@@ -38,7 +38,7 @@ Prefix `/api/tenant/v1`, middleware `module:branded` + Spatie `can:`:
 
 Service: `App\Services\Tenant\BrandedDomainService`. DNS via `App\Contracts\DomainDnsLookup` (`DnsGetRecordLookup` / `FakeDomainDnsLookup` in tests).
 
-Central `TenantService` may only set **platform** hostnames.
+Central / public registration never accept a client `domain`. `TenantService` always derives the platform hostname as `{slug}.{primary PLATFORM_DOMAIN_SUFFIXES}` (slug from company name / explicit slug). Custom domains remain tenant self-service under Branded.
 
 ## Brand chrome
 
