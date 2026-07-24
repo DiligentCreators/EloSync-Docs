@@ -42,7 +42,7 @@ BROADCAST_CONNECTION=reverb
 REVERB_APP_ID=<environment-specific-id>
 REVERB_APP_KEY=<public-application-key>
 REVERB_APP_SECRET=<secret>
-REVERB_HOST=ws.example.com
+REVERB_HOST=reverb.example.com
 REVERB_PORT=443
 REVERB_SCHEME=https
 REVERB_SERVER_HOST=127.0.0.1
@@ -77,7 +77,7 @@ The SPA needs the public Reverb endpoint:
 
 ```dotenv
 VITE_REVERB_APP_KEY=<same-as-REVERB_APP_KEY>
-VITE_REVERB_HOST=ws.example.com
+VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
 ```

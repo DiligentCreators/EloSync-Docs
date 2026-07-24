@@ -1,5 +1,11 @@
 # Changelog
 
+## Backend `.env.example` production template (2026-07-25)
+
+Backend `.env.example` is production-shaped: `https://api.example.com`, `https://app.example.com`, `reverb.example.com` (443/https), Redis cache/queue required with Reverb, S3 disk, secure session cookies, minimal comments. Secrets stay empty placeholders — never commit real keys. Local install docs override to Herd/`localhost`.
+
+---
+
 ## Laravel Forge production deployment guide (2026-07-25)
 
 Docs-only: production-friendly [Laravel Forge Deployment](/deployment/laravel-forge) covering three Forge sites (API / SPA / Docs), production `.env`, deploy scripts, scheduler, queue + Reverb daemons, email, deploy order, and troubleshooting. Installation page, Deployment index, Production Runbook, and Frontend build-artifacts docs now point operators at Forge first for go-live.
