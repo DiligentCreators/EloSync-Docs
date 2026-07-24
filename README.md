@@ -65,7 +65,9 @@ This matches the SaaS-Frontend strategy: **build in CI, deploy compiled assets o
 
 ## Laravel Forge deployment
 
-Forge should deploy from the **`build-artifacts`** branch (not `main`). The server must **not** run npm or VitePress.
+Canonical VitePress guide: **[Laravel Forge Deployment](https://docs.saleos.app/deployment/laravel-forge)** (API + SPA + Docs, daemons, Reverb, email).
+
+Forge should deploy this docs site from the **`build-artifacts`** branch (not `main`). The server must **not** run npm or VitePress.
 
 ### Deploy script (minimal)
 

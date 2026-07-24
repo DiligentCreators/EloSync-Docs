@@ -6,12 +6,13 @@ Production CI/CD for the **SaaS-Frontend** React + Vite SPA.
 - Deployment branch: **`build-artifacts`** (compiled assets only)
 - Workflow: `SaaS-Frontend/.github/workflows/frontend-build.yml`
 - Frontend-local mirror: `SaaS-Frontend/docs/ci-cd/frontend-build-artifacts.md`
+- Forge site setup: [Laravel Forge Deployment](/deployment/laravel-forge#2-spa-site-saas-frontend)
 
 ## Purpose
 
 After every merge into `main`, GitHub Actions builds production assets, validates them, uploads a GitHub Actions artifact, and updates the `build-artifacts` branch.
 
-The same artifact is **multi-client ready**: each Laravel Forge site generates `/config.js` (`window.env`) from that site’s `.env` during deploy. No API URL is baked into CI.
+The same artifact is **multi-client ready**: each Laravel Forge site generates `/config.js` (`window.env`) from that site’s `.env` during deploy. No API URL or Reverb host is baked into CI.
 
 ## Triggers
 
@@ -32,7 +33,7 @@ The same artifact is **multi-client ready**: each Laravel Forge site generates `
 
 ## Runtime configuration (Laravel Forge)
 
-`index.html` loads `/config.js` before the React app. Forge deploy script (adapted from the platform’s existing pattern):
+`index.html` loads `/config.js` before the React app. Forge deploy script:
 
 ```bash
 $CREATE_RELEASE()
@@ -47,7 +48,11 @@ fi
 echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_URL: \"$VITE_API_URL\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-SaleOS}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  VITE_API_MODE: \"${VITE_API_MODE:-central}\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_API_MODE: \"${VITE_API_MODE:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_REVERB_PORT: \"$VITE_REVERB_PORT\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_REVERB_SCHEME: \"$VITE_REVERB_SCHEME\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 
 $ACTIVATE_RELEASE()
@@ -55,11 +60,29 @@ $ACTIVATE_RELEASE()
 
 | Site `.env` key | Used as |
 |-----------------|---------|
-| `VITE_API_URL` | API origin (required in production) |
+| `VITE_API_URL` | API origin (required in production; no trailing `/api`) |
 | `VITE_APP_NAME` | Display name (optional; `VITE_CLIENT_NAME` also accepted) |
 | `VITE_API_MODE` | `central` (default) or `tenant` |
+| `VITE_REVERB_APP_KEY` | Same as backend `REVERB_APP_KEY` (public) |
+| `VITE_REVERB_HOST` | Public WebSocket hostname |
+| `VITE_REVERB_PORT` | Usually `443` behind TLS |
+| `VITE_REVERB_SCHEME` | `https` in production |
+
+Example SPA site `.env`:
+
+```env
+VITE_API_URL=https://api.example.com
+VITE_APP_NAME=SaleOS
+VITE_API_MODE=central
+VITE_REVERB_APP_KEY=<public-application-key>
+VITE_REVERB_HOST=api.example.com
+VITE_REVERB_PORT=443
+VITE_REVERB_SCHEME=https
+```
 
 Local Vite uses `.env` / `import.meta.env` when `window.env` is absent.
+
+Forge site settings: repository `SaaS-Frontend`, branch **`build-artifacts`**, web directory `/`, Node **not** required on the server.
 
 ## `build-artifacts` branch
 
@@ -81,9 +104,12 @@ Local Vite uses `.env` / `import.meta.env` when `window.env` is absent.
 ## Security
 
 - No cloud/payment secrets in frontend CI
-- SPA API URL is public; keep it on Forge `.env` per site
+- SPA API URL and Reverb app key are public; keep them on Forge `.env` per site
+- Never put `REVERB_APP_SECRET` in SPA env or `config.js`
 
 ## Related
 
-- [platform-production-runbook.md](/deployment/platform-production-runbook)
-- [object-storage.md](/developer-guide/object-storage)
+- [Laravel Forge Deployment](/deployment/laravel-forge)
+- [Production Runbook](/deployment/platform-production-runbook)
+- [Notification System](/deployment/notifications)
+- [Object Storage](/developer-guide/object-storage)

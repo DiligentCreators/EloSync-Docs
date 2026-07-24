@@ -121,6 +121,7 @@ export default defineConfig({
           text: 'Getting Started',
           items: [
             { text: 'Overview', link: '/getting-started/' },
+            { text: 'Installation', link: '/getting-started/installation' },
             { text: 'Platform Freeze', link: '/getting-started/platform-freeze' },
             { text: 'Product Roadmap', link: '/getting-started/product-roadmap' },
             { text: 'Documentation Governance', link: '/developer-guide/documentation-governance' },
@@ -270,6 +271,7 @@ export default defineConfig({
           text: 'Deployment',
           items: [
             { text: 'Overview', link: '/deployment/' },
+            { text: 'Laravel Forge', link: '/deployment/laravel-forge' },
             { text: 'Production Runbook', link: '/deployment/platform-production-runbook' },
             { text: 'Upgrade Guide', link: '/deployment/upgrade' },
             { text: 'Release Process', link: '/deployment/release-process' },

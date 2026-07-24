@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: Getting Started
-    details: Platform freeze, product roadmap, and local demo data to orient new contributors quickly.
+    details: Installation plan (backend, frontend, docs, Reverb, email), platform freeze, roadmap, and local demo data.
     link: /getting-started/
     linkText: Start here
   - title: Architecture
@@ -38,7 +38,7 @@ features:
     link: /api/
     linkText: View APIs
   - title: Deployment Guide
-    details: Production runbooks, migrate-only upgrades, go-live hardening, and ops checklists for mail, storage, auth, and gateways.
+    details: Laravel Forge three-site setup, production runbooks, migrate-only upgrades, and ops checklists for mail, Reverb, storage, and gateways.
     link: /deployment/
     linkText: Deploy SaleOS
   - title: Changelog
