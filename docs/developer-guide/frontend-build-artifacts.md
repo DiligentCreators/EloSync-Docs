@@ -75,7 +75,7 @@ VITE_API_URL=https://api.example.com
 VITE_APP_NAME=SaleOS
 VITE_API_MODE=central
 VITE_REVERB_APP_KEY=<public-application-key>
-VITE_REVERB_HOST=api.example.com
+VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
 ```

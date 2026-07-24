@@ -78,79 +78,51 @@ Enable **Redis** before setting `CACHE_STORE=redis` / `QUEUE_CONNECTION=redis`. 
 
 ### 1.2 Production `.env` (Forge → Environment)
 
-Paste from `.env.example`, then harden. Critical keys:
+Paste from backend `.env.example` (production-shaped template), then replace empty secrets. Shape:
 
 ```env
 APP_NAME="SaleOS"
 APP_ENV=production
 APP_DEBUG=false
-APP_KEY=base64:...
+APP_KEY=
 APP_URL=https://api.example.com
 FRONTEND_URL=https://app.example.com
 CORS_ALLOWED_ORIGINS=https://app.example.com
-
-LOG_LEVEL=error
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=saleos
-DB_USERNAME=forge
-DB_PASSWORD=<secret>
-
-SESSION_DRIVER=database
-SESSION_ENCRYPT=true
-SESSION_SECURE_COOKIE=true
 
 CACHE_STORE=redis
 QUEUE_CONNECTION=redis
 CACHE_PREFIX=saleos_production_
 REDIS_CLIENT=phpredis
 REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=
 REDIS_PORT=6379
-REDIS_PASSWORD=null
-
-FILESYSTEM_DISK=s3
-# AWS_ACCESS_KEY_ID=...
-# AWS_SECRET_ACCESS_KEY=...
-# AWS_DEFAULT_REGION=...
-# AWS_BUCKET=...
-# AWS_ENDPOINT=...
-# AWS_URL=...
 
 BROADCAST_CONNECTION=reverb
-REVERB_APP_ID=<unique-per-env>
-REVERB_APP_KEY=<public-key>
-REVERB_APP_SECRET=<secret>
-REVERB_HOST=api.example.com
+REVERB_APP_ID=saleos
+REVERB_APP_KEY=saleos-reverb-key
+REVERB_APP_SECRET=
+REVERB_HOST=reverb.example.com
 REVERB_PORT=443
 REVERB_SCHEME=https
 REVERB_SERVER_HOST=127.0.0.1
 REVERB_SERVER_PORT=8080
 REVERB_ALLOWED_ORIGINS=https://app.example.com
-REVERB_APP_ACCEPT_CLIENT_EVENTS_FROM=none
 
-VAPID_SUBJECT=mailto:ops@example.com
-VAPID_PUBLIC_KEY=
-VAPID_PRIVATE_KEY=
-
-STRIPE_KEY=
-STRIPE_SECRET=
-STRIPE_WEBHOOK_SECRET=
-
-PLATFORM_DOMAIN_SUFFIXES=example.com
-BRANDED_SERVER_IPV4=<public-server-ip>
+FILESYSTEM_DISK=s3
+FILESYSTEM_BRANDING_DISK=public
 ```
+
+Redis is **required** whenever Reverb / production cache / queue are enabled. Do not leave `CACHE_STORE=database` with tenancy in production.
 
 | Variable | Production note |
 |----------|-----------------|
 | `APP_DEBUG` | Must be `false` (boot fails closed if true in production) |
 | `FRONTEND_URL` | Absolute SPA origin for reset/invite links |
 | `CORS_ALLOWED_ORIGINS` | Pin SPA origin(s); never `*` |
-| `REVERB_HOST` / port / scheme | **Public** WebSocket endpoint browsers use |
+| `REVERB_HOST` | Public WebSocket host (`reverb.example.com`); browsers use this via SPA `VITE_REVERB_*` |
 | `REVERB_SERVER_*` | Internal listener behind Nginx (Forge Reverb proxy) |
-| `CACHE_PREFIX` | Unique per environment |
-| Mail | Prefer Central **Settings → Mail** (SMTP / Postmark / Mailgun); env is fallback only |
+| `CACHE_STORE` / `QUEUE_CONNECTION` | `redis` required with Reverb and tenancy |
+| Mail | Prefer Central **Settings → Mail**; env is fallback only |
 | Seeders | **Never** `db:seed` in production |
 
 Generate VAPID once and keep stable (rotation invalidates browser push subscriptions).
@@ -263,12 +235,12 @@ VITE_API_URL=https://api.example.com
 VITE_APP_NAME=SaleOS
 VITE_API_MODE=central
 VITE_REVERB_APP_KEY=<same-as-REVERB_APP_KEY>
-VITE_REVERB_HOST=api.example.com
+VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
 ```
 
-`VITE_API_URL` has **no** trailing `/api`. Reverb host/port/scheme must match the public WebSocket endpoint.
+`VITE_API_URL` has **no** trailing `/api`. Reverb host/port/scheme must match backend `REVERB_HOST` / public WebSocket endpoint.
 
 ### 2.3 Deploy script (SPA)
 

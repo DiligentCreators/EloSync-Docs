@@ -73,11 +73,11 @@ With [Laravel Herd](https://herd.laravel.com/) installed, park or link the proje
 herd sites
 ```
 
-Do **not** rely on `php artisan serve` for day-to-day work unless Herd is unavailable — CORS, cookies, and SPA URLs in `.env.example` assume the Herd host.
+Do **not** rely on `php artisan serve` for day-to-day work unless Herd is unavailable.
 
 ### 1.3 Core `.env` (local)
 
-Edit `.env` using `.env.example` as the source of truth. Minimum values:
+Backend `.env.example` is **production-shaped** (`api.example.com` / `app.example.com` / `reverb.example.com`, Redis + Reverb). After `cp .env.example .env`, override for local:
 
 ```env
 APP_NAME="SaleOS"
@@ -85,6 +85,7 @@ APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://saas-backend.test
 FRONTEND_URL=http://localhost:5173
+CORS_ALLOWED_ORIGINS=http://localhost:5173
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -94,10 +95,21 @@ DB_USERNAME=root
 DB_PASSWORD=
 
 SESSION_DRIVER=database
+SESSION_ENCRYPT=false
+SESSION_SECURE_COOKIE=false
 QUEUE_CONNECTION=database
 CACHE_STORE=database
 FILESYSTEM_DISK=public
 BROADCAST_CONNECTION=reverb
+
+REVERB_HOST=localhost
+REVERB_PORT=8080
+REVERB_SCHEME=http
+REVERB_SERVER_HOST=0.0.0.0
+REVERB_SERVER_PORT=8080
+REVERB_ALLOWED_ORIGINS=http://localhost:5173
+
+PLATFORM_DOMAIN_SUFFIXES=localhost
 ```
 
 | Variable | Purpose |
@@ -105,9 +117,9 @@ BROADCAST_CONNECTION=reverb
 | `APP_URL` | API public URL (Herd site) |
 | `FRONTEND_URL` | SPA origin for password-reset / invite links and CORS |
 | `CORS_ALLOWED_ORIGINS` | Extra SPA origins (e.g. `http://127.0.0.1:5173` for Windows E2E) |
-| `PLATFORM_DOMAIN_SUFFIXES` | Platform subdomain suffixes (default `localhost`) |
+| `PLATFORM_DOMAIN_SUFFIXES` | Platform subdomain suffixes (local: `localhost`) |
 
-Local cache/queue on `database` is fine. Production must use Redis — see the [Production Runbook](/deployment/platform-production-runbook).
+Local cache/queue on `database` is fine. Production requires Redis with Reverb — [Laravel Forge](/deployment/laravel-forge) · [Production Runbook](/deployment/platform-production-runbook).
 
 ### 1.4 Migrate and seed (local / greenfield only)
 
@@ -267,7 +279,7 @@ Production: supervised process behind TLS, SPA origin pinned — [Notification S
 
 ### 5.1 Local default (log driver)
 
-`.env.example` defaults to:
+Keep `MAIL_MAILER=log` locally (also the template default until Settings → Mail is configured):
 
 ```env
 MAIL_MAILER=log
