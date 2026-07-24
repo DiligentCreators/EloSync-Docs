@@ -6,10 +6,10 @@
 
 1. Open `/register`.
 2. If registration is closed, you will see: **We are not currently accepting new registrations.**
-3. Otherwise enter company name, your name, work email, password, and optional workspace domain.
+3. Otherwise enter company name, your name, work email, and password.
 4. After success you are signed in and taken to the workspace dashboard.
 
-Registration creates your workspace, owner account, default roles, and default modules (Leads, Tasks, Communication Templates).
+Registration creates your workspace, owner account, default roles, and default modules (Leads, Tasks, Communication Templates). The workspace platform domain is generated automatically from the company name (spaces and special characters become hyphens), for example `Acme Corp` → `acme-corp.localhost` (or your platform suffix in production). Custom domains require the [Branded](/user-guide/branded) module after signup.
 
 ### Login
 

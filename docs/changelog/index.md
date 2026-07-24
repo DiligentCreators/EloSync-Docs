@@ -1,5 +1,11 @@
 # Changelog
 
+## Platform domain auto-generated on signup / Central create (2026-07-25)
+
+Central tenant create/update and public workspace registration no longer accept a domain field. The platform hostname is always `{slug}.{PLATFORM_DOMAIN_SUFFIXES}` (company name spaces/special characters → hyphens via slug). Custom domains stay Branded self-service (Settings → Domain after purchase). SPA register + Central tenant form hide the domain input; Pest/e2e updated.
+
+---
+
 ## Backend `.env.example` production template (2026-07-25)
 
 Backend `.env.example` is production-shaped: `https://api.example.com`, `https://app.example.com`, `reverb.example.com` (443/https), Redis cache/queue required with Reverb, S3 disk, secure session cookies, minimal comments. Secrets stay empty placeholders — never commit real keys. Local install docs override to Herd/`localhost`.
@@ -44,7 +50,7 @@ Billable marketplace module `branded` (not default-included) for custom domain m
 
 - Tenant self-service **Settings → Domain**: propose hostname (ccTLDs like `myai.com.pk` / `app.domain.co.uk` supported), DNS/IP instructions, verify ownership
 - Host resolution ignores unverified or non-entitled custom domains (IP pointing alone cannot hijack a workspace)
-- Central tenant domain fields accept **platform subdomains only**
+- Central / registration auto-generate platform subdomains from slug (no client domain field)
 - When branded is active: tenant logo / app name in mail chrome and web push icon/title prefix
 - Cancel/deactivate branded clears custom-domain verification
 - Production hardening: force-delete on remove/expire (unique reclaim), verify fails closed without `BRANDED_SERVER_IPV4`/`CNAME`, CORS allowlist for verified custom Origins, hourly stale-claim purge

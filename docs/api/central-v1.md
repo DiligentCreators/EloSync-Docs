@@ -48,7 +48,7 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 | GET | `/tenants/{tenant}/payments` | `payments.list` | Paginated workspace payments |
 | POST | `/tenants/{tenant}/impersonate` | `impersonation.start` | Body: `reason` (required, 5–1000 chars) |
 
-Tenant create/update body: `company_name`, `workspace_name?`, `slug?`, `email`, `phone?`, `logo?` (image upload), `notes?`, `domain?`, `status?`, `timezone?`, `currency?`, `country?`, `locale?`. Multipart form-data is supported for logo uploads. Response includes `logo_path` and `logo_url`.
+Tenant create/update body: `company_name`, `workspace_name?`, `slug?`, `email`, `phone?`, `logo?` (image upload), `notes?`, `status?`, `timezone?`, `currency?`, `country?`, `locale?`. Multipart form-data is supported for logo uploads. Response includes `logo_path` and `logo_url`. Platform domain is **auto-generated** from the slug + `PLATFORM_DOMAIN_SUFFIXES` (client `domain` values are ignored). Custom domains are tenant self-service via the Branded module.
 
 ### Users
 
@@ -174,7 +174,7 @@ Returns session metadata only — tenant-app login token exchange is out of scop
 | Method | Path | Notes |
 |--------|------|-------|
 | GET | `/public/settings` | Unauthenticated bootstrap (branding, formats, registration/maintenance flags). No secrets. |
-| POST | `/public/register-workspace` | Self-service workspace create when `registration_enabled`; otherwise `403` with dedicated message |
+| POST | `/public/register-workspace` | Self-service workspace create when `registration_enabled`; otherwise `403` with dedicated message. Body: `company_name`, `owner_name`, `email`, `password` (+ confirmation); platform domain auto-generated from slug (client `domain` ignored). |
 | GET | `/system-settings` | All admin settings (secrets masked). Response `meta.mail_webhook` includes webhook URL + event catalog when the active provider supports webhooks. |
 | PUT | `/system-settings` | `{ "settings": { "key": value } }` — per-key validation; may include `mail_webhook_events` / `mail_webhook_secret` |
 | POST | `/system-settings/test-mail` | `{ "email": "…" }` — sends test mail using runtime SMTP config |
