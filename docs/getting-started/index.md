@@ -6,6 +6,7 @@ Welcome to **SaleOS** documentation. Start here to understand the frozen platfor
 
 | Document | Description |
 |----------|-------------|
+| [Installation & Local Configuration](./installation) | Local Herd/Vite setup; production uses [Laravel Forge](/deployment/laravel-forge) |
 | [Platform Freeze](./platform-freeze) | Locked foundation; when refactoring is allowed |
 | [Architecture](/architecture/) | Modular architecture, dependencies, and licensing conventions |
 | [Product Roadmap](./product-roadmap) | CRM → ERP module phases and delivery order |

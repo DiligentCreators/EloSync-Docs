@@ -1,5 +1,17 @@
 # Changelog
 
+## Laravel Forge production deployment guide (2026-07-25)
+
+Docs-only: production-friendly [Laravel Forge Deployment](/deployment/laravel-forge) covering three Forge sites (API / SPA / Docs), production `.env`, deploy scripts, scheduler, queue + Reverb daemons, email, deploy order, and troubleshooting. Installation page, Deployment index, Production Runbook, and Frontend build-artifacts docs now point operators at Forge first for go-live.
+
+---
+
+## Installation guide — local configuration plan (2026-07-25)
+
+Docs-only: new [Installation & Local Configuration](/getting-started/installation) page covering backend (Herd, `.env`, migrate/seed), frontend Vite/`VITE_*`, VitePress docs, Reverb + Echo alignment, email (log/SMTP/Settings), queues/scheduler/Web Push, optional Stripe/storage, terminal layout, and a verify checklist — with pointers to production runbooks.
+
+---
+
 ## Lead ingest — Custom Webhook + Meta Lead Ads (2026-07-24)
 
 Inbound lead capture through the Lead Source Driver pipeline:

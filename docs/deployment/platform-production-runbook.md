@@ -2,6 +2,8 @@
 
 This is the single ops checklist for launching the SaleOS platform (Central + Tenant applications) to paying customers.
 
+**Hosting on Laravel Forge?** Start with the step-by-step [Laravel Forge Deployment](./laravel-forge) guide (three sites, deploy scripts, daemons, Reverb, email), then use this page for launch blockers and smoke tests.
+
 Domain production guides still apply for auth, billing, RBAC, modules, Leads, and Tasks. This document covers **platform-wide** process requirements.
 
 RC notes: [releases/rc1-production-readiness.md](/deployment/rc1-production-readiness).
@@ -28,7 +30,7 @@ RC notes: [releases/rc1-production-readiness.md](/deployment/rc1-production-read
 
 Production builds are automated on merge to `main`. See [frontend-build-artifacts.md](/developer-guide/frontend-build-artifacts).
 
-**Preferred:** deploy from the **`build-artifacts`** branch (or GitHub Actions artifact `frontend-build`). On Laravel Forge, generate `/config.js` (`window.env`) from the site `.env` in the deploy script (`VITE_API_URL`, optional `VITE_APP_NAME` / `VITE_API_MODE`, and `VITE_REVERB_*`). Do not bake the API URL into CI.
+**Preferred (Laravel Forge):** deploy from the **`build-artifacts`** branch. Generate `/config.js` (`window.env`) from the SPA site `.env` in the deploy script (`VITE_API_URL`, `VITE_APP_NAME`, `VITE_API_MODE`, `VITE_REVERB_*`). Do not bake the API URL into CI. Full scripts and site settings: [Laravel Forge Deployment](./laravel-forge#2-spa-site-saas-frontend).
 
 **Manual fallback:**
 
@@ -43,7 +45,7 @@ Publish `dist/` (or the `build-artifacts` tree) to your CDN/static host / web ro
 
 Cache guidance:
 
-- `index.html` — short TTL or `no-cache` (always revalidate)
+- `index.html` / `config.js` — short TTL or `no-cache` (always revalidate)
 - Hashed assets under `assets/` — long-lived immutable cache
 - Use `build-info.json` on the artifact branch to confirm which `main` commit was built
 
@@ -51,7 +53,9 @@ Point `FRONTEND_URL` / `CORS_ALLOWED_ORIGINS` on the API at the SPA origin(s).
 
 ## Required background processes
 
-1. **HTTP / PHP-FPM** (or Laravel Cloud web process)
+On Forge, configure these as **Scheduler** + **Daemons** on the API site — see [Laravel Forge Deployment](./laravel-forge#14-scheduler) and [Daemons](./laravel-forge#15-daemons-queue--reverb).
+
+1. **HTTP / PHP-FPM** (Forge site / Laravel Cloud web process)
 2. **Queue workers** — all `ShouldQueue` notifications use the dedicated `emails` queue (`QueuesOnEmails`)
    ```bash
    php artisan queue:work redis --queue=emails,default --sleep=1 --tries=3 --timeout=60 --max-time=3600
@@ -76,6 +80,8 @@ Scheduled commands (all use `withoutOverlapping`):
 - `email-logs:prune` (weekly — retention from `EMAIL_LOGS_RETAIN_DAYS` / config `email.logs_retain_days`)
 
 ## Deploy sequence
+
+Forge API sites should use the deploy script in [Laravel Forge Deployment](./laravel-forge#13-deploy-script-api) (`$CREATE_RELEASE` / Composer / migrate / optimize / queue+reverb restart / `$ACTIVATE_RELEASE`). Equivalent manual sequence:
 
 ```bash
 php artisan down --retry=60   # optional platform-wide maintenance
@@ -165,10 +171,13 @@ Cancelling a purchased module subscription calls the payment gateway (`cancelSub
 
 ## Related docs
 
-- `architecture/platform-freeze.md`
-- `authentication/authentication-production.md`
-- `billing/payment-gateways-production.md`
-- `authorization/tenant-rbac-production.md`
-- `modules/leads-production.md`
-- `modules/tasks-production.md`
-- `releases/rc1-production-readiness.md`
+- [Laravel Forge Deployment](./laravel-forge)
+- [Notification System](./notifications)
+- [Upgrade Guide](./upgrade)
+- [Platform Freeze](/getting-started/platform-freeze)
+- [Authentication](./authentication)
+- [Payment Gateways](./payment-gateways)
+- [Tenant RBAC](./tenant-rbac)
+- [Leads](./leads)
+- [Tasks](./tasks)
+- [RC1 Production Readiness](./rc1-production-readiness)

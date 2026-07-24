@@ -2,6 +2,8 @@
 
 This runbook deploys the frozen Laravel Notifications → Reverb → Echo → React flow, plus standards-based Web Push for closed/background browsers. The payload and module contracts are defined in the [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
+**On Laravel Forge:** configure Redis, the queue daemon, Reverb daemon, and SPA `VITE_REVERB_*` using [Laravel Forge Deployment](./laravel-forge). This page remains the deep reference for env vars, Supervisor programs, rollout, and troubleshooting.
+
 ## Runtime flow
 
 1. A tenant service dispatches a domain event.
