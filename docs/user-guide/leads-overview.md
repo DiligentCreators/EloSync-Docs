@@ -9,6 +9,7 @@ Reference business module for the SaleOS platform. Every future module (Tasks, I
 | Operators / workspace users | [leads-user.md](/user-guide/leads) |
 | Engineers | [leads-developer.md](/developer-guide/leads) |
 | Production / ops | [leads-production.md](/deployment/leads) |
+| Meta App + EloSync connect | [meta-app-setup.md](/developer-guide/meta-app-setup) |
 | Module Development Standard | [module-development.md](/developer-guide/module-development) |
 | Tenant API | [../api/tenant-v1-leads.md](/api/tenant-v1-leads) |
 

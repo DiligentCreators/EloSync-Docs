@@ -57,10 +57,12 @@ Engineering documentation for extending SaleOS. New business capability ships as
 | [Tasks](./tasks) | Tasks module engineering guide |
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
 
-## Future Integrations
+## Lead ingest & integrations
 
 | Document | Description |
 |----------|-------------|
-| [Lead Source Driver Architecture](./lead-source-driver-architecture) | Architectural standard for all future lead ingestion (not implemented) |
-| [Meta Lead Ads](./meta-lead-ads-integration) | Planned blueprint — `MetaLeadAdsDriver` (first production driver) |
-| [WhatsApp Cloud Integration](./whatsapp-cloud-integration) | Planned blueprint — Cloud API messaging beyond `wa.me` (not implemented) |
+| [Lead Source Driver Architecture](./lead-source-driver-architecture) | Shared pipeline for all lead ingestion drivers |
+| [Custom Lead Webhook](./custom-lead-webhook) | Per-tenant webhook ingress |
+| [Meta App Setup](./meta-app-setup) | Create Meta Developer App + wire EloSync / SaleOS (operator guide) |
+| [Meta Lead Ads](./meta-lead-ads-integration) | Shipped — `MetaLeadAdsDriver`, OAuth, webhooks |
+| [WhatsApp Cloud Integration](./whatsapp-cloud-integration) | Planned — Cloud API messaging beyond `wa.me` |

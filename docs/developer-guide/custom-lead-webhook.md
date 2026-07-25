@@ -67,5 +67,6 @@ Timestamp must be within ±5 minutes of server time.
 ## Related
 
 - [Lead Source Driver Architecture](/developer-guide/lead-source-driver-architecture)
+- [Meta App Setup](/developer-guide/meta-app-setup)
 - [Meta Lead Ads](/developer-guide/meta-lead-ads-integration)
 - [Tenant Leads API](/api/tenant-v1-leads)

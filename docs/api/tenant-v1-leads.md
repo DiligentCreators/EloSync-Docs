@@ -171,4 +171,4 @@ Create/rotate responses include plaintext `api_key` and `signing_secret` once. P
 - `POST /leads/integrations/meta/pages` — body `{ page_ids: string[] }` (empty clears subscriptions)
 - `POST /leads/integrations/meta/disconnect` — force-deletes page rows so IDs can be reclaimed
 
-OAuth callback: `GET /api/oauth/leads/meta/callback`. Shared webhook: `GET/POST /webhooks/leads/meta`. See [Meta Lead Ads](/developer-guide/meta-lead-ads-integration).
+OAuth callback: `GET /api/oauth/leads/meta/callback`. Shared webhook: `GET/POST /webhooks/leads/meta`. Operator setup: [Meta App Setup](/developer-guide/meta-app-setup). Architecture: [Meta Lead Ads](/developer-guide/meta-lead-ads-integration).
