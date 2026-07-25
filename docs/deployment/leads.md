@@ -42,6 +42,8 @@ Ensure at least one worker listens to `imports` and `lead-ingest`. Uploads use t
 
 CSRF-exempt under `webhooks/leads/*`. Configure Meta App ID/secret/verify token via Central `PUT /api/central/v1/integrations/meta-lead-ads` or `META_LEAD_ADS_*` env.
 
+Step-by-step Meta Developer App creation, App Domains, permissions, OAuth vs webhook URLs, and tenant Connect Meta: [Meta App Setup](/developer-guide/meta-app-setup).
+
 ### Meta production gates (required for customer Pages)
 
 Before enabling Meta Lead Ads for customer workspaces:
@@ -86,3 +88,9 @@ Ensure the Laravel scheduler is running in production.
 3. Confirm `module:leads` + expanded permissions (including `leads.import`)
 4. Confirm queue worker includes `imports`
 5. Smoke: register/login → Leads board → create → DnD stage (save) → export → import template → small CSV import → history download → convert stub
+
+## Related
+
+- [Meta App Setup](/developer-guide/meta-app-setup) — Meta Developer App + EloSync wiring
+- [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration)
+- [Leads overview](/user-guide/leads-overview)

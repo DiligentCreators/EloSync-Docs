@@ -3,6 +3,8 @@
 > **Status: Shipped**
 >
 > Tenant Meta OAuth, Page subscriptions, shared `POST/GET /webhooks/leads/meta`, `MetaLeadAdsDriver`, and queue `lead-ingest` are implemented. Central App credentials live in system settings / env (`META_LEAD_ADS_*`). Tenants customize `default_source` without reconnecting.
+>
+> **Operator setup (create Meta App + connect EloSync):** [Meta App Setup](/developer-guide/meta-app-setup).
 
 ---
 
@@ -427,6 +429,7 @@ Use this as the engineering kickoff list. Update docs in the **same PR** as code
 
 ## Related
 
+- [Meta App Setup](/developer-guide/meta-app-setup) — create Meta Developer App, OAuth vs webhook URLs, Central config, tenant connect, troubleshooting
 - [Lead Source Driver Architecture](/developer-guide/lead-source-driver-architecture)
 - [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) (complementary messaging after lead capture)
 - [Leads — Developer Guide](/developer-guide/leads)

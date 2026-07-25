@@ -377,7 +377,7 @@ Configure only what you are actively developing.
 | **Creem** | Prefer Central Payment Gateways UI; env `CREEM_*` as fallback. |
 | **Object storage** | Local: `FILESYSTEM_DISK=public`. Production: S3-compatible `AWS_*` — [Object Storage](/developer-guide/object-storage). |
 | **Branded domains** | Set `BRANDED_SERVER_IPV4` (and optional CNAME) before verifying custom hosts. |
-| **Meta Lead Ads** | Central integrations / `META_LEAD_ADS_*` — [Meta Lead Ads](/developer-guide/meta-lead-ads-integration). |
+| **Meta Lead Ads** | Central integrations / `META_LEAD_ADS_*` — [Meta App Setup](/developer-guide/meta-app-setup) (operator) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration) (architecture). |
 | **Nightwatch / Telescope / Sentry** | Disabled by default in `.env.example`; enable intentionally. |
 
 ---
