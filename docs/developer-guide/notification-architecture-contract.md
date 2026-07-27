@@ -264,6 +264,7 @@ Server remains source of truth for `title` / `body`.
 
 - Explicit opt-in (post-login dialog, Profile switch, Notification Center control). Never request the native browser permission on bootstrap — only after a user gesture.
 - Sticky denial and sticky “Not now” (`localStorage`): do not re-show the post-login dialog after dismiss or after the user blocks notifications.
+- Status / subscription probes must use `getRegistration()` (never hang on `serviceWorker.ready` when no worker is registered) so Profile does not falsely report “browser does not support Web Push”.
 - Service worker displays push payloads and focuses/opens the SPA on click.
 - Logout unsubscribes locally and deletes the backend subscription while the token is still valid.
 - Expired push endpoints (`404` / `410`) are deleted automatically by `WebPushChannel`.
