@@ -1,5 +1,11 @@
 # Changelog
 
+## Web Push Profile false "not supported" (2026-07-27)
+
+Profile Desktop notifications no longer sticks on “This browser does not support Web Push” when notification permission is already granted but no service worker is registered. Status lookup uses `getRegistration()` instead of hanging on `serviceWorker.ready`.
+
+---
+
 ## Desktop notification prompt — dismiss once forever (2026-07-27)
 
 The post-login “Enable desktop notifications?” dialog no longer reappears on every login after “Not now”. Dismissal is stored in `localStorage` for that browser; users can still enable later from Profile or the Notification Center.
