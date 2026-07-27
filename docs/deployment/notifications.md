@@ -111,7 +111,7 @@ On Laravel Forge, place these values in the site environment used to generate `/
 4. **Browser requirements** (client side):
    - The SPA must be served over **HTTPS** (or `http://localhost` in development) — service workers require a secure context.
    - `public/sw.js` must be reachable at the site root so it can register with scope `/`.
-   - Permission is requested **only after explicit user action** (Profile → Desktop notifications, or the Notification Center control). The SPA fetches the public key from `GET /api/tenant/v1/push-subscriptions/vapid-public-key`, subscribes via the Push API, and syncs the subscription to the backend. Denied permission is remembered and never re-prompted automatically.
+   - Permission is requested **only after explicit user action** (post-login opt-in dialog, Profile → Desktop notifications, or the Notification Center control). The SPA fetches the public key from `GET /api/tenant/v1/push-subscriptions/vapid-public-key`, subscribes via the Push API, and syncs the subscription to the backend. Denied permission and “Not now” on the post-login dialog are remembered in `localStorage` and never re-prompted automatically in that browser (users can still enable later from Profile / Notification Center).
 
 ## Required processes
 
