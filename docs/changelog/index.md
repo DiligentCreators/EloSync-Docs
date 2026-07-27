@@ -1,5 +1,11 @@
 # Changelog
 
+## Meetings host filter crash after visiting Leads/Tasks (2026-07-27)
+
+Fixed an intermittent SPA “Something went wrong” error on Meetings. The Meetings pages unwrapped the shared users React Query cache to a bare array while Leads/Tasks stored the API envelope, so navigating Leads → Meetings called `.map` on an object. Meetings now uses a shared `useWorkspaceUsersQuery` helper with the same envelope shape (and a defensive normalizer).
+
+---
+
 ## Password show/hide on all secret fields (2026-07-26)
 
 All password and secret inputs in the SPA now use the shared `PasswordInput` control with an eye toggle (show/hide), including profile, users, tenants, mail settings, payment gateway credentials, and meeting integrations. Auth screens already had this pattern.
