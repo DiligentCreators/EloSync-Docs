@@ -1,5 +1,11 @@
 # Changelog
 
+## Desktop notification prompt — dismiss once forever (2026-07-27)
+
+The post-login “Enable desktop notifications?” dialog no longer reappears on every login after “Not now”. Dismissal is stored in `localStorage` for that browser; users can still enable later from Profile or the Notification Center.
+
+---
+
 ## Meetings host filter crash after visiting Leads/Tasks (2026-07-27)
 
 Fixed an intermittent SPA “Something went wrong” error on Meetings. The Meetings pages unwrapped the shared users React Query cache to a bare array while Leads/Tasks stored the API envelope, so navigating Leads → Meetings called `.map` on an object. Meetings now uses a shared `useWorkspaceUsersQuery` helper with the same envelope shape (and a defensive normalizer).
