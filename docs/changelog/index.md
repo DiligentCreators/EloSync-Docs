@@ -1,5 +1,11 @@
 # Changelog
 
+## Password show/hide on all secret fields (2026-07-26)
+
+All password and secret inputs in the SPA now use the shared `PasswordInput` control with an eye toggle (show/hide), including profile, users, tenants, mail settings, payment gateway credentials, and meeting integrations. Auth screens already had this pattern.
+
+---
+
 ## Meta App Setup operator guide (2026-07-25)
 
 Docs-only: added [Meta App Setup](/developer-guide/meta-app-setup) — create Meta Developer App (Marketing API use case), App Domains, Lead Ads permissions, OAuth vs webhook URLs, Central `META_LEAD_ADS_*` / integrations API, tenant Connect Meta, production gates, and troubleshooting. Linked from Meta Lead Ads, Leads deployment, installation, user overview, Tenant Leads API, and Developer Guide index.
