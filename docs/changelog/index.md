@@ -1,5 +1,11 @@
 # Changelog
 
+## Workspace timezone meeting/calendar times (2026-07-28)
+
+Scheduled datetimes (meetings, calendar, task due dates, lead follow-ups) no longer shift when the workspace timezone is not UTC. Eloquent stores those fields as UTC instants (`UtcDateTime` cast); the SPA continues to display and edit them in the workspace timezone from Settings. Meeting create/edit uses the workspace timezone (read-only on the form) instead of a separate picker that did not drive conversion.
+
+---
+
 ## Web Push Profile false "not supported" (2026-07-27)
 
 Profile Desktop notifications no longer sticks on “This browser does not support Web Push” when notification permission is already granted but no service worker is registered. Status lookup uses `getRegistration()` instead of hanging on `serviceWorker.ready`.

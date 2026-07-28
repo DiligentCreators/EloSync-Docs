@@ -21,7 +21,7 @@ Invitees use the Meetings list/detail as their source of truth. Calendar shows t
 
 1. Open **Meetings** from the workspace nav.
 2. Click **New meeting**.
-3. Enter title, start/end, timezone, optional agenda.
+3. Enter title, start/end (times use the **workspace timezone** from Settings), optional agenda.
 4. Choose a provider:
    - **None** — optional manual join URL
    - **Google Meet** / **Zoom** — requires a connected workspace account
