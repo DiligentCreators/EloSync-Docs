@@ -1,5 +1,17 @@
 # Changelog
 
+## Lead & task restore / force delete (2026-07-28)
+
+Leads and Tasks support trash filtering plus **Restore** and **Delete permanently**. Soft delete is unchanged. Restore is granted to workspace **admin** (and owner); force delete is owner-only by default (`leads.force.delete` / `tasks.force.delete`) and can be assigned on Roles. API: `POST …/restore`, `DELETE …/force`.
+
+---
+
+## Latest note & follow-up previews on Leads/Tasks lists (2026-07-28)
+
+Lead and task **table** and **board** views now show the latest note (and, for leads, the next pending follow-up). Hover the truncated preview to read the full note or follow-up details. List/board API payloads include `latest_note` and (leads) `next_follow_up`.
+
+---
+
 ## Meetings create form crash after visiting Settings (2026-07-28)
 
 Fixed an intermittent SPA “Something went wrong” error when opening New Meeting after Settings (or any page that filled the shared tenant-settings React Query cache). The meeting form unwrapped that cache to a bare array and called `.find`, while Settings stored the API envelope — so `.find` ran on an object. Meetings now uses a shared `useTenantSettingsQuery` helper with the same envelope shape (and a defensive normalizer).

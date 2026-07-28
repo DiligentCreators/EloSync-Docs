@@ -34,6 +34,12 @@ Query: `search`, `status`, `stage_id`, `priority`, `assigned_to` (`unassigned` o
 
 Status values: `active`, `waiting`, `on_hold`, `closed`, `archived`.
 
+List and board lead cards include:
+
+- `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`
+- `next_follow_up` — earliest pending follow-up (`id`, `title`, `notes`, `due_at`, `status`, `assignee`, …) or `null`
+- `next_follow_up_at` — denormalized due timestamp for the next pending follow-up (unchanged)
+
 ### POST `/leads`
 
 Body: `name` (required), `email`, `phone`, `company`, `job_title`, `source`, `lead_value` (or legacy alias `estimated_value`), `priority`, `status`, `stage_id`, `assigned_to`.
@@ -48,7 +54,15 @@ Partial update of lead fields (including `stage_id`, `status`, `priority`, `lead
 
 ### DELETE `/leads/{id}`
 
-Soft delete.
+Soft delete. Permission: `leads.delete`.
+
+### POST `/leads/{id}/restore`
+
+Restore a soft-deleted lead. Permission: `leads.restore` (admin + owner by default).
+
+### DELETE `/leads/{id}/force`
+
+Permanently delete a soft-deleted lead (must already be trashed). Permission: `leads.force.delete` (owner by default).
 
 ## Export
 

@@ -2,7 +2,7 @@
 
 ## Who can use Tasks
 
-Your workspace must have the **Tasks** module installed (included by default on new workspaces). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `assign`, `complete`, `change_due_date` as needed).
+Your workspace must have the **Tasks** module installed (included by default on new workspaces). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `complete`, `change_due_date` as needed).
 
 Without **assign**, you only see tasks assigned to you.
 
@@ -13,6 +13,9 @@ Open **Tasks** from the sidebar. The default view is the **Board** (columns by s
 - Search by title or description
 - Filter by status, priority, and assignee
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope
+- Table and board both show the **latest note**; hover a truncated preview to read the full note
+- Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted task from the row menu
+- **Delete permanently** (force delete) requires `tasks.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)
 
 Status labels in the UI:
 
