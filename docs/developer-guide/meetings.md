@@ -22,6 +22,10 @@ Enums: `MeetingStatusEnum`, `MeetingProviderEnum`, `MeetingAttendeeRoleEnum`, `M
 
 Morph alias: `meeting` → `App\Models\Meeting` (registered in `AppServiceProvider`).
 
+## Timezone
+
+`starts_at` / `ends_at` / `cancelled_at` / reminder `remind_at` use `App\Casts\UtcDateTime` (DB = UTC instants). `MeetingResource` serializes them with `App\Support\UtcIso`. The SPA form locks timezone to the workspace setting and converts wall-clock ↔ UTC via `src/lib/datetime.ts`. See [Tenant Settings — Timezone and scheduled datetimes](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+
 ## Service contract
 
 `App\Services\Tenant\MeetingService` is the sole writer:

@@ -43,7 +43,7 @@ Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `stat
 | API | `calendarService` in `src/api/services.ts` |
 | E2E | `e2e/tests/calendar/`, `npm run test:e2e:calendar` |
 
-Drag-and-drop on Week/Day calls `PUT /calendar/events/{id}` with new `starts_at` / `ends_at` (15-minute snap). Display and inputs use the workspace timezone from settings.
+Drag-and-drop on Week/Day calls `PUT /calendar/events/{id}` with new `starts_at` / `ends_at` (15-minute snap). Display and inputs use the workspace timezone from settings. `starts_at` / `ends_at` / `cancelled_at` use `UtcDateTime` + `UtcIso` so non-UTC workspace timezones do not shift absolute instants.
 
 ## Permissions
 

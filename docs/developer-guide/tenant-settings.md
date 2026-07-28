@@ -28,6 +28,14 @@ Business code must call the service (`applicationName()`, `logoUrl()`, `supportE
 
 `session_lifetime_minutes` is an integer under the `security` group (`0`–`43200`). `0` means never expire: public bootstrap exposes it, SPA idle logout is skipped, and `TenantAuthBootstrapService::issueAccessToken()` creates a Sanctum token with `expires_at = null`. When unset, resolution falls back to Central `session_lifetime_minutes`.
 
+## Timezone and scheduled datetimes
+
+`applyRuntimeConfig()` sets PHP `app.timezone` to the resolved workspace timezone (for `now()`, Sanctum expiry comparisons, reminder gates, and template placeholders).
+
+Scheduled / absolute fields that the SPA sends as UTC ISO (meetings, calendar events, task due times, lead follow-ups) use `App\Casts\UtcDateTime` so naive DB values are always read/written as **UTC**, then projected into `app.timezone` for in-app Carbon. API resources serialize those fields with `App\Support\UtcIso` (unambiguous UTC ISO-8601). Do **not** use the default `datetime` cast for new absolute scheduling columns when `app.timezone` may be non-UTC.
+
+SPA display/edit helpers live in `SaaS-Frontend/src/lib/datetime.ts` (`formatAppDateTime`, `appLocalInputToIso`, …) and use the workspace timezone from `useSettingsStore`.
+
 ## Mail provider
 
 `mail_mode` is `system` (inherit Central via `EmailManager`) or `custom` (tenant provider: SMTP / Postmark / Mailgun / …).
