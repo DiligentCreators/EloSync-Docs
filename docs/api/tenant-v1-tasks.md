@@ -27,6 +27,8 @@ Query: `search`, `status`, `priority`, `assigned_to` (`unassigned` or user id), 
 Status values: `open`, `in_progress`, `waiting`, `completed`, `cancelled`.  
 Priority values: `low`, `medium`, `high`, `urgent`.
 
+List and board task cards include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`.
+
 ### POST `/tasks`
 
 Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`.
@@ -45,7 +47,15 @@ Changing `due_at` after create requires `tasks.change_due_date` (403 otherwise).
 
 ### DELETE `/tasks/{id}`
 
-Soft delete.
+Soft delete. Permission: `tasks.delete`.
+
+### POST `/tasks/{id}/restore`
+
+Restore a soft-deleted task. Permission: `tasks.restore` (admin + owner by default).
+
+### DELETE `/tasks/{id}/force`
+
+Permanently delete a soft-deleted task (must already be trashed). Permission: `tasks.force.delete` (owner by default).
 
 ## Actions
 

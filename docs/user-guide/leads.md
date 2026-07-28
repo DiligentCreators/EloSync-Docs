@@ -2,7 +2,7 @@
 
 ## Who can use Leads
 
-Your workspace must have the **Leads** module installed (included by default on new workspaces). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `assign`, `export`, `import`, `convert` as needed).
+Your workspace must have the **Leads** module installed (included by default on new workspaces). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `export`, `import`, `convert` as needed).
 
 Without **assign**, you only see leads assigned to you.
 
@@ -13,6 +13,9 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 - Search by name, email, phone, or company
 - Filter by stage, status, priority, assignee, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
+- Table and board both show the **latest note** and **next follow-up**; hover a truncated preview to read the full note or follow-up details
+- Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted lead from the row menu
+- **Delete permanently** (force delete) requires `leads.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)
 
 ## Create & edit
 
