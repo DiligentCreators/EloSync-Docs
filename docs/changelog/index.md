@@ -1,5 +1,11 @@
 # Changelog
 
+## Meeting list vs edit timezone mismatch (2026-07-28)
+
+Meetings (and Calendar list columns) now format start/end times with an explicit timezone: workspace Settings when loaded, otherwise the meeting/event `timezone` saved on the record. This fixes the case where the edit form showed the correct Asia/Karachi wall clock (e.g. 4:00 PM) while the list still showed the UTC clock (e.g. 11:00 AM) after a Central settings fallback. Tenant settings bootstrap also refuses to adopt Central’s timezone for an authenticated workspace shell.
+
+---
+
 ## Workspace timezone meeting/calendar times (2026-07-28)
 
 Scheduled datetimes (meetings, calendar, task due dates, lead follow-ups) no longer shift when the workspace timezone is not UTC. Eloquent stores those fields as UTC instants (`UtcDateTime` cast); the SPA continues to display and edit them in the workspace timezone from Settings. Meeting create/edit uses the workspace timezone (read-only on the form) instead of a separate picker that did not drive conversion. Meetings/Calendar list UIs now re-render when the workspace timezone loads or changes so times do not stick on UTC after Settings bootstrap.
