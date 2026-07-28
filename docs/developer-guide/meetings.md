@@ -24,7 +24,7 @@ Morph alias: `meeting` → `App\Models\Meeting` (registered in `AppServiceProvid
 
 ## Timezone
 
-`starts_at` / `ends_at` / `cancelled_at` / reminder `remind_at` use `App\Casts\UtcDateTime` (DB = UTC instants). `MeetingResource` serializes them with `App\Support\UtcIso`. The SPA form locks timezone to the workspace setting and converts wall-clock ↔ UTC via `src/lib/datetime.ts`. See [Tenant Settings — Timezone and scheduled datetimes](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+`starts_at` / `ends_at` / `cancelled_at` / reminder `remind_at` use `App\Casts\UtcDateTime` (DB = UTC instants). `MeetingResource` serializes them with `App\Support\UtcIso`. The SPA form locks timezone to the workspace setting (falling back to the meeting’s stored `timezone` when Settings are still on the UTC shell default) and converts wall-clock ↔ UTC via `src/lib/datetime.ts`. List/detail formatters pass that same resolved timezone into `formatAppDateTime`. See [Tenant Settings — Timezone and scheduled datetimes](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
 
 ## Service contract
 
