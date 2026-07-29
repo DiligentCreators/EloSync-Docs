@@ -26,7 +26,7 @@ features:
     link: /architecture/
     linkText: Read architecture
   - title: User Guide
-    details: Day-to-day operator docs for authentication, RBAC, settings, Leads, Tasks, Communication Templates, and the admin console.
+    details: Day-to-day operator docs for authentication, RBAC, settings, Leads, Contacts, Tasks, Communication Templates, and the admin console.
     link: /user-guide/
     linkText: Browse user docs
   - title: Developer Guide

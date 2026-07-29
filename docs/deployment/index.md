@@ -31,6 +31,7 @@ Production runbooks and operational checklists for hosting SaleOS.
 | [Payment Gateways](./payment-gateways) | Stripe / Creem production ops |
 | [Module Development](./module-development) | Shipping modules to production |
 | [Leads](./leads) | Leads module ops |
+| [Contacts](./contacts) | Contacts module ops |
 | [Tasks](./tasks) | Tasks module ops |
 | [Daily CRM Summary](./daily-crm-summary) | Daily Reminder Time CRM summary — pilot / GA checklist |
 | [Calendar](./calendar) | Calendar module ops |

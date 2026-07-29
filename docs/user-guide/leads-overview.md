@@ -26,7 +26,7 @@ Reference business module for the SaleOS platform. Every future module (Tasks, I
 - Export CSV / XLSX of the current filtered set (`leads.export`)
 - Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping, duplicate modes, preview, queued processing, history + reports
 - **Inbound integrations** (`leads.manage_integrations`) — Custom webhooks (Zapier-ready) + Meta Lead Ads OAuth / Page subscribe
-- Convert stub (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; Contacts/Clients deferred
+- Convert (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; creates/links a real [Contact](/user-guide/contacts-overview) when that module is installed, otherwise stays status-only
 - Assignee scoping — without `leads.assign`, users only see their own leads
 - Module licensing (`module:leads`) + Spatie permissions
 - Audit + activity logging; assignment / follow-up notifications (mail + database)
@@ -37,7 +37,7 @@ Reference business module for the SaleOS platform. Every future module (Tasks, I
 
 ## Explicitly deferred
 
-- Full conversion to Contacts / Companies
+- Conversion to Companies (organizations)
 - Import retry execution (UI control present; processing deferred)
 - Workflow automations
 - Real-time board sync (Reverb / Echo)

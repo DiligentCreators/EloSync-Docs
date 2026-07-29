@@ -1,5 +1,34 @@
 # Changelog
 
+## Contacts module (2026-07-30)
+
+**Architecture**
+
+- Third product module; mirrors Leads/Tasks (flat Laravel, `module:contacts` + Spatie RBAC). **Free and default-included** — catalog `is_default_included=true` / `is_billable=false`; new workspaces get it via `installDefaultModules()`.
+
+**Backend**
+
+- Tables: `contacts`, `contact_notes`, `contact_activities`; `leads.contact_id` FK
+- `ContactService`, events/subscriber (audit + assignment mail), tenant API routes
+- Permissions: `contacts.view|create|update|delete|restore|force.delete|assign`
+- `LeadService::convert()` creates/links a real Contact when `contacts` is entitled (`conversion_meta.stub = false`); otherwise conversion stays the earlier status-only placeholder
+- Communication Templates placeholder provider for Contacts
+- Pest: `tests/Feature/Tenant/Contact/ContactTest.php`
+
+**Frontend**
+
+- Contacts list / form dialog / detail drawer (Overview, Notes, Activity tabs); nav gated by module + permission, positioned between Leads and Tasks
+- Tenant dashboard: **Recent Contacts** widget + **Create Contact** quick action (gated by `module:contacts` + `contacts.view`/`contacts.create`)
+- Lead detail drawer shows a **View contact** link after a lead converts to a real contact
+- Playwright: `npm run test:e2e:contacts` (`e2e/tests/contacts/`)
+
+**Docs**
+
+- [contacts-overview.md](/user-guide/contacts-overview) (+ user / developer / production)
+- [api/tenant-v1-contacts.md](/api/tenant-v1-contacts)
+
+---
+
 ## Meeting completion (2026-07-29)
 
 Meetings can be **marked completed** (detail action) or **auto-completed** after `ends_at` via `meetings:auto-complete` (every 5 minutes). Status is now `scheduled` | `completed` | `cancelled`. Completing cancels pending reminders, keeps the Calendar historical event as `scheduled`, and does not delete remote Zoom/Google links. List filter **Past** is replaced by **Completed**. API: `POST /meetings/{id}/complete` (`meetings.update`). Migration adds `completed_at` and backfills already-ended scheduled meetings.

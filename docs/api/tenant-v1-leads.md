@@ -140,7 +140,7 @@ Permission: `leads.convert`.
 
 Optional body: `{ "notes"?: string }`.
 
-Stub until Contacts exist: sets `converted_at`, `conversion_meta` (includes `stub: true`), status `closed`, and a converted activity. Does not create contact records.
+Sets `converted_at`, `conversion_meta`, status `closed`, and a converted activity. When the workspace has the **Contacts** module installed, this also creates (or reuses) a real `Contact`, links it via `contact_id`/`contact`, and sets `conversion_meta.stub = false`. Without Contacts installed, conversion remains status-only (`conversion_meta.stub = true`, no contact created). See [tenant-v1-contacts.md](/api/tenant-v1-contacts).
 
 ### POST `/leads/{id}/notes`
 

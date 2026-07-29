@@ -6,7 +6,7 @@ Reusable **platform module** for plain-text communication templates. Templates a
 
 - Give workspaces a single place to author reusable messages
 - Keep message composition module-agnostic through a **placeholder registry**
-- Let product modules (Leads today; Contacts/etc. later) open a picker, render, and hand off to an external channel UI
+- Let product modules (Leads, Contacts; more later) open a picker, render, and hand off to an external channel UI
 
 Templates store **plain text only** (no HTML/rich text). Channels include `whatsapp`, `sms`, and `email` in the enum; MVP create/update allows **`whatsapp` only**.
 
@@ -189,7 +189,9 @@ Do **not** run `CatalogSeeder` or permission seeders in production for this modu
 
 ## Extension guide (future product modules)
 
-To add a new context (e.g. Contacts):
+`ContactPlaceholderProvider` (context `contacts`) ships with the [Contacts](/developer-guide/contacts) module as a reference for the pattern below — registered in `PlaceholderRegistry` but not yet wired to a picker UI on the Contacts detail surface.
+
+To add a new context:
 
 1. Implement `PlaceholderProvider` for the context (definitions + resolve + findEntity)
 2. Register it in the `PlaceholderRegistry` singleton

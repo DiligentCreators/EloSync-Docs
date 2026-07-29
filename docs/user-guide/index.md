@@ -29,6 +29,8 @@ Guides for workspace operators and Central admins using SaleOS day to day.
 |----------|-------------|
 | [Leads Overview](./leads-overview) | Leads module guides index |
 | [Leads](./leads) | Kanban, table, and lead workflows |
+| [Contacts Overview](./contacts-overview) | Contacts module guides index |
+| [Contacts](./contacts) | Directory, assignment, notes, and activity |
 | [Tasks Overview](./tasks-overview) | Tasks module guides index |
 | [Tasks](./tasks) | Board, list, and task workflows |
 | [Communication Templates](./communication-templates) | Template management and WhatsApp from Leads |
