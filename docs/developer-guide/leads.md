@@ -28,7 +28,7 @@ Reference implementation. Copy this layout for Tasks and later modules.
 
 - `lead_value` replaced `estimated_value` (migration rename). Store/update requests still accept `estimated_value` as a write alias.
 - Status is independent of stage flags (`is_won` / `is_lost`). Stage change does not sync status.
-- Convert stub: `converted_at`, `conversion_meta` (includes `stub: true`), status `closed`, activity type converted. Contacts deferred.
+- Convert: `converted_at`, `conversion_meta`, status `closed`, activity type converted. When [Contacts](/developer-guide/contacts) is entitled for the workspace, also creates/links a real `Contact` (`contact_id`, `conversion_meta.stub = false`) and requires `contacts.create`; preserves the lead assignee; runs in a DB transaction. Stub converts (no `contact_id`) can be completed by calling convert again after Contacts is installed. Without Contacts, conversion remains status-only (`conversion_meta.stub = true`). `LeadPolicy::convert` uses the same assignee scope as update.
 - Assignee scoping via `ScopesToAssignee` with `leads.assign` (superadmin always org-wide).
 - Lead assignee eligibility (`User::eligibleLeadAssignees` / `EligibleLeadAssignee` rule): excludes suspended users, workspace owners (`superadmin`), and users with `exclude_from_lead_auto_assign`. Used by assign / create / update / bulk-assign / import column mapping, and by `LeadBulkAssignmentService::eligibleAssignees` for equal distribute.
 

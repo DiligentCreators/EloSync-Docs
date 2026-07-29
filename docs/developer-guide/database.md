@@ -52,7 +52,7 @@ Per-workspace pipeline: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_orde
 
 ### `leads`
 
-`tenant_id`, `uuid`, `name`, contact fields, `stage_id`, `status` (`active`|`waiting`|`on_hold`|`closed`|`archived`), `priority` (`low`|`medium`|`high`|`urgent`), `assigned_to`, `lead_value` (renamed from `estimated_value`), `last_contacted_at`, `next_follow_up_at`, `converted_at`, `conversion_meta` (JSON), soft deletes. Status is **independent** of stage. Spatie activity log name `leads`.
+`tenant_id`, `uuid`, `name`, contact fields, `stage_id`, `status` (`active`|`waiting`|`on_hold`|`closed`|`archived`), `priority` (`low`|`medium`|`high`|`urgent`), `assigned_to`, `lead_value` (renamed from `estimated_value`), `last_contacted_at`, `next_follow_up_at`, `converted_at`, `conversion_meta` (JSON), `contact_id` (nullable FK to `contacts`, set on convert when Contacts is installed), soft deletes. Status is **independent** of stage. Spatie activity log name `leads`.
 
 ### `lead_notes` / `lead_follow_ups` / `lead_activities`
 
@@ -61,6 +61,16 @@ Notes (author + body), follow-ups (due/complete/status), and CRM timeline (`type
 ### `lead_assignment_histories`
 
 `tenant_id`, `lead_id`, `old_user_id`, `new_user_id`, `changed_by`, `reason`, timestamps. Records assignee changes.
+
+## Contacts module tables
+
+### `contacts`
+
+`tenant_id`, `uuid`, `name`, `email`, `phone`, `company`, `job_title`, `source`, `source_meta` (JSON), `assigned_to`, `created_by`, `last_contacted_at`, soft deletes. Spatie activity log name `contacts`. Directory record — no stage/status workflow.
+
+### `contact_notes` / `contact_activities`
+
+Notes (author + body) and CRM timeline (`type`, `description`, `properties` JSON).
 
 ## Tasks module tables
 

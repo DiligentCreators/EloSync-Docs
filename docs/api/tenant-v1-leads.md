@@ -136,11 +136,11 @@ Download `error_report.csv` (technical/processing exceptions).
 
 ### POST `/leads/{id}/convert`
 
-Permission: `leads.convert`.
+Permission: `leads.convert` (assignee-scoped like update unless the actor has `leads.assign` / owner). When Contacts is entitled, creating the contact also requires `contacts.create`.
 
 Optional body: `{ "notes"?: string }`.
 
-Stub until Contacts exist: sets `converted_at`, `conversion_meta` (includes `stub: true`), status `closed`, and a converted activity. Does not create contact records.
+Sets `converted_at`, `conversion_meta`, status `closed`, and a converted activity. When the workspace has the **Contacts** module installed, this also creates (or reuses) a real `Contact`, links it via `contact_id`/`contact`, preserves the lead assignee, and sets `conversion_meta.stub = false`. Stub converts without a `contact_id` may call convert again after Contacts is installed to backfill the contact. Without Contacts installed, conversion remains status-only (`conversion_meta.stub = true`, no contact created). See [tenant-v1-contacts.md](/api/tenant-v1-contacts).
 
 ### POST `/leads/{id}/notes`
 

@@ -19,6 +19,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 | Module / capability | Status |
 |---------------------|--------|
 | [Leads](/user-guide/leads-overview) | ✅ Completed (Sprint 2 UX + inbound Custom Webhook + Meta Lead Ads ingest) |
+| [Contacts](/user-guide/contacts-overview) | ✅ Completed (directory, assignment, notes/activity timeline; unlocks full lead convert) |
 | [Tasks](/user-guide/tasks-overview) | ✅ Completed (Sprint 2 UX: board, KPIs, waiting status, due-date permission, comments/history) |
 | In-app notifications + Reverb | ✅ Completed (payload v1, NotificationBatch digests, Reverb/Echo, modular registry, browser toasts; poll fallback only) |
 | Tenant dashboard widgets | ✅ Completed (module/permission/assignee scoped; includes Calendar upcoming when entitled) |
@@ -31,7 +32,6 @@ The CRM is the foundation of the platform and is the first functional area deliv
 
 | Module / capability | Status |
 |---------------------|--------|
-| Contacts | Planned (unlocks full lead convert) |
 | Companies | Planned |
 | **Meetings** | Implemented |
 | Activities | Planned |

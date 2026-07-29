@@ -39,6 +39,17 @@ Meeting scheduling assumes calendar concepts (availability, time ranges, calenda
 
 **Status:** [Calendar](/user-guide/calendar-overview) and [Meetings](/user-guide/meetings-overview) are shipped. Meetings projects onto `CalendarEvent` via `CalendarEventService::upsertFromSource` (`source=meeting`, morph alias `meeting`).
 
+### Leads → Contacts (optional)
+
+```text
+Leads
+  └── may depend on Contacts   (optional — unlocks full lead convert)
+```
+
+Leads works without Contacts. When Contacts is entitled, `POST /leads/{id}/convert` creates (or links) a Contact and sets `leads.contact_id`. Without Contacts, convert remains the status-oriented placeholder (`conversion_meta.stub = true`).
+
+**Status:** [Contacts](/user-guide/contacts-overview) is shipped. No hard `module_dependencies` row — soft entitlement check in `LeadService::convert`.
+
 ### Payroll → HR (required)
 
 ```text

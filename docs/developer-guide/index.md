@@ -54,6 +54,7 @@ Engineering documentation for extending SaleOS. New business capability ships as
 | Document | Description |
 |----------|-------------|
 | [Leads](./leads) | Leads reference implementation |
+| [Contacts](./contacts) | Contacts module engineering guide |
 | [Tasks](./tasks) | Tasks module engineering guide |
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
 
