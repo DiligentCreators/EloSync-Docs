@@ -23,7 +23,8 @@ Mirror of the [Leads developer guide](/developer-guide/leads) / [Tasks developer
 
 - Assignee scoping via `ScopesToAssignee` with `contacts.assign`; without it, users only see contacts assigned to them (view/update/list/stats).
 - `contacts.force.delete` is not granted to any default role — owner/superadmin only, matching Leads/Tasks.
-- Lead → Contact linkage: `leads.contact_id` (nullable FK). `LeadService::convert()` creates (or reuses) a Contact when the `contacts` module is entitled; otherwise conversion remains the earlier status-only placeholder (`conversion_meta.stub = true`).
+- Lead → Contact linkage: `leads.contact_id` (nullable FK). `LeadService::convert()` creates (or reuses) a Contact when the `contacts` module is entitled (requires `contacts.create`, preserves lead assignee, transactional); stub converts without `contact_id` can be completed after Contacts is installed. Otherwise conversion remains the earlier status-only placeholder (`conversion_meta.stub = true`).
+- Assignee eligibility mirrors Leads (`EligibleContactAssignee` / `User::isEligibleLeadAssignee`).
 
 ## Permissions
 

@@ -12,13 +12,14 @@
 - `ContactService`, events/subscriber (audit + assignment mail), tenant API routes
 - Permissions: `contacts.view|create|update|delete|restore|force.delete|assign`
 - `LeadService::convert()` creates/links a real Contact when `contacts` is entitled (`conversion_meta.stub = false`); otherwise conversion stays the earlier status-only placeholder
+- Convert hardening: transactional + row lock; requires `contacts.create`; preserves lead assignee; `LeadPolicy::convert` matches assignee scope; stub converts can complete once Contacts is installed; assignee eligibility mirrors Leads
 - Communication Templates placeholder provider for Contacts
-- Pest: `tests/Feature/Tenant/Contact/ContactTest.php`
+- Pest: `tests/Feature/Tenant/Contact/ContactTest.php` (+ convert authz/backfill cases in LeadTest)
 
 **Frontend**
 
 - Contacts list / form dialog / detail drawer (Overview, Notes, Activity tabs); nav gated by module + permission, positioned between Leads and Tasks
-- Tenant dashboard: **Recent Contacts** widget + **Create Contact** quick action (gated by `module:contacts` + `contacts.view`/`contacts.create`)
+- Tenant dashboard: **Recent Contacts** widget + **Create Contact** quick action (gated by `module:contacts` + `contacts.view`/`contacts.create`); dashboard cache invalidated after contact save / lead convert
 - Lead detail drawer shows a **View contact** link after a lead converts to a real contact
 - Playwright: `npm run test:e2e:contacts` (`e2e/tests/contacts/`)
 
