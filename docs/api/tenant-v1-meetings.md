@@ -34,11 +34,15 @@ Creates Calendar projection (`source=meeting`). Provider ≠ `none` requires a c
 
 ### PUT `/meetings/{id}`
 
-Partial update of the same writable fields.
+Partial update of the same writable fields. Only `scheduled` meetings can be updated.
 
 ### POST `/meetings/{id}/cancel`
 
-Sets `status=cancelled`, cancels reminder + Calendar projection, attempts remote provider cancel (best-effort).
+Sets `status=cancelled`, cancels reminder + Calendar projection, attempts remote provider cancel (best-effort). Only `scheduled` meetings can be cancelled.
+
+### POST `/meetings/{id}/complete`
+
+Requires `meetings.update`. Sets `status=completed` and `completed_at`, cancels pending reminder. Calendar projection stays `scheduled` (historical). Does **not** delete remote Zoom/Google meetings. Only `scheduled` meetings can be completed. No attendee email (audit only).
 
 ### POST `/meetings/{id}/retry-sync`
 

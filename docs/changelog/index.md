@@ -1,5 +1,11 @@
 # Changelog
 
+## Meeting completion (2026-07-29)
+
+Meetings can be **marked completed** (detail action) or **auto-completed** after `ends_at` via `meetings:auto-complete` (every 5 minutes). Status is now `scheduled` | `completed` | `cancelled`. Completing cancels pending reminders, keeps the Calendar historical event as `scheduled`, and does not delete remote Zoom/Google links. List filter **Past** is replaced by **Completed**. API: `POST /meetings/{id}/complete` (`meetings.update`). Migration adds `completed_at` and backfills already-ended scheduled meetings.
+
+---
+
 ## Lead & task restore / force delete (2026-07-28)
 
 Leads and Tasks support trash filtering plus **Restore** and **Delete permanently**. Soft delete is unchanged. Restore is granted to workspace **admin** (and owner); force delete is owner-only by default (`leads.force.delete` / `tasks.force.delete`) and can be assigned on Roles. API: `POST …/restore`, `DELETE …/force`.

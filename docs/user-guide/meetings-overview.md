@@ -14,12 +14,13 @@ Schedule workspace meetings with hosts, invitees, optional Zoom/Google Meet link
 
 ## Capabilities
 
-- Create / update / cancel / delete meetings
+- Create / update / complete / cancel / delete meetings
 - Host assignment (`meetings.assign_host`)
 - Internal invitees + external email guests
 - Provider options: none (manual join URL), Google Meet, Zoom
 - Workspace-level Zoom/Google connections shared by entitled staff
 - One reminder per meeting (in-app, web push, email)
+- Auto-complete after `ends_at` via `meetings:auto-complete`
 - Calendar projection via `CalendarEventService::upsertFromSource`
 - Module licensing (`module:meetings`) + Spatie permissions
 - Required dependency on **Calendar**

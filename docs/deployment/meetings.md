@@ -35,6 +35,7 @@ Each tenant registers that platform callback URL on **their** Google/Zoom OAuth 
 ## Scheduler / queues
 
 - `crm:send-due-notifications` every 5 minutes must run (`onOneServer`) — delivers meeting reminders (database + web push + mail).
+- `meetings:auto-complete` every 5 minutes must run (`onOneServer`) — marks past `scheduled` meetings as `completed` (migration backfills already-ended rows).
 - Queue workers must process `default` / `emails` (and any dedicated notification queues) for invite mail and `RetryProviderSyncJob`.
 - Web Push requires VAPID keys (`config/webpush.php`) for browser push delivery.
 - Meeting provider webhooks are **not production-complete** (ack stub only); do not configure Zoom/Google marketplace webhooks against SaleOS yet.
@@ -46,8 +47,9 @@ Each tenant registers that platform callback URL on **their** Google/Zoom OAuth 
 3. Create meeting with `provider=none` → Calendar event with `source=meeting` for host.
 4. Save workspace Zoom/Google **Client ID + secret** in Meetings → Integrations, register the shown callback URL on that OAuth app, connect the account → schedule with that provider → `join_url` present.
 5. Set `reminder_offset_minutes` in the past for a test meeting → run `php artisan crm:send-due-notifications` → reminder notification delivered once.
-6. Staff without `view_all` cannot list unrelated meetings.
-7. Frontend: `npm run test:e2e:meetings` against a migrated API.
+6. Create a meeting, `POST /meetings/{id}/complete` → `status=completed`; run `php artisan meetings:auto-complete` against a past scheduled meeting → completed.
+7. Staff without `view_all` cannot list unrelated meetings.
+8. Frontend: `npm run test:e2e:meetings` against a migrated API.
 
 ## Rollback note
 

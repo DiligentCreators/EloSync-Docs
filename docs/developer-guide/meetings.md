@@ -24,16 +24,19 @@ Morph alias: `meeting` → `App\Models\Meeting` (registered in `AppServiceProvid
 
 ## Timezone
 
-`starts_at` / `ends_at` / `cancelled_at` / reminder `remind_at` use `App\Casts\UtcDateTime` (DB = UTC instants). `MeetingResource` serializes them with `App\Support\UtcIso`. The SPA form locks timezone to the workspace setting (falling back to the meeting’s stored `timezone` when Settings are still on the UTC shell default) and converts wall-clock ↔ UTC via `src/lib/datetime.ts`. List/detail formatters pass that same resolved timezone into `formatAppDateTime`. See [Tenant Settings — Timezone and scheduled datetimes](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+`starts_at` / `ends_at` / `cancelled_at` / `completed_at` / reminder `remind_at` use `App\Casts\UtcDateTime` (DB = UTC instants). `MeetingResource` serializes them with `App\Support\UtcIso`. The SPA form locks timezone to the workspace setting (falling back to the meeting’s stored `timezone` when Settings are still on the UTC shell default) and converts wall-clock ↔ UTC via `src/lib/datetime.ts`. List/detail formatters pass that same resolved timezone into `formatAppDateTime`. See [Tenant Settings — Timezone and scheduled datetimes](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
 
 ## Service contract
 
 `App\Services\Tenant\MeetingService` is the sole writer:
 
-- CRUD, cancel, assign host, attendee sync
+- CRUD, complete, cancel, assign host, attendee sync
+- `completePastMeetings()` for scheduler auto-complete
 - Provider sync via `MeetingProviderRegistry` (`none` / Zoom / Google Meet; fake drivers in testing)
-- Calendar projection / cancel / delete
+- Calendar projection / cancel / delete (meeting `completed` maps to calendar `scheduled`)
 - Reminder schedule / reschedule / cancel
+
+Status transitions: `scheduled` → `completed` (manual or auto) or `cancelled`. Completed/cancelled meetings are not mutable.
 
 ## Providers
 
@@ -56,11 +59,12 @@ Config: `config/meetings.php` (fake flag + Google/Zoom OAuth scopes + callback p
 | `meeting.invite` / `meeting.updated` / `meeting.cancelled` | mail + database + broadcast + web push (users); mail-only for external guests |
 | `meeting.reminder` | same; dispatched by `crm:send-due-notifications` |
 
-Subscriber: `MeetingEventSubscriber` (audit + notifications; skips actor for invite/update/cancel).
+Subscriber: `MeetingEventSubscriber` (audit + notifications; skips actor for invite/update/cancel). `MeetingCompleted` is audit-only (no attendee email).
 
 ## Scheduler
 
-`crm:send-due-notifications` (every 5 minutes, `withoutOverlapping`, `onOneServer`) claims due `MeetingReminder` rows atomically (`pending` → `sending` → `sent`) with `NotificationIdempotency` for users and cache dedupe for external guest mail.
+- `crm:send-due-notifications` (every 5 minutes, `withoutOverlapping`, `onOneServer`) claims due `MeetingReminder` rows atomically (`pending` → `sending` → `sent`) with `NotificationIdempotency` for users and cache dedupe for external guest mail. Only reminders for `scheduled` meetings are sent.
+- `meetings:auto-complete` (every 5 minutes, `withoutOverlapping`, `onOneServer`) marks `scheduled` meetings with `ends_at <= now()` as `completed`.
 
 ## Frontend
 

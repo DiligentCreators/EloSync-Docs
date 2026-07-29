@@ -54,12 +54,16 @@ Creators can set **one** reminder offset. At that time, the creator, host, and i
 - Web push (when subscribed)
 - Email
 
-External email-only guests receive email only. Cancelling or rescheduling the meeting updates or cancels the pending reminder.
+External email-only guests receive email only. Completing, cancelling, or rescheduling the meeting updates or cancels the pending reminder.
 
-## Cancel vs delete
+## Complete, cancel, and delete
 
+- **Mark as completed** — keeps the record, sets status `completed` with `completed_at`. Pending reminders stop. The Calendar projection stays as a historical `scheduled` event (Calendar does not use a completed status). Remote Zoom/Google links are left as-is.
+- **Auto-complete** — every five minutes, scheduled meetings whose end time has passed are marked completed automatically (same outcome as Mark as completed).
 - **Cancel** — keeps the record, marks status `cancelled`, cancels the Calendar projection and pending reminder. Remote Zoom/Google delete is best-effort: if the provider rejects delete (often missing `meeting:delete:meeting`), the meeting stays cancelled in SaleOS and `provider_sync_error` explains the remote failure.
 - **Delete** — soft-deletes the meeting and removes the Calendar projection (same best-effort remote delete).
+
+Completed and cancelled meetings cannot be edited, reassigned, cancelled, or completed again. Use list filters **Upcoming**, **Completed**, and **Cancelled** to find them.
 
 ## Settings
 

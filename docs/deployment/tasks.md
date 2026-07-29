@@ -33,6 +33,7 @@ New Tasks permissions for **existing** workspaces must ship as an additive **dat
 | Command | Cadence | Purpose |
 |---------|---------|---------|
 | `crm:send-due-notifications` | Every 5 minutes (`withoutOverlapping(10)`, `onOneServer`) | Idempotent due/overdue in-app task alerts + daily task digest emails + daily CRM summaries; lead follow-up due/overdue notifications; meeting reminders |
+| `meetings:auto-complete` | Every 5 minutes (`withoutOverlapping(10)`, `onOneServer`) | Mark scheduled meetings with `ends_at` in the past as `completed` |
 
 ## Deploy checklist
 
