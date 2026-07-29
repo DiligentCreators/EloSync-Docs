@@ -76,6 +76,7 @@ Scheduled commands (all use `withoutOverlapping`):
 - `subscriptions:expire`
 - `billing:run-consolidated`
 - `crm:send-due-notifications` (every 5 minutes, `onOneServer` — task digests + lead follow-up due alerts; requires shared cache)
+- `meetings:auto-complete` (every 5 minutes, `onOneServer` — mark past scheduled meetings completed)
 - `notifications:prune --days=90` (weekly)
 - `email-logs:prune` (weekly — retention from `EMAIL_LOGS_RETAIN_DAYS` / config `email.logs_retain_days`)
 
