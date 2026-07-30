@@ -13,7 +13,7 @@ Your workspace must have the **ToDos** module installed (included by default on 
 Open **ToDos** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by title or description
-- Filter by status and priority
+- Filter by status, priority, and **Overdue** (open / in-progress items past their due date)
 - Drag a card to another column to propose a status change; **Save** in the drawer commits it (Cancel restores the card)
 
 Status labels in the UI:

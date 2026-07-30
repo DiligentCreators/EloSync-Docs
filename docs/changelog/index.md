@@ -1,5 +1,9 @@
 # Changelog
 
+## Overdue filter for Tasks & ToDos (2026-07-31)
+
+List and board APIs accept `overdue=true` for open items with `due_at` in the past. Tasks and ToDos UIs expose an **Overdue** checkbox; Tasks also toggles the filter from the Overdue KPI card.
+
 ## ToDos module (2026-07-31)
 
 **Architecture**

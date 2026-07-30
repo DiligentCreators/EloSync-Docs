@@ -12,16 +12,18 @@ Middleware: `auth:tenant-api`, `tenant.user`, `verified`, `module:todos`, plus p
 
 ### GET `/todos/board`
 
-One column per status (`open`, `in_progress`, `completed`, `cancelled`): `status`, `label`, `todo_count`, `todos[]`. Honors the same filters as list (`search`, `status`, `priority`, `my_todos`).
+One column per status (`open`, `in_progress`, `completed`, `cancelled`): `status`, `label`, `todo_count`, `todos[]`. Honors the same filters as list (`search`, `status`, `priority`, `my_todos`, `overdue`).
 
 ## ToDos CRUD
 
 ### GET `/todos`
 
-Query: `search`, `status`, `priority`, `my_todos`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `status`, `priority`, `my_todos`, `overdue`, `sort`, `direction`, `page`, `per_page`.
 
 Status values: `open`, `in_progress`, `completed`, `cancelled`.  
 Priority values: `low`, `medium`, `high`, `urgent`.
+
+`overdue=true` returns open / in-progress to-dos with `due_at` in the past. When `overdue` is set, `status` is ignored.
 
 ### POST `/todos`
 
