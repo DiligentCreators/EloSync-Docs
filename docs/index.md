@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: SaleOS
+  name: EloSync
   text: Official Platform Documentation
-  tagline: Production-ready guides for operators, engineers, and platform teams building on SaleOS.
+  tagline: Production-ready guides for operators, engineers, and platform teams building on EloSync.
   actions:
     - theme: brand
       text: Getting Started
@@ -40,9 +40,9 @@ features:
   - title: Deployment Guide
     details: Laravel Forge three-site setup, production runbooks, migrate-only upgrades, and ops checklists for mail, Reverb, storage, and gateways.
     link: /deployment/
-    linkText: Deploy SaleOS
+    linkText: Deploy EloSync
   - title: Changelog
-    details: Delivery notes and platform foundation release history for SaleOS.
+    details: Delivery notes and platform foundation release history for EloSync.
     link: /changelog/
     linkText: Read changelog
 ---

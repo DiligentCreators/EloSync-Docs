@@ -1,6 +1,6 @@
 # Laravel Forge Deployment
 
-Production-oriented guide for hosting SaleOS / EloSync on **[Laravel Forge](https://forge.laravel.com/)**: four sites (API, SPA, Docs, Marketing), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
+Production-oriented guide for hosting EloSync / EloSync on **[Laravel Forge](https://forge.laravel.com/)**: four sites (API, SPA, Docs, Marketing), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
 
 Use this with the [Production Runbook](./platform-production-runbook) (launch blockers / smoke) and [Notification System](./notifications) (Redis, Reverb TLS, Web Push). Local machines stay on [Installation](/getting-started/installation).
 
@@ -88,7 +88,7 @@ Enable **Redis** before setting `CACHE_STORE=redis` / `QUEUE_CONNECTION=redis`. 
 Paste from backend `.env.example` (production-shaped template), then replace empty secrets. Shape:
 
 ```env
-APP_NAME="SaleOS"
+APP_NAME="EloSync"
 APP_ENV=production
 APP_DEBUG=false
 APP_KEY=
@@ -98,15 +98,15 @@ CORS_ALLOWED_ORIGINS=https://app.example.com
 
 CACHE_STORE=redis
 QUEUE_CONNECTION=redis
-CACHE_PREFIX=saleos_production_
+CACHE_PREFIX=elosync_production_
 REDIS_CLIENT=phpredis
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=
 REDIS_PORT=6379
 
 BROADCAST_CONNECTION=reverb
-REVERB_APP_ID=saleos
-REVERB_APP_KEY=saleos-reverb-key
+REVERB_APP_ID=elosync
+REVERB_APP_KEY=elosync-reverb-key
 REVERB_APP_SECRET=
 REVERB_HOST=reverb.example.com
 REVERB_PORT=443
@@ -239,7 +239,7 @@ Forge Environment for the **SPA site** (not the API site):
 
 ```env
 VITE_API_URL=https://api.example.com
-VITE_APP_NAME=SaleOS
+VITE_APP_NAME=EloSync
 VITE_API_MODE=central
 VITE_REVERB_APP_KEY=<same-as-REVERB_APP_KEY>
 VITE_REVERB_HOST=reverb.example.com
@@ -264,7 +264,7 @@ fi
 
 echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_URL: \"$VITE_API_URL\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-SaleOS}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-EloSync}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_MODE: \"${VITE_API_MODE:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"

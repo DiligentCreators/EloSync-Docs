@@ -1,6 +1,6 @@
 # Deployment Guide
 
-Production runbooks and operational checklists for hosting SaleOS.
+Production runbooks and operational checklists for hosting EloSync.
 
 | Start here | When |
 |------------|------|

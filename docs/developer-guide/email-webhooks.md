@@ -59,7 +59,7 @@ Typical path: `sending` → `sent` → `delivered` → `opened` → `clicked`.
 
 ### Provider tracking requirements
 
-Selecting Open/Click in Central/Tenant settings only controls which inbound events SaleOS processes. You must also enable Open/Click on the **provider webhook** and turn on open/link tracking in the provider console (e.g. Postmark server tracking). Settings save does not sync checkboxes into Postmark/Mailgun.
+Selecting Open/Click in Central/Tenant settings only controls which inbound events EloSync processes. You must also enable Open/Click on the **provider webhook** and turn on open/link tracking in the provider console (e.g. Postmark server tracking). Settings save does not sync checkboxes into Postmark/Mailgun.
 
 ## Extending a new provider
 

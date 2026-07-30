@@ -34,10 +34,10 @@ Host defaults to you. Users with `meetings.assign_host` can reassign the host.
 ## Connect Zoom or Google Meet
 
 1. Open Meetings → **Integrations** (owners/admins with `meetings.manage_integrations`).
-2. Click the **info** icon next to Zoom or Google Meet for step-by-step setup (create the provider OAuth app, required scopes, and how to connect in SaleOS).
+2. Click the **info** icon next to Zoom or Google Meet for step-by-step setup (create the provider OAuth app, required scopes, and how to connect in EloSync).
 3. Create an OAuth app in Google Cloud / Zoom Marketplace for **your organization**.
 4. Paste the shown **OAuth callback URL** into that app’s redirect settings (copy from Integrations or the setup guide).
-5. For Zoom, add scopes `meeting:write:meeting`, `meeting:read:meeting`, `meeting:delete:meeting`, and `user:read:user` (missing write → create error 4711; missing delete → remote cancel fails while SaleOS still cancels locally).
+5. For Zoom, add scopes `meeting:write:meeting`, `meeting:read:meeting`, `meeting:delete:meeting`, and `user:read:user` (missing write → create error 4711; missing delete → remote cancel fails while EloSync still cancels locally).
 6. For Google, enable the Meet API and register a **localhost** or **HTTPS** redirect URI (Google rejects `http://*.test`). Meet creates a joinable space link (not a full Calendar conference).
 7. Save your workspace **Client ID** and **Client secret** (optional webhook secret is reserved for a future native webhook integration).
 8. Click **Connect account** and approve access with the workspace Google/Zoom user.
@@ -60,7 +60,7 @@ External email-only guests receive email only. Completing, cancelling, or resche
 
 - **Mark as completed** — keeps the record, sets status `completed` with `completed_at`. Pending reminders stop. The Calendar projection stays as a historical `scheduled` event (Calendar does not use a completed status). Remote Zoom/Google links are left as-is.
 - **Auto-complete** — every five minutes, scheduled meetings whose end time has passed are marked completed automatically (same outcome as Mark as completed).
-- **Cancel** — keeps the record, marks status `cancelled`, cancels the Calendar projection and pending reminder. Remote Zoom/Google delete is best-effort: if the provider rejects delete (often missing `meeting:delete:meeting`), the meeting stays cancelled in SaleOS and `provider_sync_error` explains the remote failure.
+- **Cancel** — keeps the record, marks status `cancelled`, cancels the Calendar projection and pending reminder. Remote Zoom/Google delete is best-effort: if the provider rejects delete (often missing `meeting:delete:meeting`), the meeting stays cancelled in EloSync and `provider_sync_error` explains the remote failure.
 - **Delete** — soft-deletes the meeting and removes the Calendar projection (same best-effort remote delete).
 
 Completed and cancelled meetings cannot be edited, reassigned, cancelled, or completed again. Use list filters **Upcoming**, **Completed**, and **Cancelled** to find them.

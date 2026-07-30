@@ -1,6 +1,6 @@
 # Payment Gateway Architecture
 
-Gateway-agnostic payment infrastructure for SaleOS Central. The **Billing Engine talks only to `PaymentGatewayInterface`**. Stripe and Laravel Cashier live exclusively inside `StripeGateway`.
+Gateway-agnostic payment infrastructure for EloSync Central. The **Billing Engine talks only to `PaymentGatewayInterface`**. Stripe and Laravel Cashier live exclusively inside `StripeGateway`.
 
 ## Components
 

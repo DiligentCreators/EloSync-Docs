@@ -1,6 +1,6 @@
 # Installation & Local Configuration
 
-End-to-end plan to install and configure **SaleOS** on a developer machine: backend API, React SPA, VitePress docs, Laravel Reverb, email, queues, and related services.
+End-to-end plan to install and configure **EloSync** on a developer machine: backend API, React SPA, VitePress docs, Laravel Reverb, email, queues, and related services.
 
 | Audience | Go here |
 |----------|---------|
@@ -80,7 +80,7 @@ Do **not** rely on `php artisan serve` for day-to-day work unless Herd is unavai
 Backend `.env.example` is **production-shaped** (`api.example.com` / `app.example.com` / `reverb.example.com`, Redis + Reverb). After `cp .env.example .env`, override for local:
 
 ```env
-APP_NAME="SaleOS"
+APP_NAME="EloSync"
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://saas-backend.test
@@ -171,10 +171,10 @@ cp .env.example .env
 Local Vite `.env`:
 
 ```env
-VITE_APP_NAME=SaleOS
+VITE_APP_NAME=EloSync
 VITE_API_URL=http://saas-backend.test
 VITE_API_MODE=central
-VITE_REVERB_APP_KEY=saleos-reverb-key
+VITE_REVERB_APP_KEY=elosync-reverb-key
 VITE_REVERB_HOST=localhost
 VITE_REVERB_PORT=8080
 VITE_REVERB_SCHEME=http
@@ -237,9 +237,9 @@ Realtime notifications use Laravel Reverb → Echo in the SPA. Align keys on **b
 ```env
 BROADCAST_CONNECTION=reverb
 
-REVERB_APP_ID=saleos
-REVERB_APP_KEY=saleos-reverb-key
-REVERB_APP_SECRET=saleos-reverb-secret
+REVERB_APP_ID=elosync
+REVERB_APP_KEY=elosync-reverb-key
+REVERB_APP_SECRET=elosync-reverb-secret
 REVERB_HOST=localhost
 REVERB_PORT=8080
 REVERB_SCHEME=http
@@ -254,7 +254,7 @@ Echo private-channel auth uses `POST /broadcasting/auth` (already in CORS paths)
 ### 4.2 Frontend `.env`
 
 ```env
-VITE_REVERB_APP_KEY=saleos-reverb-key
+VITE_REVERB_APP_KEY=elosync-reverb-key
 VITE_REVERB_HOST=localhost
 VITE_REVERB_PORT=8080
 VITE_REVERB_SCHEME=http

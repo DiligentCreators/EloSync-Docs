@@ -1,4 +1,4 @@
-# Meta App Setup for EloSync / SaleOS
+# Meta App Setup for EloSync / EloSync
 
 > **Operator guide** — how to create a Meta (Facebook) Developer App and wire it to the platform so tenants can connect **Meta Lead Ads**.
 >
@@ -57,7 +57,7 @@ Save changes.
 
 ### 3. Enable permissions (required)
 
-SaleOS requests these OAuth scopes (`config/meta.php`):
+EloSync requests these OAuth scopes (`config/meta.php`):
 
 ```text
 leads_retrieval
@@ -215,7 +215,7 @@ Until steps 1–3 are done, only Meta test apps / app-role users work. See [Lead
 |-----------------|--------------|-----|
 | **URL blocked** / redirect not white-listed | Webhook URL registered as OAuth redirect, or `APP_URL` mismatch | Whitelist exact `/api/oauth/leads/meta/callback`; match scheme/host/port to `APP_URL` |
 | **Domain of this URL isn't included in the app's domains** | SPA or API host missing from App Domains | Add `api.*`, `app.*`, and root domain; save |
-| **Invalid Scopes: leads_retrieval, …** | Marketing API / Lead Ads use case missing, or permissions not **Ready for testing** | Customize use case → add all SaleOS scopes |
+| **Invalid Scopes: leads_retrieval, …** | Marketing API / Lead Ads use case missing, or permissions not **Ready for testing** | Customize use case → add all EloSync scopes |
 | Meta Lead Ads **not configured by the platform administrator** | Central / env credentials incomplete | Set App ID, secret, and verify token |
 | Connect works, no leads | Webhook not verified, `leadgen` not subscribed, or no `lead-ingest` worker | Fix Webhooks + queue worker |
 | Validator green but OAuth still fails | Validated the **webhook** URL instead of the **OAuth callback** | Re-check with `/api/oauth/leads/meta/callback` |
@@ -225,7 +225,7 @@ Until steps 1–3 are done, only Meta test apps / app-role users work. See [Lead
 ## Checklist
 
 - [ ] Use case: **Create & manage ads with Marketing API** (+ Lead Ads if offered)
-- [ ] Permissions **Ready for testing** (all five SaleOS scopes)
+- [ ] Permissions **Ready for testing** (all five EloSync scopes)
 - [ ] App Domains include API + SPA hosts
 - [ ] OAuth redirect = `/api/oauth/leads/meta/callback`
 - [ ] Webhook = `/webhooks/leads/meta` + Page `leadgen`

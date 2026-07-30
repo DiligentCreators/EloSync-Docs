@@ -3,9 +3,9 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 
 const configDir = fileURLToPath(new URL('.', import.meta.url))
-const SITE_URL = 'https://docs.saleos.app'
-const SITE_TITLE = 'SaleOS Docs'
-const SITE_DESCRIPTION = 'Official documentation for the SaleOS SaaS Platform.'
+const SITE_URL = 'https://docs.elosync.com'
+const SITE_TITLE = 'EloSync Docs'
+const SITE_DESCRIPTION = 'Official documentation for the EloSync SaaS Platform.'
 const OG_IMAGE = `${SITE_URL}/og-image.svg`
 
 function pageUrl(relativePath: string): string {
@@ -24,7 +24,7 @@ export default defineConfig({
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
 
-  // Root deployment at https://docs.saleos.app (not GitHub Pages)
+  // Root deployment at https://docs.elosync.com (not GitHub Pages)
   base: '/',
 
   cleanUrls: true,
@@ -356,7 +356,7 @@ export default defineConfig({
 
     footer: {
       message: SITE_DESCRIPTION,
-      copyright: '© 2026 SaleOS. All rights reserved.',
+      copyright: '© 2026 EloSync. All rights reserved.',
     },
 
     search: {

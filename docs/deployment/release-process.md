@@ -1,6 +1,6 @@
 # Release Process
 
-How SaleOS cuts coordinated platform releases across Backend, Frontend, and Docs.
+How EloSync cuts coordinated platform releases across Backend, Frontend, and Docs.
 
 ## Principles
 

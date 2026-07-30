@@ -10,12 +10,12 @@
 
 ## Purpose
 
-Evolve SaleOS from a **manual WhatsApp handoff** (`wa.me`) into a complete **WhatsApp communication platform** built on the official **WhatsApp Cloud API**, while keeping business logic inside SaleOS and provider specifics inside replaceable drivers.
+Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **WhatsApp communication platform** built on the official **WhatsApp Cloud API**, while keeping business logic inside EloSync and provider specifics inside replaceable drivers.
 
 **Goals (future):**
 
 - Connect tenant WhatsApp Business Accounts and phone numbers via Meta
-- Send and receive messages through SaleOS (not the user’s personal WhatsApp client)
+- Send and receive messages through EloSync (not the user’s personal WhatsApp client)
 - Conversations, shared inbox, templates, media, delivery/read status
 - Link conversations to Leads; surface messages on the Lead timeline
 - Automation and notifications on the existing platform contracts
@@ -31,13 +31,13 @@ Evolve SaleOS from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wha
 
 ## Current state
 
-SaleOS **already** supports a lightweight WhatsApp handoff via [Communication Templates](/developer-guide/communication-templates):
+EloSync **already** supports a lightweight WhatsApp handoff via [Communication Templates](/developer-guide/communication-templates):
 
 | Shipped today | Behavior |
 |---------------|----------|
 | WhatsApp button on Lead pages | Shown when Communication Templates is installed, user has `use` permission, and the lead has a valid phone |
 | Opens `wa.me` / WhatsApp Desktop / WhatsApp Web | API returns `wa_me_url`; the browser opens it |
-| User manually sends messages | The agent completes send inside WhatsApp; SaleOS does not transmit the message |
+| User manually sends messages | The agent completes send inside WhatsApp; EloSync does not transmit the message |
 
 This is **not** a WhatsApp API integration.
 
@@ -45,7 +45,7 @@ This is **not** a WhatsApp API integration.
 
 | Capability | Status |
 |------------|--------|
-| Sending through SaleOS | ❌ Not supported |
+| Sending through EloSync | ❌ Not supported |
 | Receiving replies | ❌ Not supported |
 | Delivery status | ❌ Not supported |
 | Read receipts | ❌ Not supported |
@@ -62,7 +62,7 @@ Canonical user docs: [Communication Templates](/user-guide/communication-templat
 
 ## Vision
 
-SaleOS should become a complete WhatsApp communication platform on the official WhatsApp Cloud API.
+EloSync should become a complete WhatsApp communication platform on the official WhatsApp Cloud API.
 
 Future capabilities include:
 
@@ -134,7 +134,7 @@ Automation
 | Notification system | In-app / mail digests per [Notification Architecture Contract](/developer-guide/notification-architecture-contract) |
 | Automation Engine | Future workflow reactions to message events |
 
-Business rules (who may send, assignment, logging, automation) stay in SaleOS. Drivers only speak to external providers.
+Business rules (who may send, assignment, logging, automation) stay in EloSync. Drivers only speak to external providers.
 
 ---
 
@@ -334,7 +334,7 @@ Future support for delivery lifecycle:
 
 | Status | Meaning |
 |--------|---------|
-| Queued | Accepted by SaleOS; not yet accepted by Meta |
+| Queued | Accepted by EloSync; not yet accepted by Meta |
 | Sent | Accepted by Cloud API |
 | Delivered | Delivered to customer device |
 | Read | Read receipt (when available) |
@@ -458,7 +458,7 @@ Future production requirements (Meta side):
 
 Local development may use Meta test numbers / development mode without full public Live Mode access. Document tunnel + webhook verify token setup at implementation time.
 
-Tenant RBAC permissions (SaleOS side) are TBD at implementation (e.g. inbox view/send, connection manage) and must follow `module:` + `can:` conventions.
+Tenant RBAC permissions (EloSync side) are TBD at implementation (e.g. inbox view/send, connection manage) and must follow `module:` + `can:` conventions.
 
 ---
 

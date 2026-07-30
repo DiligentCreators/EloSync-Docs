@@ -2,7 +2,7 @@
 
 Create reusable **plain-text** messages for WhatsApp (and future channels). Templates support clickable placeholders such as lead name, agent name, and workspace name.
 
-SaleOS does not send messages for you. WhatsApp opens in a new tab with the message pre-filled.
+EloSync does not send messages for you. WhatsApp opens in a new tab with the message pre-filled.
 
 ## Manage templates
 

@@ -1,6 +1,6 @@
 # API Reference
 
-REST API documentation for Central and Tenant surfaces of SaleOS.
+REST API documentation for Central and Tenant surfaces of EloSync.
 
 | Document | Description |
 |----------|-------------|

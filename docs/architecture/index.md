@@ -1,6 +1,6 @@
 # Architecture
 
-SaleOS is a **modular SaaS platform**. New business capability ships as independently owned modules on top of the frozen platform foundation.
+EloSync is a **modular SaaS platform**. New business capability ships as independently owned modules on top of the frozen platform foundation.
 
 This section documents the **long-term modular architecture convention**. It is the required standard for all future module development. It describes architectural intent and coding guidelines — not every detail of the current billing or marketplace implementation.
 

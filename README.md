@@ -1,8 +1,8 @@
-# SaleOS Docs
+# EloSync Docs
 
-Official documentation site for the **SaleOS** SaaS platform, built with [VitePress](https://vitepress.dev/).
+Official documentation site for the **EloSync** SaaS platform, built with [VitePress](https://vitepress.dev/).
 
-**Production URL:** [https://docs.saleos.app](https://docs.saleos.app)
+**Production URL:** [https://docs.elosync.com](https://docs.elosync.com)
 
 ## Requirements
 
@@ -65,7 +65,7 @@ This matches the SaaS-Frontend strategy: **build in CI, deploy compiled assets o
 
 ## Laravel Forge deployment
 
-Canonical VitePress guide: **[Laravel Forge Deployment](https://docs.saleos.app/deployment/laravel-forge)** (API + SPA + Docs, daemons, Reverb, email).
+Canonical VitePress guide: **[Laravel Forge Deployment](https://docs.elosync.com/deployment/laravel-forge)** (API + SPA + Docs, daemons, Reverb, email).
 
 Forge should deploy this docs site from the **`build-artifacts`** branch (not `main`). The server must **not** run npm or VitePress.
 
@@ -139,7 +139,7 @@ flowchart LR
   D --> F[Publish build-artifacts branch]
   F --> G[Laravel Forge deploy]
   G --> H["CREATE_RELEASE + ACTIVATE_RELEASE"]
-  H --> I[docs.saleos.app]
+  H --> I[docs.elosync.com]
 ```
 
 ```text
@@ -149,7 +149,7 @@ docs/.vitepress/dist (CI only)
     ↓  publish compiled files only
 build-artifacts (deploy branch)
     ↓  Forge activate release
-https://docs.saleos.app
+https://docs.elosync.com
 ```
 
 ## Recovery

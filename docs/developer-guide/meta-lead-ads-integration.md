@@ -10,7 +10,7 @@
 
 ## Purpose
 
-Allow each tenant to connect Meta (Facebook) assets so that **Lead Ad form submissions** arrive in SaleOS as first-class Leads — using the same duplicate detection, `LeadService` creation path, assignment, notifications, and activity timeline as manually created or CSV-imported leads.
+Allow each tenant to connect Meta (Facebook) assets so that **Lead Ad form submissions** arrive in EloSync as first-class Leads — using the same duplicate detection, `LeadService` creation path, assignment, notifications, and activity timeline as manually created or CSV-imported leads.
 
 **Goals:**
 
@@ -84,7 +84,7 @@ Timeline
 sequenceDiagram
   participant User as Prospect
   participant Meta as Meta Lead Ad / Graph API
-  participant WH as SaleOS Webhook Endpoint
+  participant WH as EloSync Webhook Endpoint
   participant Drv as MetaLeadAdsDriver
   participant Q as Queue Worker
   participant Dup as LeadDuplicateService
@@ -144,7 +144,7 @@ Tenant administrators connect Meta assets through a guided OAuth + selection flo
 2. **Tenant selects Business** — list Businesses available to the connected user; persist chosen Business ID on the tenant connection.
 3. **Tenant selects Page(s)** — list Pages under the Business (or granted to the user) that can receive Lead Ads; persist Page ID(s) and Page name(s).
 4. **Store encrypted long-lived Page Access Token** — for each selected Page, obtain and store a long-lived **Page Access Token**, encrypted at rest (same secret-handling patterns as payment gateway / mail credentials). Never return clear-text tokens from admin APIs.
-5. **Subscribe Page to Leadgen Webhooks** — for each Page, subscribe to the `leadgen` webhook field via Graph API so Meta delivers new leads to the shared SaleOS endpoint.
+5. **Subscribe Page to Leadgen Webhooks** — for each Page, subscribe to the `leadgen` webhook field via Graph API so Meta delivers new leads to the shared EloSync endpoint.
 6. **Support reconnect and disconnect**
    - **Reconnect:** re-run OAuth; refresh tokens; re-select Business/Pages if needed; re-subscribe webhooks; mark connection healthy.
    - **Disconnect:** revoke/stop webhook subscriptions where possible, clear encrypted tokens, mark Pages unsubscribed, leave historical leads intact (attribution metadata remains on existing lead rows).
@@ -207,7 +207,7 @@ Only after tenant resolution may the job initialize tenancy and call Graph / `Le
 
 Normalize Meta lead payloads inside **`MetaLeadAdsDriver`** into `NormalizedLeadData`, then enter the shared pipeline (`LeadDuplicateService` → `LeadService`). Suggested mapping:
 
-| SaleOS / Lead field | Meta source | Notes |
+| EloSync / Lead field | Meta source | Notes |
 |---------------------|-------------|-------|
 | External / Meta Lead ID | Graph `id` (`leadgen_id`) | Store for idempotency (dedicated column or stable key in lead meta / integration table) |
 | Full Name | `field_data` `full_name` (or compose `first_name` + `last_name`) | Maps to Lead `name` (required) |

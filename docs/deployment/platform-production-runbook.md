@@ -1,6 +1,6 @@
 # Platform Production Deployment Runbook
 
-This is the single ops checklist for launching the SaleOS platform (Central + Tenant applications) to paying customers.
+This is the single ops checklist for launching the EloSync platform (Central + Tenant applications) to paying customers.
 
 **Hosting on Laravel Forge?** Start with the step-by-step [Laravel Forge Deployment](./laravel-forge) guide (three sites, deploy scripts, daemons, Reverb, email), then use this page for launch blockers and smoke tests.
 

@@ -1,8 +1,8 @@
 # Documentation Governance
 
-SaleOS treats documentation as part of the product. A change is **not complete** until **code**, **tests**, and **documentation** are updated together.
+EloSync treats documentation as part of the product. A change is **not complete** until **code**, **tests**, and **documentation** are updated together.
 
-Canonical site: [docs.saleos.app](https://docs.saleos.app). Source repository: **SaaS-Docs**.
+Canonical site: [docs.elosync.com](https://docs.elosync.com). Source repository: **SaaS-Docs**.
 
 ---
 

@@ -1,6 +1,6 @@
 # User Guide
 
-Guides for workspace operators and Central admins using SaleOS day to day.
+Guides for workspace operators and Central admins using EloSync day to day.
 
 ## Application
 

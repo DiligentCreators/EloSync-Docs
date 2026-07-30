@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Documentation Governance
 
-SaleOS Docs is the **canonical** product narrative. A platform change is **not complete** until Docs, code, and tests are updated together.
+EloSync Docs is the **canonical** product narrative. A platform change is **not complete** until Docs, code, and tests are updated together.
 
 ## Same-PR rule
 

@@ -12,7 +12,7 @@ Each workspace can create one or more webhook endpoints under **Leads → Integr
 | Module | `module:leads` |
 | Driver | `custom_webhook` (`CustomWebhookDriver`) |
 | Ingress | `POST /webhooks/leads/custom/{uuid}` |
-| Auth | `Authorization: Bearer <api_key>` **or** `X-SaleOS-Key` **or** HMAC via `X-SaleOS-Signature` + `X-SaleOS-Timestamp` |
+| Auth | `Authorization: Bearer <api_key>` **or** `X-EloSync-Key` **or** HMAC via `X-EloSync-Signature` + `X-EloSync-Timestamp` |
 | Default source | Tenant-editable (`default_source`, factory default `Webhook`) |
 | Payload override | Body field `source` overrides the endpoint default when non-empty |
 | Module gate | Ingress rejects when tenant lacks active `module:leads` |
@@ -23,8 +23,8 @@ Secrets are returned **once** on create/rotate. List APIs return `has_api_key` /
 ### HMAC signing
 
 ```text
-X-SaleOS-Timestamp: <unix_seconds>
-X-SaleOS-Signature: hex(hmac_sha256("{timestamp}.{rawBody}", signing_secret))
+X-EloSync-Timestamp: <unix_seconds>
+X-EloSync-Signature: hex(hmac_sha256("{timestamp}.{rawBody}", signing_secret))
 ```
 
 Timestamp must be within ±5 minutes of server time.

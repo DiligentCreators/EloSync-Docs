@@ -26,8 +26,8 @@ Returns current custom domain status and DNS instructions.
     },
     "instructions": {
       "hostname": "app.example.co.uk",
-      "txt_name": "_saleos-verification.app.example.co.uk",
-      "txt_value": "saleos-verify-…",
+      "txt_name": "_elosync-verification.app.example.co.uk",
+      "txt_value": "elosync-verify-…",
       "server_ipv4": ["203.0.113.10"],
       "server_ipv6": [],
       "cname_target": "workspaces.example.test",
