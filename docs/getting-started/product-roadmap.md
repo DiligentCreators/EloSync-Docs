@@ -71,12 +71,34 @@ Once CRM is complete, extend it into a full sales workflow.
 
 | Module | Status |
 |--------|--------|
-| Opportunities | Planned |
-| Sales Pipeline | Planned |
-| Quotations | Planned |
-| Contracts | Planned |
+| [Opportunities](/user-guide/opportunities-overview) | ✅ Completed (deals, stages, Kanban board + table, soft Contact/Company/Lead links; free Sales opt-in) |
+| Sales Pipeline | ✅ Delivered with Opportunities (stages + board inside the module — **not** a separate Marketplace SKU) |
+| [Quotations](/user-guide/quotations-overview) | ✅ Completed (line items with computed totals, status workflow, required Opportunity link; free Sales opt-in) |
+| [Contracts](/user-guide/contracts-overview) | ✅ Completed (agreement tracking, status workflow, required Opportunity link, optional Quotation link; free Sales opt-in) |
 
-**Goal:** Manage the entire sales lifecycle from opportunity creation through quotation, negotiation, and contract execution.
+#### Opportunities (shipped)
+
+- Deal amount / currency / probability / expected close date
+- Seeded pipeline: Prospecting → Qualification → Proposal → Negotiation → Won / Lost
+- Kanban board + table; KPIs (pipeline value, weighted, conversion)
+- Soft optional links to Contacts, Companies, Leads
+- Notes, assignment, domain timeline; free Marketplace opt-in under category `sales`
+
+#### Quotations (shipped)
+
+- Required Opportunity link; optional Contact/Company links
+- Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
+- Status workflow: `draft → sent → accepted|rejected|expired`
+- Notes, assignment, domain timeline; **hard dependency** on Opportunities; free Marketplace opt-in under category `sales`
+
+#### Contracts (shipped)
+
+- Required Opportunity link; optional Quotation link (only when Quotations is entitled)
+- Party name, start/end dates, value/currency
+- Status workflow: `draft → active → expired|terminated`
+- Notes, assignment, domain timeline; **hard dependency** on Opportunities; free Marketplace opt-in under category `sales`
+
+**Goal:** Manage the entire sales lifecycle from opportunity creation through quotation, negotiation, and contract execution. ✅ **Achieved** — Opportunities, Quotations, and Contracts are all shipped.
 
 ---
 

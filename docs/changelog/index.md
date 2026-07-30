@@ -1,5 +1,89 @@
 # Changelog
 
+## Sales audit remediations (2026-07-31)
+
+- Quotations: content/`lines` updates are **draft-only** (`Quotation::isEditable()`); assignment stays available via `POST …/assign`.
+- Quotations: `POST …/status` requires `quotations.send` for `sent` and `quotations.accept` for `accepted` (other transitions still use `quotations.update`).
+- Contracts: `LinkableQuotation` requires the quotation’s opportunity to match the contract’s opportunity.
+- SPA: Edit quotation action is draft-only; Playwright RequireAccess coverage extended to Sales routes.
+- Docs: API + developer guides updated for the above.
+
+## Quotations & Contracts modules (2026-07-31)
+
+**Architecture**
+
+- Two lean Sales modules on top of Opportunities, mirroring its assignee-scope + notes + timeline patterns. Flat Laravel, `module:quotations` / `module:contracts` + Spatie RBAC. **Free Marketplace opt-in** — catalog category `sales`, `is_default_included=false` / `is_billable=false`; `quotations` `sort_order=50`, `contracts` `sort_order=60`.
+- **Hard dependency**: both `quotations` and `contracts` require **Opportunities** — Marketplace install blocks until Opportunities is entitled (`module_dependencies` migration, mirrors Meetings → Calendar).
+- **Soft optional dependency**: Contracts may link `quotation_id` only when Quotations is also entitled — validated by `LinkableQuotation` (mirrors `LinkableCompanyForOpportunity`).
+
+**Backend — Quotations**
+
+- Tables: `quotations`, `quotation_lines`, `quotation_notes`, `quotation_activities`
+- Line items (`description`, `quantity`, `unit_price`, `tax_rate`) fully replaced on create/update; `subtotal` / `tax_total` / `total` computed server-side
+- Status workflow `draft → sent → accepted|rejected|expired` (`QuotationStatusEnum`); disallowed transitions — including re-entering the same status — return a 422 validation error
+- Permissions: `quotations.view|create|update|delete|restore|force.delete|assign|send|accept`
+- Pest: `tests/Feature/Tenant/Quotation/QuotationTest.php`, `tests/Feature/Central/Module/QuotationsModuleDependencyTest.php`
+
+**Backend — Contracts**
+
+- Tables: `contracts`, `contract_notes`, `contract_activities` (no line items — a contract is a single agreement record)
+- Status workflow `draft → active → expired|terminated` (`ContractStatusEnum`); same same-status/invalid-transition guard as Quotations
+- Permissions: `contracts.view|create|update|delete|restore|force.delete|assign`
+- Pest: `tests/Feature/Tenant/Contract/ContractTest.php`, `tests/Feature/Central/Module/ContractsModuleDependencyTest.php`
+
+**Both modules**
+
+- Model + factory, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- Catalog registration via `DefaultModuleRegistrar` migration (migrate-only); permissions + default role map additive migrations
+
+**Docs**
+
+- [quotations-overview.md](/user-guide/quotations-overview) / [quotations.md](/user-guide/quotations) (+ [developer](/developer-guide/quotations) / [production](/deployment/quotations))
+- [contracts-overview.md](/user-guide/contracts-overview) / [contracts.md](/user-guide/contracts) (+ [developer](/developer-guide/contracts) / [production](/deployment/contracts))
+- [api/tenant-v1-quotations.md](/api/tenant-v1-quotations), [api/tenant-v1-contracts.md](/api/tenant-v1-contracts)
+- [Module Dependencies](/architecture/module-dependencies) updated (Quotations/Contracts → Opportunities now shipped; Contracts → Quotations optional)
+
+**Deferred**
+
+- Quotation PDF export / e-signature, contract renewal reminders, multi-currency conversion, Opportunity → Quotation → Contract conversion wizard
+
+---
+
+## Opportunities module (2026-07-30)
+
+**Architecture**
+
+- Sales deals module with **pipeline stages + Kanban board inside Opportunities** (Sales Pipeline is not a separate Marketplace SKU). Mirrors Leads board patterns and Activities soft related links. Flat Laravel, `module:opportunities` + Spatie RBAC. **Free Marketplace opt-in** — catalog category `sales`, `is_default_included=false` / `is_billable=false` / `sort_order=40`; tenants enable it manually (only Leads + Tasks auto-install).
+
+**Backend**
+
+- Tables: `opportunity_stages`, `opportunities`, `opportunity_notes`, `opportunity_activities`
+- Seeded stages: Prospecting → Qualification → Proposal → Negotiation → Won / Lost
+- Soft optional FKs: `contact_id` / `company_id` / `lead_id` (entitlement-validated when set)
+- Board / stats / stage change / assign / notes / restore / force delete
+- Permissions: `opportunities.view|create|update|delete|restore|force.delete|assign`
+- Catalog registration via `DefaultModuleRegistrar` migration (migrate-only)
+- Pest: `tests/Feature/Tenant/Opportunity/OpportunityTest.php`
+
+**Frontend**
+
+- SPA mirrors Leads (board default + table, form dialog, detail drawer) — ship with Opportunities nav gated by module + permission
+
+**Docs**
+
+- [opportunities-overview.md](/user-guide/opportunities-overview) (+ user / developer / production)
+- [api/tenant-v1-opportunities.md](/api/tenant-v1-opportunities)
+
+**Deferred**
+
+- Separate Sales Pipeline SKU, custom stage admin UI, Lead → Opportunity conversion wizard, realtime board sync, export / import
+
+---
+
+## Quotations & Contracts SPA (2026-07-31)
+
+Tenant Application pages for Quotations and Contracts (list, form with line items for quotes, detail sheets with status actions), Sales nav group, Playwright `test:e2e:quotations` / `test:e2e:contracts`, and notification deep-links for assignment.
+
 ## Marketing site Forge CI (2026-07-30)
 
 EloSync marketing repo (`SaaS-Website`) publishes a static Next.js export to `build-artifacts` on each push to `main` (same pattern as SPA/Docs). Forge deploys that branch with activate-only script — no Node on the server. See [Laravel Forge](/deployment/laravel-forge) §4 Marketing.
@@ -20,7 +104,7 @@ Workspace owners (and anyone with `marketplace.purchase`) can **remove** opt-in 
 
 ## Default module policy (2026-07-30)
 
-New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, Activities, Calendar, Meetings, and Communication Templates stay **free** (`is_billable=false`) but **opt-in** (`is_default_included=false`) via Marketplace. Existing workspace subscriptions are not removed.
+New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, Activities, Opportunities, Calendar, Meetings, and Communication Templates stay **free** (`is_billable=false`) but **opt-in** (`is_default_included=false`) via Marketplace. Existing workspace subscriptions are not removed.
 
 ## Activities module (2026-07-30)
 

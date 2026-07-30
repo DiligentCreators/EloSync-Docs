@@ -10,6 +10,8 @@ REST API documentation for Central and Tenant surfaces of SaleOS.
 | [Tenant Companies](./tenant-v1-companies) | Companies CRUD, notes, timeline |
 | [Tenant Contacts](./tenant-v1-contacts) | Contacts CRUD, notes, timeline |
 | [Tenant Tasks](./tenant-v1-tasks) | Tasks CRUD and workflows |
+| [Tenant Activities](./tenant-v1-activities) | Activities CRUD, complete, notes, timeline |
+| [Tenant Opportunities](./tenant-v1-opportunities) | Opportunities CRUD, board, stages, notes |
 | [Tenant Communication Templates](./tenant-v1-communication-templates) | Templates, placeholders, WhatsApp render |
 | [Tenant Notifications](./tenant-v1-notifications) | In-app notifications |
 | [Tenant Marketplace](./tenant-v1-marketplace) | Browse, install, and remove workspace modules |

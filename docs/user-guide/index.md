@@ -33,5 +33,11 @@ Guides for workspace operators and Central admins using SaleOS day to day.
 | [Contacts](./contacts) | Directory, assignment, notes, and activity |
 | [Tasks Overview](./tasks-overview) | Tasks module guides index |
 | [Tasks](./tasks) | Board, list, and task workflows |
+| [Opportunities Overview](./opportunities-overview) | Opportunities + sales pipeline guides index |
+| [Opportunities](./opportunities) | Kanban, table, and deal workflows |
+| [Quotations Overview](./quotations-overview) | Quotations module guides index |
+| [Quotations](./quotations) | Line items, status workflow, and totals |
+| [Contracts Overview](./contracts-overview) | Contracts module guides index |
+| [Contracts](./contracts) | Agreement tracking and status workflow |
 | [Communication Templates](./communication-templates) | Template management and WhatsApp from Leads |
 | [Branded](./branded) | Custom domain mapping and white-label notifications |
