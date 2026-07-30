@@ -33,6 +33,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Leads](./leads) | Leads module ops |
 | [Contacts](./contacts) | Contacts module ops |
 | [Tasks](./tasks) | Tasks module ops |
+| [ToDos](./todos) | Personal ToDos module ops |
 | [Daily CRM Summary](./daily-crm-summary) | Daily Reminder Time CRM summary — pilot / GA checklist |
 | [Calendar](./calendar) | Calendar module ops |
 | [Meetings](./meetings) | Meetings module ops |

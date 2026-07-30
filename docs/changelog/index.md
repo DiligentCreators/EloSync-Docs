@@ -1,5 +1,29 @@
 # Changelog
 
+## ToDos module (2026-07-31)
+
+**Architecture**
+
+- New personal checklist module (`todos`), separate from Tasks. Default-included, non-billable CRM catalog row (`sort_order` 21, icon `list-todo`).
+- Creator-scoped visibility via `ScopesToCreator` — users see only their own to-dos; workspace owner (`superadmin`) can view all.
+- Creator-only update/delete (owner may view others’ items but cannot mutate them).
+
+**Backend**
+
+- Table `todos`; model, policy, service, board + CRUD API under `module:todos` + `todos.*`.
+- Permissions: `view` · `create` · `update` · `delete` (admin/manager/staff).
+- Pest: `tests/Feature/Tenant/Todo/TodoTest.php` (CRUD, creator scope, owner view, non-creator forbid, module gate, isolation).
+
+**Frontend**
+
+- Board (default) + list; form dialog + detail sheet; nav gated by `module:todos` + `todos.view`.
+- Playwright: `npm run test:e2e:todos`.
+
+**Docs / Website**
+
+- User / developer / production / API guides; database + roadmap + this note.
+- Marketing `MODULES` entry and included-module copy updated for ToDos.
+
 ## Marketing catalog currency uses modules.currency (2026-07-31)
 
 Public `GET /api/central/v1/public/modules` now labels paid prices with each module’s **catalog currency** (`modules.currency`, typically USD as in Central Modules). It no longer uses `system_settings.currency` (workspace default), which can be PKR/EUR/etc. and mislabeled catalog USD amounts.

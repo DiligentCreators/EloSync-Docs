@@ -50,6 +50,7 @@ Business modules live in the `modules` catalog. **Commercial flags** (`is_defaul
 |------|-------|
 | `leads` | CRM pipeline — auto-installed (`source=included`) |
 | `tasks` | Work items — auto-installed (`source=included`) |
+| `todos` | Personal checklists — auto-installed (`source=included`) |
 
 They are not cancellable by workspace owners (platform admin may **deactivate**).
 

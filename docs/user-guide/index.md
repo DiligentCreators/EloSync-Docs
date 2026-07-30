@@ -33,6 +33,8 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Contacts](./contacts) | Directory, assignment, notes, and activity |
 | [Tasks Overview](./tasks-overview) | Tasks module guides index |
 | [Tasks](./tasks) | Board, list, and task workflows |
+| [ToDos Overview](./todos-overview) | Personal ToDos module guides index |
+| [ToDos](./todos) | Personal board, list, and creator-scoped workflows |
 | [Opportunities Overview](./opportunities-overview) | Opportunities + sales pipeline guides index |
 | [Opportunities](./opportunities) | Kanban, table, and deal workflows |
 | [Quotations Overview](./quotations-overview) | Quotations module guides index |

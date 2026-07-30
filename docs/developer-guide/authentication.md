@@ -61,7 +61,7 @@ Spatie roles/permissions are isolated by `guard_name` (`central-api` vs `tenant-
 `POST /api/central/v1/public/register-workspace` (honours `registration_enabled`):
 
 1. Creates workspace + domain
-2. `TenantProvisioningService` — billing profile, default-included modules (Leads, Tasks, Communication Templates), authorization defaults, module seed data
+2. `TenantProvisioningService` — billing profile, default-included modules (Leads, Tasks, ToDos), authorization defaults, module seed data
 3. `TenantAuthBootstrapService::createOwner` — owner `User` with workspace `superadmin` role (roles must already exist)
 4. Returns Sanctum `tenant-token` for immediate SPA login
 

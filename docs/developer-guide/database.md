@@ -47,6 +47,9 @@ task_digest_deliveries
 daily_summary_deliveries
   (tenant-scoped work items — Tasks module + CRM daily digests)
 
+todos
+  (tenant-scoped personal checklists — ToDos module; creator-scoped)
+
 communication_templates
   (tenant-scoped plain-text templates — Communication Templates module)
 
@@ -144,6 +147,12 @@ Notes (author + body) and quote timeline (`type`, `description`, `properties` JS
 
 Notes (author + body) and agreement timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
 
+## ToDos module tables
+
+### `todos`
+
+`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `todos`. UI labels `open` as **To Do**. Visibility is creator-scoped; workspace owner (`superadmin`) can view all. Only the creator may update or delete.
+
 ## Tasks module tables
 
 ### `tasks`
@@ -206,7 +215,7 @@ Retention: `php artisan notifications:prune --days=90` (scheduled weekly) delete
 | `sort_order`, `is_active` | |
 | soft deletes | |
 
-Default-included catalog modules today: **Leads**, **Tasks** (`is_default_included=true`, `is_billable=false`). Free Marketplace opt-in modules (including Opportunities under category `sales`) use `is_default_included=false`, `is_billable=false`. Production receives new catalog modules via **data migrations** (`DefaultModuleRegistrar`), not seeders. Modules are pure licensing products — they do not store permission lists. User authorization uses Spatie Roles & Permissions separately.
+Default-included catalog modules today: **Leads**, **Tasks**, **ToDos** (`is_default_included=true`, `is_billable=false`). Free Marketplace opt-in modules (including Opportunities under category `sales`) use `is_default_included=false`, `is_billable=false`. Production receives new catalog modules via **data migrations** (`DefaultModuleRegistrar`), not seeders. Modules are pure licensing products — they do not store permission lists. User authorization uses Spatie Roles & Permissions separately.
 
 ### `payment_gateway_module_prices`
 
