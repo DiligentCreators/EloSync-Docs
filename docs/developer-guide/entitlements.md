@@ -81,30 +81,32 @@ Only then allow access.
 
 ## Marketplace install rules
 
-Published catalog: `GET /marketplace/modules` (admin browse) or install via `POST /tenants/{tenant}/modules`.
+Published catalog: tenant `GET /marketplace/modules` / `POST …/purchase`, or central install via `POST /tenants/{tenant}/modules`.
 
 | Rule | Behavior |
 |------|----------|
 | Module must be `published` and `is_active` | Validation error otherwise |
 | Duplicate active/pending/trial install | Rejected |
+| Reinstall after cancel/suspend | Same `tenant_id`+`module_id` row is reactivated (`updateOrCreate`) |
 | Required dependencies (`module_dependencies`, `is_optional=false`) | Must already be installed; marketplace detail returns `missing_required_modules` |
 | Non-billable module | `status=active` immediately, `source=included` if `is_default_included` else `purchased` |
 | Billable module (`is_billable` + price > 0) | `status=pending` until Billing Engine settles payment |
 
-Install body: `{ "module_id": int, "billing_cycle?": "monthly" | "yearly" }`.
+Install body: `{ "module_id": int, "billing_cycle?": "monthly" | "yearly" }` (central) or `POST /marketplace/modules/{module}/purchase` with optional `billing_cycle` (tenant).
 
 ## Cancel / deactivate rules
 
-| Action | Who | Included modules | Purchased modules |
-|--------|-----|------------------|-------------------|
-| **Cancel** (`POST /module-subscriptions/{id}/cancel`) | Requires `module-subscriptions.update` | **Blocked** — use deactivate | Sets `cancelled`, `ends_at=now` |
-| **Deactivate** (`POST /module-subscriptions/{id}/deactivate`) | Requires `module-subscriptions.deactivate` | Allowed (platform admin) | Sets `suspended` |
+| Action | Who | Included modules | Purchased / opt-in modules |
+|--------|-----|------------------|----------------------------|
+| **Cancel** (`POST /module-subscriptions/{id}/cancel`) | Central `module-subscriptions.update` | **Blocked** — use deactivate | Sets `cancelled`, `ends_at=now` |
+| **Cancel** (`POST /marketplace/modules/{module}/cancel`) | Tenant `marketplace.purchase` | **Blocked** | Same cancel semantics for the current workspace |
+| **Deactivate** (`POST /module-subscriptions/{id}/deactivate`) | Central `module-subscriptions.deactivate` | Allowed (platform admin) | Sets `suspended` |
 
-Cancel removes entitlements immediately. Deactivate is the platform-admin override for included core modules.
+Cancel removes entitlements immediately. Hard dependents must be removed first (`blocking_dependents` on marketplace detail). Deactivate is the platform-admin override for included core modules.
 
 ## Dependencies
 
-`module_dependencies` supports hard/optional deps for marketplace modules. Leads and Tasks have none today. `MarketplaceService::detailForTenant` exposes `required_modules`, `optional_modules`, `missing_required_modules`, `already_installed`.
+`module_dependencies` supports hard/optional deps for marketplace modules. Leads and Tasks have none today. `MarketplaceService::detailForTenant` exposes `required_modules`, `optional_modules`, `missing_required_modules`, `already_installed`, `can_cancel`, and `blocking_dependents`.
 
 ## Billing
 
