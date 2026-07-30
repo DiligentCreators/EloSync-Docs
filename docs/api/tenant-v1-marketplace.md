@@ -10,11 +10,22 @@ Permissions: `marketplace.view` (browse), `marketplace.purchase` (install / subs
 
 | Method | Path | Permission | Behavior |
 |--------|------|------------|----------|
-| GET | `/modules` | `marketplace.view` | Paginated published catalog (`search`, `category_id`) |
+| GET | `/modules` | `marketplace.view` | Paginated published catalog (`search`, `category_id`) + per-row install flags |
 | GET | `/modules/{module}` | `marketplace.view` | Detail + install state for the current workspace |
 | POST | `/modules/{module}/purchase` | `marketplace.purchase` | Install free module or start paid checkout |
 | POST | `/modules/{module}/confirm-checkout` | `marketplace.purchase` | Confirm return from payment gateway |
 | POST | `/modules/{module}/cancel` | `marketplace.purchase` | Remove / cancel a non-core installed module |
+
+### List row extras
+
+| Field | Meaning |
+|-------|---------|
+| `already_installed` | Active or trial subscription for this workspace |
+| `purchase_pending` | Pending checkout not yet activated |
+| `version` | Catalog display version (semver metadata) |
+| `is_billable` | Paid module (SPA badge **Billable** when not installed) |
+
+SPA badge priority: **Installed** → **Pending** → **Billable** → **Available** (free, not installed). Do not label free opt-in modules as “Included”.
 
 ### Display currency conversion
 
@@ -41,8 +52,10 @@ Rates: `CurrencyConversionService` → `open.er-api.com` (configurable via `CURR
 | `purchase_pending` | Pending checkout not yet activated |
 | `subscription_status` / `subscription_source` | Current row when present |
 | `can_cancel` | Tenant may remove it now (not core-included, no blocking dependents) |
-| `blocking_dependents` | Active modules that hard-depend on this one |
-| `required_modules` / `optional_modules` / `missing_required_modules` | Dependency hints |
+| `required_modules` / `optional_modules` / `missing_required_modules` | **Dependencies** — modules this one needs (upstream) |
+| `blocking_dependents` | **Dependents** — installed modules that hard-depend on this one (downstream; blocks remove) |
+
+UI copy must keep these directions distinct: “no dependencies” means nothing upstream is required; dependents (e.g. Meetings → Calendar) still block remove until those modules are removed first.
 
 ### Cancel rules
 

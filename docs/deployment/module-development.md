@@ -39,9 +39,21 @@ Never `syncPermissions()` against existing customized roles during deploy. Grant
 
 ### What DefaultModuleRegistrar guarantees
 
-- `firstOrCreate` by module slug — never overwrites commercial flags, prices, or renamed fields
+- `firstOrCreate` by module slug — never overwrites commercial flags, prices, renamed fields, or `version` on existing rows
+- Optional `version` on create (defaults to `1.0.0`); bump existing catalog rows with `bumpVersion($slug, $version)` in a later data migration
 - Installs subscriptions only when a workspace has **never** had a row for that module (checks soft-deleted)
 - Does not reactivate cancelled / suspended / soft-deleted subscriptions
+
+### Bumping `modules.version` on module updates
+
+When a release meaningfully changes an existing module, add an idempotent data migration:
+
+```php
+app(\App\Support\Catalog\DefaultModuleRegistrar::class)
+    ->bumpVersion('meetings', '1.1.0');
+```
+
+Do **not** rely on `CatalogSeeder` / re-running `ensureModule` — those paths never overwrite catalog version. See [Module Development — Developer Guide](/developer-guide/module-development-guide#catalog-versioning-modulesversion).
 
 ### What TenantPermissionSynchronizer guarantees
 
@@ -58,12 +70,12 @@ Never `syncPermissions()` against existing customized roles during deploy. Grant
 
 ## Deploy checklist
 
-1. Run migrations (`php artisan migrate --force`) — include **data migrations** for catalog rows and additive permission grants
-2. Do **not** rely on `CatalogSeeder` / `db:seed` in production for new default modules
+1. Run migrations (`php artisan migrate --force`) — include **data migrations** for catalog rows, `bumpVersion` when the module changed, and additive permission grants
+2. Do **not** rely on `CatalogSeeder` / `db:seed` in production for new default modules or version bumps
 3. Confirm `tenant-permissions` + `tenant-default-role-permissions` config are deployed with the release (migrations read them)
 4. Entitlement cache is cleared per workspace by the module registrar when a subscription is newly installed
 5. If the module contributes dashboard widgets or notifications, confirm scheduler (`crm:send-due-notifications`) and SPA polling/widget ids
-6. Smoke: login → module nav visible → list API 200 with `module:` + `can:`
+6. Smoke: login → module nav visible → list API 200 with `module:` + `can:` → Marketplace shows expected version / Available|Installed|Billable badges
 
 ## Rollback
 
