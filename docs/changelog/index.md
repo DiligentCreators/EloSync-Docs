@@ -1,5 +1,9 @@
 # Changelog
 
+## Marketplace display currency conversion (2026-07-31)
+
+Tenant Marketplace list/detail now convert catalog module prices from the catalog currency (typically USD) into the workspace currency for **display only**. Checkout still charges the mapped Stripe/gateway Price in the catalog currency. FX rates come from a cached third-party mid-market feed (`CurrencyConversionService` / `CURRENCY_FX_*`). When rates are unavailable, the UI falls back to catalog currency amounts.
+
 ## Sales production readiness (2026-07-31)
 
 - `LinkableQuotation` keeps SoftDeletes (only drops `TenantScope`) so soft-deleted quotations cannot be linked.
