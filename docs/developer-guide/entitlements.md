@@ -23,28 +23,38 @@ A purchased or included module makes a business domain **available** to the work
 
 Core Platform capabilities live in `config/core-platform.php` and are always available.
 
-Business modules live in the `modules` catalog. Default-included today:
+Business modules live in the `modules` catalog. **Commercial flags** (`is_default_included`, `is_billable`, `monthly_price`, `yearly_price`) are the source of truth for Marketplace pricing — keep marketing/docs in sync with `CatalogSeeder` and register_* migrations.
+
+### Published catalog (current)
+
+| Slug | Name | Default included | Billable | Monthly | Yearly |
+|------|------|------------------|----------|---------|--------|
+| `leads` | Leads | Yes | No | $0 | $0 |
+| `tasks` | Tasks | Yes | No | $0 | $0 |
+| `contacts` | Contacts | No (free opt-in) | No | $0 | $0 |
+| `companies` | Companies | No (free opt-in) | No | $0 | $0 |
+| `calendar` | Calendar | No (free opt-in) | No | $0 | $0 |
+| `meetings` | Meetings | No (free opt-in) | No | $0 | $0 |
+| `activities` | Activities | No (free opt-in) | No | $0 | $0 |
+| `communication-templates` | Communication Templates | No (free opt-in) | No | $0 | $0 |
+| `branded` | Branded | No | **Yes** | **$29** | **$290** |
+
+**Default-included** modules (`is_default_included = true`, `is_billable = false`):
 
 | Slug | Notes |
 |------|-------|
-| `leads` | CRM pipeline |
-| `tasks` | Work items |
-| `contacts` | People directory |
-| `companies` | Organizations directory |
-| `calendar` | Personal calendar |
-| `meetings` | Meetings + Calendar projection |
-| `communication-templates` | Plain-text templates + placeholder registry (WhatsApp handoff) |
+| `leads` | CRM pipeline — auto-installed (`source=included`) |
+| `tasks` | Work items — auto-installed (`source=included`) |
 
-They are:
+They are not cancellable by workspace owners (platform admin may **deactivate**).
 
-- `is_default_included = true`
-- `is_billable = false`
-- Auto-installed on every new workspace (`source=included`)
-- Not cancellable by workspace owners (platform admin may **deactivate**)
+**Free Marketplace opt-in** (`is_default_included = false`, `is_billable = false`, price `$0`): Contacts, Companies, Calendar, Meetings, Activities, Communication Templates. Tenants install from Marketplace; owners can remove them.
+
+**Paid Marketplace** (`is_billable = true`): Branded at USD **$29/month** or **$290/year** (custom domain + white-label notifications).
 
 New default-included modules for **existing** production workspaces are registered via idempotent **data migrations** (`DefaultModuleRegistrar`), not `db:seed`. See [module-development production](/deployment/module-development).
 
-Schema remains flexible so they can become paid for *new* customers later without redesign (`is_billable`, pricing columns, `source`).
+Schema remains flexible so free modules can become paid for *new* customers later without redesign (`is_billable`, pricing columns, `source`).
 
 ## Resolution
 

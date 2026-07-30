@@ -1,5 +1,13 @@
 # Changelog
 
+## Marketing site Forge CI (2026-07-30)
+
+EloSync marketing repo (`SaaS-Website`) publishes a static Next.js export to `build-artifacts` on each push to `main` (same pattern as SPA/Docs). Forge deploys that branch with activate-only script — no Node on the server. See [Laravel Forge](/deployment/laravel-forge) §4 Marketing.
+
+## Marketing catalog pricing sync (2026-07-30)
+
+EloSync marketing site and docs now mirror Central catalog commercial flags: **Included free** (Leads, Tasks), **Free to install** (other CRM modules), **Paid** Branded at **$29/mo · $290/yr**. Entitlements catalog table corrected (opt-in CRM modules are not default-included).
+
 ## Tenant Marketplace remove modules (2026-07-30)
 
 Workspace owners (and anyone with `marketplace.purchase`) can **remove** opt-in modules from Marketplace — Install / Subscribe to add, Remove / Cancel subscription to drop access. Core default-included modules (Leads, Tasks) stay non-removable; hard dependents must be removed first (e.g. Meetings before Calendar). Re-installing a previously cancelled module reactivates the same subscription row.

@@ -2,6 +2,17 @@
 
 The **Branded** marketplace module lets a workspace map a **custom domain** and use its brand name / logo in emails and web push notifications.
 
+## Pricing
+
+Billable platform add-on (catalog slug `branded`):
+
+| Cycle | Price (USD) |
+|-------|-------------|
+| Monthly | **$29** |
+| Yearly | **$290** |
+
+Not default-included — purchase from Marketplace (`is_billable = true`). See [Entitlements](/developer-guide/entitlements) for the full catalog table.
+
 ## Who can use it
 
 1. Purchase or install **Branded** from Marketplace (`module:branded`).
