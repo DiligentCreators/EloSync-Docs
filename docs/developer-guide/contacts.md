@@ -24,6 +24,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads) / [Tasks developer
 - Assignee scoping via `ScopesToAssignee` with `contacts.assign`; without it, users only see contacts assigned to them (view/update/list/stats).
 - `contacts.force.delete` is not granted to any default role — owner/superadmin only, matching Leads/Tasks.
 - Lead → Contact linkage: `leads.contact_id` (nullable FK). `LeadService::convert()` creates (or reuses) a Contact when the `contacts` module is entitled (requires `contacts.create`, preserves lead assignee, transactional); stub converts without `contact_id` can be completed after Contacts is installed. Otherwise conversion remains the earlier status-only placeholder (`conversion_meta.stub = true`).
+- Contact → Company linkage: `contacts.company_id` (nullable FK) when [Companies](/developer-guide/companies) is entitled. Writes sync the legacy `company` string from the linked Company name. Resources expose `linked_company` when loaded.
 - Assignee eligibility mirrors Leads (`EligibleContactAssignee` / `User::isEligibleLeadAssignee`).
 
 ## Permissions
@@ -67,6 +68,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Nav | `permission: contacts.view`, `module: 'contacts'` (between Leads and Tasks) |
 | Dashboard | `RecentContactsWidget` (`recent_contacts` widget) + `create_contact` quick action in `tenant-dashboard-widgets.tsx` / `tenant-dashboard-page.tsx` |
 | Lead link | `lead-detail-sheet.tsx` shows a **View contact** link (`?contact={id}`) when a converted lead has `contact_id` |
+| Company link | `contact-form-dialog.tsx` company picker when `module:companies` + `companies.view`; list/detail prefer `linked_company?.name` over legacy `company` |
 
 ## Tests
 

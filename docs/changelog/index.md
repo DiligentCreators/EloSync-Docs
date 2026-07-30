@@ -1,5 +1,38 @@
 # Changelog
 
+## Companies module (2026-07-30)
+
+**Architecture**
+
+- CRM organizations module; mirrors Contacts/Leads/Tasks (flat Laravel, `module:companies` + Spatie RBAC). **Free and default-included** — catalog `is_default_included=true` / `is_billable=false` / `sort_order=12`; new workspaces get it via `installDefaultModules()`.
+
+**Backend**
+
+- Tables: `companies`, `company_notes`, `company_activities`; `contacts.company_id` FK
+- `CompanyService`, events/subscriber (audit + assignment mail), tenant API routes
+- Permissions: `companies.view|create|update|delete|restore|force.delete|assign`
+- Contact writes sync legacy `company` string from linked Company name when `company_id` is set; resources expose `linked_company`
+- Communication Templates placeholder provider for Companies
+- Pest: `tests/Feature/Tenant/Company/CompanyTest.php`
+
+**Frontend**
+
+- Companies list / form dialog / detail drawer (Overview, Notes, Activity tabs); nav gated by module + permission, positioned between Leads and Contacts
+- Tenant dashboard: **Recent Companies** widget + **Create Company** quick action (gated by `module:companies` + `companies.view`/`companies.create`)
+- Contact form company picker when Companies is entitled; list/detail prefer linked company name over legacy string
+- Playwright: `npm run test:e2e:companies` (`e2e/tests/companies/`)
+
+**Docs**
+
+- [companies-overview.md](/user-guide/companies-overview) (+ user / developer / production)
+- [api/tenant-v1-companies.md](/api/tenant-v1-companies)
+
+**Deferred**
+
+- Lead convert-to-Company, legacy company-string backfill job, Meta invent Companies
+
+---
+
 ## Contacts module (2026-07-30)
 
 **Architecture**

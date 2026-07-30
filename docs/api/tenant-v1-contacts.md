@@ -18,21 +18,23 @@ Same filters as list (minus pagination/sort). Payload includes:
 
 ### GET `/contacts`
 
-Query: `search`, `company`, `assigned_to` (`unassigned` or user id), `my_contacts`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `company`, `company_id`, `assigned_to` (`unassigned` or user id), `my_contacts`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`.
+List items include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`. May include `company_id` and `linked_company` when the relationship is loaded.
 
 ### POST `/contacts`
 
-Body: `name` (required), `email`, `phone`, `company`, `job_title`, `source`, `assigned_to`.
+Body: `name` (required), `email`, `phone`, `company` (legacy free-text), `company_id` (optional FK to Companies), `job_title`, `source`, `assigned_to`.
+
+When `company_id` is set and the company exists, the legacy `company` string is synced to that Company’s name.
 
 ### GET `/contacts/{id}`
 
-Includes assignee, creator, notes, activities.
+Includes assignee, creator, notes, activities. May include `company_id` and `linked_company` (`id`, `uuid`, `name`) when the relationship is loaded.
 
 ### PUT `/contacts/{id}`
 
-Partial update of contact fields (including `assigned_to`).
+Partial update of contact fields (including `assigned_to`, `company`, `company_id`).
 
 ### DELETE `/contacts/{id}`
 

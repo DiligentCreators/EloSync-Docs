@@ -1,6 +1,6 @@
 # Contacts Module
 
-Third product module on the frozen platform. Mirrors the [Leads](/user-guide/leads-overview) / [Tasks](/user-guide/tasks-overview) reference architecture — a workspace directory of people and companies, with assignment, notes, and an activity timeline.
+Third product module on the frozen platform. Mirrors the [Leads](/user-guide/leads-overview) / [Tasks](/user-guide/tasks-overview) reference architecture — a workspace directory of people, with assignment, notes, and an activity timeline. Organizations are first-class in [Companies](/user-guide/companies-overview); contacts may link via `company_id`.
 
 ## Guides
 
@@ -15,7 +15,8 @@ Third product module on the frozen platform. Mirrors the [Leads](/user-guide/lea
 
 ## Capabilities
 
-- Name, email, phone, company, job title, source
+- Name, email, phone, company (legacy string), job title, source
+- Optional link to a [Company](/user-guide/companies-overview) via `company_id` (form company picker when Companies is installed)
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `contacts.assign`
 - Notes (comments) + activity timeline
 - Table view with search, company filter, and **My Contacts** toggle
@@ -34,9 +35,13 @@ Contacts is installed automatically when a workspace is created (no Marketplace 
 
 When both **Leads** and **Contacts** are installed, converting a lead creates (or links) a real Contact and stores `contact_id` on the lead. The Lead detail drawer shows a **View contact** link after conversion. Without Contacts installed, conversion remains the earlier status-only placeholder.
 
+## Company link
+
+When **Companies** is installed, Contact create/edit can pick a linked organization (`company_id`). The free-text `company` field remains as a **legacy** display/search string and is synced from the linked Company name when a link is set. List/detail UIs prefer `linked_company.name`, falling back to the legacy string.
+
 ## Explicitly deferred
 
-- Companies (organizations) as a first-class entity
 - Deals / opportunities linked to contacts
 - Contact import/export
 - Follow-ups (see [Leads](/user-guide/leads-overview) for that pattern)
+- Legacy company-string → Company backfill job (see [Companies](/user-guide/companies-overview))

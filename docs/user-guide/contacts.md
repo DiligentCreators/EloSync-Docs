@@ -10,8 +10,9 @@ Without **assign**, you only see contacts assigned to you.
 
 Open **Contacts** from the sidebar.
 
-- Search by name, email, phone, company, or job title
+- Search by name, email, phone, company (legacy string), or job title
 - Filter by company and assignee, or toggle **My Contacts**
+- When a contact is linked to a [Company](/user-guide/companies), the table shows the linked company name (falls back to the legacy company string)
 - KPI cards summarize total contacts, my contacts, unassigned, with email, and created this week
 - The table shows the **latest note**; hover a truncated preview to read the full note
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted contact from the row menu
@@ -20,8 +21,9 @@ Open **Contacts** from the sidebar.
 ## Create & edit
 
 1. Click **New contact**
-2. Enter name (required) and optional email, phone, company, job title, and assignee
-3. Save
+2. Enter name (required) and optional email, phone, job title, and assignee
+3. Optionally pick a **Company** (when the Companies module is installed and you can view companies). Selecting a Company links `company_id` and syncs the legacy company text to that organization name. Leaving the picker empty keeps any existing free-text company value on edit; clearing a previously linked Company removes the link
+4. Save
 
 Edit from the row menu or the detail drawer.
 

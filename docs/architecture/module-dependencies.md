@@ -50,6 +50,17 @@ Leads works without Contacts. When Contacts is entitled, `POST /leads/{id}/conve
 
 **Status:** [Contacts](/user-guide/contacts-overview) is shipped. No hard `module_dependencies` row — soft entitlement check in `LeadService::convert`.
 
+### Contacts → Companies (optional)
+
+```text
+Contacts
+  └── may depend on Companies   (optional — unlocks company picker / company_id)
+```
+
+Contacts works without Companies (legacy free-text `company` string only). When Companies is entitled, Contact create/update can set `company_id` and sync the legacy string from the Company name. No hard `module_dependencies` row — soft entitlement / SPA gating.
+
+**Status:** [Companies](/user-guide/companies-overview) is shipped.
+
 ### Payroll → HR (required)
 
 ```text

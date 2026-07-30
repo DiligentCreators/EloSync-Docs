@@ -230,7 +230,7 @@ Normalize Meta lead payloads inside **`MetaLeadAdsDriver`** into `NormalizedLead
 
 - Prefer Graph field names; tolerate locale/custom form labels by matching known keys first, then storing leftovers under Custom Questions.
 - If `full_name` is absent, build `name` from first/last; if still empty, fall back to email local-part or `"Meta Lead"` only as a last resort so `LeadService` validation can succeed or fail explicitly.
-- Do not invent CRM Contacts/Companies from Meta data until those modules exist — stay on Lead fields + meta.
+- Do not invent CRM Contacts/Companies from Meta Lead Ads payloads — map into Lead fields (+ meta) only. Creating or linking Contacts/Companies from Meta remains deferred even though those modules now ship separately.
 - Campaign / Ad Set / Ad / Form names may be fetched lazily and cached per tenant to reduce Graph traffic.
 
 ### Suggested attribution payload (illustrative)

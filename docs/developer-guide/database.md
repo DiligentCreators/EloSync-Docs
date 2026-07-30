@@ -66,9 +66,19 @@ Notes (author + body), follow-ups (due/complete/status), and CRM timeline (`type
 
 ### `contacts`
 
-`tenant_id`, `uuid`, `name`, `email`, `phone`, `company`, `job_title`, `source`, `source_meta` (JSON), `assigned_to`, `created_by`, `last_contacted_at`, soft deletes. Spatie activity log name `contacts`. Directory record — no stage/status workflow.
+`tenant_id`, `uuid`, `name`, `email`, `phone`, `company` (legacy free-text), `company_id` (nullable FK → `companies`, null on company delete), `job_title`, `source`, `source_meta` (JSON), `assigned_to`, `created_by`, `last_contacted_at`, soft deletes. Spatie activity log name `contacts`. Directory record — no stage/status workflow. When `company_id` is set, writes sync `company` from the linked Company name.
 
 ### `contact_notes` / `contact_activities`
+
+Notes (author + body) and CRM timeline (`type`, `description`, `properties` JSON).
+
+## Companies module tables
+
+### `companies`
+
+`tenant_id`, `uuid`, `name`, `email`, `phone`, `website`, `industry`, `address`, `source`, `source_meta` (JSON), `assigned_to`, `created_by`, soft deletes. Spatie activity log name `companies`. Directory record — no stage/status workflow.
+
+### `company_notes` / `company_activities`
 
 Notes (author + body) and CRM timeline (`type`, `description`, `properties` JSON).
 
@@ -133,7 +143,7 @@ Retention: `php artisan notifications:prune --days=90` (scheduled weekly) delete
 | `sort_order`, `is_active` | |
 | soft deletes | |
 
-Default-included catalog modules today: **Leads**, **Tasks**, **Communication Templates** (`is_default_included=true`, `is_billable=false`). Production receives new default modules via **data migrations** (`DefaultModuleRegistrar`), not seeders. Modules are pure licensing products — they do not store permission lists. User authorization uses Spatie Roles & Permissions separately.
+Default-included catalog modules today: **Leads**, **Tasks**, **Contacts**, **Companies**, **Calendar**, **Meetings**, **Communication Templates** (`is_default_included=true`, `is_billable=false`). Production receives new default modules via **data migrations** (`DefaultModuleRegistrar`), not seeders. Modules are pure licensing products — they do not store permission lists. User authorization uses Spatie Roles & Permissions separately.
 
 ### `payment_gateway_module_prices`
 
