@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:quotations`, plus permission middleware / policies.
 
-Assignee scoping: without `quotations.assign` (and not superadmin), list/stats/view/update only include quotations where `assigned_to` is the current user.
+Assignee scoping: without `quotations.assign` (and not superadmin), list/stats/view/update/**send**/**accept** only include quotations where `assigned_to` is the current user.
 
 ## Stats
 
@@ -56,11 +56,11 @@ Permission: `quotations.assign`.
 
 ### POST `/quotations/{id}/send`
 
-Transitions `draft → sent`. Permission: `quotations.send`.
+Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). **Status-only** — does not email or generate a PDF.
 
 ### POST `/quotations/{id}/accept`
 
-Transitions `sent → accepted`. Permission: `quotations.accept`.
+Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scoped unless the actor has `quotations.assign` or is superadmin).
 
 ### POST `/quotations/{id}/status`
 

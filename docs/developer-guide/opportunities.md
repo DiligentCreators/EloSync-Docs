@@ -28,7 +28,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads) (pipeline board) a
 - Related FKs (`contact_id` / `company_id` / `lead_id`) are **optional**; each is validated for module entitlement + assignee scope on the related record when set.
 - Default stages are ensured idempotently (`OpportunityStageSeeder` / `ensureDefaultStages()`): Prospecting → Qualification → Proposal → Negotiation → Won / Lost.
 - Soft delete; stage changes via `POST .../stage` (`can:opportunities.update`).
-- No hard `module_dependencies` rows for Contacts/Companies/Leads. Future **Quotations** / **Contracts** are expected to declare Opportunities as a required dependency when those modules ship.
+- No hard `module_dependencies` rows for Contacts/Companies/Leads. **Quotations** and **Contracts** declare Opportunities as a required hard dependency.
 
 ## Permissions
 

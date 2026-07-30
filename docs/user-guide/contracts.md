@@ -22,7 +22,7 @@ Open **Contracts** from the sidebar (Sales). Search by title, filter by status, 
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the detail drawer.
+Edit from the row menu or the detail drawer while the contract is still **Draft**. After **Activate**, content fields are locked; use status actions and assignment instead.
 
 ## Status workflow
 

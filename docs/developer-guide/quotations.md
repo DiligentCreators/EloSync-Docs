@@ -26,6 +26,8 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - Status machine lives on `QuotationStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → sent → accepted|rejected|expired`. `QuotationService::transitionStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions, **including re-entering the same status** (e.g. sending an already-sent quotation).
 - Content updates (`PUT`) and line sync are **draft-only** via `Quotation::isEditable()`. Assignment remains available after send via `POST …/assign`.
 - `POST …/status` maps target status to permissions: `sent` → `quotations.send`, `accepted` → `quotations.accept`, otherwise `quotations.update`.
+- `send` / `accept` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
+- **Send is status-only** — no outbound email/PDF delivery in this phase.
 - Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` derives `subtotal` / `tax_total` / `total` from persisted `QuotationLine` rows.
 - Assignee scoping via `ScopesToAssignee` with `quotations.assign`.
 - `quotations.force.delete` is not granted to any default role — owner/superadmin only.

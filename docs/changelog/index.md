@@ -1,5 +1,14 @@
 # Changelog
 
+## Sales production readiness (2026-07-31)
+
+- `LinkableQuotation` keeps SoftDeletes (only drops `TenantScope`) so soft-deleted quotations cannot be linked.
+- `QuotationPolicy::send` / `accept` mirror view/update assignee scoping.
+- Contracts: content updates are **draft-only** (`Contract::isEditable()`); assignment uses dedicated `assign()` (mirrors Quotations).
+- SPA: Quotation and Contract list/detail **Edit** actions are draft-only.
+- Pest: staff assignee scope for Quotations/Contracts; soft-deleted quotation link rejected; non-draft contract edit rejected; send/accept assignee isolation.
+- Docs: API index, entitlements catalog, database schema, tenant free-install list, and Playwright Sales suites synced.
+
 ## Sales audit remediations (2026-07-31)
 
 - Quotations: content/`lines` updates are **draft-only** (`Quotation::isEditable()`); assignment stays available via `POST …/assign`.

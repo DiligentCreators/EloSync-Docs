@@ -36,6 +36,12 @@ activities / activity_notes / activity_activities
 opportunity_stages / opportunities / opportunity_notes / opportunity_activities
   (tenant-scoped sales deals + pipeline — Opportunities module)
 
+quotations / quotation_lines / quotation_notes / quotation_activities
+  (tenant-scoped quotes — Quotations module; hard-depends on Opportunities)
+
+contracts / contract_notes / contract_activities
+  (tenant-scoped agreements — Contracts module; hard-depends on Opportunities)
+
 tasks / task_notes / task_activities
 task_digest_deliveries
 daily_summary_deliveries
@@ -113,6 +119,30 @@ Per-workspace sales pipeline: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sor
 ### `opportunity_notes` / `opportunity_activities`
 
 Notes (author + body) and deal timeline (`type`, `description`, `properties` JSON; includes `stage_changed`).
+
+## Quotations module tables
+
+### `quotations`
+
+`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `contact_id` / `company_id`, `title`, `status` (`draft`|`sent`|`accepted`|`rejected`|`expired`), `currency`, `valid_until`, `subtotal` / `tax_total` / `total`, `notes`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `quotations`. Content edits are **draft-only**.
+
+### `quotation_lines`
+
+`quotation_id`, `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Replaced in full on draft update; totals recalculated server-side.
+
+### `quotation_notes` / `quotation_activities`
+
+Notes (author + body) and quote timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
+## Contracts module tables
+
+### `contracts`
+
+`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `quotation_id` (null on quotation hard delete; soft-optional via `LinkableQuotation` — same opportunity, Quotations entitled, not soft-deleted), `title`, `status` (`draft`|`active`|`expired`|`terminated`), `party_name`, `start_date`, `end_date`, `value`, `currency`, `notes`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `contracts`. Content edits are **draft-only**; status/assign remain available after activate.
+
+### `contract_notes` / `contract_activities`
+
+Notes (author + body) and agreement timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
 
 ## Tasks module tables
 

@@ -22,13 +22,13 @@ Open **Quotations** from the sidebar (Sales). Search by title, filter by status,
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the detail drawer. Editing replaces the full line-item list.
+Edit from the row menu or the detail drawer while the quotation is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
 ## Status workflow
 
 A quotation starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`)
+- **Send** (`draft → sent`) — marks the quote as sent in the CRM (does not email the customer or attach a PDF yet)
 - **Accept** (`sent → accepted`) or **Reject** / **Expire** via the status action
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.

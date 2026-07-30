@@ -22,7 +22,7 @@ List items include `status`, `opportunity`, `quotation` (when linked), assignee/
 
 ### POST `/contracts`
 
-Body: `opportunity_id` (required), `quotation_id` (optional — only valid when the **Quotations** module is entitled, the actor may access the quotation, and the quotation belongs to the same opportunity; see `LinkableQuotation`), `title` (required), `party_name`, `start_date` (required), `end_date`, `value`, `currency` (3-letter, default `USD`), `notes`, `assigned_to`.
+Body: `opportunity_id` (required), `quotation_id` (optional — only valid when the **Quotations** module is entitled, the quotation is not soft-deleted, the actor may access the quotation, and the quotation belongs to the same opportunity; see `LinkableQuotation`), `title` (required), `party_name`, `start_date` (required), `end_date`, `value`, `currency` (3-letter, default `USD`), `notes`, `assigned_to`.
 
 ### GET `/contracts/{id}`
 
@@ -30,7 +30,7 @@ Includes opportunity, quotation (when linked), assignee, creator, notes, and tim
 
 ### PUT `/contracts/{id}`
 
-Partial update.
+Partial update of **draft** contracts only. Non-draft contracts return 422 on `status` (`Only draft contracts can be edited.`). Assignment after activate uses `POST /contracts/{id}/assign`. Status changes use `POST /contracts/{id}/status`.
 
 ### DELETE `/contracts/{id}`
 

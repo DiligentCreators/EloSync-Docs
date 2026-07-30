@@ -23,8 +23,9 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) an
 ## Domain notes
 
 - **Hard dependency**: Contracts declares a required `module_dependencies` row on Opportunities — Marketplace install is blocked until Opportunities is entitled.
-- **Soft optional dependency**: `quotation_id` is nullable and validated by `LinkableQuotation` — it fails validation when the Quotations module is not entitled for the tenant, when the actor cannot view that quotation (same assignee-scope pattern as `LinkableCompanyForOpportunity`), or when the quotation’s `opportunity_id` does not match the contract’s opportunity.
+- **Soft optional dependency**: `quotation_id` is nullable and validated by `LinkableQuotation` — it fails validation when the Quotations module is not entitled for the tenant, when the quotation is soft-deleted, when the actor cannot view that quotation (same assignee-scope pattern as `LinkableCompanyForOpportunity`), or when the quotation’s `opportunity_id` does not match the contract’s opportunity.
 - Status machine lives on `ContractStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → active → expired|terminated` (also `draft → terminated`). `ContractService::changeStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions, including re-entering the same status.
+- Content updates are **draft-only** (`Contract::isEditable()`); assignment stays available via `POST …/assign` after activate.
 - No line items / totals — `value` is a single optional decimal field.
 - Assignee scoping via `ScopesToAssignee` with `contracts.assign`.
 - `contracts.force.delete` is not granted to any default role — owner/superadmin only.
