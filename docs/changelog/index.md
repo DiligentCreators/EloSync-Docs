@@ -1,5 +1,9 @@
 # Changelog
 
+## Marketing catalog currency uses modules.currency (2026-07-31)
+
+Public `GET /api/central/v1/public/modules` now labels paid prices with each module’s **catalog currency** (`modules.currency`, typically USD as in Central Modules). It no longer uses `system_settings.currency` (workspace default), which can be PKR/EUR/etc. and mislabeled catalog USD amounts.
+
 ## Marketing site public catalog + stats API (2026-07-31)
 
 - Central public endpoints for the EloSync website homepage:

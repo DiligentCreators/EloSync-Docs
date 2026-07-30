@@ -25,7 +25,7 @@ Core Platform capabilities live in `config/core-platform.php` and are always ava
 
 Business modules live in the `modules` catalog. **Commercial flags** (`is_default_included`, `is_billable`, `monthly_price`, `yearly_price`) are the source of truth for Marketplace pricing — keep marketing/docs in sync with `CatalogSeeder` and register_* migrations.
 
-**Marketing availability** (`availability`: `available` \| `in_progress` \| `planned`) is separate from commercial `status` (`draft` \| `published` \| `deprecated`). The EloSync website reads both via unauthenticated `GET /api/central/v1/public/modules` (paid tags use the platform currency from system settings).
+**Marketing availability** (`availability`: `available` \| `in_progress` \| `planned`) is separate from commercial `status` (`draft` \| `published` \| `deprecated`). The EloSync website reads both via unauthenticated `GET /api/central/v1/public/modules` (paid tags use each module’s catalog `currency`, e.g. USD — not the workspace default in system settings).
 
 ### Published catalog (current)
 
