@@ -11,8 +11,8 @@ Without **assign**, you only see tasks assigned to you.
 Open **Tasks** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by title or description
-- Filter by status, priority, and assignee
-- KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope
+- Filter by status, priority, assignee, and **Overdue** (open items past their due date)
+- KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show the **latest note**; hover a truncated preview to read the full note
 - Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted task from the row menu
 - **Delete permanently** (force delete) requires `tasks.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)

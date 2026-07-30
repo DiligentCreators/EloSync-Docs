@@ -22,10 +22,12 @@ One column per status (`open`, `in_progress`, `waiting`, `completed`, `cancelled
 
 ### GET `/tasks`
 
-Query: `search`, `status`, `priority`, `assigned_to` (`unassigned` or user id), `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `status`, `priority`, `assigned_to` (`unassigned` or user id), `my_tasks`, `overdue`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
 Status values: `open`, `in_progress`, `waiting`, `completed`, `cancelled`.  
 Priority values: `low`, `medium`, `high`, `urgent`.
+
+`overdue=true` returns open / in-progress / waiting tasks with `due_at` in the past (matches the stats overdue definition). When `overdue` is set, `status` is ignored.
 
 List and board task cards include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`.
 
