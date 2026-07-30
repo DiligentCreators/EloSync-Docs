@@ -102,7 +102,7 @@ Install body: `{ "module_id": int, "billing_cycle?": "monthly" | "yearly" }` (ce
 | **Cancel** (`POST /marketplace/modules/{module}/cancel`) | Tenant `marketplace.purchase` | **Blocked** | Same cancel semantics for the current workspace |
 | **Deactivate** (`POST /module-subscriptions/{id}/deactivate`) | Central `module-subscriptions.deactivate` | Allowed (platform admin) | Sets `suspended` |
 
-Cancel removes entitlements immediately. Hard dependents must be removed first (`blocking_dependents` on marketplace detail). Deactivate is the platform-admin override for included core modules.
+Cancel eligibility is based on catalog `is_default_included` (not subscription `source`). Cancel removes entitlements immediately. Hard dependents must be removed first (`blocking_dependents` on marketplace detail). Deactivate is the platform-admin override for included core modules.
 
 ## Dependencies
 
