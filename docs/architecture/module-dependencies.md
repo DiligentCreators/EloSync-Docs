@@ -61,6 +61,19 @@ Contacts works without Companies (legacy free-text `company` string only). When 
 
 **Status:** [Companies](/user-guide/companies-overview) is shipped.
 
+### Activities → Contacts / Companies / Leads (optional)
+
+```text
+Activities
+  ├── may depend on Contacts   (optional — contact_id link)
+  ├── may depend on Companies  (optional — company_id link)
+  └── may depend on Leads      (optional — lead_id link)
+```
+
+Activities works as a licensed module on its own catalog row, but create/update requires at least one related FK. Each FK is validated only when that module is entitled (soft entitlement; no hard `module_dependencies` row).
+
+**Status:** [Activities](/user-guide/activities-overview) is shipped.
+
 ### Payroll → HR (required)
 
 ```text

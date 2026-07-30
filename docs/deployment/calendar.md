@@ -6,7 +6,7 @@
 php artisan migrate
 ```
 
-Creates `calendar_events`, registers the `calendar` catalog module (default-included CRM), and grants missing default-role permissions (`calendar.view|create|update|delete|view_all`).
+Creates `calendar_events`, registers the `calendar` catalog module (free CRM opt-in), and grants missing default-role permissions (`calendar.view|create|update|delete|view_all`).
 
 Do **not** rely on `db:seed` in production for catalog/RBAC.
 

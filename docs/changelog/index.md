@@ -1,10 +1,46 @@
 # Changelog
 
+## Default module policy (2026-07-30)
+
+New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, Activities, Calendar, Meetings, and Communication Templates stay **free** (`is_billable=false`) but **opt-in** (`is_default_included=false`) via Marketplace. Existing workspace subscriptions are not removed.
+
+## Activities module (2026-07-30)
+
+**Architecture**
+
+- CRM engagements module; mirrors Contacts/Companies (flat Laravel, `module:activities` + Spatie RBAC). **Free Marketplace opt-in** — catalog `is_default_included=false` / `is_billable=false` / `sort_order=28`; tenants enable it manually (only Leads + Tasks auto-install).
+
+**Backend**
+
+- Tables: `activities`, `activity_notes`, `activity_activities`
+- Types: `call` | `email` | `note` | `follow_up` | `other`; complete via `POST /activities/{id}/complete`
+- Related FKs: `contact_id` / `company_id` / `lead_id` (at least one required; soft module entitlement)
+- Mirrors `crm_activity_logged` / `crm_activity_completed` onto related Contact/Company/Lead timelines
+- Permissions: `activities.view|create|update|delete|restore|force.delete|assign|complete` (staff defaults include `view` + `complete`, mirroring Tasks)
+- Pest: `tests/Feature/Tenant/Activity/ActivityTest.php` (16 tests)
+
+**Frontend**
+
+- Activities list / form dialog / detail drawer (Overview, Notes, Activity tabs); nav after Meetings
+- Tenant dashboard: **Recent Activities** widget + **Log Activity** quick action
+- Playwright: `npm run test:e2e:activities` (`e2e/tests/activities/`)
+
+**Docs**
+
+- [activities-overview.md](/user-guide/activities-overview) (+ user / developer / production)
+- [api/tenant-v1-activities.md](/api/tenant-v1-activities)
+
+**Deferred**
+
+- Calendar projection, Meetings types, unified system-timeline aggregator, Communication Template placeholders
+
+---
+
 ## Companies module (2026-07-30)
 
 **Architecture**
 
-- CRM organizations module; mirrors Contacts/Leads/Tasks (flat Laravel, `module:companies` + Spatie RBAC). **Free and default-included** — catalog `is_default_included=true` / `is_billable=false` / `sort_order=12`; new workspaces get it via `installDefaultModules()`.
+- CRM organizations module; mirrors Contacts/Leads/Tasks (flat Laravel, `module:companies` + Spatie RBAC). **Free Marketplace opt-in** — catalog `is_default_included=false` / `is_billable=false` / `sort_order=12`; tenants enable it manually (only Leads + Tasks auto-install).
 
 **Backend**
 
@@ -37,7 +73,7 @@
 
 **Architecture**
 
-- Third product module; mirrors Leads/Tasks (flat Laravel, `module:contacts` + Spatie RBAC). **Free and default-included** — catalog `is_default_included=true` / `is_billable=false`; new workspaces get it via `installDefaultModules()`.
+- Third product module; mirrors Leads/Tasks (flat Laravel, `module:contacts` + Spatie RBAC). **Free Marketplace opt-in** — catalog `is_default_included=false` / `is_billable=false`; tenants enable it manually (only Leads + Tasks auto-install).
 
 **Backend**
 

@@ -3,18 +3,18 @@
 ## Licensing
 
 - Catalog slug: `companies`
-- **Free and default-included** CRM module (same family as Leads/Tasks/Contacts/Calendar/Meetings)
-- Catalog flags: `is_default_included = true`, `is_billable = false`, price `0`, `sort_order = 12`
-- New workspaces receive `module:companies` automatically via `ModuleSubscriptionService::installDefaultModules()` (subscription `source = included`)
-- Existing workspaces missing the entitlement are backfilled by the Companies registration / ensure migrations
+- **Free Marketplace opt-in** CRM module (not auto-installed)
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 12`
+- New workspaces receive only **Leads** + **Tasks** by default; enable Companies from Marketplace
+- Existing workspaces that already have Companies keep their subscription
 - Deactivate via Central module subscription tools to revoke access without dropping data
 
 ## Bootstrap
 
 On **new workspace** create (Central tenant create or public register):
 
-1. `installDefaultModules()` installs every published `is_default_included` module, including **Companies**
-2. Entitlement is non-billable (`price = 0`, `source = included`)
+1. `installDefaultModules()` installs published `is_default_included` modules (**Leads**, **Tasks** only)
+2. Operators enable Companies from Marketplace (free / non-billable install activates immediately)
 3. Tenant permissions include `companies.*` via `config/tenant-permissions.php` / default role maps
 
 No stage or status seeder (unlike Leads) — Companies is a flat directory record.
@@ -36,7 +36,7 @@ When Companies is installed alongside Contacts, Contact create/update accept `co
 ## Deploy checklist
 
 1. Migrate company tables (`companies`, `company_notes`, `company_activities`) and `contacts.company_id`
-2. Register the `companies` catalog module (migration, not seeder) with `is_default_included` / ensure backfill for existing workspaces
+2. Register the `companies` catalog module (migration, not seeder) as free opt-in
 3. Confirm `module:companies` + `companies.*` permissions on target roles
 4. Deploy frontend (Companies nav item, list/form/detail, dashboard **Recent Companies** widget + **Create Company** quick action, Contact form company picker)
-5. Smoke: create a **new** workspace → Companies appears in nav without Marketplace purchase → create/edit/assign/note a company → link a Contact via company picker → confirm `company_id` + synced `company` string
+5. Smoke: create a **new** workspace → enable Companies from Marketplace → create/edit/assign/note a company → link a Contact via company picker → confirm `company_id` + synced `company` string

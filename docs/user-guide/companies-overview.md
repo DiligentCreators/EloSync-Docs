@@ -22,14 +22,14 @@ CRM organizations module on the frozen platform. Mirrors the [Contacts](/user-gu
 - Linked contacts shown on the company detail drawer
 - KPIs via `GET /companies/stats`
 - Trash filtering plus **Restore** and **Delete permanently**
-- Module licensing (`module:companies`) + Spatie permissions — **free / default-included** on every new workspace
+- Module licensing (`module:companies`) + Spatie permissions — **free Marketplace opt-in**
 - Audit + activity logging
 
 ## Permissions
 
 `companies.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Companies is installed automatically when a workspace is created (no Marketplace purchase). Catalog: slug `companies`, `is_default_included = true`, `is_billable = false`, `sort_order = 12`.
+Enable Companies from Marketplace (free). Catalog: slug `companies`, `is_default_included = false`, `is_billable = false`, `sort_order = 12`. Only Leads and Tasks install automatically on new workspaces.
 
 ## Contact linkage
 
