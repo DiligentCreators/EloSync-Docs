@@ -23,7 +23,7 @@ Every business capability on this platform is a **module**. Modules are licensed
 2. **Licensing ≠ authorization** — `module:{slug}` then `can:{slug}.{action}`.
 3. **Mirror Leads** — Tasks, Calendar, Communication Templates, Invoices, Inventory, Purchases, HR, Payroll, Accounting, Assets, Projects must follow the same licensing + permission + UI structure (Communication Templates is additionally a cross-cutting consumer pattern).
 4. **No shortcuts** — every module ships backend, frontend, tests, docs, and CHANGELOG in the **same delivery** ([Documentation Governance](/developer-guide/documentation-governance)).
-5. **Migrate-only production** — new default modules and permissions ship as data migrations; never production `db:seed` for catalog/RBAC.
+5. **Migrate-only production** — new default modules and permissions ship as data migrations; never production `db:seed` for catalog/RBAC. When updating an existing module, bump catalog `modules.version` via `DefaultModuleRegistrar::bumpVersion` (see [Developer Guide — catalog versioning](/developer-guide/module-development-guide#catalog-versioning-modulesversion)).
 6. **Self-contained modules** — each module owns its migrations, models, services, routes, UI, permissions, settings, docs, and tests; communicate through contracts/services only. See [Module Architecture](/architecture/module-architecture).
 7. **Declare dependencies** — required vs optional; free vs billable. See [Module Dependencies](/architecture/module-dependencies).
 8. **Independent licensing** — design every module so it can be included, free, or billable. See [Module Licensing](/architecture/module-licensing).

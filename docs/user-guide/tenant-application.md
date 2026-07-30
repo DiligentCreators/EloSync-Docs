@@ -34,8 +34,8 @@ Open **Settings → Marketplace → Open Marketplace**, or go to `/#/marketplace
 | Action | Who | Notes |
 |--------|-----|-------|
 | **Install** / **Subscribe** | `marketplace.purchase` | Free modules activate immediately; paid modules go through checkout |
-| **Remove** / **Cancel subscription** | `marketplace.purchase` | Opt-in modules only — not core Leads/Tasks. Remove dependents first when prompted |
-| **Browse** | `marketplace.view` | Catalog search and module details |
+| **Remove** / **Cancel subscription** | `marketplace.purchase` | Opt-in modules only — not core Leads/Tasks. Remove **dependents** first when prompted (modules that need this one) |
+| **Browse** | `marketplace.view` | Catalog search and module details. Badges: **Installed**, **Available** (free), **Billable** (paid), or **Pending** |
 
 ### Catalog pricing (current)
 

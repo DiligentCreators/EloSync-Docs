@@ -4,7 +4,7 @@ Canonical checklist for building a business module. Copy the **Leads** module st
 
 ## Registration recipe
 
-1. **Catalog (production)** — Ship an idempotent **data migration** that calls `App\Support\Catalog\DefaultModuleRegistrar` (`slug`, pricing defaults, `status=published`, `is_default_included` / `is_billable`). Also keep `CatalogSeeder` in sync for **local/CI fresh DBs only** — never rely on `db:seed` in production. Optional: Central Modules API for non-default / commercial catalog edits.
+1. **Catalog (production)** — Ship an idempotent **data migration** that calls `App\Support\Catalog\DefaultModuleRegistrar` (`slug`, pricing defaults, `status=published`, `is_default_included` / `is_billable`, optional `version`). Also keep `CatalogSeeder` in sync for **local/CI fresh DBs only** — never rely on `db:seed` in production. Optional: Central Modules API for non-default / commercial catalog edits.
 2. **Permissions (production)** — Add `{slug} => [view, create, update, delete, …]` in `config/tenant-permissions.php` and default grants in `config/tenant-default-role-permissions.php`. Ship a data migration that calls `TenantPermissionSynchronizer::grantMissingDefaultRolePermissions([...])` so existing workspaces receive grants additively. Modules never auto-grant permissions; roles do. Login never syncs RBAC.
 3. **Routes** — Tenant API:
 
@@ -69,6 +69,24 @@ See [tenant-v1-dashboard.md](/api/tenant-v1-dashboard).
 ## Settings
 
 If the module needs settings, register keys in `SystemSettingDefinitions` / `TenantSettingDefinitions` and resolve Central → Tenant → system. Do not invent a parallel settings store.
+
+## Catalog versioning (`modules.version`)
+
+Marketplace detail shows the catalog **version** string (semver). It is **display / release metadata** for the catalog row — not a per-workspace entitlement version.
+
+| Change | Action |
+|--------|--------|
+| First ship of a new module | Pass `version` => `1.0.0` (default) into `ensureModule` |
+| Additive feature, schema, API, or UX for that module | Ship a data migration that calls `DefaultModuleRegistrar::bumpVersion('{slug}', '{new}')` — typically **minor** (`1.1.0`, `1.2.0`, …) |
+| Breaking module behavior or required data migration for that module | Bump **major** (`2.0.0`, …) the same way |
+| Docs-only / no catalog-visible product change | No version bump |
+
+Rules agents and developers must follow:
+
+- `ensureModule` uses `firstOrCreate` by slug — it **does not** update `version` (or commercial flags) on existing rows. Never expect a re-run of the registrar or `CatalogSeeder` to bump versions in production.
+- Always bump with an explicit idempotent migration: `app(DefaultModuleRegistrar::class)->bumpVersion('calendar', '1.1.0');`
+- Note user-visible bumps in the Docs CHANGELOG.
+- Do not invent a parallel versioning system outside `modules.version`.
 
 ## Billing
 

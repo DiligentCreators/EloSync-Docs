@@ -1,5 +1,12 @@
 # Changelog
 
+## Marketplace badges, dependents copy, catalog versioning (2026-07-31)
+
+- Tenant Marketplace cards/detail: badges show **Installed** / **Available** / **Billable** / **Pending** (no longer “Included” for free opt-in modules); category tag above module name; long titles no longer overflow the card.
+- Detail sheet separates **Dependencies** (modules this one needs) from **Dependents** (installed modules that block remove).
+- List API includes `already_installed`, `purchase_pending`, and `version` per row.
+- `DefaultModuleRegistrar` accepts create-time `version` and `bumpVersion($slug, $version)` for idempotent catalog bumps; docs require bumping `modules.version` when a module is meaningfully updated.
+
 ## Marketplace display currency conversion (2026-07-31)
 
 Tenant Marketplace list/detail now convert catalog module prices from the catalog currency (typically USD) into the workspace currency for **display only**. Checkout still charges the mapped Stripe/gateway Price in the catalog currency. FX rates come from a cached third-party mid-market feed (`CurrencyConversionService` / `CURRENCY_FX_*`). When rates are unavailable, the UI falls back to catalog currency amounts.
