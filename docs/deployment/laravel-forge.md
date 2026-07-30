@@ -1,18 +1,19 @@
 # Laravel Forge Deployment
 
-Production-oriented guide for hosting SaleOS on **[Laravel Forge](https://forge.laravel.com/)**: three sites (API, SPA, Docs), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
+Production-oriented guide for hosting SaleOS / EloSync on **[Laravel Forge](https://forge.laravel.com/)**: four sites (API, SPA, Docs, Marketing), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
 
 Use this with the [Production Runbook](./platform-production-runbook) (launch blockers / smoke) and [Notification System](./notifications) (Redis, Reverb TLS, Web Push). Local machines stay on [Installation](/getting-started/installation).
 
 ## Recommended topology
 
-Create **three Forge sites** (same server or separate servers). Do not mix PHP API, SPA static files, and docs on one web root.
+Create **four Forge sites** (same server or separate servers). Do not mix PHP API, SPA static files, docs, and marketing on one web root.
 
 | Site | Domain example | Git repo | Branch | Web directory | Node on server |
 |------|----------------|----------|--------|---------------|----------------|
 | **API** | `api.example.com` | `DiligentCreators/SaaS-Backend` | `main` | `/public` | Not required |
 | **SPA** | `app.example.com` | `DiligentCreators/SaaS-Frontend` | `build-artifacts` | `/` (site root) | **Not required** |
 | **Docs** | `docs.example.com` | `DiligentCreators/SaaS-Docs` | `build-artifacts` | `/` (site root) | **Not required** |
+| **Marketing** | `elosync.com` / `www.example.com` | `DiligentCreators/SaaS-Website` | `build-artifacts` | `/` (site root) | **Not required** |
 
 ```mermaid
 flowchart LR
@@ -20,28 +21,34 @@ flowchart LR
     Bmain[SaaS-Backend main]
     Fmain[SaaS-Frontend main]
     Dmain[SaaS-Docs main]
+    Wmain[SaaS-Website main]
     Fart[Frontend build-artifacts]
     Dart[Docs build-artifacts]
+    Wart[Website build-artifacts]
   end
   subgraph forge [Laravel Forge]
     API[api.example.com]
     APP[app.example.com]
     DOCS[docs.example.com]
+    WEB[elosync.com]
   end
   Bmain -->|composer + migrate| API
   Fmain -->|Actions build| Fart
   Dmain -->|Actions build| Dart
+  Wmain -->|Actions build| Wart
   Fart -->|activate release + config.js| APP
   Dart -->|activate release| DOCS
+  Wart -->|activate release| WEB
   APP -->|HTTPS API + CORS| API
   APP -->|wss Echo| API
 ```
 
 **Rules**
 
-- SPA and Docs: CI builds on merge to `main`; Forge deploys **compiled** `build-artifacts` only. Never run `npm ci` / `vite` / VitePress on the Forge server for those sites.
+- SPA, Docs, and Marketing: CI builds on merge to `main`; Forge deploys **compiled** `build-artifacts` only. Never run `npm ci` / `vite` / VitePress / `next build` on the Forge server for those sites.
 - API: Forge runs Composer + `artisan` on each deploy. Prefer **zero-downtime** / quick deploy with shared `.env` and storage.
 - One SPA artifact serves many clients: each Forge SPA site owns its own `.env` and generated `/config.js`.
+- Marketing is a static Next.js export (`out/`) — no runtime Node, no `config.js`.
 
 ---
 
@@ -315,7 +322,43 @@ location / {
 
 ---
 
-## 4. Email on Forge
+## 4. Marketing site (SaaS-Website / EloSync)
+
+### 4.1 Site settings
+
+| Setting | Value |
+|---------|--------|
+| Repository | `DiligentCreators/SaaS-Website` |
+| Branch | **`build-artifacts`** |
+| Web directory | `/` |
+| Deploy script | Activate only |
+| Node.js | **Not required** |
+
+### 4.2 Deploy script (Marketing)
+
+```bash
+$CREATE_RELEASE()
+
+cd $FORGE_RELEASE_DIRECTORY
+
+$ACTIVATE_RELEASE()
+```
+
+CI (`Website production build`) runs `next build` with `output: "export"` and publishes the `out/` directory to `build-artifacts`. Forge only activates the release — never run `npm` / `next` on the server.
+
+Optional Nginx 404 fallback:
+
+```nginx
+location / {
+    try_files $uri $uri/ /404.html;
+}
+```
+
+Details: [SaaS-Website README](https://github.com/DiligentCreators/SaaS-Website) and repo `docs/ci-cd/website-build-artifacts.md`.
+
+---
+
+## 5. Email on Forge
 
 1. Deploy API with queue daemon running (`emails,default`).
 2. Sign in to Central → **Settings → Mail** → SMTP / Postmark / Mailgun (not Log).
@@ -331,7 +374,7 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 
 ---
 
-## 5. Cross-site checklist (before go-live)
+## 6. Cross-site checklist (before go-live)
 
 ### Wire-up
 
@@ -354,6 +397,7 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 - [ ] API deploys from `main` with migrate + optimize + queue/reverb restart
 - [ ] SPA deploys from `build-artifacts` with `config.js` generation
 - [ ] Docs deploys from `build-artifacts` with activate-only script
+- [ ] Marketing deploys from `build-artifacts` with activate-only script
 - [ ] No production seeders / `migrate:fresh`
 
 ### Smoke
@@ -363,18 +407,20 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 - [ ] Forgot-password email leaves the queue
 - [ ] Notification bell updates over Echo (or unread poll fallback)
 - [ ] Docs homepage and a deep link load
+- [ ] Marketing homepage loads (`elosync.com` or configured domain)
 
 Full launch blockers: [Production Runbook](./platform-production-runbook).
 
 ---
 
-## 6. Deploy order
+## 7. Deploy order
 
-When shipping a release that touches all three repos:
+When shipping a release that touches product repos:
 
 1. **Backend** — merge → Forge API deploy (migrations first)
 2. **Frontend** — merge → wait for Actions → `build-artifacts` → Forge SPA deploy
 3. **Docs** — merge → wait for Actions → `build-artifacts` → Forge Docs deploy
+4. **Marketing** — merge → wait for Actions → `build-artifacts` → Forge Marketing deploy (independent of API)
 
 SPA may briefly talk to a newer API if you deploy backend first (preferred for additive APIs). Avoid deploying SPA features that require API routes before the API migrate finishes.
 
@@ -382,7 +428,7 @@ See [Release Process](./release-process).
 
 ---
 
-## 7. Troubleshooting (Forge)
+## 8. Troubleshooting (Forge)
 
 | Symptom | Check |
 |---------|--------|
@@ -392,7 +438,8 @@ See [Release Process](./release-process).
 | Mail stuck | Queue daemon; `failed_jobs`; Central Mail settings; not `MAIL_MAILER=log` |
 | 500 after deploy | `APP_DEBUG=false` but check `storage/logs`; `php artisan optimize` / missing `APP_KEY` |
 | Docs 404 on deep links | Branch is `build-artifacts`; Web Directory `/`; CI clean-url indexes present |
-| Stale SPA/docs | Confirm Forge site branch is `build-artifacts`, not `main`; redeploy after Actions |
+| Marketing 404 / blank | Branch is `build-artifacts` (not `main`); Web Directory `/`; Actions `Website production build` green |
+| Stale SPA/docs/marketing | Confirm Forge site branch is `build-artifacts`, not `main`; redeploy after Actions |
 
 ---
 
@@ -406,3 +453,4 @@ See [Release Process](./release-process).
 | Migrate-only upgrades | [Upgrade Guide](./upgrade) |
 | Local install | [Installation](/getting-started/installation) |
 | Docs Forge notes | [SaaS-Docs README](https://github.com/DiligentCreators/SaaS-Docs) |
+| Marketing CI | [SaaS-Website](https://github.com/DiligentCreators/SaaS-Website) `docs/ci-cd/website-build-artifacts.md` |

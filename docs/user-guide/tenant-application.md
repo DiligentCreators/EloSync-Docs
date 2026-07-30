@@ -37,6 +37,16 @@ Open **Settings → Marketplace → Open Marketplace**, or go to `/#/marketplace
 | **Remove** / **Cancel subscription** | `marketplace.purchase` | Opt-in modules only — not core Leads/Tasks. Remove dependents first when prompted |
 | **Browse** | `marketplace.view` | Catalog search and module details |
 
+### Catalog pricing (current)
+
+| Tier | Modules | Price |
+|------|---------|-------|
+| **Included free** | Leads, Tasks | Auto-installed on every workspace |
+| **Free to install** | Contacts, Companies, Calendar, Meetings, Activities, Communication Templates | $0 — install from Marketplace |
+| **Paid** | Branded | **$29/month** or **$290/year** (USD) |
+
+Commercial flags live on the Central `modules` catalog. Full table: [Entitlements](/developer-guide/entitlements).
+
 ## Dashboard overview
 
 `GET /dashboard` returns workspace info plus a **widget registry**. You may see:
