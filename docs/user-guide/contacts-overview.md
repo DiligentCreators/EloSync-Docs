@@ -22,14 +22,14 @@ Third product module on the frozen platform. Mirrors the [Leads](/user-guide/lea
 - Table view with search, company filter, and **My Contacts** toggle
 - KPIs via `GET /contacts/stats`
 - Trash filtering plus **Restore** and **Delete permanently**
-- Module licensing (`module:contacts`) + Spatie permissions — **free / default-included** on every new workspace
+- Module licensing (`module:contacts`) + Spatie permissions — **free Marketplace opt-in**
 - Audit + activity logging
 
 ## Permissions
 
 `contacts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Contacts is installed automatically when a workspace is created (no Marketplace purchase).
+Enable Contacts from Marketplace (free). Only Leads and Tasks install automatically on new workspaces.
 
 ## Lead conversion
 

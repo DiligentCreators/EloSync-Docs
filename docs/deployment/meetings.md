@@ -6,7 +6,7 @@
 php artisan migrate
 ```
 
-Creates meetings tables, registers the `meetings` catalog module (default-included CRM), grants missing default-role permissions, and records the required **Meetings → Calendar** module dependency.
+Creates meetings tables, registers the `meetings` catalog module (free CRM opt-in), grants missing default-role permissions, and records the required **Meetings → Calendar** module dependency.
 
 Do **not** rely on `db:seed` in production for catalog/RBAC.
 

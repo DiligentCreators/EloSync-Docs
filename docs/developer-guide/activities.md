@@ -26,14 +26,16 @@ Mirror of the [Companies developer guide](/developer-guide/companies) / [Contact
 - Assignee scoping via `ScopesToAssignee` with `activities.assign`.
 - `activities.force.delete` is not granted to any default role — owner/superadmin only.
 - At least one of `contact_id` / `company_id` / `lead_id` is required; each FK is validated for module entitlement + assignee scope on the related record.
-- On create/complete, mirrors `crm_activity_logged` / `crm_activity_completed` onto related Contact/Company/Lead timelines when those modules are entitled.
-- Soft delete; completion via `POST .../complete` (`can:activities.update`).
+- On create/complete (and when related FKs change on update), mirrors `crm_activity_logged` / `crm_activity_completed` onto related Contact/Company/Lead timelines when those modules are entitled.
+- Soft delete; completion via `POST .../complete` (`can:activities.complete`). Completion is not writable through generic update.
 
 ## Permissions
 
 ```
-activities.view | create | update | delete | restore | force.delete | assign
+activities.view | create | update | delete | restore | force.delete | assign | complete
 ```
+
+Staff defaults include `activities.view` + `activities.complete` (same pattern as Tasks).
 
 Routes use `module:activities` then `can:activities.*` / policies.
 

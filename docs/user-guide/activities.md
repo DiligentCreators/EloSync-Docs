@@ -2,7 +2,7 @@
 
 ## Who can use Activities
 
-Your workspace must have the **Activities** module installed. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign` as needed).
+Your workspace must have the **Activities** module installed. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `complete` as needed).
 
 Without **assign**, you only see activities assigned to you.
 

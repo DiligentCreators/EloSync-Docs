@@ -24,14 +24,16 @@ CRM engagements module on the frozen platform. Mirrors the [Contacts](/user-guid
 - KPIs via `GET /activities/stats`
 - Completing an activity mirrors onto related Contact/Company/Lead timelines
 - Trash filtering plus **Restore** and **Delete permanently**
-- Module licensing (`module:activities`) + Spatie permissions — **free / default-included**
+- Module licensing (`module:activities`) + Spatie permissions — **free Marketplace opt-in**
 - Audit + activity logging
 
 ## Permissions
 
-`activities.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
+`activities.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `complete`
 
-Activities is installed automatically when a workspace is created (no Marketplace purchase). Catalog: slug `activities`, `is_default_included = true`, `is_billable = false`, `sort_order = 28`.
+Staff can complete assigned activities with `activities.complete` (without full update).
+
+Enable Activities from Marketplace (free). Catalog: slug `activities`, `is_default_included = false`, `is_billable = false`, `sort_order = 28`. Only Leads and Tasks install automatically on new workspaces.
 
 ## Related modules (optional)
 

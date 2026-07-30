@@ -56,7 +56,7 @@ Permanently delete a soft-deleted activity. Permission: `activities.force.delete
 
 ### POST `/activities/{id}/complete`
 
-Sets `completed_at` (idempotent if already completed). Permission: `activities.update`.
+Sets `completed_at` (idempotent if already completed). Permission: `activities.complete`.
 
 ### POST `/activities/{id}/notes`
 
