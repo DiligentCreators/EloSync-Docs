@@ -22,7 +22,7 @@ Open **Contacts** from the sidebar.
 
 1. Click **New contact**
 2. Enter name (required) and optional email, phone, job title, and assignee
-3. Optionally pick a **Company** (when the Companies module is installed and you can view companies). The legacy company text field is kept in sync with the linked Company name; you can still set free-text company when no link is chosen
+3. Optionally pick a **Company** (when the Companies module is installed and you can view companies). Selecting a Company links `company_id` and syncs the legacy company text to that organization name. Leaving the picker empty keeps any existing free-text company value on edit; clearing a previously linked Company removes the link
 4. Save
 
 Edit from the row menu or the detail drawer.
