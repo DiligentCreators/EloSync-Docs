@@ -33,6 +33,15 @@ contacts / contact_notes / contact_activities
 activities / activity_notes / activity_activities
   (tenant-scoped CRM directory + engagements)
 
+opportunity_stages / opportunities / opportunity_notes / opportunity_activities
+  (tenant-scoped sales deals + pipeline — Opportunities module)
+
+quotations / quotation_lines / quotation_notes / quotation_activities
+  (tenant-scoped quotes — Quotations module; hard-depends on Opportunities)
+
+contracts / contract_notes / contract_activities
+  (tenant-scoped agreements — Contracts module; hard-depends on Opportunities)
+
 tasks / task_notes / task_activities
 task_digest_deliveries
 daily_summary_deliveries
@@ -97,6 +106,44 @@ Notes (author + body) and CRM timeline (`type`, `description`, `properties` JSON
 
 Notes (author + body) and engagement timeline (`type`, `description`, `properties` JSON; includes `completed`).
 
+## Opportunities module tables
+
+### `opportunity_stages`
+
+Per-workspace sales pipeline: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_order`, `is_won`, `is_lost`, `is_default`, soft deletes. Seeded Prospecting → Qualification → Proposal → Negotiation → Won / Lost. Pipeline is **inside** Opportunities (not a separate module).
+
+### `opportunities`
+
+`tenant_id`, `uuid`, `name`, `amount`, `currency` (default `USD`), `probability` (0–100), `expected_close_date`, `stage_id`, nullable `contact_id` / `company_id` / `lead_id`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `opportunities`. Related FKs are optional and soft-entitlement validated.
+
+### `opportunity_notes` / `opportunity_activities`
+
+Notes (author + body) and deal timeline (`type`, `description`, `properties` JSON; includes `stage_changed`).
+
+## Quotations module tables
+
+### `quotations`
+
+`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `contact_id` / `company_id`, `title`, `status` (`draft`|`sent`|`accepted`|`rejected`|`expired`), `currency`, `valid_until`, `subtotal` / `tax_total` / `total`, `notes`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `quotations`. Content edits are **draft-only**.
+
+### `quotation_lines`
+
+`quotation_id`, `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Replaced in full on draft update; totals recalculated server-side.
+
+### `quotation_notes` / `quotation_activities`
+
+Notes (author + body) and quote timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
+## Contracts module tables
+
+### `contracts`
+
+`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `quotation_id` (null on quotation hard delete; soft-optional via `LinkableQuotation` — same opportunity, Quotations entitled, not soft-deleted), `title`, `status` (`draft`|`active`|`expired`|`terminated`), `party_name`, `start_date`, `end_date`, `value`, `currency`, `notes`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `contracts`. Content edits are **draft-only**; status/assign remain available after activate.
+
+### `contract_notes` / `contract_activities`
+
+Notes (author + body) and agreement timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
 ## Tasks module tables
 
 ### `tasks`
@@ -158,7 +205,7 @@ Retention: `php artisan notifications:prune --days=90` (scheduled weekly) delete
 | `sort_order`, `is_active` | |
 | soft deletes | |
 
-Default-included catalog modules today: **Leads**, **Tasks**, **Contacts**, **Companies**, **Calendar**, **Meetings**, **Communication Templates** (`is_default_included=true`, `is_billable=false`). Production receives new default modules via **data migrations** (`DefaultModuleRegistrar`), not seeders. Modules are pure licensing products — they do not store permission lists. User authorization uses Spatie Roles & Permissions separately.
+Default-included catalog modules today: **Leads**, **Tasks** (`is_default_included=true`, `is_billable=false`). Free Marketplace opt-in modules (including Opportunities under category `sales`) use `is_default_included=false`, `is_billable=false`. Production receives new catalog modules via **data migrations** (`DefaultModuleRegistrar`), not seeders. Modules are pure licensing products — they do not store permission lists. User authorization uses Spatie Roles & Permissions separately.
 
 ### `payment_gateway_module_prices`
 

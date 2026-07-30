@@ -20,6 +20,15 @@ A module may be:
 
 These postures can change over product releases without redesigning the module’s internal architecture.
 
+### Current free opt-in categories (examples)
+
+| Category | Example modules | Notes |
+|----------|-----------------|-------|
+| CRM | Contacts, Companies, Calendar, Meetings, Activities, Communication Templates | Free Marketplace opt-in (`is_billable=false`, not default-included) |
+| Sales | Opportunities | Free Marketplace opt-in under category `sales`; Sales Pipeline is **not** a separate SKU |
+
+Default-included today: **Leads**, **Tasks** only. Paid example: **Branded**. See [Entitlements](/developer-guide/entitlements).
+
 ## Long-term rules
 
 Documented product and engineering expectations:

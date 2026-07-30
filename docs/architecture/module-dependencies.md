@@ -74,6 +74,44 @@ Activities works as a licensed module on its own catalog row, but create/update 
 
 **Status:** [Activities](/user-guide/activities-overview) is shipped.
 
+### Opportunities → Contacts / Companies / Leads (optional)
+
+```text
+Opportunities
+  ├── may depend on Contacts   (optional — contact_id link)
+  ├── may depend on Companies  (optional — company_id link)
+  └── may depend on Leads      (optional — lead_id link)
+```
+
+Opportunities works as a licensed Sales module on its own catalog row. Related FKs are optional; each is validated only when that module is entitled (soft entitlement; no hard `module_dependencies` row).
+
+**Sales Pipeline** is not a separate module — stages and the Kanban board live inside Opportunities.
+
+**Status:** [Opportunities](/user-guide/opportunities-overview) is shipped.
+
+### Quotations / Contracts → Opportunities (required)
+
+```text
+Quotations
+  └── depends on Opportunities   (required)
+
+Contracts
+  └── depends on Opportunities   (required)
+```
+
+Quotations and Contracts each declare Opportunities as a **required** hard dependency (`module_dependencies`) — Marketplace install blocks until Opportunities is entitled.
+
+**Status:** [Quotations](/user-guide/quotations-overview) and [Contracts](/user-guide/contracts-overview) are shipped.
+
+### Contracts → Quotations (optional)
+
+```text
+Contracts
+  └── may depend on Quotations   (optional — unlocks quotation_id link)
+```
+
+Contracts works without Quotations. When Quotations is entitled, a Contract may optionally link `quotation_id`; validated by `LinkableQuotation` (soft entitlement + assignee scope). No hard `module_dependencies` row for this optional link.
+
 ### Payroll → HR (required)
 
 ```text

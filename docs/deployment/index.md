@@ -36,6 +36,10 @@ Production runbooks and operational checklists for hosting SaleOS.
 | [Daily CRM Summary](./daily-crm-summary) | Daily Reminder Time CRM summary — pilot / GA checklist |
 | [Calendar](./calendar) | Calendar module ops |
 | [Meetings](./meetings) | Meetings module ops |
+| [Activities](./activities) | Activities module ops |
+| [Opportunities](./opportunities) | Opportunities module ops |
+| [Quotations](./quotations) | Quotations module ops |
+| [Contracts](./contracts) | Contracts module ops |
 | [Communication Templates](./communication-templates) | Templates module ops |
 | [Branded](./branded) | Custom domains ops |
 

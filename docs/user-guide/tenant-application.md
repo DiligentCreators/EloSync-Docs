@@ -42,7 +42,7 @@ Open **Settings → Marketplace → Open Marketplace**, or go to `/#/marketplace
 | Tier | Modules | Price |
 |------|---------|-------|
 | **Included free** | Leads, Tasks | Auto-installed on every workspace |
-| **Free to install** | Contacts, Companies, Calendar, Meetings, Activities, Communication Templates | $0 — install from Marketplace |
+| **Free to install** | Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts, Communication Templates | $0 — install from Marketplace |
 | **Paid** | Branded | **$29/month** or **$290/year** (USD) |
 
 Commercial flags live on the Central `modules` catalog. Full table: [Entitlements](/developer-guide/entitlements).
