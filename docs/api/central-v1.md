@@ -174,6 +174,8 @@ Returns session metadata only — tenant-app login token exchange is out of scop
 | Method | Path | Notes |
 |--------|------|-------|
 | GET | `/public/settings` | Unauthenticated bootstrap (branding, formats, registration/maintenance flags). No secrets. |
+| GET | `/public/stats` | Unauthenticated marketing Trust metrics: `workspaces` (active non-archived), `module_installations` (active/trial subscriptions), `published_modules`, `uptime_percent`, `currency` (platform default). |
+| GET | `/public/modules` | Unauthenticated marketing catalog: `{ currency, modules[] }` with `availability` (`available` / `in-progress` / `planned`), `pricing` (`included` / `free` / `paid` when available), prices, and **platform currency** for paid tags. Excludes deprecated. |
 | POST | `/public/register-workspace` | Self-service workspace create when `registration_enabled`; otherwise `403` with dedicated message. Body: `company_name`, `owner_name`, `email`, `password` (+ confirmation); platform domain auto-generated from slug (client `domain` ignored). |
 | GET | `/system-settings` | All admin settings (secrets masked). Response `meta.mail_webhook` includes webhook URL + event catalog when the active provider supports webhooks. |
 | PUT | `/system-settings` | `{ "settings": { "key": value } }` — per-key validation; may include `mail_webhook_events` / `mail_webhook_secret` |

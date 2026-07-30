@@ -200,6 +200,7 @@ Retention: `php artisan notifications:prune --days=90` (scheduled weekly) delete
 | `category_id` | FK `module_categories`, nullable |
 | `monthly_price`, `yearly_price`, `currency`, `setup_fee` | Catalog amounts; default CRM modules are `0`. No provider IDs on modules |
 | `trial_days`, `version`, `status` | `draft` \| `published` \| `deprecated` |
+| `availability` | Marketing phase: `available` \| `in_progress` \| `planned` (website public catalog; independent of commercial `status`) |
 | `is_default_included` | Auto-install on workspace create |
 | `is_billable` | Whether the module can be charged when platform-managed |
 | `sort_order`, `is_active` | |

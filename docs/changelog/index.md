@@ -1,5 +1,14 @@
 # Changelog
 
+## Marketing site public catalog + stats API (2026-07-31)
+
+- Central public endpoints for the EloSync website homepage:
+  - `GET /api/central/v1/public/stats` — live Active Workspaces, Modules Installed, Catalog Modules (+ uptime / platform currency)
+  - `GET /api/central/v1/public/modules` — marketplace cards with **Available / In Progress / Planned** and **Included / Free / Paid** tags; paid prices always use the central application currency
+- Catalog modules gain `availability` (`available` \| `in_progress` \| `planned`) alongside existing commercial `status` / `is_billable` flags
+- SaaS-Website Trust + Module Marketplace sections consume these APIs (`NEXT_PUBLIC_API_URL`); CORS supports `MARKETING_URL`
+- Pest: `tests/Feature/Central/Public/PublicPlatformTest.php`
+
 ## Rebrand SaleOS → EloSync (2026-07-31)
 
 Product name, docs site, and operator examples are now **EloSync** (`docs.elosync.com`, `*.elosync.com`).
