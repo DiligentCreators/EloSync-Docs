@@ -22,6 +22,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 | [Contacts](/user-guide/contacts-overview) | ✅ Completed (directory, assignment, notes/activity timeline; unlocks full lead convert) |
 | [Companies](/user-guide/companies-overview) | ✅ Completed (organizations directory, assignment, notes/activity timeline; Contact `company_id` link) |
 | [Tasks](/user-guide/tasks-overview) | ✅ Completed (Sprint 2 UX: board, KPIs, waiting status, due-date permission, comments/history) |
+| [ToDos](/user-guide/todos-overview) | ✅ Completed (personal creator-scoped checklists; board + list; owner view-all; creator-only delete) |
 | In-app notifications + Reverb | ✅ Completed (payload v1, NotificationBatch digests, Reverb/Echo, modular registry, browser toasts; poll fallback only) |
 | Tenant dashboard widgets | ✅ Completed (module/permission/assignee scoped; includes Calendar upcoming when entitled) |
 | [Communication Templates](/user-guide/communication-templates) | ✅ Completed (plain-text templates, placeholder registry, WhatsApp `wa.me` from Leads; migrate-only production registration) |
@@ -400,4 +401,4 @@ Evolve the platform into a modular, enterprise-grade SaaS ERP where organization
 - [Platform Architecture Freeze](/getting-started/platform-freeze)
 - [Module Development Standard](/developer-guide/module-development)
 - [Entitlements](/developer-guide/entitlements)
-- [Leads](/user-guide/leads-overview) · [Contacts](/user-guide/contacts-overview) · [Companies](/user-guide/companies-overview) · [Tasks](/user-guide/tasks-overview)
+- [Leads](/user-guide/leads-overview) · [Contacts](/user-guide/contacts-overview) · [Companies](/user-guide/companies-overview) · [Tasks](/user-guide/tasks-overview) · [ToDos](/user-guide/todos-overview)

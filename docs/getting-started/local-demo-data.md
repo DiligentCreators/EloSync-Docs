@@ -126,7 +126,7 @@ Seeded data supports:
 | Artisan command | `app/Console/Commands/LocalSeedDemoCommand.php` |
 | Config | `config/local-demo.php` |
 | Master seeder | `database/seeders/Local/LocalDevelopmentSeeder.php` |
-| Child seeders | `TenantUsersSeeder`, `LeadsSeeder`, `TasksSeeder`, `DemoNotificationsSeeder` |
+| Child seeders | `TenantUsersSeeder`, `LeadsSeeder`, `TasksSeeder`, `TodosSeeder`, `DemoNotificationsSeeder` |
 | Services | `app/Services/Local/LocalDemoDataService.php` |
 
 Demo seeders are **not** registered in `DatabaseSeeder` or `TenantDatabaseSeeder`.

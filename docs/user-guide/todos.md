@@ -1,0 +1,38 @@
+# ToDos — User Guide
+
+## Who can use ToDos
+
+Your workspace must have the **ToDos** module installed (included by default on new workspaces). Your role must include the relevant permissions (`view`, `create`, `update`, `delete` as needed).
+
+- Regular users only see **their own** to-dos (items they created).
+- The **workspace owner** can open ToDos and see everyone’s items (read-only for others’ cards).
+- Only the person who created a to-do can edit or delete it.
+
+## Board & list
+
+Open **ToDos** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
+
+- Search by title or description
+- Filter by status and priority
+- Drag a card to another column to propose a status change; **Save** in the drawer commits it (Cancel restores the card)
+
+Status labels in the UI:
+
+| Value | Label |
+|-------|-------|
+| `open` | To Do |
+| `in_progress` | In Progress |
+| `completed` | Completed |
+| `cancelled` | Cancelled |
+
+## Create & edit
+
+1. Click **New to-do**
+2. Enter title (required) and optional description, status, priority, and due date
+3. Save
+
+Edit from the row menu or the detail drawer — only when you are the creator. Owners viewing someone else’s to-do see a read-only detail panel.
+
+## Delete
+
+Soft-delete from the list row menu. Only the creator can delete. The workspace owner cannot delete another user’s to-do.
