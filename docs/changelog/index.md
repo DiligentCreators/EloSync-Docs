@@ -1,5 +1,13 @@
 # Changelog
 
+## Tenant Marketplace remove modules (2026-07-30)
+
+Workspace owners (and anyone with `marketplace.purchase`) can **remove** opt-in modules from Marketplace — Install / Subscribe to add, Remove / Cancel subscription to drop access. Core default-included modules (Leads, Tasks) stay non-removable; hard dependents must be removed first (e.g. Meetings before Calendar). Re-installing a previously cancelled module reactivates the same subscription row.
+
+- API: `POST /api/tenant/v1/marketplace/modules/{module}/cancel`; detail adds `can_cancel`, `blocking_dependents`, `subscription_source`
+- UI: Marketplace module detail sheet Remove / Cancel subscription + confirmation
+- Docs: [tenant-v1-marketplace](/api/tenant-v1-marketplace), [entitlements](/developer-guide/entitlements)
+
 ## Default module policy (2026-07-30)
 
 New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, Activities, Calendar, Meetings, and Communication Templates stay **free** (`is_billable=false`) but **opt-in** (`is_default_included=false`) via Marketplace. Existing workspace subscriptions are not removed.

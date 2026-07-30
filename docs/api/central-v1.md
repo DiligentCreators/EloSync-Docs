@@ -102,9 +102,9 @@ Published modules only. Permission: `modules.list` / `modules.read`.
 | Method | Path | Notes |
 |--------|------|-------|
 | GET | `/marketplace/modules` | Paginated; filters: `search`, `category_id` |
-| GET | `/marketplace/modules/{module}` | Detail + `already_installed`, `required_modules`, `optional_modules`, `missing_required_modules`; optional `?tenant_id=` |
+| GET | `/marketplace/modules/{module}` | Detail + `already_installed`, `can_cancel`, `blocking_dependents`, dependency hints; optional `?tenant_id=` |
 
-Install for a workspace: `POST /tenants/{tenant}/modules` (not a separate marketplace purchase endpoint).
+Install for a workspace: `POST /tenants/{tenant}/modules`. Tenants self-serve via [Tenant Marketplace](/api/tenant-v1-marketplace) (`purchase` / `cancel`).
 
 ## Module subscriptions
 

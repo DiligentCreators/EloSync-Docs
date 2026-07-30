@@ -27,6 +27,16 @@ Header actions match Central:
 
 Only modules available to every workspace are listed today. Additional purchased modules will appear in the sidebar when they are installed.
 
+## Marketplace (add / remove modules)
+
+Open **Settings → Marketplace → Open Marketplace**, or go to `/#/marketplace` when Marketplace is enabled.
+
+| Action | Who | Notes |
+|--------|-----|-------|
+| **Install** / **Subscribe** | `marketplace.purchase` | Free modules activate immediately; paid modules go through checkout |
+| **Remove** / **Cancel subscription** | `marketplace.purchase` | Opt-in modules only — not core Leads/Tasks. Remove dependents first when prompted |
+| **Browse** | `marketplace.view` | Catalog search and module details |
+
 ## Dashboard overview
 
 `GET /dashboard` returns workspace info plus a **widget registry**. You may see:

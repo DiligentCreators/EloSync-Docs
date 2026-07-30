@@ -40,6 +40,10 @@ Hints under fields show when a value is still inheriting the Central default.
 
 With the **Branded** marketplace module, logo and application name are also used in email chrome and web push. See [Branded](/user-guide/branded).
 
+## Marketplace
+
+When Marketplace is enabled for the platform, **Settings → Marketplace** links to the catalog. From there you can **Install** free modules, **Subscribe** to paid ones, and **Remove** / **Cancel subscription** for opt-in modules you no longer need. Core modules (Leads, Tasks) cannot be removed. See [Tenant Application](/user-guide/tenant-application#marketplace-add--remove-modules).
+
 ## Domain (Branded module)
 
 When **Branded** is installed, **Settings → Domain** walks you through a three-step flow: enter your website address, copy DNS records into your domain provider, then check the connection. See [Branded](/user-guide/branded).
