@@ -168,6 +168,8 @@ export default defineConfig({
           items: [
             { text: 'Leads Overview', link: '/user-guide/leads-overview' },
             { text: 'Leads', link: '/user-guide/leads' },
+            { text: 'Companies Overview', link: '/user-guide/companies-overview' },
+            { text: 'Companies', link: '/user-guide/companies' },
             { text: 'Contacts Overview', link: '/user-guide/contacts-overview' },
             { text: 'Contacts', link: '/user-guide/contacts' },
             { text: 'Tasks Overview', link: '/user-guide/tasks-overview' },
@@ -233,6 +235,7 @@ export default defineConfig({
           text: 'Modules',
           items: [
             { text: 'Leads', link: '/developer-guide/leads' },
+            { text: 'Companies', link: '/developer-guide/companies' },
             { text: 'Contacts', link: '/developer-guide/contacts' },
             { text: 'Tasks', link: '/developer-guide/tasks' },
             { text: 'Calendar', link: '/developer-guide/calendar' },
@@ -260,6 +263,7 @@ export default defineConfig({
             { text: 'Central v1', link: '/api/central-v1' },
             { text: 'Tenant Dashboard', link: '/api/tenant-v1-dashboard' },
             { text: 'Tenant Leads', link: '/api/tenant-v1-leads' },
+            { text: 'Tenant Companies', link: '/api/tenant-v1-companies' },
             { text: 'Tenant Contacts', link: '/api/tenant-v1-contacts' },
             { text: 'Tenant Tasks', link: '/api/tenant-v1-tasks' },
             { text: 'Tenant Calendar', link: '/api/tenant-v1-calendar' },
@@ -290,6 +294,7 @@ export default defineConfig({
             { text: 'Payment Gateways', link: '/deployment/payment-gateways' },
             { text: 'Module Development', link: '/deployment/module-development' },
             { text: 'Leads', link: '/deployment/leads' },
+            { text: 'Companies', link: '/deployment/companies' },
             { text: 'Contacts', link: '/deployment/contacts' },
             { text: 'Tasks', link: '/deployment/tasks' },
             { text: 'Daily CRM Summary', link: '/deployment/daily-crm-summary' },

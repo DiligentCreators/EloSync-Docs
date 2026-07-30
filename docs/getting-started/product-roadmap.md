@@ -20,22 +20,15 @@ The CRM is the foundation of the platform and is the first functional area deliv
 |---------------------|--------|
 | [Leads](/user-guide/leads-overview) | ✅ Completed (Sprint 2 UX + inbound Custom Webhook + Meta Lead Ads ingest) |
 | [Contacts](/user-guide/contacts-overview) | ✅ Completed (directory, assignment, notes/activity timeline; unlocks full lead convert) |
+| [Companies](/user-guide/companies-overview) | ✅ Completed (organizations directory, assignment, notes/activity timeline; Contact `company_id` link) |
 | [Tasks](/user-guide/tasks-overview) | ✅ Completed (Sprint 2 UX: board, KPIs, waiting status, due-date permission, comments/history) |
 | In-app notifications + Reverb | ✅ Completed (payload v1, NotificationBatch digests, Reverb/Echo, modular registry, browser toasts; poll fallback only) |
 | Tenant dashboard widgets | ✅ Completed (module/permission/assignee scoped; includes Calendar upcoming when entitled) |
 | [Communication Templates](/user-guide/communication-templates) | ✅ Completed (plain-text templates, placeholder registry, WhatsApp `wa.me` from Leads; migrate-only production registration) |
 | [Calendar](/user-guide/calendar-overview) | ✅ Completed (Week/Day time grids + DnD, Month/Agenda, view_all oversight, upcoming widget) |
+| [Meetings](/user-guide/meetings-overview) | ✅ Completed (host/invitees, Zoom/Google Meet OAuth, reminders, Calendar projection, completion) |
 | **Lead Source Driver Architecture** | ✅ Implemented ([standard](/developer-guide/lead-source-driver-architecture); Custom Webhook + Meta drivers shipped) |
 | **Meta Lead Ads Integration** | ✅ Shipped ([Meta App Setup](/developer-guide/meta-app-setup) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration)) |
-
-### Planned
-
-| Module / capability | Status |
-|---------------------|--------|
-| Companies | Planned |
-| **Meetings** | Implemented |
-| Activities | Planned |
-| **WhatsApp Cloud Integration** | Planned (docs blueprint only — [Cloud API beyond `wa.me`](/developer-guide/whatsapp-cloud-integration)) |
 
 #### Calendar (shipped)
 
@@ -52,6 +45,13 @@ The CRM is the foundation of the platform and is the first functional area deliv
 - Projects onto Calendar via `CalendarEventService::upsertFromSource`
 
 > **Dependency:** Meetings → Calendar (required). See [Module Dependencies](/architecture/module-dependencies) and [Meetings](/user-guide/meetings-overview).
+
+### Planned
+
+| Module / capability | Status |
+|---------------------|--------|
+| Activities | Planned |
+| **WhatsApp Cloud Integration** | Planned (docs blueprint only — [Cloud API beyond `wa.me`](/developer-guide/whatsapp-cloud-integration)) |
 
 **Goal:** Provide a complete customer relationship management experience with lead tracking, task management, customer records, scheduling, meetings, and activity history.
 
@@ -370,4 +370,4 @@ Evolve the platform into a modular, enterprise-grade SaaS ERP where organization
 - [Platform Architecture Freeze](/getting-started/platform-freeze)
 - [Module Development Standard](/developer-guide/module-development)
 - [Entitlements](/developer-guide/entitlements)
-- [Leads](/user-guide/leads-overview) · [Tasks](/user-guide/tasks-overview)
+- [Leads](/user-guide/leads-overview) · [Contacts](/user-guide/contacts-overview) · [Companies](/user-guide/companies-overview) · [Tasks](/user-guide/tasks-overview)

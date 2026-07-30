@@ -29,6 +29,10 @@ Business modules live in the `modules` catalog. Default-included today:
 |------|-------|
 | `leads` | CRM pipeline |
 | `tasks` | Work items |
+| `contacts` | People directory |
+| `companies` | Organizations directory |
+| `calendar` | Personal calendar |
+| `meetings` | Meetings + Calendar projection |
 | `communication-templates` | Plain-text templates + placeholder registry (WhatsApp handoff) |
 
 They are:

@@ -11,7 +11,7 @@ The Playwright suite for the **Central Application** lives in the Frontend repos
 
 Covers Platform/Core only: auth, dashboard, tenants (workspaces), users, roles, permissions matrix, modules, marketplace, billing (Billing nav + payment gateways + settings billing tab + tenant invoice/payment tabs), impersonation, settings, profile, smoke, and regression.
 
-Does **not** cover Stripe Checkout or future ERP modules beyond what is listed below. Tenant Settings branding/mail coverage lives in `e2e/tests/settings/tenant-settings.spec.ts`. Tenant Users/Roles RBAC coverage lives in `e2e/tests/users/tenant-users.spec.ts` (`npm run test:e2e:tenant-rbac`). **Leads** product UI: `e2e/tests/leads/` (`npm run test:e2e:leads`). **Tasks** product UI: `e2e/tests/tasks/` (`npm run test:e2e:tasks`). **Contacts** product UI: `e2e/tests/contacts/` (`npm run test:e2e:contacts`). **Communication Templates**: `e2e/tests/communication-templates/` (`npm run test:e2e:communication-templates`). Tenant suites use Playwright project `tenant`.
+Does **not** cover Stripe Checkout or future ERP modules beyond what is listed below. Tenant Settings branding/mail coverage lives in `e2e/tests/settings/tenant-settings.spec.ts`. Tenant Users/Roles RBAC coverage lives in `e2e/tests/users/tenant-users.spec.ts` (`npm run test:e2e:tenant-rbac`). **Leads** product UI: `e2e/tests/leads/` (`npm run test:e2e:leads`). **Tasks** product UI: `e2e/tests/tasks/` (`npm run test:e2e:tasks`). **Contacts** product UI: `e2e/tests/contacts/` (`npm run test:e2e:contacts`). **Companies** product UI: `e2e/tests/companies/` (`npm run test:e2e:companies`). **Communication Templates**: `e2e/tests/communication-templates/` (`npm run test:e2e:communication-templates`). Tenant suites use Playwright project `tenant`.
 
 ## Spec directories (independently runnable)
 
@@ -31,6 +31,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Leads | `e2e/tests/leads/` | `npm run test:e2e:leads` |
 | Tasks | `e2e/tests/tasks/` | `npm run test:e2e:tasks` |
 | Contacts | `e2e/tests/contacts/` | `npm run test:e2e:contacts` |
+| Companies | `e2e/tests/companies/` | `npm run test:e2e:companies` |
 | Communication Templates | `e2e/tests/communication-templates/` | `npm run test:e2e:communication-templates` |
 | Profile | `e2e/tests/profile/` | `npm run test:e2e:profile` |
 | Smoke | `e2e/tests/smoke/` | `npm run test:e2e:smoke` |
