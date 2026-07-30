@@ -1,8 +1,8 @@
 {
-  "name": "saleos-docs",
+  "name": "elosync-docs",
   "private": true,
   "version": "1.1.0",
-  "description": "Official documentation for the SaleOS SaaS Platform.",
+  "description": "Official documentation for the EloSync SaaS Platform.",
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs",

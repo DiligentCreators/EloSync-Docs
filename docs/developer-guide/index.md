@@ -1,6 +1,6 @@
 # Developer Guide
 
-Engineering documentation for extending SaleOS. New business capability ships as **modules** that mirror **Leads** and **Tasks**.
+Engineering documentation for extending EloSync. New business capability ships as **modules** that mirror **Leads** and **Tasks**.
 
 ## Core standards
 
@@ -67,6 +67,6 @@ Engineering documentation for extending SaleOS. New business capability ships as
 |----------|-------------|
 | [Lead Source Driver Architecture](./lead-source-driver-architecture) | Shared pipeline for all lead ingestion drivers |
 | [Custom Lead Webhook](./custom-lead-webhook) | Per-tenant webhook ingress |
-| [Meta App Setup](./meta-app-setup) | Create Meta Developer App + wire EloSync / SaleOS (operator guide) |
+| [Meta App Setup](./meta-app-setup) | Create Meta Developer App + wire EloSync / EloSync (operator guide) |
 | [Meta Lead Ads](./meta-lead-ads-integration) | Shipped — `MetaLeadAdsDriver`, OAuth, webhooks |
 | [WhatsApp Cloud Integration](./whatsapp-cloud-integration) | Planned — Cloud API messaging beyond `wa.me` |

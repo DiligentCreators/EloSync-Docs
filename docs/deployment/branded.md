@@ -12,17 +12,17 @@ Registers the billable `branded` catalog module (not auto-installed), syncs `bra
 
 ```dotenv
 # Comma-separated platform subdomain suffixes (Central-managed hosts)
-PLATFORM_DOMAIN_SUFFIXES=saleos.com
+PLATFORM_DOMAIN_SUFFIXES=elosync.com
 
 # REQUIRED: public IPs tenants must point A/AAAA records at
 BRANDED_SERVER_IPV4=203.0.113.10
 # BRANDED_SERVER_IPV6=
 
 # Optional CNAME target for subdomain custom hosts
-# BRANDED_CNAME_TARGET=workspaces.saleos.com
+# BRANDED_CNAME_TARGET=workspaces.elosync.com
 
-# TXT ownership prefix (default _saleos-verification)
-# BRANDED_TXT_PREFIX=_saleos-verification
+# TXT ownership prefix (default _elosync-verification)
+# BRANDED_TXT_PREFIX=_elosync-verification
 
 # Hours before an unverified claim expires (default 72)
 # BRANDED_DOMAIN_CLAIM_TTL_HOURS=72

@@ -29,7 +29,7 @@ FRONTEND_URL=https://app.example.com
 CORS_ALLOWED_ORIGINS=https://app.example.com
 
 CACHE_STORE=redis
-CACHE_PREFIX=saleos_production_
+CACHE_PREFIX=elosync_production_
 QUEUE_CONNECTION=redis
 
 REDIS_HOST=127.0.0.1
@@ -131,7 +131,7 @@ php artisan queue:work redis \
 Use a process monitor. Example Supervisor program:
 
 ```ini
-[program:saleos-queue]
+[program:elosync-queue]
 process_name=%(program_name)s_%(process_num)02d
 command=php /home/forge/api.example.com/artisan queue:work redis --queue=emails,default --sleep=1 --tries=3 --timeout=60 --max-time=3600
 directory=/home/forge/api.example.com
@@ -159,7 +159,7 @@ php artisan reverb:start --host=127.0.0.1 --port=8080
 Example Supervisor program:
 
 ```ini
-[program:saleos-reverb]
+[program:elosync-reverb]
 command=php /home/forge/api.example.com/artisan reverb:start --host=127.0.0.1 --port=8080
 directory=/home/forge/api.example.com
 autostart=true

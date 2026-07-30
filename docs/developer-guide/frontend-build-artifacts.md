@@ -47,7 +47,7 @@ fi
 
 echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_URL: \"$VITE_API_URL\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-SaleOS}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-EloSync}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_MODE: \"${VITE_API_MODE:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
@@ -72,7 +72,7 @@ Example SPA site `.env`:
 
 ```env
 VITE_API_URL=https://api.example.com
-VITE_APP_NAME=SaleOS
+VITE_APP_NAME=EloSync
 VITE_API_MODE=central
 VITE_REVERB_APP_KEY=<public-application-key>
 VITE_REVERB_HOST=reverb.example.com

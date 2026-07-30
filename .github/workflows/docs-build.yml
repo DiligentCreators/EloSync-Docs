@@ -81,7 +81,7 @@ jobs:
             "applicationVersion": "${APP_VER}",
             "nodeVersion": "${NODE_VER}",
             "vitepressVersion": "${VP_VER}",
-            "siteUrl": "https://docs.saleos.app"
+            "siteUrl": "https://docs.elosync.com"
           }
           EOF
           node -e "const fs=require('fs'); const p=process.argv[1]; fs.writeFileSync(p, JSON.stringify(JSON.parse(fs.readFileSync(p,'utf8')), null, 2) + '\n')" "${DIST_DIR}/build-info.json"

@@ -145,7 +145,7 @@ new PlaceholderRegistry(
 4. API returns `wa_me_url` (`https://wa.me/{digits}?text=…`)
 5. Browser opens the URL; the agent sends from WhatsApp Web/app
 
-SaleOS does **not** send messages or store outbound message history in this version.
+EloSync does **not** send messages or store outbound message history in this version.
 
 Future Cloud API send/receive, conversations, and shared inbox are documented separately — see [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) (planned; not implemented).
 

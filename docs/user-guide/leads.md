@@ -57,7 +57,7 @@ When the **Communication Templates** module is installed and you have **use** pe
 2. Click **WhatsApp** next to the phone
 3. Choose a template, preview the filled message, then **Open WhatsApp**
 
-WhatsApp opens with the message pre-filled. SaleOS does not send the message for you. See [Communication Templates](/user-guide/communication-templates).
+WhatsApp opens with the message pre-filled. EloSync does not send the message for you. See [Communication Templates](/user-guide/communication-templates).
 
 ## Convert
 

@@ -1,6 +1,6 @@
 # Leads Module
 
-Reference business module for the SaleOS platform. Every future module (Tasks, Invoices, Inventory, etc.) must mirror this structure.
+Reference business module for the EloSync platform. Every future module (Tasks, Invoices, Inventory, etc.) must mirror this structure.
 
 ## Guides
 

@@ -1,6 +1,6 @@
 # Getting Started
 
-Welcome to **SaleOS** documentation. Start here to understand the frozen platform foundation and how new product capability is delivered as modules.
+Welcome to **EloSync** documentation. Start here to understand the frozen platform foundation and how new product capability is delivered as modules.
 
 ## Where to begin
 

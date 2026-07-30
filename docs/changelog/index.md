@@ -1,5 +1,11 @@
 # Changelog
 
+## Rebrand SaleOS → EloSync (2026-07-31)
+
+Product name, docs site, and operator examples are now **EloSync** (`docs.elosync.com`, `*.elosync.com`).
+
+**Breaking:** Custom lead webhook HMAC / API-key headers are renamed — `X-SaleOS-Signature` / `X-SaleOS-Timestamp` / `X-SaleOS-Key` → `X-EloSync-Signature` / `X-EloSync-Timestamp` / `X-EloSync-Key`. Update integrators (Zapier, Make, form plugins). Branded-domain DNS defaults are `_elosync-verification` / `elosync-verify-…` (override with `BRANDED_TXT_PREFIX` if needed).
+
 ## Marketplace badges, dependents copy, catalog versioning (2026-07-31)
 
 - Tenant Marketplace cards/detail: badges show **Installed** / **Available** / **Billable** / **Pending** (no longer “Included” for free opt-in modules); category tag above module name; long titles no longer overflow the card.
@@ -316,7 +322,7 @@ Docs-only: new [Installation & Local Configuration](/getting-started/installatio
 Inbound lead capture through the Lead Source Driver pipeline:
 
 - Shared `NormalizedLeadData` → `LeadDuplicateService` → `LeadService` (no driver DB writes)
-- **Custom webhooks** per tenant: URL + API key / HMAC (`X-SaleOS-Timestamp` + signature), editable `default_source`
+- **Custom webhooks** per tenant: URL + API key / HMAC (`X-EloSync-Timestamp` + signature), editable `default_source`
 - **Meta Lead Ads**: OAuth connect, **Page picker UI**, Page subscribe, shared `/webhooks/leads/meta`, queue `lead-ingest`
 - Leads UI → **Integrations** panel; permission `leads.manage_integrations`
 - Production hardening: module entitlement on ingress, body size limits, per-endpoint throttle, Graph timeouts, auth-only `needs_reauth`, force-delete page reclaim
@@ -411,7 +417,7 @@ Workspace Meetings marketplace module (CRM, default-included) with Calendar proj
 
 SPA branding no longer flickers through placeholder product names or stick on Central after soft login.
 
-- Static shell / tab-title fallback standardized on **SaleOS** (`index.html`, settings-store defaults, `VITE_APP_NAME`)
+- Static shell / tab-title fallback standardized on **EloSync** (`index.html`, settings-store defaults, `VITE_APP_NAME`)
 - Sidebar and auth layout show empty brand text until public settings are loaded (no `DC SaaS` placeholder)
 - Settings re-bootstrap after auth settles so tenant `public/settings` can resolve via Bearer token and optional `X-Tenant-Domain`
 - Central fallback on tenant routes only applies on first load — does not overwrite branding after login or settings save
@@ -459,7 +465,7 @@ Documentation-only: official architectural blueprint for a future WhatsApp Cloud
 
 ## Lead Source Driver Architecture (2026-07-20)
 
-Documentation-only: architectural decision for all future lead ingestion in SaleOS.
+Documentation-only: architectural decision for all future lead ingestion in EloSync.
 
 - Added [Lead Source Driver Architecture](/developer-guide/lead-source-driver-architecture) (`LeadSourceDriverInterface` responsibilities, shared pipeline, `NormalizedLeadData`, driver vs Lead ownership, driver catalog, Open/Closed extensibility)
 - Updated [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration): `MetaLeadAdsDriver` is the first production implementation of the architecture
@@ -570,7 +576,7 @@ Documentation-only pass establishing the long-term modular architecture standard
 - Added [Architecture](/architecture/) section: [Module Architecture](/architecture/module-architecture), [Module Dependencies](/architecture/module-dependencies), [Module Licensing](/architecture/module-licensing)
 - Updated [Product Roadmap](/getting-started/product-roadmap): Calendar, Meetings (scheduling, Zoom, Google Meet, email reminders), AI Integration (Planning)
 - Documented development convention: self-contained modules, declared dependencies, independent licensing compatibility
-- Updated site footer copyright to © 2026 SaleOS. All rights reserved.
+- Updated site footer copyright to © 2026 EloSync. All rights reserved.
 - No application code, billing, marketplace, schema, or API changes
 
 ---

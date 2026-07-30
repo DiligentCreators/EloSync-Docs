@@ -1,6 +1,6 @@
 # Module Architecture
 
-SaleOS follows a **modular architecture**. Every business capability must be developed as an **independent module**.
+EloSync follows a **modular architecture**. Every business capability must be developed as an **independent module**.
 
 This document is the required convention for all future development. It establishes ownership boundaries and communication rules so the platform can grow into a full ERP without redesigning the frozen foundation.
 

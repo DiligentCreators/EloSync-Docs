@@ -175,7 +175,7 @@ Ordered assignment change rows (`old_user`, `new_user`, `changed_by`, `reason`, 
 - `POST /leads/integrations/webhooks/{id}/rotate`
 - `DELETE /leads/integrations/webhooks/{id}`
 
-Create/rotate responses include plaintext `api_key` and `signing_secret` once. Public ingress: `POST /webhooks/leads/custom/{uuid}` (Bearer or `X-SaleOS-Signature`). See [Custom Lead Webhook](/developer-guide/custom-lead-webhook).
+Create/rotate responses include plaintext `api_key` and `signing_secret` once. Public ingress: `POST /webhooks/leads/custom/{uuid}` (Bearer or `X-EloSync-Signature`). See [Custom Lead Webhook](/developer-guide/custom-lead-webhook).
 
 ### Meta Lead Ads
 
