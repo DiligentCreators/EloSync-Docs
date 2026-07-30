@@ -43,9 +43,9 @@ Open **Settings → Marketplace → Open Marketplace**, or go to `/#/marketplace
 |------|---------|-------|
 | **Included free** | Leads, Tasks | Auto-installed on every workspace |
 | **Free to install** | Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts, Communication Templates | $0 — install from Marketplace |
-| **Paid** | Branded | **$29/month** or **$290/year** (USD) |
+| **Paid** | Branded | **$29/month** or **$290/year** (USD catalog) |
 
-Commercial flags live on the Central `modules` catalog. Full table: [Entitlements](/developer-guide/entitlements).
+Marketplace shows paid prices in your **workspace currency** (Settings → General) as an approximate conversion from the USD catalog. **Checkout is still billed in the catalog currency (USD)** via the payment provider. Commercial flags live on the Central `modules` catalog. Full table: [Entitlements](/developer-guide/entitlements).
 
 ## Dashboard overview
 

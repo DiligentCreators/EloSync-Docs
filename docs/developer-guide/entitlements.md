@@ -96,6 +96,8 @@ Only then allow access.
 
 Published catalog: tenant `GET /marketplace/modules` / `POST …/purchase`, or central install via `POST /tenants/{tenant}/modules`.
 
+Tenant Marketplace responses convert catalog amounts into the workspace currency for **display only** (`base_*` / `billed_currency` preserve the catalog/Stripe charge currency). See [Tenant Marketplace API](/api/tenant-v1-marketplace#display-currency-conversion).
+
 | Rule | Behavior |
 |------|----------|
 | Module must be `published` and `is_active` | Validation error otherwise |

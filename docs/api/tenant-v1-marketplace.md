@@ -16,6 +16,23 @@ Permissions: `marketplace.view` (browse), `marketplace.purchase` (install / subs
 | POST | `/modules/{module}/confirm-checkout` | `marketplace.purchase` | Confirm return from payment gateway |
 | POST | `/modules/{module}/cancel` | `marketplace.purchase` | Remove / cancel a non-core installed module |
 
+### Display currency conversion
+
+Catalog prices are stored in `modules.currency` (typically **USD**). Tenant list/detail responses convert `monthly_price`, `yearly_price`, and `setup_fee` into the **workspace currency** (`tenants.currency`) for display only.
+
+| Field | Meaning |
+|-------|---------|
+| `monthly_price` / `yearly_price` / `setup_fee` | Amount in `currency` (tenant currency when conversion succeeds) |
+| `currency` | Display currency for the amounts above |
+| `base_*_price` / `base_currency` | Original catalog amounts / currency |
+| `billed_currency` | Currency charged at checkout (catalog / Stripe Price — usually USD) |
+| `exchange_rate` / `exchange_rate_at` | Mid-market rate used for the conversion |
+| `price_converted` | `true` when amounts were converted from the catalog currency |
+
+If the FX provider is unavailable, amounts stay in the catalog currency (`price_converted: false`). **Checkout still charges the mapped Stripe (or gateway) Price in `billed_currency`** — conversion is display-only.
+
+Rates: `CurrencyConversionService` → `open.er-api.com` (configurable via `CURRENCY_FX_*` env), cached (~12h).
+
 ### Detail payload extras
 
 | Field | Meaning |
