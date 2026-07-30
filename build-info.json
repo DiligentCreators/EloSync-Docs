@@ -1,11 +1,11 @@
 {
-  "commitSha": "11fb5dd8ba83676d015bf179b4ccc9c36ad83412",
+  "commitSha": "4288d535f323af5c9d6e047a46a28f07d43233bd",
   "branch": "main",
-  "buildTimestampUtc": "2026-07-30T21:57:05Z",
-  "buildNumber": "56",
-  "githubRunId": "30585340150",
+  "buildTimestampUtc": "2026-07-30T22:05:50Z",
+  "buildNumber": "57",
+  "githubRunId": "30585880319",
   "applicationVersion": "1.1.0",
   "nodeVersion": "24.18.0",
   "vitepressVersion": "1.6.4",
-  "siteUrl": "https://docs.saleos.app"
+  "siteUrl": "https://docs.elosync.com"
 }
