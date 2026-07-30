@@ -27,6 +27,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 | [Communication Templates](/user-guide/communication-templates) | ✅ Completed (plain-text templates, placeholder registry, WhatsApp `wa.me` from Leads; migrate-only production registration) |
 | [Calendar](/user-guide/calendar-overview) | ✅ Completed (Week/Day time grids + DnD, Month/Agenda, view_all oversight, upcoming widget) |
 | [Meetings](/user-guide/meetings-overview) | ✅ Completed (host/invitees, Zoom/Google Meet OAuth, reminders, Calendar projection, completion) |
+| [Activities](/user-guide/activities-overview) | ✅ Completed (loggable call/email/note/follow-up engagements; Contact/Company/Lead links; complete + timeline mirrors) |
 | **Lead Source Driver Architecture** | ✅ Implemented ([standard](/developer-guide/lead-source-driver-architecture); Custom Webhook + Meta drivers shipped) |
 | **Meta Lead Ads Integration** | ✅ Shipped ([Meta App Setup](/developer-guide/meta-app-setup) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration)) |
 
@@ -46,11 +47,18 @@ The CRM is the foundation of the platform and is the first functional area deliv
 
 > **Dependency:** Meetings → Calendar (required). See [Module Dependencies](/architecture/module-dependencies) and [Meetings](/user-guide/meetings-overview).
 
+#### Activities (shipped)
+
+- Loggable CRM engagements: call, email, note, follow-up, other
+- Link to Contact / Company / Lead (at least one; soft entitlement)
+- Due date, complete action, assignee scoping, notes + timeline
+- Mirrors create/complete onto related record timelines
+- Recent Activities dashboard widget
+
 ### Planned
 
 | Module / capability | Status |
 |---------------------|--------|
-| Activities | Planned |
 | **WhatsApp Cloud Integration** | Planned (docs blueprint only — [Cloud API beyond `wa.me`](/developer-guide/whatsapp-cloud-integration)) |
 
 **Goal:** Provide a complete customer relationship management experience with lead tracking, task management, customer records, scheduling, meetings, and activity history.

@@ -28,6 +28,11 @@ lead_stages / leads / lead_notes / lead_follow_ups / lead_activities
 lead_assignment_histories
   (tenant-scoped CRM — Leads module)
 
+companies / company_notes / company_activities
+contacts / contact_notes / contact_activities
+activities / activity_notes / activity_activities
+  (tenant-scoped CRM directory + engagements)
+
 tasks / task_notes / task_activities
 task_digest_deliveries
 daily_summary_deliveries
@@ -81,6 +86,16 @@ Notes (author + body) and CRM timeline (`type`, `description`, `properties` JSON
 ### `company_notes` / `company_activities`
 
 Notes (author + body) and CRM timeline (`type`, `description`, `properties` JSON).
+
+## Activities module tables
+
+### `activities`
+
+`tenant_id`, `uuid`, `type` (`call`|`email`|`note`|`follow_up`|`other`), `subject`, `body`, `due_at`, `completed_at`, nullable `contact_id` / `company_id` / `lead_id`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `activities`. At least one related FK required on write.
+
+### `activity_notes` / `activity_activities`
+
+Notes (author + body) and engagement timeline (`type`, `description`, `properties` JSON; includes `completed`).
 
 ## Tasks module tables
 

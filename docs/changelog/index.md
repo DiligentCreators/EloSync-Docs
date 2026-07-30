@@ -1,5 +1,37 @@
 # Changelog
 
+## Activities module (2026-07-30)
+
+**Architecture**
+
+- CRM engagements module; mirrors Contacts/Companies (flat Laravel, `module:activities` + Spatie RBAC). **Free and default-included** — catalog `is_default_included=true` / `is_billable=false` / `sort_order=28`; new workspaces get it via `installDefaultModules()`.
+
+**Backend**
+
+- Tables: `activities`, `activity_notes`, `activity_activities`
+- Types: `call` | `email` | `note` | `follow_up` | `other`; complete via `POST /activities/{id}/complete`
+- Related FKs: `contact_id` / `company_id` / `lead_id` (at least one required; soft module entitlement)
+- Mirrors `crm_activity_logged` / `crm_activity_completed` onto related Contact/Company/Lead timelines
+- Permissions: `activities.view|create|update|delete|restore|force.delete|assign`
+- Pest: `tests/Feature/Tenant/Activity/ActivityTest.php` (16 tests)
+
+**Frontend**
+
+- Activities list / form dialog / detail drawer (Overview, Notes, Activity tabs); nav after Meetings
+- Tenant dashboard: **Recent Activities** widget + **Log Activity** quick action
+- Playwright: `npm run test:e2e:activities` (`e2e/tests/activities/`)
+
+**Docs**
+
+- [activities-overview.md](/user-guide/activities-overview) (+ user / developer / production)
+- [api/tenant-v1-activities.md](/api/tenant-v1-activities)
+
+**Deferred**
+
+- Calendar projection, Meetings types, unified system-timeline aggregator, Communication Template placeholders
+
+---
+
 ## Companies module (2026-07-30)
 
 **Architecture**
