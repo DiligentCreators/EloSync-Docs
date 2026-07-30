@@ -4,6 +4,8 @@
 
 Workspace owners (and anyone with `marketplace.purchase`) can **remove** opt-in modules from Marketplace — Install / Subscribe to add, Remove / Cancel subscription to drop access. Core default-included modules (Leads, Tasks) stay non-removable; hard dependents must be removed first (e.g. Meetings before Calendar). Re-installing a previously cancelled module reactivates the same subscription row.
 
+**Fix (same day):** Cancel eligibility follows catalog `is_default_included` (not historical `source=included`). Data migration marks optional CRM modules opt-in and rewrites their included subscriptions to `purchased` so Remove appears for workspaces that had them pre-opt-in.
+
 - API: `POST /api/tenant/v1/marketplace/modules/{module}/cancel`; detail adds `can_cancel`, `blocking_dependents`, `subscription_source`
 - UI: Marketplace module detail sheet Remove / Cancel subscription + confirmation
 - Docs: [tenant-v1-marketplace](/api/tenant-v1-marketplace), [entitlements](/developer-guide/entitlements)
