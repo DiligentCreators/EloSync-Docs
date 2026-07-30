@@ -11,18 +11,21 @@
 **Backend**
 
 - Table `todos`; model, policy, service, board + CRUD API under `module:todos` + `todos.*`.
+- Soft-delete route binding (`withTrashed`) and whitelist for list `sort` / `direction`.
+- Local demo: `TodosSeeder` + dataset counts in `config/local-demo.php`.
 - Permissions: `view` · `create` · `update` · `delete` (admin/manager/staff).
-- Pest: `tests/Feature/Tenant/Todo/TodoTest.php` (CRUD, creator scope, owner view, non-creator forbid, module gate, isolation).
+- Pest: `tests/Feature/Tenant/Todo/TodoTest.php` (CRUD, creator/admin scope, owner view-only, sort safety, soft-delete show, module gate, isolation).
 
 **Frontend**
 
 - Board (default) + list; form dialog + detail sheet; nav gated by `module:todos` + `todos.view`.
-- Playwright: `npm run test:e2e:todos`.
+- Board drag disabled for non-creators (owner view-only cards).
+- Playwright: `npm run test:e2e:todos` (workflow + multi-user visibility).
 
 **Docs / Website**
 
 - User / developer / production / API guides; database + roadmap + this note.
-- Marketing `MODULES` entry and included-module copy updated for ToDos.
+- Marketing `MODULES` entry and included-module copy updated for ToDos (including FAQ cancel copy).
 
 ## Marketing catalog currency uses modules.currency (2026-07-31)
 
