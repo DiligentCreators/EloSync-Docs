@@ -1,5 +1,9 @@
 # Changelog
 
+## Lead import numeric phone cast (2026-07-31)
+
+Bulk lead import no longer fails with “phone must be a string” when Excel/CSV parsers return phone cells as numbers. `LeadImportMapper` casts string fields before validation.
+
 ## Overdue filter for Tasks & ToDos (2026-07-31)
 
 List and board APIs accept `overdue=true` for open items with `due_at` in the past. Tasks and ToDos UIs expose an **Overdue** checkbox; Tasks also toggles the filter from the Overdue KPI card.
