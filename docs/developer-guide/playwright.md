@@ -11,7 +11,7 @@ The Playwright suite for the **Central Application** lives in the Frontend repos
 
 Covers Platform/Core only: auth, dashboard, tenants (workspaces), users, roles, permissions matrix, modules, marketplace, billing (Billing nav + payment gateways + settings billing tab + tenant invoice/payment tabs), impersonation, settings, profile, smoke, and regression.
 
-Does **not** cover Stripe Checkout or future ERP modules beyond what is listed below. Tenant Settings branding/mail coverage lives in `e2e/tests/settings/tenant-settings.spec.ts`. Tenant Users/Roles RBAC coverage lives in `e2e/tests/users/tenant-users.spec.ts` (`npm run test:e2e:tenant-rbac`). **Leads** product UI: `e2e/tests/leads/` (`npm run test:e2e:leads`). **Tasks** product UI: `e2e/tests/tasks/` (`npm run test:e2e:tasks`). **ToDos** product UI: `e2e/tests/todos/` (`npm run test:e2e:todos`). **Contacts** product UI: `e2e/tests/contacts/` (`npm run test:e2e:contacts`). **Companies** product UI: `e2e/tests/companies/` (`npm run test:e2e:companies`). **Opportunities / Quotations / Contracts**: `e2e/tests/{opportunities,quotations,contracts}/` plus shared-session `e2e/tests/sales/` (`npm run test:e2e:sales`). **Communication Templates**: `e2e/tests/communication-templates/` (`npm run test:e2e:communication-templates`). Tenant suites use Playwright project `tenant`.
+Does **not** cover Stripe Checkout or future ERP modules beyond what is listed below. Tenant Settings branding/mail coverage lives in `e2e/tests/settings/tenant-settings.spec.ts`. Tenant Users/Roles RBAC coverage lives in `e2e/tests/users/tenant-users.spec.ts` (`npm run test:e2e:tenant-rbac`). **Leads** product UI: `e2e/tests/leads/` (`npm run test:e2e:leads`). **Tasks** product UI: `e2e/tests/tasks/` (`npm run test:e2e:tasks`). **ToDos** product UI: `e2e/tests/todos/` (`npm run test:e2e:todos`). **Contacts** product UI: `e2e/tests/contacts/` (`npm run test:e2e:contacts`). **Companies** product UI: `e2e/tests/companies/` (`npm run test:e2e:companies`). **Opportunities / Quotations / Contracts**: `e2e/tests/{opportunities,quotations,contracts}/` plus shared-session `e2e/tests/sales/` (`npm run test:e2e:sales`). **Invoices**: `e2e/tests/invoices/` (`npm run test:e2e:invoices`). **Payments**: `e2e/tests/payments/` (`npm run test:e2e:payments`) — installs both `invoices` and `payments` modules (hard dependency). **Credit Notes**: `e2e/tests/credit-notes/` (`npm run test:e2e:credit-notes`) — installs both `invoices` and `credit-notes` modules (hard dependency). **Estimates**: `e2e/tests/estimates/` (`npm run test:e2e:estimates`) — installs both `invoices` and `estimates` modules (hard dependency), covers create → send → accept → convert to invoice. **Communication Templates**: `e2e/tests/communication-templates/` (`npm run test:e2e:communication-templates`). Tenant suites use Playwright project `tenant`.
 
 ## Spec directories (independently runnable)
 
@@ -36,6 +36,10 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Quotations | `e2e/tests/quotations/` | `npm run test:e2e:quotations` |
 | Contracts | `e2e/tests/contracts/` | `npm run test:e2e:contracts` |
 | Sales (shared session) | `e2e/tests/sales/` | `npm run test:e2e:sales` / `test:e2e:sales:headed` |
+| Invoices | `e2e/tests/invoices/` | `npm run test:e2e:invoices` |
+| Payments | `e2e/tests/payments/` | `npm run test:e2e:payments` |
+| Credit Notes | `e2e/tests/credit-notes/` | `npm run test:e2e:credit-notes` |
+| Estimates | `e2e/tests/estimates/` | `npm run test:e2e:estimates` |
 | Communication Templates | `e2e/tests/communication-templates/` | `npm run test:e2e:communication-templates` |
 | Profile | `e2e/tests/profile/` | `npm run test:e2e:profile` |
 | Smoke | `e2e/tests/smoke/` | `npm run test:e2e:smoke` |

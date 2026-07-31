@@ -112,6 +112,52 @@ Contracts
 
 Contracts works without Quotations. When Quotations is entitled, a Contract may optionally link `quotation_id`; validated by `LinkableQuotation` (soft entitlement + assignee scope). No hard `module_dependencies` row for this optional link.
 
+### Invoices → Contacts / Companies / Quotations (optional)
+
+```text
+Invoices
+  ├── may depend on Contacts     (optional — contact_id link)
+  ├── may depend on Companies    (optional — company_id link)
+  └── may depend on Quotations   (optional — quotation_id link)
+```
+
+Invoices works as a licensed Billing module on its own catalog row with **no required `module_dependencies` row** — unlike Quotations/Contracts, it does not require Opportunities. Contact and Company links are optional and only surfaced/validated when that module is entitled. `quotation_id` is a plain tenant-scoped existence check (not gated by a `LinkableQuotation`-style entitlement rule, unlike the Contracts → Quotations link above).
+
+**Status:** [Invoices](/user-guide/invoices-overview) is shipped.
+
+### Payments → Invoices (required)
+
+```text
+Payments
+  └── depends on Invoices   (required)
+```
+
+Payments records amounts against an invoice's `amount_paid` and allocates them to one or more `CustomerInvoice` rows on **post**, declaring Invoices as a **required** hard dependency (`module_dependencies`) — the first Phase 3 module to require another. Marketplace blocks installing Payments on a workspace that doesn't already have Invoices entitled.
+
+**Status:** [Payments](/user-guide/payments-overview) is shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 3.
+
+### Credit Notes → Invoices (required)
+
+```text
+Credit Notes
+  └── depends on Invoices   (required)
+```
+
+Every `CustomerCreditNote` references a `CustomerInvoice` (`customer_invoice_id`, required). Credit Notes declares Invoices as a **required** hard dependency (`module_dependencies`), the same pattern as Payments → Invoices. Applying a credit note credits the linked invoice's `amount_credited` and recalculates `balance_due` (without changing invoice `status`). Marketplace blocks installing Credit Notes on a workspace that doesn't already have Invoices entitled.
+
+**Status:** [Credit Notes](/user-guide/credit-notes-overview) is shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 3.
+
+### Estimates → Invoices (required)
+
+```text
+Estimates
+  └── depends on Invoices   (required)
+```
+
+`POST /estimates/{id}/convert` creates a **draft** `CustomerInvoice` from an accepted (or sent) estimate, copying its lines and linking it back via `customer_invoices.estimate_id`. Estimates declares Invoices as a **required** hard dependency (`module_dependencies`), the same pattern as Payments/Credit Notes → Invoices. Estimates also has optional soft links to Contacts, Companies, Opportunities, and Quotations (each validated only when entitled; no hard dependency rows). Marketplace blocks installing Estimates on a workspace that doesn't already have Invoices entitled.
+
+**Status:** [Estimates](/user-guide/estimates-overview) is shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 3.
+
 ### Payroll → HR (required)
 
 ```text

@@ -41,5 +41,13 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Quotations](./quotations) | Line items, status workflow, and totals |
 | [Contracts Overview](./contracts-overview) | Contracts module guides index |
 | [Contracts](./contracts) | Agreement tracking and status workflow |
+| [Invoices Overview](./invoices-overview) | Invoices module guides index |
+| [Invoices](./invoices) | Line items, status workflow, and balances |
+| [Payments Overview](./payments-overview) | Payments module guides index |
+| [Payments](./payments) | Record customer payments and allocate to invoices |
+| [Credit Notes Overview](./credit-notes-overview) | Credit Notes module guides index |
+| [Credit Notes](./credit-notes) | Issue and apply credit notes against invoices |
+| [Estimates Overview](./estimates-overview) | Estimates module guides index |
+| [Estimates](./estimates) | Pre-sale cost estimates and convert to invoice |
 | [Communication Templates](./communication-templates) | Template management and WhatsApp from Leads |
 | [Branded](./branded) | Custom domain mapping and white-label notifications |

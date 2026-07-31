@@ -15,6 +15,10 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Opportunities](./tenant-v1-opportunities) | Opportunities CRUD, board, stages, notes |
 | [Tenant Quotations](./tenant-v1-quotations) | Quotations CRUD, lines, send/accept, notes |
 | [Tenant Contracts](./tenant-v1-contracts) | Contracts CRUD, status, optional quotation link |
+| [Tenant Invoices](./tenant-v1-invoices) | Invoices CRUD, lines, send/void, notes |
+| [Tenant Payments](./tenant-v1-payments) | Payments CRUD, allocations, post/void, notes |
+| [Tenant Credit Notes](./tenant-v1-credit-notes) | Credit notes CRUD, lines, issue/apply/void, notes |
+| [Tenant Estimates](./tenant-v1-estimates) | Estimates CRUD, lines, send/accept/convert to invoice, notes |
 | [Tenant Communication Templates](./tenant-v1-communication-templates) | Templates, placeholders, WhatsApp render |
 | [Tenant Notifications](./tenant-v1-notifications) | In-app notifications |
 | [Tenant Marketplace](./tenant-v1-marketplace) | Browse, install, and remove workspace modules |
