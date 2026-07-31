@@ -80,7 +80,7 @@ Duplicate mode `update` also requires `leads.update`.
 
 ### GET `/leads/import/template`
 
-Query: `format` = `csv` (default) or `xlsx`. Downloads a sample template.
+Query: `format` = `csv` (default) or `xlsx`. Downloads a sample template with all mappable columns (including optional **Note**) and one sample row.
 
 ### GET `/leads/imports`
 
@@ -92,7 +92,9 @@ Multipart: `file` (CSV/XLSX). Stores the upload, returns import record + `contex
 
 ### PUT `/leads/imports/{uuid}`
 
-Body: `{ "mapping": { "name": "Name", "email": "Email", ... } }`. Status → `mapped`.
+Body: `{ "mapping": { "name": "Name", "email": "Email", "note": "Note", ... } }`. Status → `mapped`.
+
+Mappable system fields include lead attributes plus optional `note` (max 5000 chars). A non-empty note creates a lead note authored by the importer after create; on duplicate mode `update` it appends a note. Empty note cells are ignored.
 
 ### PUT `/leads/imports/{uuid}/options`
 

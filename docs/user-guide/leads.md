@@ -71,9 +71,9 @@ Users with **export** can download the current filtered set as **CSV** or **XLSX
 
 Users with **import** can bulk-load leads from **CSV** or **XLSX**:
 
-1. Open **Import** and download a sample template if needed
+1. Open **Import** and download a sample template if needed (**CSV** or **XLSX** — both include a **Note** column with a sample value)
 2. Upload a file (drag & drop or browse)
-3. Map spreadsheet columns to lead fields (Name is required)
+3. Map spreadsheet columns to lead fields (Name is required; optional **Note** creates a first note on create, or appends a note on **Update existing**)
 4. Choose unique fields (**Email** / **Phone**) and duplicate behavior (**Skip**, **Update existing**, or **Keep duplicate**)
 5. Preview counts and validation errors (nothing is written yet)
 6. Start the import — it runs in the background; watch progress until complete

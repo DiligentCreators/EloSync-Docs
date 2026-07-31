@@ -24,7 +24,7 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 - **Kanban board (default)** + table view; drag-and-drop opens the detail drawer; save commits the stage change
 - KPIs via `GET /leads/stats`; board via `GET /leads/board`
 - Export CSV / XLSX of the current filtered set (`leads.export`)
-- Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping, duplicate modes, preview, queued processing, history + reports
+- Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping (including optional first **Note**), duplicate modes, preview, queued processing, history + reports
 - **Inbound integrations** (`leads.manage_integrations`) — Custom webhooks (Zapier-ready) + Meta Lead Ads OAuth / Page subscribe
 - Convert (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; creates/links a real [Contact](/user-guide/contacts-overview) when that module is installed, otherwise stays status-only
 - Assignee scoping — without `leads.assign`, users only see their own leads
