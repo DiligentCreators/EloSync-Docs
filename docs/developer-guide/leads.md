@@ -46,6 +46,7 @@ Routes use `module:leads` then `can:leads.*` / policies.
 
 - Reusable package: Maatwebsite Laravel Excel for CSV/XLSX read + templates
 - Entity-agnostic `app/Import` framework; Lead is the first handler (future modules add their own handlers)
+- `LeadImportMapper` casts spreadsheet string fields (`phone`, `name`, `email`, etc.) to strings — Excel often returns phone as int/float
 - Every imported lead row uses `LeadService::create()` / `LeadService::update()` — never bypasses business rules
 - All runs are async: `ProcessLeadImportJob::dispatch(...)->onQueue('imports')`
 - Uploads stored on the configured uploads disk under `imports/{tenant_uuid}/`
