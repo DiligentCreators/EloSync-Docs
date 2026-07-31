@@ -32,8 +32,8 @@ Edit from the row menu or the detail sheet while the payment is still **Draft**.
 
 A payment starts in **Draft**. Move it forward with:
 
-- **Post** (`draft → posted`) — applies every allocation to its invoice's balance: the invoice's amount paid increases and its status advances (e.g. `sent → partial` or `sent → paid`, depending on how much of the invoice is now covered)
-- **Void** (`posted → void`) — reverses every allocation, rolling the linked invoices' balances and statuses back
+- **Post** (`draft → posted`) — applies every allocation to its invoice's balance: the invoice's amount paid increases and its status advances (e.g. `sent → partial` or `sent → paid`, depending on how much of the invoice is now covered). Posting is all-or-nothing: it's rejected if any allocated invoice has been deleted, is not currently Sent or Partial, or if the allocated amount would exceed that invoice's balance due
+- **Void** (`posted → void`) — reverses every allocation, rolling the linked invoices' balances and statuses back, even if an invoice has since been fully paid off by another payment or deleted
 
 Invalid transitions (e.g. voiding a draft payment, or posting an already-posted payment) are rejected with a validation error.
 

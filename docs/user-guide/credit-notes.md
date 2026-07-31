@@ -34,7 +34,7 @@ Edit from the row menu or the detail sheet while the credit note is still **Draf
 A credit note starts in **Draft**. Move it forward with:
 
 - **Issue** (`draft → issued`) — locks the credit note's content and sets the issue date to today if it wasn't set
-- **Apply** (`issued → applied`) — adds the credit note's total to the invoice's **amount credited** and reduces its **balance due**; this is a one-way, terminal action
+- **Apply** (`issued → applied`) — adds the credit note's total to the invoice's **amount credited** and reduces its **balance due**, which can also advance the invoice's status to **Partial** or **Paid** (same as posting a payment); this is a one-way, terminal action. Blocked if the invoice is no longer Sent or Partial (e.g. it was voided or already paid off), or if the credit note's total exceeds the invoice's current balance due
 - **Void** — available from **Draft** or **Issued**; permanently cancels the credit note before it has been applied. Once **Applied**, a credit note can no longer be voided.
 
 Invalid transitions (e.g. applying a draft credit note, or voiding an applied one) are rejected with a validation error.

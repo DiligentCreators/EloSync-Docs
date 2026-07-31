@@ -41,7 +41,7 @@ Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (ass
 - Assignee scoping via `ScopesToAssignee` with `estimates.assign`.
 - `estimates.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`). `opportunity_id` / `quotation_id` are optional, tenant-scoped `exists()` checks (a quotation belongs to an opportunity, but the estimate doesn't enforce that the two match).
-- Auto-numbering: `EstimateService::nextNumber()` reads the `estimates_number_prefix` tenant setting (default `EST-`), then zero-pads a running count to 5 digits — same pattern as Invoices/Payments/Credit Notes. Not yet exposed in the Tenant Settings UI.
+- Auto-numbering: `EstimateService::nextNumber()` reads the `estimates_number_prefix` tenant setting (default `EST-`), then zero-pads a running count to 5 digits — same pattern as Invoices/Payments/Credit Notes. Not yet exposed in the Tenant Settings UI. `estimates` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
 
 ## Permissions
 
