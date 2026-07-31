@@ -40,7 +40,7 @@ List items include `status`, `amount`, `currency`, `method`, `paid_at`, `referen
 
 Body: `amount` (required, numeric, min `0.01`), `currency` (3-letter, optional), `method` (required — `cash`\|`bank_transfer`\|`cheque`\|`card_manual`\|`other`), `paid_at` (optional date), `reference`, `notes`, `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `assigned_to`, `allocations` (optional array of `{ customer_invoice_id, amount }`).
 
-Status always starts at `draft`; `number` is auto-generated (`PAY-00001`, configurable via the `payments_number_prefix` tenant setting). Allocations are stored on the draft but **not** applied to any invoice balance until the payment is posted.
+Status always starts at `draft`; `number` is auto-generated (`PAY-00001`, configurable via the `payments_number_prefix` tenant setting). `number` is unique per tenant at the database level; on the rare concurrent-create collision, the service retries with a freshly generated number (up to 3 attempts). Allocations are stored on the draft but **not** applied to any invoice balance until the payment is posted — so allocation amounts are **not** validated against the invoice's balance due at create/update time, only at post time (see below).
 
 ### GET `/payments/{id}`
 
@@ -72,11 +72,18 @@ Permission: `payments.assign`.
 
 ### POST `/payments/{id}/post`
 
-Transitions `draft → posted`. For each allocation, adds `amount` to the linked invoice's `amount_paid` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` and advances the invoice status (`sent → partial` or `sent → paid`; draft/void invoices are left untouched). Permission: `payments.post`. Rejects with 422 on `status` if the payment isn't currently `draft`.
+Transitions `draft → posted`. Every allocation's invoice is locked (`SELECT ... FOR UPDATE`) and validated **before** any amount is applied — a payment either posts in full or rejects with no partial effect. An allocation is rejected with a 422 on `allocations` (naming the invoice number) when:
+
+- the invoice cannot be found — deliberately **not** `withTrashed()`, so a soft-deleted invoice can never receive a payment;
+- the invoice's status is not `sent` or `partial`;
+- the allocation amount exceeds the invoice's current `balance_due` (0.01 tolerance for float rounding); or
+- the payment and invoice both have a `currency` set and they don't match.
+
+Once every allocation passes, each adds `amount` to its invoice's `amount_paid` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` and advances the invoice status (`sent → partial` or `sent → paid`). Permission: `payments.post`. Rejects with 422 on `status` if the payment isn't currently `draft`.
 
 ### POST `/payments/{id}/void`
 
-Transitions `posted → void`. Reverses each allocation's amount from its invoice's `amount_paid` and recalculates the invoice balance/status. Permission: `payments.void`. Rejects with 422 on `status` if the payment isn't currently `posted`.
+Transitions `posted → void`. Reverses each allocation's amount from its invoice's `amount_paid` and recalculates the invoice balance/status. Unlike `post()`, this locks the invoice **with** `withTrashed()` and does not re-check its status — voiding a payment is a ledger correction that must succeed even if the invoice has since been fully paid, moved past `sent`/`partial`, or soft-deleted, otherwise the invoice's `amount_paid` would permanently disagree with the payment record. Permission: `payments.void`. Rejects with 422 on `status` if the payment isn't currently `posted`.
 
 ### POST `/payments/{id}/notes`
 

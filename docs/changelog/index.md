@@ -1,5 +1,20 @@
 # Changelog
 
+## Phase 3 Billing production hardening (2026-08-01)
+
+**Security / ledger integrity**
+
+- Payment `post()` now requires each allocated invoice to be active Sent/Partial, rejects allocations above `balance_due`, and rejects currency mismatches; soft-deleted invoices cannot be paid.
+- Invoice void limited to Draft/Sent with zero `amount_paid` / `amount_credited` (Partial→Void removed).
+- Credit note `apply()` requires Sent/Partial invoice and credit total ≤ `balance_due`.
+- Unique `(tenant_id, number)` indexes on customer invoices/payments/credit notes and estimates, with create-time duplicate-number retry.
+
+**UX / CI**
+
+- Payments list supports `?invoice=` deep-link (mirrors Credit Notes); invoice detail links through.
+- Docs Quality Gate: raised Vite `chunkSizeWarningLimit` and excluded Rollup chunk-size advisories from WARNING grep.
+- Pest expectations updated for `todos` as a third default-included module (unblocks Backend CI).
+
 ## Estimates module (2026-07-31)
 
 **Architecture**

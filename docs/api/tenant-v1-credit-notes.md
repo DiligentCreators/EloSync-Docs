@@ -43,7 +43,7 @@ List items include `status`, `currency`, `subtotal`/`tax_total`/`total`, `issue_
 
 Body: `customer_invoice_id` (required, tenant-scoped existence check), `title` (required), `notes`, `currency` (3-letter, optional — defaults to the linked invoice's currency when omitted), `issue_date` (optional date), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany` — default to the invoice's `contact_id`/`company_id` when omitted), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
 
-`subtotal`, `tax_total`, and `total` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`CN-00001`, configurable via the `credit_notes_number_prefix` tenant setting).
+`subtotal`, `tax_total`, and `total` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`CN-00001`, configurable via the `credit_notes_number_prefix` tenant setting). `number` is unique per tenant at the database level; on the rare concurrent-create collision, the service retries with a freshly generated number (up to 3 attempts).
 
 ### GET `/credit-notes/{id}`
 
@@ -79,7 +79,7 @@ Transitions `draft → issued`. Backfills `issue_date` to today if unset. Permis
 
 ### POST `/credit-notes/{id}/apply`
 
-Transitions `issued → applied`. Adds the credit note's `total` to the linked invoice's `amount_credited` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` (does not change invoice `status`). Records a `credited` activity on the invoice. Permission: `credit-notes.apply`. Rejects with 422 on `status` if the credit note isn't currently `issued`.
+Transitions `issued → applied`. The linked invoice is locked (`SELECT ... FOR UPDATE`) — deliberately **not** `withTrashed()`, so a soft-deleted invoice can never receive a credit — and validated before anything is written: rejected with a 422 on `status` if the invoice can't be found, its status is not `sent`/`partial`, or the credit note's `total` exceeds the invoice's current `balance_due` (0.01 tolerance). Once valid, adds the credit note's `total` to the invoice's `amount_credited` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` **and can advance the invoice `status`** (`sent → partial` or `sent → paid`, same as a Payment post — this is not status-neutral). Records a `credited` activity on the invoice. Permission: `credit-notes.apply`. Rejects with 422 on `status` if the credit note isn't currently `issued`.
 
 ### POST `/credit-notes/{id}/void`
 

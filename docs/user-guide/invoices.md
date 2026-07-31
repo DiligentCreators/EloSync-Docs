@@ -29,9 +29,9 @@ Edit from the row menu or the detail sheet while the invoice is still **Draft**.
 An invoice starts in **Draft**. Move it forward with:
 
 - **Send** (`draft → sent`) — marks the invoice as sent in the CRM (does not e-mail the customer or attach a PDF yet); sets the issue date to today if it wasn't set
-- **Void** — available from Draft, Sent, or Partial; permanently cancels the invoice
+- **Void** — available from Draft or Sent only; permanently cancels the invoice. Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all), since an invoice moves to **Partial** the moment either happens
 
-**Partial** and **Paid** are not user-driven — they're set automatically as [Payments](/user-guide/payments) are posted against the invoice. Applying a [Credit Note](/user-guide/credit-notes) reduces the balance due too, but does not change the invoice's status.
+**Partial** and **Paid** are not user-driven — they're set automatically as [Payments](/user-guide/payments) are posted against the invoice, or as [Credit Notes](/user-guide/credit-notes) are applied to it.
 
 Invalid transitions (e.g. sending an already-voided invoice) are rejected with a validation error.
 

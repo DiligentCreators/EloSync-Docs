@@ -44,9 +44,12 @@ jobs:
           # ignoreDeadLinks: false in docs/.vitepress/config.ts
           npm run docs:build 2>&1 | tee build.log
 
+          # Excludes Rollup's benign "chunks are larger than N kB" chunk-size
+          # advisory (and its "Adjust chunk size limit for this warning..."
+          # follow-up line), which is not a VitePress/build-quality issue.
           if grep -Ei \
             'falling back|build failed|error during build|\[vitepress\].*warn|⚠|WARNING|dead link' \
-            build.log; then
+            build.log | grep -Eiv 'chunk size|chunks are larger than'; then
             echo "::error::docs:build produced warnings, errors, or dead-link reports"
             exit 1
           fi

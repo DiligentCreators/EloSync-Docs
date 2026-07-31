@@ -79,7 +79,7 @@ Transitions `draft → sent`. Backfills `issue_date` to today if unset. Permissi
 
 ### POST `/invoices/{id}/void`
 
-Transitions `draft|sent|partial → void`. Permission: `invoices.void` (assignee-scoped unless the actor has `invoices.assign` or is superadmin).
+Transitions `draft|sent → void`. **Ledger guard:** rejected with a 422 on `status` (naming the invoice number) if `amount_paid > 0` (void the posted payments first) or `amount_credited > 0` (applied credit notes cannot be reversed, so a credited invoice can never be voided). Since an invoice only reaches `partial` once one of those is non-zero, `Partial → Void` is not an allowed transition at all. Permission: `invoices.void` (assignee-scoped unless the actor has `invoices.assign` or is superadmin).
 
 ### POST `/invoices/{id}/status`
 
@@ -90,7 +90,7 @@ Authorization depends on the target status:
 - `void` → `invoices.void`
 - other allowed transitions → `invoices.update`
 
-Rejects disallowed transitions with a 422 validation error on `status`. `partial`/`paid` transitions are allowed here for completeness, but in practice are driven by [Payments](/api/tenant-v1-payments) posting/voiding rather than direct user action. Applying a [Credit Note](/api/tenant-v1-credit-notes) credits `amount_credited`/`balance_due` directly and does not go through this endpoint. Records a `status_changed` timeline entry.
+Rejects disallowed transitions with a 422 validation error on `status`. `partial`/`paid` transitions are allowed here for completeness, but in practice are driven by [Payments](/api/tenant-v1-payments) posting/voiding rather than direct user action. Applying a [Credit Note](/api/tenant-v1-credit-notes) credits `amount_credited`/`balance_due` directly and does not go through this endpoint. A `void` target is routed through the same ledger guard as `POST /invoices/{id}/void` (see above) — it is not a bare enum transition. Records a `status_changed` timeline entry (plus a `voided` entry when the target is `void`).
 
 ### POST `/invoices/{id}/notes`
 
