@@ -109,12 +109,45 @@ Build a comprehensive billing and invoicing solution that integrates with the ex
 
 | Module | Status |
 |--------|--------|
-| Invoices | Planned |
-| Estimates | Planned |
-| Credit Notes | Planned |
-| Payments | Planned |
+| [Invoices](/user-guide/invoices-overview) | ✅ Completed (line items with computed totals, status workflow, optional Contact/Company/Quotation links; free Billing opt-in) |
+| [Estimates](/user-guide/estimates-overview) | ✅ Completed (pre-sale cost estimates, line items, status workflow, convert-to-invoice; free Billing opt-in, requires Invoices) |
+| [Credit Notes](/user-guide/credit-notes-overview) | ✅ Completed (credit notes against invoices, line items, issue/apply/void workflow, apply credits `amount_credited` + `balance_due`; free Billing opt-in, requires Invoices) |
+| [Payments](/user-guide/payments-overview) | ✅ Completed (record customer payments, allocate to invoices, post/void drives invoice balance + status; free Billing opt-in, requires Invoices) |
 
-**Goal:** Provide complete customer billing, payment tracking, and financial document management.
+#### Invoices (shipped)
+
+- No hard `module_dependencies` row — installs standalone (unlike Quotations/Contracts, which require Opportunities)
+- Optional Contact/Company links and optional Quotation link (only when their module is entitled)
+- Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
+- Balance fields (`amount_paid`, `amount_credited`, `balance_due`) driven by the Payments module — read-only via this API
+- Status workflow: `draft → sent → partial|paid → void` (`send` / `void` / `status` actions)
+- Notes, assignment, domain timeline; free Marketplace opt-in under category `billing`
+
+#### Payments (shipped)
+
+- **Hard `module_dependencies` row on Invoices** — the first Phase 3 module to require another; Marketplace blocks install until Invoices is entitled
+- Payment fields (amount, currency, method, paid-at, reference, notes) plus allocations against one or more invoices
+- Status workflow: `draft → posted → void` — posting applies allocations to invoice `amount_paid` and recalculates invoice balance/status; voiding reverses them
+- Optional Contact/Company links, assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
+- `amount_credited` is not touched by Payments — see Credit Notes below
+
+#### Credit Notes (shipped)
+
+- **Hard `module_dependencies` row on Invoices** — same pattern as Payments; Marketplace blocks install until Invoices is entitled
+- Credit note fields (title, notes, currency, issue date) plus line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
+- Status workflow: `draft → issued → applied`, with `void` available from `draft` or `issued` — applying adds the credit note's total to the invoice's `amount_credited` and recalculates `balance_due` (does not change invoice `status`)
+- Optional Contact/Company links, assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
+
+#### Estimates (shipped)
+
+- **Hard `module_dependencies` row on Invoices** — same pattern as Payments/Credit Notes; Marketplace blocks install until Invoices is entitled
+- Estimate fields (title, notes, currency, valid-until) plus line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
+- Optional Contact/Company links, plus optional Opportunity/Quotation links (each validated only when that module is entitled)
+- Status workflow: `draft → sent → accepted|rejected|expired` (identical shape to Quotations)
+- **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with a copy of the estimate's lines, links it back via `customer_invoices.estimate_id`, and marks the estimate `accepted`; one-way and one-time per estimate
+- Assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
+
+**Goal:** Provide complete customer billing, payment tracking, and financial document management. ✅ **Achieved** — Invoices, Payments, Credit Notes, and Estimates are all shipped, completing Phase 3.
 
 > **Note:** Platform billing (module subscriptions, consolidated billing, gateway abstraction) already exists under Central. Phase 3 modules are **tenant product billing** (customer-facing invoices/payments), not a redesign of the Marketplace billing engine.
 

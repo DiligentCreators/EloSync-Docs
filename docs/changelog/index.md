@@ -1,5 +1,172 @@
 # Changelog
 
+## Estimates module (2026-07-31)
+
+**Architecture**
+
+- Fourth and final Phase 3 (Billing) module — pre-sale cost estimates a tenant issues to its own customers (backend model `Estimate`, no `Customer` prefix — distinct naming from Invoices/Payments/Credit Notes since there's no equivalent Central concept to collide with). Flat Laravel, `module:estimates` + Spatie RBAC, mirrors the Credit Notes/Invoices notes/timeline/assignee-scope/lines pattern, plus a Quotations-shaped status machine.
+- **Hard dependency on Invoices** — same pattern as Payments/Credit Notes; Marketplace blocks installing Estimates until a workspace already has Invoices entitled (converting an estimate always creates a `CustomerInvoice`). **Free Marketplace opt-in** — catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=40` (after Credit Notes' `30`).
+- Estimates introduces a **convert-to-invoice** action (`POST /estimates/{id}/convert`) — the first Phase 3 action that creates a row in a *different* module's table. Adds the `customer_invoices.estimate_id` foreign key (the nullable column already existed from the Invoices migration; this module adds the constraint once `estimates` exists).
+- Optional soft links to Contacts, Companies, Opportunities, and Quotations — each validated only when that module is entitled, no hard dependency rows for these.
+
+**Backend**
+
+- Tables: `estimates`, `estimate_lines`, `estimate_notes`, `estimate_activities`
+- Auto-numbered (`EST-00001`, prefix from `estimates_number_prefix` tenant setting)
+- Status workflow `draft → sent → accepted|rejected|expired` (`EstimateStatusEnum`, identical shape to `QuotationStatusEnum`); disallowed transitions return a 422 validation error
+- `convertToInvoice()` copies the estimate's lines into a new draft `CustomerInvoice` via `CustomerInvoiceService::create()`, links it back via `estimate_id`, marks the estimate `accepted` if not already, and rejects a second conversion attempt
+- Permissions: `estimates.view|create|update|delete|restore|force.delete|assign|send|accept|convert`
+- Model + factories, controller, form requests, API resources, policy, service, events (incl. `EstimateConverted`), `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- Catalog registration + `module_dependencies` row via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
+- Pest: `tests/Feature/Tenant/Estimate/EstimateTest.php`, `tests/Feature/Central/Module/EstimatesModuleDependencyTest.php`
+- Fixed a pre-existing MySQL "identifier name too long" bug (index names exceeding the 64-character limit) in the `customer_invoice_activities`, `customer_payment_activities`, and `customer_credit_note_activities` migrations, plus the `customer_payment_allocations` unique constraint and the `customer_credit_note_notes` / `customer_credit_note_lines` indexes — discovered while migrating this batch on real MySQL; all now use explicit shortened index names
+
+**Frontend**
+
+- `src/pages/estimates/` — list page (KPIs incl. Accepted value, Converted badge, filters, DataTable), create/edit form dialog (contact/company pickers, opportunity picker with quotation picker filtered by the selected opportunity, line items editor), detail sheet (overview/lines/notes/timeline tabs; send/accept/reject/**convert to invoice**/assign/notes)
+- Added to the existing tenant sidebar **Billing** group, after Credit Notes
+- `estimateService`, `QUERY_KEYS.estimates`, `PERMISSIONS.estimates`
+- Notification registry: `estimate.assigned` → `/estimates?estimate={id}`
+- Playwright: `e2e/tests/estimates/estimates.workflow.spec.ts` (`npm run test:e2e:estimates`) — enables both `invoices` and `estimates` modules, creates an estimate, sends and accepts it, converts it to an invoice, confirms the conversion dialog, and verifies the resulting invoice + estimate timeline via the API
+
+**Docs**
+
+- [estimates-overview.md](/user-guide/estimates-overview) / [estimates.md](/user-guide/estimates) (+ [developer](/developer-guide/estimates) / [production](/deployment/estimates))
+- [api/tenant-v1-estimates.md](/api/tenant-v1-estimates)
+- [Module Dependencies](/architecture/module-dependencies) updated — Estimates → Invoices marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) — Estimates marked shipped in Phase 3, **completing Phase 3 — Billing** (Invoices, Payments, Credit Notes, Estimates all shipped)
+
+**Deferred**
+
+- Estimate PDF export / e-mail delivery, reversing a conversion (one-way, one-time), multi-currency conversion, approval workflow beyond the status enum
+
+---
+
+## Credit Notes module (2026-07-31)
+
+**Architecture**
+
+- Third Phase 3 (Billing) module — credit notes a tenant issues against its own customer invoices (backend model `CustomerCreditNote`, distinct from Central's own platform-billing `credit_notes` ledger). Flat Laravel, `module:credit-notes` + Spatie RBAC, mirrors the Payments/Invoices notes/timeline/assignee-scope pattern.
+- **Hard dependency on Invoices** — same pattern as Payments; Marketplace blocks installing Credit Notes until a workspace already has Invoices entitled. **Free Marketplace opt-in** — catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=30` (after Payments' `20`).
+- Credit Notes introduces a first-class **lines** child table (`customer_credit_note_lines`), like Invoices — `subtotal`/`tax_total`/`total` computed server-side from lines.
+- **Issuing** a draft credit note locks its content; **applying** an issued credit note adds its `total` to the linked invoice's `amount_credited` and recalculates `balance_due` via `CustomerInvoice::recalculateBalanceFromAmounts()` — unlike Payments, this does **not** drive the invoice `status`. **Voiding** is only reachable from `draft`/`issued` (before any invoice balance has been touched).
+
+**Backend**
+
+- Tables: `customer_credit_notes`, `customer_credit_note_lines`, `customer_credit_note_notes`, `customer_credit_note_activities`
+- Auto-numbered (`CN-00001`, prefix from `credit_notes_number_prefix` tenant setting)
+- Status workflow `draft → issued → applied`, with `void` from `draft`/`issued` (`CustomerCreditNoteStatusEnum`); disallowed transitions return a 422 validation error
+- Permissions: `credit-notes.view|create|update|delete|restore|force.delete|assign|issue|apply|void`
+- Model + factories, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- Catalog registration + `module_dependencies` row via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
+- Pest: `tests/Feature/Tenant/CustomerCreditNote/CustomerCreditNoteTest.php`, `tests/Feature/Central/Module/CreditNotesModuleDependencyTest.php`
+
+**Frontend**
+
+- `src/pages/credit-notes/` — list page (KPIs incl. Applied total, filters, DataTable), create/edit form dialog (invoice picker driving default currency/contact/company, line items editor), detail sheet (overview/lines/notes/timeline; issue/apply/void/assign/notes)
+- Added to the existing tenant sidebar **Billing** group, after Payments — kept separate from Central Billing nav
+- `customerCreditNoteService`, `QUERY_KEYS.customerCreditNotes`, `PERMISSIONS.customerCreditNotes`
+- Invoice detail sheet: new "Credit notes" link to `/credit-notes?invoice={id}` when Credit Notes is entitled + `credit-notes.view` is granted
+- Notification registry: `customer_credit_note.assigned` → `/credit-notes?credit-note={id}`
+- Playwright: `e2e/tests/credit-notes/credit-notes.workflow.spec.ts` (`npm run test:e2e:credit-notes`) — enables both `invoices` and `credit-notes` modules, creates and sends an invoice, creates a credit note against it, issues and applies it, and verifies the invoice's `amount_credited`/`balance_due` via the API
+
+**Docs**
+
+- [credit-notes-overview.md](/user-guide/credit-notes-overview) / [credit-notes.md](/user-guide/credit-notes) (+ [developer](/developer-guide/credit-notes) / [production](/deployment/credit-notes))
+- [api/tenant-v1-credit-notes.md](/api/tenant-v1-credit-notes)
+- [Module Dependencies](/architecture/module-dependencies) updated — Credit Notes → Invoices marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) — Credit Notes marked shipped in Phase 3; Estimates remains Planned
+- Invoices/Payments docs updated to reflect that `amount_credited`/`balance_due` are now driven by Credit Notes rather than "still planned"
+
+**Deferred**
+
+- Estimates, refunding an already-applied credit note, credit note PDF export / e-mail delivery, standalone credit notes not tied to an invoice, multi-currency conversion
+
+---
+
+## Payments module (2026-07-31)
+
+**Architecture**
+
+- Second Phase 3 (Billing) module — customer payments a tenant receives from its own customers (backend model `CustomerPayment`, distinct from Central platform-billing Payments ledger). Flat Laravel, `module:payments` + Spatie RBAC, mirrors the Invoices notes/timeline/assignee-scope pattern.
+- **Hard dependency on Invoices** — the first Phase 3 module to declare a required `module_dependencies` row; Marketplace blocks installing Payments until a workspace already has Invoices entitled. **Free Marketplace opt-in** — catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=20` (after Invoices' `10`).
+- Payments introduces a first-class **allocations** child table (`customer_payment_allocations`) linking a payment to one or more invoices; allocations are stored on draft payments but only applied to invoice balances once **posted**.
+- Posting/voiding a payment drives the previously read-only Invoice balance fields: `amount_paid` / `balance_due` and the `sent → partial|paid` status transition (via `CustomerInvoice::recalculateBalanceFromAmounts()`), closing the gap called out in the Invoices changelog entry above.
+
+**Backend**
+
+- Tables: `customer_payments`, `customer_payment_allocations`, `customer_payment_notes`, `customer_payment_activities`
+- Auto-numbered (`PAY-00001`, prefix from `payments_number_prefix` tenant setting)
+- Status workflow `draft → posted → void` (`CustomerPaymentStatusEnum`); disallowed transitions return a 422 validation error
+- Permissions: `payments.view|create|update|delete|restore|force.delete|assign|post|void`
+- Model + factories, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- Catalog registration + `module_dependencies` row via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
+- Pest: `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `tests/Feature/Central/Module/PaymentsModuleDependencyTest.php`
+
+**Frontend**
+
+- `src/pages/payments/` — list page (KPIs incl. Posted total, filters, DataTable), create/edit form dialog (amount/method/paid-at/reference, contact/company/assignee pickers, allocations editor against invoices), detail sheet (overview/allocations/notes/timeline tabs; post/void/assign/notes)
+- Added to the existing tenant sidebar **Billing** group, after Invoices — kept separate from Central Billing nav
+- `customerPaymentService`, `QUERY_KEYS.customerPayments`, `PERMISSIONS.customerPayments` — named distinctly from the pre-existing Central `paymentService` / `PERMISSIONS.payments` (platform subscription billing)
+- Invoice detail sheet: new "Related payments" link to `/payments` when Payments is entitled + `payments.view` is granted
+- Notification registry: `customer_payment.assigned` → `/payments?payment={id}`
+- Playwright: `e2e/tests/payments/payments.workflow.spec.ts` (`npm run test:e2e:payments`) — enables both `invoices` and `payments` modules, creates an invoice, records a payment with an allocation, posts it, verifies the invoice balance/status updates, voids it, and verifies the reversal
+
+**Docs**
+
+- [payments-overview.md](/user-guide/payments-overview) / [payments.md](/user-guide/payments) (+ [developer](/developer-guide/payments) / [production](/deployment/payments))
+- [api/tenant-v1-payments.md](/api/tenant-v1-payments)
+- [Module Dependencies](/architecture/module-dependencies) updated — Payments → Invoices marked shipped (was backend-only)
+- [Product Roadmap](/getting-started/product-roadmap) — Payments marked shipped in Phase 3; Credit Notes/Estimates remain Planned
+- Invoices docs updated to reflect that `amount_paid`/`balance_due` are now driven by Payments rather than "reserved for a future module"
+
+**Deferred**
+
+- Credit Notes (`amount_credited`), Estimates, payment receipt PDF export / e-mail delivery, partial refunds of a posted payment, online payment-gateway capture, multi-currency conversion
+
+---
+
+## Invoices module (2026-07-31)
+
+**Architecture**
+
+- First Phase 3 (Billing) module — customer invoices a tenant sends to its own customers (backend model `CustomerInvoice`, distinct from Central platform-billing `Invoice`). Flat Laravel, `module:invoices` + Spatie RBAC, mirrors the Quotations notes/timeline/assignee-scope pattern.
+- **No hard dependency** — unlike Quotations/Contracts (which require Opportunities), Invoices has no `module_dependencies` row and installs standalone. **Free Marketplace opt-in** — catalog category `billing` (`category_sort_order=30`), `is_default_included=false` / `is_billable=false`, `sort_order=10`.
+- **Soft optional links**: `contact_id` / `company_id` only surfaced/validated when Contacts/Companies is entitled; `quotation_id` is a plain tenant-scoped existence check (not gated by a `LinkableQuotation`-style entitlement rule).
+- Balance fields (`amount_paid`, `amount_credited`, `balance_due`) are reserved for the still-planned Payments/Credit Notes modules — read-only via this API today.
+
+**Backend**
+
+- Tables: `customer_invoices`, `customer_invoice_lines`, `customer_invoice_notes`, `customer_invoice_activities`
+- Line items (`description`, `quantity`, `unit_price`, `tax_rate`) fully replaced on create/update; `subtotal` / `tax_total` / `total` / `balance_due` computed server-side
+- Auto-numbered (`INV-00001`, prefix from `invoices_number_prefix` tenant setting)
+- Status workflow `draft → sent → partial|paid → void` (`CustomerInvoiceStatusEnum`); disallowed transitions return a 422 validation error
+- Permissions: `invoices.view|create|update|delete|restore|force.delete|assign|send|void`
+- Model + factories, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- Catalog registration via `DefaultModuleRegistrar` migration (migrate-only); permissions + default role map additive migrations
+- Pest: `tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php`
+
+**Frontend**
+
+- `src/pages/invoices/` — list page (KPIs incl. Overdue, filters, DataTable), create/edit form dialog (line items editor, contact/company/assignee pickers), detail sheet (overview/lines/notes/timeline tabs; send/void/assign/notes — no accept)
+- New tenant sidebar group **Billing** (after Sales) — kept separate from Central Billing nav
+- `customerInvoiceService`, `QUERY_KEYS.customerInvoices`, `PERMISSIONS.customerInvoices` — named distinctly from the pre-existing Central `invoiceService` / `PERMISSIONS.invoices` (platform subscription billing)
+- Notification registry: `customer_invoice.assigned` → `/invoices?invoice={id}`
+- Playwright: `e2e/tests/invoices/invoices.workflow.spec.ts` (`npm run test:e2e:invoices`) — enable module, create, search, send, void, timeline
+
+**Docs**
+
+- [invoices-overview.md](/user-guide/invoices-overview) / [invoices.md](/user-guide/invoices) (+ [developer](/developer-guide/invoices) / [production](/deployment/invoices))
+- [api/tenant-v1-invoices.md](/api/tenant-v1-invoices)
+- [Module Dependencies](/architecture/module-dependencies) updated (Invoices → Contacts/Companies/Quotations optional; Payments → Invoices required, backend-only for now)
+- [Product Roadmap](/getting-started/product-roadmap) — Invoices marked shipped in Phase 3; Payments/Credit Notes/Estimates remain Planned
+
+**Deferred**
+
+- Payments (posting `amount_paid`, auto `partial`/`paid` transitions), Credit Notes (`amount_credited`), Estimates, invoice PDF export / e-mail delivery, multi-currency conversion
+
+---
+
 ## Lead import first note (2026-07-31)
 
 Bulk lead import supports an optional **Note** column. When mapped and non-empty, import creates a first note on new leads (and appends a note when updating duplicates). Empty note cells are skipped. Template, wizard field list, Pest, and Playwright import coverage updated.

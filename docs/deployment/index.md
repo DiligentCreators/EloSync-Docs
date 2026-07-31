@@ -41,6 +41,10 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Opportunities](./opportunities) | Opportunities module ops |
 | [Quotations](./quotations) | Quotations module ops |
 | [Contracts](./contracts) | Contracts module ops |
+| [Invoices](./invoices) | Invoices module ops |
+| [Payments](./payments) | Payments module ops |
+| [Credit Notes](./credit-notes) | Credit Notes module ops |
+| [Estimates](./estimates) | Estimates module ops |
 | [Communication Templates](./communication-templates) | Templates module ops |
 | [Branded](./branded) | Custom domains ops |
 

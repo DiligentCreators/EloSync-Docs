@@ -60,6 +60,10 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Opportunities](./opportunities) | Opportunities + pipeline engineering guide |
 | [Quotations](./quotations) | Quotations module engineering guide |
 | [Contracts](./contracts) | Contracts module engineering guide |
+| [Invoices](./invoices) | Invoices module engineering guide |
+| [Payments](./payments) | Payments module engineering guide |
+| [Credit Notes](./credit-notes) | Credit Notes module engineering guide |
+| [Estimates](./estimates) | Estimates module engineering guide |
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
 
 ## Lead ingest & integrations
