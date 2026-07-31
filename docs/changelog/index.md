@@ -1,5 +1,9 @@
 # Changelog
 
+## Lead import first note (2026-07-31)
+
+Bulk lead import supports an optional **Note** column. When mapped and non-empty, import creates a first note on new leads (and appends a note when updating duplicates). Empty note cells are skipped. Template, wizard field list, Pest, and Playwright import coverage updated.
+
 ## Lead import numeric phone cast (2026-07-31)
 
 Bulk lead import no longer fails with “phone must be a string” when Excel/CSV parsers return phone cells as numbers. `LeadImportMapper` casts string fields before validation.
