@@ -8,13 +8,16 @@ Your workspace needs the free **Products** module. Access is controlled by `prod
 
 Open **Products** from the **Inventory** sidebar group. Search by SKU or name, filter by category and status, and use the KPI cards to focus the list. Users with restore permission can include deleted products or show deleted products only.
 
-## Create and edit a product
+## Create and edit a product or service
+
+The Products catalog covers both **goods** and **services**. Use one record type for everything you sell or purchase.
 
 1. Select **New product**.
 2. Enter a unique SKU and a name.
-3. Optionally choose a category and add description, unit, cost, price, currency, and reorder level.
-4. Keep **Track stock** enabled for products whose quantities should be managed by Inventory.
-5. Save.
+3. Optionally choose a category and add description, unit, cost, price, and reorder level.
+4. Choose a **currency** from the shared workspace currency list (defaults to your workspace currency from Settings).
+5. Keep **Track stock** enabled for goods whose quantities should be managed by Inventory. Turn **Track stock** off for services and other non-stocked items.
+6. Save.
 
 Products can be Active or Inactive. Inactive products remain in the catalog but should not be used for new operational work.
 

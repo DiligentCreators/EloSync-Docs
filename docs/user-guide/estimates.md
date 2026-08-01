@@ -16,7 +16,7 @@ Open **Estimates** from the sidebar (**Billing**, after Credit Notes). Search by
 ## Create an estimate
 
 1. Click **New estimate**
-2. Enter a title, currency, valid-until date, and notes
+2. Enter a title, currency (defaults to your workspace currency; full shared currency list), valid-until date, and notes
 3. Optionally link a **Contact** or **Company** (when Contacts/Companies is installed)
 4. Optionally link an **Opportunity**, and a **Quotation** for that opportunity, for traceability back to the sales pipeline
 5. Add line items (description, quantity, unit price, tax rate) — subtotal, tax, and total are calculated automatically

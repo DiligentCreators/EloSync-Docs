@@ -1,5 +1,18 @@
 # Changelog
 
+## Tenant currency defaults + Products as services (2026-08-01)
+
+**Currency UX**
+
+- Money forms (invoices, estimates, quotations, opportunities, contracts, payments, expenses, purchase orders) and Products/Vendors currency fields now use the shared searchable currency list from Settings (`currencyOptions`), not a five-code hard-coded dropdown or free-text code.
+- Create dialogs default currency to the tenant workspace currency from Settings (fallback `USD`). Edit keeps the record’s existing currency. Credit notes still inherit currency from the selected invoice; their bare create fallback also uses the tenant currency.
+
+**Products as services**
+
+- The Products catalog is documented and labeled for both goods and services. Services use the same catalog with **Track stock** turned off; Inventory continues to manage only stock-tracked items. No new product/service type column.
+
+---
+
 ## Phase 5 Inventory (2026-08-01)
 
 **Architecture**
