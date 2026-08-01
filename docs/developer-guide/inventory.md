@@ -19,7 +19,7 @@ Routes use `module:inventory`; permissions are `inventory.view|adjust|transfer|d
 
 `StockService` is the only stock mutation boundary. It creates/retrieves the product/warehouse `StockLevel`, locks it with `lockForUpdate()` inside a database transaction, rejects negative balances, updates `quantity_on_hand`, and writes the immutable `StockMovement`. Direct callers may use only `in`, `out`, and `adjust`; transfers use internal `transfer_in`/`transfer_out`.
 
-`postPurchaseOrderReceipt()` is idempotent per Purchase Order reference and posts only lines with a `product_id` whose product has `track_stock=true`.
+`postPurchaseOrderReceipt()` is idempotent per Purchase Order reference and posts only lines with a `product_id` whose product has `track_stock=true`. Callers must hold (or the method itself takes) a `lockForUpdate()` on the Purchase Order before the movement-exists check so concurrent receipts cannot double-post. `PurchaseOrderService::receive()` wraps status transition + receipt posting in one transaction so a failed post rolls the PO status back; `changeStatus()` routes `partially_received` / `received` through `receive()` so `POST …/status` cannot skip stock posting.
 
 ## Transfers
 

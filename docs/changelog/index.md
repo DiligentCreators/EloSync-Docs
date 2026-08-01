@@ -13,6 +13,7 @@
 - Added per-product/per-warehouse `stock_levels`, immutable `stock_movements`, and draftable `stock_transfers` with line items. `StockService` is the sole stock mutation boundary, using transactions and `lockForUpdate()` to maintain a non-negative balance and movement ledger.
 - Stock adjustment types are `in`, `out`, and `adjust`; transfers follow `draft → in_transit → completed|cancelled` and post paired stock movements only on completion.
 - Purchase Order lines now optionally link a Product. A **received** Purchase Order posts stock-in once for linked products with `track_stock=true` when Products and Inventory are entitled; `partially_received` remains acknowledgement-only. Receipt may select `warehouse_id` or use the default.
+- PO receive integrity: `POST …/status` with `received` / `partially_received` routes through `receive()` (same stock path as `/receive`); status + stock post share one transaction with `lockForUpdate()` on the PO so concurrent receives cannot double-post and a failed stock post does not leave the PO stuck as received.
 
 **Frontend, verification, and docs**
 

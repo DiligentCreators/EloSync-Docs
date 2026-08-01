@@ -89,7 +89,7 @@ Transitions `draft|sent|partially_received → cancelled`. Permission: `purchase
 
 Authorization depends on the target status:
 - `sent` → `purchase-orders.send`
-- `partially_received` / `received` → `purchase-orders.receive`
+- `partially_received` / `received` → `purchase-orders.receive` (same service path as `/receive`, including inventory posting when entitled; no `warehouse_id` on this body — uses the default warehouse)
 - `cancelled` → `purchase-orders.cancel`
 - other → `purchase-orders.update`
 
