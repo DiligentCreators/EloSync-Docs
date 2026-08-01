@@ -17,7 +17,7 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 ## Create & edit
 
 1. Click **New invoice**
-2. Enter a title, optional contact/company link (when Contacts/Companies is installed), optional linked quotation, currency, issue date, due date, and notes
+2. Enter a title, optional contact/company link (when Contacts/Companies is installed), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, and notes
 3. Add line items (description, quantity, unit price, tax rate) — subtotal, tax, and total are calculated automatically
 4. Optionally set an assignee (requires **assign**)
 5. Save
