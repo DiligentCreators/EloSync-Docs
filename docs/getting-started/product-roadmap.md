@@ -229,14 +229,21 @@ Implement inventory and warehouse management. ✅ **Achieved** — Products, War
 
 Expand into accounting and financial reporting.
 
-| Module | Status |
-|--------|--------|
-| Accounts | Planned |
-| Journals | Planned |
-| General Ledger | Planned |
-| Financial Reports | Planned |
+| Marketplace SKU | Status |
+|-----------------|--------|
+| [Accounting](/user-guide/accounting-overview) | ✅ Completed (CoA, journals draft/post/void, GL inquiry; free Finance opt-in) |
+| [Financial Reports](/user-guide/financial-reports-overview) | ✅ Completed (Trial Balance, P&L, Balance Sheet; hard-depends on Accounting) |
 
-**Goal:** Provide the financial backbone required for a complete ERP solution.
+#### Capabilities (inside the SKUs — not separate Marketplace modules)
+
+| Capability | Lives in |
+|------------|----------|
+| Accounts (chart of accounts) | Accounting |
+| Journals | Accounting |
+| General Ledger inquiry | Accounting |
+| Financial Reports (TB / P&L / BS) | Financial Reports |
+
+**Goal:** Provide the financial backbone required for a complete ERP solution. ✅ **Achieved** for the manual double-entry MVP (single currency; no auto-post from Billing/Purchasing/Inventory yet).
 
 ---
 

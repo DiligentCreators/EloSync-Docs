@@ -1,5 +1,29 @@
 # Changelog
 
+## Phase 6 Finance — Accounting + Financial Reports (2026-08-01)
+
+**Architecture**
+
+- Shipped two free Marketplace SKUs under category `finance` (sort `60`): **Accounting** (`accounting`, sort `10`) and **Financial Reports** (`financial-reports`, sort `20`). Both are opt-in and non-billable.
+- Roadmap capabilities Accounts / Journals / General Ledger live inside **Accounting**; Trial Balance / P&L / Balance Sheet live in **Financial Reports**.
+- Financial Reports hard-depends on Accounting (`module_dependencies`).
+
+**Domain**
+
+- Chart of accounts (`accounts`) with starter system CoA on first list; journal headers/lines with balanced debit/credit validation; lifecycle `draft → post → void` (void excluded from GL/reports).
+- General ledger inquiry aggregates posted lines (no balance cache). Manual double-entry only — no auto-post from Billing/Purchasing/Inventory; single currency.
+
+**Frontend & verification**
+
+- Finance nav: Accounts, Journals, General Ledger, Financial Reports; dual module/permission gates; Playwright `test:e2e:accounting` and `test:e2e:financial-reports`.
+- Pest coverage under `tests/Feature/Tenant/Accounting` and `FinancialReports`.
+
+**Docs**
+
+- User / developer / deployment / API guides for both SKUs; roadmap and module-dependencies updated.
+
+---
+
 ## Marketplace filters and dependency enable (2026-08-01)
 
 - Tenant Marketplace adds filter chips for **Installed**, **Available**, **Paid**, and **Free** (combinable: install status × pricing).
