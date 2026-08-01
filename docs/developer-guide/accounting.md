@@ -22,6 +22,7 @@ See [tenant-v1-accounting.md](/api/tenant-v1-accounting).
 
 - Routes: `/accounts`, `/journals`, `/general-ledger`
 - Nav group **Finance**, dual-gated `module: accounting` + `PERMISSIONS.accounting.view`
+- Production notes: `JournalEntryService::post` / `void` use `DB::transaction` + `lockForUpdate()`; system account `code`/`type` immutable; GL inquiry paginated (100/500).
 - Playwright (tenant project, one login session per suite):
   - Full module: `npm run test:e2e:accounting:modules` / `:headed` — validation, CoA CRUD, journal unbalanced/post/void, GL
   - Authz: `npm run test:e2e:accounting:authz` / `:headed` — `/403`, API 401/403, unbalanced 422

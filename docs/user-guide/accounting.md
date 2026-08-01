@@ -6,7 +6,8 @@ Enable **Accounting** from Marketplace (free). Nav appears under **Finance**: Ac
 
 1. Open **Accounts**. A starter chart loads automatically the first time.
 2. Use **New account** to add custom codes (code, name, type).
-3. System accounts cannot be deleted; accounts with posted journal lines cannot be deleted.
+3. System accounts cannot be deleted or renumbered; accounts with posted journal lines cannot be deleted.
+4. Soft-deleted custom accounts can be restored (or permanently deleted) via the trash filter when you have restore / force-delete permission.
 
 ## Journals
 
@@ -21,7 +22,7 @@ Enable **Accounting** from Marketplace (free). Nav appears under **Finance**: Ac
 
 1. Open **General Ledger**.
 2. Optionally filter by account and date range → **Apply filters**.
-3. Review opening/closing balance and line detail for posted journals only.
+3. Review opening/closing balance and paginated line detail for posted journals only.
 
 ## Related reports
 

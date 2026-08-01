@@ -11,17 +11,19 @@
 **Domain**
 
 - Chart of accounts (`accounts`) with starter system CoA on first list; journal headers/lines with balanced debit/credit validation; lifecycle `draft → post → void` (void excluded from GL/reports).
-- General ledger inquiry aggregates posted lines (no balance cache). Manual double-entry only — no auto-post from Billing/Purchasing/Inventory; single currency.
+- General ledger inquiry aggregates posted lines (no balance cache), **paginated** (default 100 / max 500) with period opening/closing balances. Manual double-entry only — no auto-post from Billing/Purchasing/Inventory; single currency.
+- Production hardeners: journal `post`/`void` use `lockForUpdate()` transactions; system account `code` locked in API; report/GL query dates FormRequest-validated; CoA seed race-safe.
 
 **Frontend & verification**
 
 - Finance nav: Accounts, Journals, General Ledger, Financial Reports; dual module/permission gates.
+- Accounts trash/restore/force-delete UX; journal void confirm + optional reason; GL pagination.
 - Playwright (per module, headed-ready): shared-session human suites (`accounting.modules` / `financial-reports.modules`), authz/security (`*.authz`), smoke (`*.workflow`); combined `test:e2e:finance` / `test:e2e:finance:headed`.
-- Pest coverage under `tests/Feature/Tenant/Accounting` and `FinancialReports`.
+- Pest: balance/post/void, cross-tenant isolation, double-post/void-draft, GL pagination, FR module gate + date validation.
 
 **Docs**
 
-- User / developer / deployment / API guides for both SKUs; roadmap and module-dependencies updated.
+- User / developer / deployment / API guides for both SKUs; roadmap, module-dependencies, and `database.md` finance tables updated.
 
 ---
 
