@@ -37,7 +37,7 @@ List items include `status`, `currency`, `subtotal`/`tax_total`/`total`, `order_
 
 ### POST `/purchase-orders`
 
-Body: `vendor_id` (required, must belong to the tenant and the Vendors module must be entitled), `title` (required), `notes`, `currency` (3-letter, default `USD`), `order_date`, `expected_date` (dates), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
+Body: `vendor_id` (required, must belong to the tenant and the Vendors module must be entitled), `title` (required), `notes`, `currency` (3-letter, default `USD`), `order_date`, `expected_date` (dates), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order, product_id? }`). `product_id` is optional and must reference an entitled, tenant-scoped Product when supplied.
 
 `subtotal`, `tax_total`, and `total` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`PO-00001`, configurable via the `purchase_orders_number_prefix` tenant setting).
 
@@ -75,9 +75,9 @@ Transitions `draft → sent`. Backfills `order_date` to today if unset. Permissi
 
 ### POST `/purchase-orders/{id}/receive`
 
-`{ "status": "partially_received"|"received" }`
+`{ "status": "partially_received"|"received", "warehouse_id": 2 }`
 
-Transitions `sent → partially_received|received` or `partially_received → received`. Any other `status` value is rejected with a 422 before the state machine is even evaluated. Permission: `purchase-orders.receive` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). **Acknowledgement only** — does not post stock movements to Inventory (no Inventory module exists on this platform).
+Transitions `sent → partially_received|received` or `partially_received → received`. Any other `status` value is rejected with a 422 before the state machine is even evaluated. `warehouse_id` is optional for receipt posting. Permission: `purchase-orders.receive` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). `partially_received` is acknowledgement-only. When Products and Inventory are entitled, `received` posts stock-in once for each linked `track_stock` product line, to `warehouse_id` or the default warehouse.
 
 ### POST `/purchase-orders/{id}/cancel`
 

@@ -16,7 +16,7 @@ Phase 4 Purchasing module (Milestone 2) on the frozen platform. Mirrors the [Est
 ## Capabilities
 
 - Header: number (`PO-` prefix, configurable), required vendor, title, status, currency, order date, expected date, notes, subtotal/tax/total
-- Line items (description, quantity, unit price, tax rate) — subtotal/tax/total recomputed server-side, draft-only edits
+- Line items (description, quantity, unit price, tax rate, optional product) — subtotal/tax/total recomputed server-side, draft-only edits
 - Status workflow: `draft → sent → partially_received | received | cancelled` (also `sent → cancelled`, `partially_received → received | cancelled`)
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `purchase-orders.assign`
 - Notes (comments) + activity timeline
@@ -32,9 +32,9 @@ Phase 4 Purchasing module (Milestone 2) on the frozen platform. Mirrors the [Est
 
 Enable Purchase Orders from Marketplace (free) — Marketplace blocks the install until **Vendors** is already entitled. Catalog: slug `purchase-orders`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 20`.
 
-## Receiving is acknowledgement only
+## Receiving and Inventory
 
-Marking a purchase order **partially received** or **received** is a status-only acknowledgement. It does **not** post stock movements to an Inventory module — there is no inventory module yet on this platform.
+**Partially received** remains a status-only acknowledgement. When Products and Inventory are entitled, marking an order **received** posts stock-in for each product-linked line whose Product tracks stock. Receiving may select an optional warehouse; the default warehouse is used otherwise. Lines without `product_id` do not post stock.
 
 ## Convert to expense (soft, Phase 4 Milestone 3)
 
@@ -42,7 +42,6 @@ Sent, partially received, or received purchase orders can be converted to a draf
 
 ## Explicitly deferred
 
-- Inventory stock posting on receipt
 - Purchase order PDFs / e-mail delivery to vendors
 - Partial-quantity receiving per line item (status is currently header-level only)
 - Dashboard widgets for Purchase Orders
