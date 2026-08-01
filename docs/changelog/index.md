@@ -1,5 +1,31 @@
 # Changelog
 
+## Phase 7 HR — Employees, Leave Management, Attendance, Payroll (2026-08-01)
+
+**Architecture**
+
+- Shipped four free Marketplace SKUs under category `hr` (sort `70`): **Employees** (`employees`), **Leave Management** (`leave-management`, sort `20`), **Attendance** (`attendance`, sort `30`), and **Payroll** (`payroll`, sort `40`). All are opt-in and non-billable.
+- Leave Management, Attendance, and Payroll hard-depend on Employees (`module_dependencies`). Payroll optionally depends on Accounting for pay-run journal posting.
+- Roadmap capabilities (directory, leave types/balances/requests, daily attendance, profiles, pay runs) live inside these four SKUs — not separate Marketplace modules.
+
+**Domain**
+
+- Employees directory with employment type/status, optional workspace user link, soft delete, and stats KPIs.
+- Leave types, per-year balances, and leave requests with `draft → pending → approved|rejected` (cancel from draft/pending); approve applies days to balances under `lockForUpdate()`.
+- Attendance records unique per employee/date with check-in/out and presence status (`present` / `absent` / `half_day` / `remote`).
+- Payroll profiles (one per employee) and pay runs that auto-generate lines from active profiles; lifecycle `draft → approved → paid`; optional soft post to a draft Accounting journal (expense debit / liability credit).
+
+**Frontend & verification**
+
+- HR nav group with Employees UI (list/form/detail); Leave / Attendance / Payroll API clients, query keys, and permissions wired for module pages.
+- Playwright: `test:e2e:employees`. Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
+
+**Docs**
+
+- User / developer / deployment / API guides for all four SKUs; roadmap, module-dependencies, and `database.md` HR tables updated.
+
+---
+
 ## Phase 6 Finance — Accounting + Financial Reports (2026-08-01)
 
 **Architecture**

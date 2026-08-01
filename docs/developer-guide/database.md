@@ -281,6 +281,42 @@ Phase 6 Finance. Manual double-entry only; Financial Reports reads posted journa
 
 General ledger inquiry (`GET /general-ledger`) paginates posted lines (default 100, max 500) while returning period opening/closing balances for the full filter set.
 
+## Employees / Leave Management / Attendance / Payroll module tables
+
+Phase 7 HR. Category `hr` (sort `70`). Free Marketplace opt-ins. Leave Management, Attendance, and Payroll hard-depend on Employees; Payroll optionally depends on Accounting for journal post.
+
+### `employees`
+
+`tenant_id`, `uuid`, unique-per-tenant `employee_number`, `first_name`, `last_name`, nullable `email` / `phone` / `job_title` / `department`, nullable `hire_date` / `termination_date`, `employment_type` (`full_time`\|`part_time`\|`contract`, default `full_time`), `status` (`active`\|`inactive`\|`terminated`, default `active`), nullable `user_id` (FK users), nullable `notes`, `created_by`, soft deletes. Indexes on `(tenant_id, status)` and `(tenant_id, last_name)`.
+
+### `leave_types`
+
+`tenant_id`, `uuid`, `name`, unique-per-tenant `code`, `is_paid`, `annual_allowance` (decimal 8,2), nullable `description`, `is_active`, `created_by`, soft deletes.
+
+### `leave_balances`
+
+`tenant_id`, `uuid`, `employee_id` (cascade), `leave_type_id` (cascade), `year`, `entitled` / `used` / `remaining` (decimal 8,2), `created_by`, soft deletes. Unique `(tenant_id, employee_id, leave_type_id, year)`.
+
+### `leave_requests`
+
+`tenant_id`, `uuid`, `employee_id`, `leave_type_id`, `start_date`, `end_date`, `days`, `status` (`draft`\|`pending`\|`approved`\|`rejected`\|`cancelled`), nullable `reason`, nullable `reviewed_by` / `reviewed_at` / `review_notes`, `created_by`, soft deletes. Approve applies days to the matching leave balance.
+
+### `attendance_records`
+
+`tenant_id`, `uuid`, `employee_id`, `date`, nullable `check_in` / `check_out` (time), `status` (`present`\|`absent`\|`half_day`\|`remote`, default `present`), nullable `notes`, `created_by`, soft deletes. Unique `(tenant_id, employee_id, date)`.
+
+### `payroll_profiles`
+
+`tenant_id`, `uuid`, `employee_id` (unique per tenant), `base_salary` (decimal 15,2), `currency` (char 3, default `USD`), `pay_frequency` (`monthly`\|`biweekly`\|`weekly`), nullable `effective_from` / `notes`, `created_by`, soft deletes.
+
+### `pay_runs`
+
+`tenant_id`, `uuid`, `period_start`, `period_end`, `status` (`draft`\|`approved`\|`paid`), nullable `notes`, nullable `approved_by` / `approved_at` / `paid_at`, nullable `journal_entry_id` (Accounting soft post), `created_by`, soft deletes.
+
+### `pay_run_lines`
+
+`tenant_id`, `uuid`, `pay_run_id` (cascade), `employee_id`, `gross` / `adjustments` / `net` (decimal 15,2), nullable `notes`, timestamps (no soft deletes). Unique `(pay_run_id, employee_id)`. Net = gross + adjustments.
+
 ## Communication Templates module tables
 
 ### `communication_templates`

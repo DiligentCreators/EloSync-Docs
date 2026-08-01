@@ -251,14 +251,24 @@ Expand into accounting and financial reporting.
 
 Implement workforce management.
 
-| Module | Status |
-|--------|--------|
-| Employees | Planned |
-| Attendance | Planned |
-| Leave Management | Planned |
-| Payroll | Planned |
+| Marketplace SKU | Status |
+|-----------------|--------|
+| [Employees](/user-guide/employees-overview) | ✅ Completed (directory, employment type/status, optional user link; free HR opt-in) |
+| [Leave Management](/user-guide/leave-management-overview) | ✅ Completed (types, balances, request workflow; hard-depends on Employees) |
+| [Attendance](/user-guide/attendance-overview) | ✅ Completed (daily records, check-in/out, presence status; hard-depends on Employees) |
+| [Payroll](/user-guide/payroll-overview) | ✅ Completed (profiles, pay runs draft/approve/pay, optional Accounting journal post; hard-depends on Employees) |
 
-**Goal:** Provide employee management, attendance tracking, leave workflows, and payroll processing.
+#### Capabilities (inside the SKUs — not separate Marketplace modules)
+
+| Capability | Lives in |
+|------------|----------|
+| Employee directory | Employees |
+| Leave types / balances / requests | Leave Management |
+| Daily attendance records | Attendance |
+| Payroll profiles | Payroll |
+| Pay runs (approve / pay / post) | Payroll |
+
+**Goal:** Provide employee management, attendance tracking, leave workflows, and payroll processing. ✅ **Achieved** for the HR MVP (no tax engine, biometric integrations, or accrual policies yet).
 
 ---
 
