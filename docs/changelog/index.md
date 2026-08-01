@@ -17,7 +17,7 @@
 **Frontend, verification, and docs**
 
 - Added Products, Warehouses, and Inventory tenant pages using the existing AppLayout, entitlement/permission-gated navigation, services, types, query keys, forms, detail sheets, and shared states.
-- Added Pest coverage under `tests/Feature/Tenant/Product`, `Warehouse`, and `Inventory`, plus Playwright commands `test:e2e:products`, `test:e2e:warehouses`, and `test:e2e:inventory`.
+- Added Pest coverage under `tests/Feature/Tenant/Product`, `Warehouse`, and `Inventory`, plus Playwright commands `test:e2e:products`, `test:e2e:warehouses`, `test:e2e:inventory`, and shared-session `test:e2e:inventory-phase` / `test:e2e:inventory-phase:headed` (Products → Warehouses → Stock → PO receive, with form validation and human-mistake paths under one login).
 - Added User, Developer, Deployment, and Tenant API guides; updated module dependencies, database dictionary, Purchase Order receiving documentation, roadmap, changelog, and documentation sidebars.
 
 **Out of scope**

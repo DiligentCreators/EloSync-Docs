@@ -32,4 +32,6 @@ Routes use `module:inventory`; permissions are `inventory.view|adjust|transfer|d
 ```bash
 php artisan test --compact tests/Feature/Tenant/Inventory
 npm run test:e2e:inventory
+npm run test:e2e:inventory-phase
+npm run test:e2e:inventory-phase:headed
 ```
