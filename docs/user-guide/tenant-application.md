@@ -35,7 +35,9 @@ Open **Settings → Marketplace → Open Marketplace**, or go to `/#/marketplace
 |--------|-----|-------|
 | **Install** / **Subscribe** | `marketplace.purchase` | Free modules activate immediately; paid modules go through checkout |
 | **Remove** / **Cancel subscription** | `marketplace.purchase` | Opt-in modules only — not core Leads/Tasks. Remove **dependents** first when prompted (modules that need this one) |
-| **Browse** | `marketplace.view` | Catalog search and module details. Badges: **Installed**, **Available** (free), **Billable** (paid), or **Pending** |
+| **Browse** | `marketplace.view` | Catalog search, filter chips (**Installed** / **Available** / **Paid** / **Free**), and module details. Badges: **Installed**, **Available** (free), **Billable** (paid), or **Pending** |
+
+When a module requires another module that is not installed yet, the detail drawer lists the dependency with its fee (**Free** or subscription price) and an **Install** / **Subscribe** action. Enable required modules first; the parent module’s Install/Subscribe unlocks afterward.
 
 ### Catalog pricing (current)
 
