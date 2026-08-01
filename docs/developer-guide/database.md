@@ -178,6 +178,40 @@ Tenant `users` includes:
 - `exclude_from_lead_auto_assign` (boolean) — omit from lead assignee pickers / equal distribute
 - `receive_all_users_daily_summary` (boolean, default `false`) — receive team CRM summary email instead of personal
 
+## Vendors module tables
+
+### `vendors`
+
+`tenant_id`, `uuid`, `name`, nullable `email` / `phone` / `website` / `address` / `tax_id` / `payment_terms`, `currency` (nullable, 3-char), `status` (`active`|`inactive`), `assigned_to`, `created_by`, soft deletes. Spatie activity log name `vendors`. Unique `uuid`. Indexes on tenant+name/email/assigned_to/status.
+
+### `vendor_notes` / `vendor_activities`
+
+Notes (author + body) and supplier timeline (`type`, `description`, `properties` JSON).
+
+## Purchase Orders module tables
+
+### `purchase_orders`
+
+`tenant_id`, `uuid`, `number` (unique per tenant), required `vendor_id` (FK → `vendors`, restrict on delete), `title`, `notes`, `status` (`draft`|`sent`|`partially_received`|`received`|`cancelled`), `currency`, `subtotal` / `tax_total` / `total`, `order_date`, `expected_date`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `purchase-orders`. Content edits are **draft-only**; send/receive/cancel/assign remain available per status machine. Receiving is acknowledgement-only (no inventory posting).
+
+### `purchase_order_lines`
+
+`tenant_id`, `purchase_order_id` (cascade), `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Synced replace-all on create/update via `PurchaseOrderService::syncLines()`.
+
+### `purchase_order_notes` / `purchase_order_activities`
+
+Notes (author + body) and procurement timeline (`type`, `description`, `properties` JSON; includes `status_changed`, `converted`).
+
+## Expenses module tables
+
+### `expenses`
+
+`tenant_id`, `uuid`, `number` (unique per tenant), `title`, `category` (`travel`|`office`|`software`|`utilities`|`other`), `amount`, `tax_amount`, `currency`, `expense_date`, `status` (`draft`|`submitted`|`approved`|`rejected`|`paid`|`cancelled`), nullable `vendor_id` (FK → `vendors`, null on delete; soft entitlement), nullable unique `purchase_order_id` (FK → `purchase_orders`, null on delete; soft entitlement; one expense per PO), `assigned_to`, `created_by`, `notes`, soft deletes. Spatie activity log name `expenses`. No line-item child table in MVP. Content edits are **draft-only**.
+
+### `expense_notes` / `expense_activities`
+
+Notes (author + body) and expense timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
 ## Communication Templates module tables
 
 ### `communication_templates`

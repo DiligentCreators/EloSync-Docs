@@ -1,0 +1,54 @@
+# Expenses — User Guide
+
+## Who can use Expenses
+
+Enable the **Expenses** module from Marketplace (free) — no other modules are required first. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `submit`, `approve`, `reject`, `pay`, `cancel` as needed).
+
+Without **assign**, you only see expenses assigned to you.
+
+## List & table
+
+Open **Expenses** from the sidebar, under the **Purchasing** group (after Purchase Orders). Search by title or number, filter by status or category, toggle **My Expenses**, and switch KPI cards (Total, Mine, Draft, Submitted, Approved, Paid) to quick-filter the table. The table shows category, status, amount, expense date, assignee, and the **latest note**.
+
+- Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted expense from the row menu
+- **Delete permanently** requires `expenses.force.delete` — granted to the workspace **owner** by default
+
+## Create an expense
+
+1. Click **New expense**
+2. Enter a title, category, amount, and optional tax amount
+3. Optionally set currency and an expense date
+4. If **Vendors** or **Purchase Orders** are installed on your workspace, optionally link a vendor and/or a purchase order
+5. Optionally set an assignee (requires **assign**)
+6. Save
+
+Edit from the row menu or the detail sheet while the expense is still **Draft**. After **Submit**, content is locked; use status actions and assignment instead.
+
+## Status workflow
+
+An expense starts in **Draft**. Move it forward with:
+
+- **Submit** (`draft → submitted`) — sends the expense for approval
+- **Approve** (`submitted → approved`) — requires `expenses.approve`, not limited to the assignee
+- **Reject** (`submitted → rejected`) — requires `expenses.reject`; terminal
+- **Mark as paid** (`approved → paid`) — requires `expenses.pay`; terminal
+- **Cancel** (`draft → cancelled` or `submitted → cancelled`) — terminal
+
+Invalid transitions (e.g. paying directly from Draft) are rejected with a validation error. `Rejected`, `Paid`, and `Cancelled` are terminal — no further transitions.
+
+## Optional vendor / purchase order links
+
+Both links are **soft** — they only appear in the create/edit form when the corresponding module (**Vendors** / **Purchase Orders**) is installed on your workspace, and they're always optional even when installed. An expense created without either link works exactly the same as one that has them; they're purely for cross-referencing spend to a supplier or an order.
+
+## Assignment
+
+Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+
+## Notes & timeline
+
+- **Notes** — free-form notes on the expense
+- **Timeline** — history of create, update, assignment, status change, note, and delete/restore events
+
+## What's not here yet
+
+Receipt attachments, reimbursement/payout tracking, general ledger posting, and multi-line (itemized) expenses are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
