@@ -53,6 +53,15 @@ todos
 communication_templates
   (tenant-scoped plain-text templates — Communication Templates module)
 
+product_categories / products / product_notes / product_activities
+  (tenant-scoped product catalog — Products module)
+
+warehouses / warehouse_notes / warehouse_activities
+  (tenant-scoped stock locations — Warehouses module)
+
+stock_levels / stock_movements / stock_transfers ──► stock_transfer_lines
+  (tenant-scoped inventory ledger and transfers — Inventory module; hard-depends on Products)
+
 notifications
   (Laravel database notifications — polymorphic notifiable)
 ```
@@ -196,7 +205,7 @@ Notes (author + body) and supplier timeline (`type`, `description`, `properties`
 
 ### `purchase_order_lines`
 
-`tenant_id`, `purchase_order_id` (cascade), `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Synced replace-all on create/update via `PurchaseOrderService::syncLines()`.
+`tenant_id`, `purchase_order_id` (cascade), nullable `product_id` (FK → `products`, null on product delete), `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Synced replace-all on create/update via `PurchaseOrderService::syncLines()`. Product link is optional and supports stock receipt when Products and Inventory are entitled.
 
 ### `purchase_order_notes` / `purchase_order_activities`
 
@@ -211,6 +220,48 @@ Notes (author + body) and procurement timeline (`type`, `description`, `properti
 ### `expense_notes` / `expense_activities`
 
 Notes (author + body) and expense timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
+## Products module tables
+
+### `product_categories`
+
+`tenant_id`, `uuid`, `name`, nullable `description`, soft deletes. Tenant-scoped catalog categories; deleting a category nulls linked product `category_id`.
+
+### `products`
+
+`tenant_id`, `uuid`, unique-per-tenant `sku`, `name`, nullable `category_id`, `description`, `unit`, `cost`, `price`, nullable 3-character `currency`, `track_stock`, nullable `reorder_level`, `status` (`active`|`inactive`), `created_by`, soft deletes. Spatie activity log name `products`.
+
+### `product_notes` / `product_activities`
+
+Notes (author + body) and product domain timeline (`type`, `description`, `properties` JSON).
+
+## Warehouses module tables
+
+### `warehouses`
+
+`tenant_id`, `uuid`, unique-per-tenant `code`, `name`, nullable `address`, `is_default`, `is_active`, `created_by`, soft deletes. The service protects the sole default warehouse.
+
+### `warehouse_notes` / `warehouse_activities`
+
+Notes (author + body) and warehouse domain timeline (`type`, `description`, `properties` JSON).
+
+## Inventory module tables
+
+### `stock_levels`
+
+`tenant_id`, `product_id`, `warehouse_id`, `quantity_on_hand`; unique `(tenant_id, product_id, warehouse_id)`. This is the current per-product, per-warehouse balance.
+
+### `stock_movements`
+
+`tenant_id`, `product_id`, `warehouse_id`, `type` (`in`|`out`|`adjust`|`transfer_in`|`transfer_out`), `quantity`, `balance_after`, nullable polymorphic-style `reference_type` / `reference_id`, nullable `notes`, `created_by`, `created_at`. Append-only ledger rows are written by `StockService`.
+
+### `stock_transfers`
+
+`tenant_id`, `uuid`, unique-per-tenant `number`, `from_warehouse_id`, `to_warehouse_id`, `status` (`draft`|`in_transit`|`completed`|`cancelled`), nullable `notes`, `created_by`, soft deletes.
+
+### `stock_transfer_lines`
+
+`tenant_id`, `stock_transfer_id` (cascade), `product_id` (restrict), `quantity`, timestamps. Unique `(stock_transfer_id, product_id)`.
 
 ## Communication Templates module tables
 

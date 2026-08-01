@@ -175,7 +175,7 @@ Introduce purchasing and vendor management. New category: `purchasing` (**Purcha
 - Required Vendor link (**hard dependency** — Marketplace blocks install until Vendors is entitled)
 - Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
 - Status workflow: `draft → sent → partially_received|received|cancelled` (also `sent → cancelled`, `partially_received → received|cancelled`)
-- Receiving is acknowledgement only — no Inventory stock posting
+- `partially_received` is acknowledgement-only; a fully received PO posts stock-in for product-linked stock-tracked lines when Products and Inventory are entitled
 - Convert to Expense (`POST /purchase-orders/{id}/convert`) — one-way, one-time, gated by a **soft** (call-time) check that the Expenses module is entitled, not a hard `module_dependencies` row
 - Notes, assignment, domain timeline; free Marketplace opt-in under category `purchasing`
 
@@ -194,17 +194,34 @@ Introduce purchasing and vendor management. New category: `purchasing` (**Purcha
 
 ## Phase 5 — Inventory
 
-Implement inventory and warehouse management.
+Implement inventory and warehouse management. ✅ **Achieved** — Products, Warehouses, and Inventory are all shipped.
 
 | Module | Status |
 |--------|--------|
-| Products | Planned |
-| Categories | Planned |
-| Warehouses | Planned |
-| Stock Management | Planned |
-| Stock Transfers | Planned |
+| [Products](/user-guide/products-overview) (including Categories) | ✅ Completed (catalog, categories, stock-tracking settings, notes/activity; free Inventory opt-in) |
+| [Warehouses](/user-guide/warehouses-overview) | ✅ Completed (locations, default `MAIN`, notes/activity; free Inventory opt-in) |
+| [Inventory](/user-guide/inventory-overview) — Stock Management | ✅ Completed (levels, movement ledger, controlled in/out/adjust changes; hard-depends on Products) |
+| [Inventory](/user-guide/inventory-overview) — Stock Transfers | ✅ Completed (draft → in transit → completed/cancelled; posts stock on completion) |
 
-**Goal:** Provide inventory control, stock tracking, warehouse operations, and product management.
+#### Products (shipped)
+
+- SKU catalog with categories, unit/cost/price/currency, status, optional reorder level, and stock-tracking flag
+- Optional `product_id` on Purchase Order lines; only stock-tracked linked products post receipt stock
+- Notes, domain activity, soft delete/restore; free Marketplace opt-in under category `inventory`
+
+#### Warehouses (shipped)
+
+- Tenant locations with active/default status; `ensureDefaultWarehouse()` provides `MAIN` when required
+- The sole default warehouse cannot be deleted
+- Notes, domain activity, soft delete/restore; free Marketplace opt-in under category `inventory`
+
+#### Inventory (shipped)
+
+- Per-product/per-warehouse levels, movement history, low-stock visibility, and non-negative transactional posting
+- Adjustments (`in`, `out`, `adjust`) and transfers (`draft → in_transit → completed|cancelled`)
+- Completing a transfer posts paired movements; a received Purchase Order posts stock-in once for product-linked stock-tracked lines when Products and Inventory are entitled
+
+**Goal:** Provide inventory control, stock tracking, warehouse operations, and product management. ✅ **Achieved.**
 
 ---
 

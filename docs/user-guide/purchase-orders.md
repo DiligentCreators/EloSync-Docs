@@ -18,7 +18,7 @@ Open **Purchase Orders** from the sidebar, under the **Purchasing** group (next 
 1. Click **New purchase order**
 2. Enter a title and select a **Vendor** (required)
 3. Optionally set currency, order date, expected date, and notes
-4. Add line items (description, quantity, unit price, tax rate) — subtotal, tax, and total are calculated automatically
+4. Add line items (description, quantity, unit price, tax rate, and optional Product) — subtotal, tax, and total are calculated automatically
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
@@ -35,7 +35,7 @@ A purchase order starts in **Draft**. Move it forward with:
 
 Invalid transitions (e.g. receiving directly from Draft) are rejected with a validation error. `Received` and `Cancelled` are terminal — no further transitions.
 
-Receiving is an **acknowledgement only** — it does not post stock movements anywhere. There is no Inventory module on this platform yet.
+**Partially received** is acknowledgement-only. If both **Products** and **Inventory** are installed, marking an order **Received** posts stock-in for each line with a selected Product that has **Track stock** enabled. You may choose a warehouse when receiving; otherwise the default warehouse is used. Lines without a Product, and products that do not track stock, do not post stock.
 
 ## Assignment
 

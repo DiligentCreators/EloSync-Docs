@@ -30,14 +30,14 @@ Mirror of the [Estimates developer guide](/developer-guide/estimates) (assignee 
 - `send()` backfills `order_date` to today if it wasn't already set, then transitions `draft → sent`.
 - `receive()` only accepts a target status of `partially_received` or `received` — any other value throws a 422 validation error before even checking the state machine.
 - Content updates (`PUT`) and line sync are **draft-only** via `PurchaseOrder::isEditable()` (`status === draft`). Assignment remains available after send via `POST …/assign`.
-- `POST …/status` route middleware requires `purchase-orders.update`; the controller then re-checks the specific gate per target status (`sent` → `send`, `partially_received`/`received` → `receive`, `cancelled` → `cancel`, otherwise `update`) before delegating to `PurchaseOrderService::changeStatus()`.
+- `POST …/status` route middleware requires `purchase-orders.update`; the controller then re-checks the specific gate per target status (`sent` → `send`, `partially_received`/`received` → `receive`, `cancelled` → `cancel`, otherwise `update`) before delegating to `PurchaseOrderService::changeStatus()`. Receive statuses (`partially_received` / `received`) are routed through `receive()` so `/status` and `/receive` share the same inventory posting and atomicity guarantees (mirrors invoices routing `void` through `void()`).
 - `send` / `receive` / `cancel` policies are assignee-scoped (same as `view` / `update`) unless the actor has `purchase-orders.assign` or is superadmin.
-- Lines are a first-class child table (`purchase_order_lines`), not embedded JSON — each row is `{ description, quantity, unit_price, tax_rate, sort_order }`. `subtotal`/`tax_total`/`total` are recomputed server-side from lines on create/update, same as Estimates/Invoices/Quotations.
+- Lines are a first-class child table (`purchase_order_lines`), not embedded JSON — each row is `{ description, quantity, unit_price, tax_rate, sort_order, product_id? }`. `product_id` is nullable and, when supplied, is tenant/entitlement validated by `LinkableProduct`. `subtotal`/`tax_total`/`total` are recomputed server-side from lines on create/update, same as Estimates/Invoices/Quotations.
 - Assignee scoping via `ScopesToAssignee` with `purchase-orders.assign`.
 - `purchase-orders.force.delete` is not granted to any default role — owner/superadmin only.
 - `vendor_id` is **required** (unlike Estimates' optional contact/company) and validated via `LinkableVendor` — must exist, belong to the tenant, and the Vendors module must be entitled.
 - Auto-numbering: `PurchaseOrderService::nextNumber()` reads the `purchase_orders_number_prefix` tenant setting (default `PO-`), then zero-pads a running count to 5 digits — same pattern as Estimates/Invoices/Payments. Exposed via `PUT /settings` (`UpdateTenantSettingsRequest`), not yet surfaced in the Tenant Settings UI. `purchase_orders` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
-- **Receiving is acknowledgement only** — `receive()` does not post stock movements to an Inventory module (none exists on this platform yet).
+- **Receiving bridge** — `partially_received` remains acknowledgement-only. On `received`, when Products and Inventory are entitled, `StockService::postPurchaseOrderReceipt()` posts stock-in once for linked `track_stock` product lines, using the optional receive `warehouse_id` or the default warehouse. `receive()` runs status transition + stock post in one DB transaction with `lockForUpdate()` on the purchase order (and again inside receipt posting) so concurrent receives cannot double-post and a failed stock post rolls the status back.
 - **Convert to expense is soft, one-way, one-time**: `PurchaseOrderService::convertToExpense()` checks `EntitlementService::hasModule($tenant, 'expenses')` at call time (not a hard `module_dependencies` row), rejects if an `Expense` already references this `purchase_order_id` (`withTrashed()` check), and only allows `sent`/`partially_received`/`received` source statuses via `PurchaseOrder::isConvertible()`. `PurchaseOrder::convertedExpense()` (`hasOne`) and `ListPurchaseOrderResource.converted_expense_id` let the frontend hide the action once used.
 
 ## Permissions
@@ -98,7 +98,6 @@ npm run test:e2e:purchase-orders
 
 ## Deferred
 
-- Inventory stock posting on receipt (no Inventory module exists yet)
 - Per-line partial receiving
 - Dashboard widgets for Purchase Orders
 - Communication template placeholders for Purchase Orders

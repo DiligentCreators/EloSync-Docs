@@ -201,6 +201,33 @@ Payroll
 
 Payroll needs employee and employment records from HR. Payroll should not re-implement HR domain logic.
 
+### Inventory → Products (required, shipped)
+
+```text
+Inventory
+  └── depends on Products   (required)
+```
+
+Inventory declares Products as a required hard dependency (`module_dependencies`), so Marketplace blocks Inventory installation until Products is entitled. Stock levels, adjustments, transfers, and receipt posting all reference Products.
+
+### Inventory → Warehouses (optional, shipped)
+
+```text
+Inventory
+  └── may use Warehouses   (optional — locations and default warehouse)
+```
+
+Inventory soft-uses Warehouses through `WarehouseService::ensureDefaultWarehouse()` to provide the `MAIN` location when a stock action omits `warehouse_id`. The Warehouses module gates its own management UI and CRUD; it is not a hard Inventory install dependency.
+
+### Purchase Orders → Inventory (optional, shipped)
+
+```text
+Purchase Orders
+  └── may use Inventory   (optional — receipt stock posting)
+```
+
+Purchase Orders continues to work without Inventory. When Inventory and Products are entitled, receiving a PO posts stock-in for each line with a nullable `product_id` whose linked Product tracks stock; `LinkableProduct` validates that link. Partially received remains acknowledgement-only. This is a soft integration, not a `module_dependencies` row.
+
 ### Accounting → Inventory (optional)
 
 ```text
@@ -208,7 +235,7 @@ Accounting
   └── may depend on Inventory   (optional)
 ```
 
-Accounting can operate without Inventory. When Inventory is installed, Accounting may optionally integrate stock valuations or COGS-related flows through contracts/services.
+Accounting can operate without Inventory. Inventory is now shipped; a future Accounting module may optionally integrate stock valuations or COGS-related flows through contracts/services.
 
 ### AI → domain modules (optional)
 

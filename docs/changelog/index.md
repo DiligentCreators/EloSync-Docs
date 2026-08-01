@@ -1,5 +1,32 @@
 # Changelog
 
+## Phase 5 Inventory (2026-08-01)
+
+**Architecture**
+
+- Shipped three free Marketplace SKUs under the new `inventory` category (category sort `50`): **Products** (`10`), **Warehouses** (`20`), and **Inventory** (`30`). All are opt-in, non-billable, and not default-included; catalog module count increases from **20 to 23**.
+- Inventory has a required hard dependency on Products. Warehouses is a soft Inventory integration: its UI CRUD remains module-gated while `ensureDefaultWarehouse()` supplies active default code `MAIN` to operations that omit a location.
+- Products provides categories, stock-tracking flags, notes/activity, and nullable `product_id` integration on Purchase Order lines. Warehouses provides locations, notes/activity, and guards against deleting the sole default warehouse.
+
+**Stock and purchasing**
+
+- Added per-product/per-warehouse `stock_levels`, immutable `stock_movements`, and draftable `stock_transfers` with line items. `StockService` is the sole stock mutation boundary, using transactions and `lockForUpdate()` to maintain a non-negative balance and movement ledger.
+- Stock adjustment types are `in`, `out`, and `adjust`; transfers follow `draft → in_transit → completed|cancelled` and post paired stock movements only on completion.
+- Purchase Order lines now optionally link a Product. A **received** Purchase Order posts stock-in once for linked products with `track_stock=true` when Products and Inventory are entitled; `partially_received` remains acknowledgement-only. Receipt may select `warehouse_id` or use the default.
+- PO receive integrity: `POST …/status` with `received` / `partially_received` routes through `receive()` (same stock path as `/receive`); status + stock post share one transaction with `lockForUpdate()` on the PO so concurrent receives cannot double-post and a failed stock post does not leave the PO stuck as received.
+
+**Frontend, verification, and docs**
+
+- Added Products, Warehouses, and Inventory tenant pages using the existing AppLayout, entitlement/permission-gated navigation, services, types, query keys, forms, detail sheets, and shared states.
+- Added Pest coverage under `tests/Feature/Tenant/Product`, `Warehouse`, and `Inventory`, plus Playwright commands `test:e2e:products`, `test:e2e:warehouses`, `test:e2e:inventory`, and shared-session `test:e2e:inventory-phase` / `test:e2e:inventory-phase:headed` (Products → Warehouses → Stock → PO receive, with form validation and human-mistake paths under one login).
+- Added User, Developer, Deployment, and Tenant API guides; updated module dependencies, database dictionary, Purchase Order receiving documentation, roadmap, changelog, and documentation sidebars.
+
+**Out of scope**
+
+- Serial/lot tracking, inventory valuation, and COGS are not included in Phase 5.
+
+---
+
 ## Expenses module + Purchase Order convert (2026-08-01)
 
 **Architecture**
