@@ -263,6 +263,24 @@ Notes (author + body) and warehouse domain timeline (`type`, `description`, `pro
 
 `tenant_id`, `stock_transfer_id` (cascade), `product_id` (restrict), `quantity`, timestamps. Unique `(stock_transfer_id, product_id)`.
 
+## Accounting / Financial Reports module tables
+
+Phase 6 Finance. Manual double-entry only; Financial Reports reads posted journal lines (void excluded). Single currency MVP — amounts are decimal, not FX-aware.
+
+### `accounts`
+
+`tenant_id`, `uuid`, unique-per-tenant `code`, `name`, `type` (`asset`|`liability`|`equity`|`revenue`|`expense`), nullable `parent_id` (self-FK), `is_active`, `is_system`, nullable `description`, soft deletes. Starter system CoA is lazy-seeded by `ChartOfAccountsSeederService` on first Accounts list (not via `db:seed`). System rows cannot change `code`/`type` or be deleted.
+
+### `journal_entries`
+
+`tenant_id`, `uuid`, unique-per-tenant `number` (e.g. `JE-00001`), `entry_date`, nullable `memo`, `status` (`draft`|`posted`|`void`), nullable `posted_at` / `posted_by`, nullable `voided_at` / `voided_by` / `void_reason`, `created_by`, soft deletes. Post/void run under `lockForUpdate()` transactions. Only drafts are editable/deletable; void excludes the entry from GL and reports (no reversing journal).
+
+### `journal_entry_lines`
+
+`tenant_id`, `journal_entry_id` (cascade), `account_id` (restrict), `debit`, `credit`, nullable `memo`, `sort_order`. Balanced debit/credit enforced in `JournalEntryService`. Indexes support GL inquiry by account and journal.
+
+General ledger inquiry (`GET /general-ledger`) paginates posted lines (default 100, max 500) while returning period opening/closing balances for the full filter set.
+
 ## Communication Templates module tables
 
 ### `communication_templates`

@@ -228,14 +228,23 @@ Purchase Orders
 
 Purchase Orders continues to work without Inventory. When Inventory and Products are entitled, receiving a PO posts stock-in for each line with a nullable `product_id` whose linked Product tracks stock; `LinkableProduct` validates that link. Partially received remains acknowledgement-only. This is a soft integration, not a `module_dependencies` row.
 
-### Accounting → Inventory (optional)
+### Financial Reports → Accounting (required, shipped)
+
+```text
+Financial Reports
+  └── depends on Accounting   (required)
+```
+
+Financial Reports declares Accounting as a required hard dependency (`module_dependencies`). Marketplace blocks installation until Accounting is entitled. Reports read posted journal lines only.
+
+### Accounting → Inventory (optional, future)
 
 ```text
 Accounting
   └── may depend on Inventory   (optional)
 ```
 
-Accounting can operate without Inventory. Inventory is now shipped; a future Accounting module may optionally integrate stock valuations or COGS-related flows through contracts/services.
+Accounting ships standalone (manual double-entry). A future milestone may optionally integrate stock valuations or COGS-related flows through contracts/services. Auto-posting from Expenses / Invoices / Payments / Credit Notes is also deferred (soft integrations, not hard install deps).
 
 ### AI → domain modules (optional)
 
