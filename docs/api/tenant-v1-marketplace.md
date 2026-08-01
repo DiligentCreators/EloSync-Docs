@@ -55,6 +55,18 @@ Rates: `CurrencyConversionService` → `open.er-api.com` (configurable via `CURR
 | `required_modules` / `optional_modules` / `missing_required_modules` | **Dependencies** — modules this one needs (upstream) |
 | `blocking_dependents` | **Dependents** — installed modules that hard-depend on this one (downstream; blocks remove) |
 
+Dependency summaries (`required_modules`, `optional_modules`, `missing_required_modules`) include pricing and install flags so the SPA can offer **Install** / **Subscribe** on a missing required module without an extra detail round-trip:
+
+| Field | Meaning |
+|-------|---------|
+| `id` / `name` / `slug` | Catalog identity |
+| `is_billable` / `is_default_included` | Commercial / core flags |
+| `already_installed` / `purchase_pending` | Workspace install state |
+| `monthly_price` / `yearly_price` / `currency` | Display amounts (workspace currency when FX succeeds) |
+| `base_*` / `billed_currency` / `price_converted` | Same display-FX shape as list rows |
+
+`blocking_dependents` remains `{ id, name, slug }` only.
+
 UI copy must keep these directions distinct: “no dependencies” means nothing upstream is required; dependents (e.g. Meetings → Calendar) still block remove until those modules are removed first.
 
 ### Cancel rules

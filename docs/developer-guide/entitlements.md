@@ -124,7 +124,7 @@ Cancel eligibility is based on catalog `is_default_included` (not subscription `
 
 ## Dependencies
 
-`module_dependencies` supports hard/optional deps for marketplace modules. Leads and Tasks have none today. `MarketplaceService::detailForTenant` exposes `required_modules`, `optional_modules`, `missing_required_modules`, `already_installed`, `can_cancel`, and `blocking_dependents`.
+`module_dependencies` supports hard/optional deps for marketplace modules. Leads and Tasks have none today. `MarketplaceService::detailForTenant` exposes `required_modules`, `optional_modules`, `missing_required_modules`, `already_installed`, `can_cancel`, and `blocking_dependents`. Dependency summaries are enriched via `summarizeModulesForTenant` with pricing and install flags so the tenant SPA can enable a missing required module (and show its subscription fee) from the detail drawer.
 
 ## Billing
 

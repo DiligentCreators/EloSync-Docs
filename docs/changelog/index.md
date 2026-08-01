@@ -1,5 +1,13 @@
 # Changelog
 
+## Marketplace filters and dependency enable (2026-08-01)
+
+- Tenant Marketplace adds filter chips for **Installed**, **Available**, **Paid**, and **Free** (combinable: install status × pricing).
+- Module detail drawer shows required-dependency fee and an **Install** / **Subscribe** action when a hard dependency is missing. Paid dependencies open that module’s subscribe flow (billing cycle + checkout); free dependencies install in place.
+- Tenant (and Central) marketplace show payloads enrich `required_modules` / `optional_modules` / `missing_required_modules` with `is_billable`, prices, and install flags.
+
+---
+
 ## Tenant currency defaults + Products as services (2026-08-01)
 
 **Currency UX**
