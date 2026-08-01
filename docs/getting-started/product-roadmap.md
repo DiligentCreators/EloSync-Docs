@@ -155,15 +155,40 @@ Build a comprehensive billing and invoicing solution that integrates with the ex
 
 ## Phase 4 — Purchasing
 
-Introduce purchasing and vendor management.
+Introduce purchasing and vendor management. New category: `purchasing` (**Purchasing**), `category_sort_order = 40`. ✅ **Achieved** — Vendors, Purchase Orders, and Expenses are all shipped, completing Phase 4.
 
 | Module | Status |
 |--------|--------|
-| Vendors | Planned |
-| Purchase Orders | Planned |
-| Expenses | Planned |
+| [Vendors](/user-guide/vendors-overview) | ✅ Completed (supplier directory, assignment, notes/activity timeline, status; free Purchasing opt-in) |
+| [Purchase Orders](/user-guide/purchase-orders-overview) | ✅ Completed (header + lines, required vendor link, status workflow, assignment, notes/activity timeline, convert to expense; free Purchasing opt-in) |
+| [Expenses](/user-guide/expenses-overview) | ✅ Completed (single-amount MVP, optional vendor/PO links, status workflow, assignment, notes/activity timeline; free Purchasing opt-in) |
 
-**Goal:** Manage supplier relationships, procurement workflows, and operational expenses.
+#### Vendors (shipped)
+
+- Name, email, phone, website, address, tax ID, payment terms, currency, status (`active`/`inactive`)
+- No `contacts` relationship — first-class, standalone supplier record (unlike Companies)
+- Assignment, notes, domain timeline; free Marketplace opt-in under category `purchasing`
+- KPIs: total, my vendors, unassigned, active, inactive
+
+#### Purchase Orders (shipped)
+
+- Required Vendor link (**hard dependency** — Marketplace blocks install until Vendors is entitled)
+- Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
+- Status workflow: `draft → sent → partially_received|received|cancelled` (also `sent → cancelled`, `partially_received → received|cancelled`)
+- Receiving is acknowledgement only — no Inventory stock posting
+- Convert to Expense (`POST /purchase-orders/{id}/convert`) — one-way, one-time, gated by a **soft** (call-time) check that the Expenses module is entitled, not a hard `module_dependencies` row
+- Notes, assignment, domain timeline; free Marketplace opt-in under category `purchasing`
+
+#### Expenses (shipped)
+
+- No hard `module_dependencies` — installs standalone; optional Vendor and Purchase Order links are **soft dependencies**, validated only when those modules are entitled
+- Single-amount MVP — no line items, receipts, reimbursements, or GL posting
+- Fields: number (`EXP-` prefix), title, category (`travel`/`office`/`software`/`utilities`/`other`), amount, tax amount, currency, expense date, notes
+- Status workflow: `draft → submitted → approved|rejected`, `approved → paid`, `draft|submitted → cancelled`
+- Draft-only field edits; workflow actions (`submit`/`approve`/`reject`/`pay`/`cancel`) available regardless of edit-lock
+- Notes, assignment, domain timeline; free Marketplace opt-in under category `purchasing`
+
+**Goal:** Manage supplier relationships, procurement workflows, and operational expenses. ✅ **Achieved.**
 
 ---
 
@@ -434,4 +459,4 @@ Evolve the platform into a modular, enterprise-grade SaaS ERP where organization
 - [Platform Architecture Freeze](/getting-started/platform-freeze)
 - [Module Development Standard](/developer-guide/module-development)
 - [Entitlements](/developer-guide/entitlements)
-- [Leads](/user-guide/leads-overview) · [Contacts](/user-guide/contacts-overview) · [Companies](/user-guide/companies-overview) · [Tasks](/user-guide/tasks-overview) · [ToDos](/user-guide/todos-overview)
+- [Leads](/user-guide/leads-overview) · [Contacts](/user-guide/contacts-overview) · [Companies](/user-guide/companies-overview) · [Tasks](/user-guide/tasks-overview) · [ToDos](/user-guide/todos-overview) · [Vendors](/user-guide/vendors-overview) · [Purchase Orders](/user-guide/purchase-orders-overview) · [Expenses](/user-guide/expenses-overview)

@@ -1,5 +1,130 @@
 # Changelog
 
+## Expenses module + Purchase Order convert (2026-08-01)
+
+**Architecture**
+
+- Third and final Phase 4 (Purchasing) module (backend model `Expense`) — a standalone operational-expense record: single amount (no line items), category, optional links to a Vendor and/or Purchase Order. Flat Laravel, `module:expenses` + Spatie RBAC, mirrors the simplified Estimate/Payment notes/timeline/assignee-scope/status-machine pattern.
+- **No hard `module_dependencies`** — Expenses installs standalone. `vendor_id` and `purchase_order_id` are both nullable and validated only at the point of use (`LinkableVendor`, new `LinkablePurchaseOrder` rule) when the corresponding module (`vendors` / `purchase-orders`) is entitled — a **soft** dependency, unlike Purchase Orders' hard dependency on Vendors. **Free Marketplace opt-in** — catalog category `purchasing`, `is_default_included=false` / `is_billable=false`, `sort_order=30` (after Purchase Orders' `20`).
+- Status workflow `draft → submitted → approved|rejected`, `approved → paid`, `draft|submitted → cancelled` via `ExpenseStatusEnum::allowedTransitions()`; `rejected`/`paid`/`cancelled` are terminal. Only `draft` expenses can have their fields edited — workflow actions (submit/approve/reject/pay/cancel) remain available regardless.
+- **Convert a Purchase Order to an Expense** (`POST /purchase-orders/{id}/convert`) — the deferred Phase 4 Milestone 2 feature, now shipped as part of Milestone 3. One-way, one-time: creates a **draft** `Expense` from a `sent`/`partially_received`/`received` purchase order (`title`, `amount`←`total`, `tax_amount`←`tax_total`, `currency`, `vendor_id`, `assigned_to`, `notes` copied; `category` always `other`). Re-running the conversion is blocked by an existing `Expense` row for that `purchase_order_id` (including soft-deleted). Gated by a new **soft, call-time** entitlement check for the Expenses module inside `PurchaseOrderService::convertToExpense()` — not a `module_dependencies` row — so Purchase Orders keeps working with Expenses uninstalled; only the convert endpoint 422s until Expenses is installed. New permission `purchase-orders.convert`.
+
+**Backend**
+
+- Tables: `expenses`, `expense_notes`, `expense_activities`
+- Auto-numbered (`EXP-00001`, prefix from new `expenses_number_prefix` tenant setting, retried on duplicate via the shared `RetriesOnDuplicateNumber` trait)
+- Enums: `ExpenseCategoryEnum` (`travel`, `office`, `software`, `utilities`, `other`), `ExpenseStatusEnum` (`draft`, `submitted`, `approved`, `rejected`, `paid`, `cancelled`), `ExpenseActivityTypeEnum` (`Created`, `Updated`, `Assigned`, `StatusChanged`, `NoteAdded`, `Deleted`, `Restored`)
+- Permissions: `expenses.view|create|update|delete|restore|force.delete|assign|submit|approve|reject|pay|cancel`
+- Model (`Expense`, `BelongsToTenant`, soft deletes, UUID, `LogsActivity`) + factories, controller, form requests, API resources, policy (assignee-scoped view/update/submit/cancel; approve/reject/pay are **not** assignee-scoped), service (`ExpenseService`: numbering, status machine, notes, timeline, assign), events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- New `LinkablePurchaseOrder` rule (mirrors `LinkableVendor`) — validates `purchase_order_id` belongs to the tenant and the Purchase Orders module is entitled, only when a value is supplied
+- `PurchaseOrderService::convertToExpense()` mirrors `EstimateService::convert()`'s draft-creation pattern but swaps the hard-dependency check for a soft `EntitlementService::hasModule()` check; new `PurchaseOrderActivityTypeEnum::Converted` timeline entry and `PurchaseOrderConverted` event
+- Catalog registration (no `module_dependencies` row) via `DefaultModuleRegistrar` migration (migrate-only); permissions + default role map additive migrations for both `expenses.*` and `purchase-orders.convert`
+- `expenses_number_prefix` added to `TenantSettingDefinitions` and `UpdateTenantSettingsRequest` validation
+- Pest: `tests/Feature/Tenant/Expense/ExpenseTest.php` (CRUD, soft FK validation against module entitlement, status workflow, assignee scoping, module gate), Purchase Order convert coverage added to `PurchaseOrderTest.php` (entitled vs blocked, one-time conversion, status guard)
+- Module counts bumped from 19 → 20 across `MarketplaceCatalogTest`, `TenantProvisioningTest`, `TenantAuthTest` fixtures
+
+**Frontend**
+
+- `src/pages/expenses/` — list page (KPIs: total, mine, draft/submitted/approved/rejected/paid, approved & paid value; status/category/vendor/PO/assignee filters, DataTable), create/edit form dialog (category select, amount, tax amount, currency, expense date, notes, optional vendor/purchase order `SearchableSelect` pickers rendered only when the corresponding module is entitled and viewable), detail sheet (overview/notes/timeline tabs; submit/approve/reject/pay/cancel/assign/notes/edit (draft only))
+- Added to the existing tenant sidebar **Purchasing** group, after Purchase Orders
+- `expenseService`, `QUERY_KEYS.expenses`, `PERMISSIONS.expenses`
+- Purchase order detail sheet: new **Convert to expense** action (permission `purchase-orders.convert`, visible only when the PO status is convertible, the Expenses module is entitled, and it hasn't already been converted) with a confirm dialog; shows a link to the resulting expense under "Related records" once converted
+- Notification registry: `expense.assigned` → `/expenses?expense={id}`
+- Playwright: `e2e/tests/expenses/expenses.workflow.spec.ts` (`npm run test:e2e:expenses`) — enables `vendors` + `purchase-orders` + `expenses`, covers KPI smoke, create/submit/approve/pay workflow, and end-to-end PO → Expense conversion
+
+**Docs**
+
+- [expenses-overview.md](/user-guide/expenses-overview) / [expenses.md](/user-guide/expenses) (+ [developer](/developer-guide/expenses) / [production](/deployment/expenses))
+- [api/tenant-v1-expenses.md](/api/tenant-v1-expenses); [api/tenant-v1-purchase-orders.md](/api/tenant-v1-purchase-orders) updated with the convert endpoint
+- [purchase-orders-overview.md](/user-guide/purchase-orders-overview) / [purchase-orders.md](/user-guide/purchase-orders) updated — convert-to-expense moved from deferred to shipped
+- [Module Dependencies](/architecture/module-dependencies) updated — Expenses' soft dependencies on Vendors/Purchase Orders, and Purchase Orders' soft use of Expenses for convert, both marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) — Expenses marked shipped; **Phase 4 — Purchasing goal Achieved**
+
+**Deferred**
+
+- Receipt attachments, reimbursements, GL posting, multi-line expenses (all explicitly out of scope for this MVP)
+
+---
+
+## Purchase Orders module (2026-08-01)
+
+**Architecture**
+
+- Second Phase 4 (Purchasing) module — Milestone 2, header + line-item procurement documents a tenant issues to its own vendors (backend model `PurchaseOrder`). Flat Laravel, `module:purchase-orders` + Spatie RBAC, mirrors the Estimates notes/timeline/assignee-scope/lines/status-machine pattern, swapping Estimates' optional related-record pickers for a single **required** `vendor_id`.
+- **Hard dependency on Vendors** — same pattern as Estimates → Invoices; Marketplace blocks installing Purchase Orders until a workspace already has Vendors entitled (every purchase order requires a vendor). **Free Marketplace opt-in** — catalog category `purchasing`, `is_default_included=false` / `is_billable=false`, `sort_order=20` (after Vendors' `10`).
+- Status workflow `draft → sent → partially_received|received|cancelled` (also `sent → cancelled`, `partially_received → received|cancelled`); `received`/`cancelled` are terminal. **Receiving is acknowledgement only** — no Inventory stock posting (no Inventory module exists on this platform). Convert-to-expense is deferred to Phase 4 Milestone 3.
+
+**Backend**
+
+- Tables: `purchase_orders`, `purchase_order_lines`, `purchase_order_notes`, `purchase_order_activities`
+- Auto-numbered (`PO-00001`, prefix from `purchase_orders_number_prefix` tenant setting, retried on duplicate via the shared `RetriesOnDuplicateNumber` trait)
+- Enums: `PurchaseOrderStatusEnum` (`draft`, `sent`, `partially_received`, `received`, `cancelled`), `PurchaseOrderActivityTypeEnum` (`Created`, `Updated`, `Assigned`, `StatusChanged`, `NoteAdded`, `Deleted`, `Restored`)
+- Permissions: `purchase-orders.view|create|update|delete|restore|force.delete|assign|send|receive|cancel`
+- Model + factories, controller, form requests, API resources, policy (assignee-scoped view/update/send/receive/cancel), service (`PurchaseOrderService`, `syncLines`/`recalculateTotals` like Estimates; `receive()` only accepts `partially_received`/`received`), events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- `LinkableVendor` rule — `vendor_id` is required, tenant-scoped, and validates the Vendors module is entitled
+- Catalog registration + `module_dependencies` row on `vendors` via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
+- `purchase_orders_number_prefix` added to `UpdateTenantSettingsRequest` validation (was previously stripped, causing `updateMany` to receive `null`)
+- Pest: `tests/Feature/Tenant/PurchaseOrder/PurchaseOrderTest.php`, `tests/Feature/Central/Module/PurchaseOrdersModuleDependencyTest.php`
+
+**Frontend**
+
+- `src/pages/purchase-orders/` — list page (KPIs: total, mine, draft, sent, partially received, received; status/vendor/assignee filters, DataTable), create/edit form dialog (required vendor `SearchableSelect`, currency, order date, expected date, notes, line items editor with live subtotal/tax/total preview), detail sheet (overview/lines/notes/timeline tabs; send/mark partially received/mark received/cancel/assign/notes/edit (draft only))
+- Added to the existing tenant sidebar **Purchasing** group, after Vendors
+- `purchaseOrderService`, `QUERY_KEYS.purchaseOrders`, `PERMISSIONS.purchaseOrders`
+- Notification registry: `purchase-order.assigned` → `/purchase-orders?purchase_order={id}`
+- Playwright: `e2e/tests/purchase-orders/purchase-orders.workflow.spec.ts` (`npm run test:e2e:purchase-orders`) — enables both `vendors` and `purchase-orders` modules, creates a vendor, creates a purchase order, verifies status transitions (draft → sent → partially received → received), checks the timeline, then deletes it
+
+**Docs**
+
+- [purchase-orders-overview.md](/user-guide/purchase-orders-overview) / [purchase-orders.md](/user-guide/purchase-orders) (+ [developer](/developer-guide/purchase-orders) / [production](/deployment/purchase-orders))
+- [api/tenant-v1-purchase-orders.md](/api/tenant-v1-purchase-orders)
+- [Module Dependencies](/architecture/module-dependencies) updated — Purchase Orders → Vendors marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) — Purchase Orders marked shipped in Phase 4; Expenses remains Planned
+
+**Deferred**
+
+- Convert a purchase order to an Expense (Phase 4 Milestone 3), Inventory stock posting on receipt, per-line partial receiving, purchase order PDFs / e-mail delivery to vendors, dashboard widgets for Purchase Orders
+
+---
+
+## Vendors module (2026-08-01)
+
+**Architecture**
+
+- First Phase 4 (Purchasing) module and Milestone 1 of that phase — a workspace directory of suppliers (backend model `Vendor`, first-class entity, **no** relationship to Contacts unlike Companies). Flat Laravel, `module:vendors` + Spatie RBAC, mirrors the Companies notes/timeline/assignee-scope pattern.
+- Introduces a new Marketplace category: `purchasing` (**Purchasing**), `category_sort_order=40`. **Free Marketplace opt-in** — `is_default_included=false` / `is_billable=false`, `sort_order=10`.
+- No `industry`, `source`, `source_meta`, or `contacts` relationship (unlike Companies). Adds `tax_id`, `payment_terms`, `currency` (max 3 chars), and a `status` enum (`active`/`inactive`, default `active`).
+
+**Backend**
+
+- Tables: `vendors`, `vendor_notes`, `vendor_activities`
+- Enums: `VendorStatusEnum` (`active`, `inactive`), `VendorActivityTypeEnum` (`Created`, `Updated`, `Assigned`, `NoteAdded`, `Deleted`, `Restored`)
+- Permissions: `vendors.view|create|update|delete|restore|force.delete|assign`
+- Model + factories, controller, form requests, API resources, policy, service (search includes `tax_id`; stats: `total_vendors`, `my_vendors`, `unassigned`, `active`, `inactive`, `scope`), events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
+- Catalog registration (new `purchasing` category + `vendors` module) via `DefaultModuleRegistrar` migration (migrate-only); permissions + default role map additive migrations
+- Pest: `tests/Feature/Tenant/Vendor/VendorTest.php` (mirrors `CompanyTest`, includes module gate coverage)
+
+**Frontend**
+
+- `src/pages/vendors/` — list page (KPIs: total, my vendors, unassigned, active, inactive; status + assignee filters, DataTable), create/edit form dialog (name, email, phone, website, address, tax ID, payment terms, currency, status, assignee), detail sheet (overview/notes/activity tabs)
+- New tenant sidebar **Purchasing** group (after Billing), with Vendors (Truck icon)
+- `vendorService`, `QUERY_KEYS.vendors`, `PERMISSIONS.vendors`
+- Notification registry: `vendor.assigned` → `/vendors?vendor={id}`
+- Playwright: `e2e/tests/vendors/vendors.workflow.spec.ts` (`npm run test:e2e:vendors`) — enables the `vendors` module, creates a vendor, verifies KPI cards, notes, and activity timeline, then deletes it
+
+**Docs**
+
+- [vendors-overview.md](/user-guide/vendors-overview) / [vendors.md](/user-guide/vendors) (+ [developer](/developer-guide/vendors) / [production](/deployment/vendors))
+- [api/tenant-v1-vendors.md](/api/tenant-v1-vendors)
+- [Module Dependencies](/architecture/module-dependencies) updated — Purchase Orders → Vendors (required, design) and Expenses → Vendors (optional, design) documented ahead of those modules shipping
+- [Product Roadmap](/getting-started/product-roadmap) — Vendors marked shipped in Phase 4, Purchase Orders and Expenses expanded with designed MVP capability bullets
+
+**Deferred**
+
+- Purchase Orders (Phase 4 Milestone 2), Expenses (Phase 4 Milestone 3), vendor scorecards/performance tracking, vendor portal, vendor import/export, dashboard widgets, communication template placeholders
+
+---
+
 ## Phase 3 Billing production hardening (2026-08-01)
 
 **Security / ledger integrity**

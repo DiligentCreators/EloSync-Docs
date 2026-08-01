@@ -158,6 +158,40 @@ Estimates
 
 **Status:** [Estimates](/user-guide/estimates-overview) is shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 3.
 
+### Purchase Orders → Vendors (required)
+
+```text
+Purchase Orders
+  └── depends on Vendors   (required)
+```
+
+A Purchase Order cannot exist without a supplier — every `PurchaseOrder` requires a `vendor_id`. Purchase Orders declares Vendors as a **required** hard dependency (`module_dependencies`), the same pattern as Payments → Invoices / Estimates → Invoices — Marketplace blocks installing Purchase Orders until Vendors is entitled.
+
+**Status:** [Vendors](/user-guide/vendors-overview) and [Purchase Orders](/user-guide/purchase-orders-overview) are both shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 4.
+
+### Expenses → Vendors, Purchase Orders (optional, shipped)
+
+```text
+Expenses
+  ├── may depend on Vendors           (optional — unlocks vendor_id link)
+  └── may depend on Purchase Orders   (optional — unlocks purchase_order_id link)
+```
+
+Expenses installs standalone with **no** `module_dependencies` rows — it works as a generic expense record with no supplier or purchase order context. When Vendors is entitled, an Expense may optionally link `vendor_id`; when Purchase Orders is entitled, an Expense may optionally link `purchase_order_id`. Both links are validated only at the point of use (`LinkableVendor`, `LinkablePurchaseOrder` rules) — soft entitlement, no hard dependency rows, so Vendors/Purchase Orders can be uninstalled later without breaking Expenses (existing links are simply no longer enforced/displayed as active relations).
+
+**Status:** [Vendors](/user-guide/vendors-overview), [Purchase Orders](/user-guide/purchase-orders-overview), and [Expenses](/user-guide/expenses-overview) are all shipped, completing Phase 4 — see [Product Roadmap](/getting-started/product-roadmap) Phase 4.
+
+### Purchase Orders → Expenses (optional, shipped, reverse direction)
+
+```text
+Purchase Orders
+  └── may use Expenses   (optional — unlocks "Convert to expense" action)
+```
+
+`POST /purchase-orders/{id}/convert` creates a draft Expense from a `sent`/`partially_received`/`received` purchase order. This is a **soft, call-time** entitlement check inside `PurchaseOrderService::convertToExpense()` — not a `module_dependencies` row — so Purchase Orders keeps working with Expenses uninstalled; only the convert endpoint itself returns a 422 until Expenses is installed. The conversion is one-way and one-time (an existing `Expense` with that `purchase_order_id`, including soft-deleted, blocks re-conversion).
+
+**Status:** Shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 4 and [Tenant Purchase Orders API](/api/tenant-v1-purchase-orders#convert-to-expense-soft-dependency-on-expenses).
+
 ### Payroll → HR (required)
 
 ```text
