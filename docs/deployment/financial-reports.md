@@ -14,4 +14,4 @@
 3. Deploy frontend `/financial-reports`
 4. Smoke: install Accounting then Financial Reports → run Trial Balance / P&L / Balance Sheet
 5. Confirm Marketplace blocks Financial Reports install when Accounting is missing
-6. Playwright: `test:e2e:financial-reports`
+6. Playwright: `test:e2e:financial-reports` / `test:e2e:financial-reports:modules:headed`

@@ -15,7 +15,8 @@
 
 **Frontend & verification**
 
-- Finance nav: Accounts, Journals, General Ledger, Financial Reports; dual module/permission gates; Playwright `test:e2e:accounting` and `test:e2e:financial-reports`.
+- Finance nav: Accounts, Journals, General Ledger, Financial Reports; dual module/permission gates.
+- Playwright (per module, headed-ready): shared-session human suites (`accounting.modules` / `financial-reports.modules`), authz/security (`*.authz`), smoke (`*.workflow`); combined `test:e2e:finance` / `test:e2e:finance:headed`.
 - Pest coverage under `tests/Feature/Tenant/Accounting` and `FinancialReports`.
 
 **Docs**
