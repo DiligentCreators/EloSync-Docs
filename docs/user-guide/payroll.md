@@ -11,8 +11,14 @@ Enable **Employees** first, then install **Payroll** from Marketplace (free). Fo
 ## Pay runs
 
 1. Create a pay run with period start and end dates.
-2. The system generates a line per active employee profile (gross = base salary, adjustments = 0, net = gross).
-3. While **draft**, edit period notes and line gross/adjustments (net recalculates).
+2. The system generates a line per active employee profile:
+   - **Gross** = profile base salary
+   - **Daily rate** = gross ÷ working days in the period (from Settings → Attendance work week, default Mon–Fri)
+   - **Adjustments** = −daily rate × (unpaid leave days + unexcused absent days)
+   - Unpaid leave comes from approved Leave Management requests whose leave type is unpaid (when that module is installed)
+   - Unexcused absences come from Attendance `absent` / uncovered `half_day` records that do not overlap approved leave (when Attendance is installed)
+   - Net is never negative; draft lines stay editable
+3. While **draft**, edit period notes and line gross/adjustments (net recalculates). Breakdown columns (work days, unpaid leave, absent) are shown for audit.
 4. **Approve** (requires at least one line) → **Pay** to mark paid.
 5. Optionally **Post** to Accounting (approved or paid) to create a draft journal for the net total.
 

@@ -1,5 +1,28 @@
 # Changelog
 
+## HR user sync, login attendance, and payroll deductions (2026-08-02)
+
+**Users ↔ Employees**
+
+- Creating a workspace user can provision a linked **Employee** when the Employees module is installed (`create_employee`, default on). Suspend sets the linked employee to inactive; name/email updates sync to the employee record.
+
+**Attendance**
+
+- Tenant Settings → **Attendance** (when the module is installed): office start/end, grace minutes, work week days.
+- Successful tenant login auto check-in for linked active employees (first login of the day; status `present` or new `late`).
+- Attendance status enum adds `late`.
+- Login check-in stores **IP** and optional **GPS coordinates** (`check_in_ip` / `check_in_latitude` / `check_in_longitude`); shown on the attendance detail sheet.
+
+**Payroll**
+
+- Pay runs deduct unpaid leave and unexcused absences from base salary using the working-day calendar; line breakdown fields: `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`.
+
+**Verification**
+
+- Pest: attendance settings, login check-in, user→employee provision, pay-period calculator. Docs and UI updated for settings, attendance, payroll, and users.
+
+---
+
 ## Phase 7 HR — Employees, Leave Management, Attendance, Payroll (2026-08-01)
 
 **Architecture**

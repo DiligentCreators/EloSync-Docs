@@ -15,7 +15,8 @@ Phase 7 HR module on the frozen platform. Manages **payroll profiles** (base sal
 
 - One payroll profile per employee (base salary, currency, pay frequency)
 - Pay runs for a period; auto-generate lines from **active** employees’ profiles
-- Line fields: gross, adjustments, net (`gross + adjustments`)
+- Line fields: gross, adjustments, net, plus working/unpaid-leave/absent/present day breakdown
+- Soft inputs from Leave Management (unpaid approved leave) and Attendance (unexcused absences)
 - Lifecycle: **draft → approved → paid**
 - Optional **post** to Accounting: creates a draft journal (expense debit / liability credit) when Accounting is entitled
 - Soft delete / restore / force delete (draft-only delete for pay runs)

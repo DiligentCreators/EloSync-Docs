@@ -37,7 +37,7 @@ Create body: `employee_id` (required, unique per tenant), `base_salary` (require
 
 Body: `period_start`, `period_end` (required), optional `notes`.
 
-Creates a draft pay run and one line per **active** employee with a payroll profile (`gross = base_salary`, `adjustments = 0`, `net = gross`).
+Creates a draft pay run and one line per **active** employee with a payroll profile. Gross starts as `base_salary`; adjustments deduct unpaid leave and unexcused absences when Leave Management / Attendance are installed. Line payload includes `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`, `gross`, `adjustments`, `net`.
 
 ### PUT `/pay-runs/{payRun}`
 
