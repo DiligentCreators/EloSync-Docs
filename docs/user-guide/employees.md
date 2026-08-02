@@ -21,6 +21,16 @@ Open **Employees** from the sidebar, under the **HR** group.
 
 Edit from the row menu or the detail drawer.
 
+## Convert from Users
+
+If someone already has a workspace login but no Employees directory row (common when Users were created before you installed Employees):
+
+1. Open **Administration → Users**
+2. Row menu → **Create employee record** (requires `employees.create`)
+3. Confirm — the platform creates a linked employee (name/email from the user, next `EMP-####` number)
+
+You can also create an employee manually and pick the **Linked user** on the employee form. Salary is configured later under **Payroll → Profiles**, not on the employee record.
+
 ## Status & employment type
 
 | Field | Values |

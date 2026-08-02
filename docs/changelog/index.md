@@ -1,5 +1,14 @@
 # Changelog
 
+## Create employee from existing user (2026-08-03)
+
+Workspaces that installed **Employees** after creating users can now convert a login into a directory record:
+
+- Users row action **Create employee record** (requires Employees module + `employees.create`)
+- `POST /api/tenant/v1/users/{user}/create-employee`
+- User list/show include nullable `employee_id`
+- Salary remains on Payroll profiles (unchanged)
+
 ## Tenant email notification toggles (2026-08-03)
 
 Workspace admins can enable or disable **event emails** under **Settings → Notifications**. Defaults are **all off** to reduce SMTP cost during MVP testing. In-app and web push channels are unchanged. Daily task digests, daily CRM summaries, and auth emails (password reset / verification) always send.

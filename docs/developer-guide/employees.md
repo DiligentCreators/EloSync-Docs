@@ -12,7 +12,7 @@ Enums: `EmployeeStatusEnum` (`active` \| `inactive` \| `terminated`), `Employmen
 
 Service: `EmployeeService` (includes `nextEmployeeNumber` / `splitFullName`). Events → subscriber → `PlatformAuditService` + Spatie `LogsActivity` (log name `employees`).
 
-`TenantUserService::create` may provision a linked employee when `employees` is installed and `create_employee` is true (default). Suspend marks the linked employee inactive; user name/email updates sync to the linked employee.
+`TenantUserService::create` may provision a linked employee when `employees` is installed and `create_employee` is true (default). Retrofit path: `POST /api/tenant/v1/users/{user}/create-employee` (`module:employees` + `can:employees.create`) calls `TenantUserService::createEmployeeForUser`. Tenant user list/show resources include nullable `employee_id`. Suspend marks the linked employee inactive; user name/email updates sync to the linked employee.
 
 ## Backend layout
 
