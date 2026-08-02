@@ -1,5 +1,18 @@
 # Changelog
 
+## Departments module (2026-08-03)
+
+Marketplace HR module (`departments`, not default-included) for organizing users and employees:
+
+- One User manager per department; one user may manage many departments
+- Many-to-many membership for users and employees
+- Admins see all departments; managers see managed departments + performance; staff see memberships
+- Performance dashboard aggregates Leads/Tasks for linked users only (unlinked employees stay on the roster)
+- Employee forms use multi-select `department_ids` when Departments is installed (legacy string column retained)
+- Playwright: `npm run test:e2e:departments`
+
+Docs: [User Guide](/user-guide/departments), [Developer Guide](/developer-guide/departments), [API](/api/tenant-v1-departments), [Deployment](/deployment/departments).
+
 ## Create employee from existing user (2026-08-03)
 
 Workspaces that installed **Employees** after creating users can now convert a login into a directory record:
