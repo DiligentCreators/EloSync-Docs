@@ -27,6 +27,7 @@ Every business capability on this platform is a **module**. Modules are licensed
 6. **Self-contained modules** — each module owns its migrations, models, services, routes, UI, permissions, settings, docs, and tests; communicate through contracts/services only. See [Module Architecture](/architecture/module-architecture).
 7. **Declare dependencies** — required vs optional; free vs billable. See [Module Dependencies](/architecture/module-dependencies).
 8. **Independent licensing** — design every module so it can be included, free, or billable. See [Module Licensing](/architecture/module-licensing).
+9. **One workspace timezone** — all current and future modules use Settings → General → Timezone for wall clocks, “today”, due dates, schedules, digests, and office hours. Store absolute datetimes as UTC (`UtcDateTime` / `UtcIso`); display/edit via SPA `datetime.ts`. No per-module timezone. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
 
 ## Cross-cutting patterns (Sprint 2+)
 
@@ -46,10 +47,11 @@ A module is complete only when:
 - [ ] Audit logging (`PlatformAuditService`) implemented
 - [ ] Activity logging (Spatie `LogsActivity` + domain timeline where applicable)
 - [ ] Notifications implemented where applicable
-- [ ] Pest tests pass (CRUD, authz, validation, tenant isolation, module gate)
+- [ ] Date/time behavior follows the [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) (workspace TZ wall clocks; UTC storage for absolute instants; no module-scoped timezone)
+- [ ] Pest tests pass (CRUD, authz, validation, tenant isolation, module gate) — include non-UTC timezone coverage when the module schedules or gates by clock
 - [ ] Playwright suite passes (`test:e2e:{slug}`)
 - [ ] Manual browser QA passes
-- [ ] Developer / User / Production guides updated **in the same PR** ([Documentation Governance](/developer-guide/documentation-governance))
+- [ ] Developer / User / Production guides updated **in the same PR** ([Documentation Governance](/developer-guide/documentation-governance)) — state that times use Settings → General → Timezone
 - [ ] API + database docs updated
 - [ ] CHANGELOG updated
 - [ ] No console errors; no failed network requests; build passes

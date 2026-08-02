@@ -26,6 +26,7 @@ Reference implementation. Copy this layout for Tasks and later modules.
 
 ## Domain notes
 
+- Follow-up `due_at` follows the [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): SPA edit/display in Settings → General timezone; store as UTC via `UtcDateTime` / `UtcIso`; due/overdue notifications use workspace-local “today”.
 - `lead_value` replaced `estimated_value` (migration rename). Store/update requests still accept `estimated_value` as a write alias.
 - Status is independent of stage flags (`is_won` / `is_lost`). Stage change does not sync status.
 - Convert: `converted_at`, `conversion_meta`, status `closed`, activity type converted. When [Contacts](/developer-guide/contacts) is entitled for the workspace, also creates/links a real `Contact` (`contact_id`, `conversion_meta.stub = false`) and requires `contacts.create`; preserves the lead assignee; runs in a DB transaction. Stub converts (no `contact_id`) can be completed by calling convert again after Contacts is installed. Without Contacts, conversion remains status-only (`conversion_meta.stub = true`). `LeadPolicy::convert` uses the same assignee scope as update.

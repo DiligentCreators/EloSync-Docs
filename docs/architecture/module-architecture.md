@@ -73,6 +73,7 @@ Every new module should:
 4. **Avoid coupling** with unrelated modules
 5. Be compatible with future **marketplace / module licensing** ([Module Licensing](./module-licensing))
 6. Follow existing **coding standards** and project structure ([Module Development Guide](/developer-guide/module-development-guide))
+7. Honor the **workspace timezone convention** for any date/time fields, schedules, digests, or “today” logic ([Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)) — same obligation for modules already shipped
 
 This is a **development guideline** for engineers. Completeness is measured by the [Definition of Done](/developer-guide/module-development#definition-of-done).
 
@@ -81,5 +82,6 @@ This is a **development guideline** for engineers. Completeness is measured by t
 - [Module Dependencies](./module-dependencies)
 - [Module Licensing](./module-licensing)
 - [Module Development Standard](/developer-guide/module-development)
+- [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)
 - [Entitlements](/developer-guide/entitlements)
 - [Product Roadmap](/getting-started/product-roadmap)

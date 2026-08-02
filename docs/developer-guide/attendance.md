@@ -12,7 +12,7 @@ Enum: `AttendanceStatusEnum` — `present` \| `absent` \| `half_day` \| `remote`
 
 Service: `AttendanceRecordService` (CRUD + stats + `markLoginCheckIn`). Spatie log name `attendance`.
 
-Tenant settings (`attendance` group): `office_start_time`, `office_end_time`, `attendance_grace_minutes`, `work_week_days`. Login check-in runs from `LoginController` when the module is installed and the user has an active linked employee. Location columns: `check_in_ip`, `check_in_latitude`, `check_in_longitude` (and check-out equivalents).
+Tenant settings (`attendance` group): `office_start_time`, `office_end_time`, `attendance_grace_minutes`, `work_week_days`. Those `H:i` values are workspace-local wall clocks; “today”, check-in time, and late classification use `Settings → General → Timezone` via `Carbon::now($workspaceTimezone)` in `AttendanceRecordService::markLoginCheckIn` (same convention as reminders/meetings — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)). Login check-in runs from `LoginController` when the module is installed and the user has an active linked employee. Location columns: `check_in_ip`, `check_in_latitude`, `check_in_longitude` (and check-out equivalents).
 
 ## Backend layout
 

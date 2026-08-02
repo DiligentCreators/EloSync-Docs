@@ -46,8 +46,8 @@ Those users do not appear in lead assignee pickers and are skipped by import aut
 ## Notes & follow-ups
 
 - **Notes** — free-form history on the lead
-- **Follow-ups** — titled reminders with due dates; edit/reschedule or complete when done
-- Assignees receive notifications when a follow-up is created for them (by someone else) and when due/overdue reminders run
+- **Follow-ups** — titled reminders with due dates in the workspace **Timezone** (Settings → General); edit/reschedule or complete when done
+- Assignees receive notifications when a follow-up is created for them (by someone else) and when due/overdue reminders run (workspace-local “today”)
 
 ## WhatsApp (Communication Templates)
 

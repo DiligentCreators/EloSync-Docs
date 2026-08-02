@@ -23,7 +23,7 @@ There is **no calendar assignment**. You cannot assign a calendar to someone els
 3. Enter title, start/end, optional description and all-day.
 4. Save — the event is stored on **your** personal calendar.
 
-Times use the workspace timezone from settings (not only the browser’s local clock).
+Times use the workspace **Timezone** from Settings → General (same zone as meetings, reminders, and attendance — not only the browser’s local clock).
 
 ## Views
 

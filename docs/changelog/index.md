@@ -1,5 +1,20 @@
 # Changelog
 
+## Workspace timezone convention + daily reminder gating (2026-08-03)
+
+**Code**
+
+- Task digest and daily CRM summary emails gated by **Daily Reminder Time** compare against the workspace timezone explicitly (`now($timezone)`), not the server/UTC process clock.
+- Tenant `applyRuntimeConfig()` applies timezone before mail overlay and no longer drops workspace timezone when mail provider config fails.
+
+**Docs convention**
+
+- Canonical [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): one Settings → General timezone (e.g. `Asia/Karachi`) drives Daily Reminder Time, task dues, lead follow-ups, meetings/calendar, and attendance office hours / login check-in. No per-module timezone.
+- Binding for **all current and future modules**: Module Development Standard principle + Definition of Done, Module Development Guide (Date and time), Module Architecture, and Platform Freeze Configuration row.
+- User Guide Settings, Attendance, Tasks, Leads, Meetings, and Calendar pages cross-link that rule.
+
+---
+
 ## HR user sync, login attendance, and payroll deductions (2026-08-02)
 
 **Users ↔ Employees**
