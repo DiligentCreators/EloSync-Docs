@@ -10,7 +10,9 @@ Phase 7 HR foundation. Slug `employees`, middleware `module:employees`, permissi
 
 Enums: `EmployeeStatusEnum` (`active` \| `inactive` \| `terminated`), `EmploymentTypeEnum` (`full_time` \| `part_time` \| `contract`).
 
-Service: `EmployeeService`. Events → subscriber → `PlatformAuditService` + Spatie `LogsActivity` (log name `employees`).
+Service: `EmployeeService` (includes `nextEmployeeNumber` / `splitFullName`). Events → subscriber → `PlatformAuditService` + Spatie `LogsActivity` (log name `employees`).
+
+`TenantUserService::create` may provision a linked employee when `employees` is installed and `create_employee` is true (default). Suspend marks the linked employee inactive; user name/email updates sync to the linked employee.
 
 ## Backend layout
 

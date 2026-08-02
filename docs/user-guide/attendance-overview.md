@@ -15,7 +15,8 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 
 - One record per employee per date (unique)
 - Optional check-in / check-out times (`HH:MM` or `HH:MM:SS`)
-- Status: `present` \| `absent` \| `half_day` \| `remote`
+- Status: `present` \| `absent` \| `half_day` \| `remote` \| `late`
+- Office hours settings + login auto check-in for linked active employees
 - Notes, soft delete / restore / force delete
 - KPIs via `GET /attendance-records/stats` (total + counts per status)
 - Module licensing (`module:attendance`) + Spatie permissions — **free Marketplace opt-in**
@@ -32,4 +33,5 @@ Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in.
 - Biometric / device integrations
 - Geofencing and GPS check-in
 - Automatic leave → attendance linking
+- Auto check-out on logout
 - Timesheets / overtime calculation

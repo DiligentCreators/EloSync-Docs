@@ -12,9 +12,9 @@ Slug `payroll`, middleware `module:payroll`, permissions `payroll.*`. Hard-depen
 
 Enums: `PayFrequencyEnum` (`monthly` \| `biweekly` \| `weekly`), `PayRunStatusEnum` (`draft` → `approved` → `paid`).
 
-Services: `PayrollProfileService`, `PayRunService`.
+Services: `PayrollProfileService`, `PayRunService`, `PayPeriodCalculator`.
 
-`PayRunService::create` builds lines from active employees’ profiles. `postToJournal` requires Accounting entitlement and creates a draft journal via `JournalEntryService` (expense debit / liability credit).
+`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator` (gross from base salary; adjustments for unpaid leave + unexcused absences when sibling modules are installed). Line columns include `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`. `postToJournal` requires Accounting entitlement and creates a draft journal via `JournalEntryService` (expense debit / liability credit).
 
 ## Backend layout
 

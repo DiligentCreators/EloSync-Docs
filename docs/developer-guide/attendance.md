@@ -8,9 +8,11 @@ Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. H
 |-------|-------|-------|
 | `AttendanceRecord` | `attendance_records` | Unique `(tenant_id, employee_id, date)`; soft deletes |
 
-Enum: `AttendanceStatusEnum` — `present` \| `absent` \| `half_day` \| `remote`.
+Enum: `AttendanceStatusEnum` — `present` \| `absent` \| `half_day` \| `remote` \| `late`.
 
-Service: `AttendanceRecordService` (CRUD + stats). Spatie log name `attendance`.
+Service: `AttendanceRecordService` (CRUD + stats + `markLoginCheckIn`). Spatie log name `attendance`.
+
+Tenant settings (`attendance` group): `office_start_time`, `office_end_time`, `attendance_grace_minutes`, `work_week_days`. Login check-in runs from `LoginController` when the module is installed and the user has an active linked employee. Location columns: `check_in_ip`, `check_in_latitude`, `check_in_longitude` (and check-out equivalents).
 
 ## Backend layout
 

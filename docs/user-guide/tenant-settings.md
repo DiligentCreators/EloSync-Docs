@@ -19,6 +19,16 @@ You need permission to view/update settings (workspace owners have this by defau
 | **Daily Reminder Time** | Local workspace time (default `09:00`) for the daily CRM summary email and the consolidated task due digest. Assignees still get in-app alerts per due/overdue task. |
 | **Default meeting provider** | Preselects None / Google Meet / Zoom on the Meetings schedule form (`meetings_default_provider`). Connecting providers is done under Meetings → Integrations. |
 
+## Attendance
+
+Shown when the **Attendance** module is installed.
+
+| Field | Behavior |
+|-------|----------|
+| **Office start / end time** | Workspace office hours used for login check-in classification. |
+| **Grace period (minutes)** | Check-ins after start time plus grace are marked **Late** (default `15`). |
+| **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri). |
+
 ## Security
 
 | Field | Behavior |
