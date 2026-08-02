@@ -31,9 +31,11 @@ Query: `search`, `status` (`active`\|`inactive`\|`terminated`), `employment_type
 
 ### POST `/employees`
 
-Body: `employee_number` (required, unique per tenant), `first_name`, `last_name` (required), optional `email`, `phone`, `job_title`, `department`, `hire_date`, `termination_date` (after or equal hire), `employment_type`, `status`, `user_id`, `notes`.
+Body: `employee_number` (required, unique per tenant), `first_name`, `last_name` (required), optional `email`, `phone`, `job_title`, `department`, `department_ids` (when Departments module installed), `hire_date`, `termination_date` (after or equal hire), `employment_type`, `status`, `user_id`, `notes`.
 
 Defaults: `employment_type=full_time`, `status=active`.
+
+Resources may include `departments[]` when loaded. Legacy string `department` remains for backward compatibility.
 
 ### PUT `/employees/{employee}`
 

@@ -83,6 +83,15 @@ Both reset endpoints use `App\Rules\PasswordRule`, which reads Central settings 
 
 Set `FRONTEND_URL` in the backend `.env` so reset/invite emails open the SPA.
 
+## Profile avatar
+
+Authenticated users can upload a profile picture on **Profile**. Multipart endpoints:
+
+- `POST /api/central/v1/me/avatar` and `POST /api/tenant/v1/me/avatar` (`file`: jpg/jpeg/png/webp, max 2 MB)
+- `DELETE /api/{central|tenant}/v1/me/avatar`
+
+Stored via `UserAvatarService` under `central/users/{id}/avatars/` or `tenants/{tenantId}/users/{id}/avatars/` on the **avatar disk** (`FILESYSTEM_AVATAR_DISK`, default `public`). Avatars are never written to S3 when `FILESYSTEM_DISK=s3`. Serve them from `{APP_URL}/storage/...` and keep `storage/app/public` on shared/persistent storage across zero-downtime deploys. Login and `GET /me` return an absolute `avatar_url`; the SPA resolves relative asset URLs against the API origin so the topbar and sidebar show the photo instead of initials.
+
 ## Email verification
 
 Tenant `User` and Central users implement `MustVerifyEmail`. Verification is required before protected Central and tenant application APIs can be used. Routes:

@@ -13,17 +13,30 @@ The left sidebar includes:
 | **Tasks** | Work items (board/list, status, priority, comments) |
 | **Templates** | Communication Templates (plain-text messages, WhatsApp from Leads) |
 | **Settings** | Workspace preferences |
-| **Profile** | Your name, email, and password |
+| **Profile** | Your name, email, password, and optional profile photo |
 
 Header actions match Central:
 
-- Collapse / expand the sidebar
+- Collapse / expand the sidebar (`⌘B` / `Ctrl+B`)
 - Breadcrumbs
-- Search (⌘K / Ctrl+K)
+- Search pages (`⌘K` / `Ctrl+K`) — jumps between sidebar pages
 - Theme toggle
 - **Notifications** — realtime in-app list and unread badge, with polling fallback when the live connection is unavailable
 - Settings shortcut
 - Account menu (Profile, Settings, Log out)
+
+### Keyboard shortcuts (modules)
+
+On a module list page (for example Leads or Tasks):
+
+| Shortcut | Action |
+|----------|--------|
+| `N` | Open **New** (same as the New button; requires create permission). Not `Ctrl+N` — browsers reserve that for a new window. |
+| `⌘F` / `Ctrl+F` | Focus that module’s search box (filters the current list, not the whole workspace) |
+| `⌘B` / `Ctrl+B` | Toggle the sidebar |
+| `⌘K` / `Ctrl+K` | Search and jump to another page |
+
+Shortcuts do not fire while you are typing in a form field.
 
 Only modules available to every workspace are listed today. Additional purchased modules will appear in the sidebar when they are installed.
 

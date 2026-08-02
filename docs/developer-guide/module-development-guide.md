@@ -115,6 +115,7 @@ Paid modules: catalog `is_billable`, marketplace install, `ModuleSubscriptionSer
 - Shared design system (`PageHeader`, `DataTable`, `PermissionGate`, empty/error/loading states)
 - Nav + breadcrumbs respect **installed modules** and **user permissions**
 - Auth payload includes active module slugs for SPA gating
+- Module list shortcuts via `useModuleShortcuts`: bare `n` (create, permission-gated; Chromium blocks `Ctrl/⌘N`) and `mod+f` (focus module `SearchInput` with `ref` + `shortcutHint`). Do **not** bind create/search on the app shell — keep them route-scoped like Leads.
 
 ## Testing checklist
 

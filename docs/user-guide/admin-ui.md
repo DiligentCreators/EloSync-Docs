@@ -12,7 +12,7 @@ Central Application routes are prefixed with `/central`. Tenant auth uses root p
 | Platform | Tenants, Users, Roles | `/central/tenants`, `/central/users`, `/central/roles` |
 | Catalog | Marketplace, Modules | `/central/marketplace`, `/central/modules` |
 | Billing | Dashboard, Invoices, Payments, Transactions, Refunds, Payment Methods, Payment Gateways, Coupons, Taxes, Billing Logs | `/central/billing`, `/central/billing/*` |
-| Settings | Settings, Profile | `/central/settings`, `/central/profile` |
+| Settings | Settings, Profile (name/email/password + optional photo) | `/central/settings`, `/central/profile` |
 
 Tenant Application uses the **same AppLayout shell** with its own nav (`/dashboard`, `/leads`, `/tasks`, `/settings`, `/profile`). Workspace Settings (`/settings`) covers General, Branding, and Mail with Central fallbacks — see [settings/tenant-settings.md](/user-guide/tenant-settings-overview). Shared shell notes: [ui/shared-layout.md](/user-guide/shared-layout).
 

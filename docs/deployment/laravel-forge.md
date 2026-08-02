@@ -117,6 +117,8 @@ REVERB_ALLOWED_ORIGINS=https://app.example.com
 
 FILESYSTEM_DISK=s3
 FILESYSTEM_BRANDING_DISK=public
+# Avatars always use public local storage (default). Keep storage/ shared across zero-downtime releases.
+# FILESYSTEM_AVATAR_DISK=public
 ```
 
 Redis is **required** whenever Reverb / production cache / queue are enabled. Do not leave `CACHE_STORE=database` with tenancy in production.
@@ -145,6 +147,7 @@ cd $FORGE_RELEASE_DIRECTORY
 
 $FORGE_COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
+# storage/ is shared across zero-downtime releases — branding + avatars live under storage/app/public
 $FORGE_PHP artisan storage:link --force || true
 $FORGE_PHP artisan migrate --force
 $FORGE_PHP artisan optimize

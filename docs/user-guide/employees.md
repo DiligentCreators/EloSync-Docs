@@ -19,6 +19,8 @@ Open **Employees** from the sidebar, under the **HR** group.
 2. Enter employee number and name (required); optionally email, phone, job title, department, hire/termination dates, employment type, status, linked user, and notes
 3. Save
 
+When the **Departments** module is installed, the free-text Department field is replaced by a multi-select of departments (synced via `department_ids`).
+
 Edit from the row menu or the detail drawer.
 
 ## Convert from Users

@@ -1,5 +1,51 @@
 # Changelog
 
+## Profile avatar upload (2026-08-03)
+
+Users can upload a profile picture on **Profile** (Central and Tenant). The photo replaces initials in the topbar user menu and sidebar account chip.
+
+- `POST/DELETE /api/{central|tenant}/v1/me/avatar` (multipart `file`: jpg/png/webp, max 2 MB)
+- Login and `/me` payloads include nullable absolute `avatar_url` (API origin `/storage/...`)
+- Avatars always store on the `public` disk (`FILESYSTEM_AVATAR_DISK`, default `public`) — never S3, even when `FILESYSTEM_DISK=s3`
+- `storage:migrate-to-s3` skips `/avatars/` keys so profile photos stay on local public storage
+- Persist `storage/app/public` across zero-downtime deploys (Forge shared storage) so avatars survive releases
+- Tenant `users.avatar_path` column added; central already had `avatar_path`
+- SPA resolves relative asset URLs against the API host so Vite/dev origins still show the photo
+
+## Compact UI density + keyboard shortcuts (2026-08-03)
+
+**Density**
+
+- Admin shell tightened toward shadcn / Laravel starter density: Inter UI font, narrower sidebar (`w-60`), shorter topbar (`h-14`), smaller page titles, denser nav rows, tighter content padding and control heights.
+
+**Keyboard shortcuts**
+
+| Shortcut | Scope | Action |
+|----------|-------|--------|
+| `Ctrl/⌘B` | App shell | Collapse / expand sidebar (mobile: open/close drawer) |
+| `Ctrl/⌘K` | App shell | Command palette (navigate pages) — unchanged |
+| `N` | Active module list | Open **New** create dialog when permitted |
+| `Ctrl/⌘F` | Active module list | Focus that module’s search field (not browser Find / not ⌘K) |
+
+**Note:** Chromium reserves `Ctrl/⌘N` for a new browser window — web apps cannot override it. Create uses bare **`N`** when focus is not in an input.
+
+Shortcuts are ignored while typing in inputs. Module pages register via `useModuleShortcuts` (mirror Leads). UI hints use `ShortcutHint` on New buttons and list search fields.
+
+## Departments module (2026-08-03)
+
+Marketplace HR module (`departments`, not default-included) for organizing users and employees:
+
+- One User manager per department; one user may manage many departments
+- Many-to-many membership for users and employees
+- Admins see all departments; managers see managed departments + performance; staff see memberships
+- Performance dashboard aggregates Leads/Tasks for linked users only (unlinked employees stay on the roster)
+- Employee forms use multi-select `department_ids` when Departments is installed (legacy string column retained)
+- Manager/member pickers include the signed-in user (Users list API omits self) so a solo owner can manage a department
+- Security: tenant-scoped Exists for manager/members; org-wide-only manager assignment; `manage_members` required to sync memberships on create/update
+- Playwright: `npm run test:e2e:departments`
+
+Docs: [User Guide](/user-guide/departments), [Developer Guide](/developer-guide/departments), [API](/api/tenant-v1-departments), [Deployment](/deployment/departments).
+
 ## Create employee from existing user (2026-08-03)
 
 Workspaces that installed **Employees** after creating users can now convert a login into a directory record:
