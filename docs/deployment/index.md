@@ -18,6 +18,8 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Release Process](./release-process) | Tagging, versioning, three-repo release checklist |
 | [Notification System](./notifications) | Redis, workers, Reverb, rollout checklist, troubleshooting |
 | [RC1 Production Readiness](./rc1-production-readiness) | Release candidate hardening notes (absorbed into v1.1.0) |
+| [Phase 7 HR Production Readiness](./hr-phase7-production-readiness) | HR go-live checklist, smoke, rollback, sign-off |
+| [Phase 7 HR Security Audit](./hr-phase7-security-audit) | HR findings, remediations, residual risk |
 | [Go-Live Hardening](./go-live-hardening-2026-07-15) | Hardening delivery notes |
 
 ## Domain ops guides
@@ -47,6 +49,10 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Estimates](./estimates) | Estimates module ops |
 | [Communication Templates](./communication-templates) | Templates module ops |
 | [Branded](./branded) | Custom domains ops |
+| [Employees](./employees) | Employees module ops |
+| [Leave Management](./leave-management) | Leave Management module ops |
+| [Attendance](./attendance) | Attendance module ops |
+| [Payroll](./payroll) | Payroll module ops |
 
 ## Related repos
 

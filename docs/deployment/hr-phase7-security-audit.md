@@ -1,29 +1,30 @@
-# Phase 7 HR — Security Audit & Production Readiness
+# Phase 7 HR — Security Audit
 
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-02 |
 | **Scope** | Employees, Leave Management, Attendance, Payroll (backend + tenant SPA) |
 | **Branch** | `feature/phase-7-hr-9630` |
-| **Status** | Remediation applied — ready for merge pending CI |
+| **Status** | Remediation applied |
+| **Companion** | [Production Readiness](/deployment/hr-phase7-production-readiness) |
 
 ---
 
 ## Verdict
 
-Phase 7 HR is **production-ready for opt-in Marketplace enablement** after the remediations in this audit. Cross-tenant isolation, route/module middleware, and policy wiring were already solid. Remaining risks were **integrity and RBAC granularity** (leave balances, payroll amounts, compensation visibility, concurrent transitions). Those are fixed and covered by Pest regressions.
+No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findings were **fixed** before merge. Phase 7 HR is safe for opt-in Marketplace enablement when the [production readiness](/deployment/hr-phase7-production-readiness) checklist is completed.
 
 ---
 
 ## What was reviewed
 
 - Tenant API routes (`module:*` + `can:*` + `auth:tenant-api`)
-- Policies / default role permissions
+- Policies / default role permissions (`config/tenant-default-role-permissions.php`)
 - Form requests (mass assignment of status, reviewer, tenant_id)
 - Leave / payroll services (transitions, balances, journal post)
 - Soft-delete / restore / force-delete paths
 - Tenant SPA permission gates and XSS surface (reason/notes)
-- Headed Playwright smoke (Employees, Leave, Attendance, Payroll — all green prior to this audit)
+- Headed Playwright smoke (Employees, Leave, Attendance, Payroll)
 
 ---
 
@@ -78,31 +79,26 @@ Phase 7 HR is **production-ready for opt-in Marketplace enablement** after the r
 
 ---
 
-## Production readiness checklist
+## Positive controls (no change required)
 
-| Check | Result |
-|-------|--------|
-| Module catalog + hard deps (Leave/Attendance/Payroll → Employees) | Pass |
-| Permission middleware on mutating + sensitive routes | Pass |
-| Tenant scoping / isolation tests | Pass |
-| Leave lifecycle integrity (days, balance, delete) | Pass (after fix) |
-| Payroll lifecycle integrity (amounts, locks, journal types) | Pass (after fix) |
-| Staff cannot read salaries by default | Pass (after fix) |
-| Soft-delete / restore authorization present | Pass |
-| Frontend `RequireAccess` / `PermissionGate` on HR routes & actions | Pass |
-| XSS: leave/attendance/payroll notes as React text nodes | Pass |
-| Headed e2e (validation + CRUD + workflows) | Pass (pre-audit) |
-| Pest regressions for remediations | Pass (this change) |
+| Control | Assessment |
+|---------|------------|
+| Tenancy isolation | Global `TenantScope` + Pest cross-workspace tests |
+| Authorization wiring | Controllers use `Gate::authorize` + route `can:*` |
+| Pay-run draft-only update/delete | Enforced in service |
+| Status transitions | Server-side enums; not request-writable |
+| Frontend XSS | Notes/reasons rendered as React text, not HTML |
+| Frontend authz | `RequireAccess` + `PermissionGate` on HR actions |
 
 ---
 
 ## Residual / follow-up (non-blocking)
 
-1. **Partial unique indexes** for soft-deleted uniques (`leave_balances`, `attendance_records`, `payroll_profiles`) to avoid recreate collisions.
-2. **Whitelist `sort`/`direction`** across tenant list services (platform-wide hardening).
+1. **Partial unique indexes** for soft-deleted uniques (`leave_balances`, `attendance_records`, `payroll_profiles`).
+2. **Whitelist `sort`/`direction`** across tenant list services (platform-wide).
 3. **Optional SoD**: reject leave/pay approve when actor is creator (config flag).
 4. **FK + index** on `pay_runs.journal_entry_id`.
-5. **Remove privileged attributes** from model `$fillable` and use explicit `forceFill` in services.
+5. **Remove privileged attributes** from model `$fillable`; use explicit `forceFill` in services.
 6. **Overlap validation** for pending/approved leave ranges per employee.
 7. Re-sync default role permissions for existing tenants that already received `payroll.view` on staff.
 
@@ -111,7 +107,7 @@ Phase 7 HR is **production-ready for opt-in Marketplace enablement** after the r
 ## Test evidence
 
 ```bash
-# Backend (from saas-backend)
+cd saas-backend
 php artisan test --compact \
   tests/Feature/Tenant/Leave/LeaveManagementTest.php \
   tests/Feature/Tenant/Payroll/PayrollTest.php \
@@ -119,12 +115,13 @@ php artisan test --compact \
   tests/Feature/Tenant/Attendance/AttendanceTest.php
 ```
 
-New / updated coverage includes: inflated leave days, insufficient balance on approve, delete of approved leave, balance upsert RBAC, negative pay-run gross, wrong journal account types, staff payroll.view denial, unique employee `user_id`, attendance check-out ordering.
+**Result (2026-08-02):** **48 passed**, including inflated leave days, insufficient balance, approved-delete block, balance upsert RBAC, negative pay-run gross, wrong journal account types, staff payroll denial, unique `user_id`, attendance check-out ordering.
+
+Headed Playwright (tenant project): Employees / Leave / Attendance / Payroll — **6/6 each**.
 
 ---
 
-## Related PRs
+## Related
 
-- Backend: Phase 7 HR (`feature/phase-7-hr-9630`)
-- Frontend: Phase 7 HR UI + e2e
-- Docs: this audit + module packs
+- [Production Readiness runbook](/deployment/hr-phase7-production-readiness)
+- Backend / Frontend / Docs / Website PRs on `feature/phase-7-hr-9630`

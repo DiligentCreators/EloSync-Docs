@@ -15,10 +15,15 @@
 - Attendance records unique per employee/date with check-in/out and presence status (`present` / `absent` / `half_day` / `remote`).
 - Payroll profiles (one per employee) and pay runs that auto-generate lines from active profiles; lifecycle `draft → approved → paid`; optional soft post to a draft Accounting journal (expense debit / liability credit).
 
+**Security & production readiness (2026-08-02)**
+
+- Hardened leave days/balance integrity, approved-delete retention, pay-run locks/amount bounds, journal account-type validation, and removed default staff `payroll.view`.
+- Docs: [Production Readiness](/deployment/hr-phase7-production-readiness) · [Security Audit](/deployment/hr-phase7-security-audit).
+
 **Frontend & verification**
 
-- HR nav group with Employees UI (list/form/detail); Leave / Attendance / Payroll API clients, query keys, and permissions wired for module pages.
-- Playwright: `test:e2e:employees`. Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
+- HR nav group with Employees / Leave / Attendance / Payroll UI; API clients, query keys, and permissions wired for module pages.
+- Playwright: `test:e2e:employees|leave-management|attendance|payroll` (modules + authz). Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
 
 **Docs**
 

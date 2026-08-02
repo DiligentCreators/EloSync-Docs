@@ -24,4 +24,4 @@
 4. With Accounting: post pay run → draft journal linked via `journal_entry_id` (expense debit + liability credit)
 5. Confirm default **staff** role does **not** include `payroll.view` (compensation restricted to manager+)
 6. Pest: `tests/Feature/Tenant/Payroll`
-7. See [Phase 7 HR Security Audit](/deployment/hr-phase7-security-audit)
+7. [Production Readiness](/deployment/hr-phase7-production-readiness) · [Security Audit](/deployment/hr-phase7-security-audit)

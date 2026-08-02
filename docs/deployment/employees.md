@@ -24,3 +24,8 @@
 ## Phase 7 roadmap context
 
 Employees is the required base for Leave Management, Attendance, and Payroll. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+
+## Go-live
+
+- [Phase 7 HR Production Readiness](/deployment/hr-phase7-production-readiness)
+- [Phase 7 HR Security Audit](/deployment/hr-phase7-security-audit)
