@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 ## Departments module (2026-08-03)
 
