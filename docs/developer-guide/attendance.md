@@ -10,7 +10,9 @@ Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. H
 
 Enum: `AttendanceStatusEnum` — `present` \| `absent` \| `half_day` \| `remote` \| `late`.
 
-Service: `AttendanceRecordService` (CRUD + stats + `markLoginCheckIn`). Spatie log name `attendance`.
+Service: `AttendanceRecordService` (CRUD + stats + `markLoginCheckIn` + self-service ownership constraints). Spatie log name `attendance`.
+
+**Ownership:** Staff with `attendance.create` / `attendance.update` may only create/update records for their linked active employee; list/show are scoped to self. Admin/manager/superadmin (`AttendanceRecordPolicy::canManageOthers`) may mark and edit any employee (including correcting check-in/out times and notes). Login auto check-in is unchanged.
 
 Tenant settings (`attendance` group): `office_start_time`, `office_end_time`, `attendance_grace_minutes`, `work_week_days`. Those `H:i` values are workspace-local wall clocks; “today”, check-in time, and late classification use `Settings → General → Timezone` via `Carbon::now($workspaceTimezone)` in `AttendanceRecordService::markLoginCheckIn` (same convention as reminders/meetings — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)). Login check-in runs from `LoginController` when the module is installed and the user has an active linked employee. Location columns: `check_in_ip`, `check_in_latitude`, `check_in_longitude` (and check-out equivalents).
 
@@ -29,6 +31,8 @@ Tenant settings (`attendance` group): `office_start_time`, `office_end_time`, `a
 ```
 attendance.view | create | update | delete | restore | force.delete
 ```
+
+Default **staff** role includes `attendance.view`, `attendance.create`, and `attendance.update` (self-service). Existing workspaces receive the create/update grants via additive `TenantPermissionSynchronizer` migration.
 
 ## API
 

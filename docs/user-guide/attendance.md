@@ -25,11 +25,28 @@ When a workspace user who is linked to an **active** employee signs in, the syst
 
 Users without a linked employee are skipped. If Attendance is not installed, login is unchanged.
 
+## Self-service (staff)
+
+Linked employees with Attendance create/update permission can:
+
+1. Open **Attendance** (you only see **your** records).
+2. Use **Check in** if login did not already create today’s check-in.
+3. Use **Check out** at the end of the day (stores the current time).
+4. Use **Mark attendance** for a fuller form (own employee only). You cannot change check-in after it is set; managers can correct times later.
+
+## Managers and admins
+
+Managers and admins can:
+
+1. View everyone’s records and KPI stats.
+2. **Record attendance** for any employee and date (one record per employee per day).
+3. Edit check-in / check-out times, status, and notes for corrections.
+
 ## Daily records
 
 1. Open **Attendance**.
-2. Create a record for an employee and date (one record per employee per day).
-3. Optionally set check-in and check-out times.
+2. Create or complete a record for the day (staff: self only; managers: any employee).
+3. Optionally set check-in and check-out times (managers may edit either).
 4. Choose status: Present, Absent, Half day, Remote, or Late.
 5. Add notes if needed.
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## Attendance self-service (2026-08-03)
+
+Staff linked to an active employee can mark their own attendance and check out; managers/admins can mark anyone and correct times/notes. Login auto check-in is unchanged. Staff lists are scoped to their own records. Default staff role gains `attendance.create` + `attendance.update` (additive sync for existing workspaces).
+
 ## Profile avatar upload (2026-08-03)
 
 Users can upload a profile picture on **Profile** (Central and Tenant). The photo replaces initials in the topbar user menu and sidebar account chip.
