@@ -1,30 +1,71 @@
-# Phase 7 HR — Security Audit
+# Phase 7 HR — Full Security Audit
 
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-02 |
-| **Scope** | Employees, Leave Management, Attendance, Payroll (backend + tenant SPA) |
+| **Scope** | Employees · Leave Management · Attendance · Payroll (API + tenant SPA + docs) |
 | **Branch** | `feature/phase-7-hr-9630` |
-| **Status** | Remediation applied |
+| **Status** | Remediation applied — **production-ready** for opt-in Marketplace enablement |
 | **Companion** | [Production Readiness](/deployment/hr-phase7-production-readiness) |
+| **Architecture** | Platform freeze respected — thin modules on existing foundation |
 
 ---
 
-## Verdict
+## Executive verdict
 
-No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findings were **fixed** before merge. Phase 7 HR is safe for opt-in Marketplace enablement when the [production readiness](/deployment/hr-phase7-production-readiness) checklist is completed.
+Phase 7 HR is **cleared for production** as four free Marketplace SKUs under category `hr`, after a security and readiness audit plus remediation.
+
+| Dimension | Rating | Notes |
+|-----------|--------|-------|
+| Security (authz / tenancy / IDOR) | **Pass** | `module:*` + `can:*` + `BelongsToTenant`; isolation tests green |
+| Data integrity (leave / payroll) | **Pass** | Days/range, balance locks, pay-run locks, journal account types |
+| Compensation privacy | **Pass** | Default `staff` no longer has `payroll.view` |
+| Frontend gates & XSS | **Pass** | `RequireAccess` / `PermissionGate`; notes as React text |
+| Automated tests | **Pass** | Pest HR suites + headed Playwright per module |
+| Docs / ops | **Pass** | User · developer · deployment · API · this report + readiness pack |
+| Residual risk | **Low / accepted** | Soft-delete uniques, SoD, sort whitelist — non-blocking |
+
+**Go / no-go:** **GO** for merge and migrate-only rollout once CI is green. Complete the [production readiness checklist](/deployment/hr-phase7-production-readiness) on staging before production traffic.
 
 ---
 
-## What was reviewed
+## Delivery matrix
 
-- Tenant API routes (`module:*` + `can:*` + `auth:tenant-api`)
-- Policies / default role permissions (`config/tenant-default-role-permissions.php`)
-- Form requests (mass assignment of status, reviewer, tenant_id)
-- Leave / payroll services (transitions, balances, journal post)
-- Soft-delete / restore / force-delete paths
-- Tenant SPA permission gates and XSS surface (reason/notes)
-- Headed Playwright smoke (Employees, Leave, Attendance, Payroll)
+| SKU | Slug | Hard dep | Billable | UI | Pest | Playwright |
+|-----|------|----------|----------|----|------|------------|
+| Employees | `employees` | — | Free opt-in | HR nav | Yes | `test:e2e:employees` (6/6 headed) |
+| Leave Management | `leave-management` | `employees` | Free opt-in | HR nav | Yes | `test:e2e:leave-management` (6/6 headed) |
+| Attendance | `attendance` | `employees` | Free opt-in | HR nav | Yes | `test:e2e:attendance` (6/6 headed) |
+| Payroll | `payroll` | `employees` (+ optional Accounting) | Free opt-in | HR nav | Yes | `test:e2e:payroll` (6/6 headed) |
+
+Companion packs: [Employees](/deployment/employees) · [Leave](/deployment/leave-management) · [Attendance](/deployment/attendance) · [Payroll](/deployment/payroll).
+
+---
+
+## What was audited
+
+### Backend
+
+- Routes: `auth:tenant-api` + `module:{slug}` + `can:{permission}` (including approve / pay / post / force.delete)
+- Policies + `Gate::authorize` in controllers
+- Default role map (`config/tenant-default-role-permissions.php`)
+- Form requests — no client write of `status`, `reviewed_by`, `tenant_id`, `journal_entry_id`
+- Services: leave lifecycle, balances, attendance uniqueness, pay-run lines, soft journal post
+- Soft-delete / restore / force-delete authorization
+- Tenant isolation (`BelongsToTenant` / `TenantScope`) and cross-workspace Pest cases
+
+### Frontend
+
+- HR nav gated by module entitlement + permission
+- Route `RequireAccess` and action `PermissionGate` (approve / pay / post / delete)
+- Leave / attendance / payroll free-text fields rendered as React children (no `dangerouslySetInnerHTML`)
+- Headed Playwright: validation errors, CRUD, leave submit→approve, payroll approve→paid
+
+### Ops / docs
+
+- Migrate-only catalog registration (`DefaultModuleRegistrar`)
+- Module dependency rows (Leave/Attendance/Payroll → Employees)
+- User / developer / deployment / API guides for all four SKUs
 
 ---
 
@@ -47,6 +88,8 @@ No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findin
 | HR-13 | Info | Soft-delete unique indexes include trashed rows | **Follow-up** |
 | HR-14 | Info | Privileged attrs remain `$fillable` but not request-writable | **Accepted** (defense-in-depth follow-up) |
 
+No Critical or High open findings remain.
+
 ---
 
 ## Remediation details
@@ -55,10 +98,11 @@ No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findin
 
 - Upsert authorizes `update` when a balance already exists; create path keeps `create`.
 - Upsert always derives `remaining = entitled - used`.
-- Leave `days` capped to inclusive calendar span (request + service).
+- Leave `days` capped to inclusive calendar span (FormRequest + service).
 - Approve runs in a transaction, locks the request, locks the balance, and rejects insufficient remaining.
 - Reject / submit / cancel also lock the request row.
 - Delete allowed only for `draft`, `rejected`, or `cancelled` (approved retained for audit).
+- Optional null `days` from the UI auto-calculates inclusive calendar days (no more `0.00` debit).
 
 ### Payroll
 
@@ -70,7 +114,7 @@ No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findin
 ### RBAC
 
 - Default **staff** role no longer includes `payroll.view`. Manager+ retains compensation access.
-- **Ops note:** Existing workspaces keep previously synced role permissions until roles are re-synced / edited. New tenants get the tightened defaults.
+- **Ops note:** Existing workspaces keep previously synced role permissions until roles are re-synced or edited. New tenants get the tightened defaults.
 
 ### Employees / Attendance
 
@@ -79,26 +123,46 @@ No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findin
 
 ---
 
-## Positive controls (no change required)
+## Security checklist
 
-| Control | Assessment |
-|---------|------------|
-| Tenancy isolation | Global `TenantScope` + Pest cross-workspace tests |
-| Authorization wiring | Controllers use `Gate::authorize` + route `can:*` |
-| Pay-run draft-only update/delete | Enforced in service |
-| Status transitions | Server-side enums; not request-writable |
-| Frontend XSS | Notes/reasons rendered as React text, not HTML |
-| Frontend authz | `RequireAccess` + `PermissionGate` on HR actions |
+| Check | Result |
+|-------|--------|
+| Module catalog + hard deps (Leave/Attendance/Payroll → Employees) | Pass |
+| Permission middleware on mutating + sensitive routes | Pass |
+| Tenant scoping / isolation tests | Pass |
+| Leave lifecycle integrity (days, balance, delete) | Pass |
+| Payroll lifecycle integrity (amounts, locks, journal types) | Pass |
+| Staff cannot read salaries by default | Pass |
+| Soft-delete / restore authorization present | Pass |
+| Frontend `RequireAccess` / `PermissionGate` on HR routes & actions | Pass |
+| XSS: leave/attendance/payroll notes as React text nodes | Pass |
+| Platform freeze (no parallel auth/tenancy/billing) | Pass |
+| Pest Leave / Payroll / Employee / Attendance (security regressions) | **48 passed** |
+| Headed Playwright Employees / Leave / Attendance / Payroll | **6/6 each** |
+
+Ops deploy / smoke / rollback: see [Production Readiness](/deployment/hr-phase7-production-readiness).
+
+---
+
+## Default RBAC after this ship
+
+| Role | Employees | Leave | Attendance | Payroll |
+|------|-----------|-------|------------|---------|
+| Owner / Admin | Full | Full | Full | Full (incl. approve / pay / post) |
+| Manager | View + mutate (per map) | View + create/update + approve | View + mutate | View + create/update + approve/pay/post |
+| Staff | View | View | View | **No `payroll.view`** |
+
+Exact permission names: see [Tenant RBAC](/user-guide/tenant-rbac) and module developer guides.
 
 ---
 
 ## Residual / follow-up (non-blocking)
 
-1. **Partial unique indexes** for soft-deleted uniques (`leave_balances`, `attendance_records`, `payroll_profiles`).
-2. **Whitelist `sort`/`direction`** across tenant list services (platform-wide).
+1. **Partial unique indexes** for soft-deleted uniques (`leave_balances`, `attendance_records`, `payroll_profiles`) to avoid recreate collisions.
+2. **Whitelist `sort`/`direction`** across tenant list services (platform-wide hardening).
 3. **Optional SoD**: reject leave/pay approve when actor is creator (config flag).
 4. **FK + index** on `pay_runs.journal_entry_id`.
-5. **Remove privileged attributes** from model `$fillable`; use explicit `forceFill` in services.
+5. **Remove privileged attributes** from model `$fillable` and use explicit `forceFill` in services.
 6. **Overlap validation** for pending/approved leave ranges per employee.
 7. Re-sync default role permissions for existing tenants that already received `payroll.view` on staff.
 
@@ -107,21 +171,42 @@ No critical cross-tenant or unauthenticated issues. Medium integrity/RBAC findin
 ## Test evidence
 
 ```bash
-cd saas-backend
+# Backend
+cd SaaS-Backend
 php artisan test --compact \
   tests/Feature/Tenant/Leave/LeaveManagementTest.php \
   tests/Feature/Tenant/Payroll/PayrollTest.php \
   tests/Feature/Tenant/Employee/EmployeeTest.php \
   tests/Feature/Tenant/Attendance/AttendanceTest.php
+# Expected: 48 passed (security + CRUD + isolation)
+
+# Frontend headed (per module)
+cd SaaS-Frontend
+npm run test:e2e:employees:headed
+npm run test:e2e:leave-management:headed
+npm run test:e2e:attendance:headed
+npm run test:e2e:payroll:headed
 ```
 
-**Result (2026-08-02):** **48 passed**, including inflated leave days, insufficient balance, approved-delete block, balance upsert RBAC, negative pay-run gross, wrong journal account types, staff payroll denial, unique `user_id`, attendance check-out ordering.
-
-Headed Playwright (tenant project): Employees / Leave / Attendance / Payroll — **6/6 each**.
+Security coverage added/expanded: inflated leave days, insufficient balance on approve, delete of approved leave, balance upsert RBAC, negative pay-run gross, wrong journal account types, staff `payroll.view` denial, unique employee `user_id`, attendance check-out ordering.
 
 ---
 
-## Related
+## Related PRs / artifacts
 
-- [Production Readiness runbook](/deployment/hr-phase7-production-readiness)
-- Backend / Frontend / Docs / Website PRs on `feature/phase-7-hr-9630`
+| Repo | Branch | Notes |
+|------|--------|-------|
+| SaaS-Backend | `feature/phase-7-hr-9630` | Modules + security hardening |
+| SaaS-Frontend | `feature/phase-7-hr-9630` | HR UI + headed e2e |
+| SaaS-Docs | `feature/phase-7-hr-9630` | Module packs + audit + readiness |
+| saas-website | `feature/phase-7-hr-9630` | Marketing modules marked available |
+
+---
+
+## Sign-off
+
+| Role | Decision |
+|------|----------|
+| Security audit | Remediation complete — no open Critical/High |
+| Production readiness | Complete ops checklist in [Production Readiness](/deployment/hr-phase7-production-readiness) |
+| Recommended next step | Merge companion PRs → migrate staging → smoke → production migrate |

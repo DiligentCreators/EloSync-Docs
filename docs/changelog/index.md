@@ -17,17 +17,20 @@
 
 **Security & production readiness (2026-08-02)**
 
-- Hardened leave days/balance integrity, approved-delete retention, pay-run locks/amount bounds, journal account-type validation, and removed default staff `payroll.view`.
-- Docs: [Production Readiness](/deployment/hr-phase7-production-readiness) · [Security Audit](/deployment/hr-phase7-security-audit).
+- Full security audit: [`/deployment/hr-phase7-security-audit`](/deployment/hr-phase7-security-audit) · ops readiness: [`/deployment/hr-phase7-production-readiness`](/deployment/hr-phase7-production-readiness).
+- Leave: balance upsert RBAC, days capped to date range, insufficient-balance reject on approve, approved requests not deletable, transition locks.
+- Payroll: pay-run approve/pay/post `lockForUpdate`, line gross `min:0`, journal accounts must be expense/liability; default **staff** no longer has `payroll.view`.
+- Employees: unique `user_id` link; Attendance: `check_out >= check_in`.
+- Verification: Pest HR security suite **48 passed**; headed Playwright Employees/Leave/Attendance/Payroll **6/6 each**.
 
 **Frontend & verification**
 
 - HR nav group with Employees / Leave / Attendance / Payroll UI; API clients, query keys, and permissions wired for module pages.
-- Playwright: `test:e2e:employees|leave-management|attendance|payroll` (modules + authz). Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
+- Playwright: `test:e2e:employees` · `leave-management` · `attendance` · `payroll` (modules + authz). Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
 
 **Docs**
 
-- User / developer / deployment / API guides for all four SKUs; roadmap, module-dependencies, and `database.md` HR tables updated.
+- User / developer / deployment / API guides for all four SKUs; roadmap, module-dependencies, and `database.md` HR tables updated; Phase 7 HR security audit + production readiness pages.
 
 ---
 
