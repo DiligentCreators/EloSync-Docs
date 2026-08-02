@@ -75,7 +75,8 @@ Do **not** rely on `CatalogSeeder` / re-running `ensureModule` — those paths n
 3. Confirm `tenant-permissions` + `tenant-default-role-permissions` config are deployed with the release (migrations read them)
 4. Entitlement cache is cleared per workspace by the module registrar when a subscription is newly installed
 5. If the module contributes dashboard widgets or notifications, confirm scheduler (`crm:send-due-notifications`) and SPA polling/widget ids
-6. Smoke: login → module nav visible → list API 200 with `module:` + `can:` → Marketplace shows expected version / Available|Installed|Billable badges
+6. If the module has dates, schedules, digests, or office hours, confirm [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) (non-UTC workspace smoke)
+7. Smoke: login → module nav visible → list API 200 with `module:` + `can:` → Marketplace shows expected version / Available|Installed|Billable badges
 
 ## Rollback
 
