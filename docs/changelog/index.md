@@ -1,5 +1,13 @@
 # Changelog
 
+## @mentions on Lead/Task notes (2026-08-03)
+
+Mention teammates in **Lead notes** and **Task comments** with `@` autocomplete. Stable body syntax `@[Display Name](user:ID)` persists mention rows (`lead_note_mentions` / `task_note_mentions`) and notifies the mentioned user (skip self; idempotent per note+user).
+
+- Types: `lead.mentioned` (database + broadcast + web push) / `task.mentioned` (database + web push)
+- Optional mail gated by Settings → Notifications toggles `lead_mentioned` / `task_mentioned` (default off)
+- SPA registry routes to the lead/task detail sheet; composer shared on lead Notes and task Comments tabs
+
 ## Leave self-service + salary deduction on approve (2026-08-03)
 
 Staff (and managers) submit leave only for their linked active employee; admin/superadmin may create on behalf of others. Managers still approve others’ pending requests. Reject requires `review_notes`. Approve accepts optional `deduct_salary` (default `!leaveType.is_paid`); overriding the default requires notes. Payroll `PayPeriodCalculator` uses `deduct_salary` (legacy null rows fall back to `!is_paid`). Default staff role gains `leave-management.create` + `leave-management.update` (additive sync).
@@ -68,7 +76,7 @@ Workspaces that installed **Employees** after creating users can now convert a l
 
 Workspace admins can enable or disable **event emails** under **Settings → Notifications**. Defaults are **all off** to reduce SMTP cost during MVP testing. In-app and web push channels are unchanged. Daily task digests, daily CRM summaries, and auth emails (password reset / verification) always send.
 
-Toggles: task assigned, task completed/reopened, follow-up created, follow-up due/overdue, meeting events, other module assignments.
+Toggles: task assigned, task completed/reopened, task mentioned, follow-up created, follow-up due/overdue, lead mentioned, meeting events, other module assignments.
 
 ## Workspace timezone convention + daily reminder gating (2026-08-03)
 

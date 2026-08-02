@@ -74,7 +74,7 @@ Every CRM/ERP database notification `data` JSON includes:
 
 Convention: `domain.event[.digest]`
 
-Examples: `lead.assigned`, `lead.assigned.digest`, `task.assigned`, `invoice.created`, `announcement`
+Examples: `lead.assigned`, `lead.assigned.digest`, `lead.mentioned`, `task.assigned`, `task.mentioned`, `invoice.created`, `announcement`
 
 Optional per-module PHP enums may stringify into `data.type`.
 

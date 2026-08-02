@@ -45,8 +45,10 @@ Marks all unread notifications for the current user as read.
 | `lead.assigned` / `lead.reassigned` | `database`, `broadcast`, `webpush` |
 | `lead.assigned.digest` | `database`, `broadcast`, `webpush` (bulk/import via NotificationBatch) |
 | Follow-up created / due / overdue | `database` + optional `mail` (`email_notifications.lead_follow_up_*`, default off) |
+| `lead.mentioned` | `database`, `broadcast`, `webpush` + optional `mail` (`email_notifications.lead_mentioned`, default off) |
 | Task assigned | `database`, `webpush` + optional `mail` (`email_notifications.task_assigned`, default off) |
 | Task completed / reopened | `database` + optional `mail` (`email_notifications.task_status`, default off) |
+| `task.mentioned` | `database`, `webpush` + optional `mail` (`email_notifications.task_mentioned`, default off) |
 | Task due today / overdue | `database` only (per task) |
 | Task daily digest (due + overdue) | `mail` only (one per assignee per day; always on) |
 | Meeting invite / update / cancel / reminder | `database`, `broadcast`, `webpush` + optional `mail` (`email_notifications.meeting_events`, default off) |

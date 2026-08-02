@@ -39,8 +39,10 @@ There is no separate attendance or meeting timezone. Change **Timezone** once; a
 |--------|----------------------------------|
 | **Task assigned** | A task is assigned to someone |
 | **Task completed / reopened** | A task is completed or reopened |
+| **Mentioned in a task comment** | Someone @mentions you in a task comment |
 | **Follow-up created** | A lead follow-up is created |
 | **Follow-up due / overdue** | A lead follow-up becomes due or overdue |
+| **Mentioned in a lead note** | Someone @mentions you in a lead note |
 | **Meeting events** | Meeting invite, update, cancel, or reminder |
 | **Other module assignments** | Contact, company, opportunity, invoice, and similar assignment emails |
 

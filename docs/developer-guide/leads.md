@@ -6,7 +6,7 @@ Reference implementation. Copy this layout for Tasks and later modules.
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Lead.php`, `LeadStage`, `LeadNote`, `LeadFollowUp`, `LeadActivity`, `LeadAssignmentHistory` |
+| Models | `app/Models/Lead.php`, `LeadStage`, `LeadNote`, `LeadNoteMention`, `LeadFollowUp`, `LeadActivity`, `LeadAssignmentHistory` |
 | Enums | `app/Enums/Tenant/LeadStatusEnum`, `LeadPriorityEnum`, `LeadFollowUpStatusEnum`, `LeadActivityTypeEnum` |
 | Service | `app/Services/Tenant/LeadService.php` (+ `ScopesToAssignee`) |
 | Export | `app/Exports/LeadsExport.php` |
@@ -20,12 +20,14 @@ Reference implementation. Copy this layout for Tasks and later modules.
 | Policy | `app/Policies/LeadPolicy.php` |
 | Events | `app/Events/Lead*.php` |
 | Subscriber | `app/Listeners/LeadEventSubscriber.php` (audit + notifications) |
-| Notifications | `app/Notifications/Tenant/Lead/*` (`mail` + `database`) |
+| Notifications | `app/Notifications/Tenant/Lead/*` (assign: database+broadcast+webpush; follow-ups/mentions: database + optional mail; mentions also broadcast+webpush) |
+| Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `LeadNoteAdded` in `LeadEventSubscriber` |
 | Seeder | `database/seeders/Tenant/LeadStageSeeder.php` |
-| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadValidationTest.php`, `LeadImportTest.php` |
+| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
+- Note bodies may include `@[Display Name](user:ID)` mention tokens. On `LeadNoteAdded`, `NoteMentionService` persists `lead_note_mentions` and sends `lead.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.lead_mentioned` (default off).
 - Follow-up `due_at` follows the [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): SPA edit/display in Settings → General timezone; store as UTC via `UtcDateTime` / `UtcIso`; due/overdue notifications use workspace-local “today”.
 - `lead_value` replaced `estimated_value` (migration rename). Store/update requests still accept `estimated_value` as a write alias.
 - Status is independent of stage flags (`is_won` / `is_lost`). Stage change does not sync status.
@@ -99,10 +101,12 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/leads/leads-page.tsx` (board default + table) |
 | Form | `lead-form-dialog.tsx` |
-| Detail | `lead-detail-sheet.tsx` (DnD stage pending until Save) |
+| Detail | `lead-detail-sheet.tsx` (DnD stage pending until Save; Notes use `MentionComposer`) |
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |
+| Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` |
+| Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`) |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |
 
