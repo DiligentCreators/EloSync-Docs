@@ -287,7 +287,7 @@ Phase 7 HR. Category `hr` (sort `70`). Free Marketplace opt-ins. Leave Managemen
 
 ### `employees`
 
-`tenant_id`, `uuid`, unique-per-tenant `employee_number`, `first_name`, `last_name`, nullable `email` / `phone` / `job_title` / `department`, nullable `hire_date` / `termination_date`, `employment_type` (`full_time`\|`part_time`\|`contract`, default `full_time`), `status` (`active`\|`inactive`\|`terminated`, default `active`), nullable `user_id` (FK users), nullable `notes`, `created_by`, soft deletes. Indexes on `(tenant_id, status)` and `(tenant_id, last_name)`.
+`tenant_id`, `uuid`, unique-per-tenant `employee_number`, `first_name`, `last_name`, nullable `email` / `phone` / `job_title` / `department`, nullable `hire_date` / `termination_date`, `employment_type` (`full_time`\|`part_time`\|`contract`, default `full_time`), `status` (`active`\|`inactive`\|`terminated`, default `active`), nullable `user_id` (FK users), nullable `active_user_id` (mirrors `user_id` while active; cleared on soft delete; unique `(tenant_id, active_user_id)`), nullable `notes`, `created_by`, soft deletes. Indexes on `(tenant_id, status)` and `(tenant_id, last_name)`.
 
 ### `leave_types`
 

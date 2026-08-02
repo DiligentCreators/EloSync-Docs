@@ -10,9 +10,10 @@
 ## Bootstrap
 
 1. Run migration `2026_08_01_170000_create_employees_table`
-2. Register module via `register_employees_module` (`DefaultModuleRegistrar`)
-3. Grant permissions via `add_employees_permissions` (`TenantPermissionSynchronizer`)
-4. Deploy frontend HR nav (Employees)
+2. Run migration `2026_08_02_204432_add_active_user_id_uniqueness_to_employees_table` (race-safe active user link)
+3. Register module via `register_employees_module` (`DefaultModuleRegistrar`)
+4. Grant permissions via `add_employees_permissions` (`TenantPermissionSynchronizer`)
+5. Deploy frontend HR nav (Employees)
 
 ## Deploy checklist
 

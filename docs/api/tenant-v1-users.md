@@ -22,14 +22,14 @@ Creates a linked Employees directory record for a user that does not already hav
 | Permission | `can:employees.create` |
 | Policy | Actor must be able to `view` the user |
 
-Defaults: next `EMP-####` number, name split from `user.name`, `email` from the user, hire date = today in the workspace timezone, `employment_type = full_time`, `status = active`.
+Defaults: next `EMP-####` number, name split from `user.name`, `email` from the user, hire date = today in the workspace timezone, `employment_type = full_time`, `status = active` (or `inactive` if the user is suspended). Concurrent calls are serialized with a user-row lock. Soft-deleted employees keep historical `user_id` but clear `active_user_id`, so re-provision is allowed.
 
 | Status | When |
 |--------|------|
 | `201` | Employee created (body uses Employee resource) |
 | `404` | User soft-deleted |
 | `403` | Module not installed or missing `employees.create` |
-| `422` | User already has a linked employee |
+| `422` | User already has an active linked employee |
 
 Also: create user accepts optional `create_employee` (boolean, default `true` when Employees is installed).
 

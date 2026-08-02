@@ -6,13 +6,13 @@ Phase 7 HR foundation. Slug `employees`, middleware `module:employees`, permissi
 
 | Model | Table | Notes |
 |-------|-------|-------|
-| `Employee` | `employees` | Soft deletes; UUID; unique `(tenant_id, employee_number)` |
+| `Employee` | `employees` | Soft deletes; UUID; unique `(tenant_id, employee_number)`; race-safe active user link via `active_user_id` |
 
 Enums: `EmployeeStatusEnum` (`active` \| `inactive` \| `terminated`), `EmploymentTypeEnum` (`full_time` \| `part_time` \| `contract`).
 
 Service: `EmployeeService` (includes `nextEmployeeNumber` / `splitFullName`). Events → subscriber → `PlatformAuditService` + Spatie `LogsActivity` (log name `employees`).
 
-`TenantUserService::create` may provision a linked employee when `employees` is installed and `create_employee` is true (default). Retrofit path: `POST /api/tenant/v1/users/{user}/create-employee` (`module:employees` + `can:employees.create`) calls `TenantUserService::createEmployeeForUser`. Tenant user list/show resources include nullable `employee_id`. Suspend marks the linked employee inactive; user name/email updates sync to the linked employee.
+`TenantUserService::create` may provision a linked employee when `employees` is installed and `create_employee` is true (default). Retrofit path: `POST /api/tenant/v1/users/{user}/create-employee` (`module:employees` + `can:employees.create`) calls `TenantUserService::createEmployeeForUser` inside a user-row lock. Tenant user list/show/update resources include nullable `employee_id`. Suspend marks the linked employee inactive; create-employee for a suspended user starts as `inactive`. Soft delete clears `active_user_id` (historical `user_id` kept) so re-provision is allowed; restore unlinks `user_id` if another active employee already owns the login.
 
 ## Backend layout
 

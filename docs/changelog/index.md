@@ -5,8 +5,9 @@
 Workspaces that installed **Employees** after creating users can now convert a login into a directory record:
 
 - Users row action **Create employee record** (requires Employees module + `employees.create`)
-- `POST /api/tenant/v1/users/{user}/create-employee`
-- User list/show include nullable `employee_id`
+- `POST /api/tenant/v1/users/{user}/create-employee` (user-row lock; inactive when the user is suspended)
+- User list/show/update include nullable `employee_id`
+- Race-safe active link via `employees.active_user_id` + unique `(tenant_id, active_user_id)`; soft delete frees the link for re-provision
 - Salary remains on Payroll profiles (unchanged)
 
 ## Tenant email notification toggles (2026-08-03)
