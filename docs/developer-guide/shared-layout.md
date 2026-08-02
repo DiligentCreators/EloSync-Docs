@@ -8,18 +8,21 @@ Both applications render authenticated pages through the same `AppLayout`:
 
 ```
 AppLayout
-├── Sidebar          (context-aware nav + brand subtitle)
-├── Topbar
+├── Sidebar          (context-aware nav + brand subtitle; ~w-60 expanded)
+├── Topbar           (h-14; collapse tip shows ⌘/Ctrl+B)
 │   ├── Collapse / mobile menu
 │   ├── Breadcrumbs
 │   ├── Command palette trigger (⌘K)
 │   ├── Theme toggle
-│   ├── Notifications (placeholder)
+│   ├── Notifications
 │   ├── Settings shortcut
 │   └── User menu
-├── <Outlet />       (page content in shared max-width container)
-└── CommandPalette
+├── <Outlet />       (page content; compact padding)
+├── GlobalShortcuts  (mod+b sidebar)
+└── CommandPalette   (mod+k)
 ```
+
+Module list pages also register `useModuleShortcuts` (`n` create — not Ctrl+N, browser-reserved; `mod+f` module search).
 
 Context is **path-based**:
 
@@ -57,7 +60,8 @@ Do **not** duplicate Sidebar/Topbar for Tenant. Parameterize via navigation conf
 
 **Shell**
 
-- `AppLayout`, `Sidebar`, `Topbar`, `Breadcrumbs`, `UserMenu`, `CommandPalette`, `ThemeToggle`
+- `AppLayout`, `Sidebar`, `Topbar`, `Breadcrumbs`, `UserMenu`, `CommandPalette`, `GlobalShortcuts`, `ThemeToggle`
+- Hooks: `useHotkeys`, `useModuleShortcuts` — see [Module Development Guide](/developer-guide/module-development-guide#frontend-checklist)
 
 **Page chrome**
 

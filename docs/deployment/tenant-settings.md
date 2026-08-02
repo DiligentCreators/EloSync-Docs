@@ -3,7 +3,7 @@
 ## Deploy checklist
 
 1. Run migrations (adds `type` / `group` on `tenant_settings`, plus `task_digest_deliveries` for durable daily task digest send state).
-2. Configure object storage: local `FILESYSTEM_DISK=public` + `php artisan storage:link`, or production `FILESYSTEM_DISK=s3`. Optional: `FILESYSTEM_BRANDING_DISK=public` so tenant branding under `tenants/{id}/branding/…` stays on local storage (see [object-storage.md](/developer-guide/object-storage)).
+2. Configure object storage: local `FILESYSTEM_DISK=public` + `php artisan storage:link`, or production `FILESYSTEM_DISK=s3`. Keep tenant branding + user avatars on local public storage (`FILESYSTEM_BRANDING_DISK=public`; avatars default `FILESYSTEM_AVATAR_DISK=public`) and persist `storage/app/public` across zero-downtime deploys (see [object-storage.md](/developer-guide/object-storage)).
 3. Ensure `settings.list` / `settings.update` exist in `config/tenant-permissions.php` and default role maps. New workspaces receive them via `TenantAuthorizationProvisioningService` during provisioning. Existing workspaces that need newly added settings permissions receive them via an additive permission **data migration** — not production seeders and not login-time sync.
 4. Confirm `APP_KEY` is stable — SMTP passwords are encrypted with Laravel Crypt.
 5. For daily task digests: scheduler must run (`schedule:run` every minute) and an `emails` queue worker must be listening. Shared cache is required for `onOneServer()` schedule locks.

@@ -14,7 +14,8 @@ Business functionality will differentiate the apps later; the shell must not req
 | Primitives | `SaaS-Frontend/src/components/ui` |
 | Page helpers | `components/common` (headers, empty/loading/error states) |
 | App chrome | `layouts/app-layout.tsx` + `components/layout` |
-| Motion / density | Same card radii, sidebar width, topbar height, content max-width |
+| Motion / density | Compact admin density: Inter, sidebar `w-60` / collapsed `w-14`, topbar `h-14`, content `px-4`–`px-6`, control `h-9` |
+| Keyboard shortcuts | Global: `GlobalShortcuts` (`mod+b`); pages: `mod+k` command palette; modules: `useModuleShortcuts` (`n` create, `mod+f` search) |
 
 Central-specific dashboard widgets (tenant analytics, platform health, marketplace shortcuts) stay in `components/dashboard` and are **not** reused on the Tenant dashboard.
 

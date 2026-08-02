@@ -21,8 +21,10 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 | POST | `/auth/login` | Throttled (`throttle:auth-login`, 5/min by email or IP) |
 | POST | `/auth/forgot-password` | |
 | POST | `/auth/reset-password` | Body: `email`, `token`, `password`, `password_confirmation` |
-| GET | `/me` | Current user + roles/permissions |
-| POST | `/me` | Update profile |
+| GET | `/me` | Current user + roles/permissions (+ `avatar_url`) |
+| POST | `/me` | Update profile (`name`, `email`) |
+| POST | `/me/avatar` | Upload profile picture (`multipart/form-data` field `file`; jpg/png/webp, max 2 MB) |
+| DELETE | `/me/avatar` | Remove profile picture |
 | POST | `/me/change-password` | |
 | POST | `/me/logout` | Revokes tokens |
 | GET | `/dashboard` | Platform stats — permission `dashboard.view`; see [Dashboard payload](#dashboard-payload) |

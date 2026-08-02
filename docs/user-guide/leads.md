@@ -19,12 +19,12 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 
 ## Create & edit
 
-1. Click **New lead**
+1. Click **New lead**, or press `N` when not typing in a field (requires **create**; browsers reserve `Ctrl+N` for a new window)
 2. Enter name (required) and optional contact / company / source / **lead value** / priority / status
 3. Optionally set stage and assignee (assignee requires **assign**)
 4. Save
 
-Edit from the row menu or the detail drawer.
+Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the detail drawer.
 
 ## Pipeline vs status
 
