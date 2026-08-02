@@ -6,13 +6,14 @@ Manage who can access your workspace and what they can do.
 
 Open **Administration → Users**.
 
-When the **Employees** module is installed, creating a user shows **Create employee record** (on by default). That creates a linked Employees directory row for attendance and payroll. Suspending a user marks the linked employee inactive (does not terminate them).
+When the **Employees** module is installed, creating a user shows **Create employee record** (on by default). That creates a linked Employees directory row for attendance and payroll. For users created before Employees was installed, use the row action **Create employee record** (requires `employees.create`). Suspending a user marks the linked employee inactive (does not terminate them).
 
 | Action | How |
 |--------|-----|
 | View | Search, filter by status, open a row |
 | Create | **New user** → name, email, password, roles; optionally **Create employee record**, **Exclude from lead assignment**, and **Receive all-users daily summary** |
 | Edit | Row menu → **Edit** → update details, roles, lead-assignment exclusion, and all-users daily summary |
+| Create employee record | Row menu → **Create employee record** when Employees is installed and the user has no linked employee yet (`employees.create`) |
 | Activate / Deactivate | Suspend / Unsuspend (when available) |
 | Reset password | Row menu → change password |
 | Resend verification | Row menu → **Resend verification** (unverified users; requires `users.verify`) |
