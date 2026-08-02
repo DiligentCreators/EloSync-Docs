@@ -70,6 +70,23 @@ See [tenant-v1-dashboard.md](/api/tenant-v1-dashboard).
 
 If the module needs settings, register keys in `SystemSettingDefinitions` / `TenantSettingDefinitions` and resolve Central → Tenant → system. Do not invent a parallel settings store.
 
+## Date and time (required for every module)
+
+Applies to **all current and future** tenant modules — same rule as Leads, Tasks, Meetings, Calendar, Attendance, and CRM reminders.
+
+1. **Single timezone** — Settings → General → Timezone (e.g. `Asia/Karachi`). Never add `{module}_timezone` or assume server `APP_TIMEZONE` / UTC for user-facing clocks.
+2. **Absolute datetimes** (`due_at`, `starts_at`, `ends_at`, `remind_at`, …) — cast with `App\Casts\UtcDateTime`; serialize with `App\Support\UtcIso`; SPA edit/display via `src/lib/datetime.ts` + `useSettingsStore`.
+3. **Wall-clock settings** (`H:i` office hours, digests, cutoffs) — interpret only in the workspace timezone; document that in the module’s user guide.
+4. **Schedulers / “today” / late gates** — use `now($workspaceTimezone)` or `Carbon::now($timezone)` after resolving timezone from `TenantSettingService`; do not rely on bare `now()` in long-lived workers.
+5. **Docs** — link [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) from the module developer guide when the module has any date/time fields.
+
+## Anti-patterns (date/time)
+
+- Per-module timezone picker that diverges from Settings → General
+- Default Eloquent `datetime` cast on absolute scheduling columns when `app.timezone` may be non-UTC
+- Bare `now()` / `today()` in scheduled commands without an explicit workspace timezone
+- Showing browser-local times while storing “naive” workspace wall clocks without conversion
+
 ## Catalog versioning (`modules.version`)
 
 Marketplace detail shows the catalog **version** string (semver). It is **display / release metadata** for the catalog row — not a per-workspace entitlement version.
@@ -117,12 +134,14 @@ Paid modules: catalog `is_billable`, marketplace install, `ModuleSubscriptionSer
 - Production `db:seed` / `CatalogSeeder` to register default modules
 - Login-time or dashboard-time permission “repair”
 - `syncPermissions()` on existing customized roles during deploy
+- Per-module timezone or server-UTC user clocks (see Date and time above)
 
 ## Related
 
 - [Module Architecture](/architecture/module-architecture)
 - [Module Dependencies](/architecture/module-dependencies)
 - [Module Licensing](/architecture/module-licensing)
+- [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)
 - [Production module registration](/deployment/module-development)
 - [Communication Templates](/developer-guide/communication-templates) — reusable platform module pattern
 - [Tenant provisioning](/developer-guide/tenant-provisioning)

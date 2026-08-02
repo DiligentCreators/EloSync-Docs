@@ -17,7 +17,7 @@ You need permission to view/update settings (workspace owners have this by defau
 - Meeting and calendar start/end times (and meeting reminders)
 - Attendance “today”, login check-in time, and office start/end + late grace
 
-There is no separate attendance or meeting timezone. Change **Timezone** once; all of the above move with it.
+There is no separate attendance or meeting timezone. Change **Timezone** once; all of the above move with it. The same rule applies to every current module and any future module that shows dates, due times, schedules, or office hours.
 
 ## General
 

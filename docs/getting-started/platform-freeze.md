@@ -14,7 +14,7 @@ Do **not** redesign:
 | Tenancy | Workspace resolution, isolation, middleware, domain resolver, white-label readiness |
 | Authorization | Modules = licensing; Roles/Permissions = RBAC (Spatie); `module:` + `can:` middleware. No Features, Plans, or Limits |
 | Billing | Marketplace, module subscriptions, consolidated billing, invoices/payments foundation, gateway abstraction, Stripe driver |
-| Configuration | Central defaults → Tenant overrides → System defaults (branding, SMTP, locale, currency, timezone) |
+| Configuration | Central defaults → Tenant overrides → System defaults (branding, SMTP, locale, currency, **timezone**). Modules consume workspace timezone; they must not invent parallel timezone systems |
 | Security | Audit logs, impersonation, session/workspace isolation, payment security |
 
 ## Allowed changes
@@ -39,5 +39,6 @@ Do **not** redesign:
 - [Module Dependencies](/architecture/module-dependencies)
 - [Module Licensing](/architecture/module-licensing)
 - [Module Development Standard](/developer-guide/module-development)
+- [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)
 - [Entitlements](/developer-guide/entitlements)
 - [Shared UI](/developer-guide/shared-ui)

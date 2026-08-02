@@ -32,9 +32,11 @@ Attendance group keys (system defaults when unset): `office_start_time` (`09:00`
 
 ## Workspace timezone convention {#timezone-and-scheduled-datetimes}
 
-**Rule:** One workspace timezone (`Settings → General → Timezone`, e.g. `Asia/Karachi`) is the wall-clock source of truth for **all** tenant date/time behavior. Do **not** invent a second timezone per module (attendance, meetings, reminders, etc.). Server / process UTC is for storage and wire format only — never for user-facing scheduling clocks.
+**Rule (all current and future tenant modules):** One workspace timezone (`Settings → General → Timezone`, e.g. `Asia/Karachi`) is the wall-clock source of truth for **all** tenant date/time behavior. Every shipped module and every new module must honor it. Do **not** invent a second timezone per module. Server / process UTC is for storage and wire format only — never for user-facing scheduling clocks.
 
-### What uses the workspace timezone
+This is part of the [Module Development Standard](/developer-guide/module-development) Definition of Done.
+
+### What uses the workspace timezone today
 
 | Area | Setting / field | Behavior when timezone is `Asia/Karachi` |
 |------|-----------------|------------------------------------------|
@@ -46,7 +48,20 @@ Attendance group keys (system defaults when unset): `office_start_time` (`09:00`
 | Office hours | `office_start_time` / `office_end_time` / grace | Separate clocks from Daily Reminder Time, but same workspace timezone |
 | Work week / payroll calendar | `work_week_days` | Working days interpreted with workspace-local dates |
 
+Future modules with due dates, schedules, office hours, digests, or “today” logic must extend this table the same way — reuse workspace timezone; do not add a module-scoped timezone setting unless product explicitly requires multi-region offices in one tenant.
+
 Wall-clock settings (`H:i` strings such as Daily Reminder Time and office start/end) are always **local to the workspace timezone**. Absolute scheduled datetimes are stored as UTC and projected into that timezone for UI and business “today/due” logic.
+
+### Module obligations
+
+| Obligation | Detail |
+|------------|--------|
+| Display / edit | SPA uses `SaaS-Frontend/src/lib/datetime.ts` + `useSettingsStore` timezone |
+| Absolute datetimes | Backend `UtcDateTime` cast + `UtcIso` on API resources |
+| Wall-clock settings | `H:i` strings interpreted in workspace TZ only |
+| Schedulers / gates | Prefer `now($workspaceTimezone)` / `Carbon::now($timezone)` over bare `now()` when process TZ may be UTC |
+| Runtime config | Rely on `applyRuntimeConfig()`; never assume server `APP_TIMEZONE` |
+| Docs | User/developer guides must state times follow Settings → General → Timezone |
 
 ### Implementation notes
 
