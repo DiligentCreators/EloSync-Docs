@@ -22,7 +22,7 @@
 
 Business code must call the service (`applicationName()`, `logoUrl()`, `supportEmail()`, `buttonColor()`, `usesCustomMailProvider()`, …) instead of branching on raw settings.
 
-`task_reminder_time` is a string `H:i` value (default `09:00`) under the `general` group (UI label: **Daily Reminder Time**). `crm:send-due-notifications` reads it after `applyRuntimeConfig()` so the comparison uses the workspace timezone. The same gate drives task due digests and daily CRM summaries.
+`task_reminder_time` is a string `H:i` value (default `09:00`) under the `general` group (UI label: **Daily Reminder Time**). `crm:send-due-notifications` compares `now($workspaceTimezone)->format('H:i')` against that value so digests and daily CRM summaries gate on the workspace timezone even if the scheduler process default remains UTC. `applyRuntimeConfig()` still sets PHP `app.timezone` / `date_default_timezone_set` for `today()` / due-date queries and Sanctum; mail overlay failures must not undo that timezone.
 
 Attendance group keys (system defaults when unset): `office_start_time` (`09:00`), `office_end_time` (`18:00`), `attendance_grace_minutes` (`15`), `work_week_days` (`[1,2,3,4,5]` ISO weekdays). Used by login check-in and `PayPeriodCalculator`.
 
