@@ -44,11 +44,16 @@ Marks all unread notifications for the current user as read.
 |------|----------------|
 | `lead.assigned` / `lead.reassigned` | `database`, `broadcast`, `webpush` |
 | `lead.assigned.digest` | `database`, `broadcast`, `webpush` (bulk/import via NotificationBatch) |
-| Follow-up created / due / overdue | `mail`, `database` |
-| Task assigned | `mail`, `database`, `webpush` |
-| Task completed / reopened | `mail`, `database` |
+| Follow-up created / due / overdue | `database` + optional `mail` (`email_notifications.lead_follow_up_*`, default off) |
+| Task assigned | `database`, `webpush` + optional `mail` (`email_notifications.task_assigned`, default off) |
+| Task completed / reopened | `database` + optional `mail` (`email_notifications.task_status`, default off) |
 | Task due today / overdue | `database` only (per task) |
-| Task daily digest (due + overdue) | `mail` only (one per assignee per day) |
+| Task daily digest (due + overdue) | `mail` only (one per assignee per day; always on) |
+| Meeting invite / update / cancel / reminder | `database`, `broadcast`, `webpush` + optional `mail` (`email_notifications.meeting_events`, default off) |
+| Other module assignments | `database`, `webpush` + optional `mail` (`email_notifications.module_assigned`, default off) |
+| Daily CRM summary (personal / team) | `mail` only (always on) |
+
+Tenant setting `email_notifications` (JSON, group `notifications`) gates **mail only**. Digests and auth mail never consult it. See [Tenant settings](/developer-guide/tenant-settings).
 
 ### Aggregation
 
@@ -105,5 +110,5 @@ Body: `{ "endpoint": "..." }`. 404 if the endpoint is not owned by the current u
 
 ## Future (hooks only)
 
-- Per-user preferences (in-app / browser / email)
+- Per-user preferences (in-app / browser / email) — workspace-level email toggles ship via `email_notifications`
 - SMS / webhooks / FCM / APNs as additional Laravel channels using `PlatformNotificationPayloadMapper`

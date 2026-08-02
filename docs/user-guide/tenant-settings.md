@@ -31,6 +31,24 @@ There is no separate attendance or meeting timezone. Change **Timezone** once; a
 | **Daily Reminder Time** | Local workspace time (default `09:00`) in **Timezone** — not server UTC — for the daily CRM summary email and the consolidated task due digest. Assignees still get in-app alerts per due/overdue task. |
 | **Default meeting provider** | Preselects None / Google Meet / Zoom on the Meetings schedule form (`meetings_default_provider`). Connecting providers is done under Meetings → Integrations. |
 
+## Notifications
+
+**Settings → Notifications** controls which **event emails** the workspace sends. Defaults are **off** for every toggle. In-app notifications and browser push are not affected.
+
+| Toggle | When email is sent (if enabled) |
+|--------|----------------------------------|
+| **Task assigned** | A task is assigned to someone |
+| **Task completed / reopened** | A task is completed or reopened |
+| **Follow-up created** | A lead follow-up is created |
+| **Follow-up due / overdue** | A lead follow-up becomes due or overdue |
+| **Meeting events** | Meeting invite, update, cancel, or reminder |
+| **Other module assignments** | Contact, company, opportunity, invoice, and similar assignment emails |
+
+Always sent (not toggleable here):
+
+- Daily task due digest and daily CRM summary (at **Daily Reminder Time**)
+- Auth emails (password reset, email verification)
+
 ## Attendance
 
 Shown when the **Attendance** module is installed.

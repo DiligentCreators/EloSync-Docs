@@ -48,13 +48,7 @@ If a selected provider is not connected, scheduling with that provider is blocke
 
 ## Reminder
 
-Creators can set **one** reminder offset. At that time, the creator, host, and invitees receive:
-
-- In-app notification
-- Web push (when subscribed)
-- Email
-
-External email-only guests receive email only. Completing, cancelling, or rescheduling the meeting updates or cancels the pending reminder.
+Creators can set **one** reminder offset. At that time, the creator, host, and invitees receive an in-app notification and web push (when subscribed). Meeting emails (invite, update, cancel, reminder — including external guests) are optional and off by default; enable **Meeting events** under **Settings → Notifications**. Completing, cancelling, or rescheduling the meeting updates or cancels the pending reminder.
 
 ## Complete, cancel, and delete
 

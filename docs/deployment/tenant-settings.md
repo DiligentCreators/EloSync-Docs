@@ -21,6 +21,7 @@
 
 - Unexpected Central branding on a tenant SPA usually means no tenant override + public bootstrap fell back correctly.
 - Mail from Central From-address on a tenant that expected custom SMTP → check whether `mail_host` is set for that workspace.
+- Unexpected assignment / follow-up / meeting emails → check tenant `email_notifications` (Settings → Notifications); defaults are all off. Digests and auth mail ignore that setting.
 - 403 on `/api/tenant/v1/settings` → missing `settings.list` / `settings.update` on the role.
 
 ## Rollback
