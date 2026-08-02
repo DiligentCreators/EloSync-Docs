@@ -374,6 +374,7 @@ export default defineConfig({
             { text: 'Release Process', link: '/deployment/release-process' },
             { text: 'Notification System', link: '/deployment/notifications' },
             { text: 'RC1 Production Readiness', link: '/deployment/rc1-production-readiness' },
+            { text: 'Phase 7 HR Security Audit', link: '/deployment/hr-phase7-security-audit' },
             { text: 'Go-Live Hardening', link: '/deployment/go-live-hardening-2026-07-15' },
             { text: 'Authentication', link: '/deployment/authentication' },
             { text: 'Tenant RBAC', link: '/deployment/tenant-rbac' },

@@ -21,5 +21,7 @@
 1. Migrate schema + catalog + permissions + dependencies
 2. Confirm Marketplace blocks Payroll without Employees; Accounting remains optional
 3. Smoke: profile → pay run (lines from active profiles) → approve → pay
-4. With Accounting: post pay run → draft journal linked via `journal_entry_id`
-5. Pest: `tests/Feature/Tenant/Payroll`
+4. With Accounting: post pay run → draft journal linked via `journal_entry_id` (expense debit + liability credit)
+5. Confirm default **staff** role does **not** include `payroll.view` (compensation restricted to manager+)
+6. Pest: `tests/Feature/Tenant/Payroll`
+7. See [Phase 7 HR Security Audit](/deployment/hr-phase7-security-audit)

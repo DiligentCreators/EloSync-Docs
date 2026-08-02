@@ -20,3 +20,4 @@
 2. Confirm Marketplace blocks install when Employees is missing
 3. Smoke: enable Employees + Leave Management → create type → upsert balance → draft → submit → approve (balance used increases)
 4. Pest: `tests/Feature/Tenant/Leave`
+5. See [Phase 7 HR Security Audit](/deployment/hr-phase7-security-audit) for integrity controls (days vs range, balance lock, delete rules)
