@@ -3,6 +3,7 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-02 |
+| **Re-verified** | 2026-08-02 |
 | **Status** | Ready for merge / staging go-live (opt-in Marketplace) |
 | **Scope** | Employees · Leave Management · Attendance · Payroll |
 | **Branch** | `feature/phase-7-hr-9630` |
@@ -12,9 +13,20 @@
 
 ## Executive summary
 
-Phase 7 delivers four free HR Marketplace SKUs on the frozen platform. After security remediation and headed browser verification, the modules are **production-ready for opt-in enablement**. They are not default-included; tenants must install from Marketplace (Leave / Attendance / Payroll require Employees first).
+Phase 7 delivers four free HR Marketplace SKUs on the frozen platform. After security remediation, headed browser verification, CI green on companion PRs, and a second readiness audit, the modules are **production-ready for opt-in enablement**. They are not default-included; tenants must install from Marketplace (Leave / Attendance / Payroll require Employees first).
 
 **Go / No-Go:** **Go** for staging → production, with the ops follow-ups below.
+
+| Gate | Result |
+|------|--------|
+| Security audit (no open Critical/High) | Pass — see companion |
+| Backend CI (Quality Gate + Pest) | Pass — [PR #72](https://github.com/DiligentCreators/SaaS-Backend/pull/72) |
+| Frontend CI (Quality Gate) | Pass — [PR #66](https://github.com/DiligentCreators/SaaS-Frontend/pull/66) |
+| Docs CI (VitePress) | Pass — [PR #75](https://github.com/DiligentCreators/SaaS-Docs/pull/75) |
+| Website marketing SKUs | Mergeable — [PR #12](https://github.com/DiligentCreators/SaaS-Website/pull/12) |
+| Headed Playwright (2026-08-02) | 6/6 per HR module |
+| Draft PRs marked ready | ☐ Eng |
+| Staging smoke | ☐ QA / Ops |
 
 ---
 
@@ -37,7 +49,10 @@ All: `is_default_included: false`, `is_billable: false`, category `hr`.
 2. Deploy **API** (`saas-backend`)
 3. Deploy **SPA** (`saas-frontend`) with HR nav group
 4. Deploy **Docs** (this pack)
-5. Staging smoke (below) before production traffic
+5. Deploy **marketing site** (modules marked available)
+6. Staging smoke (below) before production traffic
+
+Suggested merge order: **Backend → Frontend → Docs → Website**.
 
 No new env vars are required for HR itself. Payroll journal post needs an entitled **Accounting** workspace with active expense + liability accounts.
 
@@ -53,8 +68,9 @@ No new env vars are required for HR itself. Payroll journal post needs an entitl
 | 4 | Default **staff** role does **not** include `payroll.view` on **new** tenants | QA | ☐ |
 | 5 | Existing tenants: staff roles re-synced or manually stripped of `payroll.view` if undesired | Ops | ☐ |
 | 6 | Frontend HR routes gated with `RequireAccess` | QA | ☐ |
-| 7 | Pest HR suites green in CI | Eng | ☐ |
-| 8 | Playwright `test:e2e:employees|leave-management|attendance|payroll` green on staging | QA | ☐ |
+| 7 | Pest HR suites green in CI | Eng | ☑ (CI green on #72) |
+| 8 | Playwright `test:e2e:employees\|leave-management\|attendance\|payroll` green on staging | QA | ☐ |
+| 9 | Draft PRs marked ready for review and merged in order | Eng | ☐ |
 
 ---
 
@@ -73,7 +89,7 @@ No new env vars are required for HR itself. Payroll journal post needs an entitl
 2. Create leave type (allowance > 0)
 3. Create request without optional days → days auto-calculated
 4. Submit → approve → balance `used` increases
-5. Confirm approved request cannot be deleted
+5. Confirm approved request cannot be deleted (soft or force)
 6. Confirm inflated `days` beyond date range returns 422
 
 ### Attendance
@@ -113,7 +129,11 @@ npm run test:e2e:attendance
 npm run test:e2e:payroll
 ```
 
-**Evidence (2026-08-02 agent run):** Pest HR suites **48 passed** after security hardening; headed Playwright **6/6** per module (Employees, Leave, Attendance, Payroll).
+**Evidence (2026-08-02):**
+
+- Pest HR suites green locally after leave force-delete retention harden; CI Pest + Quality Gate **SUCCESS** on Backend #72
+- Headed Playwright **6/6** per module (Employees, Leave, Attendance, Payroll)
+- Frontend / Docs Quality Gates **SUCCESS**
 
 ---
 
@@ -126,6 +146,7 @@ Full detail: [Phase 7 HR Security Audit](/deployment/hr-phase7-security-audit).
 | Tenant isolation (`BelongsToTenant` + Pest isolation) | Pass |
 | Module + permission middleware | Pass |
 | Leave balance / days integrity | Pass (remediated) |
+| Approved leave soft + force delete retention | Pass (re-audit harden) |
 | Pay-run amount + journal account controls | Pass (remediated) |
 | Compensation visibility (no staff `payroll.view`) | Pass (new tenants) |
 | Concurrent approve/post locking | Pass (remediated) |
@@ -157,6 +178,7 @@ Full detail: [Phase 7 HR Security Audit](/deployment/hr-phase7-security-audit).
 |------|----------|-------|
 | No SoD on approve (creator may approve) | Info | SMB default; optional flag later |
 | Soft-delete uniques include trashed rows | Low | Recreate may need restore; follow-up partial indexes |
+| Employee `user_id` uniqueness is app-layer only | Low | Follow-up partial unique index |
 | Unvalidated list `sort`/`direction` | Low | Platform-wide pattern |
 | Existing tenants may still grant staff `payroll.view` | Medium | Re-sync roles after deploy |
 

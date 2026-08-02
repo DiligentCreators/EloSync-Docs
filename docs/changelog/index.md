@@ -18,10 +18,10 @@
 **Security & production readiness (2026-08-02)**
 
 - Full security audit: [`/deployment/hr-phase7-security-audit`](/deployment/hr-phase7-security-audit) · ops readiness: [`/deployment/hr-phase7-production-readiness`](/deployment/hr-phase7-production-readiness).
-- Leave: balance upsert RBAC, days capped to date range, insufficient-balance reject on approve, approved requests not deletable, transition locks.
+- Leave: balance upsert RBAC, days capped to date range, insufficient-balance reject on approve, approved requests not soft- **or** force-deletable, `remaining` always derived, transition locks.
 - Payroll: pay-run approve/pay/post `lockForUpdate`, line gross `min:0`, journal accounts must be expense/liability; default **staff** no longer has `payroll.view`.
 - Employees: unique `user_id` link; Attendance: `check_out >= check_in`.
-- Verification: Pest HR security suite **48 passed**; headed Playwright Employees/Leave/Attendance/Payroll **6/6 each**.
+- Re-verification: companion PR CI green (Backend #72 QG+Pest, Frontend #66, Docs #75); headed Playwright Employees/Leave/Attendance/Payroll **6/6 each**; **GO** for opt-in staging → production after staff-role re-sync.
 
 **Frontend & verification**
 
