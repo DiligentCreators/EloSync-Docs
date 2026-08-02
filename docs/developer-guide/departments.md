@@ -24,6 +24,8 @@ Service: `DepartmentService` (CRUD, membership sync, manager assign, performance
 
 **Manager/member pickers:** `GET /users` excludes the authenticated user (Users admin list). The Departments form merges the signed-in user into picker options so a solo owner can assign themselves.
 
+**Authz hardening:** `manager_id` on create/update and `PUT …/manager` require org-wide `assign_manager` (admin/superadmin). Membership arrays on create/update require `manage_members`. Exists rules for managers/members/`department_ids` are tenant-scoped (`tenant_id` + not soft-deleted).
+
 Employee create/update accepts `department_ids[]` when the Departments module is installed; syncs the pivot and sets legacy `employees.department` to the primary department name.
 
 ## Backend layout

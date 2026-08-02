@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 ## Departments module (2026-08-03)
 
@@ -10,6 +10,7 @@ Marketplace HR module (`departments`, not default-included) for organizing users
 - Performance dashboard aggregates Leads/Tasks for linked users only (unlinked employees stay on the roster)
 - Employee forms use multi-select `department_ids` when Departments is installed (legacy string column retained)
 - Manager/member pickers include the signed-in user (Users list API omits self) so a solo owner can manage a department
+- Security: tenant-scoped Exists for manager/members; org-wide-only manager assignment; `manage_members` required to sync memberships on create/update
 - Playwright: `npm run test:e2e:departments`
 
 Docs: [User Guide](/user-guide/departments), [Developer Guide](/developer-guide/departments), [API](/api/tenant-v1-departments), [Deployment](/deployment/departments).
@@ -26,7 +27,7 @@ Workspaces that installed **Employees** after creating users can now convert a l
 
 ## Tenant email notification toggles (2026-08-03)
 
-Workspace admins can enable or disable **event emails** under **Settings → Notifications**. Defaults are **all off** to reduce SMTP cost during MVP testing. In-app and web push channels are unchanged. Daily task digests, daily CRM summaries, and auth emails (password reset / verification) always send.
+Workspace admins can enable or disable **event emails** under **Settings ΓåÆ Notifications**. Defaults are **all off** to reduce SMTP cost during MVP testing. In-app and web push channels are unchanged. Daily task digests, daily CRM summaries, and auth emails (password reset / verification) always send.
 
 Toggles: task assigned, task completed/reopened, follow-up created, follow-up due/overdue, meeting events, other module assignments.
 
@@ -39,7 +40,7 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Docs convention**
 
-- Canonical [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): one Settings → General timezone (e.g. `Asia/Karachi`) drives Daily Reminder Time, task dues, lead follow-ups, meetings/calendar, and attendance office hours / login check-in. No per-module timezone.
+- Canonical [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): one Settings ΓåÆ General timezone (e.g. `Asia/Karachi`) drives Daily Reminder Time, task dues, lead follow-ups, meetings/calendar, and attendance office hours / login check-in. No per-module timezone.
 - Binding for **all current and future modules**: Module Development Standard principle + Definition of Done, Module Development Guide (Date and time), Module Architecture, and Platform Freeze Configuration row.
 - User Guide Settings, Attendance, Tasks, Leads, Meetings, and Calendar pages cross-link that rule.
 
@@ -47,13 +48,13 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 ## HR user sync, login attendance, and payroll deductions (2026-08-02)
 
-**Users ↔ Employees**
+**Users Γåö Employees**
 
 - Creating a workspace user can provision a linked **Employee** when the Employees module is installed (`create_employee`, default on). Suspend sets the linked employee to inactive; name/email updates sync to the employee record.
 
 **Attendance**
 
-- Tenant Settings → **Attendance** (when the module is installed): office start/end, grace minutes, work week days.
+- Tenant Settings ΓåÆ **Attendance** (when the module is installed): office start/end, grace minutes, work week days.
 - Successful tenant login auto check-in for linked active employees (first login of the day; status `present` or new `late`).
 - Attendance status enum adds `late`.
 - Login check-in stores **IP** and optional **GPS coordinates** (`check_in_ip` / `check_in_latitude` / `check_in_longitude`); shown on the attendance detail sheet.
@@ -64,37 +65,37 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Verification**
 
-- Pest: attendance settings, login check-in, user→employee provision, pay-period calculator. Docs and UI updated for settings, attendance, payroll, and users.
+- Pest: attendance settings, login check-in, userΓåÆemployee provision, pay-period calculator. Docs and UI updated for settings, attendance, payroll, and users.
 
 ---
 
-## Phase 7 HR — Employees, Leave Management, Attendance, Payroll (2026-08-01)
+## Phase 7 HR ΓÇö Employees, Leave Management, Attendance, Payroll (2026-08-01)
 
 **Architecture**
 
 - Shipped four free Marketplace SKUs under category `hr` (sort `70`): **Employees** (`employees`), **Leave Management** (`leave-management`, sort `20`), **Attendance** (`attendance`, sort `30`), and **Payroll** (`payroll`, sort `40`). All are opt-in and non-billable.
 - Leave Management, Attendance, and Payroll hard-depend on Employees (`module_dependencies`). Payroll optionally depends on Accounting for pay-run journal posting.
-- Roadmap capabilities (directory, leave types/balances/requests, daily attendance, profiles, pay runs) live inside these four SKUs — not separate Marketplace modules.
+- Roadmap capabilities (directory, leave types/balances/requests, daily attendance, profiles, pay runs) live inside these four SKUs ΓÇö not separate Marketplace modules.
 
 **Domain**
 
 - Employees directory with employment type/status, optional workspace user link, soft delete, and stats KPIs.
-- Leave types, per-year balances, and leave requests with `draft → pending → approved|rejected` (cancel from draft/pending); approve applies days to balances under `lockForUpdate()`.
+- Leave types, per-year balances, and leave requests with `draft ΓåÆ pending ΓåÆ approved|rejected` (cancel from draft/pending); approve applies days to balances under `lockForUpdate()`.
 - Attendance records unique per employee/date with check-in/out and presence status (`present` / `absent` / `half_day` / `remote`).
-- Payroll profiles (one per employee) and pay runs that auto-generate lines from active profiles; lifecycle `draft → approved → paid`; optional soft post to a draft Accounting journal (expense debit / liability credit).
+- Payroll profiles (one per employee) and pay runs that auto-generate lines from active profiles; lifecycle `draft ΓåÆ approved ΓåÆ paid`; optional soft post to a draft Accounting journal (expense debit / liability credit).
 
 **Security & production readiness (2026-08-02)**
 
-- Full security audit: [`/deployment/hr-phase7-security-audit`](/deployment/hr-phase7-security-audit) · ops readiness: [`/deployment/hr-phase7-production-readiness`](/deployment/hr-phase7-production-readiness).
+- Full security audit: [`/deployment/hr-phase7-security-audit`](/deployment/hr-phase7-security-audit) ┬╖ ops readiness: [`/deployment/hr-phase7-production-readiness`](/deployment/hr-phase7-production-readiness).
 - Leave: balance upsert RBAC, days capped to date range, insufficient-balance reject on approve, approved requests not soft- **or** force-deletable, `remaining` always derived, transition locks.
 - Payroll: pay-run approve/pay/post `lockForUpdate`, line gross `min:0`, journal accounts must be expense/liability; default **staff** no longer has `payroll.view`.
 - Employees: unique `user_id` link; Attendance: `check_out >= check_in`.
-- Re-verification: companion PR CI green (Backend #72 QG+Pest, Frontend #66, Docs #75); headed Playwright Employees/Leave/Attendance/Payroll **6/6 each**; **GO** for opt-in staging → production after staff-role re-sync.
+- Re-verification: companion PR CI green (Backend #72 QG+Pest, Frontend #66, Docs #75); headed Playwright Employees/Leave/Attendance/Payroll **6/6 each**; **GO** for opt-in staging ΓåÆ production after staff-role re-sync.
 
 **Frontend & verification**
 
 - HR nav group with Employees / Leave / Attendance / Payroll UI; API clients, query keys, and permissions wired for module pages.
-- Playwright: `test:e2e:employees` · `leave-management` · `attendance` · `payroll` (modules + authz). Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
+- Playwright: `test:e2e:employees` ┬╖ `leave-management` ┬╖ `attendance` ┬╖ `payroll` (modules + authz). Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
 
 **Docs**
 
@@ -102,7 +103,7 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 ---
 
-## Phase 6 Finance — Accounting + Financial Reports (2026-08-01)
+## Phase 6 Finance ΓÇö Accounting + Financial Reports (2026-08-01)
 
 **Architecture**
 
@@ -112,8 +113,8 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Domain**
 
-- Chart of accounts (`accounts`) with starter system CoA on first list; journal headers/lines with balanced debit/credit validation; lifecycle `draft → post → void` (void excluded from GL/reports).
-- General ledger inquiry aggregates posted lines (no balance cache), **paginated** (default 100 / max 500) with period opening/closing balances. Manual double-entry only — no auto-post from Billing/Purchasing/Inventory; single currency.
+- Chart of accounts (`accounts`) with starter system CoA on first list; journal headers/lines with balanced debit/credit validation; lifecycle `draft ΓåÆ post ΓåÆ void` (void excluded from GL/reports).
+- General ledger inquiry aggregates posted lines (no balance cache), **paginated** (default 100 / max 500) with period opening/closing balances. Manual double-entry only ΓÇö no auto-post from Billing/Purchasing/Inventory; single currency.
 - Production hardeners: journal `post`/`void` use `lockForUpdate()` transactions; system account `code` locked in API; report/GL query dates FormRequest-validated; CoA seed race-safe.
 
 **Frontend & verification**
@@ -131,8 +132,8 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 ## Marketplace filters and dependency enable (2026-08-01)
 
-- Tenant Marketplace adds filter chips for **Installed**, **Available**, **Paid**, and **Free** (combinable: install status × pricing).
-- Module detail drawer shows required-dependency fee and an **Install** / **Subscribe** action when a hard dependency is missing. Paid dependencies open that module’s subscribe flow (billing cycle + checkout); free dependencies install in place.
+- Tenant Marketplace adds filter chips for **Installed**, **Available**, **Paid**, and **Free** (combinable: install status ├ù pricing).
+- Module detail drawer shows required-dependency fee and an **Install** / **Subscribe** action when a hard dependency is missing. Paid dependencies open that moduleΓÇÖs subscribe flow (billing cycle + checkout); free dependencies install in place.
 - Tenant (and Central) marketplace show payloads enrich `required_modules` / `optional_modules` / `missing_required_modules` with `is_billable`, prices, and install flags.
 
 ---
@@ -142,7 +143,7 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 **Currency UX**
 
 - Money forms (invoices, estimates, quotations, opportunities, contracts, payments, expenses, purchase orders) and Products/Vendors currency fields now use the shared searchable currency list from Settings (`currencyOptions`), not a five-code hard-coded dropdown or free-text code.
-- Create dialogs default currency to the tenant workspace currency from Settings (fallback `USD`). Edit keeps the record’s existing currency. Credit notes still inherit currency from the selected invoice; their bare create fallback also uses the tenant currency.
+- Create dialogs default currency to the tenant workspace currency from Settings (fallback `USD`). Edit keeps the recordΓÇÖs existing currency. Credit notes still inherit currency from the selected invoice; their bare create fallback also uses the tenant currency.
 
 **Products as services**
 
@@ -161,14 +162,14 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 **Stock and purchasing**
 
 - Added per-product/per-warehouse `stock_levels`, immutable `stock_movements`, and draftable `stock_transfers` with line items. `StockService` is the sole stock mutation boundary, using transactions and `lockForUpdate()` to maintain a non-negative balance and movement ledger.
-- Stock adjustment types are `in`, `out`, and `adjust`; transfers follow `draft → in_transit → completed|cancelled` and post paired stock movements only on completion.
+- Stock adjustment types are `in`, `out`, and `adjust`; transfers follow `draft ΓåÆ in_transit ΓåÆ completed|cancelled` and post paired stock movements only on completion.
 - Purchase Order lines now optionally link a Product. A **received** Purchase Order posts stock-in once for linked products with `track_stock=true` when Products and Inventory are entitled; `partially_received` remains acknowledgement-only. Receipt may select `warehouse_id` or use the default.
-- PO receive integrity: `POST …/status` with `received` / `partially_received` routes through `receive()` (same stock path as `/receive`); status + stock post share one transaction with `lockForUpdate()` on the PO so concurrent receives cannot double-post and a failed stock post does not leave the PO stuck as received.
+- PO receive integrity: `POST ΓÇª/status` with `received` / `partially_received` routes through `receive()` (same stock path as `/receive`); status + stock post share one transaction with `lockForUpdate()` on the PO so concurrent receives cannot double-post and a failed stock post does not leave the PO stuck as received.
 
 **Frontend, verification, and docs**
 
 - Added Products, Warehouses, and Inventory tenant pages using the existing AppLayout, entitlement/permission-gated navigation, services, types, query keys, forms, detail sheets, and shared states.
-- Added Pest coverage under `tests/Feature/Tenant/Product`, `Warehouse`, and `Inventory`, plus Playwright commands `test:e2e:products`, `test:e2e:warehouses`, `test:e2e:inventory`, and shared-session `test:e2e:inventory-phase` / `test:e2e:inventory-phase:headed` (Products → Warehouses → Stock → PO receive, with form validation and human-mistake paths under one login).
+- Added Pest coverage under `tests/Feature/Tenant/Product`, `Warehouse`, and `Inventory`, plus Playwright commands `test:e2e:products`, `test:e2e:warehouses`, `test:e2e:inventory`, and shared-session `test:e2e:inventory-phase` / `test:e2e:inventory-phase:headed` (Products ΓåÆ Warehouses ΓåÆ Stock ΓåÆ PO receive, with form validation and human-mistake paths under one login).
 - Added User, Developer, Deployment, and Tenant API guides; updated module dependencies, database dictionary, Purchase Order receiving documentation, roadmap, changelog, and documentation sidebars.
 
 **Out of scope**
@@ -181,10 +182,10 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- Third and final Phase 4 (Purchasing) module (backend model `Expense`) — a standalone operational-expense record: single amount (no line items), category, optional links to a Vendor and/or Purchase Order. Flat Laravel, `module:expenses` + Spatie RBAC, mirrors the simplified Estimate/Payment notes/timeline/assignee-scope/status-machine pattern.
-- **No hard `module_dependencies`** — Expenses installs standalone. `vendor_id` and `purchase_order_id` are both nullable and validated only at the point of use (`LinkableVendor`, new `LinkablePurchaseOrder` rule) when the corresponding module (`vendors` / `purchase-orders`) is entitled — a **soft** dependency, unlike Purchase Orders' hard dependency on Vendors. **Free Marketplace opt-in** — catalog category `purchasing`, `is_default_included=false` / `is_billable=false`, `sort_order=30` (after Purchase Orders' `20`).
-- Status workflow `draft → submitted → approved|rejected`, `approved → paid`, `draft|submitted → cancelled` via `ExpenseStatusEnum::allowedTransitions()`; `rejected`/`paid`/`cancelled` are terminal. Only `draft` expenses can have their fields edited — workflow actions (submit/approve/reject/pay/cancel) remain available regardless.
-- **Convert a Purchase Order to an Expense** (`POST /purchase-orders/{id}/convert`) — the deferred Phase 4 Milestone 2 feature, now shipped as part of Milestone 3. One-way, one-time: creates a **draft** `Expense` from a `sent`/`partially_received`/`received` purchase order (`title`, `amount`←`total`, `tax_amount`←`tax_total`, `currency`, `vendor_id`, `assigned_to`, `notes` copied; `category` always `other`). Re-running the conversion is blocked by an existing `Expense` row for that `purchase_order_id` (including soft-deleted). Gated by a new **soft, call-time** entitlement check for the Expenses module inside `PurchaseOrderService::convertToExpense()` — not a `module_dependencies` row — so Purchase Orders keeps working with Expenses uninstalled; only the convert endpoint 422s until Expenses is installed. New permission `purchase-orders.convert`.
+- Third and final Phase 4 (Purchasing) module (backend model `Expense`) ΓÇö a standalone operational-expense record: single amount (no line items), category, optional links to a Vendor and/or Purchase Order. Flat Laravel, `module:expenses` + Spatie RBAC, mirrors the simplified Estimate/Payment notes/timeline/assignee-scope/status-machine pattern.
+- **No hard `module_dependencies`** ΓÇö Expenses installs standalone. `vendor_id` and `purchase_order_id` are both nullable and validated only at the point of use (`LinkableVendor`, new `LinkablePurchaseOrder` rule) when the corresponding module (`vendors` / `purchase-orders`) is entitled ΓÇö a **soft** dependency, unlike Purchase Orders' hard dependency on Vendors. **Free Marketplace opt-in** ΓÇö catalog category `purchasing`, `is_default_included=false` / `is_billable=false`, `sort_order=30` (after Purchase Orders' `20`).
+- Status workflow `draft ΓåÆ submitted ΓåÆ approved|rejected`, `approved ΓåÆ paid`, `draft|submitted ΓåÆ cancelled` via `ExpenseStatusEnum::allowedTransitions()`; `rejected`/`paid`/`cancelled` are terminal. Only `draft` expenses can have their fields edited ΓÇö workflow actions (submit/approve/reject/pay/cancel) remain available regardless.
+- **Convert a Purchase Order to an Expense** (`POST /purchase-orders/{id}/convert`) ΓÇö the deferred Phase 4 Milestone 2 feature, now shipped as part of Milestone 3. One-way, one-time: creates a **draft** `Expense` from a `sent`/`partially_received`/`received` purchase order (`title`, `amount`ΓåÉ`total`, `tax_amount`ΓåÉ`tax_total`, `currency`, `vendor_id`, `assigned_to`, `notes` copied; `category` always `other`). Re-running the conversion is blocked by an existing `Expense` row for that `purchase_order_id` (including soft-deleted). Gated by a new **soft, call-time** entitlement check for the Expenses module inside `PurchaseOrderService::convertToExpense()` ΓÇö not a `module_dependencies` row ΓÇö so Purchase Orders keeps working with Expenses uninstalled; only the convert endpoint 422s until Expenses is installed. New permission `purchase-orders.convert`.
 
 **Backend**
 
@@ -193,29 +194,29 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 - Enums: `ExpenseCategoryEnum` (`travel`, `office`, `software`, `utilities`, `other`), `ExpenseStatusEnum` (`draft`, `submitted`, `approved`, `rejected`, `paid`, `cancelled`), `ExpenseActivityTypeEnum` (`Created`, `Updated`, `Assigned`, `StatusChanged`, `NoteAdded`, `Deleted`, `Restored`)
 - Permissions: `expenses.view|create|update|delete|restore|force.delete|assign|submit|approve|reject|pay|cancel`
 - Model (`Expense`, `BelongsToTenant`, soft deletes, UUID, `LogsActivity`) + factories, controller, form requests, API resources, policy (assignee-scoped view/update/submit/cancel; approve/reject/pay are **not** assignee-scoped), service (`ExpenseService`: numbering, status machine, notes, timeline, assign), events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
-- New `LinkablePurchaseOrder` rule (mirrors `LinkableVendor`) — validates `purchase_order_id` belongs to the tenant and the Purchase Orders module is entitled, only when a value is supplied
+- New `LinkablePurchaseOrder` rule (mirrors `LinkableVendor`) ΓÇö validates `purchase_order_id` belongs to the tenant and the Purchase Orders module is entitled, only when a value is supplied
 - `PurchaseOrderService::convertToExpense()` mirrors `EstimateService::convert()`'s draft-creation pattern but swaps the hard-dependency check for a soft `EntitlementService::hasModule()` check; new `PurchaseOrderActivityTypeEnum::Converted` timeline entry and `PurchaseOrderConverted` event
 - Catalog registration (no `module_dependencies` row) via `DefaultModuleRegistrar` migration (migrate-only); permissions + default role map additive migrations for both `expenses.*` and `purchase-orders.convert`
 - `expenses_number_prefix` added to `TenantSettingDefinitions` and `UpdateTenantSettingsRequest` validation
 - Pest: `tests/Feature/Tenant/Expense/ExpenseTest.php` (CRUD, soft FK validation against module entitlement, status workflow, assignee scoping, module gate), Purchase Order convert coverage added to `PurchaseOrderTest.php` (entitled vs blocked, one-time conversion, status guard)
-- Module counts bumped from 19 → 20 across `MarketplaceCatalogTest`, `TenantProvisioningTest`, `TenantAuthTest` fixtures
+- Module counts bumped from 19 ΓåÆ 20 across `MarketplaceCatalogTest`, `TenantProvisioningTest`, `TenantAuthTest` fixtures
 
 **Frontend**
 
-- `src/pages/expenses/` — list page (KPIs: total, mine, draft/submitted/approved/rejected/paid, approved & paid value; status/category/vendor/PO/assignee filters, DataTable), create/edit form dialog (category select, amount, tax amount, currency, expense date, notes, optional vendor/purchase order `SearchableSelect` pickers rendered only when the corresponding module is entitled and viewable), detail sheet (overview/notes/timeline tabs; submit/approve/reject/pay/cancel/assign/notes/edit (draft only))
+- `src/pages/expenses/` ΓÇö list page (KPIs: total, mine, draft/submitted/approved/rejected/paid, approved & paid value; status/category/vendor/PO/assignee filters, DataTable), create/edit form dialog (category select, amount, tax amount, currency, expense date, notes, optional vendor/purchase order `SearchableSelect` pickers rendered only when the corresponding module is entitled and viewable), detail sheet (overview/notes/timeline tabs; submit/approve/reject/pay/cancel/assign/notes/edit (draft only))
 - Added to the existing tenant sidebar **Purchasing** group, after Purchase Orders
 - `expenseService`, `QUERY_KEYS.expenses`, `PERMISSIONS.expenses`
 - Purchase order detail sheet: new **Convert to expense** action (permission `purchase-orders.convert`, visible only when the PO status is convertible, the Expenses module is entitled, and it hasn't already been converted) with a confirm dialog; shows a link to the resulting expense under "Related records" once converted
-- Notification registry: `expense.assigned` → `/expenses?expense={id}`
-- Playwright: `e2e/tests/expenses/expenses.workflow.spec.ts` (`npm run test:e2e:expenses`) — enables `vendors` + `purchase-orders` + `expenses`, covers KPI smoke, create/submit/approve/pay workflow, and end-to-end PO → Expense conversion
+- Notification registry: `expense.assigned` ΓåÆ `/expenses?expense={id}`
+- Playwright: `e2e/tests/expenses/expenses.workflow.spec.ts` (`npm run test:e2e:expenses`) ΓÇö enables `vendors` + `purchase-orders` + `expenses`, covers KPI smoke, create/submit/approve/pay workflow, and end-to-end PO ΓåÆ Expense conversion
 
 **Docs**
 
 - [expenses-overview.md](/user-guide/expenses-overview) / [expenses.md](/user-guide/expenses) (+ [developer](/developer-guide/expenses) / [production](/deployment/expenses))
 - [api/tenant-v1-expenses.md](/api/tenant-v1-expenses); [api/tenant-v1-purchase-orders.md](/api/tenant-v1-purchase-orders) updated with the convert endpoint
-- [purchase-orders-overview.md](/user-guide/purchase-orders-overview) / [purchase-orders.md](/user-guide/purchase-orders) updated — convert-to-expense moved from deferred to shipped
-- [Module Dependencies](/architecture/module-dependencies) updated — Expenses' soft dependencies on Vendors/Purchase Orders, and Purchase Orders' soft use of Expenses for convert, both marked shipped
-- [Product Roadmap](/getting-started/product-roadmap) — Expenses marked shipped; **Phase 4 — Purchasing goal Achieved**
+- [purchase-orders-overview.md](/user-guide/purchase-orders-overview) / [purchase-orders.md](/user-guide/purchase-orders) updated ΓÇö convert-to-expense moved from deferred to shipped
+- [Module Dependencies](/architecture/module-dependencies) updated ΓÇö Expenses' soft dependencies on Vendors/Purchase Orders, and Purchase Orders' soft use of Expenses for convert, both marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Expenses marked shipped; **Phase 4 ΓÇö Purchasing goal Achieved**
 
 **Deferred**
 
@@ -227,9 +228,9 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- Second Phase 4 (Purchasing) module — Milestone 2, header + line-item procurement documents a tenant issues to its own vendors (backend model `PurchaseOrder`). Flat Laravel, `module:purchase-orders` + Spatie RBAC, mirrors the Estimates notes/timeline/assignee-scope/lines/status-machine pattern, swapping Estimates' optional related-record pickers for a single **required** `vendor_id`.
-- **Hard dependency on Vendors** — same pattern as Estimates → Invoices; Marketplace blocks installing Purchase Orders until a workspace already has Vendors entitled (every purchase order requires a vendor). **Free Marketplace opt-in** — catalog category `purchasing`, `is_default_included=false` / `is_billable=false`, `sort_order=20` (after Vendors' `10`).
-- Status workflow `draft → sent → partially_received|received|cancelled` (also `sent → cancelled`, `partially_received → received|cancelled`); `received`/`cancelled` are terminal. **Receiving is acknowledgement only** — no Inventory stock posting (no Inventory module exists on this platform). Convert-to-expense is deferred to Phase 4 Milestone 3.
+- Second Phase 4 (Purchasing) module ΓÇö Milestone 2, header + line-item procurement documents a tenant issues to its own vendors (backend model `PurchaseOrder`). Flat Laravel, `module:purchase-orders` + Spatie RBAC, mirrors the Estimates notes/timeline/assignee-scope/lines/status-machine pattern, swapping Estimates' optional related-record pickers for a single **required** `vendor_id`.
+- **Hard dependency on Vendors** ΓÇö same pattern as Estimates ΓåÆ Invoices; Marketplace blocks installing Purchase Orders until a workspace already has Vendors entitled (every purchase order requires a vendor). **Free Marketplace opt-in** ΓÇö catalog category `purchasing`, `is_default_included=false` / `is_billable=false`, `sort_order=20` (after Vendors' `10`).
+- Status workflow `draft ΓåÆ sent ΓåÆ partially_received|received|cancelled` (also `sent ΓåÆ cancelled`, `partially_received ΓåÆ received|cancelled`); `received`/`cancelled` are terminal. **Receiving is acknowledgement only** ΓÇö no Inventory stock posting (no Inventory module exists on this platform). Convert-to-expense is deferred to Phase 4 Milestone 3.
 
 **Backend**
 
@@ -238,25 +239,25 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 - Enums: `PurchaseOrderStatusEnum` (`draft`, `sent`, `partially_received`, `received`, `cancelled`), `PurchaseOrderActivityTypeEnum` (`Created`, `Updated`, `Assigned`, `StatusChanged`, `NoteAdded`, `Deleted`, `Restored`)
 - Permissions: `purchase-orders.view|create|update|delete|restore|force.delete|assign|send|receive|cancel`
 - Model + factories, controller, form requests, API resources, policy (assignee-scoped view/update/send/receive/cancel), service (`PurchaseOrderService`, `syncLines`/`recalculateTotals` like Estimates; `receive()` only accepts `partially_received`/`received`), events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
-- `LinkableVendor` rule — `vendor_id` is required, tenant-scoped, and validates the Vendors module is entitled
+- `LinkableVendor` rule ΓÇö `vendor_id` is required, tenant-scoped, and validates the Vendors module is entitled
 - Catalog registration + `module_dependencies` row on `vendors` via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
 - `purchase_orders_number_prefix` added to `UpdateTenantSettingsRequest` validation (was previously stripped, causing `updateMany` to receive `null`)
 - Pest: `tests/Feature/Tenant/PurchaseOrder/PurchaseOrderTest.php`, `tests/Feature/Central/Module/PurchaseOrdersModuleDependencyTest.php`
 
 **Frontend**
 
-- `src/pages/purchase-orders/` — list page (KPIs: total, mine, draft, sent, partially received, received; status/vendor/assignee filters, DataTable), create/edit form dialog (required vendor `SearchableSelect`, currency, order date, expected date, notes, line items editor with live subtotal/tax/total preview), detail sheet (overview/lines/notes/timeline tabs; send/mark partially received/mark received/cancel/assign/notes/edit (draft only))
+- `src/pages/purchase-orders/` ΓÇö list page (KPIs: total, mine, draft, sent, partially received, received; status/vendor/assignee filters, DataTable), create/edit form dialog (required vendor `SearchableSelect`, currency, order date, expected date, notes, line items editor with live subtotal/tax/total preview), detail sheet (overview/lines/notes/timeline tabs; send/mark partially received/mark received/cancel/assign/notes/edit (draft only))
 - Added to the existing tenant sidebar **Purchasing** group, after Vendors
 - `purchaseOrderService`, `QUERY_KEYS.purchaseOrders`, `PERMISSIONS.purchaseOrders`
-- Notification registry: `purchase-order.assigned` → `/purchase-orders?purchase_order={id}`
-- Playwright: `e2e/tests/purchase-orders/purchase-orders.workflow.spec.ts` (`npm run test:e2e:purchase-orders`) — enables both `vendors` and `purchase-orders` modules, creates a vendor, creates a purchase order, verifies status transitions (draft → sent → partially received → received), checks the timeline, then deletes it
+- Notification registry: `purchase-order.assigned` ΓåÆ `/purchase-orders?purchase_order={id}`
+- Playwright: `e2e/tests/purchase-orders/purchase-orders.workflow.spec.ts` (`npm run test:e2e:purchase-orders`) ΓÇö enables both `vendors` and `purchase-orders` modules, creates a vendor, creates a purchase order, verifies status transitions (draft ΓåÆ sent ΓåÆ partially received ΓåÆ received), checks the timeline, then deletes it
 
 **Docs**
 
 - [purchase-orders-overview.md](/user-guide/purchase-orders-overview) / [purchase-orders.md](/user-guide/purchase-orders) (+ [developer](/developer-guide/purchase-orders) / [production](/deployment/purchase-orders))
 - [api/tenant-v1-purchase-orders.md](/api/tenant-v1-purchase-orders)
-- [Module Dependencies](/architecture/module-dependencies) updated — Purchase Orders → Vendors marked shipped
-- [Product Roadmap](/getting-started/product-roadmap) — Purchase Orders marked shipped in Phase 4; Expenses remains Planned
+- [Module Dependencies](/architecture/module-dependencies) updated ΓÇö Purchase Orders ΓåÆ Vendors marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Purchase Orders marked shipped in Phase 4; Expenses remains Planned
 
 **Deferred**
 
@@ -268,8 +269,8 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- First Phase 4 (Purchasing) module and Milestone 1 of that phase — a workspace directory of suppliers (backend model `Vendor`, first-class entity, **no** relationship to Contacts unlike Companies). Flat Laravel, `module:vendors` + Spatie RBAC, mirrors the Companies notes/timeline/assignee-scope pattern.
-- Introduces a new Marketplace category: `purchasing` (**Purchasing**), `category_sort_order=40`. **Free Marketplace opt-in** — `is_default_included=false` / `is_billable=false`, `sort_order=10`.
+- First Phase 4 (Purchasing) module and Milestone 1 of that phase ΓÇö a workspace directory of suppliers (backend model `Vendor`, first-class entity, **no** relationship to Contacts unlike Companies). Flat Laravel, `module:vendors` + Spatie RBAC, mirrors the Companies notes/timeline/assignee-scope pattern.
+- Introduces a new Marketplace category: `purchasing` (**Purchasing**), `category_sort_order=40`. **Free Marketplace opt-in** ΓÇö `is_default_included=false` / `is_billable=false`, `sort_order=10`.
 - No `industry`, `source`, `source_meta`, or `contacts` relationship (unlike Companies). Adds `tax_id`, `payment_terms`, `currency` (max 3 chars), and a `status` enum (`active`/`inactive`, default `active`).
 
 **Backend**
@@ -283,18 +284,18 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Frontend**
 
-- `src/pages/vendors/` — list page (KPIs: total, my vendors, unassigned, active, inactive; status + assignee filters, DataTable), create/edit form dialog (name, email, phone, website, address, tax ID, payment terms, currency, status, assignee), detail sheet (overview/notes/activity tabs)
+- `src/pages/vendors/` ΓÇö list page (KPIs: total, my vendors, unassigned, active, inactive; status + assignee filters, DataTable), create/edit form dialog (name, email, phone, website, address, tax ID, payment terms, currency, status, assignee), detail sheet (overview/notes/activity tabs)
 - New tenant sidebar **Purchasing** group (after Billing), with Vendors (Truck icon)
 - `vendorService`, `QUERY_KEYS.vendors`, `PERMISSIONS.vendors`
-- Notification registry: `vendor.assigned` → `/vendors?vendor={id}`
-- Playwright: `e2e/tests/vendors/vendors.workflow.spec.ts` (`npm run test:e2e:vendors`) — enables the `vendors` module, creates a vendor, verifies KPI cards, notes, and activity timeline, then deletes it
+- Notification registry: `vendor.assigned` ΓåÆ `/vendors?vendor={id}`
+- Playwright: `e2e/tests/vendors/vendors.workflow.spec.ts` (`npm run test:e2e:vendors`) ΓÇö enables the `vendors` module, creates a vendor, verifies KPI cards, notes, and activity timeline, then deletes it
 
 **Docs**
 
 - [vendors-overview.md](/user-guide/vendors-overview) / [vendors.md](/user-guide/vendors) (+ [developer](/developer-guide/vendors) / [production](/deployment/vendors))
 - [api/tenant-v1-vendors.md](/api/tenant-v1-vendors)
-- [Module Dependencies](/architecture/module-dependencies) updated — Purchase Orders → Vendors (required, design) and Expenses → Vendors (optional, design) documented ahead of those modules shipping
-- [Product Roadmap](/getting-started/product-roadmap) — Vendors marked shipped in Phase 4, Purchase Orders and Expenses expanded with designed MVP capability bullets
+- [Module Dependencies](/architecture/module-dependencies) updated ΓÇö Purchase Orders ΓåÆ Vendors (required, design) and Expenses ΓåÆ Vendors (optional, design) documented ahead of those modules shipping
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Vendors marked shipped in Phase 4, Purchase Orders and Expenses expanded with designed MVP capability bullets
 
 **Deferred**
 
@@ -307,8 +308,8 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 **Security / ledger integrity**
 
 - Payment `post()` now requires each allocated invoice to be active Sent/Partial, rejects allocations above `balance_due`, and rejects currency mismatches; soft-deleted invoices cannot be paid.
-- Invoice void limited to Draft/Sent with zero `amount_paid` / `amount_credited` (Partial→Void removed).
-- Credit note `apply()` requires Sent/Partial invoice and credit total ≤ `balance_due`.
+- Invoice void limited to Draft/Sent with zero `amount_paid` / `amount_credited` (PartialΓåÆVoid removed).
+- Credit note `apply()` requires Sent/Partial invoice and credit total Γëñ `balance_due`.
 - Unique `(tenant_id, number)` indexes on customer invoices/payments/credit notes and estimates, with create-time duplicate-number retry.
 
 **UX / CI**
@@ -321,37 +322,37 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- Fourth and final Phase 3 (Billing) module — pre-sale cost estimates a tenant issues to its own customers (backend model `Estimate`, no `Customer` prefix — distinct naming from Invoices/Payments/Credit Notes since there's no equivalent Central concept to collide with). Flat Laravel, `module:estimates` + Spatie RBAC, mirrors the Credit Notes/Invoices notes/timeline/assignee-scope/lines pattern, plus a Quotations-shaped status machine.
-- **Hard dependency on Invoices** — same pattern as Payments/Credit Notes; Marketplace blocks installing Estimates until a workspace already has Invoices entitled (converting an estimate always creates a `CustomerInvoice`). **Free Marketplace opt-in** — catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=40` (after Credit Notes' `30`).
-- Estimates introduces a **convert-to-invoice** action (`POST /estimates/{id}/convert`) — the first Phase 3 action that creates a row in a *different* module's table. Adds the `customer_invoices.estimate_id` foreign key (the nullable column already existed from the Invoices migration; this module adds the constraint once `estimates` exists).
-- Optional soft links to Contacts, Companies, Opportunities, and Quotations — each validated only when that module is entitled, no hard dependency rows for these.
+- Fourth and final Phase 3 (Billing) module ΓÇö pre-sale cost estimates a tenant issues to its own customers (backend model `Estimate`, no `Customer` prefix ΓÇö distinct naming from Invoices/Payments/Credit Notes since there's no equivalent Central concept to collide with). Flat Laravel, `module:estimates` + Spatie RBAC, mirrors the Credit Notes/Invoices notes/timeline/assignee-scope/lines pattern, plus a Quotations-shaped status machine.
+- **Hard dependency on Invoices** ΓÇö same pattern as Payments/Credit Notes; Marketplace blocks installing Estimates until a workspace already has Invoices entitled (converting an estimate always creates a `CustomerInvoice`). **Free Marketplace opt-in** ΓÇö catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=40` (after Credit Notes' `30`).
+- Estimates introduces a **convert-to-invoice** action (`POST /estimates/{id}/convert`) ΓÇö the first Phase 3 action that creates a row in a *different* module's table. Adds the `customer_invoices.estimate_id` foreign key (the nullable column already existed from the Invoices migration; this module adds the constraint once `estimates` exists).
+- Optional soft links to Contacts, Companies, Opportunities, and Quotations ΓÇö each validated only when that module is entitled, no hard dependency rows for these.
 
 **Backend**
 
 - Tables: `estimates`, `estimate_lines`, `estimate_notes`, `estimate_activities`
 - Auto-numbered (`EST-00001`, prefix from `estimates_number_prefix` tenant setting)
-- Status workflow `draft → sent → accepted|rejected|expired` (`EstimateStatusEnum`, identical shape to `QuotationStatusEnum`); disallowed transitions return a 422 validation error
+- Status workflow `draft ΓåÆ sent ΓåÆ accepted|rejected|expired` (`EstimateStatusEnum`, identical shape to `QuotationStatusEnum`); disallowed transitions return a 422 validation error
 - `convertToInvoice()` copies the estimate's lines into a new draft `CustomerInvoice` via `CustomerInvoiceService::create()`, links it back via `estimate_id`, marks the estimate `accepted` if not already, and rejects a second conversion attempt
 - Permissions: `estimates.view|create|update|delete|restore|force.delete|assign|send|accept|convert`
 - Model + factories, controller, form requests, API resources, policy, service, events (incl. `EstimateConverted`), `AppServiceProvider`-registered event subscriber (audit + assignment notification)
 - Catalog registration + `module_dependencies` row via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
 - Pest: `tests/Feature/Tenant/Estimate/EstimateTest.php`, `tests/Feature/Central/Module/EstimatesModuleDependencyTest.php`
-- Fixed a pre-existing MySQL "identifier name too long" bug (index names exceeding the 64-character limit) in the `customer_invoice_activities`, `customer_payment_activities`, and `customer_credit_note_activities` migrations, plus the `customer_payment_allocations` unique constraint and the `customer_credit_note_notes` / `customer_credit_note_lines` indexes — discovered while migrating this batch on real MySQL; all now use explicit shortened index names
+- Fixed a pre-existing MySQL "identifier name too long" bug (index names exceeding the 64-character limit) in the `customer_invoice_activities`, `customer_payment_activities`, and `customer_credit_note_activities` migrations, plus the `customer_payment_allocations` unique constraint and the `customer_credit_note_notes` / `customer_credit_note_lines` indexes ΓÇö discovered while migrating this batch on real MySQL; all now use explicit shortened index names
 
 **Frontend**
 
-- `src/pages/estimates/` — list page (KPIs incl. Accepted value, Converted badge, filters, DataTable), create/edit form dialog (contact/company pickers, opportunity picker with quotation picker filtered by the selected opportunity, line items editor), detail sheet (overview/lines/notes/timeline tabs; send/accept/reject/**convert to invoice**/assign/notes)
+- `src/pages/estimates/` ΓÇö list page (KPIs incl. Accepted value, Converted badge, filters, DataTable), create/edit form dialog (contact/company pickers, opportunity picker with quotation picker filtered by the selected opportunity, line items editor), detail sheet (overview/lines/notes/timeline tabs; send/accept/reject/**convert to invoice**/assign/notes)
 - Added to the existing tenant sidebar **Billing** group, after Credit Notes
 - `estimateService`, `QUERY_KEYS.estimates`, `PERMISSIONS.estimates`
-- Notification registry: `estimate.assigned` → `/estimates?estimate={id}`
-- Playwright: `e2e/tests/estimates/estimates.workflow.spec.ts` (`npm run test:e2e:estimates`) — enables both `invoices` and `estimates` modules, creates an estimate, sends and accepts it, converts it to an invoice, confirms the conversion dialog, and verifies the resulting invoice + estimate timeline via the API
+- Notification registry: `estimate.assigned` ΓåÆ `/estimates?estimate={id}`
+- Playwright: `e2e/tests/estimates/estimates.workflow.spec.ts` (`npm run test:e2e:estimates`) ΓÇö enables both `invoices` and `estimates` modules, creates an estimate, sends and accepts it, converts it to an invoice, confirms the conversion dialog, and verifies the resulting invoice + estimate timeline via the API
 
 **Docs**
 
 - [estimates-overview.md](/user-guide/estimates-overview) / [estimates.md](/user-guide/estimates) (+ [developer](/developer-guide/estimates) / [production](/deployment/estimates))
 - [api/tenant-v1-estimates.md](/api/tenant-v1-estimates)
-- [Module Dependencies](/architecture/module-dependencies) updated — Estimates → Invoices marked shipped
-- [Product Roadmap](/getting-started/product-roadmap) — Estimates marked shipped in Phase 3, **completing Phase 3 — Billing** (Invoices, Payments, Credit Notes, Estimates all shipped)
+- [Module Dependencies](/architecture/module-dependencies) updated ΓÇö Estimates ΓåÆ Invoices marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Estimates marked shipped in Phase 3, **completing Phase 3 ΓÇö Billing** (Invoices, Payments, Credit Notes, Estimates all shipped)
 
 **Deferred**
 
@@ -363,16 +364,16 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- Third Phase 3 (Billing) module — credit notes a tenant issues against its own customer invoices (backend model `CustomerCreditNote`, distinct from Central's own platform-billing `credit_notes` ledger). Flat Laravel, `module:credit-notes` + Spatie RBAC, mirrors the Payments/Invoices notes/timeline/assignee-scope pattern.
-- **Hard dependency on Invoices** — same pattern as Payments; Marketplace blocks installing Credit Notes until a workspace already has Invoices entitled. **Free Marketplace opt-in** — catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=30` (after Payments' `20`).
-- Credit Notes introduces a first-class **lines** child table (`customer_credit_note_lines`), like Invoices — `subtotal`/`tax_total`/`total` computed server-side from lines.
-- **Issuing** a draft credit note locks its content; **applying** an issued credit note adds its `total` to the linked invoice's `amount_credited` and recalculates `balance_due` via `CustomerInvoice::recalculateBalanceFromAmounts()` — unlike Payments, this does **not** drive the invoice `status`. **Voiding** is only reachable from `draft`/`issued` (before any invoice balance has been touched).
+- Third Phase 3 (Billing) module ΓÇö credit notes a tenant issues against its own customer invoices (backend model `CustomerCreditNote`, distinct from Central's own platform-billing `credit_notes` ledger). Flat Laravel, `module:credit-notes` + Spatie RBAC, mirrors the Payments/Invoices notes/timeline/assignee-scope pattern.
+- **Hard dependency on Invoices** ΓÇö same pattern as Payments; Marketplace blocks installing Credit Notes until a workspace already has Invoices entitled. **Free Marketplace opt-in** ΓÇö catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=30` (after Payments' `20`).
+- Credit Notes introduces a first-class **lines** child table (`customer_credit_note_lines`), like Invoices ΓÇö `subtotal`/`tax_total`/`total` computed server-side from lines.
+- **Issuing** a draft credit note locks its content; **applying** an issued credit note adds its `total` to the linked invoice's `amount_credited` and recalculates `balance_due` via `CustomerInvoice::recalculateBalanceFromAmounts()` ΓÇö unlike Payments, this does **not** drive the invoice `status`. **Voiding** is only reachable from `draft`/`issued` (before any invoice balance has been touched).
 
 **Backend**
 
 - Tables: `customer_credit_notes`, `customer_credit_note_lines`, `customer_credit_note_notes`, `customer_credit_note_activities`
 - Auto-numbered (`CN-00001`, prefix from `credit_notes_number_prefix` tenant setting)
-- Status workflow `draft → issued → applied`, with `void` from `draft`/`issued` (`CustomerCreditNoteStatusEnum`); disallowed transitions return a 422 validation error
+- Status workflow `draft ΓåÆ issued ΓåÆ applied`, with `void` from `draft`/`issued` (`CustomerCreditNoteStatusEnum`); disallowed transitions return a 422 validation error
 - Permissions: `credit-notes.view|create|update|delete|restore|force.delete|assign|issue|apply|void`
 - Model + factories, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
 - Catalog registration + `module_dependencies` row via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
@@ -380,19 +381,19 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Frontend**
 
-- `src/pages/credit-notes/` — list page (KPIs incl. Applied total, filters, DataTable), create/edit form dialog (invoice picker driving default currency/contact/company, line items editor), detail sheet (overview/lines/notes/timeline; issue/apply/void/assign/notes)
-- Added to the existing tenant sidebar **Billing** group, after Payments — kept separate from Central Billing nav
+- `src/pages/credit-notes/` ΓÇö list page (KPIs incl. Applied total, filters, DataTable), create/edit form dialog (invoice picker driving default currency/contact/company, line items editor), detail sheet (overview/lines/notes/timeline; issue/apply/void/assign/notes)
+- Added to the existing tenant sidebar **Billing** group, after Payments ΓÇö kept separate from Central Billing nav
 - `customerCreditNoteService`, `QUERY_KEYS.customerCreditNotes`, `PERMISSIONS.customerCreditNotes`
 - Invoice detail sheet: new "Credit notes" link to `/credit-notes?invoice={id}` when Credit Notes is entitled + `credit-notes.view` is granted
-- Notification registry: `customer_credit_note.assigned` → `/credit-notes?credit-note={id}`
-- Playwright: `e2e/tests/credit-notes/credit-notes.workflow.spec.ts` (`npm run test:e2e:credit-notes`) — enables both `invoices` and `credit-notes` modules, creates and sends an invoice, creates a credit note against it, issues and applies it, and verifies the invoice's `amount_credited`/`balance_due` via the API
+- Notification registry: `customer_credit_note.assigned` ΓåÆ `/credit-notes?credit-note={id}`
+- Playwright: `e2e/tests/credit-notes/credit-notes.workflow.spec.ts` (`npm run test:e2e:credit-notes`) ΓÇö enables both `invoices` and `credit-notes` modules, creates and sends an invoice, creates a credit note against it, issues and applies it, and verifies the invoice's `amount_credited`/`balance_due` via the API
 
 **Docs**
 
 - [credit-notes-overview.md](/user-guide/credit-notes-overview) / [credit-notes.md](/user-guide/credit-notes) (+ [developer](/developer-guide/credit-notes) / [production](/deployment/credit-notes))
 - [api/tenant-v1-credit-notes.md](/api/tenant-v1-credit-notes)
-- [Module Dependencies](/architecture/module-dependencies) updated — Credit Notes → Invoices marked shipped
-- [Product Roadmap](/getting-started/product-roadmap) — Credit Notes marked shipped in Phase 3; Estimates remains Planned
+- [Module Dependencies](/architecture/module-dependencies) updated ΓÇö Credit Notes ΓåÆ Invoices marked shipped
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Credit Notes marked shipped in Phase 3; Estimates remains Planned
 - Invoices/Payments docs updated to reflect that `amount_credited`/`balance_due` are now driven by Credit Notes rather than "still planned"
 
 **Deferred**
@@ -405,16 +406,16 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- Second Phase 3 (Billing) module — customer payments a tenant receives from its own customers (backend model `CustomerPayment`, distinct from Central platform-billing Payments ledger). Flat Laravel, `module:payments` + Spatie RBAC, mirrors the Invoices notes/timeline/assignee-scope pattern.
-- **Hard dependency on Invoices** — the first Phase 3 module to declare a required `module_dependencies` row; Marketplace blocks installing Payments until a workspace already has Invoices entitled. **Free Marketplace opt-in** — catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=20` (after Invoices' `10`).
+- Second Phase 3 (Billing) module ΓÇö customer payments a tenant receives from its own customers (backend model `CustomerPayment`, distinct from Central platform-billing Payments ledger). Flat Laravel, `module:payments` + Spatie RBAC, mirrors the Invoices notes/timeline/assignee-scope pattern.
+- **Hard dependency on Invoices** ΓÇö the first Phase 3 module to declare a required `module_dependencies` row; Marketplace blocks installing Payments until a workspace already has Invoices entitled. **Free Marketplace opt-in** ΓÇö catalog category `billing`, `is_default_included=false` / `is_billable=false`, `sort_order=20` (after Invoices' `10`).
 - Payments introduces a first-class **allocations** child table (`customer_payment_allocations`) linking a payment to one or more invoices; allocations are stored on draft payments but only applied to invoice balances once **posted**.
-- Posting/voiding a payment drives the previously read-only Invoice balance fields: `amount_paid` / `balance_due` and the `sent → partial|paid` status transition (via `CustomerInvoice::recalculateBalanceFromAmounts()`), closing the gap called out in the Invoices changelog entry above.
+- Posting/voiding a payment drives the previously read-only Invoice balance fields: `amount_paid` / `balance_due` and the `sent ΓåÆ partial|paid` status transition (via `CustomerInvoice::recalculateBalanceFromAmounts()`), closing the gap called out in the Invoices changelog entry above.
 
 **Backend**
 
 - Tables: `customer_payments`, `customer_payment_allocations`, `customer_payment_notes`, `customer_payment_activities`
 - Auto-numbered (`PAY-00001`, prefix from `payments_number_prefix` tenant setting)
-- Status workflow `draft → posted → void` (`CustomerPaymentStatusEnum`); disallowed transitions return a 422 validation error
+- Status workflow `draft ΓåÆ posted ΓåÆ void` (`CustomerPaymentStatusEnum`); disallowed transitions return a 422 validation error
 - Permissions: `payments.view|create|update|delete|restore|force.delete|assign|post|void`
 - Model + factories, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
 - Catalog registration + `module_dependencies` row via `DefaultModuleRegistrar` migrations (migrate-only); permissions + default role map additive migrations
@@ -422,19 +423,19 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Frontend**
 
-- `src/pages/payments/` — list page (KPIs incl. Posted total, filters, DataTable), create/edit form dialog (amount/method/paid-at/reference, contact/company/assignee pickers, allocations editor against invoices), detail sheet (overview/allocations/notes/timeline tabs; post/void/assign/notes)
-- Added to the existing tenant sidebar **Billing** group, after Invoices — kept separate from Central Billing nav
-- `customerPaymentService`, `QUERY_KEYS.customerPayments`, `PERMISSIONS.customerPayments` — named distinctly from the pre-existing Central `paymentService` / `PERMISSIONS.payments` (platform subscription billing)
+- `src/pages/payments/` ΓÇö list page (KPIs incl. Posted total, filters, DataTable), create/edit form dialog (amount/method/paid-at/reference, contact/company/assignee pickers, allocations editor against invoices), detail sheet (overview/allocations/notes/timeline tabs; post/void/assign/notes)
+- Added to the existing tenant sidebar **Billing** group, after Invoices ΓÇö kept separate from Central Billing nav
+- `customerPaymentService`, `QUERY_KEYS.customerPayments`, `PERMISSIONS.customerPayments` ΓÇö named distinctly from the pre-existing Central `paymentService` / `PERMISSIONS.payments` (platform subscription billing)
 - Invoice detail sheet: new "Related payments" link to `/payments` when Payments is entitled + `payments.view` is granted
-- Notification registry: `customer_payment.assigned` → `/payments?payment={id}`
-- Playwright: `e2e/tests/payments/payments.workflow.spec.ts` (`npm run test:e2e:payments`) — enables both `invoices` and `payments` modules, creates an invoice, records a payment with an allocation, posts it, verifies the invoice balance/status updates, voids it, and verifies the reversal
+- Notification registry: `customer_payment.assigned` ΓåÆ `/payments?payment={id}`
+- Playwright: `e2e/tests/payments/payments.workflow.spec.ts` (`npm run test:e2e:payments`) ΓÇö enables both `invoices` and `payments` modules, creates an invoice, records a payment with an allocation, posts it, verifies the invoice balance/status updates, voids it, and verifies the reversal
 
 **Docs**
 
 - [payments-overview.md](/user-guide/payments-overview) / [payments.md](/user-guide/payments) (+ [developer](/developer-guide/payments) / [production](/deployment/payments))
 - [api/tenant-v1-payments.md](/api/tenant-v1-payments)
-- [Module Dependencies](/architecture/module-dependencies) updated — Payments → Invoices marked shipped (was backend-only)
-- [Product Roadmap](/getting-started/product-roadmap) — Payments marked shipped in Phase 3; Credit Notes/Estimates remain Planned
+- [Module Dependencies](/architecture/module-dependencies) updated ΓÇö Payments ΓåÆ Invoices marked shipped (was backend-only)
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Payments marked shipped in Phase 3; Credit Notes/Estimates remain Planned
 - Invoices docs updated to reflect that `amount_paid`/`balance_due` are now driven by Payments rather than "reserved for a future module"
 
 **Deferred**
@@ -447,17 +448,17 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Architecture**
 
-- First Phase 3 (Billing) module — customer invoices a tenant sends to its own customers (backend model `CustomerInvoice`, distinct from Central platform-billing `Invoice`). Flat Laravel, `module:invoices` + Spatie RBAC, mirrors the Quotations notes/timeline/assignee-scope pattern.
-- **No hard dependency** — unlike Quotations/Contracts (which require Opportunities), Invoices has no `module_dependencies` row and installs standalone. **Free Marketplace opt-in** — catalog category `billing` (`category_sort_order=30`), `is_default_included=false` / `is_billable=false`, `sort_order=10`.
+- First Phase 3 (Billing) module ΓÇö customer invoices a tenant sends to its own customers (backend model `CustomerInvoice`, distinct from Central platform-billing `Invoice`). Flat Laravel, `module:invoices` + Spatie RBAC, mirrors the Quotations notes/timeline/assignee-scope pattern.
+- **No hard dependency** ΓÇö unlike Quotations/Contracts (which require Opportunities), Invoices has no `module_dependencies` row and installs standalone. **Free Marketplace opt-in** ΓÇö catalog category `billing` (`category_sort_order=30`), `is_default_included=false` / `is_billable=false`, `sort_order=10`.
 - **Soft optional links**: `contact_id` / `company_id` only surfaced/validated when Contacts/Companies is entitled; `quotation_id` is a plain tenant-scoped existence check (not gated by a `LinkableQuotation`-style entitlement rule).
-- Balance fields (`amount_paid`, `amount_credited`, `balance_due`) are reserved for the still-planned Payments/Credit Notes modules — read-only via this API today.
+- Balance fields (`amount_paid`, `amount_credited`, `balance_due`) are reserved for the still-planned Payments/Credit Notes modules ΓÇö read-only via this API today.
 
 **Backend**
 
 - Tables: `customer_invoices`, `customer_invoice_lines`, `customer_invoice_notes`, `customer_invoice_activities`
 - Line items (`description`, `quantity`, `unit_price`, `tax_rate`) fully replaced on create/update; `subtotal` / `tax_total` / `total` / `balance_due` computed server-side
 - Auto-numbered (`INV-00001`, prefix from `invoices_number_prefix` tenant setting)
-- Status workflow `draft → sent → partial|paid → void` (`CustomerInvoiceStatusEnum`); disallowed transitions return a 422 validation error
+- Status workflow `draft ΓåÆ sent ΓåÆ partial|paid ΓåÆ void` (`CustomerInvoiceStatusEnum`); disallowed transitions return a 422 validation error
 - Permissions: `invoices.view|create|update|delete|restore|force.delete|assign|send|void`
 - Model + factories, controller, form requests, API resources, policy, service, events, `AppServiceProvider`-registered event subscriber (audit + assignment notification)
 - Catalog registration via `DefaultModuleRegistrar` migration (migrate-only); permissions + default role map additive migrations
@@ -465,18 +466,18 @@ Toggles: task assigned, task completed/reopened, follow-up created, follow-up du
 
 **Frontend**
 
-- `src/pages/invoices/` — list page (KPIs incl. Overdue, filters, DataTable), create/edit form dialog (line items editor, contact/company/assignee pickers), detail sheet (overview/lines/notes/timeline tabs; send/void/assign/notes — no accept)
-- New tenant sidebar group **Billing** (after Sales) — kept separate from Central Billing nav
-- `customerInvoiceService`, `QUERY_KEYS.customerInvoices`, `PERMISSIONS.customerInvoices` — named distinctly from the pre-existing Central `invoiceService` / `PERMISSIONS.invoices` (platform subscription billing)
-- Notification registry: `customer_invoice.assigned` → `/invoices?invoice={id}`
-- Playwright: `e2e/tests/invoices/invoices.workflow.spec.ts` (`npm run test:e2e:invoices`) — enable module, create, search, send, void, timeline
+- `src/pages/invoices/` ΓÇö list page (KPIs incl. Overdue, filters, DataTable), create/edit form dialog (line items editor, contact/company/assignee pickers), detail sheet (overview/lines/notes/timeline tabs; send/void/assign/notes ΓÇö no accept)
+- New tenant sidebar group **Billing** (after Sales) ΓÇö kept separate from Central Billing nav
+- `customerInvoiceService`, `QUERY_KEYS.customerInvoices`, `PERMISSIONS.customerInvoices` ΓÇö named distinctly from the pre-existing Central `invoiceService` / `PERMISSIONS.invoices` (platform subscription billing)
+- Notification registry: `customer_invoice.assigned` ΓåÆ `/invoices?invoice={id}`
+- Playwright: `e2e/tests/invoices/invoices.workflow.spec.ts` (`npm run test:e2e:invoices`) ΓÇö enable module, create, search, send, void, timeline
 
 **Docs**
 
 - [invoices-overview.md](/user-guide/invoices-overview) / [invoices.md](/user-guide/invoices) (+ [developer](/developer-guide/invoices) / [production](/deployment/invoices))
 - [api/tenant-v1-invoices.md](/api/tenant-v1-invoices)
-- [Module Dependencies](/architecture/module-dependencies) updated (Invoices → Contacts/Companies/Quotations optional; Payments → Invoices required, backend-only for now)
-- [Product Roadmap](/getting-started/product-roadmap) — Invoices marked shipped in Phase 3; Payments/Credit Notes/Estimates remain Planned
+- [Module Dependencies](/architecture/module-dependencies) updated (Invoices ΓåÆ Contacts/Companies/Quotations optional; Payments ΓåÆ Invoices required, backend-only for now)
+- [Product Roadmap](/getting-started/product-roadmap) ΓÇö Invoices marked shipped in Phase 3; Payments/Credit Notes/Estimates remain Planned
 
 **Deferred**
 
@@ -490,7 +491,7 @@ Bulk lead import supports an optional **Note** column. When mapped and non-empty
 
 ## Lead import numeric phone cast (2026-07-31)
 
-Bulk lead import no longer fails with “phone must be a string” when Excel/CSV parsers return phone cells as numbers. `LeadImportMapper` casts string fields before validation.
+Bulk lead import no longer fails with ΓÇ£phone must be a stringΓÇ¥ when Excel/CSV parsers return phone cells as numbers. `LeadImportMapper` casts string fields before validation.
 
 ## Overdue filter for Tasks & ToDos (2026-07-31)
 
@@ -501,15 +502,15 @@ List and board APIs accept `overdue=true` for open items with `due_at` in the pa
 **Architecture**
 
 - New personal checklist module (`todos`), separate from Tasks. Default-included, non-billable CRM catalog row (`sort_order` 21, icon `list-todo`).
-- Creator-scoped visibility via `ScopesToCreator` — users see only their own to-dos; workspace owner (`superadmin`) can view all.
-- Creator-only update/delete (owner may view others’ items but cannot mutate them).
+- Creator-scoped visibility via `ScopesToCreator` ΓÇö users see only their own to-dos; workspace owner (`superadmin`) can view all.
+- Creator-only update/delete (owner may view othersΓÇÖ items but cannot mutate them).
 
 **Backend**
 
 - Table `todos`; model, policy, service, board + CRUD API under `module:todos` + `todos.*`.
 - Soft-delete route binding (`withTrashed`) and whitelist for list `sort` / `direction`.
 - Local demo: `TodosSeeder` + dataset counts in `config/local-demo.php`.
-- Permissions: `view` · `create` · `update` · `delete` (admin/manager/staff).
+- Permissions: `view` ┬╖ `create` ┬╖ `update` ┬╖ `delete` (admin/manager/staff).
 - Pest: `tests/Feature/Tenant/Todo/TodoTest.php` (CRUD, creator/admin scope, owner view-only, sort safety, soft-delete show, module gate, isolation).
 
 **Frontend**
@@ -525,26 +526,26 @@ List and board APIs accept `overdue=true` for open items with `due_at` in the pa
 
 ## Marketing catalog currency uses modules.currency (2026-07-31)
 
-Public `GET /api/central/v1/public/modules` now labels paid prices with each module’s **catalog currency** (`modules.currency`, typically USD as in Central Modules). It no longer uses `system_settings.currency` (workspace default), which can be PKR/EUR/etc. and mislabeled catalog USD amounts.
+Public `GET /api/central/v1/public/modules` now labels paid prices with each moduleΓÇÖs **catalog currency** (`modules.currency`, typically USD as in Central Modules). It no longer uses `system_settings.currency` (workspace default), which can be PKR/EUR/etc. and mislabeled catalog USD amounts.
 
 ## Marketing site public catalog + stats API (2026-07-31)
 
 - Central public endpoints for the EloSync website homepage:
-  - `GET /api/central/v1/public/stats` — live Active Workspaces, Modules Installed, Catalog Modules (+ uptime / platform currency)
-  - `GET /api/central/v1/public/modules` — marketplace cards with **Available / In Progress / Planned** and **Included / Free / Paid** tags; paid prices always use the central application currency
+  - `GET /api/central/v1/public/stats` ΓÇö live Active Workspaces, Modules Installed, Catalog Modules (+ uptime / platform currency)
+  - `GET /api/central/v1/public/modules` ΓÇö marketplace cards with **Available / In Progress / Planned** and **Included / Free / Paid** tags; paid prices always use the central application currency
 - Catalog modules gain `availability` (`available` \| `in_progress` \| `planned`) alongside existing commercial `status` / `is_billable` flags
 - SaaS-Website Trust + Module Marketplace sections consume these APIs (`NEXT_PUBLIC_API_URL`); CORS supports `MARKETING_URL`
 - Pest: `tests/Feature/Central/Public/PublicPlatformTest.php`
 
-## Rebrand SaleOS → EloSync (2026-07-31)
+## Rebrand SaleOS ΓåÆ EloSync (2026-07-31)
 
 Product name, docs site, and operator examples are now **EloSync** (`docs.elosync.com`, `*.elosync.com`).
 
-**Breaking:** Custom lead webhook HMAC / API-key headers are renamed — `X-SaleOS-Signature` / `X-SaleOS-Timestamp` / `X-SaleOS-Key` → `X-EloSync-Signature` / `X-EloSync-Timestamp` / `X-EloSync-Key`. Update integrators (Zapier, Make, form plugins). Branded-domain DNS defaults are `_elosync-verification` / `elosync-verify-…` (override with `BRANDED_TXT_PREFIX` if needed).
+**Breaking:** Custom lead webhook HMAC / API-key headers are renamed ΓÇö `X-SaleOS-Signature` / `X-SaleOS-Timestamp` / `X-SaleOS-Key` ΓåÆ `X-EloSync-Signature` / `X-EloSync-Timestamp` / `X-EloSync-Key`. Update integrators (Zapier, Make, form plugins). Branded-domain DNS defaults are `_elosync-verification` / `elosync-verify-ΓÇª` (override with `BRANDED_TXT_PREFIX` if needed).
 
 ## Marketplace badges, dependents copy, catalog versioning (2026-07-31)
 
-- Tenant Marketplace cards/detail: badges show **Installed** / **Available** / **Billable** / **Pending** (no longer “Included” for free opt-in modules); category tag above module name; long titles no longer overflow the card.
+- Tenant Marketplace cards/detail: badges show **Installed** / **Available** / **Billable** / **Pending** (no longer ΓÇ£IncludedΓÇ¥ for free opt-in modules); category tag above module name; long titles no longer overflow the card.
 - Detail sheet separates **Dependencies** (modules this one needs) from **Dependents** (installed modules that block remove).
 - List API includes `already_installed`, `purchase_pending`, and `version` per row.
 - `DefaultModuleRegistrar` accepts create-time `version` and `bumpVersion($slug, $version)` for idempotent catalog bumps; docs require bumping `modules.version` when a module is meaningfully updated.
@@ -564,9 +565,9 @@ Tenant Marketplace list/detail now convert catalog module prices from the catalo
 
 ## Sales audit remediations (2026-07-31)
 
-- Quotations: content/`lines` updates are **draft-only** (`Quotation::isEditable()`); assignment stays available via `POST …/assign`.
-- Quotations: `POST …/status` requires `quotations.send` for `sent` and `quotations.accept` for `accepted` (other transitions still use `quotations.update`).
-- Contracts: `LinkableQuotation` requires the quotation’s opportunity to match the contract’s opportunity.
+- Quotations: content/`lines` updates are **draft-only** (`Quotation::isEditable()`); assignment stays available via `POST ΓÇª/assign`.
+- Quotations: `POST ΓÇª/status` requires `quotations.send` for `sent` and `quotations.accept` for `accepted` (other transitions still use `quotations.update`).
+- Contracts: `LinkableQuotation` requires the quotationΓÇÖs opportunity to match the contractΓÇÖs opportunity.
 - SPA: Edit quotation action is draft-only; Playwright RequireAccess coverage extended to Sales routes.
 - Docs: API + developer guides updated for the above.
 
@@ -574,22 +575,22 @@ Tenant Marketplace list/detail now convert catalog module prices from the catalo
 
 **Architecture**
 
-- Two lean Sales modules on top of Opportunities, mirroring its assignee-scope + notes + timeline patterns. Flat Laravel, `module:quotations` / `module:contracts` + Spatie RBAC. **Free Marketplace opt-in** — catalog category `sales`, `is_default_included=false` / `is_billable=false`; `quotations` `sort_order=50`, `contracts` `sort_order=60`.
-- **Hard dependency**: both `quotations` and `contracts` require **Opportunities** — Marketplace install blocks until Opportunities is entitled (`module_dependencies` migration, mirrors Meetings → Calendar).
-- **Soft optional dependency**: Contracts may link `quotation_id` only when Quotations is also entitled — validated by `LinkableQuotation` (mirrors `LinkableCompanyForOpportunity`).
+- Two lean Sales modules on top of Opportunities, mirroring its assignee-scope + notes + timeline patterns. Flat Laravel, `module:quotations` / `module:contracts` + Spatie RBAC. **Free Marketplace opt-in** ΓÇö catalog category `sales`, `is_default_included=false` / `is_billable=false`; `quotations` `sort_order=50`, `contracts` `sort_order=60`.
+- **Hard dependency**: both `quotations` and `contracts` require **Opportunities** ΓÇö Marketplace install blocks until Opportunities is entitled (`module_dependencies` migration, mirrors Meetings ΓåÆ Calendar).
+- **Soft optional dependency**: Contracts may link `quotation_id` only when Quotations is also entitled ΓÇö validated by `LinkableQuotation` (mirrors `LinkableCompanyForOpportunity`).
 
-**Backend — Quotations**
+**Backend ΓÇö Quotations**
 
 - Tables: `quotations`, `quotation_lines`, `quotation_notes`, `quotation_activities`
 - Line items (`description`, `quantity`, `unit_price`, `tax_rate`) fully replaced on create/update; `subtotal` / `tax_total` / `total` computed server-side
-- Status workflow `draft → sent → accepted|rejected|expired` (`QuotationStatusEnum`); disallowed transitions — including re-entering the same status — return a 422 validation error
+- Status workflow `draft ΓåÆ sent ΓåÆ accepted|rejected|expired` (`QuotationStatusEnum`); disallowed transitions ΓÇö including re-entering the same status ΓÇö return a 422 validation error
 - Permissions: `quotations.view|create|update|delete|restore|force.delete|assign|send|accept`
 - Pest: `tests/Feature/Tenant/Quotation/QuotationTest.php`, `tests/Feature/Central/Module/QuotationsModuleDependencyTest.php`
 
-**Backend — Contracts**
+**Backend ΓÇö Contracts**
 
-- Tables: `contracts`, `contract_notes`, `contract_activities` (no line items — a contract is a single agreement record)
-- Status workflow `draft → active → expired|terminated` (`ContractStatusEnum`); same same-status/invalid-transition guard as Quotations
+- Tables: `contracts`, `contract_notes`, `contract_activities` (no line items ΓÇö a contract is a single agreement record)
+- Status workflow `draft ΓåÆ active ΓåÆ expired|terminated` (`ContractStatusEnum`); same same-status/invalid-transition guard as Quotations
 - Permissions: `contracts.view|create|update|delete|restore|force.delete|assign`
 - Pest: `tests/Feature/Tenant/Contract/ContractTest.php`, `tests/Feature/Central/Module/ContractsModuleDependencyTest.php`
 
@@ -603,11 +604,11 @@ Tenant Marketplace list/detail now convert catalog module prices from the catalo
 - [quotations-overview.md](/user-guide/quotations-overview) / [quotations.md](/user-guide/quotations) (+ [developer](/developer-guide/quotations) / [production](/deployment/quotations))
 - [contracts-overview.md](/user-guide/contracts-overview) / [contracts.md](/user-guide/contracts) (+ [developer](/developer-guide/contracts) / [production](/deployment/contracts))
 - [api/tenant-v1-quotations.md](/api/tenant-v1-quotations), [api/tenant-v1-contracts.md](/api/tenant-v1-contracts)
-- [Module Dependencies](/architecture/module-dependencies) updated (Quotations/Contracts → Opportunities now shipped; Contracts → Quotations optional)
+- [Module Dependencies](/architecture/module-dependencies) updated (Quotations/Contracts ΓåÆ Opportunities now shipped; Contracts ΓåÆ Quotations optional)
 
 **Deferred**
 
-- Quotation PDF export / e-signature, contract renewal reminders, multi-currency conversion, Opportunity → Quotation → Contract conversion wizard
+- Quotation PDF export / e-signature, contract renewal reminders, multi-currency conversion, Opportunity ΓåÆ Quotation ΓåÆ Contract conversion wizard
 
 ---
 
@@ -615,12 +616,12 @@ Tenant Marketplace list/detail now convert catalog module prices from the catalo
 
 **Architecture**
 
-- Sales deals module with **pipeline stages + Kanban board inside Opportunities** (Sales Pipeline is not a separate Marketplace SKU). Mirrors Leads board patterns and Activities soft related links. Flat Laravel, `module:opportunities` + Spatie RBAC. **Free Marketplace opt-in** — catalog category `sales`, `is_default_included=false` / `is_billable=false` / `sort_order=40`; tenants enable it manually (only Leads + Tasks auto-install).
+- Sales deals module with **pipeline stages + Kanban board inside Opportunities** (Sales Pipeline is not a separate Marketplace SKU). Mirrors Leads board patterns and Activities soft related links. Flat Laravel, `module:opportunities` + Spatie RBAC. **Free Marketplace opt-in** ΓÇö catalog category `sales`, `is_default_included=false` / `is_billable=false` / `sort_order=40`; tenants enable it manually (only Leads + Tasks auto-install).
 
 **Backend**
 
 - Tables: `opportunity_stages`, `opportunities`, `opportunity_notes`, `opportunity_activities`
-- Seeded stages: Prospecting → Qualification → Proposal → Negotiation → Won / Lost
+- Seeded stages: Prospecting ΓåÆ Qualification ΓåÆ Proposal ΓåÆ Negotiation ΓåÆ Won / Lost
 - Soft optional FKs: `contact_id` / `company_id` / `lead_id` (entitlement-validated when set)
 - Board / stats / stage change / assign / notes / restore / force delete
 - Permissions: `opportunities.view|create|update|delete|restore|force.delete|assign`
@@ -629,7 +630,7 @@ Tenant Marketplace list/detail now convert catalog module prices from the catalo
 
 **Frontend**
 
-- SPA mirrors Leads (board default + table, form dialog, detail drawer) — ship with Opportunities nav gated by module + permission
+- SPA mirrors Leads (board default + table, form dialog, detail drawer) ΓÇö ship with Opportunities nav gated by module + permission
 
 **Docs**
 
@@ -638,7 +639,7 @@ Tenant Marketplace list/detail now convert catalog module prices from the catalo
 
 **Deferred**
 
-- Separate Sales Pipeline SKU, custom stage admin UI, Lead → Opportunity conversion wizard, realtime board sync, export / import
+- Separate Sales Pipeline SKU, custom stage admin UI, Lead ΓåÆ Opportunity conversion wizard, realtime board sync, export / import
 
 ---
 
@@ -648,15 +649,15 @@ Tenant Application pages for Quotations and Contracts (list, form with line item
 
 ## Marketing site Forge CI (2026-07-30)
 
-EloSync marketing repo (`SaaS-Website`) publishes a static Next.js export to `build-artifacts` on each push to `main` (same pattern as SPA/Docs). Forge deploys that branch with activate-only script — no Node on the server. See [Laravel Forge](/deployment/laravel-forge) §4 Marketing.
+EloSync marketing repo (`SaaS-Website`) publishes a static Next.js export to `build-artifacts` on each push to `main` (same pattern as SPA/Docs). Forge deploys that branch with activate-only script ΓÇö no Node on the server. See [Laravel Forge](/deployment/laravel-forge) ┬º4 Marketing.
 
 ## Marketing catalog pricing sync (2026-07-30)
 
-EloSync marketing site and docs now mirror Central catalog commercial flags: **Included free** (Leads, Tasks), **Free to install** (other CRM modules), **Paid** Branded at **$29/mo · $290/yr**. Entitlements catalog table corrected (opt-in CRM modules are not default-included).
+EloSync marketing site and docs now mirror Central catalog commercial flags: **Included free** (Leads, Tasks), **Free to install** (other CRM modules), **Paid** Branded at **$29/mo ┬╖ $290/yr**. Entitlements catalog table corrected (opt-in CRM modules are not default-included).
 
 ## Tenant Marketplace remove modules (2026-07-30)
 
-Workspace owners (and anyone with `marketplace.purchase`) can **remove** opt-in modules from Marketplace — Install / Subscribe to add, Remove / Cancel subscription to drop access. Core default-included modules (Leads, Tasks) stay non-removable; hard dependents must be removed first (e.g. Meetings before Calendar). Re-installing a previously cancelled module reactivates the same subscription row.
+Workspace owners (and anyone with `marketplace.purchase`) can **remove** opt-in modules from Marketplace ΓÇö Install / Subscribe to add, Remove / Cancel subscription to drop access. Core default-included modules (Leads, Tasks) stay non-removable; hard dependents must be removed first (e.g. Meetings before Calendar). Re-installing a previously cancelled module reactivates the same subscription row.
 
 **Fix (same day):** Cancel eligibility follows catalog `is_default_included` (not historical `source=included`). Data migration marks optional CRM modules opt-in and rewrites their included subscriptions to `purchased` so Remove appears for workspaces that had them pre-opt-in.
 
@@ -672,7 +673,7 @@ New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, A
 
 **Architecture**
 
-- CRM engagements module; mirrors Contacts/Companies (flat Laravel, `module:activities` + Spatie RBAC). **Free Marketplace opt-in** — catalog `is_default_included=false` / `is_billable=false` / `sort_order=28`; tenants enable it manually (only Leads + Tasks auto-install).
+- CRM engagements module; mirrors Contacts/Companies (flat Laravel, `module:activities` + Spatie RBAC). **Free Marketplace opt-in** ΓÇö catalog `is_default_included=false` / `is_billable=false` / `sort_order=28`; tenants enable it manually (only Leads + Tasks auto-install).
 
 **Backend**
 
@@ -704,7 +705,7 @@ New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, A
 
 **Architecture**
 
-- CRM organizations module; mirrors Contacts/Leads/Tasks (flat Laravel, `module:companies` + Spatie RBAC). **Free Marketplace opt-in** — catalog `is_default_included=false` / `is_billable=false` / `sort_order=12`; tenants enable it manually (only Leads + Tasks auto-install).
+- CRM organizations module; mirrors Contacts/Leads/Tasks (flat Laravel, `module:companies` + Spatie RBAC). **Free Marketplace opt-in** ΓÇö catalog `is_default_included=false` / `is_billable=false` / `sort_order=12`; tenants enable it manually (only Leads + Tasks auto-install).
 
 **Backend**
 
@@ -737,7 +738,7 @@ New workspaces auto-install **Leads** and **Tasks** only. Contacts, Companies, A
 
 **Architecture**
 
-- Third product module; mirrors Leads/Tasks (flat Laravel, `module:contacts` + Spatie RBAC). **Free Marketplace opt-in** — catalog `is_default_included=false` / `is_billable=false`; tenants enable it manually (only Leads + Tasks auto-install).
+- Third product module; mirrors Leads/Tasks (flat Laravel, `module:contacts` + Spatie RBAC). **Free Marketplace opt-in** ΓÇö catalog `is_default_included=false` / `is_billable=false`; tenants enable it manually (only Leads + Tasks auto-install).
 
 **Backend**
 
@@ -771,7 +772,7 @@ Meetings can be **marked completed** (detail action) or **auto-completed** after
 
 ## Lead & task restore / force delete (2026-07-28)
 
-Leads and Tasks support trash filtering plus **Restore** and **Delete permanently**. Soft delete is unchanged. Restore is granted to workspace **admin** (and owner); force delete is owner-only by default (`leads.force.delete` / `tasks.force.delete`) and can be assigned on Roles. API: `POST …/restore`, `DELETE …/force`.
+Leads and Tasks support trash filtering plus **Restore** and **Delete permanently**. Soft delete is unchanged. Restore is granted to workspace **admin** (and owner); force delete is owner-only by default (`leads.force.delete` / `tasks.force.delete`) and can be assigned on Roles. API: `POST ΓÇª/restore`, `DELETE ΓÇª/force`.
 
 ---
 
@@ -783,13 +784,13 @@ Lead and task **table** and **board** views now show the latest note (and, for l
 
 ## Meetings create form crash after visiting Settings (2026-07-28)
 
-Fixed an intermittent SPA “Something went wrong” error when opening New Meeting after Settings (or any page that filled the shared tenant-settings React Query cache). The meeting form unwrapped that cache to a bare array and called `.find`, while Settings stored the API envelope — so `.find` ran on an object. Meetings now uses a shared `useTenantSettingsQuery` helper with the same envelope shape (and a defensive normalizer).
+Fixed an intermittent SPA ΓÇ£Something went wrongΓÇ¥ error when opening New Meeting after Settings (or any page that filled the shared tenant-settings React Query cache). The meeting form unwrapped that cache to a bare array and called `.find`, while Settings stored the API envelope ΓÇö so `.find` ran on an object. Meetings now uses a shared `useTenantSettingsQuery` helper with the same envelope shape (and a defensive normalizer).
 
 ---
 
 ## Meeting list vs edit timezone mismatch (2026-07-28)
 
-Meetings (and Calendar list columns) now format start/end times with an explicit timezone: workspace Settings when loaded, otherwise the meeting/event `timezone` saved on the record. This fixes the case where the edit form showed the correct Asia/Karachi wall clock (e.g. 4:00 PM) while the list still showed the UTC clock (e.g. 11:00 AM) after a Central settings fallback. Tenant settings bootstrap also refuses to adopt Central’s timezone for an authenticated workspace shell.
+Meetings (and Calendar list columns) now format start/end times with an explicit timezone: workspace Settings when loaded, otherwise the meeting/event `timezone` saved on the record. This fixes the case where the edit form showed the correct Asia/Karachi wall clock (e.g. 4:00 PM) while the list still showed the UTC clock (e.g. 11:00 AM) after a Central settings fallback. Tenant settings bootstrap also refuses to adopt CentralΓÇÖs timezone for an authenticated workspace shell.
 
 ---
 
@@ -801,19 +802,19 @@ Scheduled datetimes (meetings, calendar, task due dates, lead follow-ups) no lon
 
 ## Web Push Profile false "not supported" (2026-07-27)
 
-Profile Desktop notifications no longer sticks on “This browser does not support Web Push” when notification permission is already granted but no service worker is registered. Status lookup uses `getRegistration()` instead of hanging on `serviceWorker.ready`.
+Profile Desktop notifications no longer sticks on ΓÇ£This browser does not support Web PushΓÇ¥ when notification permission is already granted but no service worker is registered. Status lookup uses `getRegistration()` instead of hanging on `serviceWorker.ready`.
 
 ---
 
-## Desktop notification prompt — dismiss once forever (2026-07-27)
+## Desktop notification prompt ΓÇö dismiss once forever (2026-07-27)
 
-The post-login “Enable desktop notifications?” dialog no longer reappears on every login after “Not now”. Dismissal is stored in `localStorage` for that browser; users can still enable later from Profile or the Notification Center.
+The post-login ΓÇ£Enable desktop notifications?ΓÇ¥ dialog no longer reappears on every login after ΓÇ£Not nowΓÇ¥. Dismissal is stored in `localStorage` for that browser; users can still enable later from Profile or the Notification Center.
 
 ---
 
 ## Meetings host filter crash after visiting Leads/Tasks (2026-07-27)
 
-Fixed an intermittent SPA “Something went wrong” error on Meetings. The Meetings pages unwrapped the shared users React Query cache to a bare array while Leads/Tasks stored the API envelope, so navigating Leads → Meetings called `.map` on an object. Meetings now uses a shared `useWorkspaceUsersQuery` helper with the same envelope shape (and a defensive normalizer).
+Fixed an intermittent SPA ΓÇ£Something went wrongΓÇ¥ error on Meetings. The Meetings pages unwrapped the shared users React Query cache to a bare array while Leads/Tasks stored the API envelope, so navigating Leads ΓåÆ Meetings called `.map` on an object. Meetings now uses a shared `useWorkspaceUsersQuery` helper with the same envelope shape (and a defensive normalizer).
 
 ---
 
@@ -825,19 +826,19 @@ All password and secret inputs in the SPA now use the shared `PasswordInput` con
 
 ## Meta App Setup operator guide (2026-07-25)
 
-Docs-only: added [Meta App Setup](/developer-guide/meta-app-setup) — create Meta Developer App (Marketing API use case), App Domains, Lead Ads permissions, OAuth vs webhook URLs, Central `META_LEAD_ADS_*` / integrations API, tenant Connect Meta, production gates, and troubleshooting. Linked from Meta Lead Ads, Leads deployment, installation, user overview, Tenant Leads API, and Developer Guide index.
+Docs-only: added [Meta App Setup](/developer-guide/meta-app-setup) ΓÇö create Meta Developer App (Marketing API use case), App Domains, Lead Ads permissions, OAuth vs webhook URLs, Central `META_LEAD_ADS_*` / integrations API, tenant Connect Meta, production gates, and troubleshooting. Linked from Meta Lead Ads, Leads deployment, installation, user overview, Tenant Leads API, and Developer Guide index.
 
 ---
 
 ## Platform domain auto-generated on signup / Central create (2026-07-25)
 
-Central tenant create/update and public workspace registration no longer accept a domain field. The platform hostname is always `{slug}.{PLATFORM_DOMAIN_SUFFIXES}` (company name spaces/special characters → hyphens via slug). Custom domains stay Branded self-service (Settings → Domain after purchase). SPA register + Central tenant form hide the domain input; Pest/e2e updated.
+Central tenant create/update and public workspace registration no longer accept a domain field. The platform hostname is always `{slug}.{PLATFORM_DOMAIN_SUFFIXES}` (company name spaces/special characters ΓåÆ hyphens via slug). Custom domains stay Branded self-service (Settings ΓåÆ Domain after purchase). SPA register + Central tenant form hide the domain input; Pest/e2e updated.
 
 ---
 
 ## Backend `.env.example` production template (2026-07-25)
 
-Backend `.env.example` is production-shaped: `https://api.example.com`, `https://app.example.com`, `reverb.example.com` (443/https), Redis cache/queue required with Reverb, S3 disk, secure session cookies, minimal comments. Secrets stay empty placeholders — never commit real keys. Local install docs override to Herd/`localhost`.
+Backend `.env.example` is production-shaped: `https://api.example.com`, `https://app.example.com`, `reverb.example.com` (443/https), Redis cache/queue required with Reverb, S3 disk, secure session cookies, minimal comments. Secrets stay empty placeholders ΓÇö never commit real keys. Local install docs override to Herd/`localhost`.
 
 ---
 
@@ -847,37 +848,37 @@ Docs-only: production-friendly [Laravel Forge Deployment](/deployment/laravel-fo
 
 ---
 
-## Installation guide — local configuration plan (2026-07-25)
+## Installation guide ΓÇö local configuration plan (2026-07-25)
 
-Docs-only: new [Installation & Local Configuration](/getting-started/installation) page covering backend (Herd, `.env`, migrate/seed), frontend Vite/`VITE_*`, VitePress docs, Reverb + Echo alignment, email (log/SMTP/Settings), queues/scheduler/Web Push, optional Stripe/storage, terminal layout, and a verify checklist — with pointers to production runbooks.
+Docs-only: new [Installation & Local Configuration](/getting-started/installation) page covering backend (Herd, `.env`, migrate/seed), frontend Vite/`VITE_*`, VitePress docs, Reverb + Echo alignment, email (log/SMTP/Settings), queues/scheduler/Web Push, optional Stripe/storage, terminal layout, and a verify checklist ΓÇö with pointers to production runbooks.
 
 ---
 
-## Lead ingest — Custom Webhook + Meta Lead Ads (2026-07-24)
+## Lead ingest ΓÇö Custom Webhook + Meta Lead Ads (2026-07-24)
 
 Inbound lead capture through the Lead Source Driver pipeline:
 
-- Shared `NormalizedLeadData` → `LeadDuplicateService` → `LeadService` (no driver DB writes)
+- Shared `NormalizedLeadData` ΓåÆ `LeadDuplicateService` ΓåÆ `LeadService` (no driver DB writes)
 - **Custom webhooks** per tenant: URL + API key / HMAC (`X-EloSync-Timestamp` + signature), editable `default_source`
 - **Meta Lead Ads**: OAuth connect, **Page picker UI**, Page subscribe, shared `/webhooks/leads/meta`, queue `lead-ingest`
-- Leads UI → **Integrations** panel; permission `leads.manage_integrations`
+- Leads UI ΓåÆ **Integrations** panel; permission `leads.manage_integrations`
 - Production hardening: module entitlement on ingress, body size limits, per-endpoint throttle, Graph timeouts, auth-only `needs_reauth`, force-delete page reclaim
 - Docs: Lead Source Driver Architecture (implemented), Custom Lead Webhook, Meta Lead Ads (shipped)
-- Pre-merge hardening: `guzzlehttp/guzzle` → 7.15.1; SPA `postcss` + `react-router` → 8.3.0 (high audit clear); Pest expectations updated for `meetings` / `branded` and platform subdomain domains; Larastan typing cleared (lead ingest + meetings/CRM)
+- Pre-merge hardening: `guzzlehttp/guzzle` ΓåÆ 7.15.1; SPA `postcss` + `react-router` ΓåÆ 8.3.0 (high audit clear); Pest expectations updated for `meetings` / `branded` and platform subdomain domains; Larastan typing cleared (lead ingest + meetings/CRM)
 
 ---
 
 ## Branded Domain settings UX (2026-07-24)
 
-Settings → **Domain** uses a guided three-step flow (enter address → copy-friendly DNS cards → check connection) instead of raw DNS admin rows, aimed at non-technical workspace admins.
+Settings ΓåÆ **Domain** uses a guided three-step flow (enter address ΓåÆ copy-friendly DNS cards ΓåÆ check connection) instead of raw DNS admin rows, aimed at non-technical workspace admins.
 
 ---
 
-## Branded module — custom domains + notification chrome (2026-07-24)
+## Branded module ΓÇö custom domains + notification chrome (2026-07-24)
 
 Billable marketplace module `branded` (not default-included) for custom domain mapping and white-label email / web push.
 
-- Tenant self-service **Settings → Domain**: propose hostname (ccTLDs like `myai.com.pk` / `app.domain.co.uk` supported), DNS/IP instructions, verify ownership
+- Tenant self-service **Settings ΓåÆ Domain**: propose hostname (ccTLDs like `myai.com.pk` / `app.domain.co.uk` supported), DNS/IP instructions, verify ownership
 - Host resolution ignores unverified or non-entitled custom domains (IP pointing alone cannot hijack a workspace)
 - Central / registration auto-generate platform subdomains from slug (no client domain field)
 - When branded is active: tenant logo / app name in mail chrome and web push icon/title prefix
@@ -905,7 +906,7 @@ At **Daily Reminder Time** (`task_reminder_time`, default `09:00` local), each w
 
 Each workspace can set its own session idle/token lifetime, including **never timeout**.
 
-- Tenant Settings → **Security**: `session_lifetime_minutes` (`0` = keep users signed in until they sign out)
+- Tenant Settings ΓåÆ **Security**: `session_lifetime_minutes` (`0` = keep users signed in until they sign out)
 - Falls back to Central `session_lifetime_minutes` when unset
 - Sanctum tenant tokens use the workspace value (`expires_at` null when `0`); SPA idle logout is skipped when `0`
 - Password policy remains Central-only
@@ -927,7 +928,7 @@ Workspace owners and users flagged **Exclude from lead assignment** no longer re
 Expired or revoked tenant sessions no longer leave the SPA on protected pages toasting **Workspace context is required.**
 
 - Backend: `InitializeTenancy` returns **401 Unauthenticated** when a Bearer token is present but cannot resolve a workspace (pruned/revoked/unknown tokens); anonymous requests without context still return `400 workspace_required`
-- Frontend: axios treats `401` and any non-`skipAuth` `400 workspace_required` (with or without a Bearer — covers the idle token-clear race) as session expiry — clears the token and hard-redirects to login without toasting; concurrent errors while redirecting are also suppressed
+- Frontend: axios treats `401` and any non-`skipAuth` `400 workspace_required` (with or without a Bearer ΓÇö covers the idle token-clear race) as session expiry ΓÇö clears the token and hard-redirects to login without toasting; concurrent errors while redirecting are also suppressed
 - Idle timeout hard-redirects immediately, then best-effort logout
 - Tests: Pest `TokenExpirationTest`; Vitest `src/api/axios.test.ts`
 - Docs: [authentication developer](/developer-guide/authentication), [authentication user guide](/user-guide/authentication)
@@ -938,11 +939,11 @@ Expired or revoked tenant sessions no longer leave the SPA on protected pages to
 
 Workspace Meetings marketplace module (CRM, default-included) with Calendar projection, **per-tenant** Zoom/Google Meet OAuth credentials + account connect, and one multi-channel reminder.
 
-- Deploy: create migration is production-safe against a leftover pre-redesign `meetings` table — replaces Meetings-related tables only (preserves other production data), purges `calendar_events` with `source_type=meeting`, then creates the current schema
-- Backend: meetings/attendees/reminders/provider connections; permissions (`view`/`create`/`update`/`delete`/`view_all`/`assign_host`/`manage_integrations`); tenant API; migrate-only catalog registration + required Meetings → Calendar dependency
+- Deploy: create migration is production-safe against a leftover pre-redesign `meetings` table ΓÇö replaces Meetings-related tables only (preserves other production data), purges `calendar_events` with `source_type=meeting`, then creates the current schema
+- Backend: meetings/attendees/reminders/provider connections; permissions (`view`/`create`/`update`/`delete`/`view_all`/`assign_host`/`manage_integrations`); tenant API; migrate-only catalog registration + required Meetings ΓåÆ Calendar dependency
 - Providers: each workspace stores its own Zoom/Google OAuth client ID/secret (encrypted); connects a workspace account; manual join URL when provider is `none`; OAuth token refresh; bounded retry job with explicit tenant init; OAuth one-time nonce
 - Cancel/delete: remote Zoom/Google delete is best-effort so missing scopes cannot block local cancel; Zoom authorize requests write/read/delete scopes
-- Reminders: atomic `pending`→`sending` claim; external guest mail dedupe; `crm:send-due-notifications` delivers in-app + web push + email
+- Reminders: atomic `pending`ΓåÆ`sending` claim; external guest mail dedupe; `crm:send-due-notifications` delivers in-app + web push + email
 - Frontend: Meetings list/form/detail/integrations; provider options gated until connected; cancel confirm; retry sync; Calendar projections open in Meetings (read-only on Calendar)
 - Docs: user/developer/deployment/API; webhooks documented as stub until native provider verify
 - Pest: `tests/Feature/Tenant/Meeting/*`
@@ -956,7 +957,7 @@ SPA branding no longer flickers through placeholder product names or stick on Ce
 - Static shell / tab-title fallback standardized on **EloSync** (`index.html`, settings-store defaults, `VITE_APP_NAME`)
 - Sidebar and auth layout show empty brand text until public settings are loaded (no `DC SaaS` placeholder)
 - Settings re-bootstrap after auth settles so tenant `public/settings` can resolve via Bearer token and optional `X-Tenant-Domain`
-- Central fallback on tenant routes only applies on first load — does not overwrite branding after login or settings save
+- Central fallback on tenant routes only applies on first load ΓÇö does not overwrite branding after login or settings save
 - Unit coverage: `src/store/settings-store.test.ts`
 - Docs: [tenant-settings developer](/developer-guide/tenant-settings), [tenant-settings overview](/user-guide/tenant-settings-overview)
 
@@ -981,7 +982,7 @@ Personal Calendar marketplace module (CRM, default-included).
 - Backend: `calendar_events`, permissions (`view`/`create`/`update`/`delete`/`view_all`), tenant API, migrate-only catalog registration
 - Frontend: **Week** (default) + **Day** time grids with drag-and-drop reschedule, Month + Agenda, create/edit/cancel/delete, upcoming dashboard widget
 - Workspace timezone-aware display/edit; overlapping events laid out side-by-side on Week/Day
-- Visibility: staff sees own events; Owner/Admin/Manager with `view_all` see all — **no calendar assignment**
+- Visibility: staff sees own events; Owner/Admin/Manager with `view_all` see all ΓÇö **no calendar assignment**
 - Platform audit via `CalendarEventSubscriber` (create/update/cancel/delete), mirroring Leads/Tasks
 - Docs: user/developer/deployment/API; Pest incl. deploy-migration + audit coverage; Playwright `test:e2e:calendar`
 - Meetings / Zoom / Google Meet later projected onto Calendar (shipped 2026-07-22)
@@ -1013,10 +1014,10 @@ Documentation-only: architectural decision for all future lead ingestion in EloS
 
 ## Meta Lead Ads Integration roadmap (2026-07-20)
 
-Documentation-only: official implementation blueprint for a future Meta Lead Ads → Leads integration.
+Documentation-only: official implementation blueprint for a future Meta Lead Ads ΓåÆ Leads integration.
 
 - Added [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration) under **Future Integrations** (architecture, OAuth, multi-tenant Page ID resolution, field mapping, `LeadDuplicateService` + `LeadService` gates, security, Meta permissions, error handling, future enhancements)
-- Sidebar: Developer Guide → Future Integrations → Meta Lead Ads
+- Sidebar: Developer Guide ΓåÆ Future Integrations ΓåÆ Meta Lead Ads
 - Product Roadmap: Phase 1 Planned entry linking to the blueprint
 - No backend or frontend application code changes
 
@@ -1024,7 +1025,7 @@ Documentation-only: official implementation blueprint for a future Meta Lead Ads
 
 ## Fix: persist Open/Click webhook event settings (2026-07-19)
 
-- Fixed settings save treating `mail_webhook_events` list arrays as `{value:…}` wrappers (Open/Click were stored as null and UI checkboxes cleared after save)
+- Fixed settings save treating `mail_webhook_events` list arrays as `{value:ΓÇª}` wrappers (Open/Click were stored as null and UI checkboxes cleared after save)
 - Default webhook events now include `opened` and `clicked`
 - Open webhooks update email log status once events are persisted
 
@@ -1037,32 +1038,32 @@ Documentation-only: official implementation blueprint for a future Meta Lead Ads
 
 ## Email webhooks, body logging, and resend (2026-07-19)
 
-- Provider delivery webhooks for Postmark / Mailgun: `POST /webhooks/email/{provider}` (Central) and `…/{provider}/{tenant}` (Tenant custom mail)
+- Provider delivery webhooks for Postmark / Mailgun: `POST /webhooks/email/{provider}` (Central) and `ΓÇª/{provider}/{tenant}` (Tenant custom mail)
 - Configurable event multiselect (`mail_webhook_events`) + signing secret in Central/Tenant Mail settings; `meta.mail_webhook` on settings GET
 - Full message body capture (`body_html` / `body_text`) on email logs by default (`EMAIL_LOGS_STORE_BODY=true`) for audit/proof
-- One-click resend from email log detail (`email-logs.resend`, `POST …/email-logs/{uuid}/resend`)
+- One-click resend from email log detail (`email-logs.resend`, `POST ΓÇª/email-logs/{uuid}/resend`)
 - Docs: [Email webhooks](/developer-guide/email-webhooks), updated [Multi-Provider Email](/developer-guide/multi-provider-email)
 
-## v1.1.0 — Platform Stabilization (prepared 2026-07-19)
+## v1.1.0 ΓÇö Platform Stabilization (prepared 2026-07-19)
 
 First official coordinated platform tag. Official record: [v1.1.0](/changelog/v1.1.0).
 
-Git tag: **`v1.1.0`** (clean SemVer — **create only after CI is green on all three repos**). No `-platform` suffix.
+Git tag: **`v1.1.0`** (clean SemVer ΓÇö **create only after CI is green on all three repos**). No `-platform` suffix.
 
 Highlights:
 
 - Multi-provider email (SMTP / Postmark / Mailgun) + logs + queue isolation
-- Production hardening (migrate-only modules/RBAC, auth≠RBAC, go-live runbooks)
+- Production hardening (migrate-only modules/RBAC, authΓëáRBAC, go-live runbooks)
 - Notifications + Communication Templates on the frozen foundation
 - Larastan level 5 at zero errors; standardized PR Quality Gates (Backend / Frontend / Docs)
-- [Documentation Governance](/developer-guide/documentation-governance) — same-PR rule for code + tests + docs
+- [Documentation Governance](/developer-guide/documentation-governance) ΓÇö same-PR rule for code + tests + docs
 - [Release Process](/deployment/release-process) with branch-protection checklist for admins
 
 Package versions: Frontend & Docs `1.1.0`; Backend tag-only. Legacy docs alias: [v1.1.0-platform](/changelog/v1.1.0-platform).
 
 ---
 
-## Multi-Provider Email Delivery — production hardening (2026-07-19)
+## Multi-Provider Email Delivery ΓÇö production hardening (2026-07-19)
 
 Production-readiness fixes on top of the multi-provider email implementation:
 
@@ -1112,12 +1113,12 @@ Documentation-only pass establishing the long-term modular architecture standard
 - Added [Architecture](/architecture/) section: [Module Architecture](/architecture/module-architecture), [Module Dependencies](/architecture/module-dependencies), [Module Licensing](/architecture/module-licensing)
 - Updated [Product Roadmap](/getting-started/product-roadmap): Calendar, Meetings (scheduling, Zoom, Google Meet, email reminders), AI Integration (Planning)
 - Documented development convention: self-contained modules, declared dependencies, independent licensing compatibility
-- Updated site footer copyright to © 2026 EloSync. All rights reserved.
+- Updated site footer copyright to ┬⌐ 2026 EloSync. All rights reserved.
 - No application code, billing, marketplace, schema, or API changes
 
 ---
 
-## Documentation sync — migrate-only modules & auth/RBAC separation (2026-07-18)
+## Documentation sync ΓÇö migrate-only modules & auth/RBAC separation (2026-07-18)
 
 Docs pass aligning architecture, deployment, RBAC, provisioning, entitlements, database, API, and Communication Templates guides with the final production architecture.
 
@@ -1176,12 +1177,12 @@ Release hardening for the frozen notification stack (no architecture changes).
 
 ## In-app notifications production stack (2026-07-16)
 
-Phased delivery of the frozen notification architecture (payload v1 → digests → Reverb/Echo → registry → browser → prune).
+Phased delivery of the frozen notification architecture (payload v1 ΓåÆ digests ΓåÆ Reverb/Echo ΓåÆ registry ΓåÆ browser ΓåÆ prune).
 
 - Backend: schema_version envelope, route descriptors, NotificationBatch + lead digests, Reverb private channels, `notifications:prune`, unread indexes
 - Frontend: Laravel Echo, modular `src/notifications` registry, optimistic bell UX, Web Notification API manager
 - Docs: [notification-architecture-contract.md](/developer-guide/notification-architecture-contract), API + roadmap updated
-- Lead assigned: database + broadcast only (mail deferred); bulk/import → one digest per assignee
+- Lead assigned: database + broadcast only (mail deferred); bulk/import ΓåÆ one digest per assignee
 
 ---
 
@@ -1191,7 +1192,7 @@ In-app notification contracts are frozen before phased implementation (payload v
 
 - Docs: [notification-architecture-contract.md](/developer-guide/notification-architecture-contract)
 - Linked from module development standard and tenant notifications API
-- No application code in this change; implementation follows Phases 1–8
+- No application code in this change; implementation follows Phases 1ΓÇô8
 
 ---
 
@@ -1272,7 +1273,7 @@ All user uploads go through Laravel Storage via `FileUploadService`. Production 
 
 - `league/flysystem-aws-s3-v3` + full `AWS_*` env (`ENDPOINT` / `URL` for Wasabi)
 - Central/tenant branding and admin tenant logos use `FileUploadService` (unique filenames, relative keys, disk-agnostic URLs)
-- Tenancy filesystem bootstrapper no longer remaps the shared `public`/uploads disk (prefix isolation via `tenants/{uuid}/…`)
+- Tenancy filesystem bootstrapper no longer remaps the shared `public`/uploads disk (prefix isolation via `tenants/{uuid}/ΓÇª`)
 - Artisan `storage:migrate-to-s3` copies existing local objects idempotently
 - Docs: `architecture/object-storage.md`; settings production guides updated
 
@@ -1280,7 +1281,7 @@ All user uploads go through Laravel Storage via `FileUploadService`. Production 
 
 ## Go-live hardening (2026-07-15)
 
-Production readiness audit for Central + Tenant with Leads & Tasks. Billing and security fixes only — no architecture redesign.
+Production readiness audit for Central + Tenant with Leads & Tasks. Billing and security fixes only ΓÇö no architecture redesign.
 
 **Critical / High**
 
@@ -1308,9 +1309,9 @@ Add Creem as a second provider behind the existing `PaymentGatewayInterface` / `
 
 - `CreemGateway` + HTTP `CreemClient`, webhook HMAC verification, provider-neutral `tenant_gateway_customers`
 - Config: `config/creem.php` (`CREEM_*` env fallbacks); seed + admin enable/disable/default/config
-- Webhooks: `POST /webhooks/gateways/creem` (`creem-signature`) → Billing Engine module activation
-- Product mapping uses Creem `prod_…` ids; Central UI credential fields + Creem-specific mapping copy
-- Return-URL / “Complete subscription” sync via `confirm-checkout` so paid checkouts activate without a second session when webhooks are delayed
+- Webhooks: `POST /webhooks/gateways/creem` (`creem-signature`) ΓåÆ Billing Engine module activation
+- Product mapping uses Creem `prod_ΓÇª` ids; Central UI credential fields + Creem-specific mapping copy
+- Return-URL / ΓÇ£Complete subscriptionΓÇ¥ sync via `confirm-checkout` so paid checkouts activate without a second session when webhooks are delayed
 - Docs: `billing/creem.md`; tests: `CreemGatewayTest`, `CreemWebhookTest`, `CreemCheckoutConfirmTest`
 
 ---
@@ -1319,16 +1320,16 @@ Add Creem as a second provider behind the existing `PaymentGatewayInterface` / `
 
 Decouple Modules from Stripe. Stripe is one payment driver; catalog pricing stays on Modules.
 
-- Added `payment_gateway_module_prices` (gateway × module × billing cycle → product/price references)
+- Added `payment_gateway_module_prices` (gateway ├ù module ├ù billing cycle ΓåÆ product/price references)
 - Migrated existing `modules.stripe_*` IDs into the mapping table, then dropped those columns
 - Added `modules.currency` and `workspace_module_subscriptions.payment_gateway_id`
 - `BillingEngine` / `StripeGateway` resolve checkout prices from mappings; consolidated billing skips recurring-gateway subscriptions
-- Central API + UI: Module form is catalog-only; **Payment Gateways → Product Mapping** manages provider refs
+- Central API + UI: Module form is catalog-only; **Payment Gateways ΓåÆ Product Mapping** manages provider refs
 - Docs: `billing/*`, `architecture/database.md`, `api/central-v1.md`, `admin-ui.md`
 
 ---
 
-## RC1 — Production Readiness (2026-07-14)
+## RC1 ΓÇö Production Readiness (2026-07-14)
 
 Release Candidate hardening for paying-customer launch. No new business modules. Official notes: [releases/rc1-production-readiness.md](/deployment/rc1-production-readiness). Recommended tag: `v1.2.0-rc.1`.
 
@@ -1372,7 +1373,7 @@ Security, ops, and SPA hardening for launch readiness. Platform freeze unchanged
 
 ---
 
-## Sprint 2 — CRM UX (2026-07-13)
+## Sprint 2 ΓÇö CRM UX (2026-07-13)
 
 Leads/Tasks UX + notifications + tenant dashboard widgets. Platform freeze unchanged.
 
@@ -1380,7 +1381,7 @@ Leads/Tasks UX + notifications + tenant dashboard widgets. Platform freeze uncha
 
 - `lead_value` (renamed from `estimated_value`); independent status `active|waiting|on_hold|closed|archived`; priority; assignment history
 - Kanban (default) + table; DnD opens drawer, save commits stage; KPIs / board / stats APIs
-- Follow-up update/reschedule; export CSV/XLSX (filtered); convert stub (`converted_at`, activity, status closed — Contacts deferred)
+- Follow-up update/reschedule; export CSV/XLSX (filtered); convert stub (`converted_at`, activity, status closed ΓÇö Contacts deferred)
 - Permissions: `view|create|update|delete|assign|export|convert` (no import); assignee scoping without `leads.assign`
 
 **Tasks**
@@ -1402,9 +1403,9 @@ Leads/Tasks UX + notifications + tenant dashboard widgets. Platform freeze uncha
 
 ---
 
-## v1.1.0-platform — Production Ready (2026-07-13)
+## v1.1.0-platform ΓÇö Production Ready (2026-07-13)
 
-Platform foundation declared **Production Ready** and **frozen**. No new business modules in this release — hardening only.
+Platform foundation declared **Production Ready** and **frozen**. No new business modules in this release ΓÇö hardening only.
 
 Logical freeze notes (never tagged in git). Official first tag: [`v1.1.0`](/changelog/v1.1.0).  
 Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
@@ -1438,7 +1439,7 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 
 ## Product roadmap documented (2026-07-12)
 
-- Added [product-roadmap.md](/getting-started/product-roadmap): CRM → Sales → Billing → Purchasing → Inventory → Finance → HR → future expansion
+- Added [product-roadmap.md](/getting-started/product-roadmap): CRM ΓåÆ Sales ΓåÆ Billing ΓåÆ Purchasing ΓåÆ Inventory ΓåÆ Finance ΓåÆ HR ΓåÆ future expansion
 - Linked from README and platform-freeze docs
 - Phase 1 CRM: Leads + Tasks complete; Contacts / Companies / Calendar / Activities next
 
@@ -1502,7 +1503,7 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 
 **Architecture**
 
-- Platform foundation locked — no redesign of Auth, Tenancy, RBAC, Billing, Marketplace, Settings, or Gateway architecture except critical security / data-integrity / production bugs
+- Platform foundation locked ΓÇö no redesign of Auth, Tenancy, RBAC, Billing, Marketplace, Settings, or Gateway architecture except critical security / data-integrity / production bugs
 - Official [Module Development Standard](/developer-guide/module-development): flat Laravel layout, catalog + `module:` + Spatie permissions, audit + activity logging, Pest + Playwright, docs DoD
 - Cursor rules added in Backend and Frontend (`.cursor/rules/platform-freeze.mdc`, `module-development.mdc`)
 - **Leads** designated as the reference business module; future modules must mirror it
@@ -1519,7 +1520,7 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 **Authentication**
 
 - Shared tenant `/login` with Workspace field (slug/domain); `/central/login` isolated for platform admins
-- Server-owned workspace resolution: host → bearer token → `workspace` input; fail-closed without context
+- Server-owned workspace resolution: host ΓåÆ bearer token ΓåÆ `workspace` input; fail-closed without context
 - Email verification enforced for Central and Tenant (`verified` middleware + SPA verify pages)
 - Sanctum token TTL wired to `session_lifetime_minutes`; Remember Me extends TTL; login lockout after failed attempts
 - Removed client tenant persistence (`tenantStorage` / `VITE_DEFAULT_TENANT_DOMAIN`)
@@ -1543,7 +1544,7 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 
 ---
 
-## Manual QA — Production Readiness Fixes (2026-07-12)
+## Manual QA ΓÇö Production Readiness Fixes (2026-07-12)
 
 **Backend**
 
@@ -1580,7 +1581,7 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 
 **Docs**
 
-- `authorization/tenant-rbac*.md` — architecture, user guide, production security
+- `authorization/tenant-rbac*.md` ΓÇö architecture, user guide, production security
 
 ---
 
@@ -1588,22 +1589,22 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 
 **Backend**
 
-- `TenantSettingService` resolves workspace settings with hierarchy: tenant override → tenant profile → Central → system default
+- `TenantSettingService` resolves workspace settings with hierarchy: tenant override ΓåÆ tenant profile ΓåÆ Central ΓåÆ system default
 - Tenant Settings API: list/update, branding upload, test mail, public bootstrap
 - SMTP passwords encrypted; runtime mail uses tenant SMTP when `mail_host` is set, otherwise Central
-- Branding assets stored under `tenants/{uuid}/branding/…`
+- Branding assets stored under `tenants/{uuid}/branding/ΓÇª`
 - Permissions: `settings.list`, `settings.update`
 - Pest coverage for resolver + API
 
 **Frontend**
 
-- Tenant Settings page (`/settings`) — General, Branding, Mail with searchable selects, color picker, uploads
+- Tenant Settings page (`/settings`) ΓÇö General, Branding, Mail with searchable selects, color picker, uploads
 - Settings store bootstraps resolved tenant branding when a workspace domain is known
 - Playwright: `npm run test:e2e:tenant-settings`
 
 **Docs**
 
-- `settings/tenant-settings*.md` — hierarchy, SMTP, storage, security
+- `settings/tenant-settings*.md` ΓÇö hierarchy, SMTP, storage, security
 
 ---
 
@@ -1648,7 +1649,7 @@ Alias: [v1.1.0-platform](/changelog/v1.1.0-platform)
 
 ---
 
-## Features layer removed — module licensing + Spatie authorization
+## Features layer removed ΓÇö module licensing + Spatie authorization
 
 Licensing and authorization are fully decoupled.
 
@@ -1734,7 +1735,7 @@ Rebuilt system settings so every key is validated and consumed at runtime.
 
 ## Tenant form cleanup
 
-Removed `owner_id` and `address` from the `tenants` schema and admin UI. Timezone, currency, country, and locale are searchable selects. Logo is an image upload (`logo` file field → `logo_path` / `logo_url`).
+Removed `owner_id` and `address` from the `tenants` schema and admin UI. Timezone, currency, country, and locale are searchable selects. Logo is an image upload (`logo` file field ΓåÆ `logo_path` / `logo_url`).
 
 ---
 
@@ -1745,7 +1746,7 @@ Stabilized the Central Application with a full Playwright pass before further Te
 **Fixed**
 
 - Logout now revokes only the current Sanctum token (was deleting all tokens and breaking parallel E2E sessions)
-- Dashboard growth/revenue series API keys aligned to frontend contract (`count`, `amount`) — removed chart `NaN` display
+- Dashboard growth/revenue series API keys aligned to frontend contract (`count`, `amount`) ΓÇö removed chart `NaN` display
 - Settings E2E opens the Billing tab before toggling trial flags
 - Auth greeting assertion matches time-based welcome copy
 - Roles cleanup searches before deleting the original role after clone
@@ -1753,7 +1754,7 @@ Stabilized the Central Application with a full Playwright pass before further Te
 **Added (Playwright)**
 
 - Module suites: marketplace, billing, impersonation, permissions, profile
-- Per-module npm scripts (`test:e2e:marketplace`, `test:e2e:billing`, …)
+- Per-module npm scripts (`test:e2e:marketplace`, `test:e2e:billing`, ΓÇª)
 - Smoke coverage for Marketplace route
 
 **Docs**
@@ -1762,14 +1763,14 @@ Stabilized the Central Application with a full Playwright pass before further Te
 
 ---
 
-## Modular foundation complete (Phases 1–6)
+## Modular foundation complete (Phases 1ΓÇô6)
 
 Delivered marketplace APIs, Billing Engine, impersonation, and the financial ledger on top of the module-licensing foundation.
 
 **Added**
 
 - Marketplace: `GET /marketplace/modules`, `GET /marketplace/modules/{module}` (published catalog, dependency hints, `?tenant_id=` install state)
-- Module subscriptions: `GET /module-subscriptions`, show, `POST …/cancel`, `POST …/deactivate`; `POST /tenants/{tenant}/modules` (install)
+- Module subscriptions: `GET /module-subscriptions`, show, `POST ΓÇª/cancel`, `POST ΓÇª/deactivate`; `POST /tenants/{tenant}/modules` (install)
 - Billing Engine (`BillingEngine`, `GatewayManager`, `ManualGateway`, `StripeGateway`, `ProrationCalculator`)
 - Consolidated billing: `php artisan billing:run-consolidated` (scheduled daily); one invoice per workspace billing cycle for all billable active modules
 - Financial ledger tables + read APIs: `invoices`, `invoice_items`, `payments`, `payment_transactions`, `payment_gateways`, `payment_methods`, `billing_addresses`, `taxes`, `coupons`, `refunds`, `credit_notes`
@@ -1816,4 +1817,5 @@ Replaced plan-based licensing with workspace module subscriptions.
 ## Prior: Central SaaS Platform completion
 
 See git history for the earlier plan-based Central Platform delivery notes (tenants, users, roles, Cashier scaffolding, dashboard). That licensing model has been superseded.
+
 

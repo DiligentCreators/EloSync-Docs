@@ -21,7 +21,7 @@ Open **Departments** from the sidebar, under the **HR** group.
 2. Enter a name (required); optionally description, status, manager, users, and employees
 3. Save
 
-The **manager** must be a user with a login. You can assign yourself. One user can manage multiple departments.
+The **manager** must be a user with a login. Workspace admins assign managers (you can assign yourself). One user can manage multiple departments. Department managers can update their department and members, but cannot reassign the manager role.
 
 ## Members
 
