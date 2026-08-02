@@ -23,7 +23,7 @@ New Tasks permissions for **existing** workspaces must ship as an additive **dat
 
 - Platform audit events: `task_created`, `task_updated`, `task_deleted`, `task_assigned`, `task_completed`, `task_reopened`, `task_note_added`
 - Notifications: assignment (mail + database); due today / overdue **in-app per task**; one daily **mail digest** per assignee (`crm:send-due-notifications`)
-- Workspace setting `task_reminder_time` / **Daily Reminder Time** (default `09:00`) in tenant timezone gates when digests and daily CRM summaries send
+- Workspace setting `task_reminder_time` / **Daily Reminder Time** (default `09:00`) in the workspace timezone (Settings → General) gates when digests and daily CRM summaries send — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)
 - Digest send state is durable in `task_digest_deliveries` (queued → sent / failed + retry). Cache flush does not re-email; failed queue jobs become retryable after `retry_after`
 - Daily CRM summary send state is durable in `daily_summary_deliveries` (`kind` = `personal`|`team`). Stale `queued` rows older than 45 minutes may be reclaimed (max 5 attempts/day). See [Daily CRM summary](/deployment/daily-crm-summary).
 - Tenant mail settings with Central SMTP fallback

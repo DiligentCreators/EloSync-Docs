@@ -8,6 +8,17 @@ In the Tenant Application sidebar, open **Settings**.
 
 You need permission to view/update settings (workspace owners have this by default).
 
+## Workspace timezone
+
+**Timezone** under General is the single clock for the whole workspace. When it is set to e.g. `Asia/Karachi`, every date and time in the Tenant Application follows that zone — not the server’s UTC clock and not the browser’s local zone alone:
+
+- Daily Reminder Time (task digest + daily CRM summary emails)
+- Task due dates and lead follow-up due times
+- Meeting and calendar start/end times (and meeting reminders)
+- Attendance “today”, login check-in time, and office start/end + late grace
+
+There is no separate attendance or meeting timezone. Change **Timezone** once; all of the above move with it.
+
 ## General
 
 | Field | Behavior |
@@ -15,8 +26,9 @@ You need permission to view/update settings (workspace owners have this by defau
 | **Workspace Name** | Display name for the workspace. Also used as the browser/app title unless you set Application Name. |
 | **Application Name** | Optional title override. Leave blank to use Workspace Name. |
 | **Company Name** | Used in emails and documents. |
-| **Timezone / Locale / Currency** | Workspace defaults. Inherit from Central when not customized. |
-| **Daily Reminder Time** | Local workspace time (default `09:00`) in the **Timezone** above — not server UTC — for the daily CRM summary email and the consolidated task due digest. Assignees still get in-app alerts per due/overdue task. |
+| **Timezone** | Workspace wall-clock zone for reminders, due dates, meetings, calendar, and attendance. Inherit from Central when not customized. |
+| **Locale / Currency** | Workspace defaults. Inherit from Central when not customized. |
+| **Daily Reminder Time** | Local workspace time (default `09:00`) in **Timezone** — not server UTC — for the daily CRM summary email and the consolidated task due digest. Assignees still get in-app alerts per due/overdue task. |
 | **Default meeting provider** | Preselects None / Google Meet / Zoom on the Meetings schedule form (`meetings_default_provider`). Connecting providers is done under Meetings → Integrations. |
 
 ## Attendance
@@ -25,9 +37,9 @@ Shown when the **Attendance** module is installed.
 
 | Field | Behavior |
 |-------|----------|
-| **Office start / end time** | Workspace office hours used for login check-in classification. |
+| **Office start / end time** | Local workspace office hours (**Timezone** above) used for login check-in classification. Separate from Daily Reminder Time. |
 | **Grace period (minutes)** | Check-ins after start time plus grace are marked **Late** (default `15`). |
-| **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri). |
+| **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri), using workspace-local dates. |
 
 ## Security
 

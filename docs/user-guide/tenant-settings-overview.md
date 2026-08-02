@@ -25,7 +25,7 @@ Also see Central [settings.md](/user-guide/central-settings-overview) for platfo
 
 | Group | Fields |
 |-------|--------|
-| **General** | Workspace Name, Application Name (optional override), Company Name, Timezone, Locale, Currency |
+| **General** | Workspace Name, Application Name (optional override), Company Name, Timezone (single clock for reminders, dues, meetings, attendance), Locale, Currency |
 | **Security** | Session timeout (minutes); `0` / Never timeout keeps users signed in until they sign out |
 | **Branding** | Logo, Favicon, Button Color, Support Email |
 | **Mail** | SMTP host/port/user/password/encryption, From name/address |

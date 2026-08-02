@@ -6,15 +6,15 @@ Enable **Employees** first, then install **Attendance** from Marketplace (free).
 
 When Attendance is installed, open **Settings → Attendance** to set:
 
-- Office start / end time
+- Office start / end time (local to **Settings → General → Timezone**)
 - Grace period (minutes) — check-ins after start + grace are marked **Late**
 - Work week days (used for payroll working-day calendars)
 
-Timezone comes from **Settings → General**.
+Attendance uses the same workspace **Timezone** as Daily Reminder Time, meetings, and task/follow-up due dates (for example `Asia/Karachi`). There is no separate attendance timezone. See [Tenant Settings — Workspace timezone](/user-guide/tenant-settings#workspace-timezone).
 
 ## Login check-in
 
-When a workspace user who is linked to an **active** employee signs in, the system creates or updates today’s attendance:
+When a workspace user who is linked to an **active** employee signs in, the system creates or updates today’s attendance (workspace-local “today” and check-in clock):
 
 - First successful login of the day sets **check-in** and status (**Present** or **Late**)
 - The check-in **IP address** is stored from the request

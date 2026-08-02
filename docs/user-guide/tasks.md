@@ -39,9 +39,9 @@ Edit from the row menu or the detail drawer. Dragging a card on the board propos
 
 You can set a due date when creating a task. Changing the due date later requires the **change due date** permission (`tasks.change_due_date`).
 
-When a task is due today or overdue, you get an **in-app** notification for that task. Once per day (at the workspace **Daily Reminder Time** in Settings → General, default 09:00 local), each assignee with due or overdue tasks also receives **one consolidated email** with links to those tasks.
+Due dates use the workspace **Timezone** from Settings → General (entered and shown in that zone, not server UTC). When a task is due today or overdue, you get an **in-app** notification for that task. Once per day (at **Daily Reminder Time** in that same timezone, default 09:00), each assignee with due or overdue tasks also receives **one consolidated email** with links to those tasks.
 
-At the same **Daily Reminder Time**, the workspace also sends a **daily CRM summary** email (leads by open stage, open tasks by status, scheduled meetings). Users without **Receive all-users daily summary** get only their own counts. Users with that flag get a user-wise summary for everyone in the workspace instead (not both).
+At the same **Daily Reminder Time**, the workspace also sends a **daily CRM summary** email (leads by open stage, open tasks by status, scheduled meetings). Users without **Receive all-users daily summary** get only their own counts. Users with that flag get a user-wise summary for everyone in the workspace instead (not both). See [Workspace timezone](/user-guide/tenant-settings#workspace-timezone).
 
 ## Assignment
 
