@@ -20,3 +20,4 @@
 2. Confirm Marketplace blocks install when Employees is missing
 3. Smoke: enable Employees + Attendance → create daily record → stats reflect status counts → soft delete/restore
 4. Pest: `tests/Feature/Tenant/Attendance`
+5. [Production Readiness](/deployment/hr-phase7-production-readiness) · [Security Audit](/deployment/hr-phase7-security-audit)
