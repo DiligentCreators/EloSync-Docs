@@ -1,5 +1,11 @@
 # Changelog
 
+## Tenant email notification toggles (2026-08-03)
+
+Workspace admins can enable or disable **event emails** under **Settings → Notifications**. Defaults are **all off** to reduce SMTP cost during MVP testing. In-app and web push channels are unchanged. Daily task digests, daily CRM summaries, and auth emails (password reset / verification) always send.
+
+Toggles: task assigned, task completed/reopened, follow-up created, follow-up due/overdue, meeting events, other module assignments.
+
 ## Workspace timezone convention + daily reminder gating (2026-08-03)
 
 **Code**

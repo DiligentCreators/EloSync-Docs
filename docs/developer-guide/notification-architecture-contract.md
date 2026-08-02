@@ -198,7 +198,7 @@ NotificationBatch::run(batchId, source, callable)
 | `broadcast` (Reverb) | Yes — open-tab realtime |
 | Browser OS toast | Client projection of Echo events — not a Laravel channel |
 | `webpush` (standards Web Push / VAPID) | Yes — closed/background browsers via `WebPushChannel` |
-| `mail` | Disabled for lead assigned in v1; may return later via `via()` + preferences |
+| `mail` | Optional for event notifications via tenant `email_notifications` (default off). Always on for digests + auth. Lead assigned remains without mail. |
 | SMS / webhooks / FCM / APNs | Future Laravel channels — same Notification classes + shared platform payload mapper |
 
 ### Platform push payload
@@ -325,4 +325,4 @@ Web Push subscriptions (authenticated tenant user; self-scoped):
 
 ## Out of scope (v1)
 
-Full preferences UI (beyond Web Push enable/disable), in-app `delivery: scheduled` digests (task due mail digests ship separately), Firebase/OneSignal/FCM channel implementation, custom notifications table, NotificationRepository, AppLayout redesign.
+Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), Firebase/OneSignal/FCM channel implementation, custom notifications table, NotificationRepository, AppLayout redesign.

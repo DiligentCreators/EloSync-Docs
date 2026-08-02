@@ -45,7 +45,7 @@ At the same **Daily Reminder Time**, the workspace also sends a **daily CRM summ
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee. The assignee receives an in-app and email notification when someone else assigns them.
+Users with **assign** can set or clear the assignee. The assignee always receives an in-app notification (and web push when enabled). Email for task assignment is optional and off by default — enable it under **Settings → Notifications**.
 
 ## Complete & reopen
 

@@ -4,7 +4,7 @@
 
 | Piece | Role |
 |-------|------|
-| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, attendance office-hour keys, `meetings_default_provider`, `session_lifetime_minutes`) |
+| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `session_lifetime_minutes`) |
 | `App\Services\Tenant\TenantSettingService` | Hierarchy resolver, cache, branding uploads, runtime mail/config, public bootstrap |
 | `App\Services\Storage\FileUploadService` | Disk-agnostic store/replace/delete/url (shared with Central) |
 | `TenantSettingController` | Authenticated list/update, test-mail, branding upload |
@@ -23,6 +23,8 @@
 Business code must call the service (`applicationName()`, `logoUrl()`, `supportEmail()`, `buttonColor()`, `usesCustomMailProvider()`, …) instead of branching on raw settings.
 
 `task_reminder_time` is a string `H:i` value (default `09:00`) under the `general` group (UI label: **Daily Reminder Time**). `crm:send-due-notifications` compares `now($workspaceTimezone)->format('H:i')` against that value so digests and daily CRM summaries gate on the workspace timezone even if the scheduler process default remains UTC. `applyRuntimeConfig()` still sets PHP `app.timezone` / `date_default_timezone_set` for `today()` / due-date queries and Sanctum; mail overlay failures must not undo that timezone.
+
+`email_notifications` is a JSON object under the `notifications` group. Keys (`task_assigned`, `task_status`, `lead_follow_up_created`, `lead_follow_up_due`, `meeting_events`, `module_assigned`) default to `false`. Event notifications call `ResolvesOptionalMailChannel::withOptionalMail()` so only the `mail` channel is gated; `database` / `broadcast` / `webpush` stay on. Digests and auth mail never consult this map. Resolve via `EmailNotificationPreferenceService` / `TenantSettingService::resolve('email_notifications')`.
 
 Attendance group keys (system defaults when unset): `office_start_time` (`09:00`), `office_end_time` (`18:00`), `attendance_grace_minutes` (`15`), `work_week_days` (`[1,2,3,4,5]` ISO weekdays). Used by login check-in and `PayPeriodCalculator`.
 
