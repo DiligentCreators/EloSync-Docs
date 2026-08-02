@@ -9,6 +9,7 @@ Marketplace HR module (`departments`, not default-included) for organizing users
 - Admins see all departments; managers see managed departments + performance; staff see memberships
 - Performance dashboard aggregates Leads/Tasks for linked users only (unlinked employees stay on the roster)
 - Employee forms use multi-select `department_ids` when Departments is installed (legacy string column retained)
+- Manager/member pickers include the signed-in user (Users list API omits self) so a solo owner can manage a department
 - Playwright: `npm run test:e2e:departments`
 
 Docs: [User Guide](/user-guide/departments), [Developer Guide](/developer-guide/departments), [API](/api/tenant-v1-departments), [Deployment](/deployment/departments).

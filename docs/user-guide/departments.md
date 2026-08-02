@@ -21,7 +21,7 @@ Open **Departments** from the sidebar, under the **HR** group.
 2. Enter a name (required); optionally description, status, manager, users, and employees
 3. Save
 
-The **manager** must be a user with a login. One user can manage multiple departments.
+The **manager** must be a user with a login. You can assign yourself. One user can manage multiple departments.
 
 ## Members
 
