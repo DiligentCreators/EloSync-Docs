@@ -192,14 +192,49 @@ Purchase Orders
 
 **Status:** Shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 4 and [Tenant Purchase Orders API](/api/tenant-v1-purchase-orders#convert-to-expense-soft-dependency-on-expenses).
 
-### Payroll → HR (required)
+### Leave Management → Employees (required, shipped)
+
+```text
+Leave Management
+  └── depends on Employees   (required)
+```
+
+Leave Management declares Employees as a required hard dependency (`module_dependencies`). Marketplace blocks installation until Employees is entitled. Leave balances and requests reference `employees.id`.
+
+**Status:** Shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 7.
+
+### Attendance → Employees (required, shipped)
+
+```text
+Attendance
+  └── depends on Employees   (required)
+```
+
+Attendance declares Employees as a required hard dependency. Daily records reference `employees.id`.
+
+**Status:** Shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 7.
+
+### Payroll → Employees (required, shipped)
 
 ```text
 Payroll
-  └── depends on HR         (required)
+  └── depends on Employees   (required)
 ```
 
-Payroll needs employee and employment records from HR. Payroll should not re-implement HR domain logic.
+Payroll declares Employees as a required hard dependency. Payroll profiles and pay-run lines reference employee records; Payroll should not re-implement the employee directory.
+
+**Status:** Shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 7.
+
+### Payroll → Accounting (optional, shipped)
+
+```text
+Payroll
+  └── may use Accounting   (optional — unlocks pay-run journal post)
+```
+
+Payroll installs and runs without Accounting. `POST /pay-runs/{id}/post` is a soft, call-time entitlement check inside `PayRunService::postToJournal()` — also registered as an **optional** `module_dependencies` row — so Marketplace can surface the integration while Payroll remains usable alone. Posting creates a draft journal (expense debit / liability credit) and stores `journal_entry_id`.
+
+**Status:** Shipped — see [Tenant Payroll API](/api/tenant-v1-payroll#post-pay-runspayrunpost).
 
 ### Inventory → Products (required, shipped)
 

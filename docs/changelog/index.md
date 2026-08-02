@@ -1,5 +1,39 @@
 # Changelog
 
+## Phase 7 HR — Employees, Leave Management, Attendance, Payroll (2026-08-01)
+
+**Architecture**
+
+- Shipped four free Marketplace SKUs under category `hr` (sort `70`): **Employees** (`employees`), **Leave Management** (`leave-management`, sort `20`), **Attendance** (`attendance`, sort `30`), and **Payroll** (`payroll`, sort `40`). All are opt-in and non-billable.
+- Leave Management, Attendance, and Payroll hard-depend on Employees (`module_dependencies`). Payroll optionally depends on Accounting for pay-run journal posting.
+- Roadmap capabilities (directory, leave types/balances/requests, daily attendance, profiles, pay runs) live inside these four SKUs — not separate Marketplace modules.
+
+**Domain**
+
+- Employees directory with employment type/status, optional workspace user link, soft delete, and stats KPIs.
+- Leave types, per-year balances, and leave requests with `draft → pending → approved|rejected` (cancel from draft/pending); approve applies days to balances under `lockForUpdate()`.
+- Attendance records unique per employee/date with check-in/out and presence status (`present` / `absent` / `half_day` / `remote`).
+- Payroll profiles (one per employee) and pay runs that auto-generate lines from active profiles; lifecycle `draft → approved → paid`; optional soft post to a draft Accounting journal (expense debit / liability credit).
+
+**Security & production readiness (2026-08-02)**
+
+- Full security audit: [`/deployment/hr-phase7-security-audit`](/deployment/hr-phase7-security-audit) · ops readiness: [`/deployment/hr-phase7-production-readiness`](/deployment/hr-phase7-production-readiness).
+- Leave: balance upsert RBAC, days capped to date range, insufficient-balance reject on approve, approved requests not soft- **or** force-deletable, `remaining` always derived, transition locks.
+- Payroll: pay-run approve/pay/post `lockForUpdate`, line gross `min:0`, journal accounts must be expense/liability; default **staff** no longer has `payroll.view`.
+- Employees: unique `user_id` link; Attendance: `check_out >= check_in`.
+- Re-verification: companion PR CI green (Backend #72 QG+Pest, Frontend #66, Docs #75); headed Playwright Employees/Leave/Attendance/Payroll **6/6 each**; **GO** for opt-in staging → production after staff-role re-sync.
+
+**Frontend & verification**
+
+- HR nav group with Employees / Leave / Attendance / Payroll UI; API clients, query keys, and permissions wired for module pages.
+- Playwright: `test:e2e:employees` · `leave-management` · `attendance` · `payroll` (modules + authz). Pest under `tests/Feature/Tenant/Employee`, `Leave`, `Attendance`, and `Payroll`.
+
+**Docs**
+
+- User / developer / deployment / API guides for all four SKUs; roadmap, module-dependencies, and `database.md` HR tables updated; Phase 7 HR security audit + production readiness pages.
+
+---
+
 ## Phase 6 Finance — Accounting + Financial Reports (2026-08-01)
 
 **Architecture**

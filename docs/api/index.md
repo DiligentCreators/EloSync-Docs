@@ -22,6 +22,15 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Vendors](./tenant-v1-vendors) | Vendors CRUD, notes, timeline |
 | [Tenant Purchase Orders](./tenant-v1-purchase-orders) | Purchase orders CRUD, lines, send/receive/cancel, convert to expense, notes, timeline |
 | [Tenant Expenses](./tenant-v1-expenses) | Expenses CRUD, submit/approve/reject/pay/cancel, notes, timeline |
+| [Tenant Products](./tenant-v1-products) | Products catalog, categories, notes, timeline |
+| [Tenant Warehouses](./tenant-v1-warehouses) | Warehouse locations, notes, timeline |
+| [Tenant Inventory](./tenant-v1-inventory) | Stock levels, adjustments, transfers |
+| [Tenant Accounting](./tenant-v1-accounting) | Chart of accounts, journals, general ledger |
+| [Tenant Financial Reports](./tenant-v1-financial-reports) | Trial Balance, P&L, Balance Sheet |
+| [Tenant Employees](./tenant-v1-employees) | Employee directory CRUD and stats |
+| [Tenant Leave Management](./tenant-v1-leave-management) | Leave types, balances, request workflow |
+| [Tenant Attendance](./tenant-v1-attendance) | Daily attendance records and stats |
+| [Tenant Payroll](./tenant-v1-payroll) | Payroll profiles, pay runs, optional journal post |
 | [Tenant Communication Templates](./tenant-v1-communication-templates) | Templates, placeholders, WhatsApp render |
 | [Tenant Notifications](./tenant-v1-notifications) | In-app notifications |
 | [Tenant Marketplace](./tenant-v1-marketplace) | Browse, install, and remove workspace modules |
