@@ -52,6 +52,23 @@ Body: `employee_id`, `leave_type_id`, `year` (2000–2100), `entitled` (required
 
 Create body: `employee_id`, `leave_type_id`, `start_date`, `end_date` (required); optional `days` (min 0.5), `reason`. Status starts as `draft`.
 
-Approve / reject body (optional): `review_notes`.
+**Self-service:** non-admin actors may only create/update/submit/cancel for their linked active employee. Admin and superadmin may create on behalf of others. Managers create for self but may approve/reject others. Index is scoped to the actor’s employee unless they can approve or create for others.
+
+### POST `/leave-requests/{id}/approve`
+
+Body (optional fields):
+
+| Field | Rules |
+|-------|--------|
+| `deduct_salary` | boolean; default = `!leaveType.is_paid` when omitted |
+| `review_notes` | string, max 5000; **required** when `deduct_salary` differs from the default |
+
+On success, `deduct_salary` is stored on the approved request (used by Payroll period calculation).
+
+### POST `/leave-requests/{id}/reject`
+
+Body: `review_notes` (**required**, string, max 5000).
 
 Workflow: `draft → pending → approved|rejected`; `draft|pending → cancelled`. Approve applies days to the leave balance for the request’s start year.
+
+Resource includes `deduct_salary` (nullable until approved) and nested `leave_type.is_paid`.
