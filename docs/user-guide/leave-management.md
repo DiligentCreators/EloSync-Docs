@@ -4,11 +4,15 @@ Enable **Employees** first, then install **Leave Management** from Marketplace (
 
 ## Leave types
 
+Admins (and workspace owners) manage leave types. Staff and managers can view types when submitting requests, but cannot create or edit them.
+
 1. Create types such as Annual Leave or Sick Leave with a unique code.
 2. Set whether the leave is paid, the annual allowance, and whether the type is active.
 3. Inactive types stay in history but should not be used for new requests.
 
 ## Balances
+
+Admins (and workspace owners) manage entitled balances. Staff see only their own balances; managers can view balances when reviewing leave.
 
 1. Upsert a balance for an employee + leave type + calendar year.
 2. Set **entitled** days (and optional **used**); **remaining** is kept in sync (`entitled − used`).
