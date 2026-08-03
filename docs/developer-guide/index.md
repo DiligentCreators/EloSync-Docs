@@ -37,6 +37,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 |----------|-------------|
 | [Shared UI](./shared-ui) | Design system and reuse strategy |
 | [Shared Layout](./shared-layout) | Shell, nav, and page structure |
+| [Module Tours](./module-tours) | driver.js product tours on module list pages |
 
 ## Billing
 

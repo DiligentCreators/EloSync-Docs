@@ -11,3 +11,7 @@ Central and Tenant applications share one shell so both sides of the platform fe
 ## Principle
 
 Changing a shared layout component should benefit both applications whenever practical. Business dashboards and module pages may diverge later; the shell stays reusable.
+
+## Module page tours
+
+On tenant module list pages (Leads, Tasks, HR modules, and the rest of the sidebar modules), a **help** icon in the page header starts a short product tour. The first visit to a module may open the tour automatically once; you can re-run it anytime from the same icon.

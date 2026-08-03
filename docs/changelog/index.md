@@ -1,5 +1,14 @@
 # Changelog
 
+## Module product tours (Phase 5) (2026-08-03)
+
+Every tenant module list page includes a short product tour (driver.js) explaining how the module works.
+
+- PageHeader help icon (`tourId`) — always re-runnable; first visit auto-prompts once via `localStorage`
+- Shared helper + per-module step configs under `SaaS-Frontend/src/tours/` (Leads is the blueprint)
+- Wired for nav modules: CRM, sales, billing, purchasing, inventory, accounting, financial reports, and HR (employees, departments, leave, attendance, payroll)
+- Docs: [Module Tours](/developer-guide/module-tours); brief note in [Shared Layout](/user-guide/shared-layout)
+
 ## Native FCM channel + device tokens (Phase 4b) (2026-08-03)
 
 Additive Firebase Cloud Messaging HTTP v1 delivery for closed/background devices, using the same `PlatformNotificationPayload` mapper as VAPID Web Push. No parallel notification framework; Firebase remains optional for local/dev.

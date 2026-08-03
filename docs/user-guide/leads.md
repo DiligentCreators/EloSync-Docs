@@ -6,6 +6,10 @@ Your workspace must have the **Leads** module installed (included by default on 
 
 Without **assign**, you only see leads assigned to you.
 
+## Page tour
+
+Use the **help** icon in the Leads page header to walk through KPIs, filters, create actions, and the board/table. The first visit may open this tour automatically once; you can re-run it anytime from the same icon.
+
 ## Board & table
 
 Open **Leads** from the sidebar. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
