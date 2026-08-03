@@ -26,6 +26,8 @@ Phase 7 HR module on the frozen platform. Manages **leave types**, **balances**,
 
 `leave-management.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `approve`
 
+Default **staff** role: `view` + `create` + `update` (self-service). Managers keep `approve` for others while creating only for self.
+
 Catalog: slug `leave-management`, category `hr`, `sort_order = 20`, free opt-in.
 
 ## Explicitly deferred

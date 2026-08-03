@@ -14,7 +14,7 @@ Enums: `PayFrequencyEnum` (`monthly` \| `biweekly` \| `weekly`), `PayRunStatusEn
 
 Services: `PayrollProfileService`, `PayRunService`, `PayPeriodCalculator`.
 
-`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator` (gross from base salary; adjustments for unpaid leave + unexcused absences when sibling modules are installed). Line columns include `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`. `postToJournal` requires Accounting entitlement and creates a draft journal via `JournalEntryService` (expense debit / liability credit).
+`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator` (gross from base salary; adjustments for unpaid leave + unexcused absences when sibling modules are installed). Unpaid leave days use each approved request’s `deduct_salary` flag (defaulted on approve from `!leaveType.is_paid`; null legacy rows fall back to `!is_paid`). Line columns include `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`. `postToJournal` requires Accounting entitlement and creates a draft journal via `JournalEntryService` (expense debit / liability credit).
 
 ## Backend layout
 

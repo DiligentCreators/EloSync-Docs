@@ -1,5 +1,59 @@
 # Changelog
 
+## Module product tours (Phase 5) (2026-08-03)
+
+Every tenant module list page includes a short product tour (driver.js) explaining how the module works.
+
+- PageHeader help icon (`tourId`) — always re-runnable; first visit auto-prompts once via `localStorage`
+- Shared helper + per-module step configs under `SaaS-Frontend/src/tours/` (Leads is the blueprint)
+- Wired for nav modules: CRM, sales, billing, purchasing, inventory, accounting, financial reports, and HR (employees, departments, leave, attendance, payroll)
+- Docs: [Module Tours](/developer-guide/module-tours); brief note in [Shared Layout](/user-guide/shared-layout)
+
+## Native FCM channel + device tokens (Phase 4b) (2026-08-03)
+
+Additive Firebase Cloud Messaging HTTP v1 delivery for closed/background devices, using the same `PlatformNotificationPayload` mapper as VAPID Web Push. No parallel notification framework; Firebase remains optional for local/dev.
+
+- Backend: `FcmChannel`, `fcm_device_tokens` register/unregister API, env-based service-account credentials (`FCM_*`), graceful skip when unconfigured
+- Shared wake trait: existing `SendsWebPushNotification` / `withWebPushChannel()` also enqueues FCM (including mention notifications)
+- Frontend: registers an FCM web token when complete `VITE_FIREBASE_*` config is present; VAPID path unchanged
+- Docs: deployment secrets + Forge checklist, architecture channels table, tenant API surface
+
+## Web Push hardened (VAPID Phase 4a) (2026-08-03)
+
+Standards browser Web Push is production-hardened for all existing notification types (including mentions).
+
+- Ops: deploy docs require `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` and a supervised `emails,default` queue worker (Web Push rides the same notification jobs)
+- Reliability: expired endpoints (`404`/`410`) pruned; SW registers with `updateViaCache: 'none'`, activates immediately, and re-syncs on `pushsubscriptionchange`; Profile / Notification Center prompt when re-subscribe is needed
+- Click → HashRouter deep link via `PlatformNotificationPayloadMapper` `url`
+- Channel skips cleanly when VAPID is unconfigured (database + Reverb unaffected)
+
+## @mentions on Lead/Task notes (2026-08-03)
+
+Mention teammates in **Lead notes** and **Task comments** with `@` autocomplete. Stable body syntax `@[Display Name](user:ID)` persists mention rows (`lead_note_mentions` / `task_note_mentions`) and notifies the mentioned user (skip self; idempotent per note+user).
+
+- Types: `lead.mentioned` (database + broadcast + web push) / `task.mentioned` (database + web push)
+- Optional mail gated by Settings → Notifications toggles `lead_mentioned` / `task_mentioned` (default off)
+- SPA registry routes to the lead/task detail sheet; composer shared on lead Notes and task Comments tabs
+
+## Leave self-service + salary deduction on approve (2026-08-03)
+
+Staff (and managers) submit leave only for their linked active employee; admin/superadmin may create on behalf of others. Managers still approve others’ pending requests. Reject requires `review_notes`. Approve accepts optional `deduct_salary` (default `!leaveType.is_paid`); overriding the default requires notes. Payroll `PayPeriodCalculator` uses `deduct_salary` (legacy null rows fall back to `!is_paid`). Default staff role gains `leave-management.create` + `leave-management.update` (additive sync).
+
+## Leave catalog authz (2026-08-03)
+
+Staff `leave-management.create` / `update` remain for **leave requests** only. Leave **types** and **balances** writes require admin/owner. Staff balance lists are scoped to self; managers may view for review.
+
+## Attendance self-service production hardening (2026-08-03)
+
+- Staff cannot change attendance `status` (manager/admin only); self marks force Present
+- Login and `/me` include `employee_id` for self-service UX
+- Managers cannot approve their own leave requests
+- Self check-in/out uses workspace timezone
+
+## Attendance self-service (2026-08-03)
+
+Staff linked to an active employee can mark their own attendance and check out; managers/admins can mark anyone and correct times/notes. Login auto check-in is unchanged. Staff lists are scoped to their own records. Default staff role gains `attendance.create` + `attendance.update` (additive sync for existing workspaces).
+
 ## Profile avatar upload (2026-08-03)
 
 Users can upload a profile picture on **Profile** (Central and Tenant). The photo replaces initials in the topbar user menu and sidebar account chip.
@@ -60,7 +114,7 @@ Workspaces that installed **Employees** after creating users can now convert a l
 
 Workspace admins can enable or disable **event emails** under **Settings → Notifications**. Defaults are **all off** to reduce SMTP cost during MVP testing. In-app and web push channels are unchanged. Daily task digests, daily CRM summaries, and auth emails (password reset / verification) always send.
 
-Toggles: task assigned, task completed/reopened, follow-up created, follow-up due/overdue, meeting events, other module assignments.
+Toggles: task assigned, task completed/reopened, task mentioned, follow-up created, follow-up due/overdue, lead mentioned, meeting events, other module assignments.
 
 ## Workspace timezone convention + daily reminder gating (2026-08-03)
 

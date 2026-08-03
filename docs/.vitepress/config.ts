@@ -265,6 +265,7 @@ export default defineConfig({
           items: [
             { text: 'Shared UI Architecture', link: '/developer-guide/shared-ui' },
             { text: 'Shared Layout', link: '/developer-guide/shared-layout' },
+            { text: 'Module Tours', link: '/developer-guide/module-tours' },
           ],
         },
         {

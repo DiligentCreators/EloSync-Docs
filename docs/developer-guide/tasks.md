@@ -6,7 +6,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Task.php`, `TaskNote`, `TaskActivity` |
+| Models | `app/Models/Task.php`, `TaskNote`, `TaskNoteMention`, `TaskActivity` |
 | Enums | `app/Enums/Tenant/TaskStatusEnum` (includes `waiting`; `Open` label `To Do`), `TaskPriorityEnum`, `TaskActivityTypeEnum` |
 | Service | `app/Services/Tenant/TaskService.php` (+ `ScopesToAssignee`) |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/TaskController.php` |
@@ -15,13 +15,15 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 | Policy | `app/Policies/TaskPolicy.php` (`changeDueDate` → `tasks.change_due_date`) |
 | Events | `app/Events/Task*.php` |
 | Subscriber | `app/Listeners/TaskEventSubscriber.php` (audit + notifications) |
-| Notifications | `app/Notifications/Tenant/Task/*` — assign/complete/reopen: mail+database; due/overdue: database; daily digest: mail only (`TaskDueDigestNotification`) |
+| Notifications | `app/Notifications/Tenant/Task/*` — assign/complete/reopen: database + optional mail (+ webpush on assign); mentions: database + webpush + optional mail; due/overdue: database; daily digest: mail only (`TaskDueDigestNotification`) |
+| Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `TaskNoteAdded` in `TaskEventSubscriber` |
 | Digest delivery | `task_digest_deliveries` + `TaskDigestDeliveryService`; `TrackTaskDueDigestDelivery` on `NotificationSent` / `NotificationFailed` |
 | Scheduled due | `crm:send-due-notifications` every 5 minutes (`onOneServer`); tenant setting `task_reminder_time` (**Daily Reminder Time**) gated in workspace timezone — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) |
-| Tests | `tests/Feature/Tenant/Task/TaskTest.php`, `tests/Feature/Tenant/Notification/TaskDueDigestNotificationTest.php` |
+| Tests | `tests/Feature/Tenant/Task/TaskTest.php`, `tests/Feature/Tenant/Notification/TaskDueDigestNotificationTest.php`, `NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
+- Comment bodies may include `@[Display Name](user:ID)` mention tokens. On `TaskNoteAdded`, `NoteMentionService` persists `task_note_mentions` and sends `task.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.task_mentioned` (default off).
 - Assignee scoping via `ScopesToAssignee` with `tasks.assign`.
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - Board columns are one per `TaskStatusEnum` case.
@@ -63,8 +65,10 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/tasks/tasks-page.tsx` (board default + list) |
 | Form | `task-form-dialog.tsx` |
-| Detail | `task-detail-sheet.tsx` (Comments + History; DnD status pending until Save) |
+| Detail | `task-detail-sheet.tsx` (Comments + History; DnD status pending until Save; Comments use `MentionComposer`) |
 | Shared board | `src/components/crm/kanban-board.tsx` |
+| Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` |
+| Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |
 | Service | `taskService` in `src/api/services.ts` |
 | Nav | `permission: tasks.view`, `module: 'tasks'` |
 

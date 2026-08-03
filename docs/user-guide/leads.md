@@ -6,6 +6,10 @@ Your workspace must have the **Leads** module installed (included by default on 
 
 Without **assign**, you only see leads assigned to you.
 
+## Page tour
+
+Use the **help** icon in the Leads page header to walk through KPIs, filters, create actions, and the board/table. The first visit may open this tour automatically once; you can re-run it anytime from the same icon.
+
 ## Board & table
 
 Open **Leads** from the sidebar. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
@@ -45,7 +49,7 @@ Those users do not appear in lead assignee pickers and are skipped by import aut
 
 ## Notes & follow-ups
 
-- **Notes** — free-form history on the lead
+- **Notes** — free-form history on the lead. Type `@` to mention a teammate; they get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a lead note** is on)
 - **Follow-ups** — titled reminders with due dates in the workspace **Timezone** (Settings → General); edit/reschedule or complete when done
 - Assignees receive notifications when a follow-up is created for them (by someone else) and when due/overdue reminders run (workspace-local “today”)
 

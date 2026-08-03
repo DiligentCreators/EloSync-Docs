@@ -24,7 +24,7 @@ modules ──► module_dependencies (depends_on_module_id)
 payment_gateways ──► gateway_logs, webhook_logs, payment_attempts, tenant_gateway_customers
 system_settings (key/value — Central Application settings; see Settings section)
 
-lead_stages / leads / lead_notes / lead_follow_ups / lead_activities
+lead_stages / leads / lead_notes / lead_note_mentions / lead_follow_ups / lead_activities
 lead_assignment_histories
   (tenant-scoped CRM — Leads module)
 
@@ -42,7 +42,7 @@ quotations / quotation_lines / quotation_notes / quotation_activities
 contracts / contract_notes / contract_activities
   (tenant-scoped agreements — Contracts module; hard-depends on Opportunities)
 
-tasks / task_notes / task_activities
+tasks / task_notes / task_note_mentions / task_activities
 task_digest_deliveries
 daily_summary_deliveries
   (tenant-scoped work items — Tasks module + CRM daily digests)
@@ -80,9 +80,9 @@ Per-workspace pipeline: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_orde
 
 `tenant_id`, `uuid`, `name`, contact fields, `stage_id`, `status` (`active`|`waiting`|`on_hold`|`closed`|`archived`), `priority` (`low`|`medium`|`high`|`urgent`), `assigned_to`, `lead_value` (renamed from `estimated_value`), `last_contacted_at`, `next_follow_up_at`, `converted_at`, `conversion_meta` (JSON), `contact_id` (nullable FK to `contacts`, set on convert when Contacts is installed), soft deletes. Status is **independent** of stage. Spatie activity log name `leads`.
 
-### `lead_notes` / `lead_follow_ups` / `lead_activities`
+### `lead_notes` / `lead_note_mentions` / `lead_follow_ups` / `lead_activities`
 
-Notes (author + body), follow-ups (due/complete/status), and CRM timeline (`type`, `description`, `properties` JSON).
+Notes (author + body), mention rows (`lead_note_id`, `user_id`, `tenant_id` — unique per note+user), follow-ups (due/complete/status), and CRM timeline (`type`, `description`, `properties` JSON). Mention tokens in note bodies use `@[Display Name](user:ID)`.
 
 ### `lead_assignment_histories`
 
@@ -168,9 +168,9 @@ Notes (author + body) and agreement timeline (`type`, `description`, `properties
 
 `tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**.
 
-### `task_notes` / `task_activities`
+### `task_notes` / `task_note_mentions` / `task_activities`
 
-Notes / comments (author + body) and task timeline (`type`, `description`, `properties` JSON).
+Notes / comments (author + body), mention rows (`task_note_id`, `user_id`, `tenant_id` — unique per note+user), and task timeline (`type`, `description`, `properties` JSON). Mention tokens use the same `@[Display Name](user:ID)` syntax as lead notes.
 
 ### `task_digest_deliveries`
 
