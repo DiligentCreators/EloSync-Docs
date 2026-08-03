@@ -260,14 +260,21 @@ Server remains source of truth for `title` / `body`.
 - Dedupe by notification UUID; multi-tab lock (`BroadcastChannel` / `localStorage`).
 - Live Echo events only — never toast on initial fetch or reconnect backfill.
 
-## Web Push (service worker)
+## Web Push (service worker) — hardened (Phase 4a)
+
+Standards VAPID Web Push is the closed/background delivery path for existing notification types (including mentions). **Native FCM / APNs remain out of scope** until a later phase; when added they must reuse `PlatformNotificationPayloadMapper` (no parallel payload mapping).
 
 - Explicit opt-in (post-login dialog, Profile switch, Notification Center control). Never request the native browser permission on bootstrap — only after a user gesture.
 - Sticky denial and sticky “Not now” (`localStorage`): do not re-show the post-login dialog after dismiss or after the user blocks notifications.
 - Status / subscription probes must use `getRegistration()` (never hang on `serviceWorker.ready` when no worker is registered) so Profile does not falsely report “browser does not support Web Push”.
-- Service worker displays push payloads and focuses/opens the SPA on click.
+- Service worker registration uses `updateViaCache: 'none'`, `skipWaiting` + `clients.claim`, and periodic `registration.update()` so deploy-time SW changes apply without a hard refresh.
+- `pushsubscriptionchange` posts `elosync:push-subscription-change`; authenticated tabs re-sync via `syncWebPushSubscription()`.
+- When local opt-in is remembered but the PushSubscription is missing, Profile / Notification Center show a re-subscribe affordance (`needsResubscribe`).
+- Service worker displays push payloads and focuses/opens the SPA on click via the mapper `url` (HashRouter deep link). Prefer focusing an existing client and navigating; fall back to `openWindow`.
 - Logout unsubscribes locally and deletes the backend subscription while the token is still valid.
+- Duplicate `endpoint` values upsert (including ownership transfer to the current user).
 - Expired push endpoints (`404` / `410`) are deleted automatically by `WebPushChannel`.
+- When VAPID is unconfigured, the channel skips without failing the notification job (`notifications.webpush_skipped_unconfigured`).
 
 ## REST API (additive surface)
 
@@ -323,6 +330,6 @@ Web Push subscriptions (authenticated tenant user; self-scoped):
 6. Pest: payload shape, idempotency, tenant isolation; Playwright if UI-visible.
 7. To wake closed browsers: implement `SupportsWebPush` and `withWebPushChannel(...)` in `via()` — do not create Web Push–specific notification classes.
 
-## Out of scope (v1)
+## Out of scope (v1 / Phase 4a)
 
-Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), Firebase/OneSignal/FCM channel implementation, custom notifications table, NotificationRepository, AppLayout redesign.
+Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), **native FCM / APNs / OneSignal channel implementation** (Phase 4b+), custom notifications table, NotificationRepository, AppLayout redesign.

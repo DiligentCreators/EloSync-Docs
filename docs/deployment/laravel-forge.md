@@ -134,7 +134,7 @@ Redis is **required** whenever Reverb / production cache / queue are enabled. Do
 | Mail | Prefer Central **Settings → Mail**; env is fallback only |
 | Seeders | **Never** `db:seed` in production |
 
-Generate VAPID once and keep stable (rotation invalidates browser push subscriptions).
+**Web Push (required for closed-browser alerts):** set `VAPID_SUBJECT` (`mailto:` or `https:`), `VAPID_PUBLIC_KEY`, and `VAPID_PRIVATE_KEY`. Generate once and keep stable (rotation invalidates browser push subscriptions). Queue daemon must consume `emails,default` — Web Push rides the same notification jobs. Native FCM is out of scope; see [Notification System](./notifications#web-push-ops-checklist-vapid-phase-4a).
 
 ### 1.3 Deploy script (API)
 
@@ -391,9 +391,10 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 ### Processes
 
 - [ ] API scheduler enabled
-- [ ] Queue daemon running (`emails,default`)
+- [ ] Queue daemon running (`emails,default`) — required for mail **and** Web Push notification jobs
 - [ ] Reverb daemon + Nginx WebSocket proxy
 - [ ] Redis up; `CACHE_STORE` / `QUEUE_CONNECTION` = `redis`
+- [ ] `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` set (stable keys; `mailto:`/`https:` subject)
 
 ### Deploy paths
 

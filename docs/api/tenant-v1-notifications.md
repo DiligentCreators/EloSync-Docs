@@ -84,7 +84,7 @@ Meeting lifecycle types: `meeting.invite`, `meeting.updated`, `meeting.cancelled
 
 ## Web Push subscriptions
 
-Standards-based Web Push (VAPID). Subscriptions belong to the authenticated tenant user. Duplicate `endpoint` values upsert.
+Standards-based Web Push (VAPID). Subscriptions belong to the authenticated tenant user. Duplicate `endpoint` values upsert (including reclaiming an endpoint from another user in the same tenant). Delivery requires configured `VAPID_*` env vars and a queue worker on `emails,default`. Expired endpoints are pruned on `404`/`410`. Native FCM is out of scope (Phase 4a).
 
 ### GET `/push-subscriptions/vapid-public-key`
 

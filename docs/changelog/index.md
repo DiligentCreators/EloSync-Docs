@@ -1,5 +1,14 @@
 # Changelog
 
+## Web Push hardened (VAPID Phase 4a) (2026-08-03)
+
+Standards browser Web Push is production-hardened for all existing notification types (including mentions). Native FCM remains out of scope.
+
+- Ops: deploy docs require `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` and a supervised `emails,default` queue worker (Web Push rides the same notification jobs)
+- Reliability: expired endpoints (`404`/`410`) pruned; SW registers with `updateViaCache: 'none'`, activates immediately, and re-syncs on `pushsubscriptionchange`; Profile / Notification Center prompt when re-subscribe is needed
+- Click → HashRouter deep link via `PlatformNotificationPayloadMapper` `url`
+- Channel skips cleanly when VAPID is unconfigured (database + Reverb unaffected)
+
 ## @mentions on Lead/Task notes (2026-08-03)
 
 Mention teammates in **Lead notes** and **Task comments** with `@` autocomplete. Stable body syntax `@[Display Name](user:ID)` persists mention rows (`lead_note_mentions` / `task_note_mentions`) and notifies the mentioned user (skip self; idempotent per note+user).

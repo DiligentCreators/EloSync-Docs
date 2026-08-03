@@ -226,6 +226,23 @@ For multiple Reverb nodes, restart one node at a time behind the load balancer. 
 - [ ] Unread counter remains correct after logout/login and Reverb reconnect.
 - [ ] Failed-job and queue-age alerts are active.
 
+## Web Push ops checklist (VAPID Phase 4a)
+
+Browser Web Push is production-ready over standards VAPID. **Native FCM / APNs are out of scope** for this phase (future Laravel channels via the same `PlatformNotificationPayloadMapper`).
+
+| Check | Why |
+|-------|-----|
+| `VAPID_SUBJECT`, `VAPID_PUBLIC_KEY`, and `VAPID_PRIVATE_KEY` are set in the API environment | Without all three, `WebPushChannel` skips sends (`notifications.webpush_skipped_unconfigured`); in-app + Reverb still work |
+| `VAPID_SUBJECT` is `mailto:` or `https:` (not a bare `http://` APP_URL) | Push services reject invalid subjects |
+| Keys are stable across deploys | Rotation invalidates every stored browser subscription |
+| `php artisan config:cache` (or clear) after any `VAPID_*` change | Values are read only via `config('webpush.*')` |
+| Queue worker consumes `emails,default` and is supervised | Notification jobs (database, broadcast, **and webpush**) run on the `emails` queue — idle workers mean no closed-browser push |
+| `push_subscriptions` migration applied | Subscribe/upsert API and channel pruning need the table |
+| SPA is HTTPS (or localhost) and `/sw.js` is reachable at site root | Service workers require a secure context and `/` scope |
+| Smoke: enable desktop notifications → assign a lead/task with the SPA closed → OS notification opens the correct HashRouter deep link | End-to-end proof that VAPID + queue + SW click navigation work |
+
+After a successful send, `last_used_at` is updated. Expired endpoints (`404` / `410`) are deleted automatically so the next opt-in / sync can re-subscribe.
+
 ## Troubleshooting
 
 ### Bell does not update
@@ -276,6 +293,14 @@ For multiple Reverb nodes, restart one node at a time behind the load balancer. 
 - The OS notification is intentionally shown only for a live Echo event while the tab is hidden.
 - Initial inbox fetches, reconnect backfills, visible tabs, denied permission, and duplicate UUIDs do not show OS notifications.
 - Check browser/OS focus-assist and site notification settings.
+
+### Web Push (closed / background tab) not appearing
+
+- Confirm `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` are present and config is refreshed.
+- Confirm the `emails` queue worker is running — Web Push is delivered by the same queued notification job as database/broadcast.
+- Confirm the user has an active row in `push_subscriptions` (Profile → Desktop notifications enabled).
+- Inspect logs for `notifications.webpush_skipped_unconfigured`, `notifications.webpush_subscription_expired`, or `notifications.webpush_failed`.
+- After endpoint expiry (`404`/`410`), the SPA shows a re-subscribe affordance on Profile / Notification Center; login also best-effort re-syncs when local opt-in is remembered.
 
 ### Permission denied or blocked
 
