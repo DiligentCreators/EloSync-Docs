@@ -32,7 +32,9 @@ Linked employees with Attendance create/update permission can:
 1. Open **Attendance** (you only see **your** records).
 2. Use **Check in** if login did not already create today’s check-in.
 3. Use **Check out** at the end of the day (stores the current time).
-4. Use **Mark attendance** for a fuller form (own employee only). You cannot change check-in after it is set; managers can correct times later.
+4. Use **Mark attendance** for a fuller form (own employee only). Check-in is set on create (or login auto check-in); staff can only add **check-out** and notes afterward. Managers can correct times later.
+
+Staff cannot change attendance **status** (Present / Absent / etc.). Managers and admins set or correct status when needed.
 
 ## Managers and admins
 

@@ -39,6 +39,13 @@ Mention teammates in **Lead notes** and **Task comments** with `@` autocomplete.
 
 Staff (and managers) submit leave only for their linked active employee; admin/superadmin may create on behalf of others. Managers still approve others’ pending requests. Reject requires `review_notes`. Approve accepts optional `deduct_salary` (default `!leaveType.is_paid`); overriding the default requires notes. Payroll `PayPeriodCalculator` uses `deduct_salary` (legacy null rows fall back to `!is_paid`). Default staff role gains `leave-management.create` + `leave-management.update` (additive sync).
 
+## Attendance self-service production hardening (2026-08-03)
+
+- Staff cannot change attendance `status` (manager/admin only); self marks force Present
+- Login and `/me` include `employee_id` for self-service UX
+- Managers cannot approve their own leave requests
+- Self check-in/out uses workspace timezone
+
 ## Attendance self-service (2026-08-03)
 
 Staff linked to an active employee can mark their own attendance and check out; managers/admins can mark anyone and correct times/notes. Login auto check-in is unchanged. Staff lists are scoped to their own records. Default staff role gains `attendance.create` + `attendance.update` (additive sync for existing workspaces).
