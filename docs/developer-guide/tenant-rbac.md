@@ -38,6 +38,18 @@ Spatie **teams** are not enabled. Isolation uses:
 
 Permissions remain a shared vocabulary defined in `config/tenant-permissions.php` (e.g. `users.list`, `leads.view`, `communication-templates.use`). They are not copied per tenant.
 
+### Role assignment UI filter (entitlement)
+
+`TenantRoleService` filters what tenants see and can newly assign:
+
+| Surface | Behavior |
+|---------|----------|
+| Role show (`getAllPermissionsWithAssignment`) | Core permission groups + groups whose catalog module is installed |
+| Permissions matrix | Same filter |
+| `syncRolePermission` | Rejects IDs for uninstalled modules; merges requested assignable IDs with **latent** grants already on the role whose module is not installed (so saving a role after uninstall does not wipe those rows) |
+
+Core groups (always visible): `dashboard`, `users`, `roles`, `settings`, `email-logs`, `marketplace`. Module group key === catalog `modules.slug`. Installed slugs come from `EntitlementService::activeModules`. Central `RoleService` is unchanged.
+
 **How permissions reach production:**
 
 | Moment | Mechanism |

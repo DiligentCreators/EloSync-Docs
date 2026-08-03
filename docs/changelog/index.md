@@ -1,5 +1,9 @@
 # Changelog
 
+## Role permissions filtered by installed modules (2026-08-03)
+
+Tenant **Roles** edit and the **Permissions matrix** only show core administration permissions plus groups for modules the workspace currently owns. Assigning a permission for an uninstalled module is rejected. Existing grants for a module that was later removed stay in the database (so reinstall can restore prior access) but stay hidden from the UI until the module is installed again.
+
 ## Module product tours (Phase 5) (2026-08-03)
 
 Every tenant module list page includes a short product tour (driver.js) explaining how the module works.

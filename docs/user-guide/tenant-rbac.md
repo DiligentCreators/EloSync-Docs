@@ -45,8 +45,9 @@ Example roles you might create: Sales Manager, Sales Agent, Finance, Support. De
 Permissions are checked actions such as `users.list` or `leads.create`.
 
 - Granted to **roles**, not directly to users (standard setup).
-- Grouped by area (Users, Roles, Settings, Leads, Tasks, Communication Templates, …) when editing a role.
-- The permissions list / matrix is read-only; change access by editing roles.
+- Grouped by area (Users, Roles, Settings, Leads, Tasks, …) when editing a role.
+- Role edit and the **Permissions matrix** only list **core** areas (Users, Roles, Settings, Dashboard, Marketplace, Email logs) plus permissions for modules your workspace currently owns.
+- Change access by editing roles; the matrix itself is read-only.
 
 ## Modules and access
 
@@ -55,7 +56,7 @@ Two checks apply to product areas (e.g. Leads):
 1. Your workspace must **own** (subscribe to) the module.
 2. Your role must include the needed permission.
 
-If the workspace does not own the module, nobody can use it—even with permissions assigned.
+If the workspace does not own the module, nobody can use it—and those module permissions are hidden from role edit and the matrix so you are not asked to assign them. After you install a module from Marketplace, its permission group appears for roles.
 
 ## Owner
 
