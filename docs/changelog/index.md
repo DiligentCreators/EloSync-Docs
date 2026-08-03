@@ -1,8 +1,17 @@
 # Changelog
 
+## Native FCM channel + device tokens (Phase 4b) (2026-08-03)
+
+Additive Firebase Cloud Messaging HTTP v1 delivery for closed/background devices, using the same `PlatformNotificationPayload` mapper as VAPID Web Push. No parallel notification framework; Firebase remains optional for local/dev.
+
+- Backend: `FcmChannel`, `fcm_device_tokens` register/unregister API, env-based service-account credentials (`FCM_*`), graceful skip when unconfigured
+- Shared wake trait: existing `SendsWebPushNotification` / `withWebPushChannel()` also enqueues FCM (including mention notifications)
+- Frontend: registers an FCM web token when complete `VITE_FIREBASE_*` config is present; VAPID path unchanged
+- Docs: deployment secrets + Forge checklist, architecture channels table, tenant API surface
+
 ## Web Push hardened (VAPID Phase 4a) (2026-08-03)
 
-Standards browser Web Push is production-hardened for all existing notification types (including mentions). Native FCM remains out of scope.
+Standards browser Web Push is production-hardened for all existing notification types (including mentions).
 
 - Ops: deploy docs require `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` and a supervised `emails,default` queue worker (Web Push rides the same notification jobs)
 - Reliability: expired endpoints (`404`/`410`) pruned; SW registers with `updateViaCache: 'none'`, activates immediately, and re-syncs on `pushsubscriptionchange`; Profile / Notification Center prompt when re-subscribe is needed

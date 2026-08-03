@@ -198,8 +198,9 @@ NotificationBatch::run(batchId, source, callable)
 | `broadcast` (Reverb) | Yes — open-tab realtime |
 | Browser OS toast | Client projection of Echo events — not a Laravel channel |
 | `webpush` (standards Web Push / VAPID) | Yes — closed/background browsers via `WebPushChannel` |
+| `fcm` (native FCM HTTP v1) | Yes — additive device-token channel via `FcmChannel` (skips when Firebase unconfigured) |
 | `mail` | Optional for event notifications via tenant `email_notifications` (default off). Always on for digests + auth. Lead assigned remains without mail. |
-| SMS / webhooks / FCM / APNs | Future Laravel channels — same Notification classes + shared platform payload mapper |
+| SMS / webhooks / APNs | Future Laravel channels — same Notification classes + shared platform payload mapper |
 
 ### Platform push payload
 
@@ -262,7 +263,7 @@ Server remains source of truth for `title` / `body`.
 
 ## Web Push (service worker) — hardened (Phase 4a)
 
-Standards VAPID Web Push is the closed/background delivery path for existing notification types (including mentions). **Native FCM / APNs remain out of scope** until a later phase; when added they must reuse `PlatformNotificationPayloadMapper` (no parallel payload mapping).
+Standards VAPID Web Push is the closed/background delivery path for existing notification types (including mentions). Native FCM (Phase 4b) reuses the same `PlatformNotificationPayloadMapper` — no parallel payload mapping.
 
 - Explicit opt-in (post-login dialog, Profile switch, Notification Center control). Never request the native browser permission on bootstrap — only after a user gesture.
 - Sticky denial and sticky “Not now” (`localStorage`): do not re-show the post-login dialog after dismiss or after the user blocks notifications.
@@ -275,6 +276,17 @@ Standards VAPID Web Push is the closed/background delivery path for existing not
 - Duplicate `endpoint` values upsert (including ownership transfer to the current user).
 - Expired push endpoints (`404` / `410`) are deleted automatically by `WebPushChannel`.
 - When VAPID is unconfigured, the channel skips without failing the notification job (`notifications.webpush_skipped_unconfigured`).
+
+## Native FCM (Phase 4b)
+
+Additive Laravel channel (`FcmChannel`) for registered FCM device tokens. Same notification classes that already call `withWebPushChannel()` / `SendsWakeChannels` also enqueue FCM — no per-type duplication.
+
+- Backend credentials: `FCM_PROJECT_ID` + `FCM_CLIENT_EMAIL` + `FCM_PRIVATE_KEY` (or `FCM_CREDENTIALS` JSON path). HTTP v1 via service-account JWT — no Firebase PHP SDK dependency.
+- When Firebase is unconfigured, `FcmChannel` skips (`notifications.fcm_skipped_unconfigured`); database + Reverb + VAPID Web Push continue.
+- Tenant API: register/unregister self-scoped tokens (`POST` / `DELETE /fcm-device-tokens`). Duplicate tokens upsert (including ownership transfer).
+- Expired / `UNREGISTERED` tokens are deleted automatically.
+- SPA registers an FCM web token only when `VITE_FIREBASE_*` config is complete; VAPID Web Push remains the default path.
+- Service worker unwraps FCM data envelopes (`payload` JSON) into the shared platform push shape.
 
 ## REST API (additive surface)
 
@@ -292,14 +304,20 @@ Web Push subscriptions (authenticated tenant user; self-scoped):
 - `PUT /api/tenant/v1/push-subscriptions`
 - `DELETE /api/tenant/v1/push-subscriptions`
 
+FCM device tokens (authenticated tenant user; self-scoped):
+
+- `GET /api/tenant/v1/fcm-device-tokens/config`
+- `POST /api/tenant/v1/fcm-device-tokens`
+- `DELETE /api/tenant/v1/fcm-device-tokens`
+
 ## Testing strategy
 
 | Layer | Focus |
 |-------|--------|
-| Pest | Payload contract, digests O(users), idempotency, channel auth, tenant isolation, Web Push subscribe/dispatch/cleanup |
-| Vitest | Permission flow, SW subscription lifecycle, logout cleanup, click navigation helpers |
+| Pest | Payload contract, digests O(users), idempotency, channel auth, tenant isolation, Web Push + FCM subscribe/dispatch/cleanup |
+| Vitest | Permission flow, SW subscription lifecycle, logout cleanup, click navigation helpers, Firebase config gate |
 | Playwright | Bell, navigation, mark read (Reverb gated by env) |
-| Manual | Reverb smoke, browser permission + Web Push delivery |
+| Manual | Reverb smoke, browser permission + Web Push / optional FCM delivery |
 
 ## Documentation strategy
 
@@ -319,17 +337,19 @@ Web Push subscriptions (authenticated tenant user; self-scoped):
 | `notifications.browser_clicked` | SPA on OS click |
 | `notifications.webpush` | After successful Web Push send |
 | `notifications.webpush_subscription_expired` | Expired endpoint cleanup |
+| `notifications.fcm` | After successful FCM send |
+| `notifications.fcm_token_expired` | Expired / unregistered FCM token cleanup |
 
 ## Module recipe (add a new notification type)
 
 1. Domain event + subscriber (mirror Leads).
-2. Laravel Notification class using `FormatsCrmDatabaseNotification` + optional `BroadcastsCrmNotification` / `SendsWebPushNotification`.
+2. Laravel Notification class using `FormatsCrmDatabaseNotification` + optional `BroadcastsCrmNotification` / `SendsWebPushNotification` (`SendsWakeChannels`).
 3. Set `category`, `delivery`, `source`, `route` descriptor, `dedupe_key`.
 4. For bulk ops: wrap orchestrator in `NotificationBatch::run` and flush digests from result counts — never notify inside per-entity loops.
 5. Add SPA registry entry under `src/notifications/modules/{domain}.ts`.
 6. Pest: payload shape, idempotency, tenant isolation; Playwright if UI-visible.
-7. To wake closed browsers: implement `SupportsWebPush` and `withWebPushChannel(...)` in `via()` — do not create Web Push–specific notification classes.
+7. To wake closed browsers: implement `SupportsWebPush` (and optionally `SupportsFcm`) and `withWebPushChannel(...)` / `withWakeChannels(...)` in `via()` — do not create Web Push– or FCM-specific notification classes.
 
-## Out of scope (v1 / Phase 4a)
+## Out of scope (v1 / Phase 4b)
 
-Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), **native FCM / APNs / OneSignal channel implementation** (Phase 4b+), custom notifications table, NotificationRepository, AppLayout redesign.
+Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), **APNs / OneSignal channel implementation**, custom notifications table, NotificationRepository, AppLayout redesign.

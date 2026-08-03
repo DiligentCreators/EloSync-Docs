@@ -84,7 +84,7 @@ Meeting lifecycle types: `meeting.invite`, `meeting.updated`, `meeting.cancelled
 
 ## Web Push subscriptions
 
-Standards-based Web Push (VAPID). Subscriptions belong to the authenticated tenant user. Duplicate `endpoint` values upsert (including reclaiming an endpoint from another user in the same tenant). Delivery requires configured `VAPID_*` env vars and a queue worker on `emails,default`. Expired endpoints are pruned on `404`/`410`. Native FCM is out of scope (Phase 4a).
+Standards-based Web Push (VAPID). Subscriptions belong to the authenticated tenant user. Duplicate `endpoint` values upsert (including reclaiming an endpoint from another user in the same tenant). Delivery requires configured `VAPID_*` env vars and a queue worker on `emails,default`. Expired endpoints are pruned on `404`/`410`.
 
 ### GET `/push-subscriptions/vapid-public-key`
 
@@ -110,7 +110,31 @@ Refresh/update keys for an endpoint (same body as POST; upsert semantics).
 
 Body: `{ "endpoint": "..." }`. 404 if the endpoint is not owned by the current user.
 
+## FCM device tokens (Phase 4b)
+
+Native FCM HTTP v1 device tokens for the authenticated tenant user. Duplicate `token` values upsert (including reclaiming a token from another user). Delivery requires configured `FCM_*` API credentials; when unconfigured the channel skips without failing the notification job. The SPA registers a token only when complete `VITE_FIREBASE_*` web config is present.
+
+### GET `/fcm-device-tokens/config`
+
+Returns `{ configured, project_id }`. Never exposes the service-account email or private key.
+
+### POST `/fcm-device-tokens`
+
+Body:
+
+| Field | Required | Notes |
+|-------|----------|--------|
+| `token` | yes | FCM registration token (32–512 chars) |
+| `platform` | no | `web` (default), `android`, or `ios` |
+| `user_agent` | no | |
+
+Response includes `id`, `platform`, `token_suffix` (last 8 chars), timestamps — never the full token.
+
+### DELETE `/fcm-device-tokens`
+
+Body: `{ "token": "..." }`. 404 if the token is not owned by the current user.
+
 ## Future (hooks only)
 
 - Per-user preferences (in-app / browser / email) — workspace-level email toggles ship via `email_notifications`
-- SMS / webhooks / FCM / APNs as additional Laravel channels using `PlatformNotificationPayloadMapper`
+- SMS / webhooks / APNs as additional Laravel channels using `PlatformNotificationPayloadMapper`
