@@ -23,7 +23,7 @@ Services: `LeaveTypeService`, `LeaveBalanceService`, `LeaveRequestService`. Appr
 - Managers (with `leave-management.approve`) can approve/reject any pending request
 - Index scoped via `LeaveRequestService::query` for actors who cannot view all
 
-Default **staff** role includes `leave-management.view|create|update` (additive migration syncs existing workspaces).
+Default **staff** role includes `leave-management.view|create|update` (additive migration syncs existing workspaces). Those create/update grants apply to **leave requests** only: `LeaveTypePolicy` / `LeaveBalancePolicy` require admin/owner (`canManageCatalog`) for writes. Staff leave-balance lists are scoped to the linked employee; managers with `leave-management.approve` can view all balances.
 
 ## Backend layout
 
