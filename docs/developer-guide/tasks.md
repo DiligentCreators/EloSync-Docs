@@ -65,7 +65,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/tasks/tasks-page.tsx` (board default + list) |
 | Form | `task-form-dialog.tsx` |
-| Detail | `task-detail-sheet.tsx` (Comments + History; DnD status pending until Save; Comments use `MentionComposer`) |
+| Detail | `task-detail-sheet.tsx` (Comments + History; Comments use `MentionComposer`; board DnD auto-saves status on the list page) |
 | Shared board | `src/components/crm/kanban-board.tsx` |
 | Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` |
 | Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |

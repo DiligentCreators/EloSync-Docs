@@ -21,7 +21,7 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 - **Lead value** — `lead_value` (renamed from `estimated_value`; API still accepts the old key as an alias on write)
 - Assignment with **assignment history** table
 - Notes, follow-ups (create / update-reschedule / complete), activity timeline
-- **Kanban board (default)** + table view; drag-and-drop opens the detail drawer; save commits the stage change
+- **Kanban board (default)** + table view; drag-and-drop auto-saves the stage change
 - KPIs via `GET /leads/stats`; board via `GET /leads/board`
 - Export CSV / XLSX of the current filtered set (`leads.export`)
 - Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping (including optional first **Note**), duplicate modes, preview, queued processing, history + reports

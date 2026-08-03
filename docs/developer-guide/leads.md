@@ -101,7 +101,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/leads/leads-page.tsx` (board default + table) |
 | Form | `lead-form-dialog.tsx` |
-| Detail | `lead-detail-sheet.tsx` (DnD stage pending until Save; Notes use `MentionComposer`) |
+| Detail | `lead-detail-sheet.tsx` (Notes use `MentionComposer`; board DnD auto-saves stage on the list page) |
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |

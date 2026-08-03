@@ -32,7 +32,7 @@ Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). 
 
 ## Pipeline vs status
 
-- **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Moving a card on the board proposes a stage change; open the drawer and **Save** to commit (Cancel restores the card).
+- **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Drag a card on the board to move stages — the change saves immediately (no drawer). You can also change stage from the detail drawer and **Save**.
 - **Status** — lifecycle state managed separately: Active, Waiting, On hold, Closed, Archived. Changing stage does **not** automatically change status.
 
 ## Assignment

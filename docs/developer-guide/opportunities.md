@@ -51,7 +51,7 @@ SPA should mirror **Leads** (board default + table, form dialog, detail sheet) u
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/opportunities/` |
-| Form / detail | form dialog + detail sheet (Overview, Notes, Activity) |
+| Form / detail | form dialog + detail sheet (Overview, Notes, Activity); board DnD auto-saves stage on the list page |
 | Service | `opportunityService` in `src/api/services.ts` |
 | Nav | `permission: opportunities.view`, `module: 'opportunities'` (Sales) |
 | Playwright | `e2e/pages/opportunities.page.ts`, `e2e/tests/opportunities/`, `npm run test:e2e:opportunities` |

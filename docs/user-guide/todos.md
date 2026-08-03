@@ -14,7 +14,7 @@ Open **ToDos** from the sidebar. The default view is the **Board** (columns by s
 
 - Search by title or description
 - Filter by status, priority, and **Overdue** (open / in-progress items past their due date)
-- Drag a card to another column to propose a status change; **Save** in the drawer commits it (Cancel restores the card)
+- Drag a card to another column to auto-save the status change (only your own to-dos; no drawer opens)
 
 Status labels in the UI:
 
