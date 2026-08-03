@@ -17,7 +17,7 @@ The platform does **not** sell plans or features. Licensing is based entirely on
 
 There are **no** plan tiers, plan modules, plan features, feature catalogs, or module usage limits (e.g. “100 leads”).
 
-A purchased or included module makes a business domain **available** to the workspace. It does **not** grant every user access. Admins assign Spatie roles and permissions to control who can use that domain.
+A purchased or included module makes a business domain **available** to the workspace. It does **not** grant every user access. Admins assign Spatie roles and permissions to control who can use that domain. Tenant role edit and the permissions matrix only list core permission groups plus groups for **installed** modules (see [Tenant RBAC](/developer-guide/tenant-rbac#role-assignment-ui-filter-entitlement)).
 
 ## Core Platform vs modules
 
