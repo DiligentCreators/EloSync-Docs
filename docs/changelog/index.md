@@ -1,5 +1,9 @@
 # Changelog
 
+## Board drag-and-drop auto-saves (2026-08-03)
+
+Kanban drag-and-drop on **Leads**, **Opportunities**, **Tasks**, and **ToDos** now saves the stage/status immediately (same as Calendar reschedule). Dropping a card no longer opens the detail drawer; click still opens it for edits. Cards without update permission remain view-only (non-draggable).
+
 ## Role permissions filtered by installed modules (2026-08-03)
 
 Tenant **Roles** edit and the **Permissions matrix** only show core administration permissions plus groups for modules the workspace currently owns. Assigning a permission for an uninstalled module is rejected. Existing grants for a module that was later removed stay in the database (so reinstall can restore prior access) but stay hidden from the UI until the module is installed again.

@@ -20,7 +20,7 @@ Personal checklist module on the frozen platform. Separate from [Tasks](/user-gu
 - **Personal visibility** — each user only sees to-dos they created
 - **Workspace owner** (`superadmin`) can view all to-dos in the workspace
 - **Creator-only update and delete** — even the owner cannot change or delete someone else’s to-do
-- **Board (default)** + List (table) view; drag-and-drop opens the drawer; save commits status
+- **Board (default)** + List (table) view; drag-and-drop auto-saves status
 - Module licensing (`module:todos`) + Spatie permissions
 - Audit via `PlatformAuditService` + Spatie activity log
 

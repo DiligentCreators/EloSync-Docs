@@ -21,7 +21,7 @@ Second product module on the frozen platform. Mirrors the [Leads](/user-guide/le
 - **`tasks.change_due_date`** — required to change `due_at` after create (initial due date allowed on create)
 - Complete / reopen (`tasks.complete`)
 - Comments (notes) + History (timeline) tabs
-- **Board (default)** + List view; drag-and-drop opens the drawer; save commits status
+- **Board (default)** + List view; drag-and-drop auto-saves status
 - KPIs via `GET /tasks/stats`; board via `GET /tasks/board`
 - Module licensing (`module:tasks`) + Spatie permissions
 - Audit + activity logging; assignment notifications (mail + database); due/overdue **in-app** alerts plus one daily consolidated **email** digest per assignee

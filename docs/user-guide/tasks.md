@@ -33,7 +33,7 @@ Status labels in the UI:
 2. Enter title (required) and optional description, status, priority, due date, and assignee
 3. Save
 
-Edit from the row menu or the detail drawer. Dragging a card on the board proposes a status change; **Save** in the drawer commits it (Cancel restores the card).
+Edit from the row menu or the detail drawer. Dragging a card on the board auto-saves the new status (no drawer).
 
 ## Due dates
 

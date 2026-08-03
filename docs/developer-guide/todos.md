@@ -54,7 +54,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-todos.md](/api/tenant-v1-to
 |-------|------|
 | Page | `src/pages/todos/todos-page.tsx` (board default + list) |
 | Form | `todo-form-dialog.tsx` |
-| Detail | `todo-detail-sheet.tsx` (overview; edit/delete gated to creator) |
+| Detail | `todo-detail-sheet.tsx` (overview; edit/delete gated to creator; board DnD auto-saves status on the list page) |
 | Shared board | `src/components/crm/kanban-board.tsx` |
 | Service | `todoService` in `src/api/services.ts` |
 | Nav | `permission: todos.view`, `module: 'todos'` |
