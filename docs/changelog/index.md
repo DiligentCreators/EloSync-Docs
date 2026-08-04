@@ -1,5 +1,9 @@
 # Changelog
 
+## Rotating dashboard inspire taglines (2026-08-05)
+
+Central and tenant dashboards show a short curated inspirational line under the welcome greeting. A new line is picked on each visit (session-aware so the same line is not repeated back-to-back).
+
 ## Board drag-and-drop auto-saves (2026-08-03)
 
 Kanban drag-and-drop on **Leads**, **Opportunities**, **Tasks**, and **ToDos** now saves the stage/status immediately (same as Calendar reschedule). Dropping a card no longer opens the detail drawer; click still opens it for edits. Cards without update permission remain view-only (non-draggable).
