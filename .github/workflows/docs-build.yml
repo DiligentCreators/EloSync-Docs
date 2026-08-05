@@ -151,9 +151,11 @@ jobs:
           fi
 
           # High-confidence leaked *values* only (not documented env var names).
+          # PEM: require a real base64 body after the header so placeholder docs
+          # (ellipsis / angle-bracket tokens) do not false-positive.
           if grep -RInE \
             --include='*.js' --include='*.mjs' --include='*.cjs' --include='*.html' --include='*.json' --include='*.map' --include='*.txt' \
-            '(-----BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY-----|sk_live_[0-9a-zA-Z]{20,}|rk_live_[0-9a-zA-Z]{20,}|whsec_[0-9a-zA-Z]{20,}|AKIA[0-9A-Z]{16})' \
+            '(-----BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY-----[[:space:]\\n]*[A-Za-z0-9+/=]{40,}|sk_live_[0-9a-zA-Z]{20,}|rk_live_[0-9a-zA-Z]{20,}|whsec_[0-9a-zA-Z]{20,}|AKIA[0-9A-Z]{16})' \
             "${DIST_DIR}" 2>/dev/null; then
             echo "::error::Potential secret values detected in build output"
             FAILED=1
