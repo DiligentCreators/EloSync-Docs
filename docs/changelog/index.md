@@ -1,5 +1,16 @@
 # Changelog
 
+## Fix — Leads Playwright coverage for Ops gates (2026-08-05)
+
+Headed `test:e2e:leads` updates for Lead Ops:
+
+- Create-lead helpers target the **Company** textbox exactly so the **Company Lead** system tag does not collide
+- Import keep-duplicate flow restored (was referencing an undefined locator)
+- Equal-distribute e2e asserts the radio is disabled for non–department-manager owners, and runs a manager path with Departments + a staff member in the managed department
+- Integrations waits for webhook endpoints to finish loading before create
+
+Requires a local queue worker on `imports` (and usually `emails`) so import jobs leave `queued`.
+
 ## Fix — lead inactivity setting save (2026-08-05)
 
 Settings → Leads **Inactivity alert (working days)** did not persist overrides and did not surface validation errors. The form field used a dotted React Hook Form name (`leads.inactivity_working_days`), which nested into `dirtyFields` / `errors` and skipped the update payload. Renamed the form field to `leads_inactivity_working_days` and map to API key `leads.inactivity_working_days` on save.
