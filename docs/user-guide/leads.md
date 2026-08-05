@@ -33,7 +33,7 @@ Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). 
 
 ## High Priority (dashboard)
 
-With **update** permission, open a lead’s detail drawer and click the **High Priority** chip on Overview. That sets priority to **High**; click again to clear it. If you marked High from another priority in this browser tab, clear **restores that previous priority** (for example Urgent → High → Urgent). If High was set elsewhere and no restore value is known, clear falls back to **Medium**.
+With **update** permission, open a lead’s detail drawer and click **Mark High Priority** on Overview. That sets priority to **High**; click again to clear it. If you marked High from another priority in this browser tab, clear **restores that previous priority** (for example Urgent → High → Urgent). If High was set elsewhere and no restore value is known, clear falls back to **Medium**.
 
 The Dashboard **High Priority** widget lists open-pipeline leads with priority **High** only. **Urgent is intentionally excluded** from that widget (use the Leads priority filter for Urgent). Existing Urgent open deals that previously appeared on the widget will leave the card after this change until marked High.
 
