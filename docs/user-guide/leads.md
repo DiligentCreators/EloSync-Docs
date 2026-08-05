@@ -67,7 +67,11 @@ WhatsApp opens with the message pre-filled. EloSync does not send the message fo
 
 ## Convert
 
-Users with **convert** can mark a lead converted. Today this is a **stub**: the lead is stamped with `converted_at`, status becomes Closed, and an activity is recorded. Creating Contact/Company records is deferred until those modules ship.
+Users with **convert** (and the Contacts module installed) can convert a lead into a contact from lead fields—no separate contact create form. The new contact defaults to **On Boarded Clients** lifecycle. The lead is stamped with `converted_at`, status becomes Closed, and activity is recorded. Use **View contact** from the lead drawer toast/link after convert.
+
+If Contacts is not installed, convert still closes the lead (`converted_at` / Closed) without creating a contact.
+
+Lifecycle on contacts is independent of soft-delete (trash). See [Contacts](/user-guide/contacts).
 
 ## Export
 

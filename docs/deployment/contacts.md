@@ -39,4 +39,4 @@ When Contacts is installed alongside Leads, `leads.convert` starts creating/link
 2. Register the `contacts` catalog module (migration, not seeder)
 3. Confirm `module:contacts` + `contacts.*` permissions on target roles
 4. Deploy frontend (Contacts nav item, list/form/detail, dashboard **Recent Contacts** widget + **Create Contact** quick action, Lead detail **View contact** link)
-5. Smoke: create a **new** workspace → enable Contacts from Marketplace → create/edit/assign/note a contact → convert a Lead → confirm `contact_id` + **View contact** link
+5. Smoke: create a **new** workspace → enable Contacts from Marketplace → create/edit/assign/note a contact → toggle On/Off Boarded Clients → convert a Lead → confirm `contact_id`, **On Boarded Clients**, and **View contact** link

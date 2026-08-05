@@ -25,7 +25,7 @@ modules ──► module_dependencies (depends_on_module_id)
 payment_gateways ──► gateway_logs, webhook_logs, payment_attempts, tenant_gateway_customers
 system_settings (key/value — Central Application settings; see Settings section)
 
-lead_stages / leads / lead_notes / lead_note_mentions / lead_follow_ups / lead_activities
+lead_stages / lead_tags / lead_lead_tag / leads / lead_notes / lead_note_mentions / lead_follow_ups / lead_activities
 lead_assignment_histories
   (tenant-scoped CRM — Leads module)
 
@@ -77,13 +77,21 @@ Plans, plan pivots, limit definitions, feature catalogs, and `tenant_subscriptio
 
 Per-workspace pipeline: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_order`, `is_won`, `is_lost`, `is_default`, soft deletes. Seeded New → Contacted → Qualified → Proposal → Negotiation → Won / Lost.
 
+### `lead_tags`
+
+Workspace disposition catalog: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_order`, `is_default`, `behavior` (`none`|`auto_follow_up`|`force_follow_up`), `auto_follow_up_days` (nullable). Independent of stages/status. Hard-deleted; pivot rows detach on delete.
+
+### `lead_lead_tag`
+
+Many-to-many: `lead_id`, `lead_tag_id` (unique pair).
+
 ### `leads`
 
 `tenant_id`, `uuid`, `name`, contact fields, `stage_id`, `status` (`active`|`waiting`|`on_hold`|`closed`|`archived`), `priority` (`low`|`medium`|`high`|`urgent`), `assigned_to`, `lead_value` (renamed from `estimated_value`), `last_contacted_at`, `next_follow_up_at`, `converted_at`, `conversion_meta` (JSON), `contact_id` (nullable FK to `contacts`, set on convert when Contacts is installed), soft deletes. Status is **independent** of stage. Spatie activity log name `leads`.
 
 ### `lead_notes` / `lead_note_mentions` / `lead_follow_ups` / `lead_activities`
 
-Notes (author + body), mention rows (`lead_note_id`, `user_id`, `tenant_id` — unique per note+user), follow-ups (due/complete/status), and CRM timeline (`type`, `description`, `properties` JSON). Mention tokens in note bodies use `@[Display Name](user:ID)`.
+Notes (author + body), mention rows (`lead_note_id`, `user_id`, `tenant_id` — unique per note+user), follow-ups (`due_at` / complete / status, nullable `lead_tag_id` for auto/force tag follow-ups), and CRM timeline (`type`, `description`, `properties` JSON). Mention tokens in note bodies use `@[Display Name](user:ID)`.
 
 ### `lead_assignment_histories`
 
@@ -93,7 +101,7 @@ Notes (author + body), mention rows (`lead_note_id`, `user_id`, `tenant_id` — 
 
 ### `contacts`
 
-`tenant_id`, `uuid`, `name`, `email`, `phone`, `company` (legacy free-text), `company_id` (nullable FK → `companies`, null on company delete), `job_title`, `source`, `source_meta` (JSON), `assigned_to`, `created_by`, `last_contacted_at`, soft deletes. Spatie activity log name `contacts`. Directory record — no stage/status workflow. When `company_id` is set, writes sync `company` from the linked Company name.
+`tenant_id`, `uuid`, `name`, `email`, `phone`, `company` (legacy free-text), `company_id` (nullable FK → `companies`, null on company delete), `job_title`, `source`, `source_meta` (JSON), `lifecycle_status` (`on_boarded`|`off_boarded`, default `on_boarded`), `assigned_to`, `created_by`, `last_contacted_at`, soft deletes. Spatie activity log name `contacts`. Directory record — no stage/status workflow. **Lifecycle is independent of soft-delete (trash).** When `company_id` is set, writes sync `company` from the linked Company name.
 
 ### `contact_notes` / `contact_activities`
 
