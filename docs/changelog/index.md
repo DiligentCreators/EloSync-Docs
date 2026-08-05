@@ -1,5 +1,16 @@
 # Changelog
 
+## Fix — Leads Ops merge-readiness audit (2026-08-06)
+
+Pre-merge fixes from security/bug audit on `feature/leads-operations`:
+
+- Persist **Receive website leads** on user **update** (`UpdateTenantUserRequest`)
+- Snapshot **commission rate** when `assigned_to` changes via `PUT /leads/{id}` (not only `/assign`)
+- Import **Update** mode no longer self-matches as a same-day duplicate; Skip/create still notify; preview write-gated
+- Department weekly digest week bounds use each tenant’s workspace timezone after `applyRuntimeConfig`
+- SPA: refresh `/me` after department save so `is_department_manager` unlocks equal import / reports without reload; edit lead omits forced `lead_type: direct` for legacy null rows
+- Docs corrections: eligible assignees vs website flag, digest schedule timezone, `dashboard.view`, current-stage metrics, `lead_commission_rate` / `department_weekly` in database dictionary
+
 ## Fix — Leads Playwright coverage for Ops gates (2026-08-05)
 
 Headed `test:e2e:leads` updates for Lead Ops:

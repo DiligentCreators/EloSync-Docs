@@ -53,9 +53,10 @@ Users with **assign** can set or clear the assignee. Assignment changes are reco
 - Workspace owners (`superadmin`)
 - Suspended users
 - Users flagged **Exclude from lead assignment** in Administration → Users (create/edit)
-- Users without **Receive website leads** (only affects custom webhook auto-assign when enabled on the endpoint)
 
 Those users do not appear in lead assignee pickers and are skipped by import auto-distribute and bulk equal distribute. A lead already assigned to someone who is later flagged can still be kept or cleared from the lead drawer.
+
+**Receive website leads** is a separate opt-in for the custom webhook website-recipient pool when an endpoint has automatic assignment enabled. It does **not** remove users from assignee pickers or equal distribute.
 
 When a lead is assigned or reassigned, the assignee’s **Default lead commission %** (set in Administration → Users) is copied onto the lead as a read-only **Commission rate** for reporting. Unassign clears it. This is display/export only — EloSync does not calculate payouts.
 

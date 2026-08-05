@@ -8,7 +8,7 @@ Authorization is enforced in the Form Request: workspace owner (`superadmin`) or
 
 ## GET `/reports/department-performance`
 
-Aggregated leads/tasks metrics by department for a date range. Counts include records **created** within the period and assigned to performance-eligible users in each department (direct members, linked employee users, and the department manager).
+Aggregated leads/tasks metrics by department for a date range. Counts include records **created** within the period and assigned to performance-eligible users in each department (direct members, linked employee users, and the department manager). Open / won / lost (leads) and open / completed (tasks) use each record’s **current** stage/status flags at query time — not historical stage changes within the period.
 
 Query:
 
@@ -19,11 +19,13 @@ Query:
 
 ### Visibility
 
+Requires `dashboard.view` (route middleware) **and** one of the rows below.
+
 | Actor | Departments returned |
 |-------|----------------------|
-| Workspace owner (`superadmin`) | All active departments |
-| Department manager | Active departments where `manager_id` = user id |
-| Others | **403 Forbidden** |
+| Workspace owner (`superadmin`) with `dashboard.view` | All active departments |
+| Department manager with `dashboard.view` | Active departments where `manager_id` = user id |
+| Others (including managers missing `dashboard.view`) | **403 Forbidden** |
 
 ### Response `data`
 
@@ -53,8 +55,8 @@ When Leads or Tasks is not installed, the corresponding `available` flag is `fal
 
 Command: `reports:send-department-digest`
 
-Schedule: Mondays at 08:00 workspace-local scheduler time (`routes/console.php`), previous calendar week.
+Schedule: Mondays at 08:00 in the **application** timezone (`routes/console.php` → `weeklyOn(1, '08:00')`; default `UTC` unless `app.timezone` / `schedule_timezone` is configured). For each tenant, previous calendar week bounds are computed **after** applying that workspace’s Settings → General timezone.
 
-Recipients: workspace owners + active department managers (non-suspended). Notification: `DepartmentPerformanceDigestNotification` via **database** + **mail**. Idempotency: `daily_summary_deliveries.kind = department_weekly` per user per week start date.
+Recipients: workspace owners + active department managers (non-suspended), still gated by `canAccessReport()` (`dashboard.view` + owner or manager). Notification: `DepartmentPerformanceDigestNotification` via **database** + **mail**. Idempotency: `daily_summary_deliveries.kind = department_weekly` per user per week start date.
 
 See [Departments developer guide](/developer-guide/departments) and [Departments user guide](/user-guide/departments).
