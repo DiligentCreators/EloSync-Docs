@@ -1,5 +1,9 @@
 # Changelog
 
+## Docs production build unblock (2026-08-05)
+
+Docs CI publish to `build-artifacts` was failing the artifact secret scan on a placeholder FCM PEM example in [Push notifications](/deployment/notifications). The example no longer uses PEM armor headers, and the scanner only flags PEM headers that are followed by real base64 key material.
+
 ## Lead tags + Contacts On/Off Boarded (2026-08-05)
 
 Multi-select disposition **tags** on Leads (full catalog CRUD + sort order), seeded defaults (Not Contacted, Contacted, No Response with per-tag auto follow-up days, Invalid Number, Not Interested, Not Applied, Follow Up Later with forced follow-up), badges on board/table/detail/forms, and filter by tag. Tags never change pipeline stage or lead status.

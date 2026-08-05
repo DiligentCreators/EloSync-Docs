@@ -60,7 +60,7 @@ VAPID_PRIVATE_KEY=<private-key>
 # Native FCM HTTP v1 (optional — skip locally / when unused)
 FCM_PROJECT_ID=<firebase-project-id>
 FCM_CLIENT_EMAIL=<service-account@….iam.gserviceaccount.com>
-FCM_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n…\n-----END PRIVATE KEY-----\n"
+FCM_PRIVATE_KEY="<pem-from-service-account-json; escape newlines as \\n>"
 # Or: FCM_CREDENTIALS=/absolute/path/to/service-account.json
 ```
 
