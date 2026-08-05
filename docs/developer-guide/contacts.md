@@ -7,7 +7,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads) / [Tasks developer
 | Piece | Path |
 |-------|------|
 | Models | `app/Models/Contact.php`, `ContactNote`, `ContactActivity` |
-| Enum | `app/Enums/Tenant/ContactActivityTypeEnum` |
+| Enum | `app/Enums/Tenant/ContactActivityTypeEnum`, `ContactLifecycleStatusEnum` |
 | Service | `app/Services/Tenant/ContactService.php` (+ `ScopesToAssignee`) |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/ContactController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Contact/*` |
@@ -21,9 +21,10 @@ Mirror of the [Leads developer guide](/developer-guide/leads) / [Tasks developer
 
 ## Domain notes
 
+- `lifecycle_status` (`on_boarded` | `off_boarded`) is independent of soft-delete (`deleted_at` / `trashed` filters). SPA labels use **On Boarded Clients** / **Off Boarded Clients**.
 - Assignee scoping via `ScopesToAssignee` with `contacts.assign`; without it, users only see contacts assigned to them (view/update/list/stats).
 - `contacts.force.delete` is not granted to any default role — owner/superadmin only, matching Leads/Tasks.
-- Lead → Contact linkage: `leads.contact_id` (nullable FK). `LeadService::convert()` creates (or reuses) a Contact when the `contacts` module is entitled (requires `contacts.create`, preserves lead assignee, transactional); stub converts without `contact_id` can be completed after Contacts is installed. Otherwise conversion remains the earlier status-only placeholder (`conversion_meta.stub = true`).
+- Lead → Contact linkage: `leads.contact_id` (nullable FK). `LeadService::convert()` creates (or reuses) a Contact when the `contacts` module is entitled (requires `contacts.create`, preserves lead assignee, sets lifecycle `on_boarded`, transactional); stub converts without `contact_id` can be completed after Contacts is installed. Otherwise conversion remains the earlier status-only placeholder (`conversion_meta.stub = true`).
 - Contact → Company linkage: `contacts.company_id` (nullable FK) when [Companies](/developer-guide/companies) is entitled. Writes sync the legacy `company` string from the linked Company name. Resources expose `linked_company` when loaded.
 - Assignee eligibility mirrors Leads (`EligibleContactAssignee` / `User::isEligibleLeadAssignee`).
 

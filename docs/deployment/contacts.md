@@ -17,7 +17,7 @@ On **new workspace** create (Central tenant create or public register):
 2. Operators enable Contacts from Marketplace (free / non-billable install activates immediately)
 3. Tenant permissions include `contacts.*` via `config/tenant-permissions.php` / default role maps
 
-No stage or status seeder (unlike Leads) — Contacts is a flat directory record.
+No pipeline-stage seeder (unlike Leads). Contacts are a flat directory with optional `lifecycle_status` (`on_boarded` / `off_boarded`; column default `on_boarded`). Soft-delete remains separate.
 
 ## Permissions rollout
 
@@ -39,4 +39,4 @@ When Contacts is installed alongside Leads, `leads.convert` starts creating/link
 2. Register the `contacts` catalog module (migration, not seeder)
 3. Confirm `module:contacts` + `contacts.*` permissions on target roles
 4. Deploy frontend (Contacts nav item, list/form/detail, dashboard **Recent Contacts** widget + **Create Contact** quick action, Lead detail **View contact** link)
-5. Smoke: create a **new** workspace → enable Contacts from Marketplace → create/edit/assign/note a contact → convert a Lead → confirm `contact_id` + **View contact** link
+5. Smoke: create a **new** workspace → enable Contacts from Marketplace → create/edit/assign/note a contact → toggle On/Off Boarded Clients → convert a Lead → confirm `contact_id`, **On Boarded Clients**, and **View contact** link

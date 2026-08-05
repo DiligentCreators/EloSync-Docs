@@ -16,6 +16,7 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 ## Capabilities (Sprint 2 CRM UX)
 
 - Pipeline stages (seeded: New → Contacted → Qualified → Proposal → Negotiation → Won / Lost)
+- **Disposition tags** — multi-select catalog (CRUD + sort order); seeded Not Contacted (default), Contacted, No Response (auto follow-up days), Invalid Number, Not Interested, Not Applied, Follow Up Later (requires creating a follow-up). Tags are independent of stage/status; badges on board, table, and detail.
 - **Independent status** — `active`, `waiting`, `on_hold`, `closed`, `archived` (not derived from stage)
 - **Priority** — `low`, `medium`, `high`, `urgent`
 - **Lead value** — `lead_value` (renamed from `estimated_value`; API still accepts the old key as an alias on write)

@@ -12,6 +12,32 @@ Assignee scoping: without `leads.assign` (and not superadmin), list/board/stats/
 
 Returns seeded pipeline stages for the workspace (New … Won / Lost).
 
+## Lead tags
+
+### GET `/lead-tags`
+
+Returns the workspace tag catalog (seeded on first use). Includes `behavior` (`none` | `auto_follow_up` | `force_follow_up`), `auto_follow_up_days`, `is_default`, `sort_order`, `color`.
+
+### POST `/lead-tags`
+
+Create a tag. Requires `leads.create`. Body: `name` (required), optional `slug`, `color`, `sort_order`, `is_default`, `behavior`, `auto_follow_up_days` (required when behavior is `auto_follow_up`).
+
+### PUT `/lead-tags/{leadTag}`
+
+Update a tag. Requires `leads.update`.
+
+### DELETE `/lead-tags/{leadTag}`
+
+Hard-delete a tag and detach it from all leads. Requires `leads.delete`.
+
+### POST `/lead-tags/reorder`
+
+Body: `{ "ordered_ids": number[] }`. Requires `leads.update`.
+
+### PUT `/leads/{lead}/tags`
+
+Sync tags on a lead. Body: `{ "tag_ids": number[], "follow_up"?: { title, due_at, notes?, assigned_to? } }`. Requires `leads.update`. Newly added `force_follow_up` tags require `follow_up`. Newly added `auto_follow_up` tags create a pending follow-up due in `auto_follow_up_days` (workspace timezone) unless one already exists for that lead+tag (`lead_follow_ups.lead_tag_id`). Applying tags never changes stage or status.
+
 ## Stats & board
 
 ### GET `/leads/stats`
@@ -30,23 +56,24 @@ Columns per stage: `stage`, `lead_count`, `total_lead_value`, `leads[]`. Honors 
 
 ### GET `/leads`
 
-Query: `search`, `status`, `stage_id`, `priority`, `assigned_to` (`unassigned` or user id), `lead_value_min`, `lead_value_max`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `status`, `stage_id`, `tag_id`, `tag_ids` (comma-separated), `priority`, `assigned_to` (`unassigned` or user id), `lead_value_min`, `lead_value_max`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
 Status values: `active`, `waiting`, `on_hold`, `closed`, `archived`.
 
 List and board lead cards include:
 
+- `tags` — applied tag objects (`id`, `name`, `slug`, `color`, `behavior`, …)
 - `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`
 - `next_follow_up` — earliest pending follow-up (`id`, `title`, `notes`, `due_at`, `status`, `assignee`, …) or `null`
 - `next_follow_up_at` — denormalized due timestamp for the next pending follow-up (unchanged)
 
 ### POST `/leads`
 
-Body: `name` (required), `email`, `phone`, `company`, `job_title`, `source`, `lead_value` (or legacy alias `estimated_value`), `priority`, `status`, `stage_id`, `assigned_to`.
+Body: `name` (required), `email`, `phone`, `company`, `job_title`, `source`, `lead_value` (or legacy alias `estimated_value`), `priority`, `status`, `stage_id`, `assigned_to`, optional `tag_ids` (defaults to workspace default tags), optional `follow_up` when creating with a force-follow-up tag.
 
 ### GET `/leads/{id}`
 
-Includes stage, assignee, notes, follow-ups, activities, assignment histories. Exposes `converted_at` / `is_converted`.
+Includes stage, assignee, tags, notes, follow-ups, activities, assignment histories. Exposes `converted_at` / `is_converted`.
 
 ### PUT `/leads/{id}`
 

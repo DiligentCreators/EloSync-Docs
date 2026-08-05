@@ -16,12 +16,13 @@ Third product module on the frozen platform. Mirrors the [Leads](/user-guide/lea
 ## Capabilities
 
 - Name, email, phone, company (legacy string), job title, source
+- **Lifecycle** — `on_boarded` / `off_boarded`, shown as **On Boarded Clients** / **Off Boarded Clients** (not soft-delete)
 - Optional link to a [Company](/user-guide/companies-overview) via `company_id` (form company picker when Companies is installed)
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `contacts.assign`
 - Notes (comments) + activity timeline
-- Table view with search, company filter, and **My Contacts** toggle
-- KPIs via `GET /contacts/stats`
-- Trash filtering plus **Restore** and **Delete permanently**
+- Table view with search, company filter, lifecycle filter, and **My Contacts** toggle
+- KPIs via `GET /contacts/stats` (includes on boarded / off boarded counts)
+- Trash filtering plus **Restore** and **Delete permanently** (trash **Active only** is unrelated to lifecycle)
 - Module licensing (`module:contacts`) + Spatie permissions — **free Marketplace opt-in**
 - Audit + activity logging
 
@@ -33,7 +34,7 @@ Enable Contacts from Marketplace (free). Only Leads and Tasks install automatica
 
 ## Lead conversion
 
-When both **Leads** and **Contacts** are installed, converting a lead creates (or links) a real Contact and stores `contact_id` on the lead. The Lead detail drawer shows a **View contact** link after conversion. Without Contacts installed, conversion remains the earlier status-only placeholder.
+When both **Leads** and **Contacts** are installed, converting a lead creates (or links) a real Contact (default lifecycle **On Boarded Clients**) and stores `contact_id` on the lead. The Lead detail drawer shows a **View contact** link after conversion. Without Contacts installed, conversion remains the earlier status-only placeholder.
 
 ## Company link
 

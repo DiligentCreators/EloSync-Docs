@@ -15,9 +15,10 @@ Use the **help** icon in the Leads page header to walk through KPIs, filters, cr
 Open **Leads** from the sidebar. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
 
 - Search by name, email, phone, or company
-- Filter by stage, status, priority, assignee, and lead value range
+- Filter by stage, status, priority, tag, assignee, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
-- Table and board both show the **latest note** and **next follow-up**; hover a truncated preview to read the full note or follow-up details
+- Table and board both show **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
+- **Manage tags** (requires update) opens the workspace tag catalog — create, edit, reorder, delete. Seeded tags include Not Contacted (default), Contacted, No Response (auto follow-up after N days), Invalid Number, Not Interested, Not Applied, and Follow Up Later (forces a follow-up when applied)
 - Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted lead from the row menu
 - **Delete permanently** (force delete) requires `leads.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)
 
@@ -25,15 +26,16 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 
 1. Click **New lead**, or press `N` when not typing in a field (requires **create**; browsers reserve `Ctrl+N` for a new window)
 2. Enter name (required) and optional contact / company / source / **lead value** / priority / status
-3. Optionally set stage and assignee (assignee requires **assign**)
+3. Optionally set stage, tags, and assignee (assignee requires **assign**). Applying Follow Up Later requires a follow-up title and due date
 4. Save
 
 Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the detail drawer.
 
-## Pipeline vs status
+## Pipeline vs status vs tags
 
 - **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Drag a card on the board to move stages — the change saves immediately (no drawer). You can also change stage from the detail drawer and **Save**.
 - **Status** — lifecycle state managed separately: Active, Waiting, On hold, Closed, Archived. Changing stage does **not** automatically change status.
+- **Tags** — multi-select disposition labels. Applying tags never changes stage or status. No Response schedules an auto follow-up using the tag’s day count (workspace timezone).
 
 ## Assignment
 
@@ -65,7 +67,11 @@ WhatsApp opens with the message pre-filled. EloSync does not send the message fo
 
 ## Convert
 
-Users with **convert** can mark a lead converted. Today this is a **stub**: the lead is stamped with `converted_at`, status becomes Closed, and an activity is recorded. Creating Contact/Company records is deferred until those modules ship.
+Users with **convert** (and the Contacts module installed) can convert a lead into a contact from lead fields—no separate contact create form. The new contact defaults to **On Boarded Clients** lifecycle. The lead is stamped with `converted_at`, status becomes Closed, and activity is recorded. Use **View contact** from the lead drawer toast/link after convert.
+
+If Contacts is not installed, convert still closes the lead (`converted_at` / Closed) without creating a contact.
+
+Lifecycle on contacts is independent of soft-delete (trash). See [Contacts](/user-guide/contacts).
 
 ## Export
 

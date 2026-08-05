@@ -12,8 +12,9 @@ On workspace provision:
 
 1. Default modules installed (includes Leads)
 2. `LeadService::ensureDefaultStages()` / `LeadStageSeeder` seeds New → … → Won / Lost
+3. `LeadService::ensureDefaultTags()` / `LeadTagSeeder` seeds disposition tags on first Leads/tags API call
 
-Existing workspaces without stages get stages lazily on first Leads API call.
+Existing workspaces without stages or tags get them lazily on first Leads API call.
 
 ## Permissions rollout
 
@@ -83,11 +84,11 @@ Ensure the Laravel scheduler is running in production.
 
 ## Deploy checklist
 
-1. Migrate lead tables + Sprint 2 enhance migration + `lead_assignment_histories` + `lead_imports`
-2. Deploy frontend (Kanban/table, KPIs, export, import wizard/history, convert stub, notifications)
+1. Migrate lead tables + Sprint 2 enhance migration + `lead_assignment_histories` + `lead_imports` + `lead_tags` / `lead_lead_tag` + `lead_follow_ups.lead_tag_id`
+2. Deploy frontend (Kanban/table, KPIs, Manage tags, export, import wizard/history, convert → contact when Contacts installed, notifications)
 3. Confirm `module:leads` + expanded permissions (including `leads.import`)
 4. Confirm queue worker includes `imports`
-5. Smoke: register/login → Leads board → create → DnD stage (save) → export → import template → small CSV import → history download → convert stub
+5. Smoke: register/login → Leads board → Manage tags → create lead (default tag) → apply Follow Up Later with due date → DnD stage → export/import → convert (On Boarded contact when Contacts installed)
 
 ## Related
 

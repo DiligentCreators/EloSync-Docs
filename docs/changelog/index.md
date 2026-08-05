@@ -1,5 +1,15 @@
 # Changelog
 
+## Lead tags + Contacts On/Off Boarded (2026-08-05)
+
+Multi-select disposition **tags** on Leads (full catalog CRUD + sort order), seeded defaults (Not Contacted, Contacted, No Response with per-tag auto follow-up days, Invalid Number, Not Interested, Not Applied, Follow Up Later with forced follow-up), badges on board/table/detail/forms, and filter by tag. Tags never change pipeline stage or lead status.
+
+Contacts gain a lifecycle field separate from soft-delete: **On Boarded Clients** / **Off Boarded Clients** (KPIs, filters, form, detail). Lead convert defaults new contacts to on boarded. Trash wording (**Active only**) is unchanged.
+
+- Backend: `lead_tags` + pivot, `PUT /leads/{id}/tags`, tag reorder/CRUD, `contacts.lifecycle_status`, Pest coverage
+- Frontend: Manage tags dialog, tag picker + force follow-up UX, contacts lifecycle UI; Playwright `leads.tags.spec.ts`
+- Docs: Leads/Contacts user + API + developer guides
+
 ## Tenant user impersonation (2026-08-05)
 
 Same-workspace **Login as user** for Owners (permission `users.impersonate`): Users row menu → reason dialog → amber banner → **End impersonation** restores the actor session. Targets cannot be self or workspace Owner; nested impersonation is blocked. Central platform impersonation is unchanged.
