@@ -1,5 +1,9 @@
 # Changelog
 
+## Fix — lead inactivity setting save (2026-08-05)
+
+Settings → Leads **Inactivity alert (working days)** did not persist overrides and did not surface validation errors. The form field used a dotted React Hook Form name (`leads.inactivity_working_days`), which nested into `dirtyFields` / `errors` and skipped the update payload. Renamed the form field to `leads_inactivity_working_days` and map to API key `leads.inactivity_working_days` on save.
+
 ## Lead inactivity alerts (2026-08-05)
 
 Assigned open leads (not in Won/Lost stages) trigger daily inactivity alerts when no **meaningful** activity occurs for the configured number of **Mon–Sat working days** (workspace timezone; Sundays excluded). Default threshold: **3** (`leads.inactivity_working_days`). Meaningful types: notes, follow-ups, stage/status changes, CRM activities, tag changes. Assignment/import/create alone do not reset the timer.
