@@ -2,10 +2,15 @@
 
 ## Lead High Priority dashboard chip (2026-08-05)
 
-Staff with **leads.update** can toggle **High Priority** from the lead detail drawer. The Dashboard **High Priority** widget lists open-pipeline leads with priority **High** only (Urgent is excluded). Clearing the chip sets priority back to Medium.
+Staff with **leads.update** can toggle **High Priority** from the lead detail drawer. The Dashboard **High Priority** widget lists open-pipeline leads with priority **High** only.
+
+**Behavior notes**
+
+- Clearing the chip restores the previous priority when the chip was used to mark High in that browser tab (for example Urgent → High → Urgent). Otherwise clear falls back to Medium.
+- **Breaking (dashboard):** Urgent open leads no longer appear on the High Priority widget. Use Leads filters for Urgent, or mark the lead High to surface it on the dashboard card.
 
 - Backend: `high_priority` widget filter + Pest coverage
-- Frontend: Overview chip; Playwright pipeline flow asserts chip + dashboard card
+- Frontend: Overview chip with priority restore; Playwright pipeline flow asserts chip, dashboard card, and Urgent restore
 - Docs: Leads / tenant application user guide, [Dashboard API](/api/tenant-v1-dashboard)
 
 ## Docs production build unblock (2026-08-05)
