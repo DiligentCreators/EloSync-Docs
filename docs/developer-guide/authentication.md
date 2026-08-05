@@ -106,7 +106,11 @@ Admin verify/resend cannot target self or (for non-owners) the workspace owner. 
 ## Impersonation compatibility
 
 Login and registration issue tokens through `TenantAuthBootstrapService::issueAccessToken()` only — that service has **no authorization side effects**.  
-`ImpersonationService` reuses the same token helper for Central → Tenant handoff when issuing a tenant token.
+`ImpersonationService` (Central) reuses the same token helper for Central → Tenant owner handoff when issuing a tenant token.
+
+### Tenant user impersonation
+
+Workspace owners (permission `users.impersonate`) can start a same-workspace session as another non-owner user via `POST /api/tenant/v1/users/{user}/impersonate`. The SPA stashes the actor Sanctum token, swaps to the returned `target_token`, and restores the actor on `POST /api/tenant/v1/user-impersonation/{id}/end`. Nested impersonation is blocked when the active bearer token name is `impersonation` or `user-impersonation`. See [Tenant Users API](/api/tenant-v1-users#user-impersonation-login-as-user).
 
 ## Token ↔ workspace binding
 

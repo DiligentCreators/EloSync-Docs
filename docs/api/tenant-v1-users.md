@@ -57,9 +57,43 @@ Example create payload fragment:
 
 These columns are not mass-assignable on the `User` model; `TenantUserService` applies them via `forceFill` after validation.
 
+## User impersonation (login as user)
+
+Same-workspace support handoff. Not a marketplace module; gated by Spatie permission only.
+
+### `POST /users/{user}/impersonate`
+
+| Middleware | Value |
+|------------|-------|
+| Permission | `can:users.impersonate` |
+| Policy | `TenantUserPolicy::impersonate` — denies self and workspace Owner (`superadmin`) |
+
+Body:
+
+| Field | Rules |
+|-------|-------|
+| `reason` | required, string, 5–1000 chars |
+
+Behavior:
+
+- Mints a Sanctum token named `user-impersonation` for the target (TTL 1 hour)
+- Creates a `user_impersonation_sessions` row (actor, target, reason, IP, user agent, PAT id)
+- Audits `user_impersonation_started`
+- Rejects nested impersonation when the current bearer token is named `impersonation` (Central) or `user-impersonation`
+- Rejects suspended targets (`422` on `user`)
+
+Response `201` includes session fields plus `target_token` and `expires_at`.
+
+### `POST /user-impersonation/{userImpersonation}/end`
+
+Authorizes when the current Sanctum PAT matches the session’s `personal_access_token_id`, or the actor still holds `users.impersonate` and owns the session. Ends the session, revokes the target PAT, audits `user_impersonation_ended`.
+
+Central platform impersonation (`POST /api/central/v1/tenants/{tenant}/impersonate`) remains a separate product surface.
+
 ## Related
 
 - [Tenant Employees API](/api/tenant-v1-employees)
 - [Tenant notifications — daily CRM summary](/api/tenant-v1-notifications#scheduled-due-digests)
 - [Daily CRM summary production](/deployment/daily-crm-summary)
 - [Tenant RBAC user guide](/user-guide/tenant-rbac)
+- [Authentication (developer)](/developer-guide/authentication#impersonation-compatibility)

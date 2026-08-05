@@ -1,5 +1,13 @@
 # Changelog
 
+## Tenant user impersonation (2026-08-05)
+
+Same-workspace **Login as user** for Owners (permission `users.impersonate`): Users row menu → reason dialog → amber banner → **End impersonation** restores the actor session. Targets cannot be self or workspace Owner; nested impersonation is blocked. Central platform impersonation is unchanged.
+
+- Backend: `user_impersonation_sessions`, `POST /users/{user}/impersonate`, `POST /user-impersonation/{id}/end`, additive permission sync
+- Frontend: auth-store modes (`central` / `tenant-user`), Users dialog, AppLayout end routing
+- Docs: [Tenant Users API](/api/tenant-v1-users#user-impersonation-login-as-user), [Authentication](/developer-guide/authentication#impersonation-compatibility), [Tenant RBAC](/user-guide/tenant-rbac)
+
 ## Rotating dashboard inspire taglines (2026-08-05)
 
 Central and tenant dashboards show a short curated inspirational line under the welcome greeting. A new line is picked on each visit (session-aware so the same line is not repeated back-to-back).

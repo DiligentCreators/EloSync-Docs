@@ -16,6 +16,7 @@ When the **Employees** module is installed, creating a user shows **Create emplo
 | Create employee record | Row menu → **Create employee record** when Employees is installed and the user has no linked employee yet (`employees.create`) |
 | Activate / Deactivate | Suspend / Unsuspend (when available) |
 | Reset password | Row menu → change password |
+| Login as user | Row menu → **Login as user** (requires `users.impersonate`; Owner only by default). Cannot target yourself or the workspace Owner. Reason is required; ends via the amber banner. |
 | Resend verification | Row menu → **Resend verification** (unverified users; requires `users.verify`) |
 | Mark email verified | Row menu → **Mark as verified** when the member never received the email (requires `users.verify`) |
 | Delete | Row menu → **Delete** (if your role allows it) |
