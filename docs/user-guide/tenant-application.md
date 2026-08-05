@@ -67,6 +67,7 @@ Marketplace shows paid prices in your **workspace currency** (Settings → Gener
 `GET /dashboard` returns workspace info plus a **widget registry**. You may see:
 
 - **Pipeline / sources / revenue** — when Leads is installed and you can view leads
+- **High Priority** — open leads with priority **High** (not Urgent); mark from the lead drawer
 - **Today’s / overdue follow-ups** and deals closing soon — Leads-scoped
 - **Upcoming / overdue tasks** — when Tasks is installed and you can view tasks
 - **Upcoming events** — when Calendar is installed and you can view calendar

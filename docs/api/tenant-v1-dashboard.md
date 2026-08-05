@@ -38,10 +38,13 @@ Returns workspace chrome plus a **widget registry**. Widgets are filtered by ins
 |----|-------------|------------|--------|
 | `pipeline_overview` | `leads` | `leads.view` | Counts / values by stage |
 | `lead_sources` | `leads` | `leads.view` | Source breakdown |
-| `revenue_pipeline` | `leads` | `leads.view` | Open-pipeline `lead_value` totals |
+| `revenue_pipeline` | `leads` | `leads.view` | Won-revenue period + open-pipeline value |
+| `high_priority` | `leads` | `leads.view` | Open (non-won/lost) leads with priority `high` only (not `urgent`); limited rows + `total_count` |
+| `follow_ups` | `leads` | `leads.view` | Pending follow-ups |
 | `todays_follow_ups` | `leads` | `leads.view` | |
 | `overdue_follow_ups` | `leads` | `leads.view` | |
-| `deals_closing_soon` | `leads` | `leads.view` | |
+| `recent_deals_closed` | `leads` | `leads.view` | Recently won leads |
+| `deals_closing_soon` | `leads` | `leads.view` | Includes negotiation/proposal previews |
 | `upcoming_tasks` | `tasks` | `tasks.view` | |
 | `overdue_tasks` | `tasks` | `tasks.view` | |
 | `calendar` | `calendar` | `calendar.view` | Upcoming events; scoped by `calendar.view_all` |

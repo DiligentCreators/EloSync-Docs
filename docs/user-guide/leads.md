@@ -31,6 +31,10 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 
 Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the detail drawer.
 
+## High Priority (dashboard)
+
+With **update** permission, open a lead’s detail drawer and click the **High Priority** chip on Overview. That sets priority to **High**; click again to clear it (back to **Medium**). The Dashboard **High Priority** widget lists open-pipeline leads with priority High only (Urgent uses the normal priority field/filter, not that widget).
+
 ## Pipeline vs status vs tags
 
 - **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Drag a card on the board to move stages — the change saves immediately (no drawer). You can also change stage from the detail drawer and **Save**.

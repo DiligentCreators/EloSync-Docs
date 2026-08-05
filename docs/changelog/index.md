@@ -1,5 +1,13 @@
 # Changelog
 
+## Lead High Priority dashboard chip (2026-08-05)
+
+Staff with **leads.update** can toggle **High Priority** from the lead detail drawer. The Dashboard **High Priority** widget lists open-pipeline leads with priority **High** only (Urgent is excluded). Clearing the chip sets priority back to Medium.
+
+- Backend: `high_priority` widget filter + Pest coverage
+- Frontend: Overview chip; Playwright pipeline flow asserts chip + dashboard card
+- Docs: Leads / tenant application user guide, [Dashboard API](/api/tenant-v1-dashboard)
+
 ## Docs production build unblock (2026-08-05)
 
 Docs CI publish to `build-artifacts` was failing the artifact secret scan on a placeholder FCM PEM example in [Push notifications](/deployment/notifications). The example no longer uses PEM armor headers, and the scanner only flags PEM headers that are followed by real base64 key material.
