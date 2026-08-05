@@ -136,6 +136,28 @@ Payments records amounts against an invoice's `amount_paid` and allocates them t
 
 **Status:** [Payments](/user-guide/payments-overview) is shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 3.
 
+### Resellers → Payments (required)
+
+```text
+Resellers
+  └── depends on Payments   (required)
+```
+
+Reseller commission accrues only when a linked customer invoice becomes fully **Paid** via the Payments ledger. Resellers declares Payments as a **required** hard dependency (`module_dependencies`). Marketplace blocks installing Resellers until Payments is entitled.
+
+**Status:** [Resellers](/user-guide/resellers-overview) Phase 1 is shipped (free Sales opt-in). Cross-workspace reseller identity is deferred.
+
+### Reseller Payouts → Resellers (required)
+
+```text
+Reseller Payouts
+  └── depends on Resellers   (required)
+```
+
+The commission ledger (`reseller_commission_entries`) always references a `Reseller`. Reseller Payouts declares Resellers as a **required** hard dependency (`module_dependencies`). Install chain: Payments → Resellers → Reseller Payouts.
+
+**Status:** [Reseller Payouts](/user-guide/reseller-payouts-overview) Phase 1 is shipped (free Sales opt-in).
+
 ### Credit Notes → Invoices (required)
 
 ```text

@@ -41,7 +41,7 @@ List items include `status`, `currency`, `subtotal`/`tax_total`/`total`/`amount_
 
 ### POST `/invoices`
 
-Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `issue_date`, `due_date` (dates), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id` (optional, tenant-scoped existence check only), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
+Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `issue_date`, `due_date` (dates), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id` (optional, tenant-scoped existence check only), `reseller_id` (optional; requires Resellers entitled — `LinkableReseller`), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
 
 `subtotal`, `tax_total`, `total`, and `balance_due` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`INV-00001`, configurable prefix).
 
