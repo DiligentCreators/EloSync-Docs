@@ -6,8 +6,10 @@ Same-workspace **Login as user** for Owners (permission `users.impersonate`): Us
 
 Hardening: one active session per actor (prior target PAT revoked), revoke PAT on session delete, reject soft-deleted targets, persist impersonation metadata in `sessionStorage` for refresh/banner restore.
 
+Platform CI note: Laravel 13 `#[AsCommand(name: 'db:seed')]` made stancl/tenancy’s `Seed` command clobber core `db:seed` (missing `--tenants` → Pest suite red). Backend re-registers framework `SeedCommand` after package boot.
+
 - Backend: `user_impersonation_sessions`, `POST /users/{user}/impersonate`, `POST /user-impersonation/{id}/end`, additive permission sync
-- Frontend: auth-store modes (`central` / `tenant-user`), Users dialog, AppLayout end routing
+- Frontend: auth-store modes (`central` / `tenant-user`), Users dialog, AppLayout end routing; Playwright `users.impersonate.spec.ts` (tenant project)
 - Docs: [Tenant Users API](/api/tenant-v1-users#user-impersonation-login-as-user), [Authentication](/developer-guide/authentication#impersonation-compatibility), [Tenant RBAC](/user-guide/tenant-rbac)
 
 ## Rotating dashboard inspire taglines (2026-08-05)
