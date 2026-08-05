@@ -15,6 +15,7 @@ central_users          tenants ──has──► workspace_module_subscriptions
                               ├── payments ──► payment_transactions
                               ├── payment_methods, billing_addresses
                               ├── impersonation_sessions (central_user_id)
+                              ├── user_impersonation_sessions (actor_user_id, target_user_id)
                               ├── (Cashier) subscriptions ──► subscription_items
                               ├── stripe_id / pm_type / pm_last_four (Billable / Stripe)
                               └── tenant_gateway_customers (provider-neutral customer_reference)
@@ -477,6 +478,20 @@ Append-only gateway status events per payment: `payment_id`, `status`, `amount`,
 | `reason` | Required audit text |
 | `ip_address`, `user_agent` | Request metadata |
 | `started_at`, `ended_at`, `duration_seconds` | Session window |
+
+### `user_impersonation_sessions`
+
+Same-workspace tenant user → user sessions (Users/auth core; not Central).
+
+| Column | Notes |
+|--------|-------|
+| `tenant_id` | FK `tenants` |
+| `actor_user_id` | FK `users` (impersonating admin) |
+| `target_user_id` | FK `users` (impersonated member) |
+| `personal_access_token_id` | Sanctum PAT minted for the target; revoked on end |
+| `reason` | Required audit text (5–1000 chars at API) |
+| `ip_address`, `user_agent` | Request metadata |
+| `started_at`, `expires_at`, `ended_at`, `duration_seconds` | Session window (TTL 1 hour) |
 
 ### `system_settings`
 

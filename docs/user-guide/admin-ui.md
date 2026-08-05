@@ -39,7 +39,7 @@ Not in the sidebar (reached via in-page links): `/central/tenants/:id`, `/centra
 | Tenant details | `/tenants/{id}`, `/tenants/{id}/entitlements`, `/tenants/{id}/invoices`, `/tenants/{id}/payments`, `/tenants/{id}/modules`, `/tenants/{id}/impersonate` |
 | Marketplace | `/marketplace/modules`, `/marketplace/modules/{id}`, install via `/tenants/{id}/modules` |
 | Module subscriptions | `/module-subscriptions`, cancel/deactivate |
-| Users | `/users`, invite, activity, suspend, change-password |
+| Users | `/users`, invite, activity, suspend, change-password, login-as (`users.impersonate`) |
 | Roles | `/roles`, clone, permissions-matrix |
 | Modules (admin catalog) | `/modules` |
 | Dashboard | `/dashboard` |

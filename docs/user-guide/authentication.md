@@ -21,6 +21,10 @@ Registration creates your workspace, owner account, default roles, and default m
 
 If a new member never receives the verification email, a workspace owner or admin can open **Administration → Users**, open that user’s row menu, and either **Resend verification** or **Mark as verified**.
 
+### Login as another user
+
+Workspace owners (and anyone granted `users.impersonate`) can open **Administration → Users**, choose **Login as user** on a non-owner member, and enter a reason. An amber **Impersonation mode is active** banner appears until you click **End impersonation**, which restores your own session. You cannot nest impersonation sessions or impersonate the workspace Owner.
+
 Your browser does not save a workspace selection in local storage. Open the correct workspace host or enter the workspace again when using the shared login URL.
 
 ### Forgot password
