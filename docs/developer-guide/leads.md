@@ -6,9 +6,9 @@ Reference implementation. Copy this layout for Tasks and later modules.
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Lead.php`, `LeadStage`, `LeadNote`, `LeadNoteMention`, `LeadFollowUp`, `LeadActivity`, `LeadAssignmentHistory` |
-| Enums | `app/Enums/Tenant/LeadStatusEnum`, `LeadPriorityEnum`, `LeadFollowUpStatusEnum`, `LeadActivityTypeEnum` |
-| Service | `app/Services/Tenant/LeadService.php` (+ `ScopesToAssignee`) |
+| Models | `app/Models/Lead.php`, `LeadStage`, `LeadTag`, `LeadNote`, `LeadNoteMention`, `LeadFollowUp`, `LeadActivity`, `LeadAssignmentHistory` |
+| Enums | `app/Enums/Tenant/LeadStatusEnum`, `LeadPriorityEnum`, `LeadFollowUpStatusEnum`, `LeadActivityTypeEnum`, `LeadTagBehaviorEnum` |
+| Service | `app/Services/Tenant/LeadService.php` (+ `ScopesToAssignee`), `LeadTagService.php` |
 | Export | `app/Exports/LeadsExport.php` |
 | Import framework | `app/Import/*` (`ImportManager`, `ImportFile`, `ImportColumnMapper`, `ImportErrorWriter`, `ImportTemplateGenerator`, `ImportHistory`, `ImportJob`) |
 | Lead import handler | `app/Import/Lead/LeadImportHandler.php`, `LeadImportValidator`, `LeadImportMapper` |
@@ -22,16 +22,17 @@ Reference implementation. Copy this layout for Tasks and later modules.
 | Subscriber | `app/Listeners/LeadEventSubscriber.php` (audit + notifications) |
 | Notifications | `app/Notifications/Tenant/Lead/*` (assign: database+broadcast+webpush; follow-ups/mentions: database + optional mail; mentions also broadcast+webpush) |
 | Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `LeadNoteAdded` in `LeadEventSubscriber` |
-| Seeder | `database/seeders/Tenant/LeadStageSeeder.php` |
-| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
+| Seeder | `database/seeders/Tenant/LeadStageSeeder.php`, `LeadTagSeeder.php` |
+| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadTagTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
+- Disposition **tags** are many-to-many (`lead_lead_tag`), independent of stage/status. Catalog CRUD + reorder under `LeadTagController`. New leads receive `is_default` tags. Sync via `PUT /leads/{id}/tags` (and optional `tag_ids` on create). `auto_follow_up` creates a pending follow-up keyed by `lead_follow_ups.lead_tag_id`; `force_follow_up` requires a nested `follow_up` payload.
 - Note bodies may include `@[Display Name](user:ID)` mention tokens. On `LeadNoteAdded`, `NoteMentionService` persists `lead_note_mentions` and sends `lead.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.lead_mentioned` (default off).
 - Follow-up `due_at` follows the [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): SPA edit/display in Settings → General timezone; store as UTC via `UtcDateTime` / `UtcIso`; due/overdue notifications use workspace-local “today”.
 - `lead_value` replaced `estimated_value` (migration rename). Store/update requests still accept `estimated_value` as a write alias.
 - Status is independent of stage flags (`is_won` / `is_lost`). Stage change does not sync status.
-- Convert: `converted_at`, `conversion_meta`, status `closed`, activity type converted. When [Contacts](/developer-guide/contacts) is entitled for the workspace, also creates/links a real `Contact` (`contact_id`, `conversion_meta.stub = false`) and requires `contacts.create`; preserves the lead assignee; runs in a DB transaction. Stub converts (no `contact_id`) can be completed by calling convert again after Contacts is installed. Without Contacts, conversion remains status-only (`conversion_meta.stub = true`). `LeadPolicy::convert` uses the same assignee scope as update.
+- Convert: `converted_at`, `conversion_meta`, status `closed`, activity type converted. When [Contacts](/developer-guide/contacts) is entitled for the workspace, also creates/links a real `Contact` (`contact_id`, `conversion_meta.stub = false`, lifecycle `on_boarded`) and requires `contacts.create`; preserves the lead assignee; runs in a DB transaction. Stub converts (no `contact_id`) can be completed by calling convert again after Contacts is installed. Without Contacts, conversion remains status-only (`conversion_meta.stub = true`). `LeadPolicy::convert` uses the same assignee scope as update.
 - Assignee scoping via `ScopesToAssignee` with `leads.assign` (superadmin always org-wide).
 - Lead assignee eligibility (`User::eligibleLeadAssignees` / `EligibleLeadAssignee` rule): excludes suspended users, workspace owners (`superadmin`), and users with `exclude_from_lead_auto_assign`. Used by assign / create / update / bulk-assign / import column mapping, and by `LeadBulkAssignmentService::eligibleAssignees` for equal distribute.
 

@@ -12,19 +12,19 @@ Assignee scoping: without `contacts.assign` (and not superadmin), list/stats/vie
 
 Same filters as list (minus pagination/sort). Payload includes:
 
-`total_contacts`, `my_contacts`, `unassigned`, `with_email`, `created_this_week`, `scope` (`org`|`mine`).
+`total_contacts`, `my_contacts`, `unassigned`, `with_email`, `created_this_week`, `on_boarded`, `off_boarded`, `scope` (`org`|`mine`).
 
 ## Contacts CRUD
 
 ### GET `/contacts`
 
-Query: `search`, `company`, `company_id`, `assigned_to` (`unassigned` or user id), `my_contacts`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `company`, `company_id`, `lifecycle_status` (`on_boarded` | `off_boarded`), `assigned_to` (`unassigned` or user id), `my_contacts`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`. May include `company_id` and `linked_company` when the relationship is loaded.
+List items include `lifecycle_status`, `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`. May include `company_id` and `linked_company` when the relationship is loaded.
 
 ### POST `/contacts`
 
-Body: `name` (required), `email`, `phone`, `company` (legacy free-text), `company_id` (optional FK to Companies), `job_title`, `source`, `assigned_to`.
+Body: `name` (required), `email`, `phone`, `company` (legacy free-text), `company_id` (optional FK to Companies), `job_title`, `source`, `lifecycle_status` (default `on_boarded`), `assigned_to`.
 
 When `company_id` is set and the company exists, the legacy `company` string is synced to that Company’s name.
 

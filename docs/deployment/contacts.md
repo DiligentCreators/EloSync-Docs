@@ -17,7 +17,7 @@ On **new workspace** create (Central tenant create or public register):
 2. Operators enable Contacts from Marketplace (free / non-billable install activates immediately)
 3. Tenant permissions include `contacts.*` via `config/tenant-permissions.php` / default role maps
 
-No stage or status seeder (unlike Leads) — Contacts is a flat directory record.
+No pipeline-stage seeder (unlike Leads). Contacts are a flat directory with optional `lifecycle_status` (`on_boarded` / `off_boarded`; column default `on_boarded`). Soft-delete remains separate.
 
 ## Permissions rollout
 

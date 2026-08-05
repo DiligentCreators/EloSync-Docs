@@ -12,8 +12,9 @@ On workspace provision:
 
 1. Default modules installed (includes Leads)
 2. `LeadService::ensureDefaultStages()` / `LeadStageSeeder` seeds New → … → Won / Lost
+3. `LeadService::ensureDefaultTags()` / `LeadTagSeeder` seeds disposition tags on first Leads/tags API call
 
-Existing workspaces without stages get stages lazily on first Leads API call.
+Existing workspaces without stages or tags get them lazily on first Leads API call.
 
 ## Permissions rollout
 
