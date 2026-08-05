@@ -17,15 +17,15 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 - Search by name, email, phone, or company
 - Filter by stage, status, priority, tag, assignee, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
-- Table and board both show **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
-- **Manage tags** (requires update) opens the workspace tag catalog — create, edit, reorder, delete. Seeded tags include Not Contacted (default), Contacted, No Response (auto follow-up after N days), Invalid Number, Not Interested, Not Applied, and Follow Up Later (forces a follow-up when applied)
+- Table and board both show **lead type**, **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
+- **Manage tags** (requires update) opens the workspace tag catalog — create, edit, reorder, delete. Seeded tags include Direct Lead / Company Lead (synced from lead type), Not Contacted (default), Contacted, No Response (auto follow-up after N days), Invalid Number, Not Interested, Not Applied, and Follow Up Later (forces a follow-up when applied)
 - Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted lead from the row menu
 - **Delete permanently** (force delete) requires `leads.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)
 
 ## Create & edit
 
 1. Click **New lead**, or press `N` when not typing in a field (requires **create**; browsers reserve `Ctrl+N` for a new window)
-2. Enter name (required) and optional contact / company / source / **lead value** / priority / status
+2. Enter name (required), **lead type** (Direct or Company), and optional contact / company / source / **lead value** / priority / status
 3. Optionally set stage, tags, and assignee (assignee requires **assign**). Applying Follow Up Later requires a follow-up title and due date
 4. Save
 
@@ -42,6 +42,7 @@ The Dashboard **High Priority** widget lists open-pipeline leads with priority *
 - **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Drag a card on the board to move stages — the change saves immediately (no drawer). You can also change stage from the detail drawer and **Save**.
 - **Status** — lifecycle state managed separately: Active, Waiting, On hold, Closed, Archived. Changing stage does **not** automatically change status.
 - **Tags** — multi-select disposition labels. Applying tags never changes stage or status. No Response schedules an auto follow-up using the tag’s day count (workspace timezone).
+- **Lead type** — Direct or Company. Saved on the lead and mirrored by the system tags Direct Lead / Company Lead (only one type tag at a time).
 
 ## Assignment
 
@@ -55,11 +56,16 @@ Users with **assign** can set or clear the assignee. Assignment changes are reco
 
 Those users do not appear in lead assignee pickers and are skipped by import auto-distribute and bulk equal distribute. A lead already assigned to someone who is later flagged can still be kept or cleared from the lead drawer.
 
+**Receive website leads** is a separate opt-in for the custom webhook website-recipient pool when an endpoint has automatic assignment enabled. It does **not** remove users from assignee pickers or equal distribute.
+
+When a lead is assigned or reassigned, the assignee’s **Default lead commission %** (set in Administration → Users) is copied onto the lead as a read-only **Commission rate** for reporting. Unassign clears it. This is display/export only — EloSync does not calculate payouts.
+
 ## Notes & follow-ups
 
 - **Notes** — free-form history on the lead. Type `@` to mention a teammate; they get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a lead note** is on)
 - **Follow-ups** — titled reminders with due dates in the workspace **Timezone** (Settings → General); edit/reschedule or complete when done
 - Assignees receive notifications when a follow-up is created for them (by someone else) and when due/overdue reminders run (workspace-local “today”)
+- **Inactivity alerts** — when an assigned open lead has no meaningful activity for the configured number of Mon–Sat working days (Settings → Leads; default 3), the assignee is notified. Department managers (or workspace owners if none) receive an escalation alert. Sundays do not count. Notes, follow-ups, stage/status changes, CRM activities, and tag changes reset the timer; assignment alone does not.
 
 ## WhatsApp (Communication Templates)
 
@@ -81,7 +87,7 @@ Lifecycle on contacts is independent of soft-delete (trash). See [Contacts](/use
 
 ## Export
 
-Users with **export** can download the current filtered set as **CSV** or **XLSX**.
+Users with **export** can download the current filtered set as **CSV** or **XLSX** (includes **Commission Rate %** when the lead is assigned).
 
 ## Import
 
@@ -94,9 +100,19 @@ Users with **import** can bulk-load leads from **CSV** or **XLSX**:
 5. Preview counts and validation errors (nothing is written yet)
 6. Start the import — it runs in the background; watch progress until complete
 
+When another lead with the same email or phone was already created **today** (workspace timezone from Settings → General), EloSync applies the **Duplicate** tag and notifies the existing lead’s assignee, creator, and the person importing — even if the row is skipped. Manual create and inbound webhooks follow the same same-day rule (manual create still adds the new lead).
+
 **Update existing** also requires the **update** permission.
 
+**Automatically distribute** (equal split) is available only when you have **assign** and you are a **department manager** of at least one active department. Newly created leads are shared equally among eligible members of your managed department(s) (owners and users marked **Exclude from lead assignment** are skipped). Non-managers cannot enable this mode.
+
 Use **Import history** to review past imports, download the original file, **failed_records.csv**, or **error_report.csv**. Fix failed rows and upload again.
+
+## Integrations (webhooks)
+
+Users with **manage integrations** can open **Integrations** from the Leads page.
+
+**Custom webhooks** — create endpoints for Zapier, website forms, etc. Each endpoint can enable **Assign to website recipients**. When on, new leads from that webhook are shared equally among users who are eligible assignees **and** have **Receive website leads** enabled in Administration → Users. If nobody is in that pool, the lead stays unassigned (ingest still succeeds). Meta Lead Ads does not use this pool.
 
 ## Activity timeline
 

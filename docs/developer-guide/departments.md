@@ -50,14 +50,29 @@ Default role map: admin (all), manager (view/create/update/manage_members/assign
 
 ## API
 
-See [tenant-v1-departments.md](/api/tenant-v1-departments).
+See [tenant-v1-departments.md](/api/tenant-v1-departments) and [tenant-v1-reports.md](/api/tenant-v1-reports) (`GET /reports/department-performance`).
+
+## Reports & digest
+
+| Piece | Path |
+|-------|------|
+| Report service | `app/Services/Tenant/DepartmentPerformanceReportService.php` |
+| Controller | `app/Http/Controllers/Tenant/Api/V1/DepartmentPerformanceReportController.php` |
+| Request | `app/Http/Requests/Tenant/Api/V1/Report/DepartmentPerformanceReportRequest.php` |
+| Notification | `app/Notifications/Tenant/Report/DepartmentPerformanceDigestNotification.php` |
+| Command | `app/Console/Commands/SendDepartmentPerformanceDigestCommand.php` (`reports:send-department-digest`) |
+| Tests | `tests/Feature/Tenant/Report/`, `tests/Feature/Tenant/Notification/DepartmentPerformanceDigestNotificationTest.php` |
+
+Auth: `dashboard.view` middleware + owner or `User::isDepartmentManager()` in the Form Request (no new Spatie permission). Period filter applies to `created_at` on leads/tasks assigned to `Department::performanceUserIds()`.
+
+Digest delivery tracking reuses `DailySummaryDelivery` with `kind = department_weekly`; mail send/fail tracked by `TrackDailySummaryDelivery`.
 
 ## Frontend
 
 - Page: `src/pages/departments/` (list, form dialog, detail sheet with Overview / Members / Performance)
-- Service / keys / permissions: `departmentService`, `QUERY_KEYS.departments*`, `PERMISSIONS.departments`
-- Nav group **HR**, dual-gated `module: departments` + `PERMISSIONS.departments.view`
-- Playwright: `e2e/tests/departments/`, `npm run test:e2e:departments`
+- Reports page: `src/pages/reports/department-reports-page.tsx` at `/reports/departments`
+- Service / keys / permissions: `departmentService`, `departmentReportService`, `QUERY_KEYS.departments*`, `QUERY_KEYS.departmentPerformanceReport`, `PERMISSIONS.dashboard.view` + owner/manager gate
+- Nav group **HR**, dual-gated `module: departments` + owner/manager (`requiresDepartmentReportAccess`)
 
 ## Tests
 

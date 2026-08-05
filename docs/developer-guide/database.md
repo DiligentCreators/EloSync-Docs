@@ -187,13 +187,15 @@ Once-per-day mail ledger for task due digests: `tenant_id`, `user_id`, `digest_d
 
 ### `daily_summary_deliveries`
 
-Once-per-day mail ledger for CRM summaries: same columns as task digests plus `kind` (`personal`|`team`). Unique `(tenant_id, user_id, digest_date, kind)`. Stale `queued` may be reclaimed after 45 minutes (max 5 attempts).
+Once-per-day mail ledger for CRM summaries: same columns as task digests plus `kind` (`personal`|`team`|`department_weekly`). Unique `(tenant_id, user_id, digest_date, kind)`. Stale `queued` may be reclaimed after 45 minutes (max 5 attempts).
 
 ### Users CRM flags
 
 Tenant `users` includes:
 
 - `exclude_from_lead_auto_assign` (boolean) — omit from lead assignee pickers / equal distribute
+- `receive_website_leads` (boolean) — opt-in for custom webhook website recipient pool
+- `lead_commission_rate` (nullable decimal 0–100) — default rate snapshotted onto leads on assign
 - `receive_all_users_daily_summary` (boolean, default `false`) — receive team CRM summary email instead of personal
 
 ## Vendors module tables

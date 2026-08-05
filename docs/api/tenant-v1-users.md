@@ -40,7 +40,9 @@ Returned on list/show and accepted on create/update:
 | Field | Type | Default | Notes |
 |-------|------|---------|-------|
 | `exclude_from_lead_auto_assign` | boolean | `false` | When `true`, user is omitted from lead assignee pickers and equal-distribution import/bulk. Workspace owners are typically `true`. |
+| `receive_website_leads` | boolean | `false` | When `true`, user may receive custom webhook leads when an endpoint has `assign_to_website_recipients` enabled. Must also pass `eligibleLeadAssignees`. |
 | `receive_all_users_daily_summary` | boolean | `false` | When `true`, at **Daily Reminder Time** the user receives the **team** (user-wise) CRM summary email and **not** a personal summary. Grants visibility into other members’ open leads/tasks/meetings counts. Prefer Owner/Admin. |
+| `lead_commission_rate` | number \| null | `null` | Optional default commission percentage (0–100). Snapshotted onto `leads.commission_rate` when this user is assigned via the assign endpoint. Reporting/display only — not used for payouts. |
 
 Example create payload fragment:
 
@@ -51,7 +53,8 @@ Example create payload fragment:
   "password": "Password1!",
   "role": ["manager"],
   "exclude_from_lead_auto_assign": false,
-  "receive_all_users_daily_summary": true
+  "receive_all_users_daily_summary": true,
+  "lead_commission_rate": 12.5
 }
 ```
 

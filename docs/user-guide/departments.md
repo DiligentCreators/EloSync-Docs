@@ -41,6 +41,17 @@ Managers and admins can open the **Performance** tab on a department:
 
 Lead and Task list pages are unchanged in this release — managers track team work from the Departments performance view.
 
+## Department reports
+
+Workspace owners and department managers can open **Department reports** from the HR sidebar.
+
+- Choose a **from / to** date range and run the report
+- See leads (open / won / lost) and tasks (open / completed) per department
+- Owners see all active departments; managers see only departments they manage
+- Requires the Departments module and dashboard access
+
+You receive a **weekly email and in-app notification** with the prior week’s department summary when you are an owner or department manager.
+
 ## Related modules
 
 - Install **Employees** to tag HR directory members into departments

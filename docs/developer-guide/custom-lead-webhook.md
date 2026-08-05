@@ -14,6 +14,7 @@ Each workspace can create one or more webhook endpoints under **Leads → Integr
 | Ingress | `POST /webhooks/leads/custom/{uuid}` |
 | Auth | `Authorization: Bearer <api_key>` **or** `X-EloSync-Key` **or** HMAC via `X-EloSync-Signature` + `X-EloSync-Timestamp` |
 | Default source | Tenant-editable (`default_source`, factory default `Webhook`) |
+| Website auto-assign | Optional `assign_to_website_recipients` — equal distribute to `eligibleLeadAssignees ∩ receive_website_leads`; empty pool leaves unassigned + audit |
 | Payload override | Body field `source` overrides the endpoint default when non-empty |
 | Module gate | Ingress rejects when tenant lacks active `module:leads` |
 | Body limit | 64 KB |
@@ -60,7 +61,7 @@ Timestamp must be within ±5 minutes of server time.
 ## Management API
 
 - `GET/POST /api/tenant/v1/leads/integrations/webhooks`
-- `PUT /api/tenant/v1/leads/integrations/webhooks/{id}`
+- `PUT /api/tenant/v1/leads/integrations/webhooks/{id}` — accepts `assign_to_website_recipients` (boolean)
 - `POST .../rotate`
 - `DELETE .../{id}`
 
