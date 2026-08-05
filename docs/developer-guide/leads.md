@@ -7,7 +7,7 @@ Reference implementation. Copy this layout for Tasks and later modules.
 | Piece | Path |
 |-------|------|
 | Models | `app/Models/Lead.php`, `LeadStage`, `LeadTag`, `LeadNote`, `LeadNoteMention`, `LeadFollowUp`, `LeadActivity`, `LeadAssignmentHistory` |
-| Enums | `app/Enums/Tenant/LeadStatusEnum`, `LeadPriorityEnum`, `LeadFollowUpStatusEnum`, `LeadActivityTypeEnum`, `LeadTagBehaviorEnum` |
+| Enums | `app/Enums/Tenant/LeadStatusEnum`, `LeadPriorityEnum`, `LeadTypeEnum`, `LeadFollowUpStatusEnum`, `LeadActivityTypeEnum`, `LeadTagBehaviorEnum` |
 | Service | `app/Services/Tenant/LeadService.php` (+ `ScopesToAssignee`), `LeadTagService.php` |
 | Export | `app/Exports/LeadsExport.php` |
 | Import framework | `app/Import/*` (`ImportManager`, `ImportFile`, `ImportColumnMapper`, `ImportErrorWriter`, `ImportTemplateGenerator`, `ImportHistory`, `ImportJob`) |
@@ -20,14 +20,16 @@ Reference implementation. Copy this layout for Tasks and later modules.
 | Policy | `app/Policies/LeadPolicy.php` |
 | Events | `app/Events/Lead*.php` |
 | Subscriber | `app/Listeners/LeadEventSubscriber.php` (audit + notifications) |
-| Notifications | `app/Notifications/Tenant/Lead/*` (assign: database+broadcast+webpush; follow-ups/mentions: database + optional mail; mentions also broadcast+webpush) |
+| Notifications | `app/Notifications/Tenant/Lead/*` (assign: database+broadcast+webpush; follow-ups/mentions: database + optional mail; mentions also broadcast+webpush; inactivity: database+broadcast+webpush) |
+| Inactivity job | `app/Services/Tenant/LeadInactivityService.php`, `app/Console/Commands/NotifyInactiveLeadsCommand.php` (`leads:notify-inactive`, daily) |
 | Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `LeadNoteAdded` in `LeadEventSubscriber` |
 | Seeder | `database/seeders/Tenant/LeadStageSeeder.php`, `LeadTagSeeder.php` |
-| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadTagTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
+| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadTagTest.php`, `LeadTypeTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `LeadSameDayDuplicateTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
-- Disposition **tags** are many-to-many (`lead_lead_tag`), independent of stage/status. Catalog CRUD + reorder under `LeadTagController`. New leads receive `is_default` tags. Sync via `PUT /leads/{id}/tags` (and optional `tag_ids` on create). `auto_follow_up` creates a pending follow-up keyed by `lead_follow_ups.lead_tag_id`; `force_follow_up` requires a nested `follow_up` payload.
+- Disposition **tags** are many-to-many (`lead_lead_tag`), independent of stage/status. Catalog CRUD + reorder under `LeadTagController`. New leads receive `is_default` tags. Sync via `PUT /leads/{id}/tags` (and optional `tag_ids` on create). `auto_follow_up` creates a pending follow-up keyed by `lead_follow_ups.lead_tag_id`; `force_follow_up` requires a nested `follow_up` payload. System tag `duplicate` is seeded (protected from delete) and applied when email/phone matches another lead created the same workspace calendar day — manual create, import (all duplicate modes), and inbound ingest still notify assignee/creator/actor via `lead.duplicate_detected`.
+- **Lead type** (`direct` | `company`) is stored on `leads.lead_type` (required on create/update via API; nullable for legacy rows). System tags `direct-lead` / `company-lead` are seeded in `LeadTagSeeder` and kept mutually exclusive via `LeadTagService::mergeExclusiveTypeTags()` on create, update, and manual tag sync.
 - Note bodies may include `@[Display Name](user:ID)` mention tokens. On `LeadNoteAdded`, `NoteMentionService` persists `lead_note_mentions` and sends `lead.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.lead_mentioned` (default off).
 - Follow-up `due_at` follows the [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): SPA edit/display in Settings → General timezone; store as UTC via `UtcDateTime` / `UtcIso`; due/overdue notifications use workspace-local “today”.
 - `lead_value` replaced `estimated_value` (migration rename). Store/update requests still accept `estimated_value` as a write alias.
@@ -35,6 +37,10 @@ Reference implementation. Copy this layout for Tasks and later modules.
 - Convert: `converted_at`, `conversion_meta`, status `closed`, activity type converted. When [Contacts](/developer-guide/contacts) is entitled for the workspace, also creates/links a real `Contact` (`contact_id`, `conversion_meta.stub = false`, lifecycle `on_boarded`) and requires `contacts.create`; preserves the lead assignee; runs in a DB transaction. Stub converts (no `contact_id`) can be completed by calling convert again after Contacts is installed. Without Contacts, conversion remains status-only (`conversion_meta.stub = true`). `LeadPolicy::convert` uses the same assignee scope as update.
 - Assignee scoping via `ScopesToAssignee` with `leads.assign` (superadmin always org-wide).
 - Lead assignee eligibility (`User::eligibleLeadAssignees` / `EligibleLeadAssignee` rule): excludes suspended users, workspace owners (`superadmin`), and users with `exclude_from_lead_auto_assign`. Used by assign / create / update / bulk-assign / import column mapping, and by `LeadBulkAssignmentService::eligibleAssignees` for equal distribute.
+- Website webhook auto-assign uses `eligibleLeadAssignees ∩ receive_website_leads` when the endpoint flag `assign_to_website_recipients` is enabled. Meta Lead Ads does not use this pool.
+- Import equal distribute (`assignment_mode=equal`): requires `leads.assign` and that the importer is `manager_id` on ≥1 active department. Pool = eligible assignees ∩ members of those departments (`assignEquallyForImport`). Non-managers receive a validation error. Bulk equal distribute remains org-wide eligible assignees.
+- **Commission rate:** `users.lead_commission_rate` (nullable decimal 0–100) is the user’s default. `LeadService::assign` copies the assignee’s rate to `leads.commission_rate` on assign/reassign and clears it on unassign. Snapshot is reporting-only (export, list, detail) — no payout engine. Bulk assign and import equal distribute use `assign()` so snapshots apply there too.
+- **Inactivity alerts:** Workspace setting `leads.inactivity_working_days` (integer, default `3`; `0` disables). Scheduled command `leads:notify-inactive` runs daily per tenant. Counts Mon–Sat working days in the workspace timezone (Sundays excluded). Idle = assigned lead in an open stage (not Won/Lost) with no meaningful `lead_activities` since the last assignment baseline. Meaningful types: `note_added`, `follow_up_created`, `follow_up_completed`, `stage_changed`, `status_changed`, `crm_activity_logged`, `crm_activity_completed`, `tags_changed`. Excluded from resetting idle: `assigned`, `reassigned`, `imported`, `created`. Notifies assignee (`lead.inactive`) plus department managers of the assignee (`lead.inactive_escalation`), else workspace owners. Idempotent via `NotificationIdempotency` (daily dedupe per lead/recipient).
 
 ## Permissions
 
@@ -107,7 +113,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |
 | Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` |
-| Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`) |
+| Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`) |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |
 
@@ -130,4 +136,5 @@ npm run test:e2e:leads
 - Spatie `LogsActivity` on `Lead` (log name `leads`)
 - Domain `lead_activities` timeline
 - `lead_assignment_histories` for assignee changes
+- `users.lead_commission_rate`, `leads.commission_rate` — snapshot on assign via `LeadService::assign`
 - `PlatformAuditService` via `LeadEventSubscriber` (+ `lead_import_completed` / `lead_import_failed`)

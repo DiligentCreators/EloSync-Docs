@@ -69,7 +69,7 @@ List and board lead cards include:
 
 ### POST `/leads`
 
-Body: `name` (required), `email`, `phone`, `company`, `job_title`, `source`, `lead_value` (or legacy alias `estimated_value`), `priority`, `status`, `stage_id`, `assigned_to`, optional `tag_ids` (defaults to workspace default tags), optional `follow_up` when creating with a force-follow-up tag.
+Body: `name` (required), `lead_type` (required: `direct` | `company`), `email`, `phone`, `company`, `job_title`, `source`, `lead_value` (or legacy alias `estimated_value`), `priority`, `status`, `stage_id`, `assigned_to`, optional `tag_ids` (defaults to workspace default tags; type tags are merged automatically), optional `follow_up` when creating with a force-follow-up tag.
 
 ### GET `/leads/{id}`
 
@@ -77,7 +77,7 @@ Includes stage, assignee, tags, notes, follow-ups, activities, assignment histor
 
 ### PUT `/leads/{id}`
 
-Partial update of lead fields (including `stage_id`, `status`, `priority`, `lead_value`, `assigned_to`). Stage change does **not** sync status.
+Partial update of lead fields (including `lead_type`, `stage_id`, `status`, `priority`, `lead_value`, `assigned_to`). Changing `lead_type` swaps the exclusive Direct Lead / Company Lead system tags. Stage change does **not** sync status.
 
 ### DELETE `/leads/{id}`
 
@@ -125,7 +125,11 @@ Mappable system fields include lead attributes plus optional `note` (max 5000 ch
 
 ### PUT `/leads/imports/{uuid}/options`
 
-Body: `{ "unique_fields": ["email","phone"], "duplicate_mode": "skip"|"update"|"keep" }`.
+Body: `{ "unique_fields": ["email","phone"], "duplicate_mode": "skip"|"update"|"keep", "assignment_mode": "none"|"equal" }`.
+
+`duplicate_mode=update` requires `leads.update`. `assignment_mode=equal` requires `leads.assign` **and** that the actor is `manager_id` on at least one active department; newly created leads are distributed equally among eligible members of those managed department(s).
+
+Same-day duplicate detection (workspace timezone): when a row matches email/phone on a lead created today, the **Duplicate** tag is applied and `lead.duplicate_detected` notifications are sent — regardless of duplicate mode (including **skip**).
 
 ### POST `/leads/imports/{uuid}/preview`
 
@@ -204,7 +208,7 @@ Ordered assignment change rows (`old_user`, `new_user`, `changed_by`, `reason`, 
 - `POST /leads/integrations/webhooks/{id}/rotate`
 - `DELETE /leads/integrations/webhooks/{id}`
 
-Create/rotate responses include plaintext `api_key` and `signing_secret` once. Public ingress: `POST /webhooks/leads/custom/{uuid}` (Bearer or `X-EloSync-Signature`). See [Custom Lead Webhook](/developer-guide/custom-lead-webhook).
+Create/rotate responses include plaintext `api_key` and `signing_secret` once. Public ingress: `POST /webhooks/leads/custom/{uuid}` (Bearer or `X-EloSync-Signature`). Endpoint fields include `assign_to_website_recipients` (boolean, default `false`). See [Custom Lead Webhook](/developer-guide/custom-lead-webhook).
 
 ### Meta Lead Ads
 

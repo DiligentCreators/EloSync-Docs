@@ -1,5 +1,62 @@
 # Changelog
 
+## Lead inactivity alerts (2026-08-05)
+
+Assigned open leads (not in Won/Lost stages) trigger daily inactivity alerts when no **meaningful** activity occurs for the configured number of **Mon–Sat working days** (workspace timezone; Sundays excluded). Default threshold: **3** (`leads.inactivity_working_days`). Meaningful types: notes, follow-ups, stage/status changes, CRM activities, tag changes. Assignment/import/create alone do not reset the timer.
+
+- Assignee receives `lead.inactive`; department managers of the assignee receive `lead.inactive_escalation` (workspace owners when no managers).
+- Backend: `LeadInactivityService`, `leads:notify-inactive` (daily schedule), `NotificationIdempotency`, Pest `LeadInactiveNotificationTest`
+- Frontend: Settings → Leads tab; notification registry entries
+- Docs: Leads user + developer guides
+
+## Department performance reports + weekly digest (2026-08-05)
+
+Workspace owners and department managers get an in-app **Department reports** page (`/reports/departments`) with leads open/won/lost and tasks open/completed by department for a selected period. Metrics join assignees via `department_user` membership (plus linked employees and manager). A weekly scheduled command sends database + email digest notifications to owners and managers.
+
+- Backend: `DepartmentPerformanceReportService`, `GET /reports/department-performance`, `reports:send-department-digest`, `DepartmentPerformanceDigestNotification`, Pest authz + metrics + digest tests
+- Frontend: HR nav item (owner or `is_department_manager`), period filters, summary cards + table
+- Docs: tenant reports API, Departments user + developer guides
+
+## Same-day duplicate leads — notify + Duplicate tag (2026-08-05)
+
+When email or phone matches another lead created the **same workspace calendar day** (Settings → General timezone), EloSync applies the protected **Duplicate** system tag and sends `lead.duplicate_detected` notifications to the existing lead’s assignee, creator, and the actor (importer or manual creator). Import duplicate mode (**Skip** / **Update** / **Keep**) is unchanged; tagging and notifications still run for same-day matches. Inbound ingest skips still tag and notify when the match is same-day.
+
+- Backend: `LeadDuplicateService::findSameDayByContactFields`, `LeadSameDayDuplicateService`, `LeadDuplicateDetected` event + notification, hooks in `LeadService`, `ImportManager`, `LeadIngestionService`, Pest `LeadSameDayDuplicateTest` (non-UTC day boundary)
+- Frontend: notification registry entry `lead.duplicate_detected`
+- Docs: Leads user + developer guides
+
+## Website lead recipient pool (2026-08-05)
+
+Custom webhook endpoints can **assign to website recipients** after ingest. Users opt in with **Receive website leads** (`receive_website_leads`). Eligible assignees in that pool receive equal distribution; empty pool leaves the lead unassigned and writes a platform audit event. Meta Lead Ads is not part of this pool.
+
+- Backend: migrations, `LeadBulkAssignmentService::eligibleAssigneesForWebsite`, post-create assign in `LeadIngestionService`, `NotificationSourceEnum::Webhook`, Pest `LeadCustomWebhookTest`
+- Frontend: user flag toggle; webhook endpoint toggle under Leads → Integrations
+- Docs: Users API, Custom Lead Webhook, Leads developer guide
+
+## Lead type Direct / Company (2026-08-05)
+
+Leads now have a first-class **lead type** (`direct` | `company`), required when creating or updating via the API and lead form. Legacy rows may still have a null type until edited.
+
+- System tags **Direct Lead** / **Company Lead** are seeded and kept mutually exclusive with the stored type
+- Import mapping adds optional **Lead Type** column (defaults to `direct` when unmapped)
+- Table, board cards, and detail drawer show lead type
+
+- Backend: `LeadTypeEnum`, `leads.lead_type` migration, tag sync in `LeadService` / `LeadTagService`, Pest `LeadTypeTest`
+- Frontend: lead form select, import field list, list/detail/board display
+- Docs: Leads user + developer guides, tenant leads API
+
+## Lead commission rate snapshot (2026-08-05)
+
+Workspace users can have an optional **Default lead commission %** (`users.lead_commission_rate`). When a lead is assigned or reassigned via `POST /leads/{id}/assign`, the assignee’s rate is copied to `leads.commission_rate`; unassign clears it. Display and export only — no payout calculations.
+
+- Backend: migrations, `TenantUserService`, `LeadService::assign`, API resources, CSV/XLSX export column, Pest `LeadCommissionRateTest`
+- Frontend: Users create/edit field; read-only commission on lead list (when assigned) and detail drawer
+- Docs: Users API, Leads developer + user guides
+
+## Import equal distribute scoped to managed departments (2026-08-05)
+
+Lead import **Automatically distribute** is limited to department managers. Eligible assignees are drawn only from members of active departments where the importer is `manager_id`. Non-managers cannot select the mode (API 422 + SPA disable). Bulk equal distribute is unchanged (org-wide). Login `/me` include `is_department_manager`.
+
 ## Lead High Priority dashboard chip (2026-08-05)
 
 Staff with **leads.update** can toggle **High Priority** from the lead detail drawer. The Dashboard **High Priority** widget lists open-pipeline leads with priority **High** only.

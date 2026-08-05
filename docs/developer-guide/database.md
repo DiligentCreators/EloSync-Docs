@@ -194,6 +194,7 @@ Once-per-day mail ledger for CRM summaries: same columns as task digests plus `k
 Tenant `users` includes:
 
 - `exclude_from_lead_auto_assign` (boolean) — omit from lead assignee pickers / equal distribute
+- `receive_website_leads` (boolean) — opt-in for custom webhook website recipient pool
 - `receive_all_users_daily_summary` (boolean, default `false`) — receive team CRM summary email instead of personal
 
 ## Vendors module tables
