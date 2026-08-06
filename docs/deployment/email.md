@@ -25,6 +25,13 @@ php -m | grep -i imap
 
 Without the extension, account test/sync fails with a clear runtime error. Do not rely on Composer IMAP packages for v1.
 
+On **PHP 8.4+**, IMAP is unbundled (PECL). Windows / Laravel Herd:
+
+1. Download the matching NTS build from [PECL imap Windows releases](https://downloads.php.net/~windows/pecl/releases/imap/) (e.g. `php_imap-1.0.3-8.4-nts-vs17-x64.zip` for Herd PHP 8.4 NTS x64).
+2. Copy `php_imap.dll` into the PHP `ext` directory (Herd: `%USERPROFILE%\.config\herd\bin\php84\ext\`).
+3. Add `extension=imap` to that version’s `php.ini`, then `herd restart`.
+4. Confirm with `php -m` (must list `imap`).
+
 ## Queue worker (`email-sync`)
 
 Sync and outbound personal send jobs use the **`email-sync`** queue (not the platform `emails` notification queue).
