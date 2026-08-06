@@ -97,4 +97,4 @@ Workspace owners (superadmin) have full access when the module is installed. Pol
 
 - [Communication Templates](/user-guide/communication-templates)
 - [Tenant Settings — Mail](/user-guide/tenant-settings#mail)
-- [Marketplace](/user-guide/marketplace)
+- [Marketplace](/user-guide/tenant-application#marketplace-add--remove-modules)
