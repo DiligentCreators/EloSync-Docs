@@ -1,5 +1,17 @@
 # Changelog
 
+## Phase 1 — Resellers + Reseller Payouts (2026-08-06)
+
+Free Sales Marketplace modules for partner accounts and a two-tier commission ledger on fully **Paid** customer invoices.
+
+- **Resellers** (`resellers`): partner directory with `commission_rate` / `owner_commission_rate`, assignee scoping, soft delete, same-workspace **invite-login** (protected `reseller` role only), Vendor-parity **threaded notes** (`note_entries` / `reseller_notes`) and **domain activity** timeline (`reseller_activities`). Hard dependency on **Payments**. Catalog: `is_default_included=false`, `is_billable=false`, category `sales`, `sort_order=70`.
+- **Reseller Payouts** (`reseller-payouts`): `reseller_commission_entries` accrued on `CustomerInvoiceBecamePaid` (not Partial); formula `resellerCut = T×R%`, `ownerCut = (T−resellerCut)×O%`; approve → pay / void. **Pay → void payment → pay again** revives void ledger rows to accrued with refreshed snapshots. Hard dependency on **Resellers**. Catalog: same free Sales flags, `sort_order=80`.
+- Invoice link: nullable `customer_invoices.reseller_id` (+ `LinkableReseller`).
+- SPA: Resellers list + detail sheet tabs Overview | Notes | Activity | Access; Reseller Payouts ledger workflow.
+- **Deferred:** cross-workspace identity (each tenant manages its own reseller logins; no Central multi-tenant reseller person).
+- Docs: user/developer/deployment/API guides + module-dependencies + database dictionary.
+- Finance ops: voiding a posted payment voids **all** commission rows for that invoice (including already `paid`); re-paying revives them to `accrued`.
+
 ## Fix — Leads Ops merge-readiness audit (2026-08-06)
 
 Pre-merge fixes from security/bug audit on `feature/leads-operations`:

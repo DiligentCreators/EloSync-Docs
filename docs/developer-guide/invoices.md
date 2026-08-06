@@ -18,7 +18,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 | Events | `app/Events/CustomerInvoice*.php` |
 | Subscriber | `app/Listeners/CustomerInvoiceEventSubscriber.php` (audit + assignment notification) |
 | Notifications | `app/Notifications/Tenant/CustomerInvoice/CustomerInvoiceAssignedNotification.php` |
-| Link rules | `LinkableContact`, `LinkableCompany`, `EligibleInvoiceAssignee` — `quotation_id` is a plain tenant-scoped `Rule::exists()`, **not** gated by a `LinkableQuotation`-style entitlement rule |
+| Link rules | `LinkableContact`, `LinkableCompany`, `LinkableReseller`, `EligibleInvoiceAssignee` — `quotation_id` is a plain tenant-scoped `Rule::exists()`, **not** gated by a `LinkableQuotation`-style entitlement rule; `reseller_id` requires Resellers entitlement + assignee scope via `LinkableReseller` |
 | Tests | `tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php` |
 
 ## Domain notes
