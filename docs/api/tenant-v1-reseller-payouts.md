@@ -65,4 +65,4 @@ Formula (per invoice total `T`):
 
 Idempotent unique key: `(customer_invoice_id, party)`.
 
-Leaving Paid (`CustomerInvoiceLeftPaid`) calls `voidForInvoice`, which voids every non-void entry for that invoice.
+Leaving Paid (`CustomerInvoiceLeftPaid`) calls `voidForInvoice`, which voids every non-void entry for that invoice. If the invoice becomes Paid again, accrual **revives** those void rows with refreshed snapshot amounts (same unique `(customer_invoice_id, party)` keys).

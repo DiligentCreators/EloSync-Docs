@@ -33,7 +33,7 @@ If Reseller Payouts is not installed when the invoice becomes Paid, no rows are 
 
 **Mark paid** records that the workspace has settled the commission — it does not move money through a payment gateway.
 
-If a Paid invoice later leaves Paid (e.g. payment voided), **all** non-void ledger rows for that invoice are auto-voided (including ones already marked paid). The manual **Void** action still rejects entries that are already `paid`.
+If a Paid invoice later leaves Paid (e.g. payment voided), **all** non-void ledger rows for that invoice are auto-voided (including ones already marked paid). If the invoice becomes Fully Paid again, those void rows are **revived** to accrued with updated amount snapshots. The manual **Void** action still rejects entries that are already `paid`.
 
 ## Related modules
 

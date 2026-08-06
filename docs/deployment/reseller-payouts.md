@@ -43,7 +43,7 @@ Transitions are dispatched from `CustomerInvoicePaidTransitions` after invoice s
 1. Migrate commission table + catalog + permissions + Resellers dependency
 2. Confirm `module:reseller-payouts` + `reseller-payouts.*` on admin/manager/staff/reseller maps
 3. Confirm listeners registered in deployed app container
-4. Smoke: Paid invoice with `reseller_id` → two accrued rows → approve → pay; void invoice payment → entries voided
+4. Smoke: Paid invoice with `reseller_id` → two accrued rows → approve → pay; void invoice payment → entries voided; re-post payment → entries revived to accrued
 5. Confirm Partial invoices do **not** accrue
 
 ## Deferred

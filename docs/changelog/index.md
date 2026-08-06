@@ -5,7 +5,7 @@
 Free Sales Marketplace modules for partner accounts and a two-tier commission ledger on fully **Paid** customer invoices.
 
 - **Resellers** (`resellers`): partner directory with `commission_rate` / `owner_commission_rate`, assignee scoping, soft delete, same-workspace **invite-login** (protected `reseller` role only). Hard dependency on **Payments**. Catalog: `is_default_included=false`, `is_billable=false`, category `sales`, `sort_order=70`.
-- **Reseller Payouts** (`reseller-payouts`): `reseller_commission_entries` accrued on `CustomerInvoiceBecamePaid` (not Partial); formula `resellerCut = T×R%`, `ownerCut = (T−resellerCut)×O%`; approve → pay / void. Hard dependency on **Resellers**. Catalog: same free Sales flags, `sort_order=80`.
+- **Reseller Payouts** (`reseller-payouts`): `reseller_commission_entries` accrued on `CustomerInvoiceBecamePaid` (not Partial); formula `resellerCut = T×R%`, `ownerCut = (T−resellerCut)×O%`; approve → pay / void. **Pay → void payment → pay again** revives void ledger rows to accrued with refreshed snapshots. Hard dependency on **Resellers**. Catalog: same free Sales flags, `sort_order=80`.
 - Invoice link: nullable `customer_invoices.reseller_id` (+ `LinkableReseller`).
 - **Deferred:** cross-workspace identity (each tenant manages its own reseller logins; no Central multi-tenant reseller person).
 - Docs: user/developer/deployment/API guides + module-dependencies + database dictionary.

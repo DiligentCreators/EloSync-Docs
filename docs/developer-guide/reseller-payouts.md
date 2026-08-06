@@ -33,10 +33,10 @@ resellerCut = round(total * (commission_rate / 100), 2)
 ownerCut    = round((total - resellerCut) * (owner_commission_rate / 100), 2)
 ```
 
-5. `firstOrCreate` on `(customer_invoice_id, party)` — reseller party uses `reseller.user_id`; owner party uses `reseller.assigned_to`
+5. `ensurePartyEntry` on `(customer_invoice_id, party)` — creates accrued rows, or **revives** void rows with refreshed amounts/rates (clears approve/pay/void metadata). Existing non-void rows are left unchanged (idempotent).
 6. Initial status `accrued`; currency from invoice (default `USD`)
 
-**Fully Paid only** — listeners fire when status transitions **into** `CustomerInvoiceStatusEnum::Paid` (not Partial). Leaving Paid runs `voidForInvoice`, which bulk-voids **every** non-void row for that invoice (including `paid`). The manual `void()` API still rejects entries already in `paid`.
+**Fully Paid only** — listeners fire when status transitions **into** `CustomerInvoiceStatusEnum::Paid` (not Partial). Leaving Paid runs `voidForInvoice`, which bulk-voids **every** non-void row for that invoice (including `paid`). Re-paying the invoice revives those void rows. The manual `void()` API still rejects entries already in `paid`.
 
 ## Workflow guards
 
