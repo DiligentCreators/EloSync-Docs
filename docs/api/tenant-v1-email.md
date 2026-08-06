@@ -21,7 +21,7 @@ Personal mailbox traffic does **not** use `EmailConfigResolver` or Settings → 
 | POST | `/email/accounts/{uuid}/sync` | `email.accounts.manage` |
 | POST | `/email/accounts/{uuid}/default` | `email.accounts.manage` |
 
-`POST /email/accounts` and `POST /email/accounts/test` accept IMAP + SMTP host/port/encryption/username/password, `email_address`, optional `from_name`, `is_default`. Passwords are stored with the Eloquent `encrypted` cast.
+`POST /email/accounts` and `POST /email/accounts/test` accept IMAP + SMTP host/port/encryption/username/password, `email_address`, optional `from_name`, `is_default`, and optional `sync_interval_minutes` (`5` | `10` | `15` | `30` | `60`, default `5`). Passwords are stored with the Eloquent `encrypted` cast. Manual `POST …/sync` always queues a sync regardless of interval.
 
 ## Folders
 
@@ -46,9 +46,11 @@ Returns synced folders (`uuid`, `name`, `type`, `remote_path`, unread/total coun
 | POST | `/email/messages/{uuid}/link` | `email.update` |
 | DELETE | `/email/messages/{uuid}/link` | `email.update` |
 
-Compose body requires `account_uuid`, optional `to`/`cc`/`bcc` arrays, `subject`, `body_html` / `body_text`. Creates a draft; call `send` to queue `SendEmailMessageJob` on `email-sync`.
+Compose body requires `account_uuid`, optional `to`/`cc`/`bcc` arrays, `subject`, `body_html` / `body_text`, and optional `in_reply_to` / `thread_key` for replies. Creates a draft; call `send` to queue `SendEmailMessageJob` on `email-sync`.
 
-Update supports `is_read`, `is_starred`, `folder_uuid` (move), and draft field edits.
+Update supports `is_read`, `is_starred`, `folder_uuid` (IMAP move to another folder on the same account), and draft field edits.
+
+`DELETE /email/messages/{uuid}` moves the message to the account **Trash** folder when present and the message is not already in Trash; otherwise permanently deletes (IMAP expunge + local row). Success message indicates which path ran.
 
 Link body: `{ "linkable_type": "lead\|contact\|company\|opportunity", "linkable_id": 1 }`.
 
@@ -71,7 +73,7 @@ Render body: `{ "variables": { "name": "Ada" } }` → `{ subject, body_html }` w
 
 ## Ops notes
 
-- Queue workers: `php artisan queue:work --queue=email-sync,emails,default`
-- Scheduler: `email:sync` every five minutes
+- Queue workers: dedicated `email-sync` daemon (see [deployment](/deployment/email#queue-worker-email-sync)); keep notifications on `emails,default`
+- Scheduler: `email:sync` **every minute** — dispatches jobs only for mailboxes whose `sync_interval_minutes` (default 5) has elapsed
 - Production sync requires PHP `ext-imap`
 - Platform transactional mail remains under Settings → Mail / Email Logs

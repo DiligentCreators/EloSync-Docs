@@ -1,5 +1,25 @@
 # Changelog
 
+## Email — per-mailbox sync interval (2026-08-06)
+
+- Each connected mailbox has **Auto-sync interval** (default **5 minutes**; 5 / 10 / 15 / 30 / 60)
+- Scheduler runs `email:sync` every minute and only queues jobs for due mailboxes; **Sync** button still forces an immediate sync
+- Forge: dedicated `email-sync` queue daemon documented separately from `emails,default`
+- Docs: user guide, API, deployment, Laravel Forge
+
+## Email — rich text compose (2026-08-06)
+
+- Compose, Reply, Forward, Templates, and Signatures use a TipTap rich text editor (bold, italic, underline, lists, link, text color)
+- Reply/Forward quote the original message as rendered HTML instead of showing source in a raw textarea
+- Docs: user guide + developer guide editor notes
+
+## Email — reply, move, trash (2026-08-06)
+
+- Reading pane: **Reply**, **Forward**, and **Move to** folder actions
+- Delete moves the message to **Trash** (IMAP) when a trash folder exists; delete again permanently removes it
+- Compose sends `in_reply_to` / `thread_key` for replies
+- Docs: user guide + tenant API behavior notes
+
 ## Email module — personal IMAP/SMTP (2026-08-06)
 
 Free Communication Marketplace module for a **personal** mailbox inside EloSync (Inbox/folders, compose/drafts/sent, templates with `{{variables}}`, signatures, CRM links to Leads/Contacts).

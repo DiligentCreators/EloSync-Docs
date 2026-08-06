@@ -34,7 +34,7 @@ SPA /email
           → Jobs on queue email-sync
               → SyncEmailAccountJob
               → SendEmailMessageJob
-  → Schedule: email:sync every five minutes (withoutOverlapping)
+  → Schedule: email:sync every minute (due by sync_interval_minutes; withoutOverlapping)
 ```
 
 | Concern | Implementation |
@@ -70,8 +70,9 @@ Bindings (e.g. `AppServiceProvider`): testing → fakes; otherwise native IMAP +
 |-------|------|
 | Inbox UI | `src/pages/email/email-page.tsx` (3-pane + connect empty state) |
 | Connect dialog | `email-account-dialog.tsx` (Gmail / Outlook / Custom presets) |
-| Compose | `email-compose-dialog.tsx` |
-| Templates / signatures | `email-templates-page.tsx`, `email-signatures-page.tsx` |
+| Compose | `email-compose-dialog.tsx` (TipTap `RichTextEditor`) |
+| Shared editor | `src/components/common/rich-text-editor.tsx` |
+| Templates / signatures | `email-templates-page.tsx`, `email-signatures-page.tsx` (+ TipTap body fields) |
 | Routes / nav | `/email`, templates & signatures children; `module: 'email'` |
 | E2E | `e2e/tests/email/`, `npm run test:e2e:email` |
 
@@ -105,9 +106,10 @@ Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities (Leads, Conta
 
 1. **Connect / test** — `MailboxClient::testConnection` + `SmtpClient::testConnection` before persist.
 2. **Sync** — `EmailSyncService` via `SyncEmailAccountJob` on `email-sync`; also forced from `POST …/accounts/{uuid}/sync`.
-3. **Schedule** — `Schedule::command('email:sync')->everyFiveMinutes()->withoutOverlapping()` in `routes/console.php`.
-4. **Send** — compose/draft in DB → `SendEmailMessageJob` → `SmtpClient::send`; append to Sent when IMAP supports it.
-5. **Disconnect** — delete folders/messages/attachments (and stored files) for that account.
+3. **Schedule** — `Schedule::command('email:sync')->everyMinute()->withoutOverlapping()->onOneServer()` in `routes/console.php`. Dispatches only accounts due per `sync_interval_minutes`.
+4. **Send** — compose/draft in DB → `SendEmailMessageJob` → `SmtpClient::send`; append to Sent when IMAP supports it. Reply compose may include `in_reply_to` / `thread_key`.
+5. **Move / trash** — `PUT` with `folder_uuid` moves on IMAP. `DELETE` moves to Trash when present; a second delete from Trash permanently removes.
+6. **Disconnect** — delete folders/messages/attachments (and stored files) for that account.
 
 ## Permission model
 

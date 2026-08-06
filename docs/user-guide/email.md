@@ -31,10 +31,10 @@ You need Marketplace purchase permission to install. After install, your role st
    - **Gmail** — IMAP/SMTP hosts and ports prefilled; use a Google [App Password](https://support.google.com/accounts/answer/185833) (2-Step Verification required). OAuth sign-in is not available in this version.
    - **Outlook / Microsoft 365** — hosts prefilled; use an app password or SMTP authenticated credentials as your provider allows. OAuth is not available in this version.
    - **Custom** — enter IMAP and SMTP host, port, encryption, and username/password yourself.
-4. Enter email address, display name, and passwords.
+4. Enter email address, display name, passwords, and **Auto-sync interval** (default **every 5 minutes**; options 5 / 10 / 15 / 30 / 60).
 5. **Test** the connection, then save.
 
-You can sync on demand from the Email page. Background sync runs periodically when workers and the scheduler are configured.
+**Manual Sync** on the Email page still runs anytime. Background sync uses each mailbox’s interval when the scheduler and `email-sync` queue worker are running.
 
 Disconnect removes the account and synced folders, messages, and attachments from EloSync for that mailbox (mail remains on the provider).
 
@@ -45,22 +45,24 @@ After connect and sync:
 - Folders appear in a left pane (Inbox, Sent, Drafts, Trash, Spam, and custom folders from the server).
 - Select a folder to list messages; open a row to read in the reading pane.
 - Search filters the current folder list.
-- Mark read/unread, move, or delete as supported by the UI and your permissions.
+- **Reply** / **Forward** from the reading pane opens Compose with the thread quoted.
+- **Move to** lets you pick another synced folder (IMAP move).
+- **Delete** moves the message to **Trash** when that folder exists; deleting again from Trash permanently removes it.
 
-Unread counts refresh with sync.
+Unread counts refresh with sync. Creating folders happens in your mail provider or webmail, then **Sync** in EloSync — folder create from the EloSync UI is not available in this version.
 
 ## Compose, drafts, and sent
 
-1. Click **Compose**.
-2. Fill To / Cc / Bcc, subject, and body.
+1. Click **Compose** (or **Reply** / **Forward** on a message).
+2. Fill To / Cc / Bcc, subject, and body in the rich text editor (bold, italic, underline, lists, links, text color).
 3. Optionally apply a **template** (fill `{{variables}}`) and choose a **signature**.
 4. **Save draft** or **Send**.
 
-Outbound mail uses your connected **personal SMTP** account, not Settings → Mail.
+Outbound mail uses your connected **personal SMTP** account, not Settings → Mail. Replies send `In-Reply-To` / thread metadata when available from the original message. Reply and Forward quote the original message as formatted HTML (not raw source).
 
 ## Templates
 
-Personal email templates store a subject and HTML body with optional `{{snake_case}}` placeholders you fill when composing.
+Personal email templates store a subject and rich-text body with optional `{{snake_case}}` placeholders you fill when composing. Use the same formatting toolbar as compose.
 
 1. Open **Email → Templates** (or the Templates tab).
 2. Create / edit name, category, subject, body, and variable list.
@@ -71,7 +73,7 @@ These templates are **yours only**. They are separate from [Communication Templa
 ## Signatures
 
 1. Open **Email → Signatures**.
-2. Create HTML signatures; mark one as **default** for compose.
+2. Create signatures in the rich text editor; mark one as **default** for compose.
 
 Signatures are personal (per user).
 

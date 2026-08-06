@@ -36,23 +36,36 @@ On **PHP 8.4+**, IMAP is unbundled (PECL). Windows / Laravel Herd:
 
 Sync and outbound personal send jobs use the **`email-sync`** queue (not the platform `emails` notification queue).
 
+### Local / Supervisor
+
 ```bash
-php artisan queue:work --queue=email-sync,default
+php artisan queue:work redis --queue=email-sync --sleep=1 --tries=3 --timeout=300 --max-time=3600
 ```
 
-Run a supervised worker that includes `email-sync` on production (Forge / Cloud / Supervisor). Keep personal mailbox jobs separate from transactional `emails` / `emails-high` capacity.
+Keep personal mailbox jobs separate from transactional `emails` / `emails-high` capacity. After credential or queue config changes, restart workers.
 
-After credential or queue config changes, restart workers.
+### Laravel Forge daemon (recommended)
+
+Add a **second** API daemon (do not mix into the notifications worker):
+
+| Field | Value |
+|-------|--------|
+| Command | `php artisan queue:work redis --queue=email-sync --sleep=1 --tries=3 --timeout=300 --max-time=3600` |
+| User | `forge` |
+| Directory | Same as the API release root (`…/current` or site path) |
+| Processes | `1` (scale if many concurrent mailbox syncs) |
+
+Ensure PHP `ext-imap` is enabled on the Forge server (see above). Deploy scripts should already run `queue:restart` so both daemons pick up new code.
 
 ## Scheduler
 
-Ensure the scheduler is running. The Email module registers:
+Enable Forge **Scheduler** (`schedule:run` every minute). The Email module registers:
 
 ```bash
 php artisan email:sync
 ```
 
-every **five minutes** with `withoutOverlapping`, dispatching `SyncEmailAccountJob` for accounts that need sync.
+**every minute** with `withoutOverlapping` + `onOneServer`. The command only dispatches `SyncEmailAccountJob` for accounts that are due based on each mailbox’s `sync_interval_minutes` (default **5**, options 5 / 10 / 15 / 30 / 60). Manual Sync from the SPA always dispatches immediately.
 
 ```bash
 * * * * * php /path/to/artisan schedule:run
