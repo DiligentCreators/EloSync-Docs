@@ -45,6 +45,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Expenses | `e2e/tests/expenses/` | `npm run test:e2e:expenses` / `test:e2e:expenses:headed` |
 | Purchasing (shared session) | `e2e/tests/purchasing/` | `npm run test:e2e:purchasing` / `test:e2e:purchasing:headed` — one login, then Vendors → Purchase Orders → Expenses with form validation + PO convert; includes negative authz (`purchasing.authz.spec.ts`) |
 | Communication Templates | `e2e/tests/communication-templates/` | `npm run test:e2e:communication-templates` |
+| Email | `e2e/tests/email/` | `npm run test:e2e:email` |
 | Profile | `e2e/tests/profile/` | `npm run test:e2e:profile` |
 | Smoke | `e2e/tests/smoke/` | `npm run test:e2e:smoke` |
 | Regression | `e2e/tests/regression/` | `npm run test:e2e:regression` |

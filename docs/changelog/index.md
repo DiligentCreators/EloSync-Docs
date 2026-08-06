@@ -1,5 +1,16 @@
 # Changelog
 
+## Email module — personal IMAP/SMTP (2026-08-06)
+
+Free Communication Marketplace module for a **personal** mailbox inside EloSync (Inbox/folders, compose/drafts/sent, templates with `{{variables}}`, signatures, CRM links to Leads/Contacts).
+
+- Catalog: slug `email`, `is_default_included=false`, `is_billable=false`, prices `$0` (not auto-installed)
+- Connect via IMAP/SMTP credentials with Gmail/Outlook **app password** presets — **no OAuth** in v1
+- Sync/send jobs on dedicated `email-sync` queue; scheduler `email:sync` every five minutes; requires PHP `ext-imap`
+- Fully separate from Settings → Mail / `EmailConfigResolver` (platform transactional mail) and from Communication Templates (WhatsApp plain-text)
+- Personal isolation enforced in policies; Spa `/email` + Playwright `test:e2e:email`
+- Docs: user, developer, API, and deployment guides
+
 ## Phase 1 — Resellers + Reseller Payouts (2026-08-06)
 
 Free Sales Marketplace modules for partner accounts and a two-tier commission ledger on fully **Paid** customer invoices.

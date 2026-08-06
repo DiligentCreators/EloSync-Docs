@@ -50,4 +50,5 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Estimates Overview](./estimates-overview) | Estimates module guides index |
 | [Estimates](./estimates) | Pre-sale cost estimates and convert to invoice |
 | [Communication Templates](./communication-templates) | Template management and WhatsApp from Leads |
+| [Email](./email) | Personal IMAP/SMTP inbox, templates, signatures, CRM links |
 | [Branded](./branded) | Custom domain mapping and white-label notifications |

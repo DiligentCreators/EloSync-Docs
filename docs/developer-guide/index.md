@@ -66,6 +66,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Credit Notes](./credit-notes) | Credit Notes module engineering guide |
 | [Estimates](./estimates) | Estimates module engineering guide |
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
+| [Email](./email) | Personal IMAP/SMTP mailbox, sync jobs, templates, signatures |
 
 ## Lead ingest & integrations
 
