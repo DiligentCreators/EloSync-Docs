@@ -46,6 +46,20 @@ Transitions are dispatched from `CustomerInvoicePaidTransitions` after invoice s
 4. Smoke: Paid invoice with `reseller_id` → two accrued rows → approve → pay; void invoice payment → entries voided; re-post payment → entries revived to accrued
 5. Confirm Partial invoices do **not** accrue
 
+## Finance runbook — invoice leaves Paid
+
+Leaving Paid (`CustomerInvoiceLeftPaid`, typically from **voiding a posted payment**) calls `voidForInvoice`, which bulk-voids **every** non-void commission row for that invoice — **including entries already marked `paid`**.
+
+This is intentional Phase 1 behavior so the ledger cannot stay “settled” against an unpaid invoice:
+
+| Situation | Result |
+|-----------|--------|
+| Accrued / approved entry, invoice unpays | Status → `void` |
+| Manually marked `paid` entry, invoice unpays | Status → `void` (finance must treat as cancelled settlement) |
+| Invoice becomes Paid again | Void rows for that invoice are **revived** to `accrued` with refreshed amount snapshots |
+
+**Ops guidance:** If commissions were already disbursed outside the app before a payment void, reverse or reclaim that disbursement in your payroll/AP process — EloSync marks the ledger void but does not move money. Manual **Void** on a single entry still rejects rows that are already `paid` while the invoice remains Paid.
+
 ## Deferred
 
 No automated disbursement gateway in Phase 1 — `pay` is ledger status only. Cross-workspace identity for parties remains deferred.

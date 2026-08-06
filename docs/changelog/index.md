@@ -9,6 +9,7 @@ Free Sales Marketplace modules for partner accounts and a two-tier commission le
 - Invoice link: nullable `customer_invoices.reseller_id` (+ `LinkableReseller`).
 - **Deferred:** cross-workspace identity (each tenant manages its own reseller logins; no Central multi-tenant reseller person).
 - Docs: user/developer/deployment/API guides + module-dependencies + database dictionary.
+- Finance ops: voiding a posted payment voids **all** commission rows for that invoice (including already `paid`); re-paying revives them to `accrued`.
 
 ## Fix — Leads Ops merge-readiness audit (2026-08-06)
 
