@@ -1,5 +1,9 @@
 # Changelog
 
+## Email — connect SMTP IP note (2026-08-07)
+
+- Connect mailbox dialog and user guide note that the mail provider must allow SMTP from the application server IP (587/465) for Test and send
+
 ## Email — security harden + docs honesty (2026-08-06)
 
 - Reading pane sanitizes HTML bodies with DOMPurify before render
