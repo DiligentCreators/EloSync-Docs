@@ -34,6 +34,8 @@ You need Marketplace purchase permission to install. After install, your role st
 4. Enter email address, display name, passwords, and **Auto-sync interval** (default **every 5 minutes**; options 5 / 10 / 15 / 30 / 60).
 5. **Test** the connection, then save.
 
+Your mail provider must allow SMTP from the application server’s IP. If **Test connection** times out after IMAP works, ask the provider to permit SMTP (ports **587** and/or **465**) for that server IP.
+
 **Manual Sync** on the Email page still runs anytime. Background sync uses each mailbox’s interval when the scheduler and `email-sync` queue worker are running.
 
 Disconnect removes the account and synced folders/messages from EloSync for that mailbox (mail remains on the provider). Attachment **download and upload are not available in this version**; a paperclip badge may appear when the provider reports attachments on a message.
