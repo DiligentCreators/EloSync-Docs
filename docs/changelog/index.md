@@ -1,5 +1,9 @@
 # Changelog
 
+## Connectivity banner — offline / restored (2026-08-07)
+
+- SPA and marketing site show a sticky top banner when the browser goes offline (“You are currently offline”) and a short green “connection was restored” notice when it comes back
+
 ## Email — connect SMTP IP note (2026-08-07)
 
 - Connect mailbox dialog and user guide note that the mail provider must allow SMTP from the application server IP (587/465) for Test and send
