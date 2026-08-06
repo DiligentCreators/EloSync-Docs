@@ -1,11 +1,11 @@
 {
-  "commitSha": "fbdb21025a2e34e77e9889af167f4c0da124763a",
+  "commitSha": "f5e81f062aae736559861d185566876fc0f2b354",
   "branch": "main",
-  "buildTimestampUtc": "2026-08-06T12:10:38Z",
-  "buildNumber": "87",
-  "githubRunId": "31100265871",
+  "buildTimestampUtc": "2026-08-06T22:52:55Z",
+  "buildNumber": "88",
+  "githubRunId": "31129286010",
   "applicationVersion": "1.1.0",
-  "nodeVersion": "24.19.0",
+  "nodeVersion": "24.18.0",
   "vitepressVersion": "1.6.4",
   "siteUrl": "https://docs.elosync.com"
 }
