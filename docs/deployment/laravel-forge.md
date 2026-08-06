@@ -173,7 +173,7 @@ Forge → Site → **Scheduler** → enable (runs `schedule:run` every minute). 
 
 Forge → Server → **Daemons** (or site Daemons). Use the site path Forge shows (example: `/home/forge/api.example.com`).
 
-**Queue worker**
+**Queue worker (notifications / default)**
 
 | Field | Value |
 |-------|--------|
@@ -181,6 +181,17 @@ Forge → Server → **Daemons** (or site Daemons). Use the site path Forge show
 | User | `forge` |
 | Directory | `/home/forge/api.example.com/current` **or** `/home/forge/api.example.com` (match your zero-downtime layout) |
 | Processes | `2` (scale with load) |
+
+**Queue worker (personal Email module — IMAP sync + send)**
+
+| Field | Value |
+|-------|--------|
+| Command | `php artisan queue:work redis --queue=email-sync --sleep=1 --tries=3 --timeout=300 --max-time=3600` |
+| User | `forge` |
+| Directory | Same as API release root |
+| Processes | `1` |
+
+Requires PHP `ext-imap` on the server. Details: [Email deployment](./email#queue-worker-email-sync).
 
 Prefer Forge’s “directory = current release” pattern so deploys + `queue:restart` pick up new code. If Daemons point at a fixed path, ensure it is the active release symlink.
 

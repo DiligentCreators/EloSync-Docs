@@ -42,6 +42,7 @@ Business modules live in the `modules` catalog. **Commercial flags** (`is_defaul
 | `quotations` | Quotations | No (free opt-in) | No | $0 | $0 |
 | `contracts` | Contracts | No (free opt-in) | No | $0 | $0 |
 | `communication-templates` | Communication Templates | No (free opt-in) | No | $0 | $0 |
+| `email` | Email | No (free opt-in) | No | $0 | $0 |
 | `branded` | Branded | No | **Yes** | **$29** | **$290** |
 
 **Default-included** modules (`is_default_included = true`, `is_billable = false`):
@@ -54,7 +55,7 @@ Business modules live in the `modules` catalog. **Commercial flags** (`is_defaul
 
 They are not cancellable by workspace owners (platform admin may **deactivate**).
 
-**Free Marketplace opt-in** (`is_default_included = false`, `is_billable = false`, price `$0`): Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts (Sales category), Communication Templates. Tenants install from Marketplace; owners can remove them. Quotations and Contracts require Opportunities first (hard `module_dependencies`).
+**Free Marketplace opt-in** (`is_default_included = false`, `is_billable = false`, price `$0`): Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts (Sales category), Communication Templates, Email (Communication category). Tenants install from Marketplace; owners can remove them. Quotations and Contracts require Opportunities first (hard `module_dependencies`).
 
 **Paid Marketplace** (`is_billable = true`): Branded at USD **$29/month** or **$290/year** (custom domain + white-label notifications).
 
