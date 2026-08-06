@@ -71,17 +71,9 @@ php artisan email:sync
 * * * * * php /path/to/artisan schedule:run
 ```
 
-## Attachment storage
+## Attachment storage (deferred)
 
-Fetched and composed attachments persist on the Laravel filesystem disk recorded on `email_attachments` (`disk` + `path`, default disk typically `local` / private storage).
-
-Operational notes:
-
-- Disconnect / account delete removes local attachment files for that mailbox
-- Disk growth scales with sync depth and attachment size — monitor storage on app servers (or the configured disk)
-- Prefer a private disk not web-accessible
-- Size caps: enforce provider-safe limits on upload/compose; refuse oversized payloads rather than buffering unbounded MIME into memory during sync/send
-- Tune PHP `memory_limit` and queue `--timeout` for large mailboxes
+The `email_attachments` table and client helpers exist for a future download/compose path. **v1 sync does not persist attachment files** to disk; it may set `has_attachments` from IMAP headers only. Prefer a private disk and monitor growth when that path ships.
 
 Personal attachments are unrelated to platform email log body storage (`EMAIL_LOGS_STORE_BODY`).
 

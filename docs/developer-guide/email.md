@@ -9,7 +9,7 @@ v1 uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** fo
 - Let each workspace user connect their own mailbox inside EloSync
 - Sync folders and messages over IMAP (`ext-imap`)
 - Send and save drafts over personal SMTP
-- Support personal templates (`{{variables}}`), signatures, and soft CRM links to Leads/Contacts
+- Support personal templates (`{{variables}}`) and signatures; CRM soft-links API exists (no SPA UI in v1)
 
 ## Separation from platform mail
 
@@ -92,7 +92,7 @@ Cached message headers/bodies, direction (`inbound` / `outbound`), draft/read/st
 
 ### `email_attachments`
 
-Stored files after fetch (`disk`, `path`, size, mime, inline/`content_id`). Cleaned when the parent message or account is removed (disconnect).
+Schema + client helpers for a future fetch/store/download path (`disk`, `path`, size, mime, inline/`content_id`). **v1 sync does not download attachment bodies**; it may set `email_messages.has_attachments` from headers only.
 
 ### `email_templates` / `email_signatures`
 
@@ -100,7 +100,7 @@ Personal CRUD; soft deletes. Templates: `subject`, `body_html`, optional `variab
 
 ### `email_message_links`
 
-Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities (Leads, Contacts). Unique per message + target.
+Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities. API requires `email.update` **and** `Gate::authorize('view', $linkable)`. No Email SPA linking UI in v1.
 
 ## Sync & send
 
@@ -109,7 +109,7 @@ Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities (Leads, Conta
 3. **Schedule** — `Schedule::command('email:sync')->everyMinute()->withoutOverlapping()->onOneServer()` in `routes/console.php`. Dispatches only accounts due per `sync_interval_minutes`.
 4. **Send** — compose/draft in DB → `SendEmailMessageJob` → `SmtpClient::send`; append to Sent when IMAP supports it. Reply compose may include `in_reply_to` / `thread_key`.
 5. **Move / trash** — `PUT` with `folder_uuid` moves on IMAP. `DELETE` moves to Trash when present; a second delete from Trash permanently removes.
-6. **Disconnect** — delete folders/messages/attachments (and stored files) for that account.
+6. **Disconnect** — delete folders/messages (and any future stored attachment rows/files) for that account.
 
 ## Permission model
 

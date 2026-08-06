@@ -52,7 +52,7 @@ Update supports `is_read`, `is_starred`, `folder_uuid` (IMAP move to another fol
 
 `DELETE /email/messages/{uuid}` moves the message to the account **Trash** folder when present and the message is not already in Trash; otherwise permanently deletes (IMAP expunge + local row). Success message indicates which path ran.
 
-Link body: `{ "linkable_type": "lead\|contact\|company\|opportunity", "linkable_id": 1 }`.
+Link body: `{ "linkable_type": "lead\|contact\|company\|opportunity", "linkable_id": 1 }`. Requires `email.update` on the message **and** authorization to `view` the target record (policy). There is no Email SPA linking UI in v1.
 
 ## Templates
 

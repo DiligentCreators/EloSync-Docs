@@ -1,5 +1,11 @@
 # Changelog
 
+## Email — security harden + docs honesty (2026-08-06)
+
+- Reading pane sanitizes HTML bodies with DOMPurify before render
+- CRM link API authorizes `view` on the target Lead/Contact/Company/Opportunity
+- Docs demote attachment download/storage and CRM linking UI (API/schema only in v1)
+
 ## Email — per-mailbox sync interval (2026-08-06)
 
 - Each connected mailbox has **Auto-sync interval** (default **5 minutes**; 5 / 10 / 15 / 30 / 60)
@@ -22,7 +28,7 @@
 
 ## Email module — personal IMAP/SMTP (2026-08-06)
 
-Free Communication Marketplace module for a **personal** mailbox inside EloSync (Inbox/folders, compose/drafts/sent, templates with `{{variables}}`, signatures, CRM links to Leads/Contacts).
+Free Communication Marketplace module for a **personal** mailbox inside EloSync (Inbox/folders, compose/drafts/sent, templates with `{{variables}}`, signatures). CRM link API and attachment schema are present; SPA linking UI and attachment file sync are deferred.
 
 - Catalog: slug `email`, `is_default_included=false`, `is_billable=false`, prices `$0` (not auto-installed)
 - Connect via IMAP/SMTP credentials with Gmail/Outlook **app password** presets — **no OAuth** in v1

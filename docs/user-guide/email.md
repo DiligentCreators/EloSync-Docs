@@ -1,6 +1,6 @@
 # Email
 
-Connect your **personal** mailbox to EloSync with IMAP (receive) and SMTP (send). Browse Inbox and folders, compose drafts, send mail, manage reusable templates and signatures, and optionally link messages to **Leads** or **Contacts**.
+Connect your **personal** mailbox to EloSync with IMAP (receive) and SMTP (send). Browse Inbox and folders, compose drafts, send mail, and manage reusable templates and signatures.
 
 Email is a free Marketplace opt-in module. It is **personal-only** — each user connects and sees only their own accounts, folders, and messages.
 
@@ -36,7 +36,7 @@ You need Marketplace purchase permission to install. After install, your role st
 
 **Manual Sync** on the Email page still runs anytime. Background sync uses each mailbox’s interval when the scheduler and `email-sync` queue worker are running.
 
-Disconnect removes the account and synced folders, messages, and attachments from EloSync for that mailbox (mail remains on the provider).
+Disconnect removes the account and synced folders/messages from EloSync for that mailbox (mail remains on the provider). Attachment **download and upload are not available in this version**; a paperclip badge may appear when the provider reports attachments on a message.
 
 ## Inbox and folders
 
@@ -77,9 +77,12 @@ These templates are **yours only**. They are separate from [Communication Templa
 
 Signatures are personal (per user).
 
-## Link to Leads and Contacts
+## Not yet in the SPA
 
-From a message, link (or unlink) matching **Leads** or **Contacts** so CRM records can show related mail. Linking does not move mail out of your personal mailbox or share the full inbox with teammates.
+These capabilities exist partially on the API/schema but are **not exposed in the Email UI** in this version:
+
+- **CRM links** (API can attach a message to a Lead/Contact/Company/Opportunity when you can view that record) — no link control in the reading pane yet
+- **Attachment download / compose attach** — sync may flag `has_attachments`; files are not fetched into EloSync storage yet
 
 ## Permissions
 
