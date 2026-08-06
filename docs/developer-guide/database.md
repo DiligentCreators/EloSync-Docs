@@ -43,7 +43,7 @@ quotations / quotation_lines / quotation_notes / quotation_activities
 contracts / contract_notes / contract_activities
   (tenant-scoped agreements — Contracts module; hard-depends on Opportunities)
 
-resellers
+resellers / reseller_notes / reseller_activities
 reseller_commission_entries
   (tenant-scoped reseller partners + commission ledger — Resellers / Reseller Payouts; Resellers hard-depends on Payments; Reseller Payouts hard-depends on Resellers)
 customer_invoices.reseller_id (nullable FK → resellers)
@@ -174,7 +174,15 @@ Notes (author + body) and agreement timeline (`type`, `description`, `properties
 
 ### `resellers`
 
-`tenant_id`, `uuid`, `name`, nullable `email` / `phone` / `company_name` / `notes`, `status` (`active`|`inactive`), `commission_rate` / `owner_commission_rate` (decimal 5,2, default 0), `assigned_to`, `created_by`, nullable `user_id` (linked same-workspace login; unique per tenant when set), soft deletes. Spatie activity log name `resellers`. Indexes on tenant+name/email/assigned_to/status.
+`tenant_id`, `uuid`, `name`, nullable `email` / `phone` / `company_name` / `notes` (profile scalar), `status` (`active`|`inactive`), `commission_rate` / `owner_commission_rate` (decimal 5,2, default 0), `assigned_to`, `created_by`, nullable `user_id` (linked same-workspace login; unique per tenant when set), soft deletes. Spatie activity log name `resellers`. Indexes on tenant+name/email/assigned_to/status.
+
+### `reseller_notes`
+
+Threaded notes (API key `note_entries`). `tenant_id`, `reseller_id` (cascade), `body` (text), `created_by`, timestamps. Index on `(reseller_id, created_at)`.
+
+### `reseller_activities`
+
+Domain timeline. `tenant_id`, `reseller_id` (cascade), `type` (string; see `ResellerActivityTypeEnum`), `description`, nullable `properties` (json), nullable `actor_id`, timestamps. Index on `(reseller_id, created_at)`.
 
 ### `reseller_commission_entries`
 

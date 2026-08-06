@@ -28,7 +28,7 @@ Permission: `resellers.create`.
 
 ### GET `/resellers/{id}`
 
-Includes assignee, creator, and linked login `user` when present. Soft-deleted → 404 for show.
+Includes assignee, creator, linked login `user` when present, plus nested `note_entries` (threaded notes) and `activities` (domain timeline). Scalar `notes` remains the profile field. Soft-deleted → 404 for show.
 
 ### PUT `/resellers/{id}`
 
@@ -65,6 +65,16 @@ Body: `password` (required, min 8), optional `email` (defaults to reseller email
 Fails if `user_id` already set, email missing after defaulting, or email already used in the tenant.
 
 Permission: `resellers.invite`. Response `201`.
+
+### GET `/resellers/{id}/timeline`
+
+Paginated domain activity events (`ResellerActivity`), newest first. Permission: `resellers.view`.
+
+### POST `/resellers/{id}/notes`
+
+Adds a threaded note (`{ "body": string }`). Requires `resellers.update` (and update policy scope). Response `201` with the note resource; also appends a timeline `note_added` activity and platform audit `reseller_note_added`.
+
+Serialized on show as `note_entries` (not `notes`) so the profile scalar is unambiguous.
 
 ## Invoice link
 

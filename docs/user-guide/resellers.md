@@ -30,6 +30,15 @@ Commission rates are percentages from 0 to 100. They are snapshotted onto commis
 
 Users with **assign** can set or clear the assignee. The assignee is the workspace “owner” party for the second commission tier (`owner_commission_rate`).
 
+## Detail sheet
+
+Open a reseller from the list to see four tabs:
+
+- **Overview** — profile fields, commission rates, assignee, and **profile notes** (the optional notes field on create/edit)
+- **Notes** — threaded team notes (separate from profile notes). Users with **update** can add notes
+- **Activity** — domain timeline (created, updated, assigned, note added, login invited, deleted/restored)
+- **Access** — linked login status and invite-login (requires **invite**)
+
 ## Invite login
 
 Users with **invite** can invite a **same-workspace** login for a reseller who does not already have `user_id` set:
