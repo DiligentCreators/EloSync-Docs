@@ -56,6 +56,9 @@ daily_summary_deliveries
 todos
   (tenant-scoped personal checklists — ToDos module; creator-scoped)
 
+announcements / announcement_reads
+  (tenant-scoped workspace announcements + read receipts — Announcements module; no view permission)
+
 communication_templates
   (tenant-scoped plain-text templates — Communication Templates module)
 
@@ -197,6 +200,14 @@ Nullable FK → `resellers` (`nullOnDelete`), indexed with `tenant_id`. Optional
 ### `todos`
 
 `tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `todos`. UI labels `open` as **To Do**. Visibility is creator-scoped; workspace owner (`superadmin`) can view all. Only the creator may update or delete.
+
+### `announcements`
+
+`tenant_id`, `uuid`, `title`, `body`, `status` (`draft`|`published`|`archived`), `published_at`, `expires_at`, `created_by`, soft deletes. Spatie activity log name `announcements`. Audience visibility is module-gated only (no `announcements.view` permission); mutations use create/update/delete/restore/force.delete.
+
+### `announcement_reads`
+
+`tenant_id`, `announcement_id`, `user_id`, `first_read_at`, `last_read_at`, `first_read_ip`, `last_read_ip`, unique `(announcement_id, user_id)`. Records first and last read times/IPs when users mark announcements as read.
 
 ## Tasks module tables
 

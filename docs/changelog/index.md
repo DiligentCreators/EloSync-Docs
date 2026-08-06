@@ -1,5 +1,16 @@
 # Changelog
 
+## Announcements module (2026-08-07)
+
+Free Communication Marketplace module (`announcements`: not default-included, not billable) for workspace announcements with read tracking.
+
+- Post-login unread dialog for every signed-in user when the module is installed (**no** `announcements.view` permission)
+- Dashboard announcements section after the welcome greeting
+- Admin CRUD with `create` / `update` / `delete` / `restore` / `force.delete`; readers list via `view_reads` (first/last read + IP)
+- Publish fans out in-app notification `type: announcement`
+- Pest `AnnouncementTest` + Playwright `test:e2e:announcements`
+- Docs: user / developer / deployment / API + database dictionary
+
 ## Connectivity banner — offline / restored (2026-08-07)
 
 - SPA and marketing site show a sticky top banner when the browser goes offline (“You are currently offline”) and a short green “connection was restored” notice when it comes back
