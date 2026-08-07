@@ -4,9 +4,9 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:email`, plus Spatie permission middleware / policies.
 
-Route parameters resolve account, folder, message, template, and signature models by **uuid**. All resources are **personal** — limited to the authenticated user.
+Route parameters resolve account, folder, message, template, and signature models by **uuid**. Accounts, folders, messages, and signatures are **personal** (authenticated user only). Templates may be **shared** (`is_shared`) for workspace-wide apply.
 
-Personal mailbox traffic does **not** use `EmailConfigResolver` or Settings → Mail. OAuth is not available in v1 (IMAP/SMTP credentials / app passwords only).
+Personal mailbox traffic does **not** use `EmailConfigResolver` or Settings → Mail. OAuth is not available in v1.x (IMAP/SMTP credentials / app passwords only). Users may connect multiple accounts; compose requires `account_uuid` (SPA sends the mailbox chosen in From).
 
 ## Accounts
 
@@ -59,8 +59,18 @@ Link body: `{ "linkable_type": "lead\|contact\|company\|opportunity", "linkable_
 | Method | Path | Permission |
 |--------|------|------------|
 | GET/POST | `/email/templates` | view / `email.templates.manage` |
-| GET/PUT/DELETE | `/email/templates/{uuid}` | view / manage |
-| POST | `/email/templates/{uuid}/render` | `email.view` |
+| GET/PUT/DELETE | `/email/templates/{uuid}` | view / manage (update/delete: creator or workspace owner) |
+| POST | `/email/templates/{uuid}/render` | `email.view` (own, shared, or owner) |
+
+Create/update accept `name`, `category`, `subject`, `body_html`, optional `variables`, `is_active`, and **`is_shared`** (boolean; default `true` on create).
+
+List query params:
+
+- `for_compose=1` — active templates the actor may **apply** (own **or** shared). Workspace owner does **not** receive others’ private templates in this mode.
+- Without `for_compose` — management list: own **or** shared; workspace owner sees all templates.
+- Optional filters: `search`, `category`, `is_active`, `is_shared`.
+
+Resource fields include `uuid`, `is_shared`, `user` `{ id, name, email }`, `can_edit`, `can_delete`. Apply/render always uses `uuid` (names are not unique across users).
 
 Render body: `{ "variables": { "name": "Ada" } }` → `{ subject, body_html }` with `{{placeholders}}` replaced.
 

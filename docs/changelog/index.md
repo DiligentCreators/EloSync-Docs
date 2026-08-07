@@ -1,5 +1,16 @@
 # Changelog
 
+## Email v1.1.0 — shared templates + multi-mailbox UX (2026-08-08)
+
+Catalog version **1.0.0 → 1.1.0**.
+
+- Templates: `is_shared` (default **shared** for new templates; existing rows stay private). Teammates can apply shared templates; creator or workspace owner can edit/delete any template.
+- Compose template list uses `for_compose=1` (own + shared only). Picker labels show name · creator · Shared/Private (`uuid` remains the identity).
+- Multi-mailbox SPA: account switcher, **Add mailbox**, set default / disconnect; compose **From** select among connected accounts.
+- Signatures remain personal. Gmail/Outlook still IMAP/SMTP + app passwords (no OAuth).
+- Pest coverage for sharing authz + non-default compose From; Playwright asserts shared checkbox default and From/mailbox controls when a mailbox is connected.
+- Docs: user / developer / API guides + this note.
+
 ## Fix — @mention composer shows name only (2026-08-07)
 
 - Lead notes / Task comments: after picking someone with `@`, the composer shows a name chip (`@Aamir Raza`) instead of the raw `@[Name](user:id)` token
