@@ -30,7 +30,7 @@ Reference implementation. Copy this layout for Tasks and later modules.
 
 - Disposition **tags** are many-to-many (`lead_lead_tag`), independent of stage/status. Catalog CRUD + reorder under `LeadTagController`. New leads receive `is_default` tags. Sync via `PUT /leads/{id}/tags` (and optional `tag_ids` on create). `auto_follow_up` creates a pending follow-up keyed by `lead_follow_ups.lead_tag_id`; `force_follow_up` requires a nested `follow_up` payload. System tag `duplicate` is seeded (protected from delete) and applied when email/phone matches another lead created the same workspace calendar day — manual create, import (Keep/Skip; Update only when a distinct same-day match remains after excluding the row being updated), and inbound ingest still notify assignee/creator/actor via `lead.duplicate_detected`.
 - **Lead type** (`direct` | `company`) is stored on `leads.lead_type` (required on create; `sometimes|required` on update so partial PUTs may omit it; nullable for legacy rows). System tags `direct-lead` / `company-lead` are seeded in `LeadTagSeeder` and kept mutually exclusive via `LeadTagService::mergeExclusiveTypeTags()` on create, update, and manual tag sync.
-- Note bodies may include `@[Display Name](user:ID)` mention tokens. On `LeadNoteAdded`, `NoteMentionService` persists `lead_note_mentions` and sends `lead.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.lead_mentioned` (default off).
+- Note bodies may include `@[Display Name](user:ID)` mention tokens (composer UI shows `@Name` chips). On `LeadNoteAdded`, `NoteMentionService` persists `lead_note_mentions` and sends `lead.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.lead_mentioned` (default off).
 - Follow-up `due_at` follows the [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes): SPA edit/display in Settings → General timezone; store as UTC via `UtcDateTime` / `UtcIso`; due/overdue notifications use workspace-local “today”.
 - `lead_value` replaced `estimated_value` (migration rename). Store/update requests still accept `estimated_value` as a write alias.
 - Status is independent of stage flags (`is_won` / `is_lost`). Stage change does not sync status.
@@ -112,7 +112,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |
-| Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
+| Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`, `lead.inactive`, `lead.inactive_escalation`) |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |

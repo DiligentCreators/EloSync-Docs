@@ -62,7 +62,7 @@ When a lead is assigned or reassigned, the assignee’s **Default lead commissio
 
 ## Notes & follow-ups
 
-- **Notes** — free-form history on the lead. Type `@` to mention a teammate; they get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a lead note** is on)
+- **Notes** — free-form history on the lead. Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a lead note** is on)
 - **Follow-ups** — titled reminders with due dates in the workspace **Timezone** (Settings → General); edit/reschedule or complete when done
 - Assignees receive notifications when a follow-up is created for them (by someone else) and when due/overdue reminders run (workspace-local “today”)
 - **Inactivity alerts** — when an assigned open lead has no meaningful activity for the configured number of Mon–Sat working days (Settings → Leads; default 3), the assignee is notified. Department managers (or workspace owners if none) receive an escalation alert. Sundays do not count. Notes, follow-ups, stage/status changes, CRM activities, and tag changes reset the timer; assignment alone does not.

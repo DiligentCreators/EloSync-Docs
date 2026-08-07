@@ -53,5 +53,5 @@ Users with **complete** can mark a task completed (sets `completed_at`) or reope
 
 ## Comments & history
 
-- **Comments** — free-form notes (stored as task notes). Type `@` to mention a teammate; they get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
+- **Comments** — free-form notes (stored as task notes). Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
 - **History** — activity timeline (create, update, assignment, complete, reopen, note, etc.)

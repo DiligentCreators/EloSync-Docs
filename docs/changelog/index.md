@@ -1,5 +1,11 @@
 # Changelog
 
+## Fix — @mention composer shows name only (2026-08-07)
+
+- Lead notes / Task comments: after picking someone with `@`, the composer shows a name chip (`@Aamir Raza`) instead of the raw `@[Name](user:id)` token
+- Stored body (and API payload) still uses `@[Display Name](user:ID)` so mention notifications keep working
+- Table/board **Latest note** previews already render `@Name` for saved notes
+
 ## Fix — Latest note @mentions show name (2026-08-07)
 
 - Table and board **Latest note** previews (and hover tooltips) render `@Name` instead of the stored `@[Name](user:id)` token
