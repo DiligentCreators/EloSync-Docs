@@ -48,7 +48,7 @@ EloSync-only tags per mailbox (not synced to IMAP). A message may have many labe
 
 Create/update body: `{ "name": "Follow up", "color": "#2563eb", "sort_order": 1 }` (`color` optional `#RRGGBB`; `name` unique per mailbox).
 
-Sync message labels: `{ "label_uuids": ["…"] }` (replace set; empty array clears). Label UUIDs must belong to the same mailbox as the message. Message list/show responses include `labels` when loaded.
+Sync message labels: `{ "label_uuids": ["…"] }` (replace set; empty array clears — field must be present). Label UUIDs must belong to the same mailbox as the message. Message list/show responses include `labels` when loaded.
 
 ## Messages
 

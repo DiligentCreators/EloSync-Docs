@@ -77,7 +77,7 @@ Bindings (e.g. `AppServiceProvider`): testing → fakes; otherwise native IMAP +
 | Shared editor | `src/components/common/rich-text-editor.tsx` |
 | Templates / signatures | `email-templates-page.tsx`, `email-signatures-page.tsx` (+ TipTap body fields) |
 | Routes / nav | `/email`, templates & signatures children; `module: 'email'` |
-| E2E | `e2e/tests/email/`, `npm run test:e2e:email` |
+| E2E | `e2e/tests/email/`, `npm run test:e2e:email` (includes EloSync labels lifecycle after mailbox connect) |
 
 ## Data model
 
