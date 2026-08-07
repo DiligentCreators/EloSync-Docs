@@ -46,7 +46,15 @@ Never `syncPermissions()` against existing customized roles during deploy. Grant
 
 ### Bumping `modules.version` on module updates
 
-When a release meaningfully changes an existing module, add an idempotent data migration:
+When a release meaningfully changes an existing module, bump catalog semver with an idempotent data migration:
+
+| Change | Bump |
+|--------|------|
+| Fix / polish | **PATCH** (`1.0.1`) |
+| Additive feature / schema / API / UX | **MINOR** (`1.1.0`) |
+| Large backward-compatible milestone | **MAJOR** (`2.0.0`) |
+
+Modules ship **without breaking changes**. A bump updates the **central** catalog version and ships with the platform deploy — every entitled workspace gets the new behavior. It does **not** install or re-enable the module for workspaces that never subscribed (or cancelled / suspended).
 
 ```php
 app(\App\Support\Catalog\DefaultModuleRegistrar::class)

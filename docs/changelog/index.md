@@ -1,5 +1,14 @@
 # Changelog
 
+## Docs — module catalog SemVer policy (2026-08-08)
+
+Clarified `modules.version` bumping for all modules:
+
+- **PATCH** (`1.0.1`) for fixes; **MINOR** (`1.1.0`) for additive features; **MAJOR** (`2.0.0`) for large backward-compatible milestones
+- Modules ship **without breaking changes**; bumps use `DefaultModuleRegistrar::bumpVersion` data migrations
+- Code + catalog version are platform-wide; a bump does **not** auto-install or re-enable modules for workspaces that never entitled them
+- Guides: [Module Development Guide — catalog versioning](/developer-guide/module-development-guide#catalog-versioning-modulesversion), [Deployment — module development](/deployment/module-development#bumping-modulesversion-on-module-updates)
+
 ## Email v1.1.0 — shared templates + multi-mailbox UX (2026-08-08)
 
 Catalog version **1.0.0 → 1.1.0**.
