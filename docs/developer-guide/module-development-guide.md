@@ -89,20 +89,39 @@ Applies to **all current and future** tenant modules — same rule as Leads, Tas
 
 ## Catalog versioning (`modules.version`)
 
-Marketplace detail shows the catalog **version** string (semver). It is **display / release metadata** for the catalog row — not a per-workspace entitlement version.
+Marketplace detail shows the catalog **version** string (semver: `MAJOR.MINOR.PATCH`). It is **display / release metadata** for the central catalog row — not a per-workspace entitlement version, and not a per-workspace code pin.
 
-| Change | Action |
-|--------|--------|
-| First ship of a new module | Pass `version` => `1.0.0` (default) into `ensureModule` |
-| Additive feature, schema, API, or UX for that module | Ship a data migration that calls `DefaultModuleRegistrar::bumpVersion('{slug}', '{new}')` — typically **minor** (`1.1.0`, `1.2.0`, …) |
-| Breaking module behavior or required data migration for that module | Bump **major** (`2.0.0`, …) the same way |
-| Docs-only / no catalog-visible product change | No version bump |
+### SemVer policy
+
+EloSync modules ship **backward-compatible** updates. Do **not** introduce breaking changes to module APIs, permissions contracts, or tenant data semantics. Prefer additive schema, additive API fields, and migrate-forward data migrations.
+
+| Change | Bump | Example |
+|--------|------|---------|
+| First ship of a new module | Start at **1.0.0** | Pass `version` => `1.0.0` into `ensureModule` |
+| Bug fix, copy, polish, small non-breaking fix | **PATCH** | `1.0.0` → `1.0.1` |
+| Additive feature, schema, API, or UX (backward compatible) | **MINOR** | `1.0.1` → `1.1.0` |
+| Large milestone that remains backward compatible (major product surface) | **MAJOR** | `1.1.0` → `2.0.0` |
+| Docs-only / no catalog-visible product change | No bump | — |
+
+Ship every product bump as a data migration that calls `DefaultModuleRegistrar::bumpVersion('{slug}', '{new}')`.
+
+Reserve breaking removals / incompatible contract changes — they are **out of policy**. If an exceptional break is ever approved, document it explicitly in the CHANGELOG and treat it as a **MAJOR** bump with a migration / upgrade path.
+
+### Who receives the update?
+
+| Layer | Behavior |
+|-------|----------|
+| **Code + schema** | One Backend/Frontend deploy. Every workspace runs the same app — there is no per-tenant module code version. |
+| **Catalog `version` string** | One central `modules` row. Marketplace shows the same version to every workspace. |
+| **Entitlement (install / enable)** | Unchanged by a version bump. Workspaces that already have the module entitled get the new behavior immediately. Workspaces that never installed (or cancelled / suspended) stay off until they install or re-enable. |
+
+A version bump does **not** auto-install a module for workspaces that have not enabled it.
 
 Rules agents and developers must follow:
 
 - `ensureModule` uses `firstOrCreate` by slug — it **does not** update `version` (or commercial flags) on existing rows. Never expect a re-run of the registrar or `CatalogSeeder` to bump versions in production.
 - Always bump with an explicit idempotent migration: `app(DefaultModuleRegistrar::class)->bumpVersion('calendar', '1.1.0');`
-- Note user-visible bumps in the Docs CHANGELOG.
+- Note user-visible bumps in the Docs CHANGELOG (include old → new catalog version).
 - Do not invent a parallel versioning system outside `modules.version`.
 
 ## Billing
