@@ -1,5 +1,13 @@
 # Changelog
 
+## Fix — offline banner for real-world disconnects (2026-08-08)
+
+- SPA sticky offline banner is driven by browser `offline`/`online` **and** Axios transport failures (no HTTP response), not only `navigator.onLine`
+- Network-error toasts are suppressed while the banner owns connectivity UX (no stacked “Network error. Check your connection.” spam)
+- While offline, SPA probes Laravel `/up` on the API origin and marks restored when reachable; successful API responses also clear offline
+- Restoring connectivity invalidates React Query so dashboards refetch
+- Marketing site: same-origin HEAD probe + visibility/online checks so the banner appears when WAN is down even if Wi‑Fi stays “online”
+
 ## Email v1.2.0 — EloSync-only labels (2026-08-08)
 
 Catalog version **1.1.0 → 1.2.0**.
@@ -57,7 +65,8 @@ Free Communication Marketplace module (`announcements`: not default-included, no
 
 ## Connectivity banner — offline / restored (2026-08-07)
 
-- SPA and marketing site show a sticky top banner when the browser goes offline (“You are currently offline”) and a short green “connection was restored” notice when it comes back
+- SPA and marketing site show a sticky top banner when connectivity is lost (“You are currently offline”) and a short green “connection was restored” notice when it comes back
+- SPA: also triggered by Axios transport failures; health probe via API `/up`; network toasts suppressed in favor of the banner (see 2026-08-08 fix)
 
 ## Email — connect SMTP IP note (2026-08-07)
 
