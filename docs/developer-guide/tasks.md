@@ -23,7 +23,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 
 ## Domain notes
 
-- Comment bodies may include `@[Display Name](user:ID)` mention tokens. On `TaskNoteAdded`, `NoteMentionService` persists `task_note_mentions` and sends `task.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.task_mentioned` (default off).
+- Comment bodies may include `@[Display Name](user:ID)` mention tokens (composer UI shows `@Name` chips). On `TaskNoteAdded`, `NoteMentionService` persists `task_note_mentions` and sends `task.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.task_mentioned` (default off).
 - Assignee scoping via `ScopesToAssignee` with `tasks.assign`.
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - Board columns are one per `TaskStatusEnum` case.
@@ -67,7 +67,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Form | `task-form-dialog.tsx` |
 | Detail | `task-detail-sheet.tsx` (Comments + History; Comments use `MentionComposer`; board DnD auto-saves status on the list page) |
 | Shared board | `src/components/crm/kanban-board.tsx` |
-| Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
+| Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |
 | Service | `taskService` in `src/api/services.ts` |
 | Nav | `permission: tasks.view`, `module: 'tasks'` |
