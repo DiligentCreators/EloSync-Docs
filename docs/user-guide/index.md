@@ -51,4 +51,6 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Estimates](./estimates) | Pre-sale cost estimates and convert to invoice |
 | [Communication Templates](./communication-templates) | Template management and WhatsApp from Leads |
 | [Email](./email) | Personal IMAP/SMTP inbox, templates, signatures, CRM links |
+| [Announcements](./announcements) | Workspace announcements with read tracking |
+| [Team Chat](./team-chat) | Channels, DMs, mentions, threads, attachments, retention |
 | [Branded](./branded) | Custom domain mapping and white-label notifications |

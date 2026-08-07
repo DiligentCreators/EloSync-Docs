@@ -1,5 +1,16 @@
 # Changelog
 
+## Team Chat module (2026-08-08)
+
+Free Collaboration Marketplace module (`team-chat`: not default-included, not billable) for realtime workspace messaging — channels, DMs, mentions, threads, and file sharing.
+
+Catalog versions: registered **1.0.0**, then bumped **1.0.0 → 1.1.0** (threads / reactions / pins / typing), **1.1.0 → 1.2.0** (attachments / search / retention). Final catalog version **1.2.0**.
+
+- Backend: conversations API under `/api/tenant/v1/conversations` (`module:team-chat` + Spatie permissions), #general auto-provision on install, Reverb private channel `tenant.{tid}.conversation.{id}` alongside the existing user notification channel, S3 attachments, message search, `team-chat.retention_days` + `team-chat:purge-expired`
+- Frontend: SPA route `/team-chat`, unread + notification bell, deep links from mention/DM notifications, shortcuts `n` / `mod+f`
+- Pest `TeamChatTest` (licensing, provision, channels/DMs, mentions, broadcast auth, tenant isolation) + Playwright `test:e2e:team-chat`
+- Docs: user guide, tenant settings retention key, module development Reverb note, entitlements/licensing catalog + this note
+
 ## Docs — module catalog SemVer policy (2026-08-08)
 
 Clarified `modules.version` bumping for all modules:

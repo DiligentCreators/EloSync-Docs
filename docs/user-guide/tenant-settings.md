@@ -51,6 +51,16 @@ Always sent (not toggleable here):
 - Daily task due digest and daily CRM summary (at **Daily Reminder Time**)
 - Auth emails (password reset, email verification)
 
+## Team Chat
+
+Shown when the **Team Chat** module is installed.
+
+| Field | Behavior |
+|-------|----------|
+| **Message & file retention** | How long Team Chat keeps messages and attachments (`team-chat.retention_days`). Choose **30**, **90**, or **365** days, or **Forever**. Forever keeps history indefinitely; otherwise older messages (and their files) are permanently purged on a schedule. |
+
+See [Team Chat](/user-guide/team-chat).
+
 ## Attendance
 
 Shown when the **Attendance** module is installed.

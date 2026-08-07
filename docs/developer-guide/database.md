@@ -573,7 +573,7 @@ Per-workspace overrides of Central defaults (`tenant_id` + `key` unique, `value`
 
 Resolution hierarchy (via `TenantSettingService`): tenant override → tenant profile columns → Central `system_settings` → system default.
 
-Groups: `general`, `security`, `branding`, `mail`. Sensitive `mail_password` encrypted. Branding files under `tenants/{uuid}/branding/…` on the configured uploads disk. `session_lifetime_minutes` (`0` = never expire) may override Central.
+Groups: `general`, `security`, `branding`, `mail`, `notifications`, `attendance`, `leads`, `team-chat`. Sensitive `mail_password` encrypted. Branding files under `tenants/{uuid}/branding/…` on the configured uploads disk. `session_lifetime_minutes` (`0` = never expire) may override Central. Team Chat retention key: `team-chat.retention_days` (`0` = forever; else days until `team-chat:purge-expired` deletes messages).
 
 Docs: [settings/tenant-settings.md](/user-guide/tenant-settings-overview).
 

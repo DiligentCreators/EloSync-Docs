@@ -26,6 +26,7 @@ These postures can change over product releases without redesigning the moduleâ€
 |----------|-----------------|-------|
 | CRM | Contacts, Companies, Calendar, Meetings, Activities, Communication Templates | Free Marketplace opt-in (`is_billable=false`, not default-included) |
 | Sales | Opportunities, Resellers, Reseller Payouts | Free Marketplace opt-in under category `sales`; Sales Pipeline is **not** a separate SKU |
+| Collaboration | Team Chat | Free Marketplace opt-in under category `collaboration` (`team-chat`, catalog **1.2.0**; not billable yet) |
 
 Default-included today: **Leads**, **Tasks** only. Paid example: **Branded**. See [Entitlements](/developer-guide/entitlements).
 
