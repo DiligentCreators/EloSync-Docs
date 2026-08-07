@@ -8,7 +8,7 @@ Catalog versions: registered **1.0.0**, then bumped **1.0.0 → 1.1.0** (threads
 
 - Backend: conversations API under `/api/tenant/v1/conversations` (`module:team-chat` + Spatie permissions), #general auto-provision on install, Reverb private channel `tenant.{tid}.conversation.{id}` alongside the existing user notification channel, S3 attachments, message search, `team-chat.retention_days` + `team-chat:purge-expired`
 - Frontend: SPA route `/team-chat`, unread + notification bell, deep links from mention/DM notifications, shortcuts `n` / `mod+f`
-- Pest `TeamChatTest` (licensing, provision, channels/DMs, mentions, broadcast auth, tenant isolation) + Playwright `test:e2e:team-chat`
+- Pest `tests/Feature/Tenant/TeamChat/TeamChatTest.php` (licensing, provision, channels/DMs, mentions, broadcast auth, tenant isolation) + Playwright `test:e2e:team-chat`
 - Docs: user guide, tenant settings retention key, module development Reverb note, entitlements/licensing catalog + this note
 
 ## Docs — module catalog SemVer policy (2026-08-08)
