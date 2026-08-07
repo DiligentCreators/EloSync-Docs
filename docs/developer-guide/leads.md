@@ -112,7 +112,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |
-| Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` |
+| Mentions UI | `src/components/crm/mention-composer.tsx`, `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`, `lead.inactive`, `lead.inactive_escalation`) |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |

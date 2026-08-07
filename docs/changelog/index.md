@@ -1,5 +1,10 @@
 # Changelog
 
+## Fix — Latest note @mentions show name (2026-08-07)
+
+- Table and board **Latest note** previews (and hover tooltips) render `@Name` instead of the stored `@[Name](user:id)` token
+- Applies wherever the shared latest-note component is used (Tasks, Leads, and other modules with notes)
+
 ## Announcements module (2026-08-07)
 
 Free Communication Marketplace module (`announcements`: not default-included, not billable) for workspace announcements with read tracking.
