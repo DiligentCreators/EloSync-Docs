@@ -1,5 +1,17 @@
 # Changelog
 
+## Email v1.2.0 — EloSync-only labels (2026-08-08)
+
+Catalog version **1.1.0 → 1.2.0**.
+
+- Per-mailbox **labels** (name + color) stored only in EloSync — not synced to IMAP/Gmail
+- Sidebar: IMAP folders, then a **Labels** heading with manage (+) and label filter list
+- Apply/remove labels from the reading pane; messages can have many labels while staying in one folder
+- Filter message list by label; disconnect removes labels with the mailbox
+- Pest: labels create / update / show / duplicate reject / apply / clear / filter / delete / cross-user forbid
+- Playwright: labels create / edit / assign / remove / filter / delete (after live mailbox connect)
+- Docs: user / developer / API guides + this note
+
 ## Docs — module catalog SemVer policy (2026-08-08)
 
 Clarified `modules.version` bumping for all modules:

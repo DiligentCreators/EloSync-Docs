@@ -1,6 +1,6 @@
 # Email — Developer Guide
 
-Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.1.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, and signatures are scoped to `user_id`. Templates support `is_shared` for workspace-wide apply.
+Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.2.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, labels, and signatures are scoped to the account owner (`user_id` via `EmailAccount`). Templates support `is_shared` for workspace-wide apply.
 
 v1.x uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** for Gmail or Microsoft in this version.
 
@@ -11,6 +11,7 @@ v1.x uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** 
 - Send and save drafts over personal SMTP
 - Support shareable templates (`{{variables}}`, `is_shared`) and private signatures; CRM soft-links API exists (no SPA UI in v1)
 - Let each user connect **multiple** IMAP/SMTP accounts, mark a default, and choose From when composing
+- Support **EloSync-only labels** (many-to-many on messages; not IMAP-synced)
 
 ## Separation from platform mail
 
@@ -28,8 +29,8 @@ v1.x uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** 
 ```text
 SPA /email
   → Tenant API /api/tenant/v1/email/*
-      → Controllers (accounts, folders, messages, templates, signatures)
-          → EmailAccountService / EmailSyncService / EmailMessageService / …
+      → Controllers (accounts, folders, labels, messages, templates, signatures)
+          → EmailAccountService / EmailSyncService / EmailMessageService / EmailLabelService / …
               → MailboxClient (IMAP)  — list folders, fetch, flags, move, append
               → SmtpClient (SMTP)     — test + send
           → Jobs on queue email-sync
@@ -51,12 +52,12 @@ SPA /email
 
 | Piece | Path |
 |-------|------|
-| Models | `EmailAccount`, `EmailFolder`, `EmailMessage`, `EmailAttachment`, `EmailSignature`, `EmailTemplate`, `EmailMessageLink` |
+| Models | `EmailAccount`, `EmailFolder`, `EmailLabel`, `EmailMessage`, `EmailAttachment`, `EmailSignature`, `EmailTemplate`, `EmailMessageLink` |
 | Enums | `EmailFolderTypeEnum`, `EmailMessageDirectionEnum`, `EmailSyncStatusEnum` |
 | Contracts | `app/Services/Tenant/Email/Contracts/MailboxClient.php`, `SmtpClient.php` |
 | DTOs | `app/Services/Tenant/Email/Dto/RemoteFolder.php`, `RemoteMessage.php`, `RemoteAttachment.php` |
 | Clients | `NativeImapMailboxClient`, `SymfonySmtpClient`, fakes for tests |
-| Services | `EmailAccountService`, `EmailSyncService`, `EmailMessageService`, `EmailTemplateService`, `EmailSignatureService` |
+| Services | `EmailAccountService`, `EmailSyncService`, `EmailMessageService`, `EmailLabelService`, `EmailTemplateService`, `EmailSignatureService` |
 | Jobs | `SyncEmailAccountJob`, `SendEmailMessageJob` (`ShouldQueue`, `onQueue('email-sync')`) |
 | Command | `email:sync` — dispatches sync jobs for accounts that need sync |
 | Controllers | `app/Http/Controllers/Tenant/Api/V1/Email/*` |
@@ -69,13 +70,14 @@ Bindings (e.g. `AppServiceProvider`): testing → fakes; otherwise native IMAP +
 
 | Piece | Path |
 |-------|------|
-| Inbox UI | `src/pages/email/email-page.tsx` (3-pane, mailbox switcher, connect empty state) |
+| Inbox UI | `src/pages/email/email-page.tsx` (3-pane, mailbox switcher, folders + labels sidebar) |
 | Connect dialog | `email-account-dialog.tsx` (Gmail / Outlook / Custom presets; multi-account) |
+| Labels | `email-labels-dialog.tsx`, `email-label-badges.tsx`; apply via reading-pane Labels menu |
 | Compose | `email-compose-dialog.tsx` (From select, TipTap `RichTextEditor`) |
 | Shared editor | `src/components/common/rich-text-editor.tsx` |
 | Templates / signatures | `email-templates-page.tsx`, `email-signatures-page.tsx` (+ TipTap body fields) |
 | Routes / nav | `/email`, templates & signatures children; `module: 'email'` |
-| E2E | `e2e/tests/email/`, `npm run test:e2e:email` |
+| E2E | `e2e/tests/email/`, `npm run test:e2e:email` (includes EloSync labels lifecycle after mailbox connect) |
 
 ## Data model
 
@@ -85,11 +87,19 @@ Per-user connection. Unique `(tenant_id, user_id, email_address)`. Passwords enc
 
 ### `email_folders`
 
-Synced remote folders (`remote_path`, `type` from `EmailFolderTypeEnum`, unread/total counts, `uidvalidity` / `uidnext`).
+Synced remote folders (`remote_path`, `type` from `EmailFolderTypeEnum`, unread/total counts, `uidvalidity` / `uidnext`). Sync deletes local folder rows whose `remote_path` is missing remotely — **do not** store EloSync-only labels as folders.
+
+### `email_labels`
+
+EloSync-only labels per mailbox (`email_account_id`, `name` unique per account, optional `color` `#RRGGBB`, `sort_order`). Not touched by IMAP sync.
+
+### `email_message_label`
+
+Pivot many-to-many (`email_message_id`, `email_label_id`). Labels may span folders; folder membership remains exclusive via `email_messages.email_folder_id`.
 
 ### `email_messages`
 
-Cached message headers/bodies, direction (`inbound` / `outbound`), draft/read/starred flags, `UtcDateTime` for `sent_at` / `received_at`. Unique `(email_folder_id, message_uid)` when UID present.
+Cached message headers/bodies, direction (`inbound` / `outbound`), draft/read/starred flags, `UtcDateTime` for `sent_at` / `received_at`. Unique `(email_folder_id, message_uid)` when UID present. List/show resources include `labels` when eager-loaded.
 
 ### `email_attachments`
 
@@ -118,7 +128,8 @@ Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities. API requires
 3. **Schedule** — `Schedule::command('email:sync')->everyMinute()->withoutOverlapping()->onOneServer()` in `routes/console.php`. Dispatches only accounts due per `sync_interval_minutes`.
 4. **Send** — compose/draft in DB → `SendEmailMessageJob` → `SmtpClient::send`; append to Sent when IMAP supports it. Reply compose may include `in_reply_to` / `thread_key`.
 5. **Move / trash** — `PUT` with `folder_uuid` moves on IMAP. `DELETE` moves to Trash when present; a second delete from Trash permanently removes.
-6. **Disconnect** — delete folders/messages (and any future stored attachment rows/files) for that account.
+6. **Labels** — CRUD under `/email/accounts/{uuid}/labels` and `/email/labels/{uuid}`; `PUT /email/messages/{uuid}/labels` syncs `label_uuids` (account-scoped). `GET /email/labels/{uuid}/messages` lists across folders.
+7. **Disconnect** — delete pivot labels, messages, folders, and labels for that account.
 
 ## Permission model
 
@@ -126,8 +137,8 @@ Config: `config/tenant-permissions.php` → `email` actions.
 
 | Permission | Purpose |
 |------------|---------|
-| `view` | List/show accounts (own), folders, messages |
-| `create` / `update` / `delete` | Compose, draft, send, flags, move, delete messages |
+| `view` | List/show accounts (own), folders, labels, messages |
+| `create` / `update` / `delete` | Compose, draft, send, flags, move, delete messages; create/update/delete/apply labels (`update`) |
 | `accounts.manage` | Connect, update credentials, test, sync, disconnect, default flag |
 | `templates.manage` | Template CRUD + preview/render (edit/delete still require creator or workspace owner) |
 | `signatures.manage` | Personal signature CRUD |
@@ -140,7 +151,7 @@ Routes: `module:email` then `can:email.*` / policies. Account/signature/message 
 
 | Migration | Responsibility |
 |-----------|----------------|
-| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog bump to **1.1.0** |
+| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog **1.1.0**; labels tables + catalog **1.2.0** |
 | Catalog | `register_email_module` via `DefaultModuleRegistrar`; version bumps via `bumpVersion` |
 | Permissions | `add_email_permissions` via `TenantPermissionSynchronizer` |
 

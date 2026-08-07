@@ -41,20 +41,31 @@ Your mail provider must allow SMTP from the application server’s IP. If **Test
 
 **Manual Sync** on the Email page still runs anytime. Background sync uses each mailbox’s interval when the scheduler and `email-sync` queue worker are running.
 
-Disconnect removes the account and synced folders/messages from EloSync for that mailbox (mail remains on the provider). Attachment **download and upload are not available in this version**; a paperclip badge may appear when the provider reports attachments on a message.
+Disconnect removes the account and synced folders, labels, and messages from EloSync for that mailbox (mail remains on the provider). Attachment **download and upload are not available in this version**; a paperclip badge may appear when the provider reports attachments on a message.
 
 ## Inbox and folders
 
 After connect and sync:
 
-- Folders appear in a left pane (Inbox, Sent, Drafts, Trash, Spam, and custom folders from the server).
+- Folders appear in a left pane (Inbox, Drafts, Sent, Trash, Spam, and custom folders from the server).
 - Select a folder to list messages; open a row to read in the reading pane.
-- Search filters the current folder list.
+- Search filters the current folder (or label) list.
 - **Reply** / **Forward** from the reading pane opens Compose with the thread quoted.
 - **Move to** lets you pick another synced folder (IMAP move).
 - **Delete** moves the message to **Trash** when that folder exists; deleting again from Trash permanently removes it.
 
 Unread counts refresh with sync. Creating folders happens in your mail provider or webmail, then **Sync** in EloSync — folder create from the EloSync UI is not available in this version.
+
+## Labels
+
+Labels are **EloSync-only** tags for organizing mail. They do **not** sync to Gmail/Outlook IMAP folders.
+
+- Under folders in the left pane, the **Labels** heading lists your labels for the selected mailbox.
+- Use the tags icon next to **Labels** to create, rename, recolor, or delete labels.
+- Open a message and use **Labels** in the reading pane to apply or remove labels (a message can have several).
+- Click a label in the sidebar to list every message on that mailbox that has the label (across folders).
+
+Disconnecting a mailbox removes its EloSync labels and assignments. Mail on your provider is unchanged.
 
 ## Compose, drafts, and sent
 
@@ -97,8 +108,8 @@ These capabilities exist partially on the API/schema but are **not exposed in th
 
 | Action | Permission | Typical roles |
 |--------|------------|---------------|
-| View inbox / folders / messages | `email.view` | Admin, Manager |
-| Compose / draft / send / flags / move | `email.create` / `email.update` / `email.delete` | Admin, Manager |
+| View inbox / folders / labels / messages | `email.view` | Admin, Manager |
+| Compose / draft / send / flags / move / labels | `email.create` / `email.update` / `email.delete` | Admin, Manager |
 | Connect / update / sync / disconnect accounts | `email.accounts.manage` | Admin, Manager |
 | Manage templates | `email.templates.manage` | Admin, Manager |
 | Manage personal signatures | `email.signatures.manage` | Admin, Manager |
