@@ -10,8 +10,9 @@ php artisan optimize
 This ships:
 
 1. Schema for `email_accounts`, `email_folders`, `email_messages`, `email_attachments`, `email_signatures`, `email_templates`, `email_message_links`
-2. Catalog row for free opt-in module `email` (data migration — **not** default-included)
+2. Catalog row for free opt-in module `email` (data migration — **not** default-included); later migrations bump catalog version (e.g. **1.1.0** shared templates) via `DefaultModuleRegistrar::bumpVersion`
 3. Additive permission grants for default roles (`email.*`)
+4. Additive template column `is_shared` (existing rows backfilled private)
 
 Do **not** run `db:seed`, `CatalogSeeder`, or any permission seeder in production for this module.
 

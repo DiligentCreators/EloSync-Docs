@@ -1,15 +1,16 @@
 # Email — Developer Guide
 
-Personal **IMAP/SMTP** mailbox module (`email`). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes are **personal** — every account, folder, message, template, and signature is scoped to `user_id`.
+Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.1.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, and signatures are scoped to `user_id`. Templates support `is_shared` for workspace-wide apply.
 
-v1 uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** for Gmail or Microsoft in this version.
+v1.x uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** for Gmail or Microsoft in this version.
 
 ## Purpose
 
 - Let each workspace user connect their own mailbox inside EloSync
 - Sync folders and messages over IMAP (`ext-imap`)
 - Send and save drafts over personal SMTP
-- Support personal templates (`{{variables}}`) and signatures; CRM soft-links API exists (no SPA UI in v1)
+- Support shareable templates (`{{variables}}`, `is_shared`) and private signatures; CRM soft-links API exists (no SPA UI in v1)
+- Let each user connect **multiple** IMAP/SMTP accounts, mark a default, and choose From when composing
 
 ## Separation from platform mail
 
@@ -68,9 +69,9 @@ Bindings (e.g. `AppServiceProvider`): testing → fakes; otherwise native IMAP +
 
 | Piece | Path |
 |-------|------|
-| Inbox UI | `src/pages/email/email-page.tsx` (3-pane + connect empty state) |
-| Connect dialog | `email-account-dialog.tsx` (Gmail / Outlook / Custom presets) |
-| Compose | `email-compose-dialog.tsx` (TipTap `RichTextEditor`) |
+| Inbox UI | `src/pages/email/email-page.tsx` (3-pane, mailbox switcher, connect empty state) |
+| Connect dialog | `email-account-dialog.tsx` (Gmail / Outlook / Custom presets; multi-account) |
+| Compose | `email-compose-dialog.tsx` (From select, TipTap `RichTextEditor`) |
 | Shared editor | `src/components/common/rich-text-editor.tsx` |
 | Templates / signatures | `email-templates-page.tsx`, `email-signatures-page.tsx` (+ TipTap body fields) |
 | Routes / nav | `/email`, templates & signatures children; `module: 'email'` |
@@ -96,7 +97,15 @@ Schema + client helpers for a future fetch/store/download path (`disk`, `path`, 
 
 ### `email_templates` / `email_signatures`
 
-Personal CRUD; soft deletes. Templates: `subject`, `body_html`, optional `variables` JSON, `is_active`. Signatures: `body_html`, `is_default` per user.
+Templates: `subject`, `body_html`, optional `variables` JSON, `is_active`, **`is_shared`** (default `true` for new rows; existing rows backfilled `false`). Soft deletes. List scope:
+
+- Management list: own templates **or** `is_shared`; workspace owner (`superadmin`) sees all (including others’ private) for administration.
+- Compose list (`for_compose=1`): own **or** shared, and `is_active` — even owner does not get others’ private in the picker.
+- Update/delete: creator **or** workspace owner, with `email.templates.manage`.
+- Resource includes `user` (creator), `can_edit`, `can_delete`. Identity for apply/render is always `uuid`.
+- Render of **inactive** templates is allowed only for users who can update them (creator / workspace owner); other entitled viewers receive 403 so inactive templates cannot be applied from compose.
+
+Signatures: personal CRUD only; `body_html`, `is_default` per user — never shared.
 
 ### `email_message_links`
 
@@ -120,19 +129,19 @@ Config: `config/tenant-permissions.php` → `email` actions.
 | `view` | List/show accounts (own), folders, messages |
 | `create` / `update` / `delete` | Compose, draft, send, flags, move, delete messages |
 | `accounts.manage` | Connect, update credentials, test, sync, disconnect, default flag |
-| `templates.manage` | Personal template CRUD + preview/render |
+| `templates.manage` | Template CRUD + preview/render (edit/delete still require creator or workspace owner) |
 | `signatures.manage` | Personal signature CRUD |
 
 Default role map (`config/tenant-default-role-permissions.php`): admin and manager receive the full set; staff may be narrower depending on map. Superadmin/owner gets all via provisioning.
 
-Routes: `module:email` then `can:email.*` / policies. Policies reject cross-user access even with matching permission strings.
+Routes: `module:email` then `can:email.*` / policies. Account/signature/message policies reject cross-user access even with matching permission strings. Template policies allow shared visibility and owner override for update/delete.
 
 ## Production registration (no seeders)
 
 | Migration | Responsibility |
 |-----------|----------------|
-| Schema | `2026_08_06_180010`–`180016` email_* tables |
-| Catalog | `register_email_module` via `DefaultModuleRegistrar` |
+| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog bump to **1.1.0** |
+| Catalog | `register_email_module` via `DefaultModuleRegistrar`; version bumps via `bumpVersion` |
 | Permissions | `add_email_permissions` via `TenantPermissionSynchronizer` |
 
 Production:

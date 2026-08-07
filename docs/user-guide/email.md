@@ -1,8 +1,8 @@
 # Email
 
-Connect your **personal** mailbox to EloSync with IMAP (receive) and SMTP (send). Browse Inbox and folders, compose drafts, send mail, and manage reusable templates and signatures.
+Connect **one or more personal** mailboxes to EloSync with IMAP (receive) and SMTP (send). Browse Inbox and folders, compose drafts, send mail, and manage reusable templates and signatures.
 
-Email is a free Marketplace opt-in module. It is **personal-only** — each user connects and sees only their own accounts, folders, and messages.
+Email is a free Marketplace opt-in module. Mailboxes and signatures stay **personal** — each user connects and sees only their own accounts, folders, and messages. Templates can be **shared** with the workspace or kept private.
 
 ## Not the same as platform mail or Communication Templates
 
@@ -26,13 +26,16 @@ You need Marketplace purchase permission to install. After install, your role st
 ## Connect IMAP / SMTP
 
 1. Open **Email** in the navigation.
-2. If you have no account, use **Connect your mailbox**.
+2. If you have no account, use **Connect your mailbox**. To add another, use **Add mailbox**.
 3. Choose a preset or **Custom**:
    - **Gmail** — IMAP/SMTP hosts and ports prefilled; use a Google [App Password](https://support.google.com/accounts/answer/185833) (2-Step Verification required). OAuth sign-in is not available in this version.
    - **Outlook / Microsoft 365** — hosts prefilled; use an app password or SMTP authenticated credentials as your provider allows. OAuth is not available in this version.
    - **Custom** — enter IMAP and SMTP host, port, encryption, and username/password yourself.
 4. Enter email address, display name, passwords, and **Auto-sync interval** (default **every 5 minutes**; options 5 / 10 / 15 / 30 / 60).
-5. **Test** the connection, then save.
+5. Optionally mark **Default mailbox** (used as the starting From when you compose).
+6. **Test** the connection, then save.
+
+Use the mailbox switcher on the Email page to change which inbox you are viewing. Under **Actions** you can edit credentials, **Set as default**, or **Disconnect**.
 
 Your mail provider must allow SMTP from the application server’s IP. If **Test connection** times out after IMAP works, ask the provider to permit SMTP (ports **587** and/or **465**) for that server IP.
 
@@ -56,28 +59,32 @@ Unread counts refresh with sync. Creating folders happens in your mail provider 
 ## Compose, drafts, and sent
 
 1. Click **Compose** (or **Reply** / **Forward** on a message).
-2. Fill To / Cc / Bcc, subject, and body in the rich text editor (bold, italic, underline, lists, links, text color).
-3. Optionally apply a **template** (fill `{{variables}}`) and choose a **signature**.
-4. **Save draft** or **Send**.
+2. Choose **From** among your connected mailboxes (defaults to your default mailbox, or the inbox you are viewing).
+3. Fill To / Cc / Bcc, subject, and body in the rich text editor (bold, italic, underline, lists, links, text color).
+4. Optionally apply a **template** (fill `{{variables}}`) and choose a **signature**.
+5. **Save draft** or **Send**.
 
-Outbound mail uses your connected **personal SMTP** account, not Settings → Mail. Replies send `In-Reply-To` / thread metadata when available from the original message. Reply and Forward quote the original message as formatted HTML (not raw source).
+Outbound mail uses the SMTP credentials of the **selected From account**, not Settings → Mail. Replies send `In-Reply-To` / thread metadata when available from the original message. Reply and Forward quote the original message as formatted HTML (not raw source).
 
 ## Templates
 
-Personal email templates store a subject and rich-text body with optional `{{snake_case}}` placeholders you fill when composing. Use the same formatting toolbar as compose.
+Email templates store a subject and rich-text body with optional `{{snake_case}}` placeholders you fill when composing. Use the same formatting toolbar as compose. Templates are identified by **id/uuid** (names do not need to be unique across the workspace).
 
 1. Open **Email → Templates** (or the Templates tab).
 2. Create / edit name, category, subject, body, and variable list.
-3. Toggle **Active** to hide a template from the compose picker without deleting it.
+3. Leave **Shared with workspace** on (default) so teammates can apply the template when composing, or turn it off for a **private** template only you can use.
+4. Toggle **Active** to hide a template from the compose picker without deleting it.
 
-These templates are **yours only**. They are separate from [Communication Templates](/user-guide/communication-templates) (WhatsApp and shared channel messages).
+**Who can edit or delete:** the creator, or the workspace owner (superadmin). Teammates can apply shared templates but cannot change them.
+
+In compose, the template picker shows **name · creator · Shared/Private** so similarly named templates are easy to tell apart. These templates are separate from [Communication Templates](/user-guide/communication-templates) (WhatsApp and shared channel messages).
 
 ## Signatures
 
 1. Open **Email → Signatures**.
 2. Create signatures in the rich text editor; mark one as **default** for compose.
 
-Signatures are personal (per user).
+Signatures remain **personal** (per user) — they are never shared with the workspace.
 
 ## Not yet in the SPA
 
@@ -93,10 +100,10 @@ These capabilities exist partially on the API/schema but are **not exposed in th
 | View inbox / folders / messages | `email.view` | Admin, Manager |
 | Compose / draft / send / flags / move | `email.create` / `email.update` / `email.delete` | Admin, Manager |
 | Connect / update / sync / disconnect accounts | `email.accounts.manage` | Admin, Manager |
-| Manage personal templates | `email.templates.manage` | Admin, Manager |
+| Manage templates | `email.templates.manage` | Admin, Manager |
 | Manage personal signatures | `email.signatures.manage` | Admin, Manager |
 
-Workspace owners (superadmin) have full access when the module is installed. Policies still enforce **personal isolation** — you cannot open another user’s mailbox.
+Workspace owners (superadmin) have full access when the module is installed. Policies still enforce **personal isolation** for mailboxes and signatures — you cannot open another user’s mailbox. Shared templates are visible/usable to entitled teammates; private templates stay creator-only for use, while the owner may still edit them.
 
 ## Related
 
