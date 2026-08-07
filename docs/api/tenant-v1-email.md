@@ -72,7 +72,7 @@ List query params:
 
 Resource fields include `uuid`, `is_shared`, `user` `{ id, name, email }`, `can_edit`, `can_delete`. Apply/render always uses `uuid` (names are not unique across users).
 
-Render body: `{ "variables": { "name": "Ada" } }` → `{ subject, body_html }` with `{{placeholders}}` replaced.
+Render body: `{ "variables": { "name": "Ada" } }` → `{ subject, body_html }` with `{{placeholders}}` replaced. Inactive templates return **403** on render for viewers who cannot update them (creators / workspace owner may still render while editing).
 
 ## Signatures
 

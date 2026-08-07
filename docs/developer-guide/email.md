@@ -103,6 +103,7 @@ Templates: `subject`, `body_html`, optional `variables` JSON, `is_active`, **`is
 - Compose list (`for_compose=1`): own **or** shared, and `is_active` — even owner does not get others’ private in the picker.
 - Update/delete: creator **or** workspace owner, with `email.templates.manage`.
 - Resource includes `user` (creator), `can_edit`, `can_delete`. Identity for apply/render is always `uuid`.
+- Render of **inactive** templates is allowed only for users who can update them (creator / workspace owner); other entitled viewers receive 403 so inactive templates cannot be applied from compose.
 
 Signatures: personal CRUD only; `body_html`, `is_default` per user — never shared.
 
