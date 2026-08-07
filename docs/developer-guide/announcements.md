@@ -15,6 +15,7 @@ Marketplace Communication module. Flat namespaces (no `Modules/` package). **Aut
 | Policy | `app/Policies/AnnouncementPolicy.php` |
 | Events | `AnnouncementCreated`, `Updated`, `Deleted`, `Published` |
 | Subscriber | `app/Listeners/AnnouncementEventSubscriber.php` |
+| Publish fan-out job | `app/Jobs/Tenant/NotifyAnnouncementPublishedJob.php` (chunks users; skips suspended) |
 | Notification | `app/Notifications/Tenant/Announcement/AnnouncementPublishedNotification.php` (`type: announcement`) |
 | Tests | `tests/Feature/Tenant/Announcement/AnnouncementTest.php` |
 
@@ -29,11 +30,15 @@ Do **not** add `announcements.view` without a product decision — reading is in
 
 ## Read receipts
 
-`announcement_reads`: unique `(announcement_id, user_id)`, `first_read_at` / `last_read_at`, `first_read_ip` / `last_read_ip`. First mark-read sets first_* ; later marks bump last_* only.
+`announcement_reads`: unique `(announcement_id, user_id)`, `first_read_at` / `last_read_at`, `first_read_ip` / `last_read_ip`. First mark-read sets first_* ; later marks bump last_* only. `markRead` uses `firstOrCreate` with unique-constraint retry so concurrent double-submit is safe.
+
+## Date and time
+
+Absolute columns use `UtcDateTime`. Audience visibility SQL compares `expires_at` to `now('UTC')` (never workspace `app.timezone`). SPA `expires_at` edit/display uses `isoToAppLocalInput` / `appLocalInputToIso`.
 
 ## Dashboard
 
-`DashboardWidgetService` emits `announcements_inbox` when `EntitlementService::hasModule(..., 'announcements')` (permission field may be null). SPA also fetches inbox directly for the welcome-section card.
+`DashboardWidgetService` emits `announcements_inbox` when `EntitlementService::hasModule(..., 'announcements')` (permission field may be null). SPA dashboard card fetches **unread** only and renders only when that list is non-empty (hidden after the user has read everything).
 
 ## Frontend
 

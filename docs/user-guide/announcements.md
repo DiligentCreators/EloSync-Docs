@@ -14,7 +14,7 @@ When there are unread published announcements, a dialog opens after you land in 
 
 ## Dashboard
 
-On the workspace dashboard, an **Announcements** section appears directly under the welcome greeting with recent published items and read/unread badges.
+On the workspace dashboard, an **Announcements** section appears under the welcome greeting only while you still have unread published announcements. Each item is labeled **Announcement** and includes **Mark as read**. After you mark them as read, the section hides. Use **Announcements** in the nav (or View all) for full history.
 
 ## Announcements page
 

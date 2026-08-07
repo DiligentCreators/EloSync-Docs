@@ -16,7 +16,7 @@ Free Communication Marketplace module for workspace-wide announcements with read
 
 - Title + body, status (`draft` / `published` / `archived`), optional expiry
 - **After login:** unread published announcements open in a dialog (Mark as read)
-- **Dashboard:** announcement list after the welcome greeting when the module is installed
+- **Dashboard:** unread announcements after the welcome greeting (hidden when none remain unread); each row has **Mark as read**
 - **History:** `/announcements` for every signed-in user (no `view` permission)
 - **Read receipts:** first/last read time + IP; admins with `view_reads` see who read each announcement
 - Publish fans out an in-app notification (`type: announcement`)

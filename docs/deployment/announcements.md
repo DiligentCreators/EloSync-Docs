@@ -26,7 +26,9 @@ Platform audit events: `announcement_created`, `announcement_updated`, `announce
 ## Deploy checklist
 
 1. Migrate schema + catalog + permissions
-2. Deploy backend notification + dashboard widget
+2. Deploy backend (notification job + dashboard widget)
 3. Deploy SPA
-4. Smoke: Marketplace install → create published announcement as admin → second user sees login dialog → Mark as read → readers list for admin → dashboard section under welcome
+4. Smoke: Marketplace install → create published announcement as admin → second user sees login dialog → Mark as read → readers list for admin → dashboard unread card disappears after mark-as-read (history remains under Announcements nav)
 5. Confirm routes return 403 when module not installed
+6. Confirm queue workers are running so publish notifications are delivered
+7. Optional: set workspace timezone ≠ UTC and verify `expires_at` matches Settings → General wall clock
