@@ -53,4 +53,4 @@ Default role map grants these to **admin**. Workspace owners (`superadmin`) rece
 
 - [Announcements overview](/user-guide/announcements-overview)
 - [Tenant API](/api/tenant-v1-announcements)
-- [Marketplace](/user-guide/marketplace)
+- [Marketplace](/user-guide/tenant-application#marketplace-add--remove-modules)
