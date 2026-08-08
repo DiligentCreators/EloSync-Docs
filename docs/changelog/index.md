@@ -1,9 +1,16 @@
 # Changelog
 
+## Central feedback system + Founding Beta intake (2026-08-08)
+
+- Backend: tenant + Central feedback APIs, public beta-application intake, Central permissions (`feedback.*`, `beta-applications.*`), critical-bug mail to System Settings `support_email`
+- SPA: Give Feedback dialog (auto page/browser context + My submissions), Central **Platform → Feedback** inbox, **Platform → Beta Applications** triage
+- Docs: [Central Feedback System](/developer-guide/central-feedback-system) marked **Implemented**; [Founding Beta](/product/founding-beta) status table updated; user guide [Give Feedback](/user-guide/feedback)
+- Marketing site companion (separate repo): Founding Beta homepage funnel, `/beta/`, `/pricing/`, module pages
+
 ## Founding Beta program docs + feedback architecture (2026-08-08)
 
 - Document [Founding Beta](/product/founding-beta): objectives, access model, tester expectations, and transition to public launch
-- Document [Central Feedback System](/developer-guide/central-feedback-system) architecture (tenant submit / Central manage) — implementation status marked Planned until APIs and SPA land
+- Document [Central Feedback System](/developer-guide/central-feedback-system) architecture (tenant submit / Central manage) — originally Planned; now Implemented (see delivery note above)
 - Product Roadmap: Business Operating System positioning note + Founding Beta cross-links
 - Marketing site companion work (separate repo): Founding Beta homepage funnel, `/beta/`, `/pricing/`, module pages
 

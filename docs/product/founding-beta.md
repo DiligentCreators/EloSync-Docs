@@ -155,8 +155,8 @@ When launch begins:
 
 | Surface | Status |
 |---------|--------|
-| Marketing Founding Beta pages | Shipping on marketing site (`/`, `/beta/`, `/pricing/`, module pages) |
-| Public beta application API | Planned / in progress with backend phase |
-| Tenant in-app feedback submission | Planned / in progress |
-| Central feedback management UI | Planned / in progress |
+| Marketing Founding Beta pages | Shipped (`/`, `/beta/`, `/pricing/`, module pages) |
+| Public beta application API | Shipped (`POST /api/central/v1/public/beta-applications`) |
+| Tenant in-app feedback submission | Shipped (user menu + command palette → Give Feedback) |
+| Central feedback + beta applications UI | Shipped (**Platform → Feedback**, **Platform → Beta Applications**) |
 | This product page | Living — update when access model or expectations change |
