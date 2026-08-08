@@ -1,5 +1,13 @@
 # Changelog
 
+## Fix — Team Chat in-pane scroll (2026-08-09)
+
+Catalog version **1.3.1 → 1.3.2**.
+
+- Team Chat fills the remaining viewport height; the **message list** (and conversation sidebar / thread panel) scroll inside the chat chrome instead of growing the page/browser scrollbar
+- Message auto-scroll and deep-link highlight scroll within the chat `ScrollArea`, so long history no longer shrinks the browser scrollbar
+- Docs: [Team Chat user guide](/user-guide/team-chat)
+
 ## Fix — Email delete, HTML view, workspace trash retention (2026-08-09)
 
 - Email: deleting a message already gone from IMAP removes the local EloSync copy; connection/auth failures keep the local copy and error

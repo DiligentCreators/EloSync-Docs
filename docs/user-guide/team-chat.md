@@ -24,6 +24,8 @@ On install, the workspace provisions a public **#general** channel and joins eve
 
 Open **Team Chat** from the sidebar (`/team-chat`).
 
+The page fills the workspace content area: channels and direct messages scroll in the left pane, the open conversation scrolls in the message list, and the composer stays pinned at the bottom. Long message history does not grow the browser page scrollbar.
+
 ## Channels, DMs, and group DMs
 
 | Type | Behavior |
