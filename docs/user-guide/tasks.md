@@ -11,6 +11,7 @@ Without **assign**, you only see tasks assigned to you.
 Open **Tasks** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by title or description
+- Each status column header and its cards use a fixed status color; Status badges in the list and detail drawer match
 - Filter by status, priority, assignee, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show the **latest note**; hover a truncated preview to read the full note

@@ -1,5 +1,12 @@
 # Changelog
 
+## Pipeline board & table stage colors (2026-08-08)
+
+- Leads / Opportunities board: column headers and cards tint from each stage’s stored color; Stage badges in the table use the same colors
+- Tasks board: fixed color per status (To Do, In Progress, Waiting, Completed, Cancelled); Status badges in list and detail match
+- Dashboard Pipeline Board widget prefers `stage.color` when present (falls back to the previous index palette)
+- Docs: user guides for Leads, Opportunities, and Tasks
+
 ## Central feedback system + Founding Beta intake (2026-08-08)
 
 - Backend: tenant + Central feedback APIs, public beta-application intake, Central permissions (`feedback.*`, `beta-applications.*`), critical-bug mail to System Settings `support_email`
