@@ -15,7 +15,7 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 
 - One record per employee per date (unique)
 - Optional check-in / check-out times (`HH:MM` or `HH:MM:SS`)
-- Status: `present` \| `absent` \| `half_day` \| `remote` \| `late`
+- Status: `present` \| `absent` \| `half_day` \| `remote` \| `late` (SPA badges: Present green, Late red, Absent slate, Half day amber, Remote blue)
 - Office hours settings + login auto check-in for linked active employees
 - Notes, soft delete / restore / force delete
 - KPIs via `GET /attendance-records/stats` (total + counts per status)

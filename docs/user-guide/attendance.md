@@ -52,6 +52,8 @@ Managers and admins can:
 4. Choose status: Present, Absent, Half day, Remote, or Late.
 5. Add notes if needed.
 
+Status badges use fixed colors so presence is easy to scan: **Present** (green), **Late** (red), **Absent** (slate), **Half day** (amber), **Remote** (blue). The same colors appear in the list table and the detail sheet.
+
 ## List & stats
 
 - Filter by employee, date range, and status
