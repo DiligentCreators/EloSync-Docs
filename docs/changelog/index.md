@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< HEAD
 ## Team Chat module (2026-08-08)
 
 Free Collaboration Marketplace module (`team-chat`: not default-included, not billable) for realtime workspace messaging — channels, DMs, mentions, threads, and file sharing.
@@ -10,6 +11,27 @@ Catalog versions: registered **1.0.0**, then bumped **1.0.0 → 1.1.0** (threads
 - Frontend: SPA route `/team-chat`, unread + notification bell, deep links from mention/DM notifications, shortcuts `n` / `mod+f`
 - Pest `tests/Feature/Tenant/TeamChat/TeamChatTest.php` (licensing, provision, channels/DMs, mentions, broadcast auth, tenant isolation) + Playwright `test:e2e:team-chat`
 - Docs: user guide, tenant settings retention key, module development Reverb note, entitlements/licensing catalog + this note
+=======
+## Fix — offline banner for real-world disconnects (2026-08-08)
+
+- SPA sticky offline banner is driven by browser `offline`/`online` **and** Axios transport failures (no HTTP response), not only `navigator.onLine`
+- Network-error toasts are suppressed while the banner owns connectivity UX (no stacked “Network error. Check your connection.” spam)
+- While offline, SPA probes Laravel `/up` on the API origin and marks restored when reachable; successful API responses also clear offline
+- Restoring connectivity invalidates React Query so dashboards refetch
+- Marketing site: same-origin HEAD probe + visibility/online checks so the banner appears when WAN is down even if Wi‑Fi stays “online”
+
+## Email v1.2.0 — EloSync-only labels (2026-08-08)
+
+Catalog version **1.1.0 → 1.2.0**.
+
+- Per-mailbox **labels** (name + color) stored only in EloSync — not synced to IMAP/Gmail
+- Sidebar: IMAP folders, then a **Labels** heading with manage (+) and label filter list
+- Apply/remove labels from the reading pane; messages can have many labels while staying in one folder
+- Filter message list by label; disconnect removes labels with the mailbox
+- Pest: labels create / update / show / duplicate reject / apply / clear / filter / delete / cross-user forbid
+- Playwright: labels create / edit / assign / remove / filter / delete (after live mailbox connect)
+- Docs: user / developer / API guides + this note
+>>>>>>> origin/main
 
 ## Docs — module catalog SemVer policy (2026-08-08)
 
@@ -56,7 +78,8 @@ Free Communication Marketplace module (`announcements`: not default-included, no
 
 ## Connectivity banner — offline / restored (2026-08-07)
 
-- SPA and marketing site show a sticky top banner when the browser goes offline (“You are currently offline”) and a short green “connection was restored” notice when it comes back
+- SPA and marketing site show a sticky top banner when connectivity is lost (“You are currently offline”) and a short green “connection was restored” notice when it comes back
+- SPA: also triggered by Axios transport failures; health probe via API `/up`; network toasts suppressed in favor of the banner (see 2026-08-08 fix)
 
 ## Email — connect SMTP IP note (2026-08-07)
 

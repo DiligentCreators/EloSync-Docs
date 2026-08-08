@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:email`, plus Spatie permission middleware / policies.
 
-Route parameters resolve account, folder, message, template, and signature models by **uuid**. Accounts, folders, messages, and signatures are **personal** (authenticated user only). Templates may be **shared** (`is_shared`) for workspace-wide apply.
+Route parameters resolve account, folder, label, message, template, and signature models by **uuid**. Accounts, folders, labels, messages, and signatures are **personal** (authenticated user only via mailbox ownership). Templates may be **shared** (`is_shared`) for workspace-wide apply.
 
 Personal mailbox traffic does **not** use `EmailConfigResolver` or Settings → Mail. OAuth is not available in v1.x (IMAP/SMTP credentials / app passwords only). Users may connect multiple accounts; compose requires `account_uuid` (SPA sends the mailbox chosen in From).
 
@@ -32,6 +32,24 @@ Personal mailbox traffic does **not** use `EmailConfigResolver` or Settings → 
 
 Returns synced folders (`uuid`, `name`, `type`, `remote_path`, unread/total counts).
 
+## Labels
+
+EloSync-only tags per mailbox (not synced to IMAP). A message may have many labels while remaining in one folder.
+
+| Method | Path | Permission |
+|--------|------|------------|
+| GET | `/email/accounts/{uuid}/labels` | `email.view` (own account) |
+| POST | `/email/accounts/{uuid}/labels` | `email.update` |
+| GET | `/email/labels/{uuid}` | `email.view` (own) |
+| PUT | `/email/labels/{uuid}` | `email.update` |
+| DELETE | `/email/labels/{uuid}` | `email.update` |
+| GET | `/email/labels/{uuid}/messages` | `email.view` |
+| PUT | `/email/messages/{uuid}/labels` | `email.update` |
+
+Create/update body: `{ "name": "Follow up", "color": "#2563eb", "sort_order": 1 }` (`color` optional `#RRGGBB`; `name` unique per mailbox).
+
+Sync message labels: `{ "label_uuids": ["…"] }` (replace set; empty array clears — field must be present). Label UUIDs must belong to the same mailbox as the message. Message list/show responses include `labels` when loaded.
+
 ## Messages
 
 | Method | Path | Permission |
@@ -41,6 +59,7 @@ Returns synced folders (`uuid`, `name`, `type`, `remote_path`, unread/total coun
 | GET | `/email/messages/{uuid}` | `email.view` |
 | POST | `/email/messages/compose` | `email.create` |
 | PUT | `/email/messages/{uuid}` | `email.update` |
+| PUT | `/email/messages/{uuid}/labels` | `email.update` |
 | POST | `/email/messages/{uuid}/send` | `email.update` |
 | DELETE | `/email/messages/{uuid}` | `email.delete` |
 | POST | `/email/messages/{uuid}/link` | `email.update` |
