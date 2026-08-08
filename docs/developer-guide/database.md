@@ -34,7 +34,7 @@ contacts / contact_notes / contact_activities
 activities / activity_notes / activity_activities
   (tenant-scoped CRM directory + engagements)
 
-opportunity_stages / opportunities / opportunity_notes / opportunity_activities
+opportunity_stages / opportunities / opportunity_tags / opportunity_opportunity_tag / opportunity_notes / opportunity_activities
   (tenant-scoped sales deals + pipeline — Opportunities module)
 
 quotations / quotation_lines / quotation_notes / quotation_activities
@@ -48,12 +48,12 @@ reseller_commission_entries
   (tenant-scoped reseller partners + commission ledger — Resellers / Reseller Payouts; Resellers hard-depends on Payments; Reseller Payouts hard-depends on Resellers)
 customer_invoices.reseller_id (nullable FK → resellers)
 
-tasks / task_notes / task_note_mentions / task_activities
+tasks / task_tags / task_task_tag / task_notes / task_note_mentions / task_activities
 task_digest_deliveries
 daily_summary_deliveries
   (tenant-scoped work items — Tasks module + CRM daily digests)
 
-todos
+todos / todo_tags / todo_todo_tag
   (tenant-scoped personal checklists — ToDos module; creator-scoped)
 
 announcements / announcement_reads
@@ -153,6 +153,10 @@ Per-workspace sales pipeline: `tenant_id`, `uuid`, `name`, `slug`, `color`, `sor
 
 Notes (author + body) and deal timeline (`type`, `description`, `properties` JSON; includes `stage_changed`).
 
+### `opportunity_tags` / `opportunity_opportunity_tag`
+
+Per-workspace opportunity tag catalog (`tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_order`) and pivot (`opportunity_id`, `opportunity_tag_id`, unique pair). Create-only catalog API for MVP (no rename/delete/reorder routes). Assign via `tag_ids` on store/update or `PUT /opportunities/{id}/tags`. Filter list with `tag_id`.
+
 ## Quotations module tables
 
 ### `quotations`
@@ -205,6 +209,10 @@ Nullable FK → `resellers` (`nullOnDelete`), indexed with `tenant_id`. Optional
 
 `tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `todos`. UI labels `open` as **To Do**. Visibility is creator-scoped; workspace owner (`superadmin`) can view all. Only the creator may update or delete.
 
+### `todo_tags` / `todo_todo_tag`
+
+Per-workspace to-do tag catalog (`tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_order`) and pivot (`todo_id`, `todo_tag_id`, unique pair). Create-only catalog API for MVP. Assign via `tag_ids` or `PUT /todos/{id}/tags`. Filter with `tag_id`.
+
 ### `announcements`
 
 `tenant_id`, `uuid`, `title`, `body`, `status` (`draft`|`published`|`archived`), `published_at`, `expires_at`, `created_by`, soft deletes. Spatie activity log name `announcements`. Audience visibility is module-gated only (no `announcements.view` permission); mutations use create/update/delete/restore/force.delete.
@@ -240,6 +248,10 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 ### `tasks`
 
 `tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**.
+
+### `task_tags` / `task_task_tag`
+
+Per-workspace task tag catalog (`tenant_id`, `uuid`, `name`, `slug`, `color`, `sort_order`) and pivot (`task_id`, `task_tag_id`, unique pair). Create-only catalog API for MVP. Assign via `tag_ids` or `PUT /tasks/{id}/tags`. Filter with `tag_id`.
 
 ### `task_notes` / `task_note_mentions` / `task_activities`
 

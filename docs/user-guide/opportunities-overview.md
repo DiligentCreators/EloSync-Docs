@@ -19,6 +19,7 @@ Sales deals module on the frozen platform. Mirrors the [Leads](/user-guide/leads
 
 - Deal fields: name (required), optional amount / currency / probability / expected close date
 - Pipeline stages (seeded: Prospecting → Qualification → Proposal → Negotiation → Won / Lost)
+- **Colored tags** — per-workspace Opportunities catalog; create/assign inline; filter by `tag_id`
 - **Kanban board (default)** + table view; drag-and-drop auto-saves stage via `POST /opportunities/{id}/stage`
 - KPIs via `GET /opportunities/stats`; board via `GET /opportunities/board`
 - Soft optional links: Contact / Company / Lead (FK rejected when that module is not installed)

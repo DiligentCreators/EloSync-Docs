@@ -25,13 +25,13 @@ New Opportunities permissions for **existing** workspaces ship as an additive **
 
 ## Monitoring
 
-- Platform audit events: `opportunity_created`, `opportunity_updated`, `opportunity_deleted`, `opportunity_assigned`, `opportunity_stage_changed`, `opportunity_note_added`
+- Platform audit events: `opportunity_created`, `opportunity_updated`, `opportunity_deleted`, `opportunity_assigned`, `opportunity_stage_changed`, `opportunity_note_added`, `opportunity_tag_created`, `opportunity_tags_synced`
 - Notifications: assignment via `OpportunityAssignedNotification`
 
 ## Deploy checklist
 
-1. Migrate tables (`opportunity_stages`, `opportunities`, `opportunity_notes`, `opportunity_activities`)
+1. Migrate tables (`opportunity_stages`, `opportunities`, `opportunity_tags`, `opportunity_opportunity_tag`, `opportunity_notes`, `opportunity_activities`); catalog bump **opportunities → 1.1.1** (colored tags)
 2. Register the `opportunities` catalog module via migration (`DefaultModuleRegistrar`) as free Sales opt-in — **not** `db:seed`
 3. Run opportunities permissions migration so default roles receive missing `opportunities.*` grants
 4. Confirm `module:opportunities` + `opportunities.*` permissions on target roles
-5. Deploy Frontend SPA with Opportunities nav/pages (mirror Leads board + table) when the SPA ships
+5. Deploy Frontend SPA with Opportunities nav/pages (mirror Leads board + table, inline tags) when the SPA ships

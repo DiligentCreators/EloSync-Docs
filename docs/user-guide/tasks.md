@@ -12,9 +12,9 @@ Open **Tasks** from the sidebar. The default view is the **Board** (columns by s
 
 - Search by title or description
 - Each status column header and its cards use a fixed status color; Status badges in the list and detail drawer match
-- Filter by status, priority, assignee, and **Overdue** (open items past their due date)
+- Filter by status, priority, assignee, **tag**, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
-- Table and board both show the **latest note**; hover a truncated preview to read the full note
+- Table and board both show **tags** and the **latest note**; hover a truncated preview to read the full note
 - Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted task from the row menu
 - **Delete permanently** (force delete) requires `tasks.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)
 
@@ -32,9 +32,12 @@ Status labels in the UI:
 
 1. Click **New task**
 2. Enter title (required) and optional description, status, priority, due date, and assignee
-3. Save
+3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
+4. Save
 
 Edit from the row menu or the detail drawer. Dragging a card on the board auto-saves the new status (no drawer).
+
+Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
 
 ## Due dates
 

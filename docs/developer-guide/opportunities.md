@@ -6,19 +6,19 @@ Mirror of the [Leads developer guide](/developer-guide/leads) (pipeline board) a
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Opportunity.php`, `OpportunityStage`, `OpportunityNote`, `OpportunityActivity` |
+| Models | `app/Models/Opportunity.php`, `OpportunityStage`, `OpportunityTag`, `OpportunityNote`, `OpportunityActivity` |
 | Enums | `OpportunityActivityTypeEnum` |
-| Service | `app/Services/Tenant/OpportunityService.php` (+ `ScopesToAssignee`) |
-| Controller | `app/Http/Controllers/Tenant/Api/V1/OpportunityController.php` |
+| Service | `app/Services/Tenant/OpportunityService.php` (+ `ScopesToAssignee`), `OpportunityTagService.php` |
+| Controller | `app/Http/Controllers/Tenant/Api/V1/OpportunityController.php`, `OpportunityTagController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Opportunity/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/Opportunity/*` |
-| Policy | `app/Policies/OpportunityPolicy.php` |
-| Events | `app/Events/Opportunity*.php` |
+| Policy | `app/Policies/OpportunityPolicy.php`, `OpportunityTagPolicy.php` |
+| Events | `app/Events/Opportunity*.php` (includes `OpportunityTagCreated`, `OpportunityTagsSynced`) |
 | Subscriber | `app/Listeners/OpportunityEventSubscriber.php` (audit + assignment notification) |
 | Notifications | `app/Notifications/Tenant/Opportunity/OpportunityAssignedNotification.php` |
 | Link rules | `LinkableContact`, `LinkableLead`, `LinkableCompanyForOpportunity`, `EligibleOpportunityAssignee` |
 | Stage seeder | `database/seeders/Tenant/OpportunityStageSeeder.php` |
-| Tests | `tests/Feature/Tenant/Opportunity/OpportunityTest.php` |
+| Tests | `tests/Feature/Tenant/Opportunity/OpportunityTest.php`, `OpportunityTagTest.php` |
 
 ## Domain notes
 
@@ -44,6 +44,8 @@ Catalog: slug `opportunities`, category `sales`, `is_default_included = false`, 
 
 Base: `/api/tenant/v1` — full reference [tenant-v1-opportunities.md](/api/tenant-v1-opportunities).
 
+Colored tags are **create-only** for MVP (`GET/POST /opportunity-tags`, assign via `tag_ids` / `PUT …/tags`, filter `tag_id`). No rename/delete/reorder tag routes.
+
 ## Frontend
 
 SPA should mirror **Leads** (board default + table, form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
@@ -60,6 +62,7 @@ SPA should mirror **Leads** (board default + table, form dialog, detail sheet) u
 
 ```bash
 php artisan test --compact tests/Feature/Tenant/Opportunity/OpportunityTest.php
+php artisan test --compact tests/Feature/Tenant/Opportunity/OpportunityTagTest.php
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:opportunities
 ```
@@ -68,4 +71,4 @@ npm run test:e2e:opportunities
 
 - Spatie `LogsActivity` on `Opportunity` (log name `opportunities`)
 - Domain `opportunity_activities` timeline
-- `PlatformAuditService` via `OpportunityEventSubscriber`
+- `PlatformAuditService` via `OpportunityEventSubscriber` (includes `opportunity_tag_created`, `opportunity_tags_synced`)
