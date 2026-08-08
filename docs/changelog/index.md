@@ -1,5 +1,12 @@
 # Changelog
 
+## Daily CRM summary — owner team mail, leads exclusion, mail chrome (2026-08-09)
+
+- **Owners** (`superadmin`) always receive the team (all-users) daily CRM summary; non-owners can still opt in via **Receive all-users daily summary**.
+- Personal digests omit the **Leads** block when the user has **Exclude from lead assignment**; leads alone do not trigger a personal send.
+- Mail chrome: Branded module → tenant logo/name; otherwise platform (central EloSync) logo/name via `BrandedMail`.
+- Docs: daily-crm-summary, branded guides, notifications API, tasks / RBAC user notes.
+
 ## Give Feedback — required searchable Module + tour tip (2026-08-09)
 
 - Give Feedback: **Module** is required via a searchable picker of installed modules (prefilled from the current page when possible); choose **Other** and enter a required **What area?** when the report is not module-related

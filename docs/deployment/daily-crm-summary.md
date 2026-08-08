@@ -13,16 +13,20 @@
 
 At workspace **Daily Reminder Time** (`task_reminder_time`, default `09:00` local), `crm:send-due-notifications` sends mail-only CRM snapshots in addition to the existing task due digest:
 
-| User flag `receive_all_users_daily_summary` | Email |
-|---------------------------------------------|--------|
-| `false` | Personal summary only (skipped when no open CRM work) |
-| `true` | User-wise team summary only (not both); roster includes only users with activity |
+| Recipient | Email |
+|-----------|--------|
+| Workspace **Owner** (`superadmin`), or any user with `receive_all_users_daily_summary` | User-wise **team** summary only (not both); roster includes only users with activity |
+| Everyone else | **Personal** summary only (skipped when no visible open CRM work) |
 
 Counts:
 
-- **Leads** — open stages only (exclude `is_won` / `is_lost`)
+- **Leads** — open stages only (exclude `is_won` / `is_lost`). Personal digests omit the Leads block when the recipient has **Exclude from lead assignment** (`exclude_from_lead_auto_assign`); those users are emailed only when they have open tasks or scheduled meetings.
 - **Tasks** — open / in_progress / waiting (exclude completed / cancelled)
 - **Meetings** — scheduled only; distinct host **or** attendee (creator-only not counted)
+
+Team digests still show per-user Leads for full owner visibility.
+
+Mail chrome: Branded module entitled → tenant logo/name; otherwise platform (central EloSync) logo/name via `BrandedMail`.
 
 Aggregations run **once per tenant** per command tick. Meeting counts use SQL `COUNT(DISTINCT meeting_id)`.
 
@@ -40,10 +44,12 @@ Aggregations run **once per tenant** per command tick. Meeting counts use SQL `C
 3. Confirm scheduler: `crm:send-due-notifications` every 5 minutes (`withoutOverlapping`, `onOneServer`).
 4. Confirm `php artisan queue:work --queue=emails` (and `queue:restart` after deploy).
 5. Shared cache driver required for `onOneServer` locks.
-6. Configure **Settings → Daily Reminder Time**; flag managers with **Receive all-users daily summary** (visibility grant — prefer Owner/Admin).
+6. Configure **Settings → Daily Reminder Time**. Owners receive the team digest automatically; optionally flag non-owner managers with **Receive all-users daily summary**.
 7. Smoke:
-   - Past reminder time → personal mail to unflagged user with open CRM work
-   - Team mail to flagged user (only users with activity)
+   - Past reminder time → personal mail to unflagged non-owner with open CRM work
+   - Team mail to Owner without the flag (only users with activity)
+   - Team mail to flagged non-owner
+   - Excluded-from-lead-assignment user with only leads → no personal mail; with tasks → personal mail without Leads block
    - Second cron tick → no duplicate
    - Ledger `queued` → `sent`; stale `queued` (>45m) reclaimable (max 5 attempts)
 8. Keep scheduler + emails workers healthy through the local reminder window (no midnight catch-up).
