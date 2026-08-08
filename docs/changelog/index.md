@@ -1,5 +1,14 @@
 # Changelog
 
+## Fix — Team Chat receive latency on 2 vCPU hosts (2026-08-08)
+
+Catalog version **1.3.0 → 1.3.1**.
+
+- Broadcast `MessageSent` **after** the DB commit and **before** audit/mention side effects so peers see messages as soon as Reverb delivers
+- Defer audit + mention/DM notification fan-out until after the HTTP response (`afterResponse`)
+- Conversation list: one batched unread query; do not hydrate every `#general` member on each list request (DM members still load for titles)
+- SPA: inbound message cache updates use `startTransition`; message rows are memoized
+
 ## Team Chat v1.3.0 — channel creator settings (2026-08-08)
 
 Catalog version **1.2.0 → 1.3.0**.
