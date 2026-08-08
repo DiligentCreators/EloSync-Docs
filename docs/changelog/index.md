@@ -1,5 +1,27 @@
 # Changelog
 
+## Fix — Lead convert RBAC + meta cleanup (v1.1.1) (2026-08-08)
+
+Catalog version **1.1.0 → 1.1.1**.
+
+- Stub contact backfill that links an existing convert Opportunity now requires `opportunities.update` (same as Opportunities API)
+- Clear stale `conversion_meta.company_id` / `company_uuid` when the company cannot be resolved
+- Cache-lock company create by tenant + normalized name to reduce concurrent duplicates; document residual race without a unique name constraint
+- Pest: stub opportunity backfill + update authz; stale company_id cleanup
+- Playwright: convert with company + optional opportunity
+- Docs: known limitation + this note
+
+## Leads v1.1.0 — convert creates Company + optional Opportunity (2026-08-08)
+
+Catalog version **1.0.0 → 1.1.0**.
+
+- Convert a lead now creates/links a **Company** when Companies is installed and the lead has a company name (case-insensitive reuse; `companies.create` only when creating)
+- Optional **Also create an opportunity** on convert when Opportunities is installed (`create_opportunity` + `opportunity.name`; links lead/contact/company; preserves lead assignee)
+- Contact convert behavior unchanged when Contacts is entitled; `conversion_meta` may include `company_id` / `opportunity_id`
+- SPA lead drawer: company hint, opportunity checkbox + fields, post-convert View company / View opportunity links
+- Pest coverage for company reuse, optional opportunity, validation, and create-permission gates
+- Docs: user / developer / API leads (+ contacts convert notes, opportunities overview) + this note
+
 ## Fix — Team Chat receive latency on 2 vCPU hosts (2026-08-08)
 
 Catalog version **1.3.0 → 1.3.1**.

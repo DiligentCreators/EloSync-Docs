@@ -38,4 +38,4 @@ Users with **assign** can set or clear the assignee from the detail drawer or th
 
 ## Converting a Lead to a Contact
 
-When your workspace has both **Leads** and **Contacts** installed, converting a Lead (from the Lead detail drawer) creates a linked Contact with lifecycle **On Boarded Clients**. After conversion, the Lead detail drawer shows a **View contact** link that opens the new Contact directly.
+When your workspace has both **Leads** and **Contacts** installed, converting a Lead (from the Lead detail drawer) creates a linked Contact with lifecycle **On Boarded Clients**. If **Companies** is also installed and the lead has a company name, convert creates or reuses that Company and links it on the Contact. You can optionally create an **Opportunity** in the same step when Opportunities is installed. After conversion, the Lead detail drawer shows **View contact** (and company / opportunity links when applicable).
