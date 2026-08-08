@@ -65,6 +65,7 @@ See [tenant-v1-dashboard.md](/api/tenant-v1-dashboard).
 - Persist via the standard `notifications` table; expose tenant APIs under `/notifications*` ([tenant-v1-notifications.md](/api/tenant-v1-notifications)).
 - Register realtime in-app types in the SPA Notification Registry; Echo updates Query caches and polling remains a recovery path.
 - Schedule due/overdue fan-out through `crm:send-due-notifications` rather than ad-hoc cron per module.
+- **Realtime conversation rooms (Team Chat):** in addition to the existing private user notification channel `tenant.{tenantId}.user.{userId}`, subscribe members to `tenant.{tenantId}.conversation.{conversationId}` (authorized by `TenantConversationChannel` — same tenant + conversation membership). Message / reaction / pin / membership broadcasts use that conversation channel; mention and DM alerts still fan out on the user notification channel.
 
 ## Settings
 

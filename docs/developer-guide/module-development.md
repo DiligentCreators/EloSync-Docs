@@ -33,6 +33,7 @@ Every business capability on this platform is a **module**. Modules are licensed
 
 - **Dashboard widgets** — register via `DashboardWidgetService` on `GET /dashboard`; gate by module entitlement, permission, and assignee scope (see Calendar `calendar` widget as the latest example).
 - **Notifications** — Follow the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract): versioned payload, route descriptors, NotificationBatch aggregation, Reverb/Echo realtime, modular SPA registry. Due/overdue work uses `crm:send-due-notifications`. Retention: `notifications:prune`.
+- **Realtime rooms** — Team Chat adds a private Reverb conversation channel `tenant.{tid}.conversation.{id}` (membership-gated) beside the existing `tenant.{tid}.user.{uid}` notification channel. See [Module Development Guide — in-app notifications](/developer-guide/module-development-guide#in-app-notifications).
 - **Assignee scoping** — reuse `ScopesToAssignee` so users without `{slug}.assign` only see their own records.
 
 ## Definition of Done

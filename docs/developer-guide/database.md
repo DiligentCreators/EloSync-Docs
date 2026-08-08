@@ -59,6 +59,10 @@ todos
 announcements / announcement_reads
   (tenant-scoped workspace announcements + read receipts — Announcements module; no view permission)
 
+chat_conversations / chat_conversation_members / chat_messages / chat_message_mentions
+chat_message_reactions / chat_message_pins / chat_message_attachments
+  (tenant-scoped Team Chat — channels/DMs, threads, reactions, pins, S3 attachments)
+
 communication_templates
   (tenant-scoped plain-text templates — Communication Templates module)
 
@@ -208,6 +212,28 @@ Nullable FK → `resellers` (`nullOnDelete`), indexed with `tenant_id`. Optional
 ### `announcement_reads`
 
 `tenant_id`, `announcement_id`, `user_id`, `first_read_at`, `last_read_at`, `first_read_ip`, `last_read_ip`, unique `(announcement_id, user_id)`. Records first and last read times/IPs when users mark announcements as read.
+
+## Team Chat module tables
+
+### `chat_conversations`
+
+`tenant_id`, `uuid`, `type` (`channel`|`dm`|`group_dm`), `visibility` (`public`|`private`, channels), `name`, `slug`, `description`, `dm_key` (sorted pair for 1:1 DMs), `created_by`, `is_archived`, `last_message_at`, soft deletes. Unique `(tenant_id, slug)` and `(tenant_id, dm_key)`. Archiving clears `slug` so names can be reused.
+
+### `chat_conversation_members`
+
+`tenant_id`, `conversation_id`, `user_id`, `role` (`owner`|`moderator`|`member`), `joined_at`, `last_read_at`, `muted_until`. Unique `(conversation_id, user_id)`.
+
+### `chat_messages`
+
+`tenant_id`, `conversation_id`, `user_id` (author), `parent_id` (thread root, same conversation), `body`, `edited_at`, soft deletes. Mentions use `@[Display Name](user:ID)`.
+
+### `chat_message_mentions` / `chat_message_reactions` / `chat_message_pins`
+
+Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`, `user_id`, `emoji`). Pins (`conversation_id`, `message_id`, `pinned_by`).
+
+### `chat_message_attachments`
+
+`tenant_id`, `message_id`, `disk`, `path`, `original_name`, `mime`, `size_bytes`. Files live on the uploads disk under the tenant prefix. Soft-deleting a message removes storage objects immediately; `team-chat:purge-expired` also deletes aged messages and files when retention days > 0.
 
 ## Tasks module tables
 
@@ -573,7 +599,7 @@ Per-workspace overrides of Central defaults (`tenant_id` + `key` unique, `value`
 
 Resolution hierarchy (via `TenantSettingService`): tenant override → tenant profile columns → Central `system_settings` → system default.
 
-Groups: `general`, `security`, `branding`, `mail`. Sensitive `mail_password` encrypted. Branding files under `tenants/{uuid}/branding/…` on the configured uploads disk. `session_lifetime_minutes` (`0` = never expire) may override Central.
+Groups: `general`, `security`, `branding`, `mail`, `notifications`, `attendance`, `leads`, `team-chat`. Sensitive `mail_password` encrypted. Branding files under `tenants/{uuid}/branding/…` on the configured uploads disk. `session_lifetime_minutes` (`0` = never expire) may override Central. Team Chat retention key: `team-chat.retention_days` (`0` = forever; else days until scheduled `team-chat:purge-expired` deletes messages and attachment files — always schedule the command; it no-ops at `0`).
 
 Docs: [settings/tenant-settings.md](/user-guide/tenant-settings-overview).
 
