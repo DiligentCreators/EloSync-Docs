@@ -110,6 +110,7 @@ export default defineConfig({
 
     nav: [
       { text: 'Getting Started', link: '/getting-started/' },
+      { text: 'Product', link: '/product/founding-beta' },
       { text: 'Architecture', link: '/architecture/' },
       { text: 'User Guide', link: '/user-guide/' },
       { text: 'Developer Guide', link: '/developer-guide/' },
@@ -127,8 +128,17 @@ export default defineConfig({
             { text: 'Installation', link: '/getting-started/installation' },
             { text: 'Platform Freeze', link: '/getting-started/platform-freeze' },
             { text: 'Product Roadmap', link: '/getting-started/product-roadmap' },
+            { text: 'Founding Beta', link: '/product/founding-beta' },
             { text: 'Documentation Governance', link: '/developer-guide/documentation-governance' },
             { text: 'Local Demo Data', link: '/getting-started/local-demo-data' },
+          ],
+        },
+      ],
+      '/product/': [
+        {
+          text: 'Product',
+          items: [
+            { text: 'Founding Beta', link: '/product/founding-beta' },
           ],
         },
       ],
@@ -264,6 +274,7 @@ export default defineConfig({
             { text: 'Tenant RBAC', link: '/developer-guide/tenant-rbac' },
             { text: 'Central Settings', link: '/developer-guide/central-settings' },
             { text: 'Tenant Settings', link: '/developer-guide/tenant-settings' },
+            { text: 'Central Feedback System', link: '/developer-guide/central-feedback-system' },
             { text: 'Multi-Provider Email', link: '/developer-guide/multi-provider-email' },
             { text: 'Email Webhooks', link: '/developer-guide/email-webhooks' },
           ],
