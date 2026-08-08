@@ -1,10 +1,27 @@
 # Changelog
 
+## Team Chat v1.3.0 — channel creator settings (2026-08-08)
+
+Catalog version **1.2.0 → 1.3.0**.
+
+- Channel **creators** can change visibility (public ↔ private), rename, and edit description
+- Creators can **permanently delete** a channel and all history (messages, reactions, pins, attachments) after typing the exact channel name
+- Workspace **#general** cannot be deleted
+- SPA: Channel settings control in the conversation header (creator only)
+- Pest coverage for creator authz, confirmation mismatch, #general protection, and slug reuse after delete
+
+## Fix — Team Chat Enter-to-send + snappier UI (2026-08-08)
+
+- Team Chat composer: **Enter** sends, **Shift+Enter** inserts a new line (replaces Ctrl/⌘+Enter)
+- Mentions picker still uses Enter to select; lead notes / task comments keep Enter = newline
+- Reduced conversation-list refetch storms: send, mark-read, and realtime message events patch the sidebar cache locally instead of invalidating the full list every time
+- Debounced mark-read; conversation detail uses list placeholder data while loading for faster channel switches
+
 ## Team Chat module (2026-08-08)
 
 Free Collaboration Marketplace module (`team-chat`: not default-included, not billable) for realtime workspace messaging — channels, DMs, mentions, threads, and file sharing.
 
-Catalog versions: registered **1.0.0**, then bumped **1.0.0 → 1.1.0** (threads / reactions / pins / typing), **1.1.0 → 1.2.0** (attachments / search / retention). Final catalog version **1.2.0**.
+Catalog versions: registered **1.0.0**, then bumped **1.0.0 → 1.1.0** (threads / reactions / pins / typing), **1.1.0 → 1.2.0** (attachments / search / retention). Shipped through catalog **1.2.0**; see **1.3.0** above for creator channel settings.
 
 - Backend: conversations API under `/api/tenant/v1/conversations` (`module:team-chat` + Spatie permissions), #general auto-provision on install (+ join new users when eligible), Reverb private channel `tenant.{tid}.conversation.{id}` alongside the existing user notification channel, S3 attachments, message search, `team-chat.retention_days` + `team-chat:purge-expired`
 - Frontend: SPA route `/team-chat`, unread + notification bell, deep links from mention/DM notifications, authenticated attachment downloads, shortcuts `n` / `mod+f`

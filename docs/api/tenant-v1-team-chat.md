@@ -13,7 +13,9 @@ Named routes use the `tenant.team-chat.*` prefix. Absolute datetimes serialize a
 | List / show conversation metadata | `team-chat.view` — public channels are visible for join UX; private channels and DMs require membership |
 | Message history, pins, downloads, search hits in a conversation | Membership (`viewMessages`) — public non-members cannot read history or files |
 | Create channel | `team-chat.channels.create` (channel create) or `team-chat.view` (DM / group DM) |
-| Update / archive channel, add/remove members | `team-chat.channels.manage` **and** membership; channel conversations only (not DMs) |
+| Update channel metadata (name / description / visibility) | Channel **creator** only (`created_by`); membership required; not DMs |
+| Permanently delete channel + history | Channel **creator** only; body `{ "confirmation": "<exact channel name>" }`; `#general` cannot be deleted |
+| Add/remove members | Channel moderator (owner/admin role on the membership) **or** `team-chat.channels.manage`; membership required; channels only |
 | Post / react / pin / attach | `team-chat.messages.create` + membership |
 | Edit message | Author with `team-chat.messages.update`, or moderator with `team-chat.messages.delete`; membership required |
 | Delete message | Author with `team-chat.messages.update` or `team-chat.messages.delete`, or moderator with `team-chat.messages.delete`; membership required |
@@ -43,11 +45,17 @@ Show metadata + members (names only). Non-members may view **public** channel me
 
 ### PATCH `/conversations/{conversation}`
 
-Permission: `team-chat.channels.manage` + membership. Channel name / description / visibility.
+Channel **creator** only. Channel name / description / visibility (`public`|`private`).
 
 ### DELETE `/conversations/{conversation}`
 
-Archives the channel (`is_archived=true`) and clears `slug` so the name can be reused.
+Permanently deletes the channel and all message history (attachments are removed from storage). Requires JSON body:
+
+```json
+{ "confirmation": "Exact Channel Name" }
+```
+
+`#general` cannot be deleted. After delete, the channel name/slug can be reused.
 
 ### POST `/conversations/{conversation}/join`
 
