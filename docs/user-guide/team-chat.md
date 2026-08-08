@@ -33,12 +33,23 @@ Open **Team Chat** from the sidebar (`/team-chat`).
 | **Direct message (DM)** | 1:1 conversation with another workspace user. Opening a DM with the same person reuses the existing thread. Anyone with `team-chat.view` can start a DM. |
 | **Group DM** | Multi-person direct conversation (created with a list of users). |
 
-#general is the default company-wide public channel.
+#general is the default company-wide public channel. It cannot be deleted.
+
+### Channel creator settings
+
+If you **created** a channel, open **Channel settings** (gear) in the conversation header to:
+
+- Rename the channel or edit its description
+- Switch visibility **public ↔ private**
+- **Permanently delete** the channel and all of its history (messages, reactions, pins, and attachments) by typing the exact channel name to confirm
+
+Only the creator can change visibility or delete the channel. Deleting #general is blocked.
 
 ## Messages
 
 With `team-chat.messages.create` you can post in conversations you belong to.
 
+- **Send** — press **Enter** to send; **Shift+Enter** inserts a new line.
 - **@mentions** — type `@` and pick a teammate. Mentions use the same `@[Name](user:id)` token pattern as lead notes / task comments and notify the mentioned member.
 - **Threads** — reply to a message to keep a side conversation under the parent.
 - **Reactions** — add or remove emoji reactions on a message.
@@ -79,8 +90,8 @@ On the Team Chat page (same pattern as other modules):
 | Permission | Ability |
 |------------|---------|
 | `team-chat.view` | Open Team Chat, list/join public channels, open DMs; read messages, search, and download attachments in conversations you belong to |
-| `team-chat.channels.create` | Create public/private channels |
-| `team-chat.channels.manage` | Update/archive channels, add/remove members |
+| `team-chat.channels.create` | Create public/private channels (creators can later edit visibility / delete their own channels) |
+| `team-chat.channels.manage` | Add/remove members on channels where you are a moderator, or with this permission |
 | `team-chat.messages.create` | Post messages, reactions, pins, attachments |
 | `team-chat.messages.update` | Edit own messages |
 | `team-chat.messages.delete` | Delete messages (moderators / elevated roles) |
