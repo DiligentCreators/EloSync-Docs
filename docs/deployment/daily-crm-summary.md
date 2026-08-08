@@ -45,14 +45,17 @@ Aggregations run **once per tenant** per command tick. Meeting counts use SQL `C
 4. Confirm `php artisan queue:work --queue=emails` (and `queue:restart` after deploy).
 5. Shared cache driver required for `onOneServer` locks.
 6. Configure **Settings → Daily Reminder Time**. Owners receive the team digest automatically; optionally flag non-owner managers with **Receive all-users daily summary**.
-7. Smoke:
+7. Confirm **Central → Branding** has a platform `logo_path` uploaded so non-Branded tenant mail shows the EloSync logo (otherwise the header falls back to text app name).
+8. Smoke:
    - Past reminder time → personal mail to unflagged non-owner with open CRM work
    - Team mail to Owner without the flag (only users with activity)
    - Team mail to flagged non-owner
    - Excluded-from-lead-assignment user with only leads → no personal mail; with tasks → personal mail without Leads block
+   - Without Branded: mail header uses platform logo; with Branded + tenant logo: tenant logo
    - Second cron tick → no duplicate
    - Ledger `queued` → `sent`; stale `queued` (>45m) reclaimable (max 5 attempts)
-8. Keep scheduler + emails workers healthy through the local reminder window (no midnight catch-up).
+   - Watch `emails` queue depth on the first morning after deploy (Owners now get team mail whenever any member has activity)
+9. Keep scheduler + emails workers healthy through the local reminder window (no midnight catch-up).
 
 ---
 
