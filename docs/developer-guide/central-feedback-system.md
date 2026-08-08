@@ -111,7 +111,7 @@ Routes live in `routes/tenant/v1.php` and `routes/central/v1.php`. Feedback is a
 | `GET` | `/api/central/v1/feedback/stats` | Lightweight triage summary |
 | `GET` | `/api/central/v1/feedback/{feedback}` | Full detail including internal notes |
 | `PATCH` | `/api/central/v1/feedback/{feedback}` | Status, priority, module linkage fields |
-| `POST` | `/api/central/v1/feedback/{feedback}/comments` | Public reply or internal note (`visibility`) |
+| `POST` | `/api/central/v1/feedback/{feedback}/comments` | Public reply or internal note (`is_internal` boolean) |
 | `GET` | `/api/central/v1/feedback/attachments/{attachment}/download` | Authorized download |
 
 ### Beta applications
