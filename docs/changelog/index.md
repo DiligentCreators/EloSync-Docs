@@ -1,6 +1,5 @@
 # Changelog
 
-<<<<<<< HEAD
 ## Team Chat module (2026-08-08)
 
 Free Collaboration Marketplace module (`team-chat`: not default-included, not billable) for realtime workspace messaging — channels, DMs, mentions, threads, and file sharing.
@@ -11,7 +10,7 @@ Catalog versions: registered **1.0.0**, then bumped **1.0.0 → 1.1.0** (threads
 - Frontend: SPA route `/team-chat`, unread + notification bell, deep links from mention/DM notifications, shortcuts `n` / `mod+f`
 - Pest `tests/Feature/Tenant/TeamChat/TeamChatTest.php` (licensing, provision, channels/DMs, mentions, broadcast auth, tenant isolation) + Playwright `test:e2e:team-chat`
 - Docs: user guide, tenant settings retention key, module development Reverb note, entitlements/licensing catalog + this note
-=======
+
 ## Fix — offline banner for real-world disconnects (2026-08-08)
 
 - SPA sticky offline banner is driven by browser `offline`/`online` **and** Axios transport failures (no HTTP response), not only `navigator.onLine`
@@ -31,7 +30,6 @@ Catalog version **1.1.0 → 1.2.0**.
 - Pest: labels create / update / show / duplicate reject / apply / clear / filter / delete / cross-user forbid
 - Playwright: labels create / edit / assign / remove / filter / delete (after live mailbox connect)
 - Docs: user / developer / API guides + this note
->>>>>>> origin/main
 
 ## Docs — module catalog SemVer policy (2026-08-08)
 
