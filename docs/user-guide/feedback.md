@@ -18,7 +18,7 @@ Then fill in:
 | Type | Bug, Feature request, UX / Usability, Performance, Integration, Other |
 | Title | Short summary, at least 3 characters |
 | Description | At least 10 characters — what you did, what you expected, what happened |
-| Module | Prefilled from the page you were on; edit or clear it |
+| Module | **Required.** Searchable list of installed modules; prefilled from the page you were on when possible. Choose **Other** when the report is not about a module — then **What area?** is required (for example Billing or login) |
 | Impact | Optional — Low, Medium, High, Critical |
 | Screenshot | Optional PNG, JPG, WebP, GIF, PDF, or text file up to 5 MB |
 

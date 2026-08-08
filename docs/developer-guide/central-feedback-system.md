@@ -97,7 +97,7 @@ Routes live in `routes/tenant/v1.php` and `routes/central/v1.php`. Feedback is a
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| `POST` | `/api/tenant/v1/feedback` | Create feedback (JSON, or multipart when an attachment is present) |
+| `POST` | `/api/tenant/v1/feedback` | Create feedback (JSON, or multipart when an attachment is present). `module_slug` is **required** (`string`, `max:100`) — catalog slug or a short free-text area when the reporter chose Other in the SPA |
 | `GET` | `/api/tenant/v1/feedback` | List own submissions |
 | `GET` | `/api/tenant/v1/feedback/{feedback}` | Show (public fields + public comments only) |
 | `POST` | `/api/tenant/v1/feedback/{feedback}/comments` | Public comment |

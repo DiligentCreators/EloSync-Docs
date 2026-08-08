@@ -14,4 +14,4 @@ Changing a shared layout component should benefit both applications whenever pra
 
 ## Module page tours
 
-On tenant module list pages (Leads, Tasks, HR modules, and the rest of the sidebar modules), a **help** icon in the page header starts a short product tour. The first visit to a module may open the tour automatically once; you can re-run it anytime from the same icon.
+On tenant module list pages (Leads, Tasks, HR modules, and the rest of the sidebar modules), a **help** icon in the page header starts a short product tour. The first visit to a module may open the tour automatically once; you can re-run it anytime from the same icon. Every module tour ends with a step that points at your avatar menu so you know how to open **Give Feedback** and report a bug.

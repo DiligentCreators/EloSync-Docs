@@ -6,7 +6,8 @@ Every tenant module list page ships a short **product tour** (driver.js) that ex
 
 - First visit: auto-prompt once per module (`localStorage`)
 - Always re-runnable from the PageHeader help icon (`CircleHelp`)
-- Short steps (typically 3–6): purpose, filters/KPIs, create/actions, records
+- Short steps (typically 3–6 module-specific steps): purpose, filters/KPIs, create/actions, records
+- Every tour appends one shared **Give Feedback** step (avatar menu) at runtime
 - Stable selectors; prefer existing roles/labels; add `data-tour` only when needed
 
 ## Architecture
@@ -41,8 +42,11 @@ Shared constants in `TOUR_SELECTORS`:
 | `[data-tour="module-table"]` | DataTable or KanbanBoard |
 | `[aria-label="KPI summary"]` | KPI strip |
 | `[aria-label="View mode"]` | Board/table toggle |
+| `[data-tour="user-menu"]` | Avatar button (shared Give Feedback step) |
 
 Missing elements are skipped (`skipMissingElement: true`).
+
+The shared feedback step is built in `feedbackTourStep()` and appended inside `startModuleTour()` — do not copy it into each `src/tours/{slug}.ts` file.
 
 ## Adding a tour for a new module
 
