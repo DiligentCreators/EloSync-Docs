@@ -12,6 +12,16 @@ Assignee scoping: without `opportunities.assign` (and not superadmin), list/stat
 
 Permission: `opportunities.view`. Returns seeded pipeline stages for the workspace (Prospecting … Won / Lost), ensuring defaults exist if the tenant has none.
 
+## Tags
+
+### GET `/opportunity-tags`
+
+List workspace opportunity tags. Permission: `opportunities.view`.
+
+### POST `/opportunity-tags`
+
+Create a tag. Body: `name` (required), optional `slug`, `color`, `sort_order`. Permission: `opportunities.create`.
+
 ## Stats
 
 ### GET `/opportunities/stats`
@@ -34,23 +44,27 @@ Returns one column per stage: `stage`, `opportunity_count`, `total_amount`, `opp
 
 ### GET `/opportunities`
 
-Query: `search`, `stage_id`, `assigned_to` (`unassigned` or user id), `my_opportunities`, `contact_id`, `company_id`, `lead_id`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `stage_id`, `tag_id`, `assigned_to` (`unassigned` or user id), `my_opportunities`, `contact_id`, `company_id`, `lead_id`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `stage`, assignee/creator refs, related `contact` / `company` / `lead` when loaded, and `latest_note`.
+List items include `stage`, assignee/creator refs, related `contact` / `company` / `lead` when loaded, `tags[]`, and `latest_note`.
 
 ### POST `/opportunities`
 
-Body: `name` (required), `amount`, `currency` (3-letter, default `USD`), `probability` (0–100), `expected_close_date`, `stage_id` (defaults to the workspace default stage), `contact_id`, `company_id`, `lead_id`, `assigned_to`.
+Body: `name` (required), `amount`, `currency` (3-letter, default `USD`), `probability` (0–100), `expected_close_date`, `stage_id` (defaults to the workspace default stage), `contact_id`, `company_id`, `lead_id`, `assigned_to`, `tag_ids[]`.
 
 Related FKs are optional. Each FK requires the corresponding module to be entitled when set.
 
 ### GET `/opportunities/{id}`
 
-Includes stage, assignee, creator, notes, timeline activities, and related refs.
+Includes stage, assignee, creator, notes, timeline activities, related refs, and `tags`.
 
 ### PUT `/opportunities/{id}`
 
-Partial update.
+Partial update (including `tag_ids[]`).
+
+### PUT `/opportunities/{id}/tags`
+
+Sync tags. Body: `{ "tag_ids": number[] }`. Permission: `opportunities.update`.
 
 ### DELETE `/opportunities/{id}`
 

@@ -17,6 +17,7 @@ Personal checklist module on the frozen platform. Separate from [Tasks](/user-gu
 
 - Title, description, status, priority, due date
 - Statuses: `open` (UI **To Do**), `in_progress`, `completed`, `cancelled`
+- **Colored tags** — per-workspace ToDos catalog; create/assign inline; filter by `tag_id`
 - **Personal visibility** — each user only sees to-dos they created
 - **Workspace owner** (`superadmin`) can view all to-dos in the workspace
 - **Creator-only update and delete** — even the owner cannot change or delete someone else’s to-do

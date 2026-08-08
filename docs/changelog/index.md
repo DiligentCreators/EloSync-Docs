@@ -2,12 +2,13 @@
 
 ## Pipeline board & table stage colors (2026-08-08)
 
-Catalog versions: **leads 1.1.1 → 1.2.0**, **opportunities 1.0.0 → 1.1.0**, **tasks 1.0.0 → 1.1.0**.
+Catalog versions: **leads 1.1.1 → 1.2.0**, **opportunities 1.0.0 → 1.1.0**, **tasks 1.0.0 → 1.1.0**, **todos 1.0.0 → 1.1.0**.
 
 - Leads / Opportunities board: column headers and cards tint from each stage’s stored color; Stage badges in the table and detail drawer use the same soft outline colors
 - Tasks board: fixed color per status (To Do, In Progress, Waiting, Completed, Cancelled); Status badges in list and detail match
 - Dashboard **Pipeline Board** widget prefers `stage.color` when present (falls back to the previous index palette)
-- Docs: user guides for Leads, Opportunities, Tasks, and tenant dashboard overview
+- **Tags (Tasks / ToDos / Opportunities):** per-module colored tags (name + color). Create and assign inline from the create/edit dialog (ClickUp-style chips). Filter list/board by tag. Separate catalogs — Tasks tags ≠ ToDos tags ≠ Opportunities tags. Leads keep their existing disposition tags system unchanged.
+- Docs: user guides for Leads, Opportunities, Tasks, ToDos, and tenant dashboard overview; API tag endpoints
 
 ## Central feedback system + Founding Beta intake (2026-08-08)
 

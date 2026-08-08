@@ -13,7 +13,8 @@ Your workspace must have the **ToDos** module installed (included by default on 
 Open **ToDos** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by title or description
-- Filter by status, priority, and **Overdue** (open / in-progress items past their due date)
+- Filter by status, priority, **tag**, and **Overdue** (open / in-progress items past their due date)
+- Board cards show colored **tag** chips
 - Drag a card to another column to auto-save the status change (only your own to-dos; no drawer opens)
 
 Status labels in the UI:
@@ -29,9 +30,12 @@ Status labels in the UI:
 
 1. Click **New to-do**
 2. Enter title (required) and optional description, status, priority, and due date
-3. Save
+3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
+4. Save
 
 Edit from the row menu or the detail drawer — only when you are the creator. Owners viewing someone else’s to-do see a read-only detail panel.
+
+Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities).
 
 ## Delete
 
