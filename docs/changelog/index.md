@@ -1,5 +1,11 @@
 # Changelog
 
+## Fix — @mention composer caret after pick (2026-08-09)
+
+- Tasks comments / Leads notes / Team Chat: after picking an `@` suggestion you can keep typing and Backspace/Delete removes the mention chip
+- Root causes: `display:flex` on the contentEditable (Chrome caret stuck next to atomic chips), no Backspace handler for `contentEditable=false` chips, and chip `@Name` text re-triggering autocomplete
+- Docs: developer guide Mentions UI notes for Leads / Tasks
+
 ## Attendance status badge colors (2026-08-09)
 
 Catalog version: **attendance 1.0.0 → 1.0.1**.
