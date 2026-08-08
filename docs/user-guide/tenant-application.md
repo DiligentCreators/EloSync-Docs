@@ -66,7 +66,7 @@ Marketplace shows paid prices in your **workspace currency** (Settings → Gener
 
 `GET /dashboard` returns workspace info plus a **widget registry**. You may see:
 
-- **Pipeline / sources / revenue** — when Leads is installed and you can view leads
+- **Pipeline / sources / revenue** — when Leads is installed and you can view leads. The **Pipeline Board** widget tints each stage column and its cards from that stage’s color (falls back to a default palette when a color is missing).
 - **High Priority** — open leads with priority **High** only (**not** Urgent; intentional). Mark/clear from the lead drawer; clear restores the prior priority when known.
 - **Today’s / overdue follow-ups** and deals closing soon — Leads-scoped
 - **Upcoming / overdue tasks** — when Tasks is installed and you can view tasks

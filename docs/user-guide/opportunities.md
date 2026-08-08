@@ -11,6 +11,7 @@ Without **assign**, you only see opportunities assigned to you.
 Open **Opportunities** from the sidebar (Sales). The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
 
 - Search by deal name
+- Each stage column header and its cards use that stage’s color; Stage badges in the table and detail drawer use the same colors
 - Filter by stage, assignee, related Contact / Company / Lead, or toggle **My Opportunities**
 - KPI cards summarize totals, open / won / lost, pipeline value, weighted pipeline, won value, and conversion rate for your scope
 - Table and board show the **latest note**; hover a truncated preview to read the full note
