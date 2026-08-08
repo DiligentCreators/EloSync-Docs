@@ -79,9 +79,15 @@ WhatsApp opens with the message pre-filled. EloSync does not send the message fo
 
 ## Convert
 
-Users with **convert** (and the Contacts module installed) can convert a lead into a contact from lead fields—no separate contact create form. The new contact defaults to **On Boarded Clients** lifecycle. The lead is stamped with `converted_at`, status becomes Closed, and activity is recorded. Use **View contact** from the lead drawer toast/link after convert.
+Users with **convert** can convert a lead from the detail drawer. Behavior depends on which Marketplace modules are installed:
 
-If Contacts is not installed, convert still closes the lead (`converted_at` / Closed) without creating a contact.
+- **Contacts** — creates a linked Contact from lead fields (name, email, phone, job title) with lifecycle **On Boarded Clients**. Requires `contacts.create`. No separate contact form.
+- **Companies** — when the lead has a company name, creates a Company or reuses an existing one (case-insensitive name match) and links it to the Contact. Requires `companies.create` when a new company must be created.
+- **Opportunities** (optional) — check **Also create an opportunity**, enter a name (defaults to the lead name), and optionally an amount (defaults from lead value). Requires `opportunities.create`. The opportunity is linked to the lead, contact, and company when those exist.
+
+The lead is stamped with `converted_at`, status becomes Closed, and activity is recorded. After convert, the drawer shows **View contact** / **View company** / **View opportunity** links when those records were created and you can view them.
+
+If Contacts is not installed, convert still closes the lead (`converted_at` / Closed) without creating a contact. Company and opportunity can still be created when those modules are installed.
 
 Lifecycle on contacts is independent of soft-delete (trash). See [Contacts](/user-guide/contacts).
 

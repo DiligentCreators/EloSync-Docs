@@ -31,7 +31,7 @@ New Contacts permissions for **existing** workspaces must ship as an additive **
 
 ## Lead integration
 
-When Contacts is installed alongside Leads, `leads.convert` starts creating/linking real Contacts (`leads.contact_id`) instead of the status-only placeholder. No backfill runs automatically for leads converted before Contacts was installed — those keep `conversion_meta.stub = true`.
+When Contacts is installed alongside Leads, `leads.convert` starts creating/linking real Contacts (`leads.contact_id`) instead of the status-only placeholder. No backfill runs automatically for leads converted before Contacts was installed — call convert again on stub rows after Contacts is entitled (company/opportunity IDs already in `conversion_meta` are reused). With Companies/Opportunities entitled, the same convert path can create/link those records (see Leads user guide).
 
 ## Deploy checklist
 

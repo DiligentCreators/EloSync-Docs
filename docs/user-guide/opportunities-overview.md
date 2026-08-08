@@ -22,6 +22,7 @@ Sales deals module on the frozen platform. Mirrors the [Leads](/user-guide/leads
 - **Kanban board (default)** + table view; drag-and-drop auto-saves stage via `POST /opportunities/{id}/stage`
 - KPIs via `GET /opportunities/stats`; board via `GET /opportunities/board`
 - Soft optional links: Contact / Company / Lead (FK rejected when that module is not installed)
+- Lead convert can optionally create an Opportunity (when Opportunities + create permission are present)
 - Assignment with assignee scoping via `opportunities.assign`
 - Notes + domain activity timeline
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -44,7 +45,6 @@ No hard `module_dependencies` row today. Linking a Contact, Company, or Lead req
 
 - Separate Marketplace SKU for “Sales Pipeline” (pipeline lives in this module)
 - Custom stage admin UI (stages are seeded / idempotent seeder)
-- Lead → Opportunity conversion wizard
 - Quotations / Contracts integration
 - Real-time board sync (Reverb / Echo)
 - Export / import

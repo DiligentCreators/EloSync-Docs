@@ -27,7 +27,7 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 - Export CSV / XLSX of the current filtered set (`leads.export`)
 - Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping (including optional first **Note**), duplicate modes, preview, queued processing, history + reports
 - **Inbound integrations** (`leads.manage_integrations`) — Custom webhooks (Zapier-ready) + Meta Lead Ads OAuth / Page subscribe
-- Convert (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; creates/links a real [Contact](/user-guide/contacts-overview) when that module is installed, otherwise stays status-only
+- Convert (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; creates/links a real [Contact](/user-guide/contacts-overview) when that module is installed (plus [Company](/user-guide/companies-overview) when the lead has a company name); optionally creates an [Opportunity](/user-guide/opportunities-overview) when the agent opts in; otherwise stays status-only for Contacts
 - Assignee scoping — without `leads.assign`, users only see their own leads
 - Module licensing (`module:leads`) + Spatie permissions
 - Audit + activity logging; assignment / follow-up notifications (mail + database)
