@@ -84,6 +84,7 @@ Do **not** rely on `CatalogSeeder` / re-running `ensureModule` — those paths n
 4. Entitlement cache is cleared per workspace by the module registrar when a subscription is newly installed
 5. If the module contributes dashboard widgets or notifications, confirm scheduler (`crm:send-due-notifications`) and SPA polling/widget ids
 6. If the module uses live conversation rooms (Team Chat), confirm Reverb is up and broadcast auth allows `tenant.{tid}.conversation.{id}` in addition to `tenant.{tid}.user.{uid}`; always schedule `team-chat:purge-expired` (no-op when `team-chat.retention_days` is `0`)
+7. Always schedule `trash:purge-expired` (no-op when `trash.retention_days` is `0`) so SoftDeletes Trash stays within the workspace retention window
 7. If the module has dates, schedules, digests, or office hours, confirm [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) (non-UTC workspace smoke)
 8. Smoke: login → module nav visible → list API 200 with `module:` + `can:` → Marketplace shows expected version / Available|Installed|Billable badges
 

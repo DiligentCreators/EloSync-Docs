@@ -127,9 +127,10 @@ Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities. API requires
 2. **Sync** — `EmailSyncService` via `SyncEmailAccountJob` on `email-sync`; also forced from `POST …/accounts/{uuid}/sync`.
 3. **Schedule** — `Schedule::command('email:sync')->everyMinute()->withoutOverlapping()->onOneServer()` in `routes/console.php`. Dispatches only accounts due per `sync_interval_minutes`.
 4. **Send** — compose/draft in DB → `SendEmailMessageJob` → `SmtpClient::send`; append to Sent when IMAP supports it. Reply compose may include `in_reply_to` / `thread_key`.
-5. **Move / trash** — `PUT` with `folder_uuid` moves on IMAP. `DELETE` moves to Trash when present; a second delete from Trash permanently removes.
-6. **Labels** — CRUD under `/email/accounts/{uuid}/labels` and `/email/labels/{uuid}`; `PUT /email/messages/{uuid}/labels` syncs `label_uuids` (account-scoped). `GET /email/labels/{uuid}/messages` lists across folders.
-7. **Disconnect** — delete pivot labels, messages, folders, and labels for that account.
+5. **Move / trash** — `PUT` with `folder_uuid` moves on IMAP. `DELETE` moves to Trash when present; a second delete from Trash permanently removes. If the IMAP move/delete fails because the remote UID is already gone, EloSync hard-deletes the local `EmailMessage` and returns success (`deleted`) so the SPA does not surface a 500.
+6. **Show / body refresh** — `GET` message runs `EmailMessageService::show`. When `body_html` is empty but a remote UID exists, the service re-fetches the body from IMAP once and persists `body_html` / `body_text`. `NativeImapMailboxClient` walks nested `multipart/*` parts so nested `text/html` is stored.
+7. **Labels** — CRUD under `/email/accounts/{uuid}/labels` and `/email/labels/{uuid}`; `PUT /email/messages/{uuid}/labels` syncs `label_uuids` (account-scoped). `GET /email/labels/{uuid}/messages` lists across folders.
+8. **Disconnect** — delete pivot labels, messages, folders, and labels for that account.
 
 ## Permission model
 
