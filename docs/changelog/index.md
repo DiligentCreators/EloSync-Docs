@@ -1,5 +1,16 @@
 # Changelog
 
+## Fix — Lead convert RBAC + meta cleanup (v1.1.1) (2026-08-08)
+
+Catalog version **1.1.0 → 1.1.1**.
+
+- Stub contact backfill that links an existing convert Opportunity now requires `opportunities.update` (same as Opportunities API)
+- Clear stale `conversion_meta.company_id` / `company_uuid` when the company cannot be resolved
+- Cache-lock company create by tenant + normalized name to reduce concurrent duplicates; document residual race without a unique name constraint
+- Pest: stub opportunity backfill + update authz; stale company_id cleanup
+- Playwright: convert with company + optional opportunity
+- Docs: known limitation + this note
+
 ## Leads v1.1.0 — convert creates Company + optional Opportunity (2026-08-08)
 
 Catalog version **1.0.0 → 1.1.0**.

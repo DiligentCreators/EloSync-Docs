@@ -171,11 +171,12 @@ Download `error_report.csv` (technical/processing exceptions).
 
 Permission: `leads.convert` (assignee-scoped like update unless the actor has `leads.assign` / owner). Creating related records also requires the matching create permission when that module is entitled:
 
-| Related create | Permission |
-|----------------|------------|
+| Related create / link | Permission |
+|----------------|-------|
 | Contact | `contacts.create` |
 | Company (new name only) | `companies.create` |
 | Opportunity (`create_opportunity: true`) | `opportunities.create` |
+| Link existing stub opportunity on contact backfill | `opportunities.update` |
 
 Optional body:
 
