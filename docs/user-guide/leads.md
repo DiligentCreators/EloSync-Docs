@@ -15,7 +15,7 @@ Use the **help** icon in the Leads page header to walk through KPIs, filters, cr
 Open **Leads** from the sidebar. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
 
 - Search by name, email, phone, or company
-- Each stage column header and its cards use that stage’s color; Stage badges in the table use the same colors
+- Each stage column header and its cards use that stage’s color; Stage badges in the table and detail drawer use the same colors
 - Filter by stage, status, priority, tag, assignee, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
 - Table and board both show **lead type**, **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
