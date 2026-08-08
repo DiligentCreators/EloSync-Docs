@@ -78,7 +78,7 @@ On the Team Chat page (same pattern as other modules):
 
 | Permission | Ability |
 |------------|---------|
-| `team-chat.view` | Open Team Chat, list/join public channels, open DMs, read messages, search, download attachments |
+| `team-chat.view` | Open Team Chat, list/join public channels, open DMs; read messages, search, and download attachments in conversations you belong to |
 | `team-chat.channels.create` | Create public/private channels |
 | `team-chat.channels.manage` | Update/archive channels, add/remove members |
 | `team-chat.messages.create` | Post messages, reactions, pins, attachments |

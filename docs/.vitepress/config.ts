@@ -378,6 +378,7 @@ export default defineConfig({
             { text: 'Tenant Communication Templates', link: '/api/tenant-v1-communication-templates' },
             { text: 'Tenant Email', link: '/api/tenant-v1-email' },
             { text: 'Tenant Notifications', link: '/api/tenant-v1-notifications' },
+            { text: 'Tenant Team Chat', link: '/api/tenant-v1-team-chat' },
             { text: 'Tenant Marketplace', link: '/api/tenant-v1-marketplace' },
             { text: 'Tenant Users', link: '/api/tenant-v1-users' },
             { text: 'Tenant Branded Domain', link: '/api/tenant-v1-branded' },
