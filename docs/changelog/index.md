@@ -2,9 +2,9 @@
 
 ## Fix — Email delete, HTML view, workspace trash retention (2026-08-09)
 
-- Email: deleting a message that is already gone from the real IMAP inbox removes the local EloSync copy instead of returning an error
-- Email: reading pane shows full HTML in a sandboxed iframe; IMAP body extract walks nested multiparts; opening a message re-fetches HTML when `body_html` was empty
-- Settings → General: **Trash retention** (`trash.retention_days` — Forever / 30 / 90 / 365) with daily `trash:purge-expired` across SoftDeletes modules (`TrashPurgeRegistry`)
+- Email: deleting a message already gone from IMAP removes the local EloSync copy; connection/auth failures keep the local copy and error
+- Email: reading pane shows sanitized HTML in a sandboxed iframe (popups allowed for links); IMAP body extract walks nested multiparts + charset decode; show re-fetches only when `body_html` is null
+- Settings → General: **Trash retention** (`trash.retention_days` — Forever / 30 / 90 / 365, API-validated) with daily `trash:purge-expired` across SoftDeletes modules (`TrashPurgeRegistry`, excludes EmailAccount)
 
 ## Fix — @mention composer caret after pick (2026-08-09)
 

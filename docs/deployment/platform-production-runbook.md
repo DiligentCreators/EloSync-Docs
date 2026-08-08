@@ -80,7 +80,7 @@ Scheduled commands (all use `withoutOverlapping`):
 - `notifications:prune --days=90` (weekly)
 - `email-logs:prune` (weekly — retention from `EMAIL_LOGS_RETAIN_DAYS` / config `email.logs_retain_days`)
 - `team-chat:purge-expired` (daily, `onOneServer` — no-op when `team-chat.retention_days` is `0`)
-- `trash:purge-expired` (daily, `onOneServer` — no-op when `trash.retention_days` is `0`)
+- `trash:purge-expired` (daily, `onOneServer`, `withoutOverlapping(120)` — no-op when `trash.retention_days` is `0`)
 - `email:sync` (every minute, `onOneServer`)
 
 ## Deploy sequence

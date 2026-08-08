@@ -69,9 +69,11 @@ Compose body requires `account_uuid`, optional `to`/`cc`/`bcc` arrays, `subject`
 
 Update supports `is_read`, `is_starred`, `folder_uuid` (IMAP move to another folder on the same account), and draft field edits.
 
-`DELETE /email/messages/{uuid}` moves the message to the account **Trash** folder when present and the message is not already in Trash; otherwise permanently deletes (IMAP expunge + local row). Success message indicates which path ran. If the remote IMAP message is already gone, the API still deletes the local row and returns a permanent-delete success (no 500).
+`DELETE /email/messages/{uuid}` moves the message to the account **Trash** folder when present and the message is not already in Trash; otherwise permanently deletes (IMAP expunge + local row). Success message indicates which path ran. If IMAP reports the remote UID is already gone, the API still deletes the local row and returns a permanent-delete success. Transient IMAP failures (auth/network) return an error and leave the local row.
 
-`GET /email/messages/{uuid}` returns `body_html` and `body_text`. When `body_html` is empty, the service may re-fetch the body from IMAP once so nested multipart HTML is available in the reading pane.
+`GET /email/messages/{uuid}` returns `body_html` and `body_text`. When `body_html` is `null`, the service may re-fetch the body from IMAP once so nested multipart HTML is available in the reading pane (empty string after a successful fetch means no HTML part).
+
+SPA reading pane renders `body_html` in a sandboxed iframe (`allow-popups` only) after DOMPurify sanitization (scripts stripped; styles kept).
 
 Link body: `{ "linkable_type": "lead\|contact\|company\|opportunity", "linkable_id": 1 }`. Requires `email.update` on the message **and** authorization to `view` the target record (policy). There is no Email SPA linking UI in v1.
 
