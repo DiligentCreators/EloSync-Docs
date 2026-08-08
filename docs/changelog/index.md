@@ -1,5 +1,12 @@
 # Changelog
 
+## Give Feedback — required searchable Module + tour tip (2026-08-09)
+
+- Give Feedback: **Module** is required via a searchable picker of installed modules (prefilled from the current page when possible); choose **Other** and enter a required **What area?** when the report is not module-related
+- Tenant API: `module_slug` is required on create (`max:100`)
+- Module product tours append a shared final step pointing at the avatar menu → **Give Feedback**
+- Docs: [Give Feedback](/user-guide/feedback), [Module Tours](/developer-guide/module-tours), [Shared Layout](/user-guide/shared-layout)
+
 ## Fix — Team Chat in-pane scroll (2026-08-09)
 
 Catalog version **1.3.1 → 1.3.2**.
