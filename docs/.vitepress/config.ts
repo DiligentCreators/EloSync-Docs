@@ -192,6 +192,7 @@ export default defineConfig({
             { text: 'Announcements Overview', link: '/user-guide/announcements-overview' },
             { text: 'Announcements', link: '/user-guide/announcements' },
             { text: 'Team Chat', link: '/user-guide/team-chat' },
+            { text: 'Give Feedback', link: '/user-guide/feedback' },
             { text: 'Calendar Overview', link: '/user-guide/calendar-overview' },
             { text: 'Calendar', link: '/user-guide/calendar' },
             { text: 'Meetings Overview', link: '/user-guide/meetings-overview' },

@@ -1,5 +1,12 @@
 # Changelog
 
+## Feedback UI — tenant submit + Central triage (2026-08-08)
+
+- Workspace users can send platform feedback from the user menu or command palette; the dialog captures page route, URL, browser, and build version automatically and lists past submissions with their status
+- Central operators triage every workspace from **Platform → Feedback** (filters, stats chips, status/priority updates, internal notes vs public responses, attachments)
+- **Platform → Beta Applications** records status and private notes for Founding Beta signups
+- New page: [Give Feedback](/user-guide/feedback)
+
 ## Founding Beta program docs + feedback architecture (2026-08-08)
 
 - Document [Founding Beta](/product/founding-beta): objectives, access model, tester expectations, and transition to public launch
