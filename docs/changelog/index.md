@@ -1,16 +1,16 @@
 # Changelog
 
-## Feedback UI — tenant submit + Central triage (2026-08-08)
+## Central feedback system + Founding Beta intake (2026-08-08)
 
-- Workspace users can send platform feedback from the user menu or command palette; the dialog captures page route, URL, browser, and build version automatically and lists past submissions with their status
-- Central operators triage every workspace from **Platform → Feedback** (filters, stats chips, status/priority updates, internal notes vs public responses, attachments)
-- **Platform → Beta Applications** records status and private notes for Founding Beta signups
-- New page: [Give Feedback](/user-guide/feedback)
+- Backend: tenant + Central feedback APIs, public beta-application intake, Central permissions (`feedback.*`, `beta-applications.*`), critical-bug mail to System Settings `support_email`
+- SPA: Give Feedback dialog (auto page/browser context + My submissions), Central **Platform → Feedback** inbox, **Platform → Beta Applications** triage
+- Docs: [Central Feedback System](/developer-guide/central-feedback-system) marked **Implemented**; [Founding Beta](/product/founding-beta) status table updated; user guide [Give Feedback](/user-guide/feedback)
+- Marketing site companion (separate repo): Founding Beta homepage funnel, `/beta/`, `/pricing/`, module pages
 
 ## Founding Beta program docs + feedback architecture (2026-08-08)
 
 - Document [Founding Beta](/product/founding-beta): objectives, access model, tester expectations, and transition to public launch
-- Document [Central Feedback System](/developer-guide/central-feedback-system) architecture (tenant submit / Central manage) — implementation status marked Planned until APIs and SPA land
+- Document [Central Feedback System](/developer-guide/central-feedback-system) architecture (tenant submit / Central manage) — originally Planned; now Implemented (see delivery note above)
 - Product Roadmap: Business Operating System positioning note + Founding Beta cross-links
 - Marketing site companion work (separate repo): Founding Beta homepage funnel, `/beta/`, `/pricing/`, module pages
 

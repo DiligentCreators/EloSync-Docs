@@ -2,9 +2,9 @@
 
 Architecture for EloSync product feedback: **submitted from the Tenant Application**, **managed in the Central Application**.
 
-> **Implementation status**
+> **Status: Implemented**
 >
-> This document describes the **target architecture** aligned with existing EloSync conventions (Sanctum dual-guard, Spatie RBAC, single-DB tenancy, Central React SPA, `FileUploadService`, `PlatformAuditService`). Sections marked **Implemented** reflect code that exists; sections marked **Planned** must be updated when the corresponding PR lands. Do not treat Planned APIs as live contracts until backend + SPA ship.
+> Shipped with Backend [#93](https://github.com/DiligentCreators/SaaS-Backend/pull/93) and Frontend [#88](https://github.com/DiligentCreators/SaaS-Frontend/pull/88). Architecture stays aligned with Sanctum dual-guard, Spatie RBAC, single-DB tenancy, Central React SPA, `FileUploadService`, and `PlatformAuditService`. User-facing flows: [Give Feedback](/user-guide/feedback).
 
 Related: [Founding Beta](/product/founding-beta) · [Authentication](/developer-guide/authentication) · [Object Storage](/developer-guide/object-storage) · [Admin UI](/user-guide/admin-ui) · [Platform Freeze](/getting-started/platform-freeze)
 
@@ -46,8 +46,8 @@ Related: [Founding Beta](/product/founding-beta) · [Authentication](/developer-
 | Operator triage | Central API + Central nav (`feedback.*` permissions) |
 | Website Founding Beta applications | Separate public intake (`/api/central/v1/public/beta-applications`) — applications, not in-app feedback tickets |
 
-**Planned:** in-app feedback APIs and UIs.  
-**Planned:** public beta application intake used by `elosync.com/beta/`.
+**Implemented:** in-app feedback APIs + Tenant Give Feedback dialog + Central Feedback inbox.  
+**Implemented:** public beta application intake used by `elosync.com/beta/` + Central Beta Applications triage.
 
 ---
 
@@ -89,28 +89,39 @@ Central detail view should include:
 
 ---
 
-## API flow (target)
+## API flow
 
-Exact paths must follow existing `routes/tenant/v1.php` and `routes/central/v1.php` conventions when implemented.
+Routes live in `routes/tenant/v1.php` and `routes/central/v1.php`. Feedback is a **platform** concern (no `module:feedback` middleware).
 
 ### Tenant (auth: `tenant-api`)
 
-| Method | Path (illustrative) | Purpose |
-|--------|---------------------|---------|
-| `POST` | `/api/tenant/v1/feedback` | Create feedback (+ multipart attachment) |
-| `GET` | `/api/tenant/v1/feedback` | List own / allowed submissions |
+| Method | Path | Purpose |
+|--------|------|---------|
+| `POST` | `/api/tenant/v1/feedback` | Create feedback (JSON, or multipart when an attachment is present) |
+| `GET` | `/api/tenant/v1/feedback` | List own submissions |
 | `GET` | `/api/tenant/v1/feedback/{feedback}` | Show (public fields + public comments only) |
 | `POST` | `/api/tenant/v1/feedback/{feedback}/comments` | Public comment |
+| `GET` | `/api/tenant/v1/feedback/attachments/{attachment}/download` | Download own attachment |
 
 ### Central (auth: `central-api`)
 
-| Method | Path (illustrative) | Purpose |
-|--------|---------------------|---------|
+| Method | Path | Purpose |
+|--------|------|---------|
 | `GET` | `/api/central/v1/feedback` | List + filters + pagination |
+| `GET` | `/api/central/v1/feedback/stats` | Lightweight triage summary |
 | `GET` | `/api/central/v1/feedback/{feedback}` | Full detail including internal notes |
 | `PATCH` | `/api/central/v1/feedback/{feedback}` | Status, priority, module linkage fields |
 | `POST` | `/api/central/v1/feedback/{feedback}/comments` | Public reply or internal note (`visibility`) |
-| `GET` | `/api/central/v1/feedback/stats` | Lightweight triage summary (optional) |
+| `GET` | `/api/central/v1/feedback/attachments/{attachment}/download` | Authorized download |
+
+### Beta applications
+
+| Method | Path | Auth |
+|--------|------|------|
+| `POST` | `/api/central/v1/public/beta-applications` | Public + throttle (marketing site) |
+| `GET` | `/api/central/v1/beta-applications` | `beta-applications.list` |
+| `GET` | `/api/central/v1/beta-applications/{beta_application}` | `beta-applications.read` |
+| `PATCH` | `/api/central/v1/beta-applications/{beta_application}` | `beta-applications.update` |
 
 Envelope: existing `ApiResponseService` `{ status, message, data, meta }`.
 
@@ -130,15 +141,12 @@ No new auth system. Sanctum + existing SPA cookie/token flows only.
 
 ## Authorization
 
-**Planned** Central permissions (add to `config/central-permissions.php` + seeders), for example:
+Central permissions in `config/central-permissions.php` (synced via migration / seeders):
 
-- `feedback.list`
-- `feedback.read`
-- `feedback.update`
-- `feedback.comment`
-- `feedback.stats` (if stats endpoint ships)
+- `feedback.list`, `feedback.read`, `feedback.update`, `feedback.comment`, `feedback.stats`
+- `beta-applications.list`, `beta-applications.read`, `beta-applications.update`
 
-Tenant: typically **authenticated workspace users** may submit; listing own feedback should not require a Marketplace module entitlement. Do not invent a `module:feedback` license.
+Tenant: **any authenticated workspace user** may submit and list their own feedback. There is no Marketplace module entitlement and no `module:feedback` license.
 
 Policies decide attachment download and comment visibility.
 
@@ -181,12 +189,12 @@ Tenant submitters may optionally send **impact** language; they must not arbitra
 
 ## Attachments / screenshots
 
-**Planned** reuse:
+**Implemented** reuse:
 
 - `App\Services\Storage\FileUploadService`
-- Private disk path prefix pattern similar to Team Chat attachments (`tenants/{uuid}/feedback/...`)
-- Allowlisted MIME types + max size validation
-- Authorized download routes (tenant: own item; central: with permission)
+- Private disk path under the workspace prefix for feedback attachments
+- Allowlisted MIME types + max size validation (`max:5120` KB)
+- Authorized download routes (tenant: own item; Central: with permission; SPA uses authenticated blob download, not bare public URLs)
 
 Do **not** invent a parallel storage stack.
 
@@ -207,12 +215,10 @@ API resources for tenant **must omit** internal notes even if a client crafts re
 
 Reuse existing notification infrastructure — do not build a second bus.
 
-**Planned:**
-
-| Event | Audience | Channel candidates |
-|-------|----------|--------------------|
-| New / critical feedback | Central operators | Mail (and later Central inbox if added) |
-| Public reply / meaningful status change | Submitting tenant user | Database + mail / push patterns already used by CRM notifications where appropriate |
+| Event | Audience | Channel |
+|-------|----------|---------|
+| Critical bug reported | Operators via System Settings `support_email` | Mail (`CriticalFeedbackReported`) |
+| Public reply / meaningful status change | Submitting tenant user | **Later** — reuse existing CRM-style database + mail / push patterns; not required for v1 triage |
 
 ---
 
@@ -238,7 +244,7 @@ Prefer human-readable **`FB-000001`** style numbers using Central sequential all
 
 ## Security checklist (tests required)
 
-When implemented, Pest (and SPA/E2E where applicable) must cover:
+Pest + SPA unit/e2e coverage ships with the feature and includes:
 
 1. Tenant A cannot read Tenant B feedback or attachments
 2. Tenant cannot read internal notes
@@ -246,6 +252,8 @@ When implemented, Pest (and SPA/E2E where applicable) must cover:
 4. Validation rejects invalid types / oversized files
 5. Only Central can change status/priority
 6. Public comments visible; internal notes hidden on tenant show
+7. Critical bugs mail `support_email` (cache cleared after system-settings seed)
+8. Frontend: dialog schema + Playwright shell wiring (`test:e2e:feedback`) against a stubbed tenant API
 
 ---
 
@@ -287,12 +295,10 @@ Keep models/APIs separate so applicant PII and product tickets do not overload o
 
 ## Documentation sync rule
 
-When the feature ships:
+Keep this page synchronized when behavior changes:
 
-1. Move Planned → Implemented with exact routes, permissions, and UI entry points.
-2. Update [Founding Beta](/product/founding-beta) status table.
-3. Add User Guide operator + tenant pages if the UX is user-visible.
-4. Add API pages under Central / Tenant v1 docs.
-5. Add a changelog delivery note the same day.
-
-Until then, treat this page as **architecture + contract intent**, not a live API reference.
+1. Exact routes, permissions, and UI entry points below stay accurate.
+2. Update [Founding Beta](/product/founding-beta) status table when intake / access model changes.
+3. Keep [Give Feedback](/user-guide/feedback) aligned with shell + Central UX.
+4. Add dedicated API reference pages under Central / Tenant v1 docs when those catalogs grow a Feedback section.
+5. Add a changelog delivery note the same day as user- or operator-visible changes.
