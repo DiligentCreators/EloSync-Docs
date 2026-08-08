@@ -1,4 +1,4 @@
-# Tasks — Production Guide
+﻿# Tasks — Production Guide
 
 ## Licensing
 
@@ -21,7 +21,7 @@ New Tasks permissions for **existing** workspaces must ship as an additive **dat
 
 ## Monitoring
 
-- Platform audit events: `task_created`, `task_updated`, `task_deleted`, `task_assigned`, `task_completed`, `task_reopened`, `task_note_added`
+- Platform audit events: `task_created`, `task_updated`, `task_deleted`, `task_assigned`, `task_completed`, `task_reopened`, `task_note_added`, `task_tag_created`, `task_tags_synced`
 - Notifications: assignment (mail + database); due today / overdue **in-app per task**; one daily **mail digest** per assignee (`crm:send-due-notifications`)
 - Workspace setting `task_reminder_time` / **Daily Reminder Time** (default `09:00`) in the workspace timezone (Settings → General) gates when digests and daily CRM summaries send — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)
 - Digest send state is durable in `task_digest_deliveries` (queued → sent / failed + retry). Cache flush does not re-email; failed queue jobs become retryable after `retry_after`
@@ -37,10 +37,10 @@ New Tasks permissions for **existing** workspaces must ship as an additive **dat
 
 ## Deploy checklist
 
-1. Migrate task tables (`tasks`, `task_notes`, `task_activities`) and `task_digest_deliveries`
+1. Migrate task tables (`tasks`, `task_tags`, `task_task_tag`, `task_notes`, `task_activities`) and `task_digest_deliveries`; catalog bump **tasks → 1.1.1** (colored tags)
 2. Migrate CRM summary support: `users.receive_all_users_daily_summary`, `daily_summary_deliveries`
-3. Deploy frontend (board/list, KPIs, comments/history, due-date gate, Settings → Daily Reminder Time, Users → daily summary flag)
+3. Deploy frontend (board/list, KPIs, comments/history, due-date gate, inline tags, Settings → Daily Reminder Time, Users → daily summary flag)
 4. Confirm `module:tasks` + expanded permissions
 5. Confirm scheduler + `php artisan queue:work --queue=emails` (digest + CRM summary mail is queued)
 6. Shared cache driver required for schedule `onOneServer()` locks
-7. Smoke: register/login → Tasks board → create → complete → note → due-date permission check → set reminder time → confirm personal/team CRM summary after gate
+7. Smoke: register/login → Tasks board → create (with tag) → complete → note → due-date permission check → set reminder time → confirm personal/team CRM summary after gate

@@ -29,7 +29,7 @@ Open **Opportunities** from the sidebar (Sales). The default view is the **Kanba
 
 Edit from the row menu or the detail drawer.
 
-Tags are an **Opportunities-only** catalog (separate from Leads disposition tags and Tasks / ToDos tags).
+Tags are an **Opportunities-only** catalog (separate from Leads disposition tags and Tasks / ToDos tags). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
 
 ## Sales pipeline (stages)
 

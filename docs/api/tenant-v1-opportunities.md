@@ -22,6 +22,8 @@ List workspace opportunity tags. Permission: `opportunities.view`.
 
 Create a tag. Body: `name` (required), optional `slug`, `color`, `sort_order`. Permission: `opportunities.create`.
 
+MVP catalogs are **create-only** (no update/delete/reorder tag endpoints). Assign via `tag_ids` or `PUT /opportunities/{id}/tags`; detail UI shows badges and uses the edit dialog to change assignments.
+
 ## Stats
 
 ### GET `/opportunities/stats`

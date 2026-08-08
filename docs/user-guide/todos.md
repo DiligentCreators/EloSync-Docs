@@ -35,7 +35,7 @@ Status labels in the UI:
 
 Edit from the row menu or the detail drawer — only when you are the creator. Owners viewing someone else’s to-do see a read-only detail panel.
 
-Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities).
+Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
 
 ## Delete
 

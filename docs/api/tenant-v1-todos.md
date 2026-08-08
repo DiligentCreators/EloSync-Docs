@@ -18,6 +18,8 @@ List workspace to-do tags. Permission: `todos.view`.
 
 Create a tag. Body: `name` (required), optional `slug`, `color`, `sort_order`. Permission: `todos.create`.
 
+MVP catalogs are **create-only** (no update/delete/reorder tag endpoints). Assign via `tag_ids` or `PUT /todos/{id}/tags`; detail UI shows badges and uses the edit dialog to change assignments.
+
 ## Board
 
 ### GET `/todos/board`

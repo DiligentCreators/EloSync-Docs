@@ -6,20 +6,20 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Task.php`, `TaskNote`, `TaskNoteMention`, `TaskActivity` |
+| Models | `app/Models/Task.php`, `TaskTag`, `TaskNote`, `TaskNoteMention`, `TaskActivity` |
 | Enums | `app/Enums/Tenant/TaskStatusEnum` (includes `waiting`; `Open` label `To Do`), `TaskPriorityEnum`, `TaskActivityTypeEnum` |
-| Service | `app/Services/Tenant/TaskService.php` (+ `ScopesToAssignee`) |
-| Controller | `app/Http/Controllers/Tenant/Api/V1/TaskController.php` |
+| Service | `app/Services/Tenant/TaskService.php` (+ `ScopesToAssignee`), `TaskTagService.php` |
+| Controller | `app/Http/Controllers/Tenant/Api/V1/TaskController.php`, `TaskTagController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Task/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/Task/*` |
-| Policy | `app/Policies/TaskPolicy.php` (`changeDueDate` → `tasks.change_due_date`) |
-| Events | `app/Events/Task*.php` |
+| Policy | `app/Policies/TaskPolicy.php` (`changeDueDate` → `tasks.change_due_date`), `TaskTagPolicy.php` |
+| Events | `app/Events/Task*.php` (includes `TaskTagCreated`, `TaskTagsSynced`) |
 | Subscriber | `app/Listeners/TaskEventSubscriber.php` (audit + notifications) |
 | Notifications | `app/Notifications/Tenant/Task/*` — assign/complete/reopen: database + optional mail (+ webpush on assign); mentions: database + webpush + optional mail; due/overdue: database; daily digest: mail only (`TaskDueDigestNotification`) |
 | Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `TaskNoteAdded` in `TaskEventSubscriber` |
 | Digest delivery | `task_digest_deliveries` + `TaskDigestDeliveryService`; `TrackTaskDueDigestDelivery` on `NotificationSent` / `NotificationFailed` |
 | Scheduled due | `crm:send-due-notifications` every 5 minutes (`onOneServer`); tenant setting `task_reminder_time` (**Daily Reminder Time**) gated in workspace timezone — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) |
-| Tests | `tests/Feature/Tenant/Task/TaskTest.php`, `tests/Feature/Tenant/Notification/TaskDueDigestNotificationTest.php`, `NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
+| Tests | `tests/Feature/Tenant/Task/TaskTest.php`, `TaskTagTest.php`, `tests/Feature/Tenant/Notification/TaskDueDigestNotificationTest.php`, `NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
@@ -56,8 +56,13 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-tasks.md](/api/tenant-v1-ta
 | POST | `/tasks/{task}/reopen` | complete |
 | POST | `/tasks/{task}/notes` | update |
 | GET | `/tasks/{task}/timeline` | view |
+| GET | `/task-tags` | view |
+| POST | `/task-tags` | create |
+| PUT | `/tasks/{task}/tags` | update |
 
 Auth login/`me` include `modules: string[]` for SPA gating.
+
+Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). Assign on store/update via `tag_ids[]` or `PUT …/tags`; filter list/board with `tag_id`.
 
 ## Frontend
 
@@ -77,6 +82,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 ```bash
 # Backend
 php artisan test --compact tests/Feature/Tenant/Task/TaskTest.php
+php artisan test --compact tests/Feature/Tenant/Task/TaskTagTest.php
 
 # Frontend E2E
 npm run test:e2e:tasks
@@ -86,7 +92,7 @@ npm run test:e2e:tasks
 
 - Spatie `LogsActivity` on `Task` (log name `tasks`)
 - Domain `task_activities` timeline
-- `PlatformAuditService` via `TaskEventSubscriber`
+- `PlatformAuditService` via `TaskEventSubscriber` (includes `task_tag_created`, `task_tags_synced`)
 
 ## Intentional differences from Leads
 

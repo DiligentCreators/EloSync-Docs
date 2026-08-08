@@ -37,7 +37,7 @@ Status labels in the UI:
 
 Edit from the row menu or the detail drawer. Dragging a card on the board auto-saves the new status (no drawer).
 
-Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities).
+Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
 
 ## Due dates
 
