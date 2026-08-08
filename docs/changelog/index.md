@@ -1,5 +1,12 @@
 # Changelog
 
+## Founding Beta program docs + feedback architecture (2026-08-08)
+
+- Document [Founding Beta](/product/founding-beta): objectives, access model, tester expectations, and transition to public launch
+- Document [Central Feedback System](/developer-guide/central-feedback-system) architecture (tenant submit / Central manage) — implementation status marked Planned until APIs and SPA land
+- Product Roadmap: Business Operating System positioning note + Founding Beta cross-links
+- Marketing site companion work (separate repo): Founding Beta homepage funnel, `/beta/`, `/pricing/`, module pages
+
 ## Fix — Lead convert RBAC + meta cleanup (v1.1.1) (2026-08-08)
 
 Catalog version **1.1.0 → 1.1.1**.

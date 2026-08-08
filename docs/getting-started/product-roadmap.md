@@ -1,6 +1,10 @@
 # Product Roadmap
 
-Long-term direction of the platform: evolution from a CRM into a complete SaaS ERP. Modules should be implemented in the order below unless business priorities require otherwise.
+Long-term direction of the platform: evolution from a CRM foundation into a complete modular **Business Operating System** / SaaS ERP. Modules should be implemented in the order below unless business priorities require otherwise.
+
+> **Founding Beta**
+>
+> EloSync is currently in [Founding Beta](/product/founding-beta): recruiting real businesses to test connected workflows and feed the [Central Feedback System](/developer-guide/central-feedback-system). Marketing CTAs prioritize beta recruitment over paid conversion until that learning loop is healthy.
 
 > **Architecture Policy**
 >
