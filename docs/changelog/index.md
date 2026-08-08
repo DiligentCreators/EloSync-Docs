@@ -1,5 +1,12 @@
 # Changelog
 
+## Attendance status badge colors (2026-08-09)
+
+Catalog version: **attendance 1.0.0 → 1.0.1**.
+
+- Status badges in the Attendance table and detail sheet use fixed outline colors: Present (green), Late (red), Absent (slate), Half day (amber), Remote (blue)
+- Docs: [Attendance user guide](/user-guide/attendance)
+
 ## Pipeline board & table stage colors (2026-08-08)
 
 Catalog versions: **leads 1.1.1 → 1.2.0**, **opportunities 1.0.0 → 1.1.0**, **tasks 1.0.0 → 1.1.0**.
