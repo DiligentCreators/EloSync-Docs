@@ -48,11 +48,11 @@ Disconnect removes the account and synced folders, labels, and messages from Elo
 After connect and sync:
 
 - Folders appear in a left pane (Inbox, Drafts, Sent, Trash, Spam, and custom folders from the server).
-- Select a folder to list messages; open a row to read in the reading pane.
+- Select a folder to list messages; open a row to read in the reading pane. HTML messages render as full HTML (styled layout) in a sandboxed viewer after sanitization; plain-text-only messages show as text.
 - Search filters the current folder (or label) list.
 - **Reply** / **Forward** from the reading pane opens Compose with the thread quoted.
 - **Move to** lets you pick another synced folder (IMAP move).
-- **Delete** moves the message to **Trash** when that folder exists; deleting again from Trash permanently removes it.
+- **Delete** moves the message to **Trash** when that folder exists; deleting again from Trash permanently removes it. If the message is already gone from your real mailbox (deleted in Gmail/Outlook), EloSync still removes it from the Email module instead of showing an error. Temporary mailbox connection failures keep the EloSync copy and show an error so mail is not lost.
 
 Unread counts refresh with sync. Creating folders happens in your mail provider or webmail, then **Sync** in EloSync — folder create from the EloSync UI is not available in this version.
 

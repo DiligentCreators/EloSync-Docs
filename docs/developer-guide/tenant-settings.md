@@ -4,7 +4,7 @@
 
 | Piece | Role |
 |-------|------|
-| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `team-chat.retention_days`, `session_lifetime_minutes`) |
+| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`) |
 | `App\Services\Tenant\TenantSettingService` | Hierarchy resolver, cache, branding uploads, runtime mail/config, public bootstrap |
 | `App\Services\Storage\FileUploadService` | Disk-agnostic store/replace/delete/url (shared with Central) |
 | `TenantSettingController` | Authenticated list/update, test-mail, branding upload |
@@ -33,6 +33,8 @@ Attendance group keys (system defaults when unset): `office_start_time` (`09:00`
 `session_lifetime_minutes` is an integer under the `security` group (`0`–`43200`). `0` means never expire: public bootstrap exposes it, SPA idle logout is skipped, and `TenantAuthBootstrapService::issueAccessToken()` creates a Sanctum token with `expires_at = null`. When unset, resolution falls back to Central `session_lifetime_minutes`.
 
 `team-chat.retention_days` is an integer under the `team-chat` group (Team Chat module). Allowed product values: **30**, **90**, **365**, or **0** (forever). Default when unset is **0** (keep forever). The scheduled command `team-chat:purge-expired` permanently deletes messages older than the window when `days > 0`; attachments are removed with those messages. Resolve via `TenantSettingService::get('team-chat.retention_days', 0, $tenant)`.
+
+`trash.retention_days` is an integer under the `general` group. Allowed product values: **30**, **90**, **365**, or **0** (forever). Default when unset is **0** (keep SoftDeletes rows until manual force-delete). Validated in `UpdateTenantSettingsRequest` (`in:0,30,90,365`). The scheduled command `trash:purge-expired` force-deletes soft-deleted rows older than the window for models in `App\Support\TrashPurgeRegistry` (CRM/module SoftDeletes — excludes Users, Team Chat, EmailAccount disconnect lifecycle, and IMAP `EmailMessage`). Resolve via `TenantSettingService::get('trash.retention_days', 0, $tenant)`. Always schedule the command (`withoutOverlapping(120)`); it no-ops when the setting is `0`.
 
 ## Workspace timezone convention {#timezone-and-scheduled-datetimes}
 

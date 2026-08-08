@@ -30,6 +30,7 @@ There is no separate attendance or meeting timezone. Change **Timezone** once; a
 | **Locale / Currency** | Workspace defaults. Inherit from Central when not customized. |
 | **Daily Reminder Time** | Local workspace time (default `09:00`) in **Timezone** — not server UTC — for the daily CRM summary email and the consolidated task due digest. Assignees still get in-app alerts per due/overdue task. |
 | **Default meeting provider** | Preselects None / Google Meet / Zoom on the Meetings schedule form (`meetings_default_provider`). Connecting providers is done under Meetings → Integrations. |
+| **Trash retention** | How long soft-deleted items stay in Trash before automatic permanent purge (`trash.retention_days`). Choose **30**, **90**, or **365** days, or **Forever**. Applies to leads, tasks, contacts, companies, invoices, and other SoftDeletes modules (not Team Chat messages — see Team Chat retention; not Email mailboxes — disconnect those separately; not IMAP Email Trash folders). Purge is irreversible. |
 
 ## Notifications
 
