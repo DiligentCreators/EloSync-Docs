@@ -32,7 +32,7 @@ So you do not have to describe your setup, the dialog also sends the page route 
 
 The **My submissions** tab in the same dialog lists your recent reports with their current status (New, Triaged, Planned, In progress, Resolved, Closed, Duplicate, Won't fix, Not reproducible). It refreshes automatically after you send something new.
 
-When Central changes the status of your report or posts a **Public response**, you also receive an email at the address on your workspace account with the ticket number, title, and the update details. Internal operator notes are never emailed.
+When Central changes the status of your report or posts a **Public response**, you also receive an email at the address on your workspace account with the ticket number, title, and the update details. Status-change emails wait briefly so quick triage updates only notify for the final status. The email includes a link that opens **Give Feedback → My submissions**. Internal operator notes are never emailed.
 
 ## Triaging feedback (Central operators)
 
