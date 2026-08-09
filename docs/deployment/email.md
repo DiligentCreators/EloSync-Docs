@@ -10,7 +10,7 @@ php artisan optimize
 This ships:
 
 1. Schema for `email_accounts`, `email_folders`, `email_labels`, `email_message_label`, `email_messages`, `email_attachments`, `email_signatures`, `email_templates`, `email_message_links`
-2. Catalog row for free opt-in module `email` (data migration — **not** default-included); later migrations bump catalog version (e.g. **1.1.0** shared templates, **1.2.0** EloSync labels) via `DefaultModuleRegistrar::bumpVersion`
+2. Catalog row for free opt-in module `email` (data migration — **not** default-included); later migrations bump catalog version (e.g. **1.1.0** shared templates, **1.2.0** EloSync labels, **1.3.0** reading-pane layout + multi-select bulk API) via `DefaultModuleRegistrar::bumpVersion`
 3. Additive permission grants for default roles (`email.*`)
 4. Additive template column `is_shared` (existing rows backfilled private)
 

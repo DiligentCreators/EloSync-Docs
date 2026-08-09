@@ -66,7 +66,7 @@ Sync message labels: `{ "label_uuids": ["…"] }` (replace set; empty array clea
 | POST | `/email/messages/{uuid}/link` | `email.update` |
 | DELETE | `/email/messages/{uuid}/link` | `email.update` |
 
-Bulk body (max 50 UUIDs):
+Bulk body (max 25 UUIDs; capped for synchronous IMAP timeout safety):
 
 ```json
 {
