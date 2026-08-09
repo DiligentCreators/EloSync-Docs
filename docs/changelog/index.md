@@ -1,5 +1,14 @@
 # Changelog
 
+## Email reading pane layout + multi-select bulk actions (2026-08-09)
+
+Catalog version: **email 1.2.0 → 1.3.0**.
+
+- Reading pane: **Right panel** (default, taller viewport, drag-resizable list) or **Full panel**; preference stored in the browser
+- Multi-select across folders/labels with bulk **Mark read/unread**, **Move to**, **Labels** (add/remove), and **Delete**
+- API: `POST /email/messages/bulk` (owned messages only; up to 50 per request)
+- Docs: [Email user guide](/user-guide/email), [Email developer guide](/developer-guide/email), [Tenant Email API](/api/tenant-v1-email)
+
 ## Give Feedback — email reporters on Central updates (2026-08-09)
 
 - When Central changes a feedback ticket’s **status**, or posts a **public response**, the submitting workspace user receives a platform-branded email (`FeedbackReporterUpdated`) with the ticket number, title, and update details

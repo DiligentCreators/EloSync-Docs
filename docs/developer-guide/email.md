@@ -1,6 +1,6 @@
 # Email — Developer Guide
 
-Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.2.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, labels, and signatures are scoped to the account owner (`user_id` via `EmailAccount`). Templates support `is_shared` for workspace-wide apply.
+Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.3.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, labels, and signatures are scoped to the account owner (`user_id` via `EmailAccount`). Templates support `is_shared` for workspace-wide apply.
 
 v1.x uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** for Gmail or Microsoft in this version.
 
@@ -70,14 +70,15 @@ Bindings (e.g. `AppServiceProvider`): testing → fakes; otherwise native IMAP +
 
 | Piece | Path |
 |-------|------|
-| Inbox UI | `src/pages/email/email-page.tsx` (3-pane, mailbox switcher, folders + labels sidebar) |
+| Inbox UI | `src/pages/email/email-page.tsx` (folders + resizable list + reading pane; layout right/full; multi-select bulk toolbar) |
 | Connect dialog | `email-account-dialog.tsx` (Gmail / Outlook / Custom presets; multi-account) |
-| Labels | `email-labels-dialog.tsx`, `email-label-badges.tsx`; apply via reading-pane Labels menu |
+| Labels | `email-labels-dialog.tsx`, `email-label-badges.tsx`; apply via reading-pane or bulk Labels menu |
+| Reading pane | `email-reading-pane.tsx` (actions, full-panel toggle, sandboxed HTML) |
 | Compose | `email-compose-dialog.tsx` (From select, TipTap `RichTextEditor`) |
 | Shared editor | `src/components/common/rich-text-editor.tsx` |
 | Templates / signatures | `email-templates-page.tsx`, `email-signatures-page.tsx` (+ TipTap body fields) |
 | Routes / nav | `/email`, templates & signatures children; `module: 'email'` |
-| E2E | `e2e/tests/email/`, `npm run test:e2e:email` (includes EloSync labels lifecycle after mailbox connect) |
+| E2E | `e2e/tests/email/`, `npm run test:e2e:email` (labels lifecycle, layout toggle, multi-select mark read when mailbox has mail) |
 
 ## Data model
 
@@ -130,7 +131,8 @@ Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities. API requires
 5. **Move / trash** — `PUT` with `folder_uuid` moves on IMAP. `DELETE` moves to Trash when present; a second delete from Trash permanently removes. Soft-fail local hard-delete applies only when IMAP reports the UID missing (`MailboxMessageNotFoundException`). Auth/network/UID-resolve failures propagate so the EloSync copy is not deleted.
 6. **Show / body refresh** — `GET` message runs `EmailMessageService::show`. When `body_html` is `null`, the service re-fetches from IMAP once and persists HTML or `''` (empty string = fetch attempted, no HTML — avoids re-hitting IMAP on every open). Transient fetch failures leave `null` so a later open can retry. `NativeImapMailboxClient` walks nested `multipart/*` parts and converts common MIME charsets to UTF-8.
 7. **Labels** — CRUD under `/email/accounts/{uuid}/labels` and `/email/labels/{uuid}`; `PUT /email/messages/{uuid}/labels` syncs `label_uuids` (account-scoped). `GET /email/labels/{uuid}/messages` lists across folders.
-8. **Disconnect** — delete pivot labels, messages, folders, and labels for that account.
+8. **Bulk** — `POST /email/messages/bulk` with up to 50 `message_uuids` and `action` (`delete` | `move` | `flags` | `labels`). Reuses single-message services; label mode is `add` / `remove` (not replace-all). Returns `{ processed, failed[] }`; HTTP 422 when none succeed. Permissions: `email.delete` for delete, `email.update` otherwise. Owned messages only.
+9. **Disconnect** — delete pivot labels, messages, folders, and labels for that account.
 
 ## Permission model
 
@@ -152,7 +154,7 @@ Routes: `module:email` then `can:email.*` / policies. Account/signature/message 
 
 | Migration | Responsibility |
 |-----------|----------------|
-| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog **1.1.0**; labels tables + catalog **1.2.0** |
+| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog **1.1.0**; labels tables + catalog **1.2.0**; bulk/layout SPA + catalog **1.3.0** |
 | Catalog | `register_email_module` via `DefaultModuleRegistrar`; version bumps via `bumpVersion` |
 | Permissions | `add_email_permissions` via `TenantPermissionSynchronizer` |
 
