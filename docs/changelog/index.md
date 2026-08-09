@@ -1,5 +1,11 @@
 # Changelog
 
+## CRM digest email visual redesign (2026-08-09)
+
+- Daily CRM (personal + team), task due digest, and department performance digest emails use shared table-based HTML templates: navy header with digest label (`DAILY SUMMARY` / `TASK DIGEST` / `DEPT DIGEST`), tinted metric cards, and card-styled body sections (user CRM cards, task lists, department stats).
+- Views live under Backend `resources/views/emails/crm/`; notifications pass data via `CrmDigestMailView` + `BrandedMail::apply()`.
+- Docs: [Daily CRM summary](/deployment/daily-crm-summary), notifications API digest notes.
+
 ## Daily CRM summary — owner team mail, leads exclusion, mail chrome (2026-08-09)
 
 - **Owners** (`superadmin`) always receive the team (all-users) daily CRM summary; non-owners can still opt in via **Receive all-users daily summary**.

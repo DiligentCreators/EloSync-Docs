@@ -26,7 +26,7 @@ Counts:
 
 Team digests still show per-user Leads for full owner visibility.
 
-Mail chrome: Branded module entitled → tenant logo/name; otherwise platform (central EloSync) logo/name via `BrandedMail`.
+Mail chrome: Branded module entitled → tenant logo/name; otherwise platform (central EloSync) logo/name via `BrandedMail`. Digests use table-based HTML templates (`resources/views/emails/crm/`) with a navy header label (`DAILY SUMMARY`), tinted metric cards, and per-user CRM cards — shared with the task due digest (`TASK DIGEST`) and department performance digest (`DEPT DIGEST`).
 
 Aggregations run **once per tenant** per command tick. Meeting counts use SQL `COUNT(DISTINCT meeting_id)`.
 
@@ -52,6 +52,7 @@ Aggregations run **once per tenant** per command tick. Meeting counts use SQL `C
    - Team mail to flagged non-owner
    - Excluded-from-lead-assignment user with only leads → no personal mail; with tasks → personal mail without Leads block
    - Without Branded: mail header uses platform logo; with Branded + tenant logo: tenant logo
+   - HTML body shows navy header label (`DAILY SUMMARY`) and metric/user cards (not plain Markdown lines)
    - Second cron tick → no duplicate
    - Ledger `queued` → `sent`; stale `queued` (>45m) reclaimable (max 5 attempts)
    - Watch `emails` queue depth on the first morning after deploy (Owners now get team mail whenever any member has activity)
