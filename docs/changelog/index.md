@@ -1,5 +1,13 @@
 # Changelog
 
+## Give Feedback — email reporters on Central updates (2026-08-09)
+
+- When Central changes a feedback ticket’s **status**, or posts a **public response**, the submitting workspace user receives a platform-branded email (`FeedbackReporterUpdated`) with the ticket number, title, and update details
+- Status emails are delayed ~90 seconds and suppressed if triage moved on (rapid updates only notify for the final status); public replies send immediately
+- Mail includes a **View my submissions** CTA (`/#/dashboard?feedback=submissions`) that opens Give Feedback on **My submissions**
+- Priority/module-only triage and **internal notes** do not email the reporter; missing/soft-deleted reporters are skipped silently
+- Docs: [Central Feedback System](/developer-guide/central-feedback-system), [Give Feedback](/user-guide/feedback)
+
 ## CRM digest email visual redesign (2026-08-09)
 
 - Daily CRM (personal + team), task due digest, and department performance digest emails use shared table-based HTML templates: navy header with digest label (`DAILY SUMMARY` / `TASK DIGEST` / `DEPT DIGEST`), tinted metric cards, and card-styled body sections (user CRM cards, task lists, department stats).

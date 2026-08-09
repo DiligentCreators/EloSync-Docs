@@ -218,7 +218,10 @@ Reuse existing notification infrastructure — do not build a second bus.
 | Event | Audience | Channel |
 |-------|----------|---------|
 | Critical bug reported | Operators via System Settings `support_email` | Mail (`CriticalFeedbackReported`) |
-| Public reply / meaningful status change | Submitting tenant user | **Later** — reuse existing CRM-style database + mail / push patterns; not required for v1 triage |
+| Status changed (Central triage) | Submitting tenant user (`user_id`) | Mail (`FeedbackReporterUpdated`, kind `status_changed`) — delayed ~90s and suppressed if status moved again during debounce; skipped when the reporter is missing/soft-deleted or has no email; priority/module-only updates do not notify |
+| Public reply from Central | Submitting tenant user | Mail (`FeedbackReporterUpdated`, kind `public_reply`, immediate) — internal notes never notify |
+
+Reporter mail uses platform branding (same pattern as `CriticalFeedbackReported`), not tenant Branded chrome. Status/public-reply mail includes a **View my submissions** CTA (`/#/dashboard?feedback=submissions`) that opens the Give Feedback dialog on **My submissions**. In-app / CRM preference mute channels remain out of scope (transactional platform mail, same as critical-bug operator alerts).
 
 ---
 
