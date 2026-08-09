@@ -1,5 +1,15 @@
 # Changelog
 
+## Email reading pane layout + multi-select bulk actions (2026-08-09)
+
+Catalog version: **email 1.2.0 → 1.3.0**.
+
+- Reading pane: **Right panel** (default, taller viewport, drag-resizable list) or **Full panel**; preference stored in the browser
+- Multi-select in each folder/label list with bulk **Mark read/unread**, **Move to**, **Labels** (add/remove), and **Delete** (batch capped at 25 for IMAP timeout safety)
+- API: `POST /email/messages/bulk` (owned messages only; up to 25 per request)
+- Ops: run `php artisan migrate --force` for the catalog bump (no new tables); keep the standing **`email-sync`** queue worker for mailbox connect/sync (bulk actions run in the HTTP request)
+- Docs: [Email user guide](/user-guide/email), [Email developer guide](/developer-guide/email), [Tenant Email API](/api/tenant-v1-email), [Email deployment](/deployment/email)
+
 ## Give Feedback — email reporters on Central updates (2026-08-09)
 
 - When Central changes a feedback ticket’s **status**, or posts a **public response**, the submitting workspace user receives a platform-branded email (`FeedbackReporterUpdated`) with the ticket number, title, and update details

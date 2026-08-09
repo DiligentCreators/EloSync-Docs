@@ -57,6 +57,7 @@ Sync message labels: `{ "label_uuids": ["…"] }` (replace set; empty array clea
 | GET | `/email/folders/{uuid}/messages` | `email.view` |
 | GET | `/email/accounts/{uuid}/messages/search?q=` | `email.view` |
 | GET | `/email/messages/{uuid}` | `email.view` |
+| POST | `/email/messages/bulk` | `email.update` or `email.delete` (by action) |
 | POST | `/email/messages/compose` | `email.create` |
 | PUT | `/email/messages/{uuid}` | `email.update` |
 | PUT | `/email/messages/{uuid}/labels` | `email.update` |
@@ -64,6 +65,21 @@ Sync message labels: `{ "label_uuids": ["…"] }` (replace set; empty array clea
 | DELETE | `/email/messages/{uuid}` | `email.delete` |
 | POST | `/email/messages/{uuid}/link` | `email.update` |
 | DELETE | `/email/messages/{uuid}/link` | `email.update` |
+
+Bulk body (max 25 UUIDs; capped for synchronous IMAP timeout safety):
+
+```json
+{
+  "message_uuids": ["…"],
+  "action": "delete | move | flags | labels",
+  "folder_uuid": "…",
+  "is_read": true,
+  "label_uuids": ["…"],
+  "label_mode": "add | remove"
+}
+```
+
+`folder_uuid` required for `move`; `is_read` for `flags`; `label_uuids` + `label_mode` for `labels`. Response data: `{ "processed": n, "failed": [{ "uuid", "message" }] }`. All-failed batches return **422**.
 
 Compose body requires `account_uuid`, optional `to`/`cc`/`bcc` arrays, `subject`, `body_html` / `body_text`, and optional `in_reply_to` / `thread_key` for replies. Creates a draft; call `send` to queue `SendEmailMessageJob` on `email-sync`.
 

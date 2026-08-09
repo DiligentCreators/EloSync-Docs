@@ -49,7 +49,9 @@ After connect and sync:
 
 - Folders appear in a left pane (Inbox, Drafts, Sent, Trash, Spam, and custom folders from the server).
 - Select a folder to list messages; open a row to read in the reading pane. HTML messages render as full HTML (styled layout) in a sandboxed viewer after sanitization; plain-text-only messages show as text.
+- Use the **reading pane** control (layout icon next to search) to switch between **Right panel** (default, resizable list width) and **Full panel** (message fills the content area; **Back to list** returns to the split view without changing your saved layout preference). Your choice is remembered in the browser.
 - Search filters the current folder (or label) list.
+- Use checkboxes to **select multiple messages** (or select all visible in the current list), then **Mark read / unread**, **Move to**, **Labels**, or **Delete** from the bulk toolbar (up to 25 messages per bulk request). Delete follows the same Trash vs permanent rules as a single message.
 - **Reply** / **Forward** from the reading pane opens Compose with the thread quoted.
 - **Move to** lets you pick another synced folder (IMAP move).
 - **Delete** moves the message to **Trash** when that folder exists; deleting again from Trash permanently removes it. If the message is already gone from your real mailbox (deleted in Gmail/Outlook), EloSync still removes it from the Email module instead of showing an error. Temporary mailbox connection failures keep the EloSync copy and show an error so mail is not lost.
@@ -63,6 +65,7 @@ Labels are **EloSync-only** tags for organizing mail. They do **not** sync to Gm
 - Under folders in the left pane, the **Labels** heading lists your labels for the selected mailbox.
 - Use the tags icon next to **Labels** to create, rename, recolor, or delete labels.
 - Open a message and use **Labels** in the reading pane to apply or remove labels (a message can have several).
+- Or select several messages and use the bulk **Labels** menu to add or remove a label across the selection.
 - Click a label in the sidebar to list every message on that mailbox that has the label (across folders).
 
 Disconnecting a mailbox removes its EloSync labels and assignments. Mail on your provider is unchanged.
