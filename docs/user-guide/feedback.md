@@ -32,6 +32,8 @@ So you do not have to describe your setup, the dialog also sends the page route 
 
 The **My submissions** tab in the same dialog lists your recent reports with their current status (New, Triaged, Planned, In progress, Resolved, Closed, Duplicate, Won't fix, Not reproducible). It refreshes automatically after you send something new.
 
+When Central changes the status of your report or posts a **Public response**, you also receive an email at the address on your workspace account with the ticket number, title, and the update details. Internal operator notes are never emailed.
+
 ## Triaging feedback (Central operators)
 
 Central users work every workspace from one inbox at **Platform → Feedback**.
@@ -41,6 +43,8 @@ Central users work every workspace from one inbox at **Platform → Feedback**.
 - Open a row to see the reporter, workspace, module and page context, description, and attachments
 - Set **status** and **priority**, then **Save triage**
 - Add an **Internal note** (Central only) or a **Public response** (visible to the reporter)
+
+Status changes and public responses email the reporter automatically. Internal notes do not.
 
 **Platform → Beta Applications** lists Founding Beta signups from the marketing site, where operators record a status (New, Reviewed, Accepted, Rejected, Waitlisted) and private notes. See [Founding Beta](/product/founding-beta).
 

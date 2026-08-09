@@ -218,7 +218,10 @@ Reuse existing notification infrastructure — do not build a second bus.
 | Event | Audience | Channel |
 |-------|----------|---------|
 | Critical bug reported | Operators via System Settings `support_email` | Mail (`CriticalFeedbackReported`) |
-| Public reply / meaningful status change | Submitting tenant user | **Later** — reuse existing CRM-style database + mail / push patterns; not required for v1 triage |
+| Status changed (Central triage) | Submitting tenant user (`user_id`) | Mail (`FeedbackReporterUpdated`, kind `status_changed`) — skipped when the reporter is missing or has no email; priority/module-only updates do not notify |
+| Public reply from Central | Submitting tenant user | Mail (`FeedbackReporterUpdated`, kind `public_reply`) — internal notes never notify |
+
+Reporter mail uses platform branding (same pattern as `CriticalFeedbackReported`), not tenant Branded chrome. In-app / push channels remain out of scope for feedback tickets.
 
 ---
 
