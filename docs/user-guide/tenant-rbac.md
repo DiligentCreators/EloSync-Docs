@@ -21,7 +21,7 @@ When the **Employees** module is installed, creating a user shows **Create emplo
 | Mark email verified | Row menu → **Mark as verified** when the member never received the email (requires `users.verify`) |
 | Delete | Row menu → **Delete** (if your role allows it) |
 
-**Receive all-users daily summary** grants a workspace-wide view of open leads, tasks, and meetings in the daily team email. Prefer Owner / Admin accounts. That user receives the team rollup **instead of** a personal summary.
+**Receive all-users daily summary** grants a workspace-wide view of open leads, tasks, and meetings in the daily team email (in addition to **Owners**, who always receive that team rollup). Prefer Admin / manager accounts for the flag. That user receives the team rollup **instead of** a personal summary.
 
 Each person belongs only to **this** workspace. They cannot see users from other workspaces.
 

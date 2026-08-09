@@ -1,5 +1,20 @@
 # Changelog
 
+## CRM digest email visual redesign (2026-08-09)
+
+- Daily CRM (personal + team), task due digest, and department performance digest emails use shared table-based HTML templates: navy header with digest label (`DAILY SUMMARY` / `TASK DIGEST` / `DEPT DIGEST`), tinted metric cards, and card-styled body sections (user CRM cards, task lists, department stats).
+- Views live under Backend `resources/views/emails/crm/`; notifications pass data via `CrmDigestMailView` + `BrandedMail::apply()`.
+- Docs: [Daily CRM summary](/deployment/daily-crm-summary), notifications API digest notes.
+
+## Daily CRM summary — owner team mail, leads exclusion, mail chrome (2026-08-09)
+
+- **Owners** (`superadmin`) always receive the team (all-users) daily CRM summary; non-owners can still opt in via **Receive all-users daily summary**.
+- Personal digests omit the **Leads** block when the user has **Exclude from lead assignment**; leads alone do not trigger a personal send.
+- Mail chrome: Branded module → tenant logo/name; otherwise platform (central EloSync) logo/name via `BrandedMail`. Confirm Central Branding logo is set in production.
+- First-morning note: expect one team digest per Owner when any member has CRM activity — watch the `emails` queue.
+- Docs: daily-crm-summary, branded guides, notifications API, tasks / RBAC user notes.
+- Frontend Users dialog help text clarifies Owners already receive the team rollup.
+
 ## Give Feedback — required searchable Module + tour tip (2026-08-09)
 
 - Give Feedback: **Module** is required via a searchable picker of installed modules (prefilled from the current page when possible); choose **Other** and enter a required **What area?** when the report is not module-related

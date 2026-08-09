@@ -43,9 +43,11 @@ Central / public registration never accept a client `domain`. `TenantService` al
 ## Brand chrome
 
 - `App\Support\BrandedMail::apply()` on tenant mail notifications
+  - **Branded entitled:** tenant `applicationName`, `logoUrl`, `buttonColor`, frontend URL
+  - **Otherwise:** central `SystemSettingService` app name + logo (platform/EloSync chrome) + default button color
 - Published `resources/views/vendor/mail/html/message.blade.php` (+ button) for logo / brand name
 - `EmailConfigResolver` overrides From name when branded is active
-- `PlatformNotificationPayloadMapper` uses tenant logo/favicon + title prefix
+- `PlatformNotificationPayloadMapper` uses tenant logo/favicon + title prefix **only when Branded is active**
 
 ## Cancel / deactivate
 
@@ -60,5 +62,5 @@ Central / public registration never accept a client `domain`. `TenantService` al
 
 ## Tests
 
-- Pest: `tests/Feature/Tenant/Branded/BrandedDomainTest.php`, `tests/Feature/Notifications/BrandedNotificationPayloadTest.php`, `tests/Unit/DomainRuleTest.php`, `tests/Unit/PlatformDomainClassifierTest.php`
+- Pest: `tests/Feature/Tenant/Branded/BrandedDomainTest.php`, `tests/Feature/Notifications/BrandedNotificationPayloadTest.php`, `tests/Feature/Notifications/BrandedMailChromeTest.php`, `tests/Unit/DomainRuleTest.php`, `tests/Unit/PlatformDomainClassifierTest.php`
 - Playwright: `npm run test:e2e:branded` (Domain tab hidden without module)

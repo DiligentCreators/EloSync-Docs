@@ -40,7 +40,7 @@ While Branded is active:
 - Tenant emails use your application / company name, logo, and button color in the mail chrome.
 - Web push notifications use your logo / favicon and prefix titles with your application name.
 
-Visual SPA branding (Settings → Branding) remains available to all workspaces; notification white-label and custom domains require Branded.
+Without Branded, tenant emails use the **platform (EloSync) logo and app name** from Central branding — not a blank text-only header. Visual SPA branding (Settings → Branding) remains available to all workspaces; custom domains and web-push white-label require Branded.
 
 ## Remove or cancel
 
