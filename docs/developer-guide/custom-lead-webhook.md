@@ -21,6 +21,8 @@ Each workspace can create one or more webhook endpoints under **Leads → Integr
 
 Secrets are returned **once** on create/rotate. List APIs return `has_api_key` / `has_signing_secret` only.
 
+The tenant Integrations UI offers **Copy URL** and **Copy JSON** on each endpoint. **Copy JSON** puts a sample POST body on the clipboard (with the endpoint `default_source` in `source`) so form builders can map fields. Auth headers are configured separately — never embed the API key in public browser JS.
+
 ### HMAC signing
 
 ```text

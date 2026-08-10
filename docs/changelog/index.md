@@ -1,5 +1,11 @@
 # Changelog
 
+## Lead webhook Copy JSON (2026-08-10)
+
+- Leads → Integrations → Webhooks: **Copy JSON** next to **Copy URL** (also on the one-time secrets panel after create/rotate)
+- Clipboard payload is the example POST body for website / Zapier wiring, with that endpoint’s default `source`; extras map under `custom_fields`
+- Docs: [Leads user guide](/user-guide/leads), [Custom Lead Webhook](/developer-guide/custom-lead-webhook)
+
 ## Email reading pane layout + multi-select bulk actions (2026-08-09)
 
 Catalog version: **email 1.2.0 → 1.3.0**.

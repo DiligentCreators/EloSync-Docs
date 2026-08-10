@@ -119,7 +119,7 @@ Use **Import history** to review past imports, download the original file, **fai
 
 Users with **manage integrations** can open **Integrations** from the Leads page.
 
-**Custom webhooks** — create endpoints for Zapier, website forms, etc. Each endpoint can enable **Assign to website recipients**. When on, new leads from that webhook are shared equally among users who are eligible assignees **and** have **Receive website leads** enabled in Administration → Users. If nobody is in that pool, the lead stays unassigned (ingest still succeeds). Meta Lead Ads does not use this pool.
+**Custom webhooks** — create endpoints for Zapier, website forms, etc. Use **Copy URL** and **Copy JSON** on each endpoint: the JSON is an example POST body (`name`, `email`, `phone`, …; extras under `custom_fields`) with that endpoint’s default source filled in. Authenticate separately with the API key (Bearer) or HMAC — do not put secrets in the page. Each endpoint can enable **Assign to website recipients**. When on, new leads from that webhook are shared equally among users who are eligible assignees **and** have **Receive website leads** enabled in Administration → Users. If nobody is in that pool, the lead stays unassigned (ingest still succeeds). Meta Lead Ads does not use this pool.
 
 ## Activity timeline
 
