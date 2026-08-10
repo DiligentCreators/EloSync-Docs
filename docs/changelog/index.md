@@ -1,5 +1,9 @@
 # Changelog
 
+## Automation module v1.0.0 (2026-08-10)
+
+Billable marketplace **Automation** SKU (`automation`): cross-module trigger → condition → action workflows with builder UI, templates, runs/logs, queue `automations`, and schedule dispatcher. Wired triggers for Leads, Tasks, Opportunities, Meetings, and Customer Invoices. `NotificationSourceEnum::Workflow` reserved for automation notifications; mentions/DMs use `Mention` / `DirectMessage`.
+
 ## Lead webhook Copy JSON (2026-08-10)
 
 - Leads → Integrations → Webhooks: **Copy JSON** next to **Copy URL** (also on the one-time secrets panel after create/rotate)

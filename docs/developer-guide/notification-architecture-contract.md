@@ -64,7 +64,10 @@ Every CRM/ERP database notification `data` JSON includes:
 
 ### NotificationSource (backed enum)
 
-`assign` | `bulk_assign` | `import` | `workflow` | `system` | `schedule`
+`assign` | `bulk_assign` | `import` | `webhook` | `workflow` | `mention` | `direct_message` | `system` | `schedule`
+
+- `workflow` — Automation module runs (`AutomationWorkflowNotification`)
+- `mention` / `direct_message` — @mentions and Team Chat DMs (not Automation)
 
 ### Route action (small enum)
 

@@ -132,7 +132,7 @@ Automation
 | `WhatsAppCloudDriver` | Cloud API auth, webhooks, templates, media, status mapping |
 | Lead module | Lead ownership, timeline/activity hooks via `LeadService` / activity services — not Graph parsing |
 | Notification system | In-app / mail digests per [Notification Architecture Contract](/developer-guide/notification-architecture-contract) |
-| Automation Engine | Future workflow reactions to message events |
+| Automation Engine | Domain-event workflows shipped as Marketplace module `automation`; WhatsApp message event triggers remain Planned |
 
 Business rules (who may send, assignment, logging, automation) stay in EloSync. Drivers only speak to external providers.
 
@@ -386,7 +386,7 @@ Sending outside the customer service window requires an approved Cloud template.
 
 ## Automation
 
-Future examples (Automation Engine / workflows — not implemented):
+Future examples for **WhatsApp message** triggers (CRM domain-event Automation ships as Marketplace module `automation`; message events wait on Cloud API):
 
 - Send welcome message
 - Follow-up reminders
@@ -396,7 +396,7 @@ Future examples (Automation Engine / workflows — not implemented):
 - Drip campaigns
 - Workflow automation (if message received → create Task / change Lead stage)
 
-Automations subscribe to Conversation / Message domain events. Drivers do not embed business workflows.
+Automations subscribe to Conversation / Message domain events. Drivers do not embed business workflows. See [Automation developer guide](/developer-guide/automation).
 
 ---
 
