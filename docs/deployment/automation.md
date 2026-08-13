@@ -48,3 +48,5 @@ Shared cache driver required for `onOneServer()` locks. Schedule matching uses a
 4. Confirm scheduler runs `automation:dispatch-schedules`
 5. Optional: set `AUTOMATION_WEBHOOK_SECRET` for default webhook HMAC when actions omit a secret
 6. Smoke: Marketplace install → create from template → activate → manual run → Runs page shows completed/failed with logs
+
+Full go-live checklist: [Automation production readiness](./automation-production-readiness).

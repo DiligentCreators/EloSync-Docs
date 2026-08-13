@@ -45,7 +45,7 @@ Schedule evaluation uses workspace timezone from `TenantSettingService` — see 
 
 ## Outbound webhooks
 
-`OutboundWebhookService` blocks private/loopback hosts (SSRF). Optional HMAC via `AUTOMATION_WEBHOOK_SECRET`. Exhausted `ExecuteAutomationRunJob` retries call `failed()` and persist run status `failed`.
+`OutboundWebhookService` blocks private/loopback hosts (SSRF). Optional HMAC via `AUTOMATION_WEBHOOK_SECRET`. Exhausted `ExecuteAutomationRunJob` retries call `failed()` and persist run status `failed`. The job uses a per-run cache lock (so delay continuations wait instead of overlapping) and `$timeout = 60` (below Redis `retry_after` 90). Action `delay_seconds` is capped at 86400.
 
 ## Frontend
 
