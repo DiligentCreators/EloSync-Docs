@@ -1,5 +1,7 @@
 # Storage — Production Guide
 
+Full go-live audit / checklist: [Storage production readiness](./storage-production-readiness).
+
 ## Licensing
 
 | Slug | Default included | Billable | Monthly / yearly |
@@ -19,18 +21,33 @@ Catalog versions: **1.0.0** for each slug.
 2. Confirm `CatalogSeeder` is **not** required in production
 3. Map Stripe/Creem products for each pack × monthly/yearly in Central → Payment Gateways → Product Mapping
 4. Prefer a **dedicated Wasabi/S3 bucket** for EloSync content (keep SQL backups out of the sellable pool)
-5. Confirm env:
+5. Confirm env (content on S3/Wasabi; branding/avatars stay on the VPS `public` disk):
 
 ```env
 FILESYSTEM_DISK=s3
 FILESYSTEM_UPLOADS_DISK=s3
 FILESYSTEM_BRANDING_DISK=public
 # FILESYSTEM_AVATAR_DISK=public
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_ENDPOINT=https://s3.wasabisys.com
+AWS_URL=
+AWS_USE_PATH_STYLE_ENDPOINT=false
 ```
+
+See [object-storage.md](/developer-guide/object-storage) for Wasabi notes.
+
+6. Migrate order (forward-fix only — **do not** `migrate:rollback` these):
+   `2026_08_13_220700` → `220710` → `220720` → `220730`
 
 ## Upgrade path for packs
 
 Tenants cancel the active pack subscription, then purchase the new size. There is no automatic pack swap/proration helper in v1.
+
+**Warning:** after cancel, allowance falls back to free **1 GiB** immediately. If the workspace already uses more than 1 GiB, further uploads soft-block (`STORAGE_QUOTA_EXCEEDED`) until the new pack is active.
 
 ## Monitoring
 
