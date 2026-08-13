@@ -6,25 +6,26 @@ Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Esti
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Expense.php`, `ExpenseNote`, `ExpenseActivity` |
-| Enums | `ExpenseCategoryEnum` (`travel`\|`office`\|`software`\|`utilities`\|`other`), `ExpenseStatusEnum`, `ExpenseActivityTypeEnum` |
-| Service | `app/Services/Tenant/ExpenseService.php` (+ `ScopesToAssignee`, `RetriesOnDuplicateNumber`) |
-| Controller | `app/Http/Controllers/Tenant/Api/V1/ExpenseController.php` |
-| Requests | `app/Http/Requests/Tenant/Api/V1/Expense/*` |
-| Resources | `app/Http/Resources/Tenant/Api/V1/Expense/*` |
-| Policy | `app/Policies/ExpensePolicy.php` |
+| Models | `app/Models/Expense.php`, `ExpenseCategory`, `ExpenseNote`, `ExpenseActivity` |
+| Enums | `ExpenseStatusEnum`, `ExpenseActivityTypeEnum` |
+| Service | `app/Services/Tenant/ExpenseService.php` (+ `ScopesToAssignee`, `RetriesOnDuplicateNumber`), `ExpenseCategoryService`, `ExpenseCategorySeederService` |
+| Controller | `app/Http/Controllers/Tenant/Api/V1/ExpenseController.php`, `ExpenseCategoryController` |
+| Requests | `app/Http/Requests/Tenant/Api/V1/Expense/*`, `ExpenseCategory/*` |
+| Resources | `app/Http/Resources/Tenant/Api/V1/Expense/*`, `ExpenseCategory/*` |
+| Policy | `app/Policies/ExpensePolicy.php`, `ExpenseCategoryPolicy` (maps to `expenses.*`) |
 | Events | `app/Events/Expense*.php` |
 | Subscriber | `app/Listeners/ExpenseEventSubscriber.php` (audit + assignment notification) |
 | Notifications | `app/Notifications/Tenant/Expense/ExpenseAssignedNotification.php` |
 | Link rules | `app/Rules/LinkableVendor.php` (reused), `app/Rules/LinkablePurchaseOrder.php` — both optional, tenant-scoped, module-entitlement-checked |
 | Assignee rule | `app/Rules/EligibleExpenseAssignee.php` |
-| Factories | `ExpenseFactory`, `ExpenseNoteFactory`, `ExpenseActivityFactory` |
-| Tests | `tests/Feature/Tenant/Expense/ExpenseTest.php` |
-| Migrations | `database/migrations/2026_08_01_130000_create_expenses_table.php` … `130005_add_purchase_orders_convert_permission.php` |
+| Factories | `ExpenseFactory`, `ExpenseCategoryFactory`, `ExpenseNoteFactory`, `ExpenseActivityFactory` |
+| Tests | `tests/Feature/Tenant/Expense/ExpenseTest.php`, `ExpenseCategoryTest.php` |
+| Migrations | `database/migrations/2026_08_01_130000_create_expenses_table.php` … `130005_add_purchase_orders_convert_permission.php`; `2026_08_13_171652`+ expense categories + catalog bump `1.0.0 → 1.1.0` |
 
 ## Domain notes
 
 - **No hard module dependency**: Expenses has no `module_dependencies` row — it's installable standalone, unlike Purchase Orders → Vendors. `vendor_id` / `purchase_order_id` are both nullable columns.
+- **Tenant categories**: `expense_categories` lookup (name, slug, `sort_order`, `is_active`, soft deletes). `expenses.category_id` is a nullable FK. Category CRUD reuses `expenses.view|create|update|delete|restore|force.delete` — no `expense-categories.*` family. `ExpenseCategorySeederService::ensureDefaults()` lazily inserts Travel / Office / Software / Utilities / Other (slugs `travel|office|software|utilities|other`) on first list/create/PO convert. Delete/forceDelete is blocked while any expenses (including trashed, for force) still reference the category. Catalog version **1.1.0**.
 - Status machine lives on `ExpenseStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → submitted|cancelled`, `submitted → approved|rejected|cancelled`, `approved → paid`, `rejected`/`paid`/`cancelled` are terminal. `ExpenseService::transitionStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions.
 - Content updates (`PUT`) are **draft-only** via `Expense::isEditable()` (`status === draft`). Assignment remains available after submit via `POST …/assign`.
 - `submit()` / `cancel()` are assignee-scoped in `ExpensePolicy` (same as `view` / `update`) unless the actor has `expenses.assign` or is superadmin. `approve()` / `reject()` / `pay()` are **not** assignee-scoped — any actor with the specific permission can act, modeling an approver distinct from the submitter.
@@ -41,7 +42,7 @@ Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Esti
 1. Resolves the purchase order's tenant and checks `EntitlementService::hasModule($tenant, 'expenses')` — throws a 422 `ValidationException` (`purchase_order` field) if Expenses isn't entitled, rather than a hard 403 at the module-middleware layer.
 2. Checks for an existing `Expense::withTrashed()->where('purchase_order_id', $purchaseOrder->id)` — throws a 422 if one already exists (one-time).
 3. Checks `PurchaseOrder::isConvertible()` (status is `sent`, `partially_received`, or `received`) — throws a 422 otherwise. Draft orders haven't incurred real spend yet; cancelled orders shouldn't become payable expenses.
-4. Creates a **draft** `Expense` inside a DB transaction: `title` = PO title, `category` = `other`, `amount` = PO `total`, `tax_amount` = PO `tax_total`, `currency`/`vendor_id`/`assigned_to`/`notes` copied from the PO, `purchase_order_id` = PO id, `expense_date` = today.
+4. Creates a **draft** `Expense` inside a DB transaction: `title` = PO title, `category_id` defaults to the seeded **Other** category, `amount` = PO `total`, `tax_amount` = PO `tax_total`, `currency`/`vendor_id`/`assigned_to`/`notes` copied from the PO, `purchase_order_id` = PO id, `expense_date` = today.
 5. Records a `PurchaseOrderActivityTypeEnum::Converted` activity on the purchase order and fires `PurchaseOrderConverted`.
 
 Exposed via `POST /purchase-orders/{purchaseOrder}/convert`, gated by `middleware('can:purchase-orders.convert')` at the route level (an ordinary Spatie permission, not a module-dependency check) plus `Gate::authorize('convert', $purchaseOrder)` in the controller. `PurchaseOrder::convertedExpense()` is a `hasOne(Expense::class)` relation; `ListPurchaseOrderResource` exposes `converted_expense_id` (null until converted) so the frontend can hide the button and show a link instead.
@@ -55,7 +56,7 @@ purchase-orders.convert
 
 Routes use `module:expenses` then `can:expenses.*` / policies. The convert route lives under the existing `module:purchase-orders` group and only needs `can:purchase-orders.convert` — the Expenses module check happens in the service layer (soft), not route middleware (hard).
 
-Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.1.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`).
 
 ## API (tenant)
 
@@ -67,12 +68,12 @@ SPA mirrors **Purchase Orders** (table + form dialog, detail sheet) under the ex
 
 | Piece | Path |
 |-------|------|
-| Page | `src/pages/expenses/` (`expenses-page.tsx`, `expense-form-dialog.tsx`, `expense-detail-sheet.tsx`) |
-| Detail sheet | Overview (category, amount/tax/total, date, assignee, related vendor/PO), notes, timeline — actions: assign, add note, submit, approve, reject, mark as paid, cancel, edit (draft only), delete |
-| Form dialog | Title, category, amount, tax amount, currency, expense date, notes, and **conditional** vendor / purchase order pickers (`SearchableSelect`) shown only when `hasModule('vendors')` / `hasModule('purchase-orders')` is true |
-| Service | `expenseService` in `src/api/services.ts`; `purchaseOrderService.convert()` for the PO action |
-| Types | `Expense*` in `src/types/api.ts`; `PurchaseOrder.converted_expense_id` added for the convert UI |
-| Query keys | `QUERY_KEYS.expenses` / `expense(id)` / `expenseTimeline(id)` / `expenseStats` |
+| Page | `src/pages/expenses/` (`expenses-page.tsx`, `expense-form-dialog.tsx`, `expense-detail-sheet.tsx`, `expense-categories-dialog.tsx`) |
+| Detail sheet | Overview (category name, amount/tax/total, date, assignee, related vendor/PO), notes, timeline — actions: assign, add note, submit, approve, reject, mark as paid, cancel, edit (draft only), delete |
+| Form dialog | Title, category picker (`category_id`, active categories), amount, tax amount, currency, expense date, notes, and **conditional** vendor / purchase order pickers (`SearchableSelect`) shown only when `hasModule('vendors')` / `hasModule('purchase-orders')` is true |
+| Service | `expenseService` + `expenseCategoryService` in `src/api/services.ts`; `purchaseOrderService.convert()` for the PO action |
+| Types | `Expense*` / `ExpenseCategory*` in `src/types/api.ts`; `PurchaseOrder.converted_expense_id` added for the convert UI |
+| Query keys | `QUERY_KEYS.expenses` / `expense(id)` / `expenseTimeline(id)` / `expenseStats` / `expenseCategories` |
 | Permissions | `PERMISSIONS.expenses.*` (maps to `expenses.*` permission strings); `PERMISSIONS.purchaseOrders.convert` reused for the PO action |
 | Nav | **Purchasing** sidebar group, after Purchase Orders — `permission: PERMISSIONS.expenses.view`, `module: 'expenses'` |
 | Route | `tenantRoutes.expenses = '/expenses'`, lazy-loaded in `App.tsx` behind `RequireAccess module="expenses"` |
@@ -84,6 +85,7 @@ SPA mirrors **Purchase Orders** (table + form dialog, detail sheet) under the ex
 
 ```bash
 php artisan test --compact tests/Feature/Tenant/Expense/ExpenseTest.php
+php artisan test --compact tests/Feature/Tenant/Expense/ExpenseCategoryTest.php
 php artisan test --compact tests/Feature/Tenant/PurchaseOrder/PurchaseOrderTest.php
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:expenses

@@ -10,13 +10,15 @@ Without **assign**, you only see expenses assigned to you.
 
 Open **Expenses** from the sidebar, under the **Purchasing** group (after Purchase Orders). Search by title or number, filter by status or category, toggle **My Expenses**, and switch KPI cards (Total, Mine, Draft, Submitted, Approved, Paid) to quick-filter the table. The table shows category, status, amount, expense date, assignee, and the **latest note**.
 
+Use **Manage categories** (requires `expenses.update`) to add, rename, activate/deactivate, or delete workspace expense categories. New workspaces start with Travel, Office, Software, Utilities, and Other. You cannot delete a category that still has expenses.
+
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted expense from the row menu
 - **Delete permanently** requires `expenses.force.delete` — granted to the workspace **owner** by default
 
 ## Create an expense
 
 1. Click **New expense**
-2. Enter a title, category, amount, and optional tax amount
+2. Enter a title, category (from your workspace list), amount, and optional tax amount
 3. Optionally set currency and an expense date
 4. If **Vendors** or **Purchase Orders** are installed on your workspace, optionally link a vendor and/or a purchase order
 5. Optionally set an assignee (requires **assign**)

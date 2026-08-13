@@ -15,13 +15,13 @@ Phase 4 Purchasing module (Milestone 3, final) on the frozen platform. A simplif
 
 ## Capabilities
 
-- Header only, no line items: number (`EXP-` prefix, configurable), title, category (`travel`\|`office`\|`software`\|`utilities`\|`other`), amount, tax amount, currency, expense date, status, notes
+- Header only, no line items: number (`EXP-` prefix, configurable), title, tenant-managed category, amount, tax amount, currency, expense date, status, notes
 - Optional `vendor_id` and `purchase_order_id` — soft links, only validated (and only pickable in the UI) when the corresponding module is entitled on the workspace
 - Status workflow: `draft → submitted → approved | rejected`, `approved → paid`, `draft | submitted → cancelled`
 - Draft-only field edits — after **Submit**, only status actions and assignment remain available
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `expenses.assign`
 - Notes (comments) + activity timeline
-- Table view with search, status filter, category filter, assignee filter, and **My Expenses** toggle
+- Table view with search, status filter, category filter, assignee filter, and **My Expenses** toggle; **Manage categories** dialog (same `expenses.*` permissions as Product Categories)
 - KPIs via `GET /expenses/stats` (total, mine, draft, submitted, approved, rejected, paid, cancelled, approved value, paid value)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:expenses`) + Spatie permissions — **free Marketplace opt-in**, no hard dependencies

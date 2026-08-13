@@ -318,9 +318,13 @@ Notes (author + body) and procurement timeline (`type`, `description`, `properti
 
 ## Expenses module tables
 
+### `expense_categories`
+
+`tenant_id`, unique `uuid`, `name`, `slug`, `sort_order` (default 0), `is_active` (default true), timestamps, soft deletes. Unique `(tenant_id, slug)`, index `(tenant_id, sort_order)`. Tenant-managed lookup; starter slugs `travel|office|software|utilities|other` are lazy-seeded. Delete is blocked in the service while expenses exist.
+
 ### `expenses`
 
-`tenant_id`, `uuid`, `number` (unique per tenant), `title`, `category` (`travel`|`office`|`software`|`utilities`|`other`), `amount`, `tax_amount`, `currency`, `expense_date`, `status` (`draft`|`submitted`|`approved`|`rejected`|`paid`|`cancelled`), nullable `vendor_id` (FK → `vendors`, null on delete; soft entitlement), nullable unique `purchase_order_id` (FK → `purchase_orders`, null on delete; soft entitlement; one expense per PO), `assigned_to`, `created_by`, `notes`, soft deletes. Spatie activity log name `expenses`. No line-item child table in MVP. Content edits are **draft-only**.
+`tenant_id`, `uuid`, `number` (unique per tenant), `title`, nullable `category_id` (FK → `expense_categories`, null on delete), `amount`, `tax_amount`, `currency`, `expense_date`, `status` (`draft`|`submitted`|`approved`|`rejected`|`paid`|`cancelled`), nullable `vendor_id` (FK → `vendors`, null on delete; soft entitlement), nullable unique `purchase_order_id` (FK → `purchase_orders`, null on delete; soft entitlement; one expense per PO), `assigned_to`, `created_by`, `notes`, soft deletes. Spatie activity log name `expenses`. No line-item child table in MVP. Content edits are **draft-only**.
 
 ### `expense_notes` / `expense_activities`
 

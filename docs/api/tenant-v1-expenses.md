@@ -34,13 +34,13 @@ Same filters as list (minus pagination/sort). Response:
 
 ### GET `/expenses`
 
-Query: `search` (matches `title` or `number`), `status` (`draft`\|`submitted`\|`approved`\|`rejected`\|`paid`\|`cancelled`), `category` (`travel`\|`office`\|`software`\|`utilities`\|`other`), `vendor_id`, `purchase_order_id`, `assigned_to` (`unassigned` or user id), `my_expenses`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `title` or `number`), `status` (`draft`\|`submitted`\|`approved`\|`rejected`\|`paid`\|`cancelled`), `category_id`, `vendor_id`, `purchase_order_id`, `assigned_to` (`unassigned` or user id), `my_expenses`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `category`, `amount`, `tax_amount`, `currency`, `expense_date`, `vendor`/`purchase_order` refs (when linked), assignee/creator refs, and `latest_note`.
+List items include `status`, `category_id`, embedded `category` (`{ id, name, slug }` when loaded), `amount`, `tax_amount`, `currency`, `expense_date`, `vendor`/`purchase_order` refs (when linked), assignee/creator refs, and `latest_note`.
 
 ### POST `/expenses`
 
-Body: `title` (required), `category` (optional, default `other`), `amount` (required), `tax_amount` (optional, default `0`), `currency` (3-letter, default `USD`), `expense_date`, `notes`, `vendor_id` (optional — must belong to the tenant and the Vendors module must be entitled), `purchase_order_id` (optional — must belong to the tenant and the Purchase Orders module must be entitled), `assigned_to`.
+Body: `title` (required), `category_id` (optional — tenant `expense_categories` id, must be active; defaults to the seeded **Other** category), `amount` (required), `tax_amount` (optional, default `0`), `currency` (3-letter, default `USD`), `expense_date`, `notes`, `vendor_id` (optional — must belong to the tenant and the Vendors module must be entitled), `purchase_order_id` (optional — must belong to the tenant and the Purchase Orders module must be entitled), `assigned_to`.
 
 Status always starts at `draft`; `number` is auto-generated (`EXP-00001`, configurable via the `expenses_number_prefix` tenant setting). There is no server-computed total — `amount` and `tax_amount` are stored as given.
 
@@ -115,6 +115,18 @@ Permission: `expenses.update`.
 ### GET `/expenses/{id}/timeline`
 
 Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `note_added`, `deleted`, `restored`).
+
+## Expense categories
+
+Categories use the same `module:expenses` gate and `expenses.*` permissions (no separate permission family). Listing lazy-seeds Travel / Office / Software / Utilities / Other when missing.
+
+- `GET /expense-categories` — list (`expenses.view`)
+- `POST /expense-categories` — create (`expenses.create`). Body: `name` (required); optional `slug`, `sort_order`, `is_active`
+- `GET|PUT|DELETE /expense-categories/{expenseCategory}` — view, update, soft-delete (`view` / `update` / `delete`)
+- `POST /expense-categories/{expenseCategory}/restore` — restore (`expenses.restore`)
+- `DELETE /expense-categories/{expenseCategory}/force` — permanently delete a soft-deleted category (`expenses.force.delete`)
+
+Delete and force-delete return 422 if any expenses (including trashed, for force) still reference the category.
 
 ## Related: convert a Purchase Order to an Expense
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## Expenses categories 1.1.0 (2026-08-13)
+
+Catalog version: **expenses 1.0.0 → 1.1.0**.
+
+- Tenant-managed expense categories (`expense_categories`) replace the hardcoded `travel|office|software|utilities|other` enum. CRUD reuses `expenses.*` (same pattern as Product Categories).
+- Expenses store `category_id` with embedded `{ id, name, slug }` on the API; list filter is `?category_id=`. Create/PO convert default to seeded **Other**.
+- Starter categories (Travel, Office, Software, Utilities, Other) lazy-seed on first list/create/convert. Delete is blocked while expenses still use the category.
+- SPA: **Manage categories** on Expenses; form/filter/detail use the lookup. Playwright covers creating a custom category and using it on a new expense.
+- Docs: [Expenses user guide](/user-guide/expenses), [developer](/developer-guide/expenses), [API](/api/tenant-v1-expenses), [database](/developer-guide/database), [deployment](/deployment/expenses)
+
 ## Fix — overdue due dates vs workspace timezone (2026-08-13)
 
 Catalog versions: **tasks 1.1.1 → 1.1.2**, **todos 1.1.0 → 1.1.1**, **leads 1.2.0 → 1.2.1**.
