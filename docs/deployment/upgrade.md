@@ -33,6 +33,17 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Storage module (2026-08-13)
+
+After migrating Storage:
+
+1. Map gateway prices for each billable pack (`storage-10` … `storage-1000`) × monthly/yearly
+2. Confirm `FILESYSTEM_BRANDING_DISK=public` and uploads on S3/Wasabi
+3. Workspaces that already had Team Chat receive free Storage automatically (grandfather migration)
+4. New workspaces install free Storage from Marketplace when they need content uploads
+
+See [Storage deployment](/deployment/storage).
+
 ## New workspaces after upgrade
 
 `TenantProvisioningService` continues to:

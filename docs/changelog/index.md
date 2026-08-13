@@ -1,5 +1,15 @@
 # Changelog
 
+## Storage module 1.0.0 (2026-08-13)
+
+Catalog versions: **storage** / **storage-10** / **storage-50** / **storage-100** / **storage-500** / **storage-1000** all **1.0.0**.
+
+- Free Marketplace **Storage** unlocks **1 GB** total workspace content storage (chat attachments, feedback screenshots, lead imports). Branding logos/favicons and profile avatars stay on the VPS and do not count.
+- Billable capacity packs set **total** allowance: 10 / 50 / 100 / 500 / 1000 GB ($4/$12/$20/$75/$120 monthly). Packs require free Storage; only one pack may be active (cancel then buy to change size).
+- `WorkspaceStorageService` soft-blocks uploads with `STORAGE_REQUIRED` / `STORAGE_QUOTA_EXCEEDED`; pack install conflicts return `STORAGE_PACK_CONFLICT`.
+- Settings → **Storage** usage panel; Marketplace pack purchase uses existing billing. Team Chat workspaces are grandfathered onto free Storage.
+- Prefer a dedicated Wasabi/S3 bucket for EloSync content. Docs: [Storage overview](/user-guide/storage-overview), [developer](/developer-guide/storage), [API](/api/tenant-v1-storage), [deployment](/deployment/storage). Playwright: `test:e2e:storage`.
+
 ## Expenses categories 1.1.0 (2026-08-13)
 
 Catalog version: **expenses 1.0.0 → 1.1.0**.

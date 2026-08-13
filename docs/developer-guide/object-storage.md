@@ -128,6 +128,10 @@ Options: `--source=public` (default), `--destination=s3` (default).
 
 Database paths are already relative keys and do **not** need rewriting when directory structure is preserved.
 
+## Workspace quota (Storage module)
+
+Content uploads on the uploads disk are gated by [`WorkspaceStorageService`](/developer-guide/storage) when the free **Storage** module (or a capacity pack) is entitled. Branding and avatars stay on the VPS disks and are **not** counted toward quota. See [Storage](/user-guide/storage-overview).
+
 ## Application usage
 
 ```php

@@ -315,6 +315,17 @@ AI
 
 AI Integration is planned as a cross-cutting capability. Integrations with Leads, Tasks, CRM, and similar modules should be **optional** — AI must not require every domain module to be installed.
 
+### Storage packs → Storage (required)
+
+```text
+storage-10 / storage-50 / storage-100 / storage-500 / storage-1000
+  └── depends on storage   (required)
+```
+
+Billable capacity packs cannot install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel current pack before buying another size). Content upload modules (Team Chat, Feedback, Lead imports) soft-check Storage allowance; they do not declare a hard `module_dependencies` row on Storage.
+
+**Status:** [Storage](/user-guide/storage-overview) shipped.
+
 ## Design rules
 
 When designing a new module:

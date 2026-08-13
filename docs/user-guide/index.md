@@ -54,5 +54,6 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Announcements](./announcements) | Workspace announcements with read tracking |
 | [Team Chat](./team-chat) | Channels, DMs, mentions, threads, attachments, retention |
 | [Branded](./branded) | Custom domain mapping and white-label notifications |
+| [Storage](./storage-overview) | 1 GB free content storage + paid capacity packs |
 | [Automation Overview](./automation-overview) | Automation module guides index |
 | [Automation](./automation) | Workflows, templates, runs, and permissions |
