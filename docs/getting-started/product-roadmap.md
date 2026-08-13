@@ -278,13 +278,32 @@ Implement workforce management.
 
 ---
 
+## Phase 8 — Operations
+
+| Marketplace SKU | Status |
+|-----------------|--------|
+| [Help Desk](/user-guide/help-desk-overview) | ✅ Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget; free Operations opt-in) |
+
+#### Help Desk (shipped)
+
+- Internal workspace ticketing — distinct from [Central Give Feedback](/user-guide/feedback) (platform bug/feature intake)
+- Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
+- Optional soft links to Contacts / Companies when those modules are entitled
+- Tenant-managed categories (General, Technical, Billing, Account, Other)
+- Assignee scoping, notes, domain timeline, `due_at` with workspace timezone convention for overdue
+- Dashboard widget `help_desk_my_open`
+- Free Marketplace opt-in under category `operations` — **no** hard module dependencies
+
+**Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, customer portal, or Knowledge Base yet).
+
+---
+
 ## Future Expansion
 
 The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
 
 - Assets
 - Projects
-- Help Desk
 - Knowledge Base
 - Documents
 - Manufacturing

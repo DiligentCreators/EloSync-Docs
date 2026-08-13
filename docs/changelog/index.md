@@ -1,5 +1,16 @@
 # Changelog
 
+## Help Desk module v1.0.0 (2026-08-14)
+
+Catalog version: **help-desk 1.0.0** (new Operations SKU).
+
+- Internal workspace ticketing MVP: tickets with status (`open` / `in_progress` / `waiting` / `resolved` / `closed`), priority, tenant-managed categories, assignment, notes/timeline, optional soft Contact/Company links, KPIs, `due_at`, and dashboard widget `help_desk_my_open`
+- Free Marketplace opt-in under category `operations` — no hard module dependencies; distinct from Central [Give Feedback](/user-guide/feedback)
+- Permissions: `help-desk.view|create|update|delete|restore|force.delete|assign|close|reopen` (admin all except `force.delete`; manager view/create/update/assign/close/reopen; staff view/create/update/close/reopen)
+- Tenant setting `help_desk_number_prefix` (default `HD-`); overdue uses workspace timezone convention
+- Deferred: SLAs, email ingest/multi-channel, customer portal, Knowledge Base, attachments, `@mentions`, Automation triggers, Communication Template context, Kanban
+- Docs: [Help Desk overview](/user-guide/help-desk-overview), [user guide](/user-guide/help-desk), [developer](/developer-guide/help-desk), [API](/api/tenant-v1-help-desk), [database](/developer-guide/database), [deployment](/deployment/help-desk), [Upgrade](/deployment/upgrade)
+
 ## Expenses categories 1.1.0 (2026-08-13)
 
 Catalog version: **expenses 1.0.0 → 1.1.0**.

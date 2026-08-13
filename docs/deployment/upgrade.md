@@ -86,6 +86,17 @@ Do **not** run `db:seed`. Starter categories (Travel / Office / Software / Utili
 
 See [Expenses production](/deployment/expenses).
 
+## Help Desk module v1.0.0
+
+After migrate, existing workspaces do **not** auto-install Help Desk. Operators enable `help-desk` from Marketplace. Registration is migrate-only via `DefaultModuleRegistrar` — do **not** run `db:seed`. Permissions ship additively via `TenantPermissionSynchronizer`.
+
+```bash
+php artisan migrate --force   # help_desk_* tables + catalog registration + help-desk.* permissions
+# then deploy Frontend, then Docs
+```
+
+See [Help Desk production](/deployment/help-desk).
+
 ## Automation module (billable add-on)
 
 After migrate, existing workspaces do **not** auto-install Automation. Operators install `automation` from Marketplace. Include the `automations` queue on workers and confirm `automation:dispatch-schedules` is on the scheduler. Optional env: `AUTOMATION_WEBHOOK_SECRET`. See [Automation production](/deployment/automation).
@@ -101,3 +112,4 @@ After migrate, existing workspaces do **not** auto-install Automation. Operators
 - [Email Webhooks](/developer-guide/email-webhooks)
 - [Tenant provisioning](/developer-guide/tenant-provisioning)
 - [Expenses production](/deployment/expenses)
+- [Help Desk production](/deployment/help-desk)

@@ -330,6 +330,20 @@ Notes (author + body) and procurement timeline (`type`, `description`, `properti
 
 Notes (author + body) and expense timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
 
+## Help Desk module tables
+
+### `help_desk_categories`
+
+`tenant_id`, unique `uuid`, `name`, `slug`, `sort_order` (default 0), `is_active` (default true), timestamps, soft deletes. Unique `(tenant_id, slug)`, index `(tenant_id, sort_order)`. Tenant-managed lookup; starter slugs `general|technical|billing|account|other` are lazy-seeded and stay immutable on rename. **Other** cannot be deleted. Spatie activity log name `help-desk-categories`. Delete is also blocked in the service while tickets exist.
+
+### `help_desk_tickets`
+
+`tenant_id`, `uuid`, `number` (unique per tenant), `subject`, nullable `description`, `status` (`open`|`in_progress`|`waiting`|`resolved`|`closed`), `priority` (`low`|`medium`|`high`|`urgent`), nullable `category_id` (FK → `help_desk_categories`, null on delete), nullable `contact_id` (FK → `contacts`, null on delete; soft entitlement), nullable `company_id` (FK → `companies`, null on delete; soft entitlement), `assigned_to`, `created_by`, nullable `due_at` (UTC), soft deletes. Spatie activity log name `help-desk`. Content edits are **blocked when closed**.
+
+### `help_desk_notes` / `help_desk_activities`
+
+Notes (author + body) and ticket timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
 ## Products module tables
 
 ### `product_categories`
