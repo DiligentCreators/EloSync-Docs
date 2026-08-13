@@ -10,6 +10,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Companies](./tenant-v1-companies) | Companies CRUD, notes, timeline |
 | [Tenant Contacts](./tenant-v1-contacts) | Contacts CRUD, notes, timeline |
 | [Tenant Tasks](./tenant-v1-tasks) | Tasks CRUD and workflows |
+| [Tenant Projects](./tenant-v1-projects) | Projects CRUD, board, members, status, notes, timeline |
 | [Tenant ToDos](./tenant-v1-todos) | Personal ToDos CRUD and board |
 | [Tenant Activities](./tenant-v1-activities) | Activities CRUD, complete, notes, timeline |
 | [Tenant Opportunities](./tenant-v1-opportunities) | Opportunities CRUD, board, stages, notes |

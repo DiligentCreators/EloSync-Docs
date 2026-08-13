@@ -51,7 +51,10 @@ customer_invoices.reseller_id (nullable FK → resellers)
 tasks / task_tags / task_task_tag / task_notes / task_note_mentions / task_activities
 task_digest_deliveries
 daily_summary_deliveries
-  (tenant-scoped work items — Tasks module + CRM daily digests)
+  (tenant-scoped work items — Tasks module + CRM daily digests; optional soft `project_id`)
+
+projects / project_members / project_notes / project_activities
+  (tenant-scoped Operations projects — Projects module; standalone free opt-in)
 
 automation_workflows / automation_triggers / automation_conditions / automation_actions
 automation_runs / automation_logs
@@ -251,7 +254,19 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 
 ### `tasks`
 
-`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**.
+`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, nullable `project_id` (FK → `projects`, null on delete; soft entitlement via `LinkableProject` — Projects must be entitled and the project visible to the actor), `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**. Catalog version **1.2.0** (added `project_id`).
+
+### `projects`
+
+`tenant_id`, `uuid`, `title` (not `name`), `status` (`planned`|`active`|`on_hold`|`completed`|`cancelled`, default `planned`), nullable `description`, nullable soft FKs `contact_id` / `company_id` / `opportunity_id` (null on delete), nullable date `starts_on` / `ends_on`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `projects`. Indexes on tenant+status/assignee/contact/company/opportunity/ends_on/title.
+
+### `project_members`
+
+Pivot: `tenant_id`, `project_id` (cascade), `user_id`, timestamps. Unique `(project_id, user_id)`. Assignee is not duplicated as a member.
+
+### `project_notes` / `project_activities`
+
+Notes (author + body) and project timeline (`type`, `description`, `properties` JSON; includes `members_synced`, `status_changed`).
 
 ### `task_tags` / `task_task_tag`
 

@@ -18,6 +18,7 @@ Second product module on the frozen platform. Mirrors the [Leads](/user-guide/le
 - Title, description, status, priority, due date
 - Status includes **`waiting`**; UI label for `open` is **To Do**
 - **Colored tags** — per-workspace Tasks catalog; create/assign inline; filter by `tag_id`
+- Optional soft **`project_id`** when [Projects](/user-guide/projects-overview) is entitled (Tasks catalog **1.2.0**)
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `tasks.assign`
 - **`tasks.change_due_date`** — required to change `due_at` after create (initial due date allowed on create)
 - Complete / reopen (`tasks.complete`)
