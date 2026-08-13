@@ -1,5 +1,11 @@
 # Changelog
 
+## Automation module v1.0.0 (2026-08-10)
+
+Billable marketplace **Automation** SKU (`automation`): cross-module trigger → condition → action workflows with builder UI, templates, runs/logs, queue `automations`, and schedule dispatcher. Wired triggers for Leads, Tasks, Opportunities, Meetings, and Customer Invoices. `NotificationSourceEnum::Workflow` reserved for automation notifications; mentions/DMs use `Mention` / `DirectMessage`.
+
+Hardeners: create always persists inactive then `activate()` (unwired triggers cannot bypass); outbound webhook SSRF + connect timeout; schedule 90s due window + 2-minute dedup + per-workflow cache lock; `ExecuteAutomationRunJob::failed()` + per-run cache lock + 60s timeout; delay_seconds capped at 24h; `AUTOMATION_WEBHOOK_SECRET` in `.env.example`. Docs hubs, Forge/`automations` queue, Meta Lead Ads event note, Playwright create → activate → run, [production readiness](/deployment/automation-production-readiness). Marketing catalog lists Automation as a paid add-on ($29/$290) alongside Branded.
+
 ## Lead webhook Copy JSON (2026-08-10)
 
 - Leads → Integrations → Webhooks: **Copy JSON** next to **Copy URL** (also on the one-time secrets panel after create/rotate)

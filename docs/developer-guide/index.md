@@ -67,6 +67,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Estimates](./estimates) | Estimates module engineering guide |
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
 | [Email](./email) | Personal IMAP/SMTP mailbox, sync jobs, templates, signatures |
+| [Automation](./automation) | Cross-module trigger → condition → action engine |
 
 ## Lead ingest & integrations
 

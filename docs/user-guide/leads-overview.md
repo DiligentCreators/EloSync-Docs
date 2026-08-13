@@ -40,5 +40,5 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 
 - Conversion to Companies (organizations)
 - Import retry execution (UI control present; processing deferred)
-- Workflow automations
+- Workflow automations (installable Marketplace module — see [Automation](/user-guide/automation-overview); not a hard-coded Lead feature)
 - Real-time board sync (Reverb / Echo)

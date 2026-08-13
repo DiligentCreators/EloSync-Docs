@@ -378,6 +378,7 @@ Configure only what you are actively developing.
 | **Object storage** | Local: `FILESYSTEM_DISK=public`. Production: S3-compatible `AWS_*` — [Object Storage](/developer-guide/object-storage). |
 | **Branded domains** | Set `BRANDED_SERVER_IPV4` (and optional CNAME) before verifying custom hosts. |
 | **Meta Lead Ads** | Central integrations / `META_LEAD_ADS_*` — [Meta App Setup](/developer-guide/meta-app-setup) (operator) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration) (architecture). |
+| **Automation webhooks** | Optional `AUTOMATION_WEBHOOK_SECRET` for default outbound HMAC when a workflow webhook action omits its own secret. |
 | **Nightwatch / Telescope / Sentry** | Disabled by default in `.env.example`; enable intentionally. |
 
 ---
@@ -390,7 +391,7 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 |----------|---------|------|
 | 1 | (Herd — no command) | Backend site live |
 | 2 | `php artisan reverb:start` | SaaS-Backend |
-| 3 | `php artisan queue:work --queue=emails,default` | SaaS-Backend |
+| 3 | `php artisan queue:work --queue=automations,emails,default` | SaaS-Backend |
 | 4 | `php artisan schedule:work` | SaaS-Backend (optional) |
 | 5 | `npm run dev` | SaaS-Frontend |
 | 6 | `npm run docs:dev` | SaaS-Docs (when editing docs) |

@@ -73,6 +73,10 @@ Smoke:
 2. Customized role permission sets are unchanged except for explicitly migrated additive grants
 3. New registration still gets all default-included modules + full owner permissions
 
+## Automation module (billable add-on)
+
+After migrate, existing workspaces do **not** auto-install Automation. Operators install `automation` from Marketplace. Include the `automations` queue on workers and confirm `automation:dispatch-schedules` is on the scheduler. Optional env: `AUTOMATION_WEBHOOK_SECRET`. See [Automation production](/deployment/automation).
+
 ## Related
 
 - [Release Process](/deployment/release-process)

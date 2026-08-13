@@ -59,11 +59,12 @@ LeadAssignmentService
         ↓
 Notification System
         ↓
-Automation Engine
+Automation Engine (Marketplace module `automation` — domain-event workflows)
         ↓
 Timeline
 ```
 
+Domain-event Automation is a billable module; drivers must not embed automation. WhatsApp message-specific triggers remain Planned until Cloud API ships.
 ### Non-negotiable rules
 
 - **No driver may bypass this pipeline.**
