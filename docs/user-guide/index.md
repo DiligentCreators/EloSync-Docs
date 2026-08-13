@@ -58,3 +58,5 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Branded](./branded) | Custom domain mapping and white-label notifications |
 | [Automation Overview](./automation-overview) | Automation module guides index |
 | [Automation](./automation) | Workflows, templates, runs, and permissions |
+| [Knowledge Base Overview](./knowledge-base-overview) | Knowledge Base module guides index |
+| [Knowledge Base](./knowledge-base) | Internal articles, categories, notes, and permissions |

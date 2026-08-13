@@ -319,6 +319,17 @@ Projects installs standalone with **no** `module_dependencies` rows — title, s
 
 **Status:** [Projects](/user-guide/projects-overview) shipped lean **v1.0.0**; Tasks catalog **1.2.0** adds soft `project_id`.
 
+### Knowledge Base (standalone, shipped)
+
+```text
+Knowledge Base
+  └── (no hard dependencies)
+```
+
+Knowledge Base installs as a free Operations Marketplace opt-in (`knowledge-base` **1.0.0**) with **no** `module_dependencies` rows. Internal workspace articles only — Help Desk links, public URLs, and Automation triggers are deferred and must remain soft/optional if added later.
+
+**Status:** Shipped — see [Knowledge Base Overview](/user-guide/knowledge-base-overview) and [Product Roadmap](/getting-started/product-roadmap).
+
 ### AI → domain modules (optional)
 
 ```text
