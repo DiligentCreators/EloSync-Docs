@@ -1,5 +1,16 @@
 # Changelog
 
+## Expenses categories 1.1.0 (2026-08-13)
+
+Catalog version: **expenses 1.0.0 → 1.1.0**.
+
+- Tenant-managed expense categories (`expense_categories`) replace the hardcoded `travel|office|software|utilities|other` enum. CRUD reuses `expenses.*` (same pattern as Product Categories).
+- Expenses store `category_id` with embedded `{ id, name, slug }` on the API; list filter is `?category_id=`. Create/PO convert default to seeded **Other**. This is a first-party SPA contract change (MINOR) — **migrate Backend before deploying the SPA**.
+- Starter categories (Travel, Office, Software, Utilities, Other) lazy-seed on first list/create/convert. Starter slugs stay stable if renamed. **Other** cannot be deleted. Listing does not restore a deleted Travel/Office/Software/Utilities row; only missing **Other** is restored. Delete is also blocked while expenses still use the category.
+- Spatie activity log name `expense-categories` for category CRUD (lazy seed is quiet).
+- SPA: **Manage categories** on Expenses (`expenses.create` **or** `update` **or** `delete`); in-dialog create/edit/delete are gated separately. Form/filter/detail use the lookup. Playwright covers creating a custom category and using it on a new expense.
+- Docs: [Expenses user guide](/user-guide/expenses), [developer](/developer-guide/expenses), [API](/api/tenant-v1-expenses), [database](/developer-guide/database), [deployment](/deployment/expenses), [Upgrade](/deployment/upgrade)
+
 ## Fix — overdue due dates vs workspace timezone (2026-08-13)
 
 Catalog versions: **tasks 1.1.1 → 1.1.2**, **todos 1.1.0 → 1.1.1**, **leads 1.2.0 → 1.2.1**.

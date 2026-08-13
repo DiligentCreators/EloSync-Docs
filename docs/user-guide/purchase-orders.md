@@ -50,7 +50,7 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 If the **Expenses** module is installed on your workspace and you have the `purchase-orders.convert` permission, a **Convert to expense** button appears on **Sent**, **Partially received**, and **Received** purchase orders (not on Draft or Cancelled). Converting:
 
-- Creates a **draft** Expense with title, amount, tax amount, currency, and vendor copied from the purchase order, category `Other`
+- Creates a **draft** Expense with title, amount, tax amount, currency, and vendor copied from the purchase order, using the seeded **Other** expense category
 - Links the new expense back to the purchase order (visible in the expense's **Related records**)
 - Is **one-way and one-time** — once converted, the button disappears and the purchase order shows a link to the created expense instead
 

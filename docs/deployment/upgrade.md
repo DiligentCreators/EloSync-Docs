@@ -73,6 +73,19 @@ Smoke:
 2. Customized role permission sets are unchanged except for explicitly migrated additive grants
 3. New registration still gets all default-included modules + full owner permissions
 
+## Expenses categories 1.1.0 (first-party SPA contract)
+
+Ship **Backend migrate before the SPA**. Expense resources no longer return `category` as a string; the SPA expects `category_id` and embedded `{ id, name, slug }`.
+
+```bash
+php artisan migrate --force   # expense_categories + backfill + catalog bump 1.0.0 → 1.1.0
+# then deploy Frontend, then Docs
+```
+
+Do **not** run `db:seed`. Starter categories (Travel / Office / Software / Utilities / Other) lazy-seed on first list/create/PO convert. **Other** cannot be deleted; starter slugs stay stable if renamed.
+
+See [Expenses production](/deployment/expenses).
+
 ## Automation module (billable add-on)
 
 After migrate, existing workspaces do **not** auto-install Automation. Operators install `automation` from Marketplace. Include the `automations` queue on workers and confirm `automation:dispatch-schedules` is on the scheduler. Optional env: `AUTOMATION_WEBHOOK_SECRET`. See [Automation production](/deployment/automation).
@@ -87,3 +100,4 @@ After migrate, existing workspaces do **not** auto-install Automation. Operators
 - [Multi-Provider Email](/developer-guide/multi-provider-email)
 - [Email Webhooks](/developer-guide/email-webhooks)
 - [Tenant provisioning](/developer-guide/tenant-provisioning)
+- [Expenses production](/deployment/expenses)

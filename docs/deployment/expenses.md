@@ -20,7 +20,7 @@ On **new workspace** create (Central tenant create or public register):
 3. Tenant permissions include `expenses.*` via `config/tenant-permissions.php` / default role maps
 4. `purchase-orders.convert` ships alongside Expenses (same migration wave) so existing Purchase Orders installs can surface the convert action once Expenses is also enabled
 
-No stage or status seeder — expense status defaults to `draft` at creation time and advances via the state machine.
+No stage or status seeder — expense status defaults to `draft` at creation time and advances via the state machine. Expense categories (Travel / Office / Software / Utilities / Other) are lazy-seeded on first category list, expense create, or PO convert — not via `db:seed`.
 
 ## Permissions rollout
 
@@ -33,18 +33,19 @@ New Expenses permissions (and `purchase-orders.convert`) for **existing** worksp
 ## Monitoring
 
 - Platform audit events: `expense_created`, `expense_updated`, `expense_deleted`, `expense_assigned`, `expense_status_changed`, `expense_note_added`, `expense_restored`
+- Spatie activity log name `expense-categories` for category CRUD (lazy seed is quiet)
 - Notifications: assignment (mail + database) via `ExpenseAssignedNotification`
 - Tenant mail settings with Central SMTP fallback
 
 ## Deploy checklist
 
-1. Migrate expense tables (`expenses`, `expense_notes`, `expense_activities`)
+1. Migrate expense tables (`expenses`, `expense_notes`, `expense_activities`, `expense_categories`) and catalog bump **1.0.0 → 1.1.0** — **before** deploying the SPA (`category` string → `category_id` + embed)
 2. Register the `expenses` catalog module (migration, not seeder) as free opt-in under the `purchasing` category — **no** `module_dependencies` row
 3. Migrate the `purchase-orders.convert` permission and grant it to existing `admin`/`manager` roles
-4. Confirm `module:expenses` + `expenses.*` permissions on target roles
-5. Deploy frontend (Expenses nav item under **Purchasing**, after Purchase Orders — list/form/detail; Convert to expense button on the Purchase Order detail sheet)
-6. Smoke: create a **new** workspace → enable Expenses (alone, no other Purchasing modules) → create/edit/assign/note an expense → submit → approve → mark as paid → soft delete/restore
-7. Smoke (soft convert): on a workspace with Vendors + Purchase Orders + Expenses all enabled → create a purchase order → send it → **Convert to expense** → confirm a draft expense with the PO's amount/vendor was created and the action is now hidden
+4. Confirm `module:expenses` + `expenses.*` permissions on target roles (category CRUD reuses the same permissions)
+5. Deploy frontend (Expenses nav item under **Purchasing**, after Purchase Orders — list/form/detail + **Manage categories**; Convert to expense button on the Purchase Order detail sheet)
+6. Smoke: create a **new** workspace → enable Expenses (alone, no other Purchasing modules) → Manage categories → create a custom category → create/edit/assign/note an expense → submit → approve → mark as paid → soft delete/restore
+7. Smoke (soft convert): on a workspace with Vendors + Purchase Orders + Expenses all enabled → create a purchase order → send it → **Convert to expense** → confirm a draft expense with the PO's amount/vendor and **Other** category was created and the action is now hidden
 8. Smoke (soft-gate off): on a workspace with Purchase Orders but **without** Expenses enabled → confirm the Convert button does not appear and the API returns a clear error if called directly
 
 ## Phase 4 roadmap context
