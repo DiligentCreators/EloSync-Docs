@@ -58,7 +58,7 @@ On Forge, configure these as **Scheduler** + **Daemons** on the API site — see
 1. **HTTP / PHP-FPM** (Forge site / Laravel Cloud web process)
 2. **Queue workers** — all `ShouldQueue` notifications use the dedicated `emails` queue (`QueuesOnEmails`)
    ```bash
-   php artisan queue:work redis --queue=emails,default --sleep=1 --tries=3 --timeout=60 --max-time=3600
+   php artisan queue:work redis --queue=automations,emails,default --sleep=1 --tries=3 --timeout=90 --max-time=3600
    ```
 3. **Reverb** — supervised WebSocket process behind TLS
    ```bash
@@ -82,6 +82,7 @@ Scheduled commands (all use `withoutOverlapping`):
 - `team-chat:purge-expired` (daily, `onOneServer` — no-op when `team-chat.retention_days` is `0`)
 - `trash:purge-expired` (daily, `onOneServer`, `withoutOverlapping(120)` — no-op when `trash.retention_days` is `0`)
 - `email:sync` (every minute, `onOneServer`)
+- `automation:dispatch-schedules` (every minute, `withoutOverlapping(5)`, `onOneServer` — due Automation schedule triggers; no-op when the module is not entitled)
 
 ## Deploy sequence
 

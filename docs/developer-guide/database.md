@@ -53,6 +53,10 @@ task_digest_deliveries
 daily_summary_deliveries
   (tenant-scoped work items — Tasks module + CRM daily digests)
 
+automation_workflows / automation_triggers / automation_conditions / automation_actions
+automation_runs / automation_logs
+  (tenant-scoped Automation engine — billable Marketplace module `automation`)
+
 todos / todo_tags / todo_todo_tag
   (tenant-scoped personal checklists — ToDos module; creator-scoped)
 
@@ -264,6 +268,20 @@ Once-per-day mail ledger for task due digests: `tenant_id`, `user_id`, `digest_d
 ### `daily_summary_deliveries`
 
 Once-per-day mail ledger for CRM summaries: same columns as task digests plus `kind` (`personal`|`team`|`department_weekly`). Unique `(tenant_id, user_id, digest_date, kind)`. Stale `queued` may be reclaimed after 45 minutes (max 5 attempts).
+
+## Automation module tables
+
+### `automation_workflows`
+
+`tenant_id`, `uuid`, `name`, `description`, `is_active`, `version`, `template_key`, `metadata` JSON, `created_by`, `updated_by`, timestamps. Spatie activity log name `automation`. Always created inactive; activation is a separate gate (wired trigger + required modules entitled).
+
+### `automation_triggers` / `automation_conditions` / `automation_actions`
+
+Per-workflow trigger (`type`, `config` JSON), conditions (`field`, `operator`, `value` JSON, `logic_group`, `sort_order`), and ordered actions (`type`, `config` JSON, `delay_seconds`, `sort_order`).
+
+### `automation_runs` / `automation_logs`
+
+Runs: `workflow_id`, `uuid`, `status` (`pending`|`running`|`completed`|`failed`|`skipped`|`cancelled`), `trigger_type`, `trigger_payload` JSON, `error_message`, `started_at`, `finished_at`. Logs: `run_id`, `level`, `step`, `message`, `context` JSON. Exhausted queue retries mark the run `failed` via `ExecuteAutomationRunJob::failed()`.
 
 ### Users CRM flags
 

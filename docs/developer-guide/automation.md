@@ -17,6 +17,10 @@ Billable marketplace module (`automation` v1.0.0). Mirrors Tasks packaging; doma
 | Notification | `AutomationWorkflowNotification` (`NotificationSourceEnum::Workflow`) |
 | Tests | `tests/Feature/Tenant/Automation/*`, `tests/Unit/Automation/*` |
 
+## Activation gate
+
+Workflows are always persisted **inactive**. Create/update with `is_active=true` still saves first, then calls `activate()`. Unwired catalog triggers (for example `contact.created`) cannot be activated — the row stays inactive and the API returns validation errors on `trigger`.
+
 ## Loop guard & notification source
 
 - While `AutomationContext` depth &gt; 0, `AutomationEngine::dispatchEvent()` no-ops so action side-effects do not recurse.
@@ -37,7 +41,11 @@ Routes: `module:automation` then `can:automation.*`.
 
 ## Date and time
 
-Schedule evaluation uses workspace timezone from `TenantSettingService` — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+Schedule evaluation uses workspace timezone from `TenantSettingService` — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes). Daily/weekly/monthly times match within 90 seconds after `H:i`; duplicate schedule runs for the same workflow are suppressed for 2 minutes.
+
+## Outbound webhooks
+
+`OutboundWebhookService` blocks private/loopback hosts (SSRF). Optional HMAC via `AUTOMATION_WEBHOOK_SECRET`. Exhausted `ExecuteAutomationRunJob` retries call `failed()` and persist run status `failed`.
 
 ## Frontend
 

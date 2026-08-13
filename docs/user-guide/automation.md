@@ -14,7 +14,7 @@ Workflow Automation lets your workspace react to CRM and operations events witho
 2. Choose a **trigger** (Lead created, Task completed, Manual, Schedule, …). Triggers for modules you have not installed are unavailable.
 3. Add optional **conditions** (field / operator / value; AND or OR groups).
 4. Add one or more **actions** in order (create task, notify, webhook, …).
-5. **Save**. Use **Activate** when ready — only active workflows run.
+5. **Save** (inactive) or **Save & activate**. Only active workflows run. Triggers marked **Coming soon** can be saved but not activated.
 
 ### Triggers (v1)
 

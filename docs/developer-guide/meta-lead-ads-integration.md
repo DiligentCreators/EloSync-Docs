@@ -105,7 +105,7 @@ sequenceDiagram
   Dup-->>LS: create | update | skip
   LS->>N: Existing Lead events → assignment + notifications
   LS->>TL: Activity "Lead imported from Meta Lead Ads"
-  Note over N: Automations hook when Workflow Automation ships
+  Note over N: Automation module subscribes to LeadCreated / LeadUpdated when entitled
 ```
 
 ### Component responsibilities (planned)
@@ -291,7 +291,7 @@ After successful create/update (Lead module, not driver):
 
 1. **Assignment** — apply tenant default assignment rules or explicit routing (future campaign auto-assignment).
 2. **Notifications** — rely on existing Lead event → notification pipeline ([Notification Architecture Contract](/developer-guide/notification-architecture-contract)); prefer additive `source` / metadata rather than a parallel notifier.
-3. **Automations** — when Workflow Automation ships, Meta-created leads should emit the same domain events so automations can subscribe without Meta-specific hooks in v1.
+3. **Automations** — Meta-created leads already emit the same Lead domain events (`LeadCreated` / `LeadUpdated`). Entitled Automation workflows with wired `lead.created` / `lead.updated` triggers subscribe without Meta-specific hooks. See [Automation developer guide](/developer-guide/automation).
 4. **Activity Timeline** — see below.
 
 ---

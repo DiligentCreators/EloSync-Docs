@@ -36,7 +36,7 @@ Query: `search`, `is_active`, `trigger_type`, `sort`, `direction`, `page`, `per_
 
 ### POST `/automation/workflows`
 
-Permission: `automation.create`.
+Permission: `automation.create`. Workflows are always stored inactive first. `is_active: true` then attempts activation and returns 422 (workflow remains inactive) when the trigger is not wired.
 
 ```json
 {
