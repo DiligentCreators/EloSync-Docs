@@ -1,5 +1,18 @@
 # Changelog
 
+## Knowledge Base module 1.0.0 (2026-08-14)
+
+Free Operations Marketplace module (`knowledge-base`: not default-included, not billable, catalog **1.0.0**) for **internal** team articles, flat categories, and searchable FAQs. No public/customer portal.
+
+- Articles: title, slug, excerpt, TipTap HTML body, optional category, status `draft` / `published` / `archived`, `published_at` (`UtcDateTime`)
+- Permissions: `knowledge-base.view|create|update|delete|restore|force.delete` — admin defaults exclude force.delete; manager = view/create/update; staff = view
+- View-only users see published only; editors with update see drafts / archived / trash
+- Categories: flat; delete blocked while articles use them
+- Notes + domain timeline + Spatie `LogsActivity` + PlatformAuditService; no hard module dependencies
+- Tenant API under `/api/tenant/v1/knowledge-base*` and `/knowledge-base-categories*`; SPA `src/pages/knowledge-base/`; tourId `knowledge-base`; Playwright `test:e2e:knowledge-base`
+- Deferred: public URLs, Help Desk links, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
+- Docs: [overview](/user-guide/knowledge-base-overview), [user guide](/user-guide/knowledge-base), [developer](/developer-guide/knowledge-base), [API](/api/tenant-v1-knowledge-base), [deployment](/deployment/knowledge-base)
+
 ## Expenses categories 1.1.0 (2026-08-13)
 
 Catalog version: **expenses 1.0.0 → 1.1.0**.

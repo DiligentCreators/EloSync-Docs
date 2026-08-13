@@ -303,6 +303,17 @@ Accounting
 
 Accounting ships standalone (manual double-entry). A future milestone may optionally integrate stock valuations or COGS-related flows through contracts/services. Auto-posting from Expenses / Invoices / Payments / Credit Notes is also deferred (soft integrations, not hard install deps).
 
+### Knowledge Base (standalone, shipped)
+
+```text
+Knowledge Base
+  └── (no hard dependencies)
+```
+
+Knowledge Base installs as a free Operations Marketplace opt-in (`knowledge-base` **1.0.0**) with **no** `module_dependencies` rows. Internal workspace articles only — Help Desk links, public URLs, and Automation triggers are deferred and must remain soft/optional if added later.
+
+**Status:** Shipped — see [Knowledge Base Overview](/user-guide/knowledge-base-overview) and [Product Roadmap](/getting-started/product-roadmap).
+
 ### AI → domain modules (optional)
 
 ```text

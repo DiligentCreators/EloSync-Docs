@@ -47,6 +47,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Communication Templates | `e2e/tests/communication-templates/` | `npm run test:e2e:communication-templates` |
 | Email | `e2e/tests/email/` | `npm run test:e2e:email` (+ `test:e2e:email:headed`) |
 | Automation | `e2e/tests/automation/` | `npm run test:e2e:automation` / `test:e2e:automation:headed` |
+| Knowledge Base | `e2e/tests/knowledge-base/` | `npm run test:e2e:knowledge-base` / `test:e2e:knowledge-base:headed` |
 | Profile | `e2e/tests/profile/` | `npm run test:e2e:profile` |
 | Smoke | `e2e/tests/smoke/` | `npm run test:e2e:smoke` |
 | Regression | `e2e/tests/regression/` | `npm run test:e2e:regression` |
