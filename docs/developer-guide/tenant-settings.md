@@ -63,7 +63,7 @@ Wall-clock settings (`H:i` strings such as Daily Reminder Time and office start/
 | Obligation | Detail |
 |------------|--------|
 | Display / edit | SPA uses `SaaS-Frontend/src/lib/datetime.ts` + `useSettingsStore` timezone |
-| Absolute datetimes | Backend `UtcDateTime` cast + `UtcIso` on API resources |
+| Absolute datetimes | Backend `UtcDateTime` cast + `UtcIso` on API resources; SQL vs those columns uses `App\Support\UtcInstant` (`now('UTC')` / workspace day bounds converted to UTC) — never bind bare `now()` / `today()` |
 | Wall-clock settings | `H:i` strings interpreted in workspace TZ only |
 | Schedulers / gates | Prefer `now($workspaceTimezone)` / `Carbon::now($timezone)` over bare `now()` when process TZ may be UTC |
 | Runtime config | Rely on `applyRuntimeConfig()`; never assume server `APP_TIMEZONE` |
@@ -73,9 +73,10 @@ Wall-clock settings (`H:i` strings such as Daily Reminder Time and office start/
 
 - `applyRuntimeConfig()` sets PHP `app.timezone` and `date_default_timezone_set` to the resolved workspace timezone (for `now()` / `today()`, Sanctum expiry comparisons, reminder gates, and template placeholders). Apply timezone **before** mail overlay; mail failures must not leave the process on server UTC.
 - Scheduled / absolute fields the SPA sends as UTC ISO (meetings, calendar events, task due times, lead follow-ups) use `App\Casts\UtcDateTime` so naive DB values are always read/written as **UTC**, then projected into `app.timezone` for in-app Carbon. API resources serialize those fields with `App\Support\UtcIso` (unambiguous UTC ISO-8601). Do **not** use the default `datetime` cast for new absolute scheduling columns when `app.timezone` may be non-UTC.
+- SQL filters against those UTC columns (`due_at < now`, due today / this week) must use `App\Support\UtcInstant` (`now()`, `dayBounds()`, `startOfWeek()` / `endOfWeek()`). Binding workspace `now()` / `today()` compares Karachi (or any non-UTC) wall clock to UTC storage and falsely marks upcoming due times as overdue. In-memory Carbon after the cast is already in `app.timezone` and may use `now()` / `startOfDay()`. Announcements visibility uses the same UTC instant compare.
 - Reminder gates in `crm:send-due-notifications` must compare against `now($workspaceTimezone)`, not bare `now()`, so scheduler workers stuck on UTC still honor the workspace clock.
 - Attendance login check-in must resolve “today” / check-in / late threshold with an explicit workspace timezone (`Carbon::now($timezone)`), not the server default.
-- SPA display/edit helpers live in `SaaS-Frontend/src/lib/datetime.ts` (`formatAppDateTime`, `appLocalInputToIso`, …) and use the workspace timezone from `useSettingsStore`.
+- SPA display/edit helpers live in `SaaS-Frontend/src/lib/datetime.ts` (`formatAppDateTime`, `appLocalInputToIso`, `isoToAppLocalInput`, …) and use the workspace timezone from `useSettingsStore`. Do **not** send raw `datetime-local` strings or `.slice(0, 16)` of a UTC ISO value — that ignores Settings → General and shows UTC hours in the picker.
 
 ## Mail provider
 

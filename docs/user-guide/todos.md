@@ -29,7 +29,7 @@ Status labels in the UI:
 ## Create & edit
 
 1. Click **New to-do**
-2. Enter title (required) and optional description, status, priority, and due date
+2. Enter title (required) and optional description, status, priority, and due date (workspace timezone from Settings → General). **Overdue** means that due instant has already passed — a to-do due later today is not overdue.
 3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
 4. Save
 

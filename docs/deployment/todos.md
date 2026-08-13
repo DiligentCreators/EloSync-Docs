@@ -28,7 +28,7 @@ Catalog registration + install for workspaces missing the module: `2026_07_31_03
 
 ## Deploy checklist
 
-1. Migrate `todos`, `todo_tags`, `todo_todo_tag`; catalog bump **todos → 1.1.0** (colored tags)
+1. Migrate `todos`, `todo_tags`, `todo_todo_tag`; catalog bump **todos → 1.1.1** (UTC overdue compare + workspace TZ due inputs)
 2. Run register + permissions data migrations
 3. Deploy frontend (board/list, creator-gated edit/delete, inline tags)
 4. Confirm `module:todos` + `todos.*` permissions

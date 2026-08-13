@@ -34,7 +34,7 @@ Do **not** add `announcements.view` without a product decision — reading is in
 
 ## Date and time
 
-Absolute columns use `UtcDateTime`. Audience visibility SQL compares `expires_at` to `now('UTC')` (never workspace `app.timezone`). SPA `expires_at` edit/display uses `isoToAppLocalInput` / `appLocalInputToIso`.
+Absolute columns use `UtcDateTime`. Audience visibility SQL compares `expires_at` to `UtcInstant::now()` / `now('UTC')` (never workspace `app.timezone`). SPA `expires_at` edit/display uses `isoToAppLocalInput` / `appLocalInputToIso`.
 
 ## Dashboard
 
