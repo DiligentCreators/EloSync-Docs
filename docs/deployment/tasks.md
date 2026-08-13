@@ -37,7 +37,7 @@ New Tasks permissions for **existing** workspaces must ship as an additive **dat
 
 ## Deploy checklist
 
-1. Migrate task tables (`tasks`, `task_tags`, `task_task_tag`, `task_notes`, `task_activities`) and `task_digest_deliveries`; catalog bump **tasks → 1.1.1** (colored tags)
+1. Migrate task tables (`tasks`, `task_tags`, `task_task_tag`, `task_notes`, `task_activities`) and `task_digest_deliveries`; catalog bump **tasks → 1.1.2** (UTC overdue compare + workspace TZ due inputs)
 2. Migrate CRM summary support: `users.receive_all_users_daily_summary`, `daily_summary_deliveries`
 3. Deploy frontend (board/list, KPIs, comments/history, due-date gate, inline tags, Settings → Daily Reminder Time, Users → daily summary flag)
 4. Confirm `module:tasks` + expanded permissions

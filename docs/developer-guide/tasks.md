@@ -26,6 +26,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 - Comment bodies may include `@[Display Name](user:ID)` mention tokens (composer UI shows `@Name` chips). On `TaskNoteAdded`, `NoteMentionService` persists `task_note_mentions` and sends `task.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.task_mentioned` (default off).
 - Assignee scoping via `ScopesToAssignee` with `tasks.assign`.
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
+- `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue / due-today / due-this-week SQL uses `App\Support\UtcInstant` so non-UTC workspace timezones do not mark upcoming tasks overdue. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone), not raw `datetime-local` / ISO slice.
 - Board columns are one per `TaskStatusEnum` case.
 
 ## Permissions
@@ -83,6 +84,7 @@ Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). 
 # Backend
 php artisan test --compact tests/Feature/Tenant/Task/TaskTest.php
 php artisan test --compact tests/Feature/Tenant/Task/TaskTagTest.php
+php artisan test --compact tests/Unit/UtcInstantTest.php
 
 # Frontend E2E
 npm run test:e2e:tasks

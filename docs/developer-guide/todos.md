@@ -24,6 +24,7 @@ Mirror of the [Tasks](/developer-guide/tasks) / [Leads](/developer-guide/leads) 
 - **Update and delete** require permission **and** `created_by === actor.id` (owner may view others but cannot mutate).
 - Board columns are one per `TodoStatusEnum` case (`open`, `in_progress`, `completed`, `cancelled`).
 - Soft deletes only (no restore / force-delete routes in v1).
+- `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue list SQL uses `App\Support\UtcInstant`. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone).
 
 ## Permissions
 

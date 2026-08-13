@@ -1,5 +1,14 @@
 # Changelog
 
+## Fix — overdue due dates vs workspace timezone (2026-08-13)
+
+Catalog versions: **tasks 1.1.1 → 1.1.2**, **todos 1.1.0 → 1.1.1**, **leads 1.2.0 → 1.2.1**.
+
+- Tasks, ToDos, and lead follow-ups no longer show as **Overdue** when the due time is still upcoming in Settings → General timezone (e.g. Asia/Karachi). SQL was comparing UTC-stored `due_at` to workspace `now()`.
+- Due today / this week KPIs and dashboard widgets use workspace calendar day bounds converted to UTC (`App\Support\UtcInstant`).
+- Task / ToDo / activity / lead follow-up forms convert `datetime-local` through `appLocalInputToIso` / `isoToAppLocalInput` instead of sending naive strings or slicing UTC ISO.
+- Docs: [Workspace timezone](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes), [Tasks](/user-guide/tasks), [ToDos](/user-guide/todos)
+
 ## Automation module v1.0.0 (2026-08-10)
 
 Billable marketplace **Automation** SKU (`automation`): cross-module trigger → condition → action workflows with builder UI, templates, runs/logs, queue `automations`, and schedule dispatcher. Wired triggers for Leads, Tasks, Opportunities, Meetings, and Customer Invoices. `NotificationSourceEnum::Workflow` reserved for automation notifications; mentions/DMs use `Mention` / `DirectMessage`.

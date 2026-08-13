@@ -43,7 +43,7 @@ Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities).
 
 You can set a due date when creating a task. Changing the due date later requires the **change due date** permission (`tasks.change_due_date`).
 
-Due dates use the workspace **Timezone** from Settings → General (entered and shown in that zone, not server UTC). When a task is due today or overdue, you get an **in-app** notification for that task. Once per day (at **Daily Reminder Time** in that same timezone, default 09:00), each assignee with due or overdue tasks also receives **one consolidated email** with links to those tasks.
+Due dates use the workspace **Timezone** from Settings → General (entered and shown in that zone, not server UTC). **Overdue** means the due date-and-time has already passed in that timezone — a task due later today is not overdue. When a task is due today or overdue, you get an **in-app** notification for that task. Once per day (at **Daily Reminder Time** in that same timezone, default 09:00), each assignee with due or overdue tasks also receives **one consolidated email** with links to those tasks.
 
 At the same **Daily Reminder Time**, the workspace also sends a **daily CRM summary** email (leads by open stage, open tasks by status, scheduled meetings). Workspace **Owners** and users with **Receive all-users daily summary** get a user-wise summary for everyone with activity (instead of a personal summary). Everyone else gets only their own counts. Users excluded from lead assignment do not see a Leads block on their personal summary (and are not emailed when they only have open leads). See [Workspace timezone](/user-guide/tenant-settings#workspace-timezone).
 
