@@ -90,6 +90,10 @@ See [Expenses production](/deployment/expenses).
 
 After migrate, existing workspaces do **not** auto-install Automation. Operators install `automation` from Marketplace. Include the `automations` queue on workers and confirm `automation:dispatch-schedules` is on the scheduler. Optional env: `AUTOMATION_WEBHOOK_SECRET`. See [Automation production](/deployment/automation).
 
+## Knowledge Base module (free Operations opt-in)
+
+After migrate, existing workspaces do **not** auto-install Knowledge Base. Operators install `knowledge-base` from Marketplace (internal articles only; not billable). See [Knowledge Base production](/deployment/knowledge-base).
+
 ## Related
 
 - [Release Process](/deployment/release-process)
