@@ -1,5 +1,16 @@
 # Changelog
 
+<<<<<<< HEAD
+## Projects 1.0.0 + Tasks 1.2.0 (2026-08-14)
+
+Catalog versions: **projects 1.0.0** (new), **tasks 1.1.2 → 1.2.0**.
+
+- Free Operations Marketplace opt-in **Projects** (`slug: projects`): title, status board (`planned` → `active`/`cancelled`; `active` → `on_hold`/`completed`/`cancelled`; `on_hold` → `active`/`cancelled`), assignee + members, soft Contact/Company/Opportunity links, notes/timeline, stats/board, dashboard widgets `active_projects` / `overdue_projects`.
+- Visibility without `projects.assign`: assignee **OR** member **OR** creator. Dates `starts_on`/`ends_on`; overdue uses workspace timezone “today”.
+- Soft Task `project_id` (nullable FK, `LinkableProject`) when Projects is entitled.
+- Explicitly deferred: Gantt, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, tags, `PRJ-` numbers.
+- Docs: [Projects overview](/user-guide/projects-overview), [user](/user-guide/projects), [developer](/developer-guide/projects), [API](/api/tenant-v1-projects), [deployment](/deployment/projects), [Tasks](/user-guide/tasks), [module dependencies](/architecture/module-dependencies), [roadmap](/getting-started/product-roadmap)
+=======
 ## Knowledge Base module 1.0.0 (2026-08-14)
 
 Free Operations Marketplace module (`knowledge-base`: not default-included, not billable, catalog **1.0.0**) for **internal** team articles, flat categories, and searchable FAQs. No public/customer portal.
@@ -12,6 +23,7 @@ Free Operations Marketplace module (`knowledge-base`: not default-included, not 
 - Tenant API under `/api/tenant/v1/knowledge-base*` and `/knowledge-base-categories*`; SPA `src/pages/knowledge-base/`; tourId `knowledge-base`; Playwright `test:e2e:knowledge-base`
 - Deferred: public URLs, Help Desk links, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
 - Docs: [overview](/user-guide/knowledge-base-overview), [user guide](/user-guide/knowledge-base), [developer](/developer-guide/knowledge-base), [API](/api/tenant-v1-knowledge-base), [deployment](/deployment/knowledge-base)
+>>>>>>> origin/main
 
 ## Expenses categories 1.1.0 (2026-08-13)
 

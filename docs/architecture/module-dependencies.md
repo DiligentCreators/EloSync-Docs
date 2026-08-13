@@ -303,6 +303,22 @@ Accounting
 
 Accounting ships standalone (manual double-entry). A future milestone may optionally integrate stock valuations or COGS-related flows through contracts/services. Auto-posting from Expenses / Invoices / Payments / Credit Notes is also deferred (soft integrations, not hard install deps).
 
+### Projects (standalone) + Tasks → Projects (optional, shipped)
+
+```text
+Projects
+  ├── may depend on Contacts       (optional — contact_id link)
+  ├── may depend on Companies      (optional — company_id link)
+  └── may depend on Opportunities  (optional — opportunity_id link)
+
+Tasks
+  └── may depend on Projects       (optional — project_id link)
+```
+
+Projects installs standalone with **no** `module_dependencies` rows — title, status board, assignee/members, notes/timeline work without CRM modules. Soft FKs to Contact / Company / Opportunity are validated only when those modules are entitled. Tasks may optionally set `project_id` via `LinkableProject` (Projects entitled + project visible to the actor); uninstalling Projects nulls the FK (`nullOnDelete`). No hard install dependency either direction.
+
+**Status:** [Projects](/user-guide/projects-overview) shipped lean **v1.0.0**; Tasks catalog **1.2.0** adds soft `project_id`.
+
 ### Knowledge Base (standalone, shipped)
 
 ```text

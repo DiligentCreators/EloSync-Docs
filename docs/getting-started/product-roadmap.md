@@ -300,7 +300,7 @@ Implement workforce management.
 The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
 
 - Assets
-- Projects
+- [Projects](/user-guide/projects-overview) — **shipped lean v1.0.0** (free Operations Marketplace opt-in: title, status board, assignee/members, soft CRM links, Task `project_id`, stats/board/notes, dashboard widgets). **Still deferred:** Gantt, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, tags, `PRJ-` numbers
 - Help Desk
 - Documents
 - Manufacturing
