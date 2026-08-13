@@ -41,7 +41,12 @@ AWS_USE_PATH_STYLE_ENDPOINT=false
 See [object-storage.md](/developer-guide/object-storage) for Wasabi notes.
 
 6. Migrate order (forward-fix only — **do not** `migrate:rollback` these):
-   `2026_08_13_220700` → `220710` → `220720` → `220730`
+   `2026_08_13_220700` → `220710` → `220720` → `220730` → `233733` (expand grandfather to all workspaces)
+7. Verify pack checkout mappings before selling packs:
+
+```bash
+php artisan storage:verify-pack-mappings
+```
 
 ## Upgrade path for packs
 

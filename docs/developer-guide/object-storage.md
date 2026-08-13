@@ -25,15 +25,14 @@ branding/logos/
 branding/favicons/
 tenants/{tenant_uuid}/branding/logos/
 tenants/{tenant_uuid}/branding/favicons/
-tenants/{tenant_uuid}/leads/          # future modules
-tenants/{tenant_uuid}/tasks/
-tenants/{tenant_uuid}/attachments/
+tenants/{tenant_uuid}/feedback/       # feedback screenshots (quota-counted)
+tenants/{tenant_uuid}/users/{user_id}/avatars/
 central/logos/
 central/branding/
 central/users/{user_id}/avatars/
-tenants/{tenant_uuid}/users/{user_id}/avatars/
+team-chat/{tenant_uuid}/{conversation_id}/   # chat attachments (quota-counted)
+imports/{tenant_uuid}/                       # lead import CSVs + error reports (quota-counted)
 exports/
-imports/
 temp/
 ```
 
