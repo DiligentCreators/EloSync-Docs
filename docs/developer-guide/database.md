@@ -320,7 +320,7 @@ Notes (author + body) and procurement timeline (`type`, `description`, `properti
 
 ### `expense_categories`
 
-`tenant_id`, unique `uuid`, `name`, `slug`, `sort_order` (default 0), `is_active` (default true), timestamps, soft deletes. Unique `(tenant_id, slug)`, index `(tenant_id, sort_order)`. Tenant-managed lookup; starter slugs `travel|office|software|utilities|other` are lazy-seeded. Delete is blocked in the service while expenses exist.
+`tenant_id`, unique `uuid`, `name`, `slug`, `sort_order` (default 0), `is_active` (default true), timestamps, soft deletes. Unique `(tenant_id, slug)`, index `(tenant_id, sort_order)`. Tenant-managed lookup; starter slugs `travel|office|software|utilities|other` are lazy-seeded and stay immutable on rename. **Other** cannot be deleted. Spatie activity log name `expense-categories`. Delete is also blocked in the service while expenses exist.
 
 ### `expenses`
 

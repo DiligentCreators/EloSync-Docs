@@ -118,7 +118,7 @@ Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `no
 
 ## Expense categories
 
-Categories use the same `module:expenses` gate and `expenses.*` permissions (no separate permission family). Listing lazy-seeds Travel / Office / Software / Utilities / Other when missing.
+Categories use the same `module:expenses` gate and `expenses.*` permissions (no separate permission family). Listing lazy-seeds Travel / Office / Software / Utilities / Other when missing. Starter slugs (`travel|office|software|utilities|other`) are not changed on rename. Listing does not restore a soft-deleted starter except **Other**.
 
 - `GET /expense-categories` — list (`expenses.view`)
 - `POST /expense-categories` — create (`expenses.create`). Body: `name` (required); optional `slug`, `sort_order`, `is_active`
@@ -126,7 +126,7 @@ Categories use the same `module:expenses` gate and `expenses.*` permissions (no 
 - `POST /expense-categories/{expenseCategory}/restore` — restore (`expenses.restore`)
 - `DELETE /expense-categories/{expenseCategory}/force` — permanently delete a soft-deleted category (`expenses.force.delete`)
 
-Delete and force-delete return 422 if any expenses (including trashed, for force) still reference the category.
+Delete and force-delete return 422 if the category slug is `other`, or if any expenses (including trashed, for force) still reference the category.
 
 ## Related: convert a Purchase Order to an Expense
 
