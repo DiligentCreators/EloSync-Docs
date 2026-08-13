@@ -315,6 +315,17 @@ AI
 
 AI Integration is planned as a cross-cutting capability. Integrations with Leads, Tasks, CRM, and similar modules should be **optional** — AI must not require every domain module to be installed.
 
+### Storage packs → Storage (required)
+
+```text
+storage-10 / storage-50 / storage-100 / storage-500 / storage-1000
+  └── depends on storage   (required)
+```
+
+Capacity packs are separate billable catalog SKUs. Marketplace blocks pack install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel then buy to switch). Team Chat soft-companion installs free Storage when Team Chat is activated.
+
+**Status:** [Storage](/user-guide/storage) shipped.
+
 ## Design rules
 
 When designing a new module:

@@ -27,8 +27,9 @@ These postures can change over product releases without redesigning the moduleâ€
 | CRM | Contacts, Companies, Calendar, Meetings, Activities, Communication Templates | Free Marketplace opt-in (`is_billable=false`, not default-included) |
 | Sales | Opportunities, Resellers, Reseller Payouts | Free Marketplace opt-in under category `sales`; Sales Pipeline is **not** a separate SKU |
 | Collaboration | Team Chat | Free Marketplace opt-in under category `collaboration` (`team-chat`, catalog **1.3.2**; not billable yet) |
+| Platform | Storage | Free `storage` (1 GB) + billable capacity packs `storage-10` â€¦ `storage-1000` (mutually exclusive totals) |
 
-Default-included today: **Leads**, **Tasks** only. Paid example: **Branded**. See [Entitlements](/developer-guide/entitlements).
+Default-included today: **Leads**, **Tasks**, **ToDos**. Paid examples: **Branded**, **Automation**, Storage packs. See [Entitlements](/developer-guide/entitlements).
 
 ## Long-term rules
 

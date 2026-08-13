@@ -1,5 +1,17 @@
 # Changelog
 
+## Storage module + capacity packs 1.0.0 (2026-08-13)
+
+Catalog versions: **storage / storage-10 / storage-50 / storage-100 / storage-500 / storage-1000** all **1.0.0**.
+
+- Free Marketplace opt-in `storage` unlocks **1 GiB** total content allowance. Billable packs set **total** allowance (10 / 50 / 100 / 500 / 1000 GB) at $4 / $12 / $20 / $75 / $120 monthly (yearly = 10×).
+- Packs are mutually exclusive (`STORAGE_PACK_CONFLICT`); upgrade = cancel current pack, then purchase another. Each pack hard-depends on free Storage.
+- Quota enforcement on Team Chat attachments, feedback screenshots, and lead import uploads via `WorkspaceStorageService`. Branding logos/favicons and profile avatars stay on the VPS and do **not** count.
+- Team Chat install companion-installs free Storage; grandfather migration covers existing Team Chat workspaces.
+- SPA: Settings → Storage usage panel; Marketplace pack conflict copy; upload toasts for `STORAGE_REQUIRED` / `STORAGE_QUOTA_EXCEEDED`.
+- Pest `tests/Feature/Storage/WorkspaceStorageTest.php`; Playwright `test:e2e:storage`.
+- Docs: [Storage user guide](/user-guide/storage), [developer](/developer-guide/storage), [API](/api/tenant-v1-storage), [deployment](/deployment/storage), [object storage](/developer-guide/object-storage).
+
 ## Expenses categories 1.1.0 (2026-08-13)
 
 Catalog version: **expenses 1.0.0 → 1.1.0**.

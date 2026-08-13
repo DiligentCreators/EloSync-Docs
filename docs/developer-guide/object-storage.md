@@ -140,6 +140,10 @@ $uploads->delete($path);
 
 Controllers must not call `store()` / `Storage::disk('public')` directly for user uploads.
 
+## Workspace content quota
+
+Tenant **content** uploads (Team Chat attachments, feedback screenshots, lead imports) are gated by the [Storage](/developer-guide/storage) marketplace module (`WorkspaceStorageService` + `config/storage.php`). Branding and avatars stay on the VPS disks above and **do not** count toward that quota.
+
 ## Security
 
 - Branding validation rejects SVG and non-image MIME types (`UploadBrandingAssetRequest` / tenant equivalent).
