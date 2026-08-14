@@ -279,6 +279,24 @@ Implement workforce management.
 
 ---
 
+## Phase 8 — Operations
+
+| Marketplace SKU | Status |
+|-----------------|--------|
+| [Help Desk](/user-guide/help-desk-overview) | ✅ Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget; free Operations opt-in) |
+
+#### Help Desk (shipped)
+
+- Internal workspace ticketing — distinct from [Central Give Feedback](/user-guide/feedback) (platform bug/feature intake)
+- Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
+- Optional soft links to Contacts / Companies when those modules are entitled
+- Tenant-managed categories (General, Technical, Billing, Account, Other)
+- Assignee scoping, notes, domain timeline, `due_at` with workspace timezone convention for overdue
+- Dashboard widget `help_desk_my_open`
+- Free Marketplace opt-in under category `operations` — **no** hard module dependencies
+
+**Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, customer portal, or Knowledge Base yet).
+
 ## Knowledge Base (shipped)
 
 | Module | Status |
@@ -301,8 +319,7 @@ Implement workforce management.
 The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
 
 - Assets
-- [Projects](/user-guide/projects-overview) — **shipped lean v1.0.0** (free Operations Marketplace opt-in: title, status board, assignee/members, soft CRM links, Task `project_id`, stats/board/notes, dashboard widgets). **Still deferred:** Gantt, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, tags, `PRJ-` numbers
-- Help Desk
+
 - Documents
 - Manufacturing
 - Quality Assurance

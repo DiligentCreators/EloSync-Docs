@@ -59,5 +59,8 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Storage](./storage-overview) | 1 GB free content storage + paid capacity packs |
 | [Automation Overview](./automation-overview) | Automation module guides index |
 | [Automation](./automation) | Workflows, templates, runs, and permissions |
+| [Help Desk Overview](./help-desk-overview) | Help Desk module guides index |
+| [Help Desk](./help-desk) | Internal tickets, categories, assignment, and status workflow |
+
 | [Knowledge Base Overview](./knowledge-base-overview) | Knowledge Base module guides index |
 | [Knowledge Base](./knowledge-base) | Internal articles, categories, notes, and permissions |

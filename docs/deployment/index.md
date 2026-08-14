@@ -60,6 +60,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Leave Management](./leave-management) | Leave Management module ops |
 | [Attendance](./attendance) | Attendance module ops |
 | [Payroll](./payroll) | Payroll module ops |
+| [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
 
 ## Related repos
 

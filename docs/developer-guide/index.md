@@ -69,6 +69,8 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
 | [Email](./email) | Personal IMAP/SMTP mailbox, sync jobs, templates, signatures |
 | [Automation](./automation) | Cross-module trigger → condition → action engine |
+| [Help Desk](./help-desk) | Internal ticketing MVP engineering guide |
+
 | [Knowledge Base](./knowledge-base) | Internal articles Marketplace opt-in (Operations, free) |
 
 ## Lead ingest & integrations
