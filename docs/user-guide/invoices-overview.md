@@ -20,6 +20,8 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 ## Capabilities
 
 - Invoice fields: title, optional contact/company link, optional quotation link, currency, issue date, due date, notes
+- Recurring series (weekly / monthly / quarterly / semi-annually / yearly) that generate the next **draft** invoice after Send; **Stop recurring** ends the series without voiding history
+- Download invoice PDF (workspace-branded)
 - Auto-numbered (`INV-00001`; prefix backed by the `invoices_number_prefix` tenant setting, default `INV-` — not yet exposed in the Tenant Settings UI)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side
 - Balance tracking: `amount_paid`, `amount_credited`, `balance_due` (read-only via this API — `amount_paid`/`balance_due` are populated by [Payments](/user-guide/payments-overview); `amount_credited`/`balance_due` are populated by [Credit Notes](/user-guide/credit-notes-overview))
@@ -34,7 +36,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 
 `invoices.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `void`
 
-Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`.
+Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.1.0**.
 
 ## Related modules
 
@@ -42,6 +44,5 @@ Enable Invoices from Marketplace (free) — no other module is required first. C
 
 ## Explicitly deferred
 
-- Estimates (pre-invoice quoting to customers, distinct from the CRM Quotations module)
-- Invoice PDF export / e-mail delivery to the customer
+- Invoice e-mail delivery to the customer
 - Multi-currency conversion

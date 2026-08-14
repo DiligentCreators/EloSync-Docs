@@ -33,6 +33,14 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Invoices 1.1.0 (recurring + PDF)
+
+After migrate:
+
+1. Confirm catalog `invoices` version is `1.1.0`
+2. Confirm scheduler includes `invoices:generate-recurring` (daily)
+3. `composer install` must include `dompdf/dompdf` for PDF download
+
 ## Storage module (2026-08-13)
 
 After migrating Storage:

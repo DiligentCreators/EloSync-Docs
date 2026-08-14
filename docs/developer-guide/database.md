@@ -212,7 +212,7 @@ Domain timeline. `tenant_id`, `reseller_id` (cascade), `type` (string; see `Rese
 
 ### `customer_invoices.reseller_id`
 
-Nullable FK → `resellers` (`nullOnDelete`), indexed with `tenant_id`. Optional link validated via `LinkableReseller` when Resellers is entitled. (Customer invoice module tables are documented in the Invoices developer guide; this column is the Phase 1 Resellers extension.)
+Nullable FK → `resellers` (`nullOnDelete`), indexed with `tenant_id`. Optional link validated via `LinkableReseller` when Resellers is entitled. (Customer invoice module tables are documented in the Invoices developer guide; this column is the Phase 1 Resellers extension.) Recurrence columns on the same table (1.1.0): `is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurrence_due_days`, `recurring_source_invoice_id` (self-FK, null on delete).
 
 ## ToDos module tables
 

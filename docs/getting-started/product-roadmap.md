@@ -116,7 +116,7 @@ Build a comprehensive billing and invoicing solution that integrates with the ex
 
 | Module | Status |
 |--------|--------|
-| [Invoices](/user-guide/invoices-overview) | ✅ Completed (line items with computed totals, status workflow, optional Contact/Company/Quotation links; free Billing opt-in) |
+| [Invoices](/user-guide/invoices-overview) | ✅ Completed (line items, status workflow, recurring series, PDF download; free Billing opt-in) |
 | [Estimates](/user-guide/estimates-overview) | ✅ Completed (pre-sale cost estimates, line items, status workflow, convert-to-invoice; free Billing opt-in, requires Invoices) |
 | [Credit Notes](/user-guide/credit-notes-overview) | ✅ Completed (credit notes against invoices, line items, issue/apply/void workflow, apply credits `amount_credited` + `balance_due`; free Billing opt-in, requires Invoices) |
 | [Payments](/user-guide/payments-overview) | ✅ Completed (record customer payments, allocate to invoices, post/void drives invoice balance + status; free Billing opt-in, requires Invoices) |
@@ -129,6 +129,8 @@ Build a comprehensive billing and invoicing solution that integrates with the ex
 - Balance fields (`amount_paid`, `amount_credited`, `balance_due`) driven by the Payments module — read-only via this API
 - Status workflow: `draft → sent → partial|paid → void` (`send` / `void` / `status` actions)
 - Notes, assignment, domain timeline; free Marketplace opt-in under category `billing`
+- Recurring series (weekly / monthly / quarterly / semi-annually / yearly) generate the next **draft** after Send; **Stop recurring** ends the series; optional void of the latest unpaid generated invoice
+- Download PDF (`GET /invoices/{id}/pdf`)
 
 #### Payments (shipped)
 

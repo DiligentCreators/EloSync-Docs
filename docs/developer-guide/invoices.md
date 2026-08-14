@@ -9,7 +9,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 | Piece | Path |
 |-------|------|
 | Models | `app/Models/CustomerInvoice.php`, `CustomerInvoiceLine`, `CustomerInvoiceNote`, `CustomerInvoiceActivity` |
-| Enums | `CustomerInvoiceStatusEnum`, `CustomerInvoiceActivityTypeEnum` |
+| Enums | `CustomerInvoiceStatusEnum`, `CustomerInvoiceActivityTypeEnum`, `CustomerInvoiceRecurrenceFrequencyEnum`, `CustomerInvoiceRecurrenceStatusEnum` |
 | Service | `app/Services/Tenant/CustomerInvoiceService.php` (+ `ScopesToAssignee`) |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/CustomerInvoiceController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/CustomerInvoice/*` |
@@ -30,7 +30,9 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - Content updates (`PUT`) and line sync are **draft-only** via `CustomerInvoice::isEditable()` (`status === draft`). Assignment remains available after send via `POST …/assign`.
 - `POST …/status` (`changeStatus`) maps target status to permissions in the controller: `sent` → `invoices.send`, `void` → `invoices.void`, otherwise `invoices.update`. The form request itself only requires `invoices.update`; the controller's `Gate::authorize()` call adds the stricter check per target status.
 - `send` / `void` / `view` / `update` policies are assignee-scoped (same pattern) unless the actor has `invoices.assign` or is superadmin.
-- `send()` backfills `issue_date` to today if unset, then transitions to `sent`. **Status-only** — no outbound email/PDF delivery in this phase.
+- `send()` backfills `issue_date` to today if unset, then transitions to `sent`. If the invoice is a recurring **series root**, this also sets `recurrence_status=active` and `recurrence_next_issue_on` to the next period (workspace timezone). **Status-only** — no outbound email delivery.
+- Recurring series live on `customer_invoices` (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurrence_due_days`, `recurring_source_invoice_id`). The original invoice is the template. `invoices:generate-recurring` (daily) clones **draft** occurrences from the root’s current lines; children are not themselves recurring. `POST …/recurrence/stop` ends the series (`ended`) and optionally voids the latest unpaid generated invoice (`void_latest_unpaid`). Voiding the root also ends an active series.
+- PDF: `GET …/pdf` (`invoices.view`, assignee-scoped) renders a Dompdf document from `resources/views/invoices/pdf.blade.php` on the fly (no stored `pdf_path`).
 - Line items are fully replaced on create/update (`CustomerInvoiceService::syncLines()`); `CustomerInvoice::recalculateTotals()` derives `subtotal` / `tax_total` / `total` from persisted `CustomerInvoiceLine` rows. `balance_due` is then derived from `total - amount_paid - amount_credited` via `recalculateBalanceFromAmounts()`, called by [Payments](/developer-guide/payments) on post/void and by [Credit Notes](/developer-guide/credit-notes) on apply.
 - Assignee scoping via `ScopesToAssignee` with `invoices.assign`.
 - `invoices.force.delete` is not granted to any default role — owner/superadmin only.
@@ -46,7 +48,7 @@ invoices.view | create | update | delete | restore | force.delete | assign | sen
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Registered via `DefaultModuleRegistrar` migration (migrate-only).
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.1.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.1.0 bumped with `bumpVersion`.
 
 ## API (tenant)
 
@@ -59,7 +61,7 @@ SPA mirrors **Quotations** (table + form dialog, detail sheet) under the existin
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/invoices/` (`invoices-page.tsx`, `invoice-form-dialog.tsx`, `invoice-detail-sheet.tsx`) |
-| Detail sheet tabs | Overview, Lines, Notes, Timeline — actions: assign, add note, send, void, edit (draft only), delete. No **accept** action (Invoices has no `accepted` status). |
+| Detail sheet tabs | Overview, Lines, Notes, Timeline — actions: download PDF, stop recurring (active series root), assign, add note, send, void, edit (draft only), delete. No **accept** action (Invoices has no `accepted` status). |
 | Service | `customerInvoiceService` in `src/api/services.ts` |
 | Types | `CustomerInvoice*` in `src/types/api.ts` (kept distinct from the pre-existing Central `Invoice*` types) |
 | Query keys | `QUERY_KEYS.customerInvoices` / `customerInvoice(id)` / `customerInvoiceTimeline(id)` / `customerInvoiceStats` |
@@ -72,7 +74,7 @@ SPA mirrors **Quotations** (table + form dialog, detail sheet) under the existin
 ## Tests
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php
+php artisan test --compact tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceRecurrenceTest.php
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:invoices
 ```

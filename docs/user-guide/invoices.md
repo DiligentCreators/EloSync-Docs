@@ -24,11 +24,28 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 
 Edit from the row menu or the detail sheet while the invoice is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
+## Recurring invoices
+
+Turn on **Recurring invoice** when you create (or edit a draft) and choose a frequency: weekly, monthly, quarterly, semi-annually, or yearly. Optional end date stops generation after that date.
+
+The first invoice is a normal invoice. After you **Send** it, EloSync creates the **next** invoice as a **Draft** on each due date (workspace timezone), copying line items, customer, currency, and assignee. Generated invoices do not copy payments or credits.
+
+When a customer cancels:
+
+1. Open the original recurring invoice and click **Stop recurring**. No further invoices are created. Paid invoices stay paid.
+2. Optionally check **Also void the latest unpaid generated invoice** if this period’s auto-created draft/sent invoice should not be collected. If that invoice already has a payment or credit, void the payment first or issue a [credit note](/user-guide/credit-notes) instead.
+
+Stopping the series does **not** void history by itself.
+
+## Download PDF
+
+**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF (workspace name, line items, totals, balance) for any invoice you can view. Sending still does not email the customer.
+
 ## Status workflow
 
 An invoice starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the invoice as sent in the CRM (does not e-mail the customer or attach a PDF yet); sets the issue date to today if it wasn't set
+- **Send** (`draft → sent`) — marks the invoice as sent in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series.
 - **Void** — available from Draft or Sent only; permanently cancels the invoice. Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all), since an invoice moves to **Partial** the moment either happens
 
 **Partial** and **Paid** are not user-driven — they're set automatically as [Payments](/user-guide/payments) are posted against the invoice, or as [Credit Notes](/user-guide/credit-notes) are applied to it.
@@ -42,7 +59,7 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 ## Notes & activity
 
 - **Notes** — free-form notes on the invoice
-- **Activity** — timeline of create, update, assignment, status change, note, void, and delete/restore events
+- **Activity** — timeline of create, update, assignment, status change, note, void, delete/restore, and recurring start/stop/generate events
 
 ## Related payments and credit notes
 
@@ -50,4 +67,4 @@ If the [Payments](/user-guide/payments) module is installed and you have `paymen
 
 ## What's not here yet
 
-Generating invoice PDFs and e-mailing invoices to customers are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+E-mailing invoices to customers (with or without the PDF attached) is still planned — see the [Product Roadmap](/getting-started/product-roadmap).

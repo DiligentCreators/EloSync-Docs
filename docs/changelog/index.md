@@ -1,5 +1,15 @@
 # Changelog
 
+## Invoices recurring series + PDF 1.1.0 (2026-08-15)
+
+Catalog version: **invoices 1.0.0 → 1.1.0**.
+
+- Create/edit drafts with **Recurring invoice** and frequency (weekly, monthly, quarterly, semi-annually, yearly). Sending the first invoice starts the series; `invoices:generate-recurring` (daily, workspace timezone) creates the next **draft** with copied lines.
+- **Stop recurring** on the original invoice ends future generation without changing paid history. Optional checkbox voids the latest unpaid auto-generated draft/sent invoice (same ledger rules as Void).
+- **Download PDF** from the invoice sheet and row menu (`GET /invoices/{id}/pdf`, `invoices.view`). Email delivery is still deferred.
+- Pest `CustomerInvoiceRecurrenceTest`; Playwright recurring create / PDF / stop. Requires `dompdf/dompdf`.
+- Docs: [user guide](/user-guide/invoices), [overview](/user-guide/invoices-overview), [developer](/developer-guide/invoices), [API](/api/tenant-v1-invoices), [deployment](/deployment/invoices)
+
 ## Help Desk module v1.0.0 (2026-08-14)
 
 Catalog version: **help-desk 1.0.0** (new Operations SKU).
