@@ -1,28 +1,58 @@
-# Storage — Deployment
+# Storage — Production Guide
 
-## Migrate
+Full go-live audit / checklist: [Storage production readiness](./storage-production-readiness).
+
+## Licensing
+
+| Slug | Default included | Billable | Monthly / yearly |
+|------|------------------|----------|------------------|
+| `storage` | false | false | $0 / $0 |
+| `storage-10` | false | true | $4 / $40 |
+| `storage-50` | false | true | $12 / $120 |
+| `storage-100` | false | true | $20 / $200 |
+| `storage-500` | false | true | $75 / $750 |
+| `storage-1000` | false | true | $120 / $1200 |
+
+Catalog versions: **1.0.0** for each slug.
+
+## Bootstrap
+
+1. Migrate (registers modules, pack → `storage` dependencies, permissions, Team Chat grandfather)
+2. Confirm `CatalogSeeder` is **not** required in production
+3. Map Stripe/Creem products for each pack × monthly/yearly in Central → Payment Gateways → Product Mapping
+4. Prefer a **dedicated Wasabi/S3 bucket** for EloSync content (keep SQL backups out of the sellable pool)
+5. Confirm env (content on S3/Wasabi; branding/avatars stay on the VPS `public` disk):
+
+```env
+FILESYSTEM_DISK=s3
+FILESYSTEM_UPLOADS_DISK=s3
+FILESYSTEM_BRANDING_DISK=public
+# FILESYSTEM_AVATAR_DISK=public
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_ENDPOINT=https://s3.wasabisys.com
+AWS_URL=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+```
+
+See [object-storage.md](/developer-guide/object-storage) for Wasabi notes.
+
+6. Migrate order (forward-only — **do not** `migrate:rollback` these):
+   `2026_08_13_220700` → `220710` → `220720` → `220730` → `233733` (expand grandfather to all workspaces)
+7. Verify pack checkout mappings before selling packs:
 
 ```bash
-php artisan migrate
+php artisan storage:verify-pack-mappings
 ```
 
-Registers free `storage` + billable packs (`storage-10` … `storage-1000`), pack → storage dependencies, `storage.*` permissions, and grandfathers free Storage onto workspaces that already have Team Chat entitled.
+## Upgrade path for packs
 
-## Disks (unchanged)
+Tenants cancel the active pack subscription, then purchase the new size. There is no automatic pack swap/proration helper in v1.
 
-```dotenv
-FILESYSTEM_DISK=s3
-FILESYSTEM_BRANDING_DISK=public
-# FILESYSTEM_AVATAR_DISK=public  # default
-```
-
-Content uploads (chat / feedback / imports) use the uploads/S3 disk and count toward quota. Branding + avatars stay on the VPS `public` disk and do not count.
-
-Prefer a **dedicated Wasabi/S3 bucket** for EloSync tenant content (separate from SQL backups on the same account). Monitor sellable capacity; reserve headroom for ops backups.
-
-## Gateway product mapping
-
-For each billable pack × monthly/yearly cycle, map Stripe/Creem product/price IDs under Central → Payment Gateways → Product Mapping (`payment_gateway_module_prices`). Checkout fails closed when mapping is required and missing.
+**Warning:** after cancel, allowance falls back to free **1 GiB** immediately. If the workspace already uses more than 1 GiB, further uploads soft-block (`STORAGE_QUOTA_EXCEEDED`) until the new pack is active.
 
 ## Smoke checks
 
@@ -30,6 +60,16 @@ For each billable pack × monthly/yearly cycle, map Stripe/Creem product/price I
 2. Upload a Team Chat attachment (or install Team Chat and confirm companion Storage).
 3. Purchase a pack after cancelling any other pack; conflict message when a second pack is already active.
 4. Confirm branding logo upload still works without a pack.
+
+## Monitoring
+
+- Settings → Storage usage per workspace
+- Wasabi bucket usage alerts (recommend alert at ~70% of sellable capacity after reserving backup headroom)
+- Soft-block codes: `STORAGE_REQUIRED`, `STORAGE_QUOTA_EXCEEDED`, `STORAGE_PACK_CONFLICT`
+
+## Permissions
+
+Owner/manager default roles receive `storage.view` and `storage.manage` via `TenantPermissionSynchronizer`.
 
 ## Related
 

@@ -33,6 +33,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Leave Management](./tenant-v1-leave-management) | Leave types, balances, request workflow |
 | [Tenant Attendance](./tenant-v1-attendance) | Daily attendance records and stats |
 | [Tenant Payroll](./tenant-v1-payroll) | Payroll profiles, pay runs, optional journal post |
+| [Tenant Help Desk](./tenant-v1-help-desk) | Internal tickets CRUD, status/close/reopen, notes, timeline |
 | [Tenant Communication Templates](./tenant-v1-communication-templates) | Templates, placeholders, WhatsApp render |
 | [Tenant Email](./tenant-v1-email) | Personal accounts, folders, labels, messages, templates, signatures, links |
 | [Tenant Notifications](./tenant-v1-notifications) | In-app notifications |
@@ -40,4 +41,4 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Marketplace](./tenant-v1-marketplace) | Browse, install, and remove workspace modules |
 | [Tenant Users](./tenant-v1-users) | Workspace users + CRM preference flags |
 | [Tenant Branded Domain](./tenant-v1-branded) | Custom domain propose / verify / remove |
-| [Tenant Storage](./tenant-v1-storage) | Workspace storage usage + quota error codes |
+| [Tenant Storage](./tenant-v1-storage) | Workspace content storage usage + quota error codes |

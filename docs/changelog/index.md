@@ -1,5 +1,16 @@
 # Changelog
 
+## Help Desk module v1.0.0 (2026-08-14)
+
+Catalog version: **help-desk 1.0.0** (new Operations SKU).
+
+- Internal workspace ticketing MVP: tickets with status (`open` / `in_progress` / `waiting` / `resolved` / `closed`), priority, tenant-managed categories, assignment, notes/timeline, optional soft Contact/Company links, KPIs, `due_at`, and dashboard widget `help_desk_my_open`
+- Free Marketplace opt-in under category `operations` — no hard module dependencies; distinct from Central [Give Feedback](/user-guide/feedback)
+- Permissions: `help-desk.view|create|update|delete|restore|force.delete|assign|close|reopen` (admin all except `force.delete`; manager view/create/update/assign/close/reopen; staff view/create/update/close/reopen)
+- Tenant setting `help_desk_number_prefix` (default `HD-`); overdue uses workspace timezone convention
+- Deferred: SLAs, email ingest/multi-channel, customer portal, Knowledge Base, attachments, `@mentions`, Automation triggers, Communication Template context, Kanban
+- Docs: [Help Desk overview](/user-guide/help-desk-overview), [user guide](/user-guide/help-desk), [developer](/developer-guide/help-desk), [API](/api/tenant-v1-help-desk), [database](/developer-guide/database), [deployment](/deployment/help-desk), [Upgrade](/deployment/upgrade)
+
 ## Projects 1.0.0 + Tasks 1.2.0 (2026-08-14)
 
 Catalog versions: **projects 1.0.0** (new), **tasks 1.1.2 → 1.2.0**.
@@ -23,17 +34,16 @@ Free Operations Marketplace module (`knowledge-base`: not default-included, not 
 - Deferred: public URLs, Help Desk links, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
 - Docs: [overview](/user-guide/knowledge-base-overview), [user guide](/user-guide/knowledge-base), [developer](/developer-guide/knowledge-base), [API](/api/tenant-v1-knowledge-base), [deployment](/deployment/knowledge-base)
 
-## Storage module + capacity packs 1.0.0 (2026-08-13)
+## Storage module 1.0.0 (2026-08-13)
 
-Catalog versions: **storage / storage-10 / storage-50 / storage-100 / storage-500 / storage-1000** all **1.0.0**.
+Catalog versions: **storage** / **storage-10** / **storage-50** / **storage-100** / **storage-500** / **storage-1000** all **1.0.0**.
 
-- Free Marketplace opt-in `storage` unlocks **1 GiB** total content allowance. Billable packs set **total** allowance (10 / 50 / 100 / 500 / 1000 GB) at $4 / $12 / $20 / $75 / $120 monthly (yearly = 10×).
-- Packs are mutually exclusive (`STORAGE_PACK_CONFLICT`); upgrade = cancel current pack, then purchase another. Each pack hard-depends on free Storage.
-- Quota enforcement on Team Chat attachments, feedback screenshots, and lead import uploads via `WorkspaceStorageService`. Branding logos/favicons and profile avatars stay on the VPS and do **not** count.
-- Team Chat install companion-installs free Storage; grandfather migration covers existing Team Chat workspaces.
-- SPA: Settings → Storage usage panel; Marketplace pack conflict copy; upload toasts for `STORAGE_REQUIRED` / `STORAGE_QUOTA_EXCEEDED`.
-- Pest `tests/Feature/Storage/WorkspaceStorageTest.php`; Playwright `test:e2e:storage`.
-- Docs: [Storage user guide](/user-guide/storage), [developer](/developer-guide/storage), [API](/api/tenant-v1-storage), [deployment](/deployment/storage), [object storage](/developer-guide/object-storage).
+- Free Marketplace **Storage** unlocks **1 GB** total workspace content storage (chat attachments, feedback screenshots, lead imports). Branding logos/favicons and profile avatars stay on the VPS and do not count.
+- Billable capacity packs set **total** allowance: 10 / 50 / 100 / 500 / 1000 GB ($4/$12/$20/$75/$120 monthly; yearly ~10× $40/$120/$200/$750/$1200). Packs require free Storage; only one pack may be active (cancel then buy to change size).
+- `WorkspaceStorageService` soft-blocks uploads with `STORAGE_REQUIRED` / `STORAGE_QUOTA_EXCEEDED`; pack install conflicts return `STORAGE_PACK_CONFLICT`.
+- Team Chat install companion-installs free Storage; grandfather migrations cover existing workspaces. Settings → **Storage** usage panel; Marketplace pack conflict copy; upload toasts for quota errors.
+- Prefer a dedicated Wasabi/S3 bucket for EloSync content. Pest `tests/Feature/Storage/WorkspaceStorageTest.php`; Playwright `test:e2e:storage`.
+- Docs: [Storage overview](/user-guide/storage-overview), [user guide](/user-guide/storage), [developer](/developer-guide/storage), [API](/api/tenant-v1-storage), [deployment](/deployment/storage), [production readiness audit](/deployment/storage-production-readiness), [object storage](/developer-guide/object-storage).
 
 ## Expenses categories 1.1.0 (2026-08-13)
 

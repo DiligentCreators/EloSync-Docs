@@ -25,15 +25,14 @@ branding/logos/
 branding/favicons/
 tenants/{tenant_uuid}/branding/logos/
 tenants/{tenant_uuid}/branding/favicons/
-tenants/{tenant_uuid}/leads/          # future modules
-tenants/{tenant_uuid}/tasks/
-tenants/{tenant_uuid}/attachments/
+tenants/{tenant_uuid}/feedback/       # feedback screenshots (quota-counted)
+tenants/{tenant_uuid}/users/{user_id}/avatars/
 central/logos/
 central/branding/
 central/users/{user_id}/avatars/
-tenants/{tenant_uuid}/users/{user_id}/avatars/
+team-chat/{tenant_uuid}/{conversation_id}/   # chat attachments (quota-counted)
+imports/{tenant_uuid}/                       # lead import CSVs + error reports (quota-counted)
 exports/
-imports/
 temp/
 ```
 
@@ -127,6 +126,10 @@ php artisan storage:migrate-to-s3 --force
 Options: `--source=public` (default), `--destination=s3` (default).
 
 Database paths are already relative keys and do **not** need rewriting when directory structure is preserved.
+
+## Workspace quota (Storage module)
+
+Content uploads on the uploads disk are gated by [`WorkspaceStorageService`](/developer-guide/storage) when the free **Storage** module (or a capacity pack) is entitled. Branding and avatars stay on the VPS disks and are **not** counted toward quota. See [Storage](/user-guide/storage-overview).
 
 ## Application usage
 

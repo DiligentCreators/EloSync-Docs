@@ -258,6 +258,18 @@ Payroll installs and runs without Accounting. `POST /pay-runs/{id}/post` is a so
 
 **Status:** Shipped — see [Tenant Payroll API](/api/tenant-v1-payroll#post-pay-runspayrunpost).
 
+### Help Desk → Contacts, Companies (optional, shipped)
+
+```text
+Help Desk
+  ├── may depend on Contacts   (optional — unlocks contact_id link)
+  └── may depend on Companies  (optional — unlocks company_id link)
+```
+
+Help Desk installs standalone with **no** `module_dependencies` rows — it works as an internal ticket queue with no CRM context. When Contacts is entitled, a ticket may optionally link `contact_id`; when Companies is entitled, a ticket may optionally link `company_id`. Both links are validated only at the point of use (`LinkableContact`, `LinkableCompany` rules) — soft entitlement, no hard dependency rows.
+
+**Status:** Shipped — see [Help Desk Overview](/user-guide/help-desk-overview) and [Product Roadmap](/getting-started/product-roadmap) Phase 8.
+
 ### Inventory → Products (required, shipped)
 
 ```text
@@ -349,9 +361,9 @@ storage-10 / storage-50 / storage-100 / storage-500 / storage-1000
   └── depends on storage   (required)
 ```
 
-Capacity packs are separate billable catalog SKUs. Marketplace blocks pack install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel then buy to switch). Team Chat soft-companion installs free Storage when Team Chat is activated.
+Billable capacity packs cannot install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel current pack before buying another size). Content upload modules (Team Chat, Feedback, Lead imports) soft-check Storage allowance; they do not declare a hard `module_dependencies` row on Storage. Team Chat soft-companion installs free Storage when Team Chat is activated.
 
-**Status:** [Storage](/user-guide/storage) shipped.
+**Status:** [Storage](/user-guide/storage-overview) shipped.
 
 ## Design rules
 

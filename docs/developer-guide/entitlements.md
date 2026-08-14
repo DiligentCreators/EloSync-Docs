@@ -44,6 +44,7 @@ Business modules live in the `modules` catalog. **Commercial flags** (`is_defaul
 | `communication-templates` | Communication Templates | No (free opt-in) | No | $0 | $0 |
 | `email` | Email | No (free opt-in) | No | $0 | $0 |
 | `team-chat` | Team Chat | No (free opt-in) | No | $0 | $0 |
+| `help-desk` | Help Desk | No (free opt-in) | No | $0 | $0 |
 | `branded` | Branded | No | **Yes** | **$29** | **$290** |
 | `storage` | Storage | No | No | $0 | $0 |
 | `storage-10` | Storage 10 GB | No | **Yes** | **$4** | **$40** |
@@ -62,7 +63,7 @@ Business modules live in the `modules` catalog. **Commercial flags** (`is_defaul
 
 They are not cancellable by workspace owners (platform admin may **deactivate**).
 
-**Free Marketplace opt-in** (`is_default_included = false`, `is_billable = false`, price `$0`): Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts (Sales category), Communication Templates, Email (Communication category), Team Chat (Collaboration category). Tenants install from Marketplace; owners can remove them. Quotations and Contracts require Opportunities first (hard `module_dependencies`).
+**Free Marketplace opt-in** (`is_default_included = false`, `is_billable = false`, price `$0`): Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts (Sales category), Communication Templates, Email (Communication category), Team Chat (Collaboration category), Help Desk (Operations category). Tenants install from Marketplace; owners can remove them. Quotations and Contracts require Opportunities first (hard `module_dependencies`).
 
 **Paid Marketplace** (`is_billable = true`): Branded at USD **$29/month** or **$290/year** (custom domain + white-label notifications); Automation at **$29/$290**; Storage capacity packs (`storage-10` … `storage-1000`) as listed above (require free `storage`).
 

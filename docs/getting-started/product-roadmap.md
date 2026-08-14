@@ -32,6 +32,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 | [Communication Templates](/user-guide/communication-templates) | ✅ Completed (plain-text templates, placeholder registry, WhatsApp `wa.me` from Leads; migrate-only production registration) |
 | [Email](/user-guide/email) | ✅ Completed (personal IMAP/SMTP mailbox, folders, compose/drafts, templates/signatures, CRM links; free Marketplace opt-in; no OAuth v1) |
 | [Team Chat](/user-guide/team-chat) | ✅ Completed (channels/DMs, mentions, threads/reactions/pins/typing, attachments/search/retention; free Collaboration opt-in; catalog **1.3.2**) |
+| [Storage](/user-guide/storage-overview) | ✅ Completed (1 GB free + 10/50/100/500/1000 GB packs; quota on chat/feedback/imports; branding/avatars excluded) |
 | [Calendar](/user-guide/calendar-overview) | ✅ Completed (Week/Day time grids + DnD, Month/Agenda, view_all oversight, upcoming widget) |
 | [Meetings](/user-guide/meetings-overview) | ✅ Completed (host/invitees, Zoom/Google Meet OAuth, reminders, Calendar projection, completion) |
 | [Activities](/user-guide/activities-overview) | ✅ Completed (loggable call/email/note/follow-up engagements; Contact/Company/Lead links; complete + timeline mirrors) |
@@ -278,6 +279,24 @@ Implement workforce management.
 
 ---
 
+## Phase 8 — Operations
+
+| Marketplace SKU | Status |
+|-----------------|--------|
+| [Help Desk](/user-guide/help-desk-overview) | ✅ Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget; free Operations opt-in) |
+
+#### Help Desk (shipped)
+
+- Internal workspace ticketing — distinct from [Central Give Feedback](/user-guide/feedback) (platform bug/feature intake)
+- Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
+- Optional soft links to Contacts / Companies when those modules are entitled
+- Tenant-managed categories (General, Technical, Billing, Account, Other)
+- Assignee scoping, notes, domain timeline, `due_at` with workspace timezone convention for overdue
+- Dashboard widget `help_desk_my_open`
+- Free Marketplace opt-in under category `operations` — **no** hard module dependencies
+
+**Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, customer portal, or Knowledge Base yet).
+
 ## Knowledge Base (shipped)
 
 | Module | Status |
@@ -300,8 +319,7 @@ Implement workforce management.
 The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
 
 - Assets
-- [Projects](/user-guide/projects-overview) — **shipped lean v1.0.0** (free Operations Marketplace opt-in: title, status board, assignee/members, soft CRM links, Task `project_id`, stats/board/notes, dashboard widgets). **Still deferred:** Gantt, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, tags, `PRJ-` numbers
-- Help Desk
+
 - Documents
 - Manufacturing
 - Quality Assurance

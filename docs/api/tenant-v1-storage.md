@@ -22,17 +22,22 @@ Returns:
 }
 ```
 
-`pack_slug` is the active capacity SKU (`storage-10`, …) or `null` when only free Storage applies.
+`pack_slug` is set when a billable pack (`storage-10` … `storage-1000`) is entitled; otherwise `null` with free 1 GiB when `base_entitled` is true. `storage_required` is `true` when the workspace has no Storage entitlement (usage callers that somehow reach the endpoint without module middleware still see the flag; normal gated clients always have base entitled).
 
-## Error codes (content uploads)
+## Upload error codes
 
-Content upload endpoints (Team Chat attachments, feedback attachment, lead import upload) may return validation errors:
+Content upload endpoints (chat attachments, feedback attachment, lead import upload) may return **422** with:
 
-| Code | When |
-|------|------|
-| `STORAGE_REQUIRED` | Free Storage (and no pack) is not entitled |
-| `STORAGE_QUOTA_EXCEEDED` | `used + incoming > allowance` |
-| `STORAGE_PACK_CONFLICT` | Installing a second capacity pack while another is ACTIVE/TRIAL/PENDING |
+| `errors.code` | Meaning |
+|---------------|---------|
+| `STORAGE_REQUIRED` | Free Storage module not installed |
+| `STORAGE_QUOTA_EXCEEDED` | Used + incoming bytes exceed allowance |
+
+Marketplace pack install may return:
+
+| `errors.code` | Meaning |
+|---------------|---------|
+| `STORAGE_PACK_CONFLICT` | Another storage pack is already active/pending |
 
 ## Marketplace detail extras
 

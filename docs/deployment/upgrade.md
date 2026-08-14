@@ -33,6 +33,17 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Storage module (2026-08-13)
+
+After migrating Storage:
+
+1. Map gateway prices for each billable pack (`storage-10` … `storage-1000`) × monthly/yearly
+2. Confirm `FILESYSTEM_BRANDING_DISK=public` and uploads on S3/Wasabi
+3. Workspaces that already had Team Chat receive free Storage automatically (grandfather migration)
+4. New workspaces install free Storage from Marketplace when they need content uploads
+
+See [Storage deployment](/deployment/storage).
+
 ## New workspaces after upgrade
 
 `TenantProvisioningService` continues to:
@@ -86,6 +97,17 @@ Do **not** run `db:seed`. Starter categories (Travel / Office / Software / Utili
 
 See [Expenses production](/deployment/expenses).
 
+## Help Desk module v1.0.0
+
+After migrate, existing workspaces do **not** auto-install Help Desk. Operators enable `help-desk` from Marketplace. Registration is migrate-only via `DefaultModuleRegistrar` — do **not** run `db:seed`. Permissions ship additively via `TenantPermissionSynchronizer`.
+
+```bash
+php artisan migrate --force   # help_desk_* tables + catalog registration + help-desk.* permissions
+# then deploy Frontend, then Docs
+```
+
+See [Help Desk production](/deployment/help-desk).
+
 ## Projects 1.0.0 + Tasks project_id (1.2.0)
 
 ```bash
@@ -118,4 +140,6 @@ After migrate, existing workspaces do **not** auto-install Knowledge Base. Opera
 - [Email Webhooks](/developer-guide/email-webhooks)
 - [Tenant provisioning](/developer-guide/tenant-provisioning)
 - [Expenses production](/deployment/expenses)
+- [Help Desk production](/deployment/help-desk)
+
 - [Projects production](/deployment/projects)

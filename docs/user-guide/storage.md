@@ -1,8 +1,18 @@
-# Storage — User Guide
+# Storage
 
-**Storage** gives each workspace a content-file quota for Team Chat attachments, feedback screenshots, and lead import files. Logos, favicons, and profile avatars stay on the app server and do **not** count toward this quota.
+Workspace content storage for chat attachments, feedback screenshots, and lead imports. Logos, favicons, and profile avatars stay on the app server and do **not** count toward this quota.
 
-## Pricing
+## Enable Storage
+
+1. Open **Marketplace**
+2. Find **Storage** (free) under the Storage category
+3. Click **Install**
+
+New workspaces start with **0 GB** of content storage until Storage is installed. Installing **Team Chat** also installs free Storage automatically so chat attachments keep working. Workspaces that already existed when Storage shipped were granted the free module automatically (grandfather migration).
+
+Permission **View storage** (`storage.view`) opens Settings → Storage. Workspace admins get view + manage by default.
+
+## Allowance
 
 | SKU | Slug | Monthly (USD) | Yearly (USD) | Total allowance |
 |-----|------|---------------|--------------|-----------------|
@@ -13,35 +23,41 @@
 | Storage 500 GB | `storage-500` | $75 | $750 | 500 GB |
 | Storage 1000 GB | `storage-1000` | $120 | $1200 | 1000 GB |
 
-Pack sizes are **total** workspace allowance (they replace the free 1 GB, they do not add to it). Only **one** capacity pack can be active at a time — cancel the current pack before purchasing another.
+Pack size is the **total** workspace allowance (not added on top of the free 1 GB). Only **one** capacity pack can be active at a time — cancel the current pack before purchasing another.
 
-Not default-included. Install free Storage from Marketplace; buy packs the same way.
+## Upgrade / change pack
 
-## Who can use it
+1. If another pack is already active, open that pack in Marketplace and **Cancel subscription**
+2. Purchase the new pack size (requires free Storage installed)
+3. Gateway product mapping must exist for billable packs (Stripe / Creem) before checkout succeeds
 
-1. Install **Storage** from Marketplace (`module:storage`) — unlocks 1 GB.
-2. Permission **View storage** (`storage.view`) to open Settings → Storage. Workspace admins get view + manage by default.
-
-Installing **Team Chat** also installs free Storage automatically so chat attachments keep working.
+Cancelling a pack returns the workspace to the free 1 GB (while `storage` remains installed). Cancelling free Storage while a pack is still active is blocked by the pack’s required dependency.
 
 ## What counts
 
-| Counts toward quota | Does not count |
-|---------------------|----------------|
-| Team Chat message attachments | Workspace / Central logos & favicons |
-| Feedback screenshots | Profile avatars |
-| Lead import source files (+ error/failed CSVs) | Temp / system paths outside those features |
+**Included in quota**
 
-## Check usage
+- Team Chat message attachments
+- Feedback screenshots / attachments
+- Lead import source files (and generated error reports when present)
 
-**Settings → Storage** shows used vs allowance, the active pack (if any), and a link to Marketplace to upgrade.
+**Not included**
 
-When uploads exceed the allowance, the API returns `STORAGE_QUOTA_EXCEEDED` and the SPA shows an upgrade toast. Without Storage installed, content uploads return `STORAGE_REQUIRED`.
+- Workspace / Central branding logos and favicons
+- Profile avatars
 
-## Upgrade / downgrade
+## Settings
 
-1. Open Marketplace → the pack you want (or Settings → Storage → Upgrade).
-2. If another pack is already active, **Cancel** it first.
-3. Subscribe to the new pack (requires free Storage installed).
+**Settings → Storage** shows used bytes, allowance, percent used, and the current pack (or Free 1 GB). Use **Upgrade storage** to open Marketplace.
 
-Cancelling a pack returns the workspace to the free 1 GB (while `storage` remains installed). Cancelling free Storage while a pack is still active is blocked by the pack’s required dependency.
+## When uploads fail
+
+| Situation | Message |
+|-----------|---------|
+| Storage not installed | Install the free Storage module (`STORAGE_REQUIRED`) |
+| Over quota | Upgrade storage pack or free space (`STORAGE_QUOTA_EXCEEDED`) |
+| Another pack already active | Cancel the current pack first (`STORAGE_PACK_CONFLICT`) |
+
+## Related
+
+- [Storage overview](/user-guide/storage-overview)
