@@ -85,11 +85,27 @@ Password length / special-character rules stay under Central Settings.
 
 | Field | Behavior |
 |-------|----------|
-| **Button color** | Primary buttons and accents for this workspace only. |
-| **Support email** | Shown in tenant-facing emails when set. |
-| **Logo / Favicon** | Upload immediately. If unset, the platform (Central) logo/favicon is used automatically. |
+| **Button color** | Primary buttons, accents, and invoice PDF chrome for this workspace. |
+| **Support email** | Shown in tenant-facing emails and on invoice PDFs when set. |
+| **Logo / Favicon** | Upload immediately. Logo is embedded on invoice PDFs. If unset, the platform (Central) logo/favicon is used in the app; invoice PDFs omit the logo until you upload one. |
 
-Hints under fields show when a value is still inheriting the Central default.
+### Invoice company profile
+
+Used on customer invoice PDFs (header, FROM block, footer):
+
+| Field | Notes |
+|-------|-------|
+| **Tagline** | Short line under the company name |
+| **Address / Phone / Website** | Contact block |
+| **NTN / STRN** | Tax identifiers (optional) |
+| **Default payment terms** | e.g. Net 15 Days — used when issue/due dates cannot derive Net X days |
+| **Default invoice notes** | Printed when the invoice memo is empty |
+
+### Invoice payment details
+
+Bank name, account name/number, IBAN, and SWIFT/BIC. If any field is set, the PDF shows a **Payment Information** section; leave all blank to hide it.
+
+Hints under fields show when a value is still inheriting the Central default (branding color/email) or is unset.
 
 With the **Branded** marketplace module, logo and application name are also used in email chrome and web push. See [Branded](/user-guide/branded).
 

@@ -33,11 +33,18 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Invoices 1.1.1 (branded PDF settings)
+
+After migrate:
+
+1. Confirm catalog `invoices` version is `1.1.1`
+2. Operators can fill Settings → Branding → Invoice company profile / payment details for PDF chrome
+
 ## Invoices 1.1.0 (recurring + PDF)
 
 After migrate:
 
-1. Confirm catalog `invoices` version is `1.1.0`
+1. Confirm catalog `invoices` version is at least `1.1.0` (prefer `1.1.1` after the branded PDF polish migrate)
 2. Confirm scheduler includes `invoices:generate-recurring` (daily, `withoutOverlapping(120)`, `onOneServer`)
 3. `composer install` must include `dompdf/dompdf` for PDF download
 4. Optional env (defaults are fine): `INVOICES_RECURRING_CATCHUP_CAP` (52), `INVOICES_RECURRING_CHUNK_SIZE` (100), `INVOICES_RECURRING_TIME_BUDGET_SECONDS` (45), `INVOICES_PDF_CACHE_SECONDS` (300), `INVOICES_PDF_PER_MINUTE` (30)

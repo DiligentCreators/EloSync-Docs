@@ -39,7 +39,7 @@ Stopping the series does **not** void history by itself.
 
 ## Download PDF
 
-**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF (workspace name, line items, totals, balance) for any invoice you can view. Sending still does not email the customer.
+**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, totals, and balance due. Configure missing company/payment fields under Branding. Sending still does not email the customer.
 
 ## Status workflow
 

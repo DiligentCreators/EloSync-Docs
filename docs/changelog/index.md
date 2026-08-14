@@ -1,5 +1,14 @@
 # Changelog
 
+## Invoices branded PDF + settings 1.1.1 (2026-08-15)
+
+Catalog version: **invoices 1.1.0 → 1.1.1**.
+
+- Invoice PDF redesigned to a professional layout: logo/header, FROM / BILL TO / details, colored line table, notes + totals, balance due bar, optional payment information footer — accent color from workspace **button color**.
+- New workspace settings (Settings → Branding): company tagline, address, phone, website, NTN/STRN, default payment terms, default notes, bank name/account/IBAN/SWIFT. Missing fields stay blank; bank section hides when empty.
+- PDF cache key includes a settings fingerprint so branding edits invalidate cached PDFs without waiting for invoice updates.
+- Docs: [user guide invoices](/user-guide/invoices), [tenant settings](/user-guide/tenant-settings), [developer invoices](/developer-guide/invoices), [tenant settings](/developer-guide/tenant-settings), [deployment invoices](/deployment/invoices)
+
 ## Invoices recurring series + PDF 1.1.0 (2026-08-15)
 
 Catalog version: **invoices 1.0.0 → 1.1.0**.

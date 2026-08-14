@@ -8,7 +8,7 @@ Full go-live audit / checklist: [Invoices 1.1.0 production readiness](./invoices
 - Category: **Billing** (`billing`)
 - **Free Marketplace opt-in** (not auto-installed)
 - Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 10`
-- Catalog version: **1.1.0** (recurring series + PDF download)
+- Catalog version: **1.1.1** (recurring series + branded PDF; company/payment settings on Branding)
 - **No hard dependency** — unlike Quotations/Contracts, Invoices does **not** require Opportunities (or any other module) and can be installed standalone
 - The **Payments** module (shipped — see [deployment/payments.md](/deployment/payments)) declares a required `module_dependencies` row on Invoices, so Invoices must be installed first before a workspace can enable Payments
 
@@ -37,7 +37,7 @@ New Invoices permissions for **existing** workspaces ship as an additive **data 
 
 ## PDF
 
-- `GET /invoices/{id}/pdf` is throttled (`invoices-pdf`, `INVOICES_PDF_PER_MINUTE`, default 30/user). Rendered PDFs are cached **base64** by invoice id + `updated_at` (`INVOICES_PDF_CACHE_SECONDS`, default 300; `0` disables) so the default database cache never stores raw binary. Sending an invoice dispatches `WarmCustomerInvoicePdfJob` on the **default** queue (no extra queue name).
+- `GET /invoices/{id}/pdf` is throttled (`invoices-pdf`, `INVOICES_PDF_PER_MINUTE`, default 30/user). Rendered PDFs are cached **base64** by invoice id + `updated_at` + branding/settings fingerprint (`INVOICES_PDF_CACHE_SECONDS`, default 300; `0` disables) so the default database cache never stores raw binary and Settings → Branding changes refresh PDFs. Sending an invoice dispatches `WarmCustomerInvoicePdfJob` on the **default** queue (no extra queue name).
 
 ## Optional env
 
