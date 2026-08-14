@@ -28,6 +28,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue / due-today / due-this-week SQL uses `App\Support\UtcInstant` so non-UTC workspace timezones do not mark upcoming tasks overdue. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone), not raw `datetime-local` / ISO slice.
 - Board columns are one per `TaskStatusEnum` case.
+- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. List/show embed `project` (`id`, `uuid`, `title`, `status`) when loaded. Catalog version **1.2.0**. See [Projects developer guide](/developer-guide/projects).
 
 ## Permissions
 

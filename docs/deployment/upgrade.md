@@ -86,6 +86,15 @@ Do **not** run `db:seed`. Starter categories (Travel / Office / Software / Utili
 
 See [Expenses production](/deployment/expenses).
 
+## Projects 1.0.0 + Tasks project_id (1.2.0)
+
+```bash
+php artisan migrate --force   # projects tables + permissions + catalog + tasks.project_id + tasks 1.2.0
+# then deploy Frontend (Projects nav + optional task project picker), then Docs
+```
+
+Do **not** run `db:seed`. Projects is free Marketplace opt-in (not default-included). See [Projects production](/deployment/projects).
+
 ## Automation module (billable add-on)
 
 After migrate, existing workspaces do **not** auto-install Automation. Operators install `automation` from Marketplace. Include the `automations` queue on workers and confirm `automation:dispatch-schedules` is on the scheduler. Optional env: `AUTOMATION_WEBHOOK_SECRET`. See [Automation production](/deployment/automation).
@@ -93,6 +102,10 @@ After migrate, existing workspaces do **not** auto-install Automation. Operators
 ## Storage module + capacity packs
 
 After migrate, free `storage` and billable packs are catalog-only except: workspaces that already have **Team Chat** entitled receive free Storage via the grandfather migration (and new Team Chat installs companion-install Storage). Map Stripe/Creem prices for each pack × cycle before selling packs. See [Storage deployment](/deployment/storage).
+
+## Knowledge Base module (free Operations opt-in)
+
+After migrate, existing workspaces do **not** auto-install Knowledge Base. Operators install `knowledge-base` from Marketplace (internal articles only; not billable). See [Knowledge Base production](/deployment/knowledge-base).
 
 ## Related
 
@@ -105,3 +118,4 @@ After migrate, free `storage` and billable packs are catalog-only except: worksp
 - [Email Webhooks](/developer-guide/email-webhooks)
 - [Tenant provisioning](/developer-guide/tenant-provisioning)
 - [Expenses production](/deployment/expenses)
+- [Projects production](/deployment/projects)

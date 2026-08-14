@@ -10,6 +10,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Companies](./tenant-v1-companies) | Companies CRUD, notes, timeline |
 | [Tenant Contacts](./tenant-v1-contacts) | Contacts CRUD, notes, timeline |
 | [Tenant Tasks](./tenant-v1-tasks) | Tasks CRUD and workflows |
+| [Tenant Projects](./tenant-v1-projects) | Projects CRUD, board, members, status, notes, timeline |
 | [Tenant ToDos](./tenant-v1-todos) | Personal ToDos CRUD and board |
 | [Tenant Activities](./tenant-v1-activities) | Activities CRUD, complete, notes, timeline |
 | [Tenant Opportunities](./tenant-v1-opportunities) | Opportunities CRUD, board, stages, notes |
@@ -23,6 +24,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Purchase Orders](./tenant-v1-purchase-orders) | Purchase orders CRUD, lines, send/receive/cancel, convert to expense, notes, timeline |
 | [Tenant Expenses](./tenant-v1-expenses) | Expenses CRUD, submit/approve/reject/pay/cancel, notes, timeline |
 | [Tenant Products](./tenant-v1-products) | Products catalog, categories, notes, timeline |
+| [Tenant Knowledge Base](./tenant-v1-knowledge-base) | Internal articles, categories, notes, timeline |
 | [Tenant Warehouses](./tenant-v1-warehouses) | Warehouse locations, notes, timeline |
 | [Tenant Inventory](./tenant-v1-inventory) | Stock levels, adjustments, transfers |
 | [Tenant Accounting](./tenant-v1-accounting) | Chart of accounts, journals, general ledger |
