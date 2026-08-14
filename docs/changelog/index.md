@@ -11,6 +11,29 @@ Catalog version: **help-desk 1.0.0** (new Operations SKU).
 - Deferred: SLAs, email ingest/multi-channel, customer portal, Knowledge Base, attachments, `@mentions`, Automation triggers, Communication Template context, Kanban
 - Docs: [Help Desk overview](/user-guide/help-desk-overview), [user guide](/user-guide/help-desk), [developer](/developer-guide/help-desk), [API](/api/tenant-v1-help-desk), [database](/developer-guide/database), [deployment](/deployment/help-desk), [Upgrade](/deployment/upgrade)
 
+## Projects 1.0.0 + Tasks 1.2.0 (2026-08-14)
+
+Catalog versions: **projects 1.0.0** (new), **tasks 1.1.2 → 1.2.0**.
+
+- Free Operations Marketplace opt-in **Projects** (`slug: projects`): title, status board (`planned` → `active`/`cancelled`; `active` → `on_hold`/`completed`/`cancelled`; `on_hold` → `active`/`cancelled`), assignee + members, soft Contact/Company/Opportunity links, notes/timeline, stats/board, dashboard widgets `active_projects` / `overdue_projects`.
+- Visibility without `projects.assign`: assignee **OR** member **OR** creator. Dates `starts_on`/`ends_on`; overdue uses workspace timezone “today”.
+- Soft Task `project_id` (nullable FK, `LinkableProject`) when Projects is entitled.
+- Explicitly deferred: Gantt, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, tags, `PRJ-` numbers.
+- Docs: [Projects overview](/user-guide/projects-overview), [user](/user-guide/projects), [developer](/developer-guide/projects), [API](/api/tenant-v1-projects), [deployment](/deployment/projects), [Tasks](/user-guide/tasks), [module dependencies](/architecture/module-dependencies), [roadmap](/getting-started/product-roadmap)
+
+## Knowledge Base module 1.0.0 (2026-08-14)
+
+Free Operations Marketplace module (`knowledge-base`: not default-included, not billable, catalog **1.0.0**) for **internal** team articles, flat categories, and searchable FAQs. No public/customer portal.
+
+- Articles: title, slug, excerpt, TipTap HTML body, optional category, status `draft` / `published` / `archived`, `published_at` (`UtcDateTime`)
+- Permissions: `knowledge-base.view|create|update|delete|restore|force.delete` — admin defaults exclude force.delete; manager = view/create/update; staff = view
+- View-only users see published only; editors with update see drafts / archived / trash
+- Categories: flat; delete blocked while articles use them
+- Notes + domain timeline + Spatie `LogsActivity` + PlatformAuditService; no hard module dependencies
+- Tenant API under `/api/tenant/v1/knowledge-base*` and `/knowledge-base-categories*`; SPA `src/pages/knowledge-base/`; tourId `knowledge-base`; Playwright `test:e2e:knowledge-base`
+- Deferred: public URLs, Help Desk links, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
+- Docs: [overview](/user-guide/knowledge-base-overview), [user guide](/user-guide/knowledge-base), [developer](/developer-guide/knowledge-base), [API](/api/tenant-v1-knowledge-base), [deployment](/deployment/knowledge-base)
+
 ## Expenses categories 1.1.0 (2026-08-13)
 
 Catalog version: **expenses 1.0.0 → 1.1.0**.

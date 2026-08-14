@@ -296,6 +296,21 @@ Implement workforce management.
 
 **Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, customer portal, or Knowledge Base yet).
 
+## Knowledge Base (shipped)
+
+| Module | Status |
+|--------|--------|
+| [Knowledge Base](/user-guide/knowledge-base-overview) | ✅ Completed (**internal-only** v1.0.0; free Operations Marketplace opt-in) |
+
+#### Knowledge Base (shipped)
+
+- Internal workspace articles: title, slug, excerpt, TipTap HTML body, optional flat category, status `draft` / `published` / `archived`, `published_at`
+- View-only users see published only; editors with update see drafts / archived / trash
+- Notes + domain timeline + Spatie activity log + platform audit; no hard module dependencies
+- Explicitly deferred: public URLs, Help Desk links, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
+
+**Goal:** Give teams an installable internal FAQ / SOP library without a customer portal. ✅ **Achieved** for internal-only v1.
+
 ---
 
 ## Future Expansion
@@ -303,8 +318,7 @@ Implement workforce management.
 The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
 
 - Assets
-- Projects
-- Knowledge Base
+
 - Documents
 - Manufacturing
 - Quality Assurance

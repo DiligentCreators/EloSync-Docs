@@ -33,6 +33,8 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Contacts](./contacts) | Directory, assignment, notes, and activity |
 | [Tasks Overview](./tasks-overview) | Tasks module guides index |
 | [Tasks](./tasks) | Board, list, and task workflows |
+| [Projects Overview](./projects-overview) | Projects module guides index |
+| [Projects](./projects) | Board, list, members, and project workflows |
 | [ToDos Overview](./todos-overview) | Personal ToDos module guides index |
 | [ToDos](./todos) | Personal board, list, and creator-scoped workflows |
 | [Opportunities Overview](./opportunities-overview) | Opportunities + sales pipeline guides index |
@@ -58,3 +60,6 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Automation](./automation) | Workflows, templates, runs, and permissions |
 | [Help Desk Overview](./help-desk-overview) | Help Desk module guides index |
 | [Help Desk](./help-desk) | Internal tickets, categories, assignment, and status workflow |
+
+| [Knowledge Base Overview](./knowledge-base-overview) | Knowledge Base module guides index |
+| [Knowledge Base](./knowledge-base) | Internal articles, categories, notes, and permissions |

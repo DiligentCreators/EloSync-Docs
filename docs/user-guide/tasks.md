@@ -33,11 +33,14 @@ Status labels in the UI:
 1. Click **New task**
 2. Enter title (required) and optional description, status, priority, due date, and assignee
 3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
-4. Save
+4. If **Projects** is installed, optionally link a **project**
+5. Save
 
 Edit from the row menu or the detail drawer. Dragging a card on the board auto-saves the new status (no drawer).
 
 Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
+
+The project link is **soft** — it only appears when Projects is enabled, and you can only pick projects you are allowed to see (assignee, member, creator, or with `projects.assign`).
 
 ## Due dates
 

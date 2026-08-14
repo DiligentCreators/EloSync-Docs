@@ -51,7 +51,10 @@ customer_invoices.reseller_id (nullable FK → resellers)
 tasks / task_tags / task_task_tag / task_notes / task_note_mentions / task_activities
 task_digest_deliveries
 daily_summary_deliveries
-  (tenant-scoped work items — Tasks module + CRM daily digests)
+  (tenant-scoped work items — Tasks module + CRM daily digests; optional soft `project_id`)
+
+projects / project_members / project_notes / project_activities
+  (tenant-scoped Operations projects — Projects module; standalone free opt-in)
 
 automation_workflows / automation_triggers / automation_conditions / automation_actions
 automation_runs / automation_logs
@@ -62,6 +65,10 @@ todos / todo_tags / todo_todo_tag
 
 announcements / announcement_reads
   (tenant-scoped workspace announcements + read receipts — Announcements module; no view permission)
+
+knowledge_base_categories / knowledge_base_articles
+knowledge_base_article_notes / knowledge_base_article_activities
+  (tenant-scoped internal articles — Knowledge Base module; free Operations opt-in)
 
 chat_conversations / chat_conversation_members / chat_messages / chat_message_mentions
 chat_message_reactions / chat_message_pins / chat_message_attachments
@@ -225,6 +232,20 @@ Per-workspace to-do tag catalog (`tenant_id`, `uuid`, `name`, `slug`, `color`, `
 
 `tenant_id`, `announcement_id`, `user_id`, `first_read_at`, `last_read_at`, `first_read_ip`, `last_read_ip`, unique `(announcement_id, user_id)`. Records first and last read times/IPs when users mark announcements as read.
 
+## Knowledge Base module tables
+
+### `knowledge_base_categories`
+
+`tenant_id`, `uuid`, `name`, `slug`, `sort_order` (default 0), `is_active` (default true), soft deletes. Unique `(tenant_id, slug)`, index `(tenant_id, sort_order)`. Flat categories only. Soft/force delete is blocked in the service while articles still reference the category (force also considers trashed articles).
+
+### `knowledge_base_articles`
+
+`tenant_id`, `uuid`, nullable `category_id` (FK → `knowledge_base_categories`, null on delete), `title`, `slug`, nullable `excerpt`, `body` (TipTap HTML), `status` (`draft`|`published`|`archived`), nullable `published_at` (`UtcDateTime`), nullable `created_by`, soft deletes. Unique `(tenant_id, slug)`, indexes `(tenant_id, status)` and `(tenant_id, title)`. Spatie activity log name `knowledge-base`. Audience list scope is published-only unless the actor has `knowledge-base.update`.
+
+### `knowledge_base_article_notes` / `knowledge_base_article_activities`
+
+Notes (`knowledge_base_article_id`, `user_id`, `body`) and article domain timeline (`type`, `description`, `properties` JSON; includes status changes).
+
 ## Team Chat module tables
 
 ### `chat_conversations`
@@ -251,7 +272,19 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 
 ### `tasks`
 
-`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**.
+`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, nullable `project_id` (FK → `projects`, null on delete; soft entitlement via `LinkableProject` — Projects must be entitled and the project visible to the actor), `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**. Catalog version **1.2.0** (added `project_id`).
+
+### `projects`
+
+`tenant_id`, `uuid`, `title` (not `name`), `status` (`planned`|`active`|`on_hold`|`completed`|`cancelled`, default `planned`), nullable `description`, nullable soft FKs `contact_id` / `company_id` / `opportunity_id` (null on delete), nullable date `starts_on` / `ends_on`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `projects`. Indexes on tenant+status/assignee/contact/company/opportunity/ends_on/title.
+
+### `project_members`
+
+Pivot: `tenant_id`, `project_id` (cascade), `user_id`, timestamps. Unique `(project_id, user_id)`. Assignee is not duplicated as a member.
+
+### `project_notes` / `project_activities`
+
+Notes (author + body) and project timeline (`type`, `description`, `properties` JSON; includes `members_synced`, `status_changed`).
 
 ### `task_tags` / `task_task_tag`
 
