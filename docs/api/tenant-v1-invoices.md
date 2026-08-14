@@ -51,7 +51,7 @@ Includes contact, company, quotation, assignee, creator, lines, notes, timeline 
 
 ### GET `/invoices/{id}/pdf`
 
-Permission: `invoices.view` (assignee-scoped). Returns `application/pdf` attachment `{number}.pdf`. 404 if the invoice is deleted.
+Permission: `invoices.view` (assignee-scoped). Extra limiter `throttle:invoices-pdf` (`INVOICES_PDF_PER_MINUTE`, default 30/user; disabled in tests). Returns `application/pdf` attachment `{number}.pdf`. Body is cached by invoice id + `updated_at` (`INVOICES_PDF_CACHE_SECONDS`, default 300). 404 if the invoice is deleted.
 
 ### PUT `/invoices/{id}`
 

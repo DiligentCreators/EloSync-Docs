@@ -38,8 +38,12 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 After migrate:
 
 1. Confirm catalog `invoices` version is `1.1.0`
-2. Confirm scheduler includes `invoices:generate-recurring` (daily)
+2. Confirm scheduler includes `invoices:generate-recurring` (daily, `withoutOverlapping(120)`, `onOneServer`)
 3. `composer install` must include `dompdf/dompdf` for PDF download
+4. Optional env (defaults are fine): `INVOICES_RECURRING_CATCHUP_CAP` (52), `INVOICES_RECURRING_CHUNK_SIZE` (100), `INVOICES_RECURRING_TIME_BUDGET_SECONDS` (45), `INVOICES_PDF_CACHE_SECONDS` (300), `INVOICES_PDF_PER_MINUTE` (30)
+5. Treat a non-zero `invoices:generate-recurring` exit as a tenant-series failure — see logs `invoices.generate-recurring.tenant_failed`
+
+See [Invoices 1.1.0 production readiness](/deployment/invoices-production-readiness).
 
 ## Storage module (2026-08-13)
 

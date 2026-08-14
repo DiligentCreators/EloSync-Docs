@@ -7,8 +7,9 @@ Catalog version: **invoices 1.0.0 → 1.1.0**.
 - Create/edit drafts with **Recurring invoice** and frequency (weekly, monthly, quarterly, semi-annually, yearly). Sending the first invoice starts the series; `invoices:generate-recurring` (daily, workspace timezone) creates the next **draft** with copied lines.
 - **Stop recurring** on the original invoice ends future generation without changing paid history. Optional checkbox voids the latest unpaid auto-generated draft/sent invoice (same ledger rules as Void).
 - **Download PDF** from the invoice sheet and row menu (`GET /invoices/{id}/pdf`, `invoices.view`). Email delivery is still deferred.
-- Pest `CustomerInvoiceRecurrenceTest`; Playwright recurring create / PDF / stop. Requires `dompdf/dompdf`.
-- Docs: [user guide](/user-guide/invoices), [overview](/user-guide/invoices-overview), [developer](/developer-guide/invoices), [API](/api/tenant-v1-invoices), [deployment](/deployment/invoices)
+- Pest `CustomerInvoiceRecurrenceTest` (catch-up cap, command failure exit, PDF cache, timezone, stop/void, soft-delete skip). Playwright one-session headed workflow (validation, CRUD, Overview memo, PDF sheet + row menu, send/void, generate + stop with optional void, shortcuts, trash). Requires `dompdf/dompdf`.
+- Production hardening: generator `chunkById` + per-tenant time budget; catch-up cap default **52**; command **FAILURE** if any tenant series fails; PDF cache + `WarmCustomerInvoicePdfJob` on the default queue; `throttle:invoices-pdf`. Soft-deleted occurrences are treated as already issued for that date.
+- Docs: [user guide](/user-guide/invoices), [overview](/user-guide/invoices-overview), [developer](/developer-guide/invoices), [API](/api/tenant-v1-invoices), [deployment](/deployment/invoices), [production readiness](/deployment/invoices-production-readiness)
 
 ## Help Desk module v1.0.0 (2026-08-14)
 

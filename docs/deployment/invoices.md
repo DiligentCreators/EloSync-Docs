@@ -1,5 +1,7 @@
 # Invoices — Production Guide
 
+Full go-live audit / checklist: [Invoices 1.1.0 production readiness](./invoices-production-readiness).
+
 ## Licensing
 
 - Catalog slug: `invoices`
@@ -30,6 +32,24 @@ New Invoices permissions for **existing** workspaces ship as an additive **data 
 ## Scheduler
 
 - `invoices:generate-recurring` daily (`withoutOverlapping(120)`, `onOneServer`) — for entitled workspaces, creates **draft** occurrences when `recurrence_next_issue_on` is due in the **workspace timezone**. Skips tenants without Invoices installed.
+- Chunks due series roots (`INVOICES_RECURRING_CHUNK_SIZE`, default 100) and stops a tenant run when the time budget is reached (`INVOICES_RECURRING_TIME_BUDGET_SECONDS`, default 45). Catch-up is capped per series per run (`INVOICES_RECURRING_CATCHUP_CAP`, default 52); remaining periods run on the next daily tick.
+- Exit code is **non-zero** if any entitled tenant had a failed series or an exception. Watch `invoices.generate-recurring.tenant_failed` / `series_failed` and Nightwatch command duration.
+
+## PDF
+
+- `GET /invoices/{id}/pdf` is throttled (`invoices-pdf`, `INVOICES_PDF_PER_MINUTE`, default 30/user). Rendered PDFs are cached **base64** by invoice id + `updated_at` (`INVOICES_PDF_CACHE_SECONDS`, default 300; `0` disables) so the default database cache never stores raw binary. Sending an invoice dispatches `WarmCustomerInvoicePdfJob` on the **default** queue (no extra queue name).
+
+## Optional env
+
+Defaults are production-safe. Override only if Nightwatch shows slow generate or PDF routes:
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `INVOICES_RECURRING_CATCHUP_CAP` | `52` | Periods per series per generate run |
+| `INVOICES_RECURRING_CHUNK_SIZE` | `100` | Due series roots per chunk |
+| `INVOICES_RECURRING_TIME_BUDGET_SECONDS` | `45` | Per-tenant generate budget |
+| `INVOICES_PDF_CACHE_SECONDS` | `300` | PDF cache TTL (`0` = off) |
+| `INVOICES_PDF_PER_MINUTE` | `30` | PDF download limiter per user |
 
 ## Deploy checklist
 

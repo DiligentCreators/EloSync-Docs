@@ -58,8 +58,9 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 ## Notes & activity
 
-- **Notes** — free-form notes on the invoice
-- **Activity** — timeline of create, update, assignment, status change, note, void, delete/restore, and recurring start/stop/generate events
+- **Overview** — shows the invoice memo from the create/edit **Notes** field (also printed on the PDF)
+- **Notes** tab — internal activity notes the team adds after the invoice exists (not the same as the memo)
+- **Timeline** — create, update, assignment, status change, note, void, delete/restore, and recurring start/stop/generate events
 
 ## Related payments and credit notes
 
