@@ -40,3 +40,4 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Marketplace](./tenant-v1-marketplace) | Browse, install, and remove workspace modules |
 | [Tenant Users](./tenant-v1-users) | Workspace users + CRM preference flags |
 | [Tenant Branded Domain](./tenant-v1-branded) | Custom domain propose / verify / remove |
+| [Tenant Storage](./tenant-v1-storage) | Workspace content storage usage + quota error codes |

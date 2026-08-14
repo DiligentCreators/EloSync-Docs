@@ -27,7 +27,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Marketplace | `e2e/tests/marketplace/` | `npm run test:e2e:marketplace` |
 | Billing | `e2e/tests/billing/` | `npm run test:e2e:billing` |
 | Impersonation | `e2e/tests/impersonation/` | `npm run test:e2e:impersonation` |
-| Settings | `e2e/tests/settings/` | `npm run test:e2e:settings` — Central identity/flags + `tenant-settings.spec.ts` workspace branding/mail fallback (`npm run test:e2e:tenant-settings`) |
+| Settings | `e2e/tests/settings/` | `npm run test:e2e:settings` — Central identity/flags + `tenant-settings.spec.ts` workspace branding/mail fallback (`npm run test:e2e:tenant-settings`); Storage usage panel (`npm run test:e2e:storage`) |
 | Leads | `e2e/tests/leads/` | `npm run test:e2e:leads` |
 | Tasks | `e2e/tests/tasks/` | `npm run test:e2e:tasks` |
 | Projects | `e2e/tests/projects/` | `npm run test:e2e:projects` / `test:e2e:projects:headed` |

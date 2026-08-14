@@ -97,6 +97,10 @@ With the **Branded** marketplace module, logo and application name are also used
 
 When Marketplace is enabled for the platform, **Settings → Marketplace** links to the catalog. From there you can **Install** free modules, **Subscribe** to paid ones, and **Remove** / **Cancel subscription** for opt-in modules you no longer need. Core modules (Leads, Tasks) cannot be removed. See [Tenant Application](/user-guide/tenant-application#marketplace-add--remove-modules).
 
+## Storage
+
+When **Storage** is installed, **Settings → Storage** shows used / allowance bytes, the current pack (or Free 1 GB), and a link to upgrade in Marketplace. See [Storage](/user-guide/storage).
+
 ## Domain (Branded module)
 
 When **Branded** is installed, **Settings → Domain** walks you through a three-step flow: enter your website address, copy DNS records into your domain provider, then check the connection. See [Branded](/user-guide/branded).
