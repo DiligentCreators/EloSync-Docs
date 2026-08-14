@@ -121,6 +121,10 @@ Do **not** run `db:seed`. Projects is free Marketplace opt-in (not default-inclu
 
 After migrate, existing workspaces do **not** auto-install Automation. Operators install `automation` from Marketplace. Include the `automations` queue on workers and confirm `automation:dispatch-schedules` is on the scheduler. Optional env: `AUTOMATION_WEBHOOK_SECRET`. See [Automation production](/deployment/automation).
 
+## Storage module + capacity packs
+
+After migrate, free `storage` and billable packs are catalog-only except: workspaces that already have **Team Chat** entitled receive free Storage via the grandfather migration (and new Team Chat installs companion-install Storage). Map Stripe/Creem prices for each pack × cycle before selling packs. See [Storage deployment](/deployment/storage).
+
 ## Knowledge Base module (free Operations opt-in)
 
 After migrate, existing workspaces do **not** auto-install Knowledge Base. Operators install `knowledge-base` from Marketplace (internal articles only; not billable). See [Knowledge Base production](/deployment/knowledge-base).

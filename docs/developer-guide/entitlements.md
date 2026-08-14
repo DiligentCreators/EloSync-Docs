@@ -46,6 +46,12 @@ Business modules live in the `modules` catalog. **Commercial flags** (`is_defaul
 | `team-chat` | Team Chat | No (free opt-in) | No | $0 | $0 |
 | `help-desk` | Help Desk | No (free opt-in) | No | $0 | $0 |
 | `branded` | Branded | No | **Yes** | **$29** | **$290** |
+| `storage` | Storage | No | No | $0 | $0 |
+| `storage-10` | Storage 10 GB | No | **Yes** | **$4** | **$40** |
+| `storage-50` | Storage 50 GB | No | **Yes** | **$12** | **$120** |
+| `storage-100` | Storage 100 GB | No | **Yes** | **$20** | **$200** |
+| `storage-500` | Storage 500 GB | No | **Yes** | **$75** | **$750** |
+| `storage-1000` | Storage 1000 GB | No | **Yes** | **$120** | **$1200** |
 
 **Default-included** modules (`is_default_included = true`, `is_billable = false`):
 
@@ -59,7 +65,7 @@ They are not cancellable by workspace owners (platform admin may **deactivate**)
 
 **Free Marketplace opt-in** (`is_default_included = false`, `is_billable = false`, price `$0`): Contacts, Companies, Calendar, Meetings, Activities, Opportunities, Quotations, Contracts (Sales category), Communication Templates, Email (Communication category), Team Chat (Collaboration category), Help Desk (Operations category). Tenants install from Marketplace; owners can remove them. Quotations and Contracts require Opportunities first (hard `module_dependencies`).
 
-**Paid Marketplace** (`is_billable = true`): Branded at USD **$29/month** or **$290/year** (custom domain + white-label notifications).
+**Paid Marketplace** (`is_billable = true`): Branded at USD **$29/month** or **$290/year** (custom domain + white-label notifications); Automation at **$29/$290**; Storage capacity packs (`storage-10` … `storage-1000`) as listed above (require free `storage`).
 
 New default-included modules for **existing** production workspaces are registered via idempotent **data migrations** (`DefaultModuleRegistrar`), not `db:seed`. See [module-development production](/deployment/module-development).
 

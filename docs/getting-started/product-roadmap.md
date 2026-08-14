@@ -328,6 +328,7 @@ The platform architecture supports additional modules without requiring architec
 - Vendor Portal
 - Business Intelligence & Analytics
 - Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned with Cloud API
+- Storage — **shipped v1.0.0** as free `storage` (1 GB) + billable capacity packs `storage-10` … `storage-1000` (see [Storage](/user-guide/storage)); task/lead images and email attachment persistence still planned
 - Marketing Automation
 - Email Campaigns
 - SMS & WhatsApp provider integrations (Cloud API / Twilio) — templates + `wa.me` MVP already shipped; Cloud API blueprint: [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration)

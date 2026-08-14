@@ -40,7 +40,7 @@ AWS_USE_PATH_STYLE_ENDPOINT=false
 
 See [object-storage.md](/developer-guide/object-storage) for Wasabi notes.
 
-6. Migrate order (forward-fix only — **do not** `migrate:rollback` these):
+6. Migrate order (forward-only — **do not** `migrate:rollback` these):
    `2026_08_13_220700` → `220710` → `220720` → `220730` → `233733` (expand grandfather to all workspaces)
 7. Verify pack checkout mappings before selling packs:
 
@@ -54,6 +54,13 @@ Tenants cancel the active pack subscription, then purchase the new size. There i
 
 **Warning:** after cancel, allowance falls back to free **1 GiB** immediately. If the workspace already uses more than 1 GiB, further uploads soft-block (`STORAGE_QUOTA_EXCEEDED`) until the new pack is active.
 
+## Smoke checks
+
+1. Install free Storage from Marketplace → Settings → Storage shows 1 GB allowance.
+2. Upload a Team Chat attachment (or install Team Chat and confirm companion Storage).
+3. Purchase a pack after cancelling any other pack; conflict message when a second pack is already active.
+4. Confirm branding logo upload still works without a pack.
+
 ## Monitoring
 
 - Settings → Storage usage per workspace
@@ -63,3 +70,9 @@ Tenants cancel the active pack subscription, then purchase the new size. There i
 ## Permissions
 
 Owner/manager default roles receive `storage.view` and `storage.manage` via `TenantPermissionSynchronizer`.
+
+## Related
+
+- [Object Storage](/developer-guide/object-storage)
+- [Payment gateways](/developer-guide/payment-gateways)
+- [Upgrade](/deployment/upgrade)

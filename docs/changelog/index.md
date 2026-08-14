@@ -41,8 +41,9 @@ Catalog versions: **storage** / **storage-10** / **storage-50** / **storage-100*
 - Free Marketplace **Storage** unlocks **1 GB** total workspace content storage (chat attachments, feedback screenshots, lead imports). Branding logos/favicons and profile avatars stay on the VPS and do not count.
 - Billable capacity packs set **total** allowance: 10 / 50 / 100 / 500 / 1000 GB ($4/$12/$20/$75/$120 monthly; yearly ~10× $40/$120/$200/$750/$1200). Packs require free Storage; only one pack may be active (cancel then buy to change size).
 - `WorkspaceStorageService` soft-blocks uploads with `STORAGE_REQUIRED` / `STORAGE_QUOTA_EXCEEDED`; pack install conflicts return `STORAGE_PACK_CONFLICT`.
-- Settings → **Storage** usage panel; Marketplace pack purchase uses existing billing. Existing workspaces are grandfathered onto free Storage.
-- Prefer a dedicated Wasabi/S3 bucket for EloSync content. Docs: [Storage overview](/user-guide/storage-overview), [developer](/developer-guide/storage), [API](/api/tenant-v1-storage), [deployment](/deployment/storage), [production readiness audit](/deployment/storage-production-readiness). Playwright: `test:e2e:storage`.
+- Team Chat install companion-installs free Storage; grandfather migrations cover existing workspaces. Settings → **Storage** usage panel; Marketplace pack conflict copy; upload toasts for quota errors.
+- Prefer a dedicated Wasabi/S3 bucket for EloSync content. Pest `tests/Feature/Storage/WorkspaceStorageTest.php`; Playwright `test:e2e:storage`.
+- Docs: [Storage overview](/user-guide/storage-overview), [user guide](/user-guide/storage), [developer](/developer-guide/storage), [API](/api/tenant-v1-storage), [deployment](/deployment/storage), [production readiness audit](/deployment/storage-production-readiness), [object storage](/developer-guide/object-storage).
 
 ## Expenses categories 1.1.0 (2026-08-13)
 

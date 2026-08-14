@@ -15,6 +15,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Entitlements](./entitlements) | Module licensing vs Spatie authorization |
 | [Database](./database) | ERD / table dictionary |
 | [Object Storage](./object-storage) | Wasabi / S3 uploads |
+| [Storage](./storage) | Workspace content quota + pack SKUs |
 | [Frontend Build Artifacts](./frontend-build-artifacts) | CI/CD → `build-artifacts` branch |
 | [Playwright](./playwright) | E2E suites (Central + Tenant) |
 | [Tenant Provisioning](./tenant-provisioning) | Workspace create → default modules |

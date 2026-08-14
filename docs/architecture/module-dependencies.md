@@ -361,7 +361,7 @@ storage-10 / storage-50 / storage-100 / storage-500 / storage-1000
   └── depends on storage   (required)
 ```
 
-Billable capacity packs cannot install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel current pack before buying another size). Content upload modules (Team Chat, Feedback, Lead imports) soft-check Storage allowance; they do not declare a hard `module_dependencies` row on Storage.
+Billable capacity packs cannot install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel current pack before buying another size). Content upload modules (Team Chat, Feedback, Lead imports) soft-check Storage allowance; they do not declare a hard `module_dependencies` row on Storage. Team Chat soft-companion installs free Storage when Team Chat is activated.
 
 **Status:** [Storage](/user-guide/storage-overview) shipped.
 

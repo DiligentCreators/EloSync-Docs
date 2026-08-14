@@ -54,6 +54,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Communication Templates](./communication-templates) | Templates module ops |
 | [Email](./email) | Personal IMAP/SMTP mailbox ops (`email-sync`, ext-imap) |
 | [Branded](./branded) | Custom domains ops |
+| [Storage](./storage) | Content quota packs + Wasabi mapping |
 | [Automation](./automation) | Automation queue, scheduler, webhook SSRF, catalog ops |
 | [Knowledge Base](./knowledge-base) | Internal articles Marketplace opt-in ops |
 | [Employees](./employees) | Employees module ops |
