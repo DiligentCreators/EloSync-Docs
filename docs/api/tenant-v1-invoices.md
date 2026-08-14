@@ -41,7 +41,7 @@ List items include `status`, `currency`, `subtotal`/`tax_total`/`total`/`amount_
 
 ### POST `/invoices`
 
-Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `issue_date`, `due_date` (dates), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id` (optional, tenant-scoped existence check only), `reseller_id` (optional; requires Resellers entitled — `LinkableReseller`), `assigned_to`, `is_recurring` (boolean), `recurrence_frequency` (`weekly`\|`monthly`\|`quarterly`\|`semi_annually`\|`yearly`, required when recurring), `recurrence_ends_on` (optional date), `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
+Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `issue_date`, `due_date` (dates), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id` (optional, tenant-scoped existence check only), `reseller_id` (optional; requires Resellers entitled — `LinkableReseller`), `assigned_to`, `is_recurring` (boolean), `recurrence_frequency` (`weekly`\|`monthly`\|`quarterly`\|`semi_annually`\|`yearly`, required when recurring), `recurrence_next_issue_on` (date, required when recurring; must be after `issue_date` or today if issue date is empty), `recurrence_ends_on` (optional date; must be on or after the next invoice date), `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
 
 `subtotal`, `tax_total`, `total`, and `balance_due` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`INV-00001`, configurable prefix).
 
@@ -79,7 +79,7 @@ Permission: `invoices.assign`.
 
 ### POST `/invoices/{id}/send`
 
-Transitions `draft → sent`. Backfills `issue_date` to today if unset. Permission: `invoices.send` (assignee-scoped unless the actor has `invoices.assign` or is superadmin). **Status-only** — does not email the customer. Recurring drafts become an **active** series (`recurrence_next_issue_on` = next period).
+Transitions `draft → sent`. Backfills `issue_date` to today if unset. Permission: `invoices.send` (assignee-scoped unless the actor has `invoices.assign` or is superadmin). **Status-only** — does not email the customer. Recurring drafts become an **active** series. `recurrence_next_issue_on` stays the date chosen on the draft when it is after the issue date; otherwise it becomes one frequency period after the issue date.
 
 ### POST `/invoices/{id}/recurrence/stop`
 

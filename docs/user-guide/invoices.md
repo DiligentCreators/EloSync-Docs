@@ -26,9 +26,9 @@ Edit from the row menu or the detail sheet while the invoice is still **Draft**.
 
 ## Recurring invoices
 
-Turn on **Recurring invoice** when you create (or edit a draft) and choose a frequency: weekly, monthly, quarterly, semi-annually, or yearly. Optional end date stops generation after that date.
+Turn on **Recurring invoice** when you create (or edit a draft). Choose a frequency (weekly, monthly, quarterly, semi-annually, or yearly) and a **Next invoice date** — the day EloSync should create the next **Draft**. That date does not have to match the issue day: you can invoice on 15 August and set the next draft for 1 September. After that, later invoices follow the frequency from the next-invoice date (1 October, 1 November, …). Optional end date stops generation after that date.
 
-The first invoice is a normal invoice. After you **Send** it, EloSync creates the **next** invoice as a **Draft** on each due date (workspace timezone), copying line items, customer, currency, and assignee. Generated invoices do not copy payments or credits.
+The first invoice is a normal invoice. After you **Send** it, EloSync creates the **next** invoice as a **Draft** on the **Next invoice date** you chose (workspace timezone), copying line items, customer, currency, and assignee. Generated invoices do not copy payments or credits.
 
 When a customer cancels:
 

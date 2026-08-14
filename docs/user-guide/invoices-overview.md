@@ -20,7 +20,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 ## Capabilities
 
 - Invoice fields: title, optional contact/company link, optional quotation link, currency, issue date, due date, notes
-- Recurring series (weekly / monthly / quarterly / semi-annually / yearly) that generate the next **draft** invoice after Send; **Stop recurring** ends the series without voiding history
+- Recurring series (weekly / monthly / quarterly / semi-annually / yearly) with a chosen **next invoice date**; later drafts follow the frequency from that date. **Stop recurring** ends the series without voiding history
 - Download invoice PDF (workspace-branded)
 - Auto-numbered (`INV-00001`; prefix backed by the `invoices_number_prefix` tenant setting, default `INV-` — not yet exposed in the Tenant Settings UI)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side

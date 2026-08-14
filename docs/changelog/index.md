@@ -4,7 +4,7 @@
 
 Catalog version: **invoices 1.0.0 → 1.1.0**.
 
-- Create/edit drafts with **Recurring invoice** and frequency (weekly, monthly, quarterly, semi-annually, yearly). Sending the first invoice starts the series; `invoices:generate-recurring` (daily, workspace timezone) creates the next **draft** with copied lines.
+- Create/edit drafts with **Recurring invoice**, frequency, and a required **Next invoice date** (e.g. invoice on 15 Aug, next draft on 1 Sep; later invoices follow the frequency from that date). Sending the first invoice starts the series; `invoices:generate-recurring` (daily, workspace timezone) creates the next **draft** with copied lines.
 - **Stop recurring** on the original invoice ends future generation without changing paid history. Optional checkbox voids the latest unpaid auto-generated draft/sent invoice (same ledger rules as Void).
 - **Download PDF** from the invoice sheet and row menu (`GET /invoices/{id}/pdf`, `invoices.view`). Email delivery is still deferred.
 - Pest `CustomerInvoiceRecurrenceTest` (catch-up cap, command failure exit, PDF cache, timezone, stop/void, soft-delete skip). Playwright one-session headed workflow (validation, CRUD, Overview memo, PDF sheet + row menu, send/void, generate + stop with optional void, shortcuts, trash). Requires `dompdf/dompdf`.
