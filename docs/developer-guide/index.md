@@ -57,6 +57,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Leads](./leads) | Leads reference implementation |
 | [Contacts](./contacts) | Contacts module engineering guide |
 | [Tasks](./tasks) | Tasks module engineering guide |
+| [Projects](./projects) | Projects module engineering guide |
 | [ToDos](./todos) | Personal ToDos module engineering guide |
 | [Opportunities](./opportunities) | Opportunities + pipeline engineering guide |
 | [Quotations](./quotations) | Quotations module engineering guide |
@@ -68,6 +69,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Communication Templates](./communication-templates) | Templates, placeholders, WhatsApp render |
 | [Email](./email) | Personal IMAP/SMTP mailbox, sync jobs, templates, signatures |
 | [Automation](./automation) | Cross-module trigger → condition → action engine |
+| [Knowledge Base](./knowledge-base) | Internal articles Marketplace opt-in (Operations, free) |
 
 ## Lead ingest & integrations
 

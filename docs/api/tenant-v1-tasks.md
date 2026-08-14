@@ -36,7 +36,7 @@ One column per status (`open`, `in_progress`, `waiting`, `completed`, `cancelled
 
 Query: `search`, `status`, `priority`, `tag_id`, `assigned_to` (`unassigned` or user id), `my_tasks`, `overdue`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List/board items include `tags[]` when loaded.
+List/board items include `tags[]` when loaded, plus `project_id` and embedded `project` (`id`, `uuid`, `title`, `status`) when the soft Projects link is set and loaded.
 
 Status values: `open`, `in_progress`, `waiting`, `completed`, `cancelled`.  
 Priority values: `low`, `medium`, `high`, `urgent`.
@@ -47,17 +47,17 @@ List and board task cards include `latest_note` — most recent note (`id`, `bod
 
 ### POST `/tasks`
 
-Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`.
+Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`).
 
 Initial `due_at` on create does not require `tasks.change_due_date`.
 
 ### GET `/tasks/{id}`
 
-Includes assignee, creator, notes, activities, and `tags`.
+Includes assignee, creator, notes, activities, `tags`, and optional `project`.
 
 ### PUT `/tasks/{id}`
 
-Partial update of task fields (including `status` / `priority` / `assigned_to` / `due_at` / `tag_ids[]`).
+Partial update of task fields (including `status` / `priority` / `assigned_to` / `due_at` / `tag_ids[]` / `project_id`).
 
 Changing `due_at` after create requires `tasks.change_due_date` (403 otherwise).
 

@@ -20,6 +20,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [RC1 Production Readiness](./rc1-production-readiness) | Release candidate hardening notes (absorbed into v1.1.0) |
 | [Phase 7 HR Production Readiness](./hr-phase7-production-readiness) | HR go-live checklist, smoke, rollback, sign-off |
 | [Automation Production Readiness](./automation-production-readiness) | Automation go-live checklist, smoke, rollback, sign-off |
+| [Knowledge Base Production Readiness](./knowledge-base-production-readiness) | Knowledge Base audit, go-live checklist, smoke, rollback, sign-off |
 | [Storage Production Readiness](./storage-production-readiness) | Storage module audit, blockers, smoke, rollback, sign-off |
 | [Phase 7 HR Security Audit](./hr-phase7-security-audit) | HR findings, remediations, residual risk |
 | [Go-Live Hardening](./go-live-hardening-2026-07-15) | Hardening delivery notes |
@@ -37,6 +38,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Leads](./leads) | Leads module ops |
 | [Contacts](./contacts) | Contacts module ops |
 | [Tasks](./tasks) | Tasks module ops |
+| [Projects](./projects) | Projects module ops |
 | [ToDos](./todos) | Personal ToDos module ops |
 | [Daily CRM Summary](./daily-crm-summary) | Daily Reminder Time CRM summary — pilot / GA checklist |
 | [Calendar](./calendar) | Calendar module ops |
@@ -53,6 +55,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Email](./email) | Personal IMAP/SMTP mailbox ops (`email-sync`, ext-imap) |
 | [Branded](./branded) | Custom domains ops |
 | [Automation](./automation) | Automation queue, scheduler, webhook SSRF, catalog ops |
+| [Knowledge Base](./knowledge-base) | Internal articles Marketplace opt-in ops |
 | [Employees](./employees) | Employees module ops |
 | [Leave Management](./leave-management) | Leave Management module ops |
 | [Attendance](./attendance) | Attendance module ops |

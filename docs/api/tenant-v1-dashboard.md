@@ -47,12 +47,14 @@ Returns workspace chrome plus a **widget registry**. Widgets are filtered by ins
 | `deals_closing_soon` | `leads` | `leads.view` | Includes negotiation/proposal previews |
 | `upcoming_tasks` | `tasks` | `tasks.view` | |
 | `overdue_tasks` | `tasks` | `tasks.view` | |
+| `active_projects` | `projects` | `projects.view` | Active status; visibility-scoped (assignee/member/creator or `projects.assign`) |
+| `overdue_projects` | `projects` | `projects.view` | Open + `ends_on` before workspace today |
 | `calendar` | `calendar` | `calendar.view` | Upcoming events; scoped by `calendar.view_all` |
 | `activity_feed` | — | `dashboard.view` | Recent lead/task activity |
 | `notifications` | — | `dashboard.view` | Unread count + recent (scoped to current user) |
 | `quick_actions` | — | `dashboard.view` | Shortcuts gated by module + permission |
 
-Leads/tasks widgets apply assignee scoping: without the module’s `*.assign` permission, data is limited to the current user’s assignments. Calendar uses `calendar.view_all` for org vs mine (no calendar assignment).
+Leads/tasks widgets apply assignee scoping: without the module’s `*.assign` permission, data is limited to the current user’s assignments. Projects widgets use assignee **OR** member **OR** creator visibility (or org-wide with `projects.assign`). Calendar uses `calendar.view_all` for org vs mine (no calendar assignment).
 
 ## Explicitly not included
 
