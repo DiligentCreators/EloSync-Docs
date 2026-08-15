@@ -1,5 +1,11 @@
 # Changelog
 
+## Reports 1.3.1 / People 1.3.0 production readiness — Conditional Go (2026-08-16)
+
+- Audit of `feature/analytics-people-reports-e0a6` companions (Backend [#112](https://github.com/DiligentCreators/SaaS-Backend/pull/112) · Frontend [#108](https://github.com/DiligentCreators/SaaS-Frontend/pull/108) · Docs [#133](https://github.com/DiligentCreators/SaaS-Docs/pull/133) · Website [#27](https://github.com/DiligentCreators/SaaS-Website/pull/27)).
+- **Conditional Go:** local Pest Analytics **20/20**; headed Playwright **14/14**; Docs Quality Gate green; Frontend CI typecheck blocker fixed (re-check required); Backend Laravel Tests / Quality Gate must be dispatched green before merge.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
 ## Reports chart types 1.3.1 (Analytics) (2026-08-15)
 
 Catalog version: **analytics 1.3.0 → 1.3.1**. Display name remains **Reports**.

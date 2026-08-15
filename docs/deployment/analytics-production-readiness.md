@@ -2,40 +2,42 @@
 
 | Field | Value |
 |-------|--------|
-| **Date** | 2026-08-15 (Go audit — Reports suite **1.2.0**; People domain shipped later as **1.3.0**) |
-| **Status** | **Go** — companions green after tour CI fix, website 1.2.0, refetch/a11y polish, Backend CI dispatched |
-| **Scope** | Analytics module `analytics` **v1.2.0** charts Go; catalog now **1.3.1** (People domain + mixed chart types) |
-| **Branch** | `feature/analytics-module-mvp-bc72` |
+| **Date** | 2026-08-16 |
+| **Status** | **Conditional Go** — local Pest + headed Playwright green; Frontend CI typecheck blocker fixed (push pending gate); Backend Laravel Tests / Quality Gate must be green on branch before merge |
+| **Scope** | Analytics module `analytics` catalog **1.3.1** (People / HR domain **1.3.0** + mixed chart types **1.3.1**) |
+| **Branch** | `feature/analytics-people-reports-e0a6` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
 
-**PRs:** Backend [#111](https://github.com/DiligentCreators/SaaS-Backend/pull/111) · Frontend [#107](https://github.com/DiligentCreators/SaaS-Frontend/pull/107) · Docs [#132](https://github.com/DiligentCreators/SaaS-Docs/pull/132) · Website [#26](https://github.com/DiligentCreators/SaaS-Website/pull/26)
+**PRs:** Backend [#112](https://github.com/DiligentCreators/SaaS-Backend/pull/112) · Frontend [#108](https://github.com/DiligentCreators/SaaS-Frontend/pull/108) · Docs [#133](https://github.com/DiligentCreators/SaaS-Docs/pull/133) · Website [#27](https://github.com/DiligentCreators/SaaS-Website/pull/27)
+
+Prior Go audit for charts suite **1.2.0** remains valid for that slice; this audit covers **1.3.0 / 1.3.1** delta and re-validates ship gates.
 
 ---
 
 ## Executive summary
 
-Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.3.1** polishes SPA chart types (pie / donut / bar / area / line) on top of **1.3.0** People domain, **1.2.0** charts, and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. **Financial Reports** and **Department reports** stay separate. **Payroll** inside People remains deferred.
+Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.3.1** adds mixed SPA chart types (pie / donut / bar / area / line) on top of **1.3.0** People domain (Employees, Leave, Attendance), **1.2.0** charts, and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. **Financial Reports** and **Department reports** stay separate. **Payroll** inside People remains deferred.
 
-**Go / No-Go:** **Go** for staging → production after migrate + human smoke below.
+**Go / No-Go:** **Conditional Go** for staging → production after (1) Frontend Quality Gate green on the cursor-type fix, (2) Backend Laravel Tests + Quality Gate green on branch, (3) migrate through **1.3.1**, (4) human smoke including People + chart UX.
 
 | Gate | Result |
 |------|--------|
-| Catalog: operations / `analytics` / **1.2.0** / free opt-in / sort 70 / not default-included | **Pass** |
-| Migrate-only register + permissions + rename 1.1.0 + charts bump 1.2.0 | **Pass** |
+| Catalog: operations / `analytics` / **1.3.1** / free opt-in / sort 70 / not default-included | **Pass** (local DB verified) |
+| Migrate-only bumps: 1.1.0 → 1.2.0 → **1.3.0** → **1.3.1** | **Pass** (code + local migrate) |
 | Route middleware: `module:analytics` then `can:analytics.view` | **Pass** |
-| Soft sections / domain sources (no hard `module_dependencies`) | **Pass** |
-| Domain APIs: CRM / Sales / Billing / Purchasing + CSV export | **Pass** |
-| SPA hub + domain pages + nested Reports submenu + charts | **Pass** |
-| Refetch UX + accessible loading/empty names | **Pass** (F6/F7) |
+| Soft sections / domain sources including **people** (no hard `module_dependencies`) | **Pass** |
+| Domain APIs: CRM / Sales / Billing / Purchasing / **People** + CSV export | **Pass** |
+| SPA hub + domain pages + nested Reports submenu (incl. People) + mixed charts | **Pass** (local) |
+| Chart UX: legend values, theme-aware ticks/tooltips, hover band | **Pass** (local); CI typecheck fix landed |
 | Read-only `GET` overview / reports (no mutations) | **Pass** |
-| Pest `tests/Feature/Tenant/Analytics` | **Pass** (**17** passed; Backend Laravel Tests + Quality Gate **success** on branch) |
-| Module-tour registry (`analytics`, length **35**) | **Pass** (F9) |
-| Playwright `test:e2e:analytics*` | **Pass** after authz label/timeout fix (re-run on staging for sign-off) |
-| Docs core set (user / developer / API / deploy / changelog / roadmap) | **Pass** |
-| Marketing website SKU + timeline **1.2.0** | **Pass** (F10) |
-| Weighted pipeline SQL aggregate (no unbounded `get()`) | **Pass** |
-| LocalSeed / `boost.json` leftovers | **Excluded** from PR (F12) |
-| People / HR; report builder; saved reports; email analytics | **Deferred** |
+| Pest `tests/Feature/Tenant/Analytics` | **Pass** (**20** passed local, 2026-08-16) |
+| Backend Laravel Tests + Quality Gate on PR branch | **Pending** (workflow_dispatch; not auto on PR) |
+| Frontend Quality Gate (`tsc -b`) | **Fail → fix pushed** (Tooltip `cursor` typing); re-check required |
+| Playwright `test:e2e:analytics:headed` | **Pass** (**14/14**, workers=1, 2026-08-16) |
+| Docs core set (user / developer / API / deploy / changelog / roadmap) | **Pass** (Docs Quality Gate **success** on PR #133) |
+| Marketing website SKU + timeline **1.3.1** | **Pass** (copy); Website PR has no CI checks |
+| People / HR; mixed charts | **Shipped in scope** |
+| Report builder; saved reports; email analytics; Payroll in People | **Deferred** |
 
 ---
 
@@ -46,27 +48,34 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Free Operations Marketplace opt-in (not default, not billable) | Pass | Pass | Pass | Pass |
 | Soft source-module sections (no hard deps) | Pass | Pass | Pass | Pass |
 | Period via shared `DashboardPeriod` | Pass | Pass | Pass | Pass |
-| Domain reports CRM/Sales/Billing/Purchasing + CSV | Pass | Pass | Pass | Pass |
-| Per-module charts (SPA Recharts) | n/a | Pass | Pass | Pass |
-| Nested Reports sidebar (label navigates; chevron toggles) | n/a | Pass | Pass | n/a |
+| Domain reports CRM/Sales/Billing/Purchasing/People + CSV | Pass | Pass | Pass | Pass |
+| Per-module mixed charts (SPA Recharts) | n/a | Pass* | Pass | Pass |
+| Nested Reports sidebar incl. People | n/a | Pass | Pass | n/a |
 | Permission `analytics.view` only | Pass | Pass | Pass | n/a |
 | Keep Financial Reports + Department reports separate | Pass | Pass | Pass | Pass |
-| People / HR deferred (~1.3.0) | Pass | Pass | Pass | n/a |
+| Payroll deferred from People | Pass | Pass | Pass | n/a |
+
+\*Frontend CI must reconfirm after cursor typing fix.
 
 ---
 
 ## Findings
 
-### Resolved this Go audit
+### Open this audit
 
-| ID | Severity | Finding | Resolution |
-|----|----------|---------|------------|
-| F9 | HIGH | Module-tour length 34 vs 35 | Assert `analytics` + length **35** |
-| F10 | MEDIUM | Website timeline catalog 1.1.0 | Timeline detail **1.2.0** + charts |
-| F11 | MEDIUM | Backend PR Pest CI paused | Manual `workflow_dispatch` Laravel Tests + Quality Gate on branch |
-| F12 | LOW | LocalSeed + `boost.json` dirty | Kept **out** of production PR |
-| F6 | LOW | Stale cards on refetch | Apply disabled + “Updating…” status + opacity while fetching |
-| F7 | LOW | Weak loading/empty a11y names | Named `aria-label` / `role="status"` on loading and empty |
+| ID | Severity | Finding | Action |
+|----|----------|---------|--------|
+| F13 | **HIGH** | Frontend Quality Gate failed: `Tooltip` `cursor={hoverCursorFill()}` typed as `CSSProperties` incompatible with Recharts `CursorDefinition` | Narrow return type to `{ fill: string }`; push + wait for Quality Gate **success** on PR #108 |
+| F14 | **MEDIUM** | Backend PR #112 has no Laravel Tests / Quality Gate runs on push (label-only) | `workflow_dispatch` Laravel Tests + Code Quality Gate on `feature/analytics-people-reports-e0a6`; require green before merge |
+| F15 | **LOW** | Website PR #27 reports no checks | Accept if repo has no Quality Gate; verify marketing timeline shows **1.3.1** manually |
+
+### Resolved / accepted
+
+| ID | Severity | Notes |
+|----|----------|-------|
+| F9–F12, F6–F7 | — | Closed in 1.2.0 Go audit |
+| People deferred (1.2.0) | — | Delivered as **1.3.0** |
+| Charts bar-only UX | LOW | Addressed in **1.3.1** mixed types + legend values |
 
 ### Accepted / intentional
 
@@ -76,7 +85,8 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | No hard `module_dependencies` | Empty overview/domain valid when only Analytics installed |
 | Charts SPA-only | No chart-specific API endpoints |
 | No queues / schedulers / env vars | Deploy = migrate + SPA |
-| People/HR not in 1.2.0 | Documented future area |
+| Authz e2e is SPA gate focused | API middleware covered by Pest; headed Herd API probes flaky under SPA load |
+| Payroll not in People | Documented deferred |
 
 ---
 
@@ -84,23 +94,24 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 
 | Suite | Result | Notes |
 |-------|--------|-------|
-| `php artisan test --compact tests/Feature/Tenant/Analytics` | **17 passed** | Overview + domain + CSV + authz |
-| Backend `workflow_dispatch` Laravel Tests + Quality Gate | **Success** | Runs [31896888030](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31896888030), [31896890006](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31896890006) |
-| Frontend `npx tsc --noEmit` | **Pass** | |
-| Module-tour Vitest length **35** | **Pass** | Includes `analytics` |
-| Docs VitePress Quality Gate (PR #132) | **Success** | |
-| Playwright `test:e2e:analytics` | Specs updated | Authz expects **Reports** nav label; API timeout 30s |
+| `php artisan test --compact --filter=Analytics` | **20 passed** | Local 2026-08-16; overview + CRM/Sales/Billing/Purchasing/People + CSV + authz |
+| `npm run test:e2e:analytics:headed` | **14 passed** (~4.7m) | Authz + workflow + modules (validation, presets, CRM/People CSV); `--workers=1` |
+| Frontend `npx tsc -b` (after cursor fix) | **Pass** local | Must pass CI Quality Gate |
+| Docs VitePress Quality Gate (PR #133) | **Success** | |
+| Catalog row (local) | **1.3.1**, operations, not default, not billable, $0 | |
+| Backend CI on PR branch | **Pending** dispatch | |
 
 ---
 
 ## Deploy order
 
-1. **Backend** — `php artisan migrate --force` (register → permissions → 1.1.0 → **1.2.0**)
-2. **SPA** — hub + domain pages + nested nav + charts + refetch polish
-3. **Docs** + **marketing site** (SKU **1.2.0**)
+1. **Backend** — `php artisan migrate --force` through `…_bump_analytics_module_to_reports_1_3_1`
+2. **SPA** — hub + People domain + mixed charts + e2e helpers
+3. **Docs** + **marketing site** (SKU / timeline **1.3.1**)
 4. Staging smoke below
 
-Suggested merge: **Backend → Frontend → Docs → Website**.  
+Suggested merge: **Backend → Frontend → Docs → Website** after CI gates clear.
+
 No new queues, schedulers, or env vars.
 
 ---
@@ -109,32 +120,35 @@ No new queues, schedulers, or env vars.
 
 | # | Check | Owner | Pass? |
 |---|-------|-------|-------|
-| 1 | Migrations through `…_bump_analytics_module_to_reports_1_2_0` applied | Ops | ☐ |
-| 2 | Catalog: published, Operations, not default-included, not billable, `$0`, **v1.2.0** | Ops | ☐ |
+| 1 | Migrations through `…_bump_analytics_module_to_reports_1_3_1` applied | Ops | ☐ |
+| 2 | Catalog: published, Operations, not default-included, not billable, `$0`, **v1.3.1** | Ops | ☐ |
 | 3 | New workspace lacks Reports until Marketplace install | QA | ☐ |
 | 4 | SPA `RequireAccess` (`module=analytics`, `analytics.view`) | QA | ☐ |
-| 5 | Nested sidebar: Reports navigates; chevron expands CRM/Sales/Billing/Purchasing | QA | ☐ |
+| 5 | Nested sidebar: Reports + CRM/Sales/Billing/Purchasing/**People** | QA | ☐ |
 | 6 | Soft sources + charts only for entitled modules + view permission | QA | ☐ |
-| 7 | Domain CSV export when sources present | QA | ☐ |
-| 8 | Period apply shows Updating… / disables button while fetching | QA | ☐ |
-| 9 | Pest Analytics + Backend CI green | Eng | ☐ |
-| 10 | Frontend Quality Gate green (tour length 35) | Eng | ☐ |
-| 11 | Playwright `test:e2e:analytics` on staging | QA | ☐ |
-| 12 | Smoke steps below signed off | QA / Ops | ☐ |
+| 7 | People report: employees / leave / attendance metrics when entitled | QA | ☐ |
+| 8 | Chart types vary (pie/donut/bar/area/line); legend shows values; light/dark readable | QA | ☐ |
+| 9 | Domain CSV export when sources present | QA | ☐ |
+| 10 | Period validation + Apply period refetch UX | QA | ☐ |
+| 11 | Pest Analytics **20** + Backend CI green | Eng | ☐ |
+| 12 | Frontend Quality Gate green | Eng | ☐ |
+| 13 | Playwright `test:e2e:analytics` (headed preferred locally) | QA | ☐ |
+| 14 | Smoke steps below signed off | QA / Ops | ☐ |
 
 ---
 
 ## Staging smoke (human)
 
-1. Marketplace → install **Reports** (free; search `analytics` if needed)
-2. Sidebar Overview → **Reports** opens hub; chevron expands domain links
-3. Default period: KPI sections + per-module charts for entitled sources
-4. Change period → **Apply period** shows Updating… then refreshes
-5. Open CRM / Sales / Billing / Purchasing: KPIs, module charts, table, **Export CSV**
-6. Custom period: missing dates / end before start show client errors
-7. Staff without a source `{module}.view`: that section/source omitted
-8. Module uninstalled → SPA `/403` and API `403`
-9. Confirm Financial Reports and Department reports remain separate surfaces
+1. Marketplace → install **Reports** (free; search `analytics` / Reports)
+2. Sidebar Overview → **Reports** opens hub; chevron expands CRM / Sales / Billing / Purchasing / **People**
+3. Default period: KPI sections + mixed charts for entitled sources
+4. Change period → **Apply period** refreshes; custom period validation (missing dates / end before start)
+5. Open **People**: KPIs, employee/leave/attendance charts with legend values, table, **Export CSV**
+6. Open CRM / Sales / Billing / Purchasing: KPIs, charts, table, CSV
+7. Toggle light/dark: axis ticks, tooltips, legend numbers remain readable
+8. Staff without a source `{module}.view`: that section/source omitted
+9. Module uninstalled → SPA `/403` and API `403`
+10. Confirm Financial Reports and Department reports remain separate surfaces
 
 ---
 
@@ -152,7 +166,7 @@ No new queues, schedulers, or env vars.
 ## Monitoring
 
 - No Analytics-specific audit events (read-only)
-- Watch `GET /api/tenant/v1/analytics/overview` and `/analytics/reports/{area}` latency
+- Watch `GET /api/tenant/v1/analytics/overview` and `/analytics/reports/{area}` (incl. `people`) latency
 - Platform 403 rate if Marketplace uninstalls spike
 
 ---
@@ -161,8 +175,8 @@ No new queues, schedulers, or env vars.
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
-| Engineering | | | **Go** / No-Go |
-| Product | | | Accept People/HR deferred |
-| Ops | | | Staging migrate + smoke ☐ |
+| Engineering | | | **Conditional Go** until F13/F14 clear → then **Go** / No-Go |
+| Product | | | Accept Payroll / report builder deferred |
+| Ops | | | Staging migrate through **1.3.1** + smoke ☐ |
 
-**Recommendation:** Merge companions after CI green on pushed fixes; run staging smoke; ship **1.2.0**. Do **not** ship People/HR or report builder under this SKU without a new catalog version and DoD.
+**Recommendation:** Do **not** merge until Frontend Quality Gate is green and Backend Laravel Tests + Quality Gate succeed on `feature/analytics-people-reports-e0a6`. Then merge Backend → Frontend → Docs → Website, migrate to **1.3.1**, run staging smoke (include People + chart UX), ship. Do **not** add Payroll or report builder under this SKU without a new catalog version and DoD.
