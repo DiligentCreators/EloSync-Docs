@@ -270,6 +270,17 @@ Help Desk installs standalone with **no** `module_dependencies` rows — it work
 
 **Status:** Shipped — see [Help Desk Overview](/user-guide/help-desk-overview) and [Product Roadmap](/getting-started/product-roadmap) Phase 8.
 
+### WhatsApp Cloud → Leads (optional, shipped)
+
+```text
+WhatsApp Cloud
+  └── may depend on Leads   (optional — unlocks lead_id link + timeline mirrors)
+```
+
+WhatsApp Cloud installs standalone with **no** `module_dependencies` rows. Conversations work with `lead_id` null. When Leads is entitled, agents may link a Lead and outbound/inbound messages mirror onto the Lead timeline via `LeadService::recordActivity`. Communication Templates (`wa.me`) remains a separate free module and is not a hard dependency.
+
+**Status:** Shipped MVP **1.0.0** — see [WhatsApp Cloud Overview](/user-guide/whatsapp-cloud-overview) and [Product Roadmap](/getting-started/product-roadmap) Phase 1.
+
 ### Inventory → Products (required, shipped)
 
 ```text

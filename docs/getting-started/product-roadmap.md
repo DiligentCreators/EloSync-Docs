@@ -63,13 +63,22 @@ The CRM is the foundation of the platform and is the first functional area deliv
 - Mirrors create/complete onto related record timelines
 - Recent Activities dashboard widget
 
-### Planned
+### Planned / deferred after MVP
 
 | Module / capability | Status |
 |---------------------|--------|
-| **WhatsApp Cloud Integration** | Planned (docs blueprint only — [Cloud API beyond `wa.me`](/developer-guide/whatsapp-cloud-integration)) |
+| Media, Automation WhatsApp triggers, Lead Source WhatsApp Driver | Deferred (post-MVP) |
 
-**Goal:** Provide a complete customer relationship management experience with lead tracking, task management, customer records, scheduling, meetings, and activity history.
+#### WhatsApp Cloud (shipped MVP 1.0.0)
+
+- Billable CRM Marketplace module `whatsapp-cloud`
+- Connect WABA/phone via Meta OAuth; encrypted tokens; webhook subscribe
+- Shared inbox: text send/receive; delivery/read status webhooks
+- Meta Cloud templates for outside the 24h customer service window
+- Soft optional Lead link + timeline mirrors; `wa.me` Communication Templates remain as fallback
+- User: [Overview](/user-guide/whatsapp-cloud-overview) · [Guide](/user-guide/whatsapp-cloud) · [API](/api/tenant-v1-whatsapp-cloud) · [Deploy](/deployment/whatsapp-cloud)
+
+**Goal:** Provide a complete customer relationship management experience with lead tracking, task management, customer records, scheduling, meetings, activity history, and WhatsApp Cloud messaging.
 
 ---
 
@@ -347,11 +356,11 @@ The platform architecture supports additional modules without requiring architec
 - Customer Portal
 - Vendor Portal
 - Business Intelligence & Analytics — **shipped v1.4.0** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing/People including Payroll soft source + mixed chart types + CSV; see [Analytics Overview](/user-guide/analytics-overview)); report builder and saved reports still planned
-- Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned with Cloud API
+- Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned post Cloud MVP
 - Storage — **shipped v1.0.0** as free `storage` (1 GB) + billable capacity packs `storage-10` … `storage-1000` (see [Storage](/user-guide/storage)); task/lead images and email attachment persistence still planned
 - Marketing Automation
 - Email Campaigns
-- SMS & WhatsApp provider integrations (Cloud API / Twilio) — templates + `wa.me` MVP already shipped; Cloud API blueprint: [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration)
+- SMS & WhatsApp provider integrations — Communication Templates `wa.me` + Cloud API MVP (`whatsapp-cloud`) shipped; Twilio / media / Automation WA triggers still deferred: [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration)
 - API & Webhooks
 - **AI Integration (Planning)** — optional integrations with Leads, Tasks, CRM, and other domain modules
 - Multi-Branch Management

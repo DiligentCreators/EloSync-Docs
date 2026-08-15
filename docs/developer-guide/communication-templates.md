@@ -147,7 +147,7 @@ new PlaceholderRegistry(
 
 EloSync does **not** send messages or store outbound message history in this version.
 
-Future Cloud API send/receive, conversations, and shared inbox are documented separately — see [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) (planned; not implemented).
+Future Cloud API send/receive, conversations, and shared inbox ship as Marketplace module `whatsapp-cloud` — see [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) (MVP shipped; media/Automation triggers deferred).
 
 ## Permission model
 
