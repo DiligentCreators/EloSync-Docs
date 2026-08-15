@@ -314,20 +314,21 @@ Implement workforce management.
 
 **Goal:** Give teams an installable internal FAQ / SOP library without a customer portal. ✅ **Achieved** for internal-only v1.
 
-## Analytics (shipped)
+## Analytics / Reports (shipped)
 
 | Module | Status |
 |--------|--------|
-| [Analytics](/user-guide/analytics-overview) | ✅ Completed (BI MVP v1.0.0; free Operations Marketplace opt-in) |
+| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Completed (Reports suite **1.1.0**; free Operations Marketplace opt-in; slug `analytics`) |
 
-#### Analytics (shipped)
+#### Reports suite (shipped)
 
 - Executive overview of KPIs from entitled modules (leads, opportunities, tasks, invoices, help-desk, projects)
-- Shared period filter (`DashboardPeriod`); sections soft-gated by module entitlement + view permission
+- Domain report pages: CRM, Sales, Billing, Purchasing — KPI + table + CSV export
+- Shared period filter (`DashboardPeriod`); soft-gated by module entitlement + view permission
 - Permission `analytics.view`; **no** hard `module_dependencies`
-- Explicitly deferred: report builder, saved/scheduled reports, CSV export, email analytics
+- Explicitly deferred: report builder, saved/scheduled reports, charts, email analytics
 
-**Goal:** Give workspaces a cross-module executive KPI surface without a full BI suite. ✅ **Achieved** for overview MVP v1.
+**Goal:** Give workspaces a cross-module executive KPI surface and operational report pages without a full BI builder. ✅ **Achieved** for Reports suite v1.1.0.
 
 ---
 
@@ -343,7 +344,7 @@ The platform architecture supports additional modules without requiring architec
 - Recruitment
 - Customer Portal
 - Vendor Portal
-- Business Intelligence & Analytics — **shipped v1.0.0** as free Marketplace module `analytics` (executive overview MVP; see [Analytics Overview](/user-guide/analytics-overview)); report builder / saved reports / export still planned
+- Business Intelligence & Analytics — **shipped v1.1.0** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing + CSV; see [Analytics Overview](/user-guide/analytics-overview)); report builder / saved reports / charts still planned
 - Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned with Cloud API
 - Storage — **shipped v1.0.0** as free `storage` (1 GB) + billable capacity packs `storage-10` … `storage-1000` (see [Storage](/user-guide/storage)); task/lead images and email attachment persistence still planned
 - Marketing Automation

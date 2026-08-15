@@ -2,9 +2,9 @@
 
 | Field | Value |
 |-------|--------|
-| **Date** | 2026-08-15 |
-| **Status** | **Conditional Go** — Marketplace opt-in MVP ready after companion CI + staging smoke; marketing SKU + aggregate fix closed in this audit |
-| **Scope** | Analytics module `analytics` v1.0.0 |
+| **Date** | 2026-08-15 (re-audit for Reports suite **1.1.0**) |
+| **Status** | **Conditional Go** — Marketplace opt-in Reports suite after companion CI + staging smoke |
+| **Scope** | Analytics module `analytics` v1.1.0 (display name Reports) |
 | **Branch** | `feature/analytics-module-mvp-bc72` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
 
@@ -14,11 +14,9 @@
 
 ## Executive summary
 
-Analytics is a **free** Operations Marketplace SKU (`$0`). It is **not** default-included. Workspaces install from Marketplace after migrate; existing tenants are unchanged until they opt in.
+Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.1.0** adds CRM / Sales / Billing / Purchasing report pages with KPI + table + CSV on top of the executive overview. Soft gates and `analytics.view` are unchanged. Financial Reports and Department reports stay separate.
 
-Locked v1 scope is implemented: **executive overview** with shared dashboard period filters and **soft** KPI sections (leads, opportunities, tasks, invoices, help-desk, projects) only when the source module is entitled **and** the actor has `{module}.view`. No report builder, saved/scheduled reports, CSV export, or email analytics.
-
-**Go / No-Go:** **Conditional Go** for staging → production after CI on companion PRs and staging smoke. Security, catalog, SPA gates, Pest, and headed Playwright are green. Residual items are fast-follow quality work, not ship blockers for the MVP.
+**Go / No-Go:** **Conditional Go** for staging → production after CI on companion PRs and staging smoke.
 
 | Gate | Result |
 |------|--------|

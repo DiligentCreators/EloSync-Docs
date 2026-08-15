@@ -342,19 +342,18 @@ Knowledge Base installs as a free Operations Marketplace opt-in (`knowledge-base
 
 **Status:** Shipped — see [Knowledge Base Overview](/user-guide/knowledge-base-overview) and [Product Roadmap](/getting-started/product-roadmap).
 
-### Analytics → CRM / Sales / Billing / Operations modules (optional, shipped)
+### Analytics / Reports → CRM / Sales / Billing / Purchasing modules (optional, shipped)
 
 ```text
-Analytics
-  ├── may use Leads           (optional — leads section)
-  ├── may use Opportunities   (optional — opportunities section)
-  ├── may use Tasks           (optional — tasks section)
-  ├── may use Invoices        (optional — invoices section)
-  ├── may use Help Desk       (optional — help_desk section)
-  └── may use Projects        (optional — projects section)
+Reports (slug analytics)
+  ├── may use Leads / Tasks              (CRM report + overview)
+  ├── may use Opportunities / Quotations / Contracts (Sales report)
+  ├── may use Invoices / Payments / Credit Notes (Billing report)
+  ├── may use Vendors / Purchase Orders / Expenses (Purchasing report)
+  └── may use Help Desk / Projects       (overview sections)
 ```
 
-Analytics installs as a free Operations Marketplace opt-in (`analytics` **1.0.0**) with **no** `module_dependencies` rows. The executive overview includes a section only when that source module is entitled **and** the actor has `{module}.view`. Accounting statements stay in Financial Reports.
+Reports installs as a free Operations Marketplace opt-in (`analytics` **1.1.0**, display name Reports) with **no** `module_dependencies` rows. Overview sections and domain reports include data only when that source module is entitled **and** the actor has `{module}.view`. Accounting statements stay in Financial Reports.
 
 **Status:** Shipped — see [Analytics Overview](/user-guide/analytics-overview) and [Product Roadmap](/getting-started/product-roadmap).
 

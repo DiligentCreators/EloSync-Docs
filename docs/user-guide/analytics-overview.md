@@ -1,20 +1,17 @@
-# Analytics Module
+# Reports Module (Analytics)
 
-Business Intelligence & Analytics MVP. Free Operations Marketplace module for an **executive overview** of KPIs from entitled CRM, sales, billing, and operations modules. Period filters reuse the shared dashboard period helper. No report builder, saved reports, or CSV export in v1.0.0.
+Business Intelligence **Reports** suite. Free Operations Marketplace module (catalog slug **`analytics`**, version **1.1.0**).
 
-Accounting statements (Trial Balance / P&L / Balance Sheet) remain in [Financial Reports](/user-guide/financial-reports-overview).
+- Executive dashboard with period filters
+- Domain report pages: CRM, Sales, Billing, Purchasing (KPI + table + CSV)
+- Soft-gated by source module entitlement + `{module}.view`
+- No report builder or saved reports in 1.1.0
 
-## Guides
-
-| Audience | Document |
-|----------|----------|
+| Audience | Doc |
+|----------|-----|
 | Operators | [analytics.md](/user-guide/analytics) |
-| Engineers | [analytics.md](/developer-guide/analytics) |
-| Production | [analytics.md](/deployment/analytics) |
-| Tenant API | [../api/tenant-v1-analytics.md](/api/tenant-v1-analytics) |
+| Developers | [developer-guide/analytics](/developer-guide/analytics) |
+| API | [tenant-v1-analytics](/api/tenant-v1-analytics) |
+| Deploy | [deployment/analytics](/deployment/analytics) |
 
-## Permissions
-
-`analytics.view`
-
-Catalog: slug `analytics`, category `operations`, free opt-in, `sort_order = 70`, version **1.0.0**. **No** hard `module_dependencies` — source modules are soft entitlements.
+Accounting TB / P&L / BS remain in [Financial Reports](/user-guide/financial-reports-overview).

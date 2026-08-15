@@ -1,10 +1,19 @@
-# Analytics — User Guide
+# Analytics / Reports — User Guide
 
-1. Enable **Analytics** from Marketplace (free Operations module).
-2. Open **Overview → Analytics**.
-3. Choose a period (This Month, Last Month, custom range, and other presets) → **Apply period**.
-4. Review KPI sections for modules you have installed and can view (Leads, Opportunities, Tasks, Invoices, Help Desk, Projects).
+Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v1.1.0).
 
-Sections appear only when that source module is entitled **and** you have its view permission. Dates use **Settings → General → Timezone**.
+1. Enable **Reports** from Marketplace (free Operations module; search `analytics` if needed).
+2. Open **Overview → Reports** for the executive dashboard.
+3. Choose a period → **Apply period**.
+4. Open domain reports from the hub cards or sidebar:
+   - **CRM report** — Leads + Tasks
+   - **Sales report** — Opportunities, Quotations, Contracts
+   - **Billing report** — Invoices, Payments, Credit Notes
+   - **Purchasing report** — Vendors, Purchase Orders, Expenses
+5. On each domain page, review KPI cards + breakdown table, then **Export CSV** when sources are available.
+
+Sections and domain rows appear only when that source module is entitled **and** you have its view permission. Dates use **Settings → General → Timezone**.
 
 For accounting statements (Trial Balance, P&L, Balance Sheet), use [Financial Reports](/user-guide/financial-reports).
+
+**Still deferred:** report builder, saved/scheduled reports, charts, email analytics.

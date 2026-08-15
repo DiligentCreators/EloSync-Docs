@@ -70,7 +70,7 @@ knowledge_base_categories / knowledge_base_articles
 knowledge_base_article_notes / knowledge_base_article_activities
   (tenant-scoped internal articles — Knowledge Base module; free Operations opt-in)
 
-Analytics (`analytics`) — **no dedicated tables**; executive overview aggregates existing CRM / sales / billing / operations rows
+Analytics (`analytics`, display **Reports**) — **no dedicated tables**; executive overview + domain report aggregates over existing CRM / sales / billing / purchasing rows
 
 chat_conversations / chat_conversation_members / chat_messages / chat_message_mentions
 chat_message_reactions / chat_message_pins / chat_message_attachments

@@ -1,5 +1,16 @@
 # Changelog
 
+## Reports suite 1.1.0 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.0.0 → 1.1.0**. Display name **Reports** (slug remains `analytics`).
+
+- Executive dashboard retained (`GET /analytics/overview`).
+- Domain reports: CRM, Sales, Billing, Purchasing — KPI summary + breakdown table + CSV export (`GET /analytics/reports/{area}`, `…/export`).
+- Soft sources per area; empty report when none entitled / viewable.
+- SPA Overview → Reports hub + domain pages; Playwright covers CRM CSV.
+- Deferred still: report builder, saved/scheduled reports, charts, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics)
+
 ## Analytics module 1.0.0 (2026-08-15)
 
 Free Operations Marketplace module (`analytics` catalog **1.0.0**) — Business Intelligence & Analytics MVP.
