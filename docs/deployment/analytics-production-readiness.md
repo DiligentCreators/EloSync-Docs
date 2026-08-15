@@ -2,9 +2,9 @@
 
 | Field | Value |
 |-------|--------|
-| **Date** | 2026-08-15 (re-audit for Reports suite **1.1.0**) |
+| **Date** | 2026-08-15 (re-audit for Reports charts **1.2.0**) |
 | **Status** | **Conditional Go** — Marketplace opt-in Reports suite after companion CI + staging smoke |
-| **Scope** | Analytics module `analytics` v1.1.0 (display name Reports) |
+| **Scope** | Analytics module `analytics` v1.2.0 (display name Reports) |
 | **Branch** | `feature/analytics-module-mvp-bc72` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
 
@@ -14,7 +14,7 @@
 
 ## Executive summary
 
-Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.1.0** adds CRM / Sales / Billing / Purchasing report pages with KPI + table + CSV on top of the executive overview. Soft gates and `analytics.view` are unchanged. Financial Reports and Department reports stay separate.
+Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.2.0** adds SPA charts on the hub and domain reports (count/amount bars) on top of the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. Financial Reports and Department reports stay separate.
 
 **Go / No-Go:** **Conditional Go** for staging → production after CI on companion PRs and staging smoke.
 
@@ -31,7 +31,7 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Docs core set (user / developer / API / deploy) | **Pass** |
 | Marketing website SKU (`available` Operations free) | **Pass** (aligned this audit) |
 | Weighted pipeline SQL aggregate (no unbounded `get()`) | **Pass** (fixed this audit) |
-| Report builder / export / email analytics | **Deferred** (locked out of v1) |
+| Report builder / saved reports / email analytics | **Deferred** (charts shipped in 1.2.0) |
 
 ---
 

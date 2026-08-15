@@ -1,5 +1,15 @@
 # Changelog
 
+## Reports charts 1.2.0 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.1.0 → 1.2.0**. Display name remains **Reports**.
+
+- Hub overview: one bar chart per entitled module (friendly module titles).
+- Domain reports (CRM / Sales / Billing / Purchasing): separate charts per source module (e.g. Leads, Invoices); value chart when amounts exist.
+- Charts use existing Recharts + theme `--chart-*` tokens; no API contract change.
+- Deferred still: report builder, saved/scheduled reports, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics)
+
 ## Reports suite 1.1.0 (Analytics) (2026-08-15)
 
 Catalog version: **analytics 1.0.0 → 1.1.0**. Display name **Reports** (slug remains `analytics`).

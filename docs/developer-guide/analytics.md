@@ -1,6 +1,6 @@
 # Reports (Analytics) — Developer Guide
 
-Slug `analytics` (display name **Reports**). Free Operations Marketplace module (**1.1.0**). Soft-depends on source modules — **no** hard `module_dependencies` rows.
+Slug `analytics` (display name **Reports**). Free Operations Marketplace module (**1.2.0**). Soft-depends on source modules — **no** hard `module_dependencies` rows.
 
 ## Services
 
@@ -24,17 +24,17 @@ Slug `analytics` (display name **Reports**). Free Operations Marketplace module 
 
 ## Frontend
 
-- Hub `/analytics` (Overview → Reports)
-- Domain pages `/analytics/crm|sales|billing|purchasing`
+- Hub `/analytics` (Overview → Reports) — Recharts per entitled module
+- Domain pages `/analytics/crm|sales|billing|purchasing` — one chart per source module (+ value chart when amounts apply) + table + CSV
 - Playwright: `npm run test:e2e:analytics` / `:modules` / `:authz` (+ `:headed`)
 
 ## Tests
 
-Pest: `tests/Feature/Tenant/Analytics/` (overview + domain reports + CSV).
+Pest: `tests/Feature/Tenant/Analytics/` (overview + domain reports + CSV). Charts are SPA-only (no API change).
 
 ## Catalog
 
-Migrate-only bump `1.0.0` → `1.1.0` with name **Reports**. Entitlements stay on slug `analytics`.
+Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts). Entitlements stay on slug `analytics`.
 
 ## Related
 
