@@ -49,6 +49,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Email | `e2e/tests/email/` | `npm run test:e2e:email` (+ `test:e2e:email:headed`) |
 | Automation | `e2e/tests/automation/` | `npm run test:e2e:automation` / `test:e2e:automation:headed` |
 | Knowledge Base | `e2e/tests/knowledge-base/` | `npm run test:e2e:knowledge-base` / `test:e2e:knowledge-base:headed` |
+| Analytics | `e2e/tests/analytics/` | `npm run test:e2e:analytics` / `test:e2e:analytics:modules` / `test:e2e:analytics:authz` (+ `:headed`) |
 | Profile | `e2e/tests/profile/` | `npm run test:e2e:profile` |
 | Smoke | `e2e/tests/smoke/` | `npm run test:e2e:smoke` |
 | Regression | `e2e/tests/regression/` | `npm run test:e2e:regression` |

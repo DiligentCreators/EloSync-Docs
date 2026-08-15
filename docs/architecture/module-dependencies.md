@@ -342,6 +342,22 @@ Knowledge Base installs as a free Operations Marketplace opt-in (`knowledge-base
 
 **Status:** Shipped — see [Knowledge Base Overview](/user-guide/knowledge-base-overview) and [Product Roadmap](/getting-started/product-roadmap).
 
+### Analytics → CRM / Sales / Billing / Operations modules (optional, shipped)
+
+```text
+Analytics
+  ├── may use Leads           (optional — leads section)
+  ├── may use Opportunities   (optional — opportunities section)
+  ├── may use Tasks           (optional — tasks section)
+  ├── may use Invoices        (optional — invoices section)
+  ├── may use Help Desk       (optional — help_desk section)
+  └── may use Projects        (optional — projects section)
+```
+
+Analytics installs as a free Operations Marketplace opt-in (`analytics` **1.0.0**) with **no** `module_dependencies` rows. The executive overview includes a section only when that source module is entitled **and** the actor has `{module}.view`. Accounting statements stay in Financial Reports.
+
+**Status:** Shipped — see [Analytics Overview](/user-guide/analytics-overview) and [Product Roadmap](/getting-started/product-roadmap).
+
 ### AI → domain modules (optional)
 
 ```text
