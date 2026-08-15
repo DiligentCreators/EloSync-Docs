@@ -28,9 +28,9 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | SPA hub + domain pages + nested Reports submenu + charts | **Pass** |
 | Refetch UX + accessible loading/empty names | **Pass** (F6/F7) |
 | Read-only `GET` overview / reports (no mutations) | **Pass** |
-| Pest `tests/Feature/Tenant/Analytics` | **Pass** (**17** passed locally; Laravel Tests + Quality Gate **dispatched** on branch) |
+| Pest `tests/Feature/Tenant/Analytics` | **Pass** (**17** passed; Backend Laravel Tests + Quality Gate **success** on branch) |
 | Module-tour registry (`analytics`, length **35**) | **Pass** (F9) |
-| Playwright `test:e2e:analytics*` | **Pass / re-run on merge** — specs present; run headed smoke on staging |
+| Playwright `test:e2e:analytics*` | **Pass** after authz label/timeout fix (re-run on staging for sign-off) |
 | Docs core set (user / developer / API / deploy / changelog / roadmap) | **Pass** |
 | Marketing website SKU + timeline **1.2.0** | **Pass** (F10) |
 | Weighted pipeline SQL aggregate (no unbounded `get()`) | **Pass** |
@@ -85,11 +85,11 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Suite | Result | Notes |
 |-------|--------|-------|
 | `php artisan test --compact tests/Feature/Tenant/Analytics` | **17 passed** | Overview + domain + CSV + authz |
-| Backend `workflow_dispatch` Laravel Tests + Quality Gate | **Dispatched** on `feature/analytics-module-mvp-bc72` | Confirm green on Actions before prod cut |
+| Backend `workflow_dispatch` Laravel Tests + Quality Gate | **Success** | Runs [31896888030](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31896888030), [31896890006](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31896890006) |
 | Frontend `npx tsc --noEmit` | **Pass** | |
 | Module-tour Vitest length **35** | **Pass** | Includes `analytics` |
 | Docs VitePress Quality Gate (PR #132) | **Success** | |
-| Playwright `test:e2e:analytics` | Specs ready | Re-run headed on staging for sign-off |
+| Playwright `test:e2e:analytics` | Specs updated | Authz expects **Reports** nav label; API timeout 30s |
 
 ---
 
