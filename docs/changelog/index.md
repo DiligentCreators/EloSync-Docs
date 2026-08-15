@@ -1,5 +1,26 @@
 # Changelog
 
+## Reports 1.4.0 production readiness — Go (2026-08-16)
+
+- Closed audit openers: companion PRs Backend [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28); Backend Laravel Tests + Code Quality Gate **success**; local catalog migrated to **1.4.0**.
+- Pest Analytics **23/23**; headed Playwright **14/14**; Frontend / Docs / Website Quality Gates **success**.
+- Staging migrate + human smoke (manager Payroll / staff omit) remain ops pre-flight.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
+## Reports 1.4.0 production readiness — Conditional Go (2026-08-16)
+
+- Audit of `feature/analytics-payroll-people-1-4-0` companions (superseded by Go above after F19/F20 closed).
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
+## Reports People Payroll soft source 1.4.0 (Analytics) (2026-08-16)
+
+Catalog version: **analytics 1.3.1 → 1.4.0**. Display name remains **Reports**.
+
+- People domain soft source **`payroll`**: pay runs overlapping the period, paid net (sum of line `net` for paid runs), payroll profile count, status mix rows (`draft` / `approved` / `paid`).
+- Soft gate: Payroll entitled + **`payroll.view`** (stricter than `analytics.view` alone; staff roles omit compensation by default; no self-scope).
+- SPA: People copy / nav `anyModules` / donut chart label for Payroll; CSV includes payroll rows when entitled.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics), [roadmap](/getting-started/product-roadmap)
+
 ## Reports 1.3.1 production blockers closed — Go (2026-08-16)
 
 - Closed audit blockers before merge: People leave/attendance **self-scope** (F16), catalog bump **SemVer migration order** (F17), People period **whereDate** filters (F18), website PR **Quality Gate** (F15).
