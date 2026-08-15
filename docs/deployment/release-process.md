@@ -6,7 +6,7 @@ How EloSync cuts coordinated platform releases across Backend, Frontend, and Doc
 
 1. **Three-repo sync** — Backend, Frontend, and Docs ship the same platform tag when the release is platform-scoped.
 2. **Docs first for intent** — official release record lives under `docs/changelog/` before tags are created.
-3. **CI green before tags** — Quality Gate (+ Tests on Backend) must pass on the release SHA in each repo.
+3. **CI green before tags** — Quality Gate (+ Tests on Backend) must pass on the release SHA in each repo. (Backend Pest/QG are currently **manual** `workflow_dispatch` only — run them from Actions before tagging, or re-enable push/PR triggers first.)
 4. **No production reseeding** — upgrades are migrate-only ([Upgrade Guide](./upgrade)).
 5. **Freeze rules still apply** — do not redesign Authentication, Tenancy, RBAC licensing, Billing, Marketplace, Settings, or Gateway architecture ([Platform Freeze](/getting-started/platform-freeze)).
 
