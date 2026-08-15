@@ -6,6 +6,7 @@ Business Intelligence **Reports** suite. Free Operations Marketplace module (cat
 - Domain report pages: CRM, Sales, Billing, Purchasing (KPI + per-module charts + table + CSV)
 - Soft-gated by source module entitlement + `{module}.view`
 - No report builder or saved reports in 1.2.0
+- **Planned (future):** People / HR domain report — soft sources `employees`, `leave-management`, `attendance` first; Payroll later with stricter authz. Keep [Department reports](/user-guide/departments) and [Financial Reports](/user-guide/financial-reports-overview) separate.
 
 | Audience | Doc |
 |----------|-----|
@@ -14,4 +15,4 @@ Business Intelligence **Reports** suite. Free Operations Marketplace module (cat
 | API | [tenant-v1-analytics](/api/tenant-v1-analytics) |
 | Deploy | [deployment/analytics](/deployment/analytics) |
 
-Accounting TB / P&L / BS remain in [Financial Reports](/user-guide/financial-reports-overview).
+Accounting TB / P&L / BS remain in [Financial Reports](/user-guide/financial-reports-overview). Department performance stays on [Department reports](/user-guide/departments).

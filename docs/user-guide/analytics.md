@@ -14,6 +14,6 @@ Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v
 
 Sections and domain rows appear only when that source module is entitled **and** you have its view permission. Dates use **Settings → General → Timezone**.
 
-For accounting statements (Trial Balance, P&L, Balance Sheet), use [Financial Reports](/user-guide/financial-reports).
+For accounting statements (Trial Balance, P&L, Balance Sheet), use [Financial Reports](/user-guide/financial-reports). For department lead/task performance, use [Department reports](/user-guide/departments) (owner / department-manager surface — not part of Reports).
 
-**Still deferred:** report builder, saved/scheduled reports, email analytics.
+**Still deferred:** People / HR domain report (Employees + Leave + Attendance first; Payroll later with stricter authz), report builder, saved/scheduled reports, email analytics.

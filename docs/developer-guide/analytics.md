@@ -22,6 +22,15 @@ Slug `analytics` (display name **Reports**). Free Operations Marketplace module 
 | Purchasing | `vendors`, `purchase-orders`, `expenses` |
 | Overview (extra) | also `help-desk`, `projects` |
 
+### Planned soft sources (not shipped)
+
+| Area | Modules | Notes |
+|------|---------|--------|
+| People (HR) | `employees`, `leave-management`, `attendance` | Next domain area after CRM/Sales/Billing/Purchasing; same soft-gate + charts/table/CSV pattern; catalog bump likely **1.3.0** |
+| People (phase 2) | `payroll` | Higher sensitivity — stricter than plain `analytics.view` if added |
+
+Do **not** merge [Department reports](/developer-guide/departments) or [Financial Reports](/developer-guide/financial-reports) into Analytics; keep those SKUs/surfaces separate (link from People hub if useful).
+
 ## Frontend
 
 - Hub `/analytics` (Overview → Reports) — Recharts per entitled module
@@ -34,10 +43,11 @@ Pest: `tests/Feature/Tenant/Analytics/` (overview + domain reports + CSV). Chart
 
 ## Catalog
 
-Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts). Entitlements stay on slug `analytics`.
+Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts). Entitlements stay on slug `analytics`. Planned: **1.3.0** for People / HR domain report when implemented.
 
 ## Related
 
 - [Financial Reports](/developer-guide/financial-reports) — accounting statements (separate SKU)
+- [Departments](/developer-guide/departments) — department performance reports (separate owner/manager surface)
 - [Module Dependencies](/architecture/module-dependencies)
 - [Workspace timezone](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)

@@ -11,6 +11,11 @@ Production readiness audit: [Analytics Production Readiness](./analytics-product
 - **No** hard `module_dependencies` — KPI sections and domain reports soft-gate on source module entitlement + view permission
 - **No** dedicated Analytics tables — aggregates existing tenant data
 
+## Planned (not in this release)
+
+- **People / HR** domain report (`employees`, `leave-management`, `attendance`; Payroll later with stricter authz)
+- Do not merge Department reports or Financial Reports into Analytics
+
 ## Deploy checklist
 
 1. Migrate catalog bumps (`…_1_1_0`, `…_1_2_0`) and ensure prior register + permissions migrations are applied

@@ -31,7 +31,7 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Docs core set (user / developer / API / deploy) | **Pass** |
 | Marketing website SKU (`available` Operations free) | **Pass** (aligned this audit) |
 | Weighted pipeline SQL aggregate (no unbounded `get()`) | **Pass** (fixed this audit) |
-| Report builder / saved reports / email analytics | **Deferred** (charts shipped in 1.2.0) |
+| People / HR domain report; report builder / saved reports / email analytics | **Deferred** (charts shipped in 1.2.0; People planned ~1.3.0) |
 
 ---
 

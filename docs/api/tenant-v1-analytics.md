@@ -49,3 +49,5 @@ Overview section ids: `leads`, `opportunities`, `tasks`, `invoices`, `help_desk`
 ```
 
 Empty `sources` / `metrics` / `rows` is valid when no source modules/permissions apply (HTTP 200). Export streams `text/csv` with the same columns/rows.
+
+**Planned (not shipped):** `area=people` (or similar) for HR soft sources — Employees, Leave, Attendance first; Payroll later. Department performance and Financial Reports stay on their existing APIs.
