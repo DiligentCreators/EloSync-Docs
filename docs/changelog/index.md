@@ -1,5 +1,58 @@
 # Changelog
 
+## Reports 1.2.0 production readiness — Go (2026-08-15)
+
+- Audit findings F6–F7, F9–F12 addressed (refetch/a11y polish, tour length 35, website catalog 1.2.0, Backend CI dispatched, LocalSeed excluded).
+- Status **Go** for staging smoke → production after companion CI green.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
+## Reports: plan People / HR domain (docs) (2026-08-15)
+
+Docs-only future reference (no catalog bump):
+
+- Next Reports domain area: **People / HR** — soft sources Employees, Leave, Attendance first; Payroll later with stricter authz.
+- Keep [Department reports](/user-guide/departments) and [Financial Reports](/user-guide/financial-reports-overview) separate from Analytics.
+- Likely catalog bump when implemented: **analytics 1.2.0 → 1.3.0**.
+- Guides: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [roadmap](/getting-started/product-roadmap)
+
+## Reports 1.2.0 production readiness re-audit (2026-08-15)
+
+- Re-audited companion PRs Backend [#111](https://github.com/DiligentCreators/SaaS-Backend/pull/111) · Frontend [#107](https://github.com/DiligentCreators/SaaS-Frontend/pull/107) · Docs [#132](https://github.com/DiligentCreators/SaaS-Docs/pull/132) · Website [#26](https://github.com/DiligentCreators/SaaS-Website/pull/26).
+- **Conditional Go:** Pest Analytics **17/17** local; Docs CI green; Frontend Quality Gate blocked on module-tour length (**35**); website timeline must show catalog **1.2.0**; Playwright not re-run this audit.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
+## Reports charts 1.2.0 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.1.0 → 1.2.0**. Display name remains **Reports**.
+
+- Hub overview: one bar chart per entitled module (friendly module titles).
+- Domain reports (CRM / Sales / Billing / Purchasing): separate charts per source module (e.g. Leads, Invoices); value chart when amounts exist.
+- Charts use existing Recharts + theme `--chart-*` tokens; no API contract change.
+- Deferred still: People / HR domain report, report builder, saved/scheduled reports, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics)
+
+## Reports suite 1.1.0 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.0.0 → 1.1.0**. Display name **Reports** (slug remains `analytics`).
+
+- Executive dashboard retained (`GET /analytics/overview`).
+- Domain reports: CRM, Sales, Billing, Purchasing — KPI summary + breakdown table + CSV export (`GET /analytics/reports/{area}`, `…/export`).
+- Soft sources per area; empty report when none entitled / viewable.
+- SPA Overview → Reports hub + domain pages; Playwright covers CRM CSV.
+- Deferred still: report builder, saved/scheduled reports, charts, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics)
+
+## Analytics module 1.0.0 (2026-08-15)
+
+Free Operations Marketplace module (`analytics` catalog **1.0.0**) — Business Intelligence & Analytics MVP.
+
+- Executive overview API `GET /analytics/overview` with shared period filters (`DashboardPeriod`); soft KPI sections for leads, opportunities, tasks, invoices, help-desk, and projects (omitted without entitlement + view permission).
+- Permission `analytics.view` (admin / manager / staff). No hard `module_dependencies`.
+- SPA `/analytics` under Overview with period controls and StatCard sections; Playwright `test:e2e:analytics` (modules / authz / workflow).
+- Distinct from [Financial Reports](/user-guide/financial-reports-overview) (accounting TB / P&L / BS).
+- Deferred: report builder, saved/scheduled reports, CSV export, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics), [production readiness](/deployment/analytics-production-readiness)
+
 ## Backend CI: pause auto runs + faster Pest (2026-08-15)
 
 - `laravel.yml` and `quality-gate.yml` auto `push`/`pull_request` triggers **paused** — both are `workflow_dispatch` only (Actions → Run workflow) to cut GitHub Actions billing. Re-enable push/PR triggers when required checks should resume.
