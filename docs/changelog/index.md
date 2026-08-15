@@ -1,5 +1,11 @@
 # Changelog
 
+## Reports 1.2.0 production readiness — Go (2026-08-15)
+
+- Audit findings F6–F7, F9–F12 addressed (refetch/a11y polish, tour length 35, website catalog 1.2.0, Backend CI dispatched, LocalSeed excluded).
+- Status **Go** for staging smoke → production after companion CI green.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
 ## Reports: plan People / HR domain (docs) (2026-08-15)
 
 Docs-only future reference (no catalog bump):
@@ -8,6 +14,12 @@ Docs-only future reference (no catalog bump):
 - Keep [Department reports](/user-guide/departments) and [Financial Reports](/user-guide/financial-reports-overview) separate from Analytics.
 - Likely catalog bump when implemented: **analytics 1.2.0 → 1.3.0**.
 - Guides: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [roadmap](/getting-started/product-roadmap)
+
+## Reports 1.2.0 production readiness re-audit (2026-08-15)
+
+- Re-audited companion PRs Backend [#111](https://github.com/DiligentCreators/SaaS-Backend/pull/111) · Frontend [#107](https://github.com/DiligentCreators/SaaS-Frontend/pull/107) · Docs [#132](https://github.com/DiligentCreators/SaaS-Docs/pull/132) · Website [#26](https://github.com/DiligentCreators/SaaS-Website/pull/26).
+- **Conditional Go:** Pest Analytics **17/17** local; Docs CI green; Frontend Quality Gate blocked on module-tour length (**35**); website timeline must show catalog **1.2.0**; Playwright not re-run this audit.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
 
 ## Reports charts 1.2.0 (Analytics) (2026-08-15)
 
