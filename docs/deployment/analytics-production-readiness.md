@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-16 |
-| **Status** | **Conditional Go** — local Pest + headed Playwright green; Frontend Quality Gate **success** after cursor-type fix; Backend Code Quality Gate **success**; Backend Laravel Tests still required green on branch before merge |
+| **Status** | **Go** — local Pest + headed Playwright green; Frontend Quality Gate **success**; Backend Code Quality Gate **success**; Backend Laravel Tests **success**. Staging migrate through **1.3.1** + human smoke remain before production cutover |
 | **Scope** | Analytics module `analytics` catalog **1.3.1** (People / HR domain **1.3.0** + mixed chart types **1.3.1**) |
 | **Branch** | `feature/analytics-people-reports-e0a6` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
@@ -18,7 +18,7 @@ Prior Go audit for charts suite **1.2.0** remains valid for that slice; this aud
 
 Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.3.1** adds mixed SPA chart types (pie / donut / bar / area / line) on top of **1.3.0** People domain (Employees, Leave, Attendance), **1.2.0** charts, and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. **Financial Reports** and **Department reports** stay separate. **Payroll** inside People remains deferred.
 
-**Go / No-Go:** **Conditional Go** for staging → production after (1) Frontend Quality Gate green on the cursor-type fix, (2) Backend Laravel Tests + Quality Gate green on branch, (3) migrate through **1.3.1**, (4) human smoke including People + chart UX.
+**Go / No-Go:** **Go** for staging → production after migrate through **1.3.1** and human smoke (include People + chart UX).
 
 | Gate | Result |
 |------|--------|
@@ -37,8 +37,8 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Marketing website SKU + timeline **1.3.1** | **Pass** (copy); Website PR has no CI checks |
 | People / HR; mixed charts | **Shipped in scope** |
 | Report builder; saved reports; email analytics; Payroll in People | **Deferred** |
-| Backend Laravel Tests on PR branch | **Pending** (workflow_dispatch in progress / required before merge) |
-| Backend Code Quality Gate on PR branch | **Pass** (workflow_dispatch) |
+| Backend Laravel Tests on PR branch | **Pass** ([run 31910355184](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31910355184)) |
+| Backend Code Quality Gate on PR branch | **Pass** ([run 31910356882](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31910356882)) |
 
 ---
 
@@ -67,7 +67,7 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | ID | Severity | Finding | Action |
 |----|----------|---------|--------|
 | F13 | **HIGH** → resolved | Frontend Quality Gate failed: `Tooltip` `cursor` typing | Fixed `{ fill: string }`; Quality Gate **success** on PR #108 |
-| F14 | **MEDIUM** | Backend PR #112 has no auto Laravel Tests on push | `workflow_dispatch` Laravel Tests (required green) + Code Quality Gate (**success**) |
+| F14 | **MEDIUM** → resolved | Backend PR #112 has no auto Laravel Tests on push | Dispatched Laravel Tests + Quality Gate; both **success** |
 | F15 | **LOW** | Website PR #27 reports no checks | Accept if repo has no Quality Gate; verify marketing timeline shows **1.3.1** manually |
 
 ### Resolved / accepted
@@ -176,8 +176,8 @@ No new queues, schedulers, or env vars.
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
-| Engineering | | | **Conditional Go** until F13/F14 clear → then **Go** / No-Go |
+| Engineering | | | **Go** / No-Go |
 | Product | | | Accept Payroll / report builder deferred |
 | Ops | | | Staging migrate through **1.3.1** + smoke ☐ |
 
-**Recommendation:** Do **not** merge until Frontend Quality Gate is green and Backend Laravel Tests + Quality Gate succeed on `feature/analytics-people-reports-e0a6`. Then merge Backend → Frontend → Docs → Website, migrate to **1.3.1**, run staging smoke (include People + chart UX), ship. Do **not** add Payroll or report builder under this SKU without a new catalog version and DoD.
+**Recommendation:** Merge companions **Backend → Frontend → Docs → Website**, migrate to **1.3.1**, run staging smoke (include People + chart UX), ship. Do **not** add Payroll or report builder under this SKU without a new catalog version and DoD.
