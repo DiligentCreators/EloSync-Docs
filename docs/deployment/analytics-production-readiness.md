@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-16 |
-| **Status** | **Conditional Go** — local Pest + headed Playwright green; Frontend CI typecheck blocker fixed (push pending gate); Backend Laravel Tests / Quality Gate must be green on branch before merge |
+| **Status** | **Conditional Go** — local Pest + headed Playwright green; Frontend Quality Gate **success** after cursor-type fix; Backend Code Quality Gate **success**; Backend Laravel Tests still required green on branch before merge |
 | **Scope** | Analytics module `analytics` catalog **1.3.1** (People / HR domain **1.3.0** + mixed chart types **1.3.1**) |
 | **Branch** | `feature/analytics-people-reports-e0a6` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
@@ -31,13 +31,14 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Chart UX: legend values, theme-aware ticks/tooltips, hover band | **Pass** (local); CI typecheck fix landed |
 | Read-only `GET` overview / reports (no mutations) | **Pass** |
 | Pest `tests/Feature/Tenant/Analytics` | **Pass** (**20** passed local, 2026-08-16) |
-| Backend Laravel Tests + Quality Gate on PR branch | **Pending** (workflow_dispatch; not auto on PR) |
-| Frontend Quality Gate (`tsc -b`) | **Fail → fix pushed** (Tooltip `cursor` typing); re-check required |
+| Frontend Quality Gate (`tsc -b`) | **Pass** (PR #108 after cursor-type fix) |
 | Playwright `test:e2e:analytics:headed` | **Pass** (**14/14**, workers=1, 2026-08-16) |
 | Docs core set (user / developer / API / deploy / changelog / roadmap) | **Pass** (Docs Quality Gate **success** on PR #133) |
 | Marketing website SKU + timeline **1.3.1** | **Pass** (copy); Website PR has no CI checks |
 | People / HR; mixed charts | **Shipped in scope** |
 | Report builder; saved reports; email analytics; Payroll in People | **Deferred** |
+| Backend Laravel Tests on PR branch | **Pending** (workflow_dispatch in progress / required before merge) |
+| Backend Code Quality Gate on PR branch | **Pass** (workflow_dispatch) |
 
 ---
 
@@ -65,8 +66,8 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 
 | ID | Severity | Finding | Action |
 |----|----------|---------|--------|
-| F13 | **HIGH** | Frontend Quality Gate failed: `Tooltip` `cursor={hoverCursorFill()}` typed as `CSSProperties` incompatible with Recharts `CursorDefinition` | Narrow return type to `{ fill: string }`; push + wait for Quality Gate **success** on PR #108 |
-| F14 | **MEDIUM** | Backend PR #112 has no Laravel Tests / Quality Gate runs on push (label-only) | `workflow_dispatch` Laravel Tests + Code Quality Gate on `feature/analytics-people-reports-e0a6`; require green before merge |
+| F13 | **HIGH** → resolved | Frontend Quality Gate failed: `Tooltip` `cursor` typing | Fixed `{ fill: string }`; Quality Gate **success** on PR #108 |
+| F14 | **MEDIUM** | Backend PR #112 has no auto Laravel Tests on push | `workflow_dispatch` Laravel Tests (required green) + Code Quality Gate (**success**) |
 | F15 | **LOW** | Website PR #27 reports no checks | Accept if repo has no Quality Gate; verify marketing timeline shows **1.3.1** manually |
 
 ### Resolved / accepted
