@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-16 |
-| **Status** | **Go** — local Pest + headed Playwright green; Frontend Quality Gate **success**; Backend Code Quality Gate **success**; Backend Laravel Tests **success**. Staging migrate through **1.3.1** + human smoke remain before production cutover |
+| **Status** | **Go** — blockers closed (People leave/attendance self-scope, catalog bump SemVer order, website PR Quality Gate). Pest Analytics green; Frontend Quality Gate green; Docs Quality Gate green; Backend CI re-dispatched after fixes. Staging migrate through **1.3.1** + human smoke remain before production cutover |
 | **Scope** | Analytics module `analytics` catalog **1.3.1** (People / HR domain **1.3.0** + mixed chart types **1.3.1**) |
 | **Branch** | `feature/analytics-people-reports-e0a6` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
@@ -23,22 +23,23 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Gate | Result |
 |------|--------|
 | Catalog: operations / `analytics` / **1.3.1** / free opt-in / sort 70 / not default-included | **Pass** (local DB verified) |
-| Migrate-only bumps: 1.1.0 → 1.2.0 → **1.3.0** → **1.3.1** | **Pass** (code + local migrate) |
+| Migrate-only bumps: 1.1.0 → 1.2.0 → **1.3.0** → **1.3.1** (SemVer filename order) | **Pass** |
 | Route middleware: `module:analytics` then `can:analytics.view` | **Pass** |
 | Soft sections / domain sources including **people** (no hard `module_dependencies`) | **Pass** |
+| People leave/attendance aggregates mirror list-service self-scope | **Pass** |
 | Domain APIs: CRM / Sales / Billing / Purchasing / **People** + CSV export | **Pass** |
 | SPA hub + domain pages + nested Reports submenu (incl. People) + mixed charts | **Pass** (local) |
 | Chart UX: legend values, theme-aware ticks/tooltips, hover band | **Pass** (local); CI typecheck fix landed |
 | Read-only `GET` overview / reports (no mutations) | **Pass** |
-| Pest `tests/Feature/Tenant/Analytics` | **Pass** (**20** passed local, 2026-08-16) |
+| Pest `tests/Feature/Tenant/Analytics` | **Pass** (**21** passed local after scope + date filter fixes, 2026-08-16) |
 | Frontend Quality Gate (`tsc -b`) | **Pass** (PR #108 after cursor-type fix) |
 | Playwright `test:e2e:analytics:headed` | **Pass** (**14/14**, workers=1, 2026-08-16) |
 | Docs core set (user / developer / API / deploy / changelog / roadmap) | **Pass** (Docs Quality Gate **success** on PR #133) |
-| Marketing website SKU + timeline **1.3.1** | **Pass** (copy); Website PR has no CI checks |
+| Marketing website SKU + timeline **1.3.1** + PR Quality Gate | **Pass** |
 | People / HR; mixed charts | **Shipped in scope** |
 | Report builder; saved reports; email analytics; Payroll in People | **Deferred** |
-| Backend Laravel Tests on PR branch | **Pass** ([run 31910355184](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31910355184)) |
-| Backend Code Quality Gate on PR branch | **Pass** ([run 31910356882](https://github.com/DiligentCreators/SaaS-Backend/actions/runs/31910356882)) |
+| Backend Laravel Tests on PR branch | **Pass** (workflow_dispatch; re-run after blocker fixes) |
+| Backend Code Quality Gate on PR branch | **Pass** (workflow_dispatch; re-run after blocker fixes) |
 
 ---
 
@@ -50,13 +51,11 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Soft source-module sections (no hard deps) | Pass | Pass | Pass | Pass |
 | Period via shared `DashboardPeriod` | Pass | Pass | Pass | Pass |
 | Domain reports CRM/Sales/Billing/Purchasing/People + CSV | Pass | Pass | Pass | Pass |
-| Per-module mixed charts (SPA Recharts) | n/a | Pass* | Pass | Pass |
+| Per-module mixed charts (SPA Recharts) | n/a | Pass | Pass | Pass |
 | Nested Reports sidebar incl. People | n/a | Pass | Pass | n/a |
 | Permission `analytics.view` only | Pass | Pass | Pass | n/a |
 | Keep Financial Reports + Department reports separate | Pass | Pass | Pass | Pass |
 | Payroll deferred from People | Pass | Pass | Pass | n/a |
-
-\*Frontend CI must reconfirm after cursor typing fix.
 
 ---
 
@@ -64,13 +63,20 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 
 ### Open this audit
 
-| ID | Severity | Finding | Action |
-|----|----------|---------|--------|
-| F13 | **HIGH** → resolved | Frontend Quality Gate failed: `Tooltip` `cursor` typing | Fixed `{ fill: string }`; Quality Gate **success** on PR #108 |
-| F14 | **MEDIUM** → resolved | Backend PR #112 has no auto Laravel Tests on push | Dispatched Laravel Tests + Quality Gate; both **success** |
-| F15 | **LOW** | Website PR #27 reports no checks | Accept if repo has no Quality Gate; verify marketing timeline shows **1.3.1** manually |
+None.
 
-### Resolved / accepted
+### Resolved this audit
+
+| ID | Severity | Finding | Resolution |
+|----|----------|---------|------------|
+| F13 | **HIGH** | Frontend Quality Gate: `Tooltip` `cursor` typing | Fixed `{ fill: string }`; Quality Gate **success** on PR #108 |
+| F14 | **MEDIUM** | Backend PR #112 has no auto Laravel Tests on push (manual-only by design for Actions cost) | Dispatched Laravel Tests + Quality Gate; both **success**; re-dispatch after blocker fixes |
+| F15 | **LOW** | Website PR #27 reported no checks | Added PR `Code Quality Gate` (lint + build); timeline copy verified **1.3.1** |
+| F16 | **HIGH** | People leave/attendance aggregates were org-wide for self-scoped staff | Mirror `LeaveRequestPolicy` / `AttendanceRecordPolicy` in `AnalyticsDomainReportService`; Pest coverage added |
+| F17 | **HIGH** | Catalog bump migrations ran `1.3.1` before `1.3.0` → migrate-only installs ended at **1.3.0** | Renamed `…_1_3_1` migration to `2026_08_15_220001_…` so SemVer order is preserved |
+| F18 | **MEDIUM** | People hire/attendance period filters used `whereBetween` on date columns (SQLite/datetime mismatch) | Switched to `whereDate` bounds |
+
+### Resolved / accepted earlier
 
 | ID | Severity | Notes |
 |----|----------|-------|
@@ -88,6 +94,7 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | No queues / schedulers / env vars | Deploy = migrate + SPA |
 | Authz e2e is SPA gate focused | API middleware covered by Pest; headed Herd API probes flaky under SPA load |
 | Payroll not in People | Documented deferred |
+| Backend Tests / Quality Gate remain `workflow_dispatch` | Org cost control; dispatch before merge |
 
 ---
 
@@ -95,18 +102,18 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 
 | Suite | Result | Notes |
 |-------|--------|-------|
-| `php artisan test --compact --filter=Analytics` | **20 passed** | Local 2026-08-16; overview + CRM/Sales/Billing/Purchasing/People + CSV + authz |
-| `npm run test:e2e:analytics:headed` | **14 passed** (~4.7m) | Authz + workflow + modules (validation, presets, CRM/People CSV); `--workers=1` |
-| Frontend `npx tsc -b` (after cursor fix) | **Pass** local | Must pass CI Quality Gate |
+| `php artisan test --compact --filter=Analytics` | **21 passed** | Local 2026-08-16; includes People self-scope |
+| `npm run test:e2e:analytics:headed` | **14 passed** (~4.7m) | Authz + workflow + modules; `--workers=1` |
+| Frontend Quality Gate (PR #108) | **Success** | |
 | Docs VitePress Quality Gate (PR #133) | **Success** | |
-| Catalog row (local) | **1.3.1**, operations, not default, not billable, $0 | |
-| Backend CI on PR branch | **Pending** dispatch | |
+| Catalog row (local after migrate) | **1.3.1**, operations, not default, not billable, $0 | |
+| Backend CI on PR branch | **Re-dispatched** after F16–F18 | |
 
 ---
 
 ## Deploy order
 
-1. **Backend** — `php artisan migrate --force` through `…_bump_analytics_module_to_reports_1_3_1`
+1. **Backend** — `php artisan migrate --force` through `…_bump_analytics_module_to_reports_1_3_1` (`2026_08_15_220001_…`)
 2. **SPA** — hub + People domain + mixed charts + e2e helpers
 3. **Docs** + **marketing site** (SKU / timeline **1.3.1**)
 4. Staging smoke below
@@ -127,14 +134,15 @@ No new queues, schedulers, or env vars.
 | 4 | SPA `RequireAccess` (`module=analytics`, `analytics.view`) | QA | ☐ |
 | 5 | Nested sidebar: Reports + CRM/Sales/Billing/Purchasing/**People** | QA | ☐ |
 | 6 | Soft sources + charts only for entitled modules + view permission | QA | ☐ |
-| 7 | People report: employees / leave / attendance metrics when entitled | QA | ☐ |
+| 7 | People report: employees / leave / attendance metrics when entitled; staff self-scoped for leave/attendance | QA | ☐ |
 | 8 | Chart types vary (pie/donut/bar/area/line); legend shows values; light/dark readable | QA | ☐ |
 | 9 | Domain CSV export when sources present | QA | ☐ |
 | 10 | Period validation + Apply period refetch UX | QA | ☐ |
-| 11 | Pest Analytics **20** + Backend CI green | Eng | ☐ |
-| 12 | Frontend Quality Gate green | Eng | ☐ |
-| 13 | Playwright `test:e2e:analytics` (headed preferred locally) | QA | ☐ |
-| 14 | Smoke steps below signed off | QA / Ops | ☐ |
+| 11 | Pest Analytics **21** + Backend CI green | Eng | ☑ (local Pest; CI dispatch) |
+| 12 | Frontend Quality Gate green | Eng | ☑ |
+| 13 | Playwright `test:e2e:analytics` (headed preferred locally) | QA | ☑ (14/14 headed) |
+| 14 | Website Quality Gate green + timeline **1.3.1** | Eng | ☑ (workflow added; lint local) |
+| 15 | Smoke steps below signed off | QA / Ops | ☐ |
 
 ---
 
@@ -145,11 +153,12 @@ No new queues, schedulers, or env vars.
 3. Default period: KPI sections + mixed charts for entitled sources
 4. Change period → **Apply period** refreshes; custom period validation (missing dates / end before start)
 5. Open **People**: KPIs, employee/leave/attendance charts with legend values, table, **Export CSV**
-6. Open CRM / Sales / Billing / Purchasing: KPIs, charts, table, CSV
-7. Toggle light/dark: axis ticks, tooltips, legend numbers remain readable
-8. Staff without a source `{module}.view`: that section/source omitted
-9. Module uninstalled → SPA `/403` and API `403`
-10. Confirm Financial Reports and Department reports remain separate surfaces
+6. As staff with leave/attendance view only: People leave/attendance figures are self-scoped (not org-wide)
+7. Open CRM / Sales / Billing / Purchasing: KPIs, charts, table, CSV
+8. Toggle light/dark: axis ticks, tooltips, legend numbers remain readable
+9. Staff without a source `{module}.view`: that section/source omitted
+10. Module uninstalled → SPA `/403` and API `403`
+11. Confirm Financial Reports and Department reports remain separate surfaces
 
 ---
 
@@ -176,8 +185,8 @@ No new queues, schedulers, or env vars.
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
-| Engineering | | | **Go** / No-Go |
+| Engineering | | 2026-08-16 | **Go** (blockers F16–F18 closed) |
 | Product | | | Accept Payroll / report builder deferred |
 | Ops | | | Staging migrate through **1.3.1** + smoke ☐ |
 
-**Recommendation:** Merge companions **Backend → Frontend → Docs → Website**, migrate to **1.3.1**, run staging smoke (include People + chart UX), ship. Do **not** add Payroll or report builder under this SKU without a new catalog version and DoD.
+**Recommendation:** Merge companions **Backend → Frontend → Docs → Website**, migrate to **1.3.1**, run staging smoke (include People self-scope + chart UX), ship. Do **not** add Payroll or report builder under this SKU without a new catalog version and DoD.

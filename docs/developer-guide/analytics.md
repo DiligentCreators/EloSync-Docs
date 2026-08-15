@@ -21,6 +21,8 @@ Slug `analytics` (display name **Reports**). Free Operations Marketplace module 
 | Billing | `invoices`, `payments`, `credit-notes` |
 | Purchasing | `vendors`, `purchase-orders`, `expenses` |
 | People | `employees`, `leave-management`, `attendance` |
+
+People leave/attendance aggregates mirror list policies: non-approvers / non-managers see only their linked employee. Employees remain org-wide (`EmployeePolicy`). Soft gate remains entitlement + `{module}.view`.
 | Overview (extra) | also `help-desk`, `projects` |
 
 ### Deferred soft sources
@@ -39,11 +41,11 @@ Do **not** merge [Department reports](/developer-guide/departments) or [Financia
 
 ## Tests
 
-Pest: `tests/Feature/Tenant/Analytics/` (overview + domain reports + CSV, including People). Charts are SPA-only (no API change).
+Pest: `tests/Feature/Tenant/Analytics/` (overview + domain reports + CSV, including People self-scope). Charts are SPA-only (no API change).
 
 ## Catalog
 
-Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts) → `1.3.0` (People / HR domain) → `1.3.1` (mixed chart types). Entitlements stay on slug `analytics`.
+Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts) → `1.3.0` (People / HR domain) → `1.3.1` (mixed chart types). Bump migration filenames must ascend SemVer (`1.3.0` before `1.3.1`). Entitlements stay on slug `analytics`.
 
 ## Related
 

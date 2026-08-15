@@ -5,6 +5,7 @@ Business Intelligence **Reports** suite. Free Operations Marketplace module (cat
 - Executive dashboard with period filters and per-module charts (pie, donut, bar, area, line by context)
 - Domain report pages: CRM, Sales, Billing, Purchasing, **People** (KPI + per-module charts + table + CSV)
 - Soft-gated by source module entitlement + `{module}.view`
+- People leave/attendance metrics follow the same self-scope as Leave / Attendance list APIs
 - People soft sources: `employees`, `leave-management`, `attendance` (Payroll deferred — stricter authz later)
 - No report builder or saved reports in 1.3.x
 - Keep [Department reports](/user-guide/departments) and [Financial Reports](/user-guide/financial-reports-overview) separate

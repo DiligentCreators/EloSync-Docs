@@ -1,9 +1,15 @@
 # Changelog
 
+## Reports 1.3.1 production blockers closed — Go (2026-08-16)
+
+- Closed audit blockers before merge: People leave/attendance **self-scope** (F16), catalog bump **SemVer migration order** (F17), People period **whereDate** filters (F18), website PR **Quality Gate** (F15).
+- Pest Analytics **21/20+** (includes staff self-scope). Staging migrate through **1.3.1** + smoke remain.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
 ## Reports 1.3.1 / People 1.3.0 production readiness — Go (2026-08-16)
 
 - Audit of `feature/analytics-people-reports-e0a6` companions (Backend [#112](https://github.com/DiligentCreators/SaaS-Backend/pull/112) · Frontend [#108](https://github.com/DiligentCreators/SaaS-Frontend/pull/108) · Docs [#133](https://github.com/DiligentCreators/SaaS-Docs/pull/133) · Website [#27](https://github.com/DiligentCreators/SaaS-Website/pull/27)).
-- **Go:** local Pest Analytics **20/20**; headed Playwright **14/14**; Docs / Frontend Quality Gates green; Backend Code Quality Gate + Laravel Tests green (dispatched). Staging migrate **1.3.1** + smoke remain.
+- **Go:** local Pest Analytics green; headed Playwright **14/14**; Docs / Frontend Quality Gates green; Backend Code Quality Gate + Laravel Tests green (dispatched). Staging migrate **1.3.1** + smoke remain.
 - Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
 
 ## Reports chart types 1.3.1 (Analytics) (2026-08-15)

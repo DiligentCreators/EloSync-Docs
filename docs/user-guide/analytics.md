@@ -11,9 +11,9 @@ Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v
    - **Billing report** — Invoices, Payments, Credit Notes
    - **Purchasing report** — Vendors, Purchase Orders, Expenses
    - **People report** — Employees, Leave Management, Attendance
-5. On each domain page, review KPI cards, per-module bar charts (e.g. Leads, Employees — plus a value chart when amounts apply), and the breakdown table, then **Export CSV** when sources are available.
+5. On each domain page, review KPI cards, per-module charts (pie / donut / bar / area / line by context — e.g. status mix vs value compare), and the breakdown table, then **Export CSV** when sources are available.
 
-Sections and domain rows appear only when that source module is entitled **and** you have its view permission. Dates use **Settings → General → Timezone**.
+Sections and domain rows appear only when that source module is entitled **and** you have its view permission. On **People**, leave and attendance figures follow the same self-scope as those modules (staff see their own linked employee; managers/approvers see the workspace). Employees totals remain workspace-wide when you have `employees.view`. Dates use **Settings → General → Timezone**.
 
 For accounting statements (Trial Balance, P&L, Balance Sheet), use [Financial Reports](/user-guide/financial-reports). For department lead/task performance, use [Department reports](/user-guide/departments) (owner / department-manager surface — not part of Reports).
 
