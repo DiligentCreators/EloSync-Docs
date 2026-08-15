@@ -1,10 +1,15 @@
 # Changelog
 
+## Reports 1.4.0 production readiness — Go (2026-08-16)
+
+- Closed audit openers: companion PRs Backend [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28); Backend Laravel Tests + Code Quality Gate **success**; local catalog migrated to **1.4.0**.
+- Pest Analytics **23/23**; headed Playwright **14/14**; Frontend / Docs / Website Quality Gates **success**.
+- Staging migrate + human smoke (manager Payroll / staff omit) remain ops pre-flight.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
 ## Reports 1.4.0 production readiness — Conditional Go (2026-08-16)
 
-- Audit of `feature/analytics-payroll-people-1-4-0` companions (local commits; PRs not opened yet).
-- **Conditional Go:** Pest Analytics **23/23**; headed Playwright **14/14** (People asserts Payroll); SemVer bump `…_1_4_0` after `1.3.1`; docs/website copy aligned.
-- Remaining: open PRs + CI dispatch, migrate catalog **1.3.1 → 1.4.0**, staging smoke (manager Payroll + staff omit).
+- Audit of `feature/analytics-payroll-people-1-4-0` companions (superseded by Go above after F19/F20 closed).
 - Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
 
 ## Reports People Payroll soft source 1.4.0 (Analytics) (2026-08-16)
