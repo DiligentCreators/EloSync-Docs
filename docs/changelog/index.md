@@ -1,5 +1,16 @@
 # Changelog
 
+## Reports People / HR domain 1.3.0 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.2.0 → 1.3.0**. Display name remains **Reports**.
+
+- New domain area **`people`**: soft sources Employees, Leave Management, Attendance (entitlement + `{module}.view`).
+- KPI cards + per-module charts + breakdown table + CSV export (same contract as CRM/Sales/Billing/Purchasing).
+- Period-aware hired/terminated, approved leave overlapping the period, and attendance records in range.
+- SPA `/analytics/people`, hub link, sidebar child under Reports.
+- Deferred still: Payroll in People report (stricter authz), report builder, saved/scheduled reports, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics), [roadmap](/getting-started/product-roadmap)
+
 ## Reports 1.2.0 production readiness — Go (2026-08-15)
 
 - Audit findings F6–F7, F9–F12 addressed (refetch/a11y polish, tour length 35, website catalog 1.2.0, Backend CI dispatched, LocalSeed excluded).
