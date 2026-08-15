@@ -9,7 +9,7 @@ Free Operations Marketplace module (`analytics` catalog **1.0.0**) — Business 
 - SPA `/analytics` under Overview with period controls and StatCard sections; Playwright `test:e2e:analytics` (modules / authz / workflow).
 - Distinct from [Financial Reports](/user-guide/financial-reports-overview) (accounting TB / P&L / BS).
 - Deferred: report builder, saved/scheduled reports, CSV export, email analytics.
-- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics)
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics), [production readiness](/deployment/analytics-production-readiness)
 
 ## Backend CI: pause auto runs + faster Pest (2026-08-15)
 

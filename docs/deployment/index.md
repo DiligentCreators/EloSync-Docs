@@ -63,6 +63,8 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Attendance](./attendance) | Attendance module ops |
 | [Payroll](./payroll) | Payroll module ops |
 | [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
+| [Analytics](./analytics) | Analytics module ops (migrate-only catalog + permissions) |
+| [Analytics Production Readiness](./analytics-production-readiness) | Analytics MVP Go / No-Go audit |
 
 ## Related repos
 

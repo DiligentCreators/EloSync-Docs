@@ -436,6 +436,7 @@ export default defineConfig({
             { text: 'Phase 7 HR Production Readiness', link: '/deployment/hr-phase7-production-readiness' },
             { text: 'Phase 7 HR Security Audit', link: '/deployment/hr-phase7-security-audit' },
             { text: 'Knowledge Base Production Readiness', link: '/deployment/knowledge-base-production-readiness' },
+            { text: 'Analytics Production Readiness', link: '/deployment/analytics-production-readiness' },
             { text: 'Storage Production Readiness', link: '/deployment/storage-production-readiness' },
             { text: 'Invoices Production Readiness', link: '/deployment/invoices-production-readiness' },
             { text: 'Go-Live Hardening', link: '/deployment/go-live-hardening-2026-07-15' },
