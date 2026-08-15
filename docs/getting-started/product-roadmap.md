@@ -318,18 +318,18 @@ Implement workforce management.
 
 | Module | Status |
 |--------|--------|
-| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Completed (Reports suite **1.2.0**; free Operations Marketplace opt-in; slug `analytics`) |
+| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Completed (Reports suite **1.3.1**; free Operations Marketplace opt-in; slug `analytics`) |
 
 #### Reports suite (shipped)
 
 - Executive overview of KPIs from entitled modules (leads, opportunities, tasks, invoices, help-desk, projects)
-- Domain report pages: CRM, Sales, Billing, Purchasing — KPI + per-module charts + table + CSV export
+- Domain report pages: CRM, Sales, Billing, Purchasing, People — KPI + per-module charts + table + CSV export
 - Shared period filter (`DashboardPeriod`); soft-gated by module entitlement + view permission
 - Permission `analytics.view`; **no** hard `module_dependencies`
-- Explicitly deferred: **People / HR** domain report (Employees + Leave + Attendance first; Payroll later with stricter authz), report builder, saved/scheduled reports, email analytics
+- Explicitly deferred: **Payroll** inside the People report (stricter authz), report builder, saved/scheduled reports, email analytics
 - Keep separate: [Financial Reports](/user-guide/financial-reports-overview), [Department reports](/user-guide/departments)
 
-**Goal:** Give workspaces a cross-module executive KPI surface and operational report pages without a full BI builder. ✅ **Achieved** for Reports suite v1.2.0 (charts). Next additive area when scheduled: People / HR (**~1.3.0**).
+**Goal:** Give workspaces a cross-module executive KPI surface and operational report pages without a full BI builder. ✅ **Achieved** for Reports suite v1.3.0 (People / HR domain).
 
 ---
 
@@ -345,7 +345,7 @@ The platform architecture supports additional modules without requiring architec
 - Recruitment
 - Customer Portal
 - Vendor Portal
-- Business Intelligence & Analytics — **shipped v1.2.0** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing + charts + CSV; see [Analytics Overview](/user-guide/analytics-overview)); People / HR domain report, report builder, and saved reports still planned
+- Business Intelligence & Analytics — **shipped v1.3.1** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing/People + mixed chart types + CSV; see [Analytics Overview](/user-guide/analytics-overview)); Payroll in People report, report builder, and saved reports still planned
 - Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned with Cloud API
 - Storage — **shipped v1.0.0** as free `storage` (1 GB) + billable capacity packs `storage-10` … `storage-1000` (see [Storage](/user-guide/storage)); task/lead images and email attachment persistence still planned
 - Marketing Automation

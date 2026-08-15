@@ -1,12 +1,14 @@
 # Reports Module (Analytics)
 
-Business Intelligence **Reports** suite. Free Operations Marketplace module (catalog slug **`analytics`**, version **1.2.0**).
+Business Intelligence **Reports** suite. Free Operations Marketplace module (catalog slug **`analytics`**, version **1.3.1**).
 
-- Executive dashboard with period filters and per-module charts
-- Domain report pages: CRM, Sales, Billing, Purchasing (KPI + per-module charts + table + CSV)
+- Executive dashboard with period filters and per-module charts (pie, donut, bar, area, line by context)
+- Domain report pages: CRM, Sales, Billing, Purchasing, **People** (KPI + per-module charts + table + CSV)
 - Soft-gated by source module entitlement + `{module}.view`
-- No report builder or saved reports in 1.2.0
-- **Planned (future):** People / HR domain report — soft sources `employees`, `leave-management`, `attendance` first; Payroll later with stricter authz. Keep [Department reports](/user-guide/departments) and [Financial Reports](/user-guide/financial-reports-overview) separate.
+- People leave/attendance metrics follow the same self-scope as Leave / Attendance list APIs
+- People soft sources: `employees`, `leave-management`, `attendance` (Payroll deferred — stricter authz later)
+- No report builder or saved reports in 1.3.x
+- Keep [Department reports](/user-guide/departments) and [Financial Reports](/user-guide/financial-reports-overview) separate
 
 | Audience | Doc |
 |----------|-----|

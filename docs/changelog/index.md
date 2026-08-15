@@ -1,5 +1,37 @@
 # Changelog
 
+## Reports 1.3.1 production blockers closed — Go (2026-08-16)
+
+- Closed audit blockers before merge: People leave/attendance **self-scope** (F16), catalog bump **SemVer migration order** (F17), People period **whereDate** filters (F18), website PR **Quality Gate** (F15).
+- Pest Analytics **21/20+** (includes staff self-scope). Staging migrate through **1.3.1** + smoke remain.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
+## Reports 1.3.1 / People 1.3.0 production readiness — Go (2026-08-16)
+
+- Audit of `feature/analytics-people-reports-e0a6` companions (Backend [#112](https://github.com/DiligentCreators/SaaS-Backend/pull/112) · Frontend [#108](https://github.com/DiligentCreators/SaaS-Frontend/pull/108) · Docs [#133](https://github.com/DiligentCreators/SaaS-Docs/pull/133) · Website [#27](https://github.com/DiligentCreators/SaaS-Website/pull/27)).
+- **Go:** local Pest Analytics green; headed Playwright **14/14**; Docs / Frontend Quality Gates green; Backend Code Quality Gate + Laravel Tests green (dispatched). Staging migrate **1.3.1** + smoke remain.
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
+## Reports chart types 1.3.1 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.3.0 → 1.3.1**. Display name remains **Reports**.
+
+- Hub and domain reports pick chart types by context: pie/donut for status mix, horizontal bars for currency, area/line for longer series, vertical bars for simple compares.
+- Card badges label chart intent (Share / Mix / Compare / Trend / Series / Bars). Empty periods show a clear placeholder.
+- No API contract change; SPA-only Recharts polish on existing overview + domain payloads.
+- Docs: [overview](/user-guide/analytics-overview), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics)
+
+## Reports People / HR domain 1.3.0 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.2.0 → 1.3.0**. Display name remains **Reports**.
+
+- New domain area **`people`**: soft sources Employees, Leave Management, Attendance (entitlement + `{module}.view`).
+- KPI cards + per-module charts + breakdown table + CSV export (same contract as CRM/Sales/Billing/Purchasing).
+- Period-aware hired/terminated, approved leave overlapping the period, and attendance records in range.
+- SPA `/analytics/people`, hub link, sidebar child under Reports.
+- Deferred still: Payroll in People report (stricter authz), report builder, saved/scheduled reports, email analytics.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics), [roadmap](/getting-started/product-roadmap)
+
 ## Reports 1.2.0 production readiness — Go (2026-08-15)
 
 - Audit findings F6–F7, F9–F12 addressed (refetch/a11y polish, tour length 35, website catalog 1.2.0, Backend CI dispatched, LocalSeed excluded).

@@ -4,12 +4,12 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:analytics`, `can:analytics.view`.
 
-Catalog slug `analytics` (display name Reports, version **1.2.0**). No hard Marketplace dependency on other modules. Overview sections and domain report sources are included only when that source module is entitled **and** the actor has `{module}.view`. Charts are SPA-rendered from the same payloads (no chart-specific endpoints).
+Catalog slug `analytics` (display name Reports, version **1.3.1**). No hard Marketplace dependency on other modules. Overview sections and domain report sources are included only when that source module is entitled **and** the actor has `{module}.view`. Charts are SPA-rendered from the same payloads (no chart-specific endpoints); the SPA picks pie / donut / bar / area / line by metric context.
 
 | Method | Path | Query |
 |--------|------|-------|
 | GET | `/analytics/overview` | `period` (`this_month` default, …, `custom`); for `custom`: `period_from`, `period_to` |
-| GET | `/analytics/reports/{area}` | same period params; `area` ∈ `crm` \| `sales` \| `billing` \| `purchasing` |
+| GET | `/analytics/reports/{area}` | same period params; `area` ∈ `crm` \| `sales` \| `billing` \| `purchasing` \| `people` |
 | GET | `/analytics/reports/{area}/export` | same period params; CSV download (`format=csv` optional) |
 
 ### Overview response
@@ -50,4 +50,4 @@ Overview section ids: `leads`, `opportunities`, `tasks`, `invoices`, `help_desk`
 
 Empty `sources` / `metrics` / `rows` is valid when no source modules/permissions apply (HTTP 200). Export streams `text/csv` with the same columns/rows.
 
-**Planned (not shipped):** `area=people` (or similar) for HR soft sources — Employees, Leave, Attendance first; Payroll later. Department performance and Financial Reports stay on their existing APIs.
+**People (`area=people`):** soft sources `employees`, `leave-management`, `attendance`. Payroll is deferred. Department performance and Financial Reports stay on their existing APIs.

@@ -1,19 +1,20 @@
 # Analytics / Reports — User Guide
 
-Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v1.2.0).
+Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v1.3.1).
 
 1. Enable **Reports** from Marketplace (free Operations module; search `analytics` if needed).
-2. Open **Overview → Reports** for the executive dashboard (one chart per entitled module). Use the chevron beside **Reports** in the sidebar to expand CRM / Sales / Billing / Purchasing without leaving the Reports section.
+2. Open **Overview → Reports** for the executive dashboard (one chart per entitled module). Use the chevron beside **Reports** in the sidebar to expand CRM / Sales / Billing / Purchasing / People without leaving the Reports section.
 3. Choose a period → **Apply period**.
 4. Open domain reports from the hub cards or sidebar:
    - **CRM report** — Leads + Tasks
    - **Sales report** — Opportunities, Quotations, Contracts
    - **Billing report** — Invoices, Payments, Credit Notes
    - **Purchasing report** — Vendors, Purchase Orders, Expenses
-5. On each domain page, review KPI cards, per-module bar charts (e.g. Leads, Invoices — plus a value chart when amounts apply), and the breakdown table, then **Export CSV** when sources are available.
+   - **People report** — Employees, Leave Management, Attendance
+5. On each domain page, review KPI cards, per-module charts (pie / donut / bar / area / line by context — e.g. status mix vs value compare), and the breakdown table, then **Export CSV** when sources are available.
 
-Sections and domain rows appear only when that source module is entitled **and** you have its view permission. Dates use **Settings → General → Timezone**.
+Sections and domain rows appear only when that source module is entitled **and** you have its view permission. On **People**, leave and attendance figures follow the same self-scope as those modules (staff see their own linked employee; managers/approvers see the workspace). Employees totals remain workspace-wide when you have `employees.view`. Dates use **Settings → General → Timezone**.
 
 For accounting statements (Trial Balance, P&L, Balance Sheet), use [Financial Reports](/user-guide/financial-reports). For department lead/task performance, use [Department reports](/user-guide/departments) (owner / department-manager surface — not part of Reports).
 
-**Still deferred:** People / HR domain report (Employees + Leave + Attendance first; Payroll later with stricter authz), report builder, saved/scheduled reports, email analytics.
+**Still deferred:** Payroll inside the People report (stricter authz), report builder, saved/scheduled reports, email analytics.
