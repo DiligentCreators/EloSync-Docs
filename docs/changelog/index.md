@@ -1,5 +1,12 @@
 # Changelog
 
+## Reports 1.4.0 production readiness — Conditional Go (2026-08-16)
+
+- Audit of `feature/analytics-payroll-people-1-4-0` companions (local commits; PRs not opened yet).
+- **Conditional Go:** Pest Analytics **23/23**; headed Playwright **14/14** (People asserts Payroll); SemVer bump `…_1_4_0` after `1.3.1`; docs/website copy aligned.
+- Remaining: open PRs + CI dispatch, migrate catalog **1.3.1 → 1.4.0**, staging smoke (manager Payroll + staff omit).
+- Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
+
 ## Reports People Payroll soft source 1.4.0 (Analytics) (2026-08-16)
 
 Catalog version: **analytics 1.3.1 → 1.4.0**. Display name remains **Reports**.
