@@ -10,7 +10,7 @@ Without **assign**, you only see invoices assigned to you.
 
 Open **Invoices** from the sidebar (**Billing**). Search by title or number, filter by status or assignee, toggle **My invoices** or **Overdue only**, and switch KPI cards (Total, My Invoices, Draft, Sent, Overdue) to quick-filter the table. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
 
-- An **Overdue** badge appears next to the status badge for unpaid, sent/partial invoices past their due date
+- An **Overdue** badge appears next to the status badge for unpaid invoices past their due date
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted invoice from the row menu
 - **Delete permanently** requires `invoices.force.delete` — granted to the workspace **owner** by default
 
@@ -33,7 +33,7 @@ The first invoice is a normal invoice. After you **Send** it, EloSync creates th
 When a customer cancels:
 
 1. Open the original recurring invoice and click **Stop recurring**. No further invoices are created. Paid invoices stay paid.
-2. Optionally check **Also void the latest unpaid generated invoice** if this period’s auto-created draft/sent invoice should not be collected. If that invoice already has a payment or credit, void the payment first or issue a [credit note](/user-guide/credit-notes) instead.
+2. Optionally check **Also cancel the latest unpaid generated invoice** if this period’s auto-created draft/unpaid invoice should not be collected. If that invoice already has a payment or credit, void the payment first or issue a [credit note](/user-guide/credit-notes) instead.
 
 Stopping the series does **not** void history by itself.
 
@@ -43,14 +43,16 @@ Stopping the series does **not** void history by itself.
 
 ## Status workflow
 
+## Status workflow
+
 An invoice starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the invoice as sent in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series.
-- **Void** — available from Draft or Sent only; permanently cancels the invoice. Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all), since an invoice moves to **Partial** the moment either happens
+- **Send** (`draft → unpaid`) — marks the invoice as unpaid in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series.
+- **Cancel** — available from Draft or Unpaid only; permanently cancels the invoice (`cancelled`). Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all). Partial payments keep the invoice **Unpaid** until the balance clears.
 
-**Partial** and **Paid** are not user-driven — they're set automatically as [Payments](/user-guide/payments) are posted against the invoice, or as [Credit Notes](/user-guide/credit-notes) are applied to it.
+**Paid** is set automatically when Payments (or credits) bring the balance to zero.
 
-Invalid transitions (e.g. sending an already-voided invoice) are rejected with a validation error.
+Invalid transitions (e.g. sending an already-cancelled invoice) are rejected with a validation error.
 
 ## Assignment
 

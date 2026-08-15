@@ -19,17 +19,16 @@ Same filters as list (minus pagination/sort). Response:
   "total_invoices": 0,
   "my_invoices": 0,
   "draft": 0,
-  "sent": 0,
-  "partial": 0,
+  "unpaid": 0,
   "paid": 0,
-  "void": 0,
+  "cancelled": 0,
   "overdue": 0,
   "outstanding_balance": 0,
   "scope": "org | mine"
 }
 ```
 
-`overdue` / `outstanding_balance` only consider invoices with `status` in `sent`/`partial` and (for `overdue`) `due_date` in the past with `balance_due > 0`.
+`overdue` / `outstanding_balance` only consider invoices with `status` = `unpaid` and (for `overdue`) `due_date` in the past with `balance_due > 0`.
 
 ## Invoices CRUD
 
@@ -79,28 +78,28 @@ Permission: `invoices.assign`.
 
 ### POST `/invoices/{id}/send`
 
-Transitions `draft → sent`. Backfills `issue_date` to today if unset. Permission: `invoices.send` (assignee-scoped unless the actor has `invoices.assign` or is superadmin). **Status-only** — does not email the customer. Recurring drafts become an **active** series. `recurrence_next_issue_on` stays the date chosen on the draft when it is after the issue date; otherwise it becomes one frequency period after the issue date.
+Transitions `draft → unpaid`. Backfills `issue_date` to today if unset. Permission: `invoices.send` (assignee-scoped unless the actor has `invoices.assign` or is superadmin). **Status-only** — does not email the customer. Recurring drafts become an **active** series. `recurrence_next_issue_on` stays the date chosen on the draft when it is after the issue date; otherwise it becomes one frequency period after the issue date.
 
 ### POST `/invoices/{id}/recurrence/stop`
 
 `{ "void_latest_unpaid": boolean }` (optional, default false)
 
-Permission: `invoices.update`. Only valid on the **series root** while `recurrence_status=active`. Sets status to `ended`. When `void_latest_unpaid` is true, also voids the latest generated draft/sent occurrence with zero paid/credited (requires `invoices.void` on that occurrence). Does not void the original invoice or paid history.
+Permission: `invoices.update`. Only valid on the **series root** while `recurrence_status=active`. Sets status to `ended`. When `void_latest_unpaid` is true, also cancels the latest generated draft/unpaid occurrence with zero paid/credited (requires `invoices.void` on that occurrence). Does not cancel the original invoice or paid history.
 
 ### POST `/invoices/{id}/void`
 
-Transitions `draft|sent → void`. **Ledger guard:** rejected with a 422 on `status` (naming the invoice number) if `amount_paid > 0` (void the posted payments first) or `amount_credited > 0` (applied credit notes cannot be reversed, so a credited invoice can never be voided). Since an invoice only reaches `partial` once one of those is non-zero, `Partial → Void` is not an allowed transition at all. Permission: `invoices.void` (assignee-scoped unless the actor has `invoices.assign` or is superadmin).
+Transitions `draft|unpaid → cancelled`. **Ledger guard:** rejected with a 422 on `status` (naming the invoice number) if `amount_paid > 0` (void the posted payments first) or `amount_credited > 0` (applied credit notes cannot be reversed, so a credited invoice can never be cancelled). Permission: `invoices.void` (assignee-scoped unless the actor has `invoices.assign` or is superadmin).
 
 ### POST `/invoices/{id}/status`
 
-`{ "status": "draft"|"sent"|"partial"|"paid"|"void" }`
+`{ "status": "draft"|"unpaid"|"paid"|"cancelled" }`
 
 Authorization depends on the target status:
-- `sent` → `invoices.send`
-- `void` → `invoices.void`
+- `unpaid` → `invoices.send`
+- `cancelled` → `invoices.void`
 - other allowed transitions → `invoices.update`
 
-Rejects disallowed transitions with a 422 validation error on `status`. `partial`/`paid` transitions are allowed here for completeness, but in practice are driven by [Payments](/api/tenant-v1-payments) posting/voiding rather than direct user action. Applying a [Credit Note](/api/tenant-v1-credit-notes) credits `amount_credited`/`balance_due` directly and does not go through this endpoint. A `void` target is routed through the same ledger guard as `POST /invoices/{id}/void` (see above) — it is not a bare enum transition. Records a `status_changed` timeline entry (plus a `voided` entry when the target is `void`).
+Rejects disallowed transitions with a 422 validation error on `status`. `paid` transitions are allowed here for completeness, but in practice are driven by [Payments](/api/tenant-v1-payments) posting/voiding rather than direct user action. Applying a [Credit Note](/api/tenant-v1-credit-notes) credits `amount_credited`/`balance_due` and keeps or clears status via balance helpers. A `cancelled` target is routed through the same ledger guard as `POST /invoices/{id}/void` (see above) — it is not a bare enum transition. Records a `status_changed` timeline entry (plus a `voided` activity entry when cancelling).
 
 ### POST `/invoices/{id}/notes`
 

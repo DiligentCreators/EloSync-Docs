@@ -91,13 +91,12 @@ Password length / special-character rules stay under Central Settings.
 
 ### Invoice company profile
 
-Used on customer invoice PDFs (header, FROM block, footer):
+Used on customer invoice PDFs (header and footer):
 
 | Field | Notes |
 |-------|-------|
 | **Tagline** | Short line under the company name |
 | **Address / Phone / Website** | Contact block |
-| **NTN / STRN** | Tax identifiers (optional) |
 | **Default payment terms** | e.g. Net 15 Days — used when issue/due dates cannot derive Net X days |
 | **Default invoice notes** | Printed when the invoice memo is empty |
 

@@ -33,6 +33,13 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Invoices 1.2.0 (status model)
+
+After migrate:
+
+1. Confirm catalog `invoices` version is `1.2.0`
+2. Confirm existing invoice rows remapped (`sent`/`partial` → `unpaid`, `void` → `cancelled`)
+
 ## Invoices 1.1.1 (branded PDF settings)
 
 After migrate:

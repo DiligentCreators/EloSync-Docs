@@ -1,11 +1,20 @@
 # Changelog
 
+## Invoices status model 1.2.0 (2026-08-15)
+
+Catalog version: **invoices 1.1.1 → 1.2.0**.
+
+- Invoice statuses are now **`draft` / `unpaid` / `paid` / `cancelled`** (replacing `sent` / `partial` / `void`). **Send** moves draft → unpaid; **Cancel** (API still `POST …/void`) moves draft|unpaid → cancelled. Partial payments stay **unpaid** until the balance clears to **paid**.
+- Data migration remaps existing rows: `sent`/`partial` → `unpaid`, `void` → `cancelled`.
+- SPA filters, KPIs, badges, and Playwright expectations updated; permission slug `invoices.void` unchanged.
+- Docs: [user guide](/user-guide/invoices), [overview](/user-guide/invoices-overview), [developer](/developer-guide/invoices), [API](/api/tenant-v1-invoices), [deployment](/deployment/invoices)
+
 ## Invoices branded PDF + settings 1.1.1 (2026-08-15)
 
 Catalog version: **invoices 1.1.0 → 1.1.1**.
 
-- Invoice PDF redesigned to a professional layout: logo/header, FROM / BILL TO / details, colored line table, notes + totals, balance due bar, optional payment information footer — accent color from workspace **button color**.
-- New workspace settings (Settings → Branding): company tagline, address, phone, website, NTN/STRN, default payment terms, default notes, bank name/account/IBAN/SWIFT. Missing fields stay blank; bank section hides when empty.
+- Invoice PDF redesigned to a professional layout: logo/header, BILL TO / details, colored line table, notes + totals, balance due bar, optional payment information footer — accent color from workspace **button color**.
+- New workspace settings (Settings → Branding): company tagline, address, phone, website, default payment terms, default notes, bank name/account/IBAN/SWIFT. Missing fields stay blank; bank section hides when empty.
 - PDF cache key includes a settings fingerprint so branding edits invalidate cached PDFs without waiting for invoice updates.
 - Docs: [user guide invoices](/user-guide/invoices), [tenant settings](/user-guide/tenant-settings), [developer invoices](/developer-guide/invoices), [tenant settings](/developer-guide/tenant-settings), [deployment invoices](/deployment/invoices)
 

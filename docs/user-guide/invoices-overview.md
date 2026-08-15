@@ -25,7 +25,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 - Auto-numbered (`INV-00001`; prefix backed by the `invoices_number_prefix` tenant setting, default `INV-` — not yet exposed in the Tenant Settings UI)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side
 - Balance tracking: `amount_paid`, `amount_credited`, `balance_due` (read-only via this API — `amount_paid`/`balance_due` are populated by [Payments](/user-guide/payments-overview); `amount_credited`/`balance_due` are populated by [Credit Notes](/user-guide/credit-notes-overview))
-- Status workflow: `draft → sent → partial | paid → void` (`POST /invoices/{id}/send`, `.../void`, `.../status`) — `partial`/`paid` are set automatically as Payments posts against the invoice (applying a Credit Note updates the balance but does not change status)
+- Status workflow: `draft → unpaid → paid | cancelled` (`POST /invoices/{id}/send`, `.../void` cancels, `.../status`) — `paid` is set automatically as Payments clear the balance; partial payments stay `unpaid`
 - Assignment with assignee scoping via `invoices.assign`
 - Notes + domain activity timeline (mirrors Quotations)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -36,7 +36,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 
 `invoices.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `void`
 
-Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.1.1**.
+Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.2.0**.
 
 ## Related modules
 

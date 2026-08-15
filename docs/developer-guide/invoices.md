@@ -24,11 +24,11 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 ## Domain notes
 
 - **No hard dependency**: Invoices does **not** declare a `module_dependencies` row on Opportunities (unlike Quotations/Contracts) — it installs standalone from Marketplace.
-- Status machine lives on `CustomerInvoiceStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → sent|void`, `sent → void|partial|paid`, `partial → paid` only, `paid`/`void` are terminal. `partial`/`paid` are set programmatically by [Payments](/developer-guide/payments) posting/voiding or [Credit Notes](/developer-guide/credit-notes) applying, via `CustomerInvoice::applyBalanceStatus()` / `recalculateBalanceFromAmounts()` — this API only exposes user-driven `send` / `void` / `status`.
-- **`Partial → Void` is deliberately not an allowed transition** — an invoice only reaches `partial` once `amount_paid` and/or `amount_credited` is non-zero, and `CustomerInvoiceService::void()` is the enforcement point (not just the enum): it throws `ValidationException` (422, `status`, naming the invoice number) if `amount_paid > 0` (void the payments first) or `amount_credited > 0` (applied credits can never be reversed). `CustomerInvoice::isVoidable()` mirrors this (Draft/Sent only, both amounts zero). `changeStatus()` (used by `POST …/status`) routes a `void` target through `void()` rather than calling `transitionStatus()` directly, so both entry points share the same ledger guard.
+- Status machine lives on `CustomerInvoiceStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → unpaid|cancelled`, `unpaid → cancelled|paid`, `paid`/`cancelled` are terminal. `paid` is set programmatically by [Payments](/developer-guide/payments) posting/voiding or [Credit Notes](/developer-guide/credit-notes) applying, via `CustomerInvoice::applyBalanceStatus()` / `recalculateBalanceFromAmounts()` — partial settlement keeps `unpaid`. This API only exposes user-driven `send` / `void` (cancel) / `status`.
+- **`Unpaid → Cancelled` requires a zero ledger** — `CustomerInvoiceService::void()` is the enforcement point (not just the enum): it throws `ValidationException` (422, `status`, naming the invoice number) if `amount_paid > 0` (void the payments first) or `amount_credited > 0` (applied credits can never be reversed). `CustomerInvoice::isVoidable()` mirrors this (Draft/Unpaid only, both amounts zero). `changeStatus()` (used by `POST …/status`) routes a `cancelled` target through `void()` rather than calling `transitionStatus()` directly, so both entry points share the same ledger guard.
 - `CustomerInvoiceService::transitionStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions.
 - Content updates (`PUT`) and line sync are **draft-only** via `CustomerInvoice::isEditable()` (`status === draft`). Assignment remains available after send via `POST …/assign`.
-- `POST …/status` (`changeStatus`) maps target status to permissions in the controller: `sent` → `invoices.send`, `void` → `invoices.void`, otherwise `invoices.update`. The form request itself only requires `invoices.update`; the controller's `Gate::authorize()` call adds the stricter check per target status.
+- `POST …/status` (`changeStatus`) maps target status to permissions in the controller: `unpaid` → `invoices.send`, `cancelled` → `invoices.void`, otherwise `invoices.update`. The form request itself only requires `invoices.update`; the controller's `Gate::authorize()` call adds the stricter check per target status.
 - `send` / `void` / `view` / `update` policies are assignee-scoped (same pattern) unless the actor has `invoices.assign` or is superadmin.
 - `send()` backfills `issue_date` to today if unset, then transitions to `sent`. If the invoice is a recurring **series root**, this also sets `recurrence_status=active`. **`recurrence_next_issue_on`** is the date the operator chose on the draft (required when recurring); Send keeps it when it is after the issue date, otherwise it falls back to one frequency step from the issue date. **Status-only** — no outbound email delivery.
 - Recurring series live on `customer_invoices` (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurrence_due_days`, `recurring_source_invoice_id`). The original invoice is the template. `invoices:generate-recurring` (daily) clones **draft** occurrences from the root’s current lines; children are not themselves recurring. `POST …/recurrence/stop` ends the series (`ended`) and optionally voids the latest unpaid generated invoice (`void_latest_unpaid`). Voiding the root also ends an active series.
@@ -39,7 +39,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - `invoices.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`), same as Quotations/Opportunities. `quotation_id` is optional and only existence/tenant-checked — a tenant can link any of its own quotations even if Quotations is not currently entitled (no soft-entitlement guard, unlike Contracts → Quotations).
 - Auto-numbering: `CustomerInvoiceService::nextNumber()` reads the `invoices_number_prefix` tenant setting (default `INV-`), then zero-pads a running count (`CustomerInvoice::withTrashed()->count() + 1`) to 5 digits. `customer_invoices` has a `unique(tenant_id, number)` DB index; `create()` wraps the insert with the shared `RetriesOnDuplicateNumber` trait (`app/Services/Tenant/Concerns/RetriesOnDuplicateNumber.php`), retrying up to 3 times with a freshly generated number if two concurrent requests race to the same count-derived sequence. The same trait/index pattern is used by Payments, Credit Notes, and Estimates.
-- Overdue definition (shared by list `overdue=true` filter and `stats.overdue`): `due_date < today`, `status` in `sent`/`partial`, `balance_due > 0`.
+- Overdue definition (shared by list `overdue=true` filter and `stats.overdue`): `due_date < today`, `status` = `unpaid`, `balance_due > 0`.
 
 ## Permissions
 
@@ -49,7 +49,7 @@ invoices.view | create | update | delete | restore | force.delete | assign | sen
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.1.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.1.0/1.1.1 bumped with `bumpVersion`.
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.2.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.1.x/1.2.0 bumped with `bumpVersion`.
 
 ## API (tenant)
 
@@ -62,7 +62,7 @@ SPA mirrors **Quotations** (table + form dialog, detail sheet) under the existin
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/invoices/` (`invoices-page.tsx`, `invoice-form-dialog.tsx`, `invoice-detail-sheet.tsx`) |
-| Detail sheet tabs | Overview, Lines, Notes, Timeline — actions: download PDF, stop recurring (active series root), assign, add note, send, void, edit (draft only), delete. No **accept** action (Invoices has no `accepted` status). |
+| Detail sheet tabs | Overview, Lines, Notes, Timeline — actions: download PDF, stop recurring (active series root), assign, add note, send, cancel (`/void`), edit (draft only), delete. No **accept** action (Invoices has no `accepted` status). |
 | Service | `customerInvoiceService` in `src/api/services.ts` |
 | Types | `CustomerInvoice*` in `src/types/api.ts` (kept distinct from the pre-existing Central `Invoice*` types) |
 | Query keys | `QUERY_KEYS.customerInvoices` / `customerInvoice(id)` / `customerInvoiceTimeline(id)` / `customerInvoiceStats` |
