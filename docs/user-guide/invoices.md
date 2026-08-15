@@ -10,7 +10,7 @@ Without **assign**, you only see invoices assigned to you.
 
 Open **Invoices** from the sidebar (**Billing**). Search by title or number, filter by status or assignee, toggle **My invoices** or **Overdue only**, and switch KPI cards (Total, My Invoices, Draft, Sent, Overdue) to quick-filter the table. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
 
-- An **Overdue** badge appears next to the status badge for unpaid, sent/partial invoices past their due date
+- An **Overdue** badge appears next to the status badge for unpaid invoices past their due date
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted invoice from the row menu
 - **Delete permanently** requires `invoices.force.delete` — granted to the workspace **owner** by default
 
@@ -24,16 +24,35 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 
 Edit from the row menu or the detail sheet while the invoice is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
+## Recurring invoices
+
+Turn on **Recurring invoice** when you create (or edit a draft). Choose a frequency (weekly, monthly, quarterly, semi-annually, or yearly) and a **Next invoice date** — the day EloSync should create the next **Draft**. That date does not have to match the issue day: you can invoice on 15 August and set the next draft for 1 September. After that, later invoices follow the frequency from the next-invoice date (1 October, 1 November, …). Optional end date stops generation after that date.
+
+The first invoice is a normal invoice. After you **Send** it, EloSync creates the **next** invoice as a **Draft** on the **Next invoice date** you chose (workspace timezone), copying line items, customer, currency, and assignee. Generated invoices do not copy payments or credits.
+
+When a customer cancels:
+
+1. Open the original recurring invoice and click **Stop recurring**. No further invoices are created. Paid invoices stay paid.
+2. Optionally check **Also cancel the latest unpaid generated invoice** if this period’s auto-created draft/unpaid invoice should not be collected. If that invoice already has a payment or credit, void the payment first or issue a [credit note](/user-guide/credit-notes) instead.
+
+Stopping the series does **not** void history by itself.
+
+## Download PDF
+
+**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, totals, and balance due. Configure missing company/payment fields under Branding. Sending still does not email the customer.
+
+## Status workflow
+
 ## Status workflow
 
 An invoice starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the invoice as sent in the CRM (does not e-mail the customer or attach a PDF yet); sets the issue date to today if it wasn't set
-- **Void** — available from Draft or Sent only; permanently cancels the invoice. Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all), since an invoice moves to **Partial** the moment either happens
+- **Send** (`draft → unpaid`) — marks the invoice as unpaid in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series.
+- **Cancel** — available from Draft or Unpaid only; permanently cancels the invoice (`cancelled`). Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all). Partial payments keep the invoice **Unpaid** until the balance clears.
 
-**Partial** and **Paid** are not user-driven — they're set automatically as [Payments](/user-guide/payments) are posted against the invoice, or as [Credit Notes](/user-guide/credit-notes) are applied to it.
+**Paid** is set automatically when Payments (or credits) bring the balance to zero.
 
-Invalid transitions (e.g. sending an already-voided invoice) are rejected with a validation error.
+Invalid transitions (e.g. sending an already-cancelled invoice) are rejected with a validation error.
 
 ## Assignment
 
@@ -41,8 +60,9 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 ## Notes & activity
 
-- **Notes** — free-form notes on the invoice
-- **Activity** — timeline of create, update, assignment, status change, note, void, and delete/restore events
+- **Overview** — shows the invoice memo from the create/edit **Notes** field (also printed on the PDF)
+- **Notes** tab — internal activity notes the team adds after the invoice exists (not the same as the memo)
+- **Timeline** — create, update, assignment, status change, note, void, delete/restore, and recurring start/stop/generate events
 
 ## Related payments and credit notes
 
@@ -50,4 +70,4 @@ If the [Payments](/user-guide/payments) module is installed and you have `paymen
 
 ## What's not here yet
 
-Generating invoice PDFs and e-mailing invoices to customers are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+E-mailing invoices to customers (with or without the PDF attached) is still planned — see the [Product Roadmap](/getting-started/product-roadmap).

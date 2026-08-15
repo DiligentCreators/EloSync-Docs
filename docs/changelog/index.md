@@ -1,5 +1,34 @@
 # Changelog
 
+## Invoices status model 1.2.0 (2026-08-15)
+
+Catalog version: **invoices 1.1.1 → 1.2.0**.
+
+- Invoice statuses are now **`draft` / `unpaid` / `paid` / `cancelled`** (replacing `sent` / `partial` / `void`). **Send** moves draft → unpaid; **Cancel** (API still `POST …/void`) moves draft|unpaid → cancelled. Partial payments stay **unpaid** until the balance clears to **paid**.
+- Data migration remaps existing rows: `sent`/`partial` → `unpaid`, `void` → `cancelled`.
+- SPA filters, KPIs, badges, and Playwright expectations updated; permission slug `invoices.void` unchanged.
+- Docs: [user guide](/user-guide/invoices), [overview](/user-guide/invoices-overview), [developer](/developer-guide/invoices), [API](/api/tenant-v1-invoices), [deployment](/deployment/invoices)
+
+## Invoices branded PDF + settings 1.1.1 (2026-08-15)
+
+Catalog version: **invoices 1.1.0 → 1.1.1**.
+
+- Invoice PDF redesigned to a professional layout: logo/header, BILL TO / details, colored line table, notes + totals, balance due bar, optional payment information footer — accent color from workspace **button color**.
+- New workspace settings (Settings → Branding): company tagline, address, phone, website, default payment terms, default notes, bank name/account/IBAN/SWIFT. Missing fields stay blank; bank section hides when empty.
+- PDF cache key includes a settings fingerprint so branding edits invalidate cached PDFs without waiting for invoice updates.
+- Docs: [user guide invoices](/user-guide/invoices), [tenant settings](/user-guide/tenant-settings), [developer invoices](/developer-guide/invoices), [tenant settings](/developer-guide/tenant-settings), [deployment invoices](/deployment/invoices)
+
+## Invoices recurring series + PDF 1.1.0 (2026-08-15)
+
+Catalog version: **invoices 1.0.0 → 1.1.0**.
+
+- Create/edit drafts with **Recurring invoice**, frequency, and a required **Next invoice date** (e.g. invoice on 15 Aug, next draft on 1 Sep; later invoices follow the frequency from that date). Sending the first invoice starts the series; `invoices:generate-recurring` (daily, workspace timezone) creates the next **draft** with copied lines.
+- **Stop recurring** on the original invoice ends future generation without changing paid history. Optional checkbox voids the latest unpaid auto-generated draft/sent invoice (same ledger rules as Void).
+- **Download PDF** from the invoice sheet and row menu (`GET /invoices/{id}/pdf`, `invoices.view`). Email delivery is still deferred.
+- Pest `CustomerInvoiceRecurrenceTest` (catch-up cap, command failure exit, PDF cache, timezone, stop/void, soft-delete skip). Playwright one-session headed workflow (validation, CRUD, Overview memo, PDF sheet + row menu, send/void, generate + stop with optional void, shortcuts, trash). Requires `dompdf/dompdf`.
+- Production hardening: generator `chunkById` + per-tenant time budget; catch-up cap default **52**; command **FAILURE** if any tenant series fails; PDF cache + `WarmCustomerInvoicePdfJob` on the default queue; `throttle:invoices-pdf`. Soft-deleted occurrences are treated as already issued for that date.
+- Docs: [user guide](/user-guide/invoices), [overview](/user-guide/invoices-overview), [developer](/developer-guide/invoices), [API](/api/tenant-v1-invoices), [deployment](/deployment/invoices), [production readiness](/deployment/invoices-production-readiness)
+
 ## Help Desk module v1.0.0 (2026-08-14)
 
 Catalog version: **help-desk 1.0.0** (new Operations SKU).

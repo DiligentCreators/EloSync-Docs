@@ -22,6 +22,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Automation Production Readiness](./automation-production-readiness) | Automation go-live checklist, smoke, rollback, sign-off |
 | [Knowledge Base Production Readiness](./knowledge-base-production-readiness) | Knowledge Base audit, go-live checklist, smoke, rollback, sign-off |
 | [Storage Production Readiness](./storage-production-readiness) | Storage module audit, blockers, smoke, rollback, sign-off |
+| [Invoices Production Readiness](./invoices-production-readiness) | Invoices 1.1.0 recurring + PDF audit, smoke, rollback, sign-off |
 | [Phase 7 HR Security Audit](./hr-phase7-security-audit) | HR findings, remediations, residual risk |
 | [Go-Live Hardening](./go-live-hardening-2026-07-15) | Hardening delivery notes |
 
@@ -47,7 +48,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Opportunities](./opportunities) | Opportunities module ops |
 | [Quotations](./quotations) | Quotations module ops |
 | [Contracts](./contracts) | Contracts module ops |
-| [Invoices](./invoices) | Invoices module ops |
+| [Invoices](./invoices) | Invoices module ops ([1.1.0 readiness](./invoices-production-readiness)) |
 | [Payments](./payments) | Payments module ops |
 | [Credit Notes](./credit-notes) | Credit Notes module ops |
 | [Estimates](./estimates) | Estimates module ops |

@@ -83,6 +83,7 @@ Scheduled commands (all use `withoutOverlapping`):
 - `trash:purge-expired` (daily, `onOneServer`, `withoutOverlapping(120)` — no-op when `trash.retention_days` is `0`)
 - `email:sync` (every minute, `onOneServer`)
 - `automation:dispatch-schedules` (every minute, `withoutOverlapping(5)`, `onOneServer` — due Automation schedule triggers; no-op when the module is not entitled)
+- `invoices:generate-recurring` (daily, `withoutOverlapping(120)`, `onOneServer` — draft occurrences for due recurring customer invoices; no-op when Invoices is not entitled; non-zero exit if any tenant series failed)
 
 ## Deploy sequence
 
