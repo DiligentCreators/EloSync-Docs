@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-16 |
-| **Status** | **Go** — blockers closed (People leave/attendance self-scope, catalog bump SemVer order, website PR Quality Gate). Pest Analytics green; Frontend Quality Gate green; Docs Quality Gate green; Backend CI re-dispatched after fixes. Staging migrate through **1.3.1** + human smoke remain before production cutover |
-| **Scope** | Analytics module `analytics` catalog **1.3.1** (People / HR domain **1.3.0** + mixed chart types **1.3.1**) |
+| **Status** | Prior **1.3.1** Go remains; **1.4.0** adds People Payroll soft source (`payroll.view`). Staging migrate through **1.4.0** + smoke before production |
+| **Scope** | Analytics module `analytics` catalog **1.4.0** (People Payroll soft source on top of **1.3.1** mixed charts) |
 | **Branch** | `feature/analytics-people-reports-e0a6` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
 
@@ -16,14 +16,14 @@ Prior Go audit for charts suite **1.2.0** remains valid for that slice; this aud
 
 ## Executive summary
 
-Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.3.1** adds mixed SPA chart types (pie / donut / bar / area / line) on top of **1.3.0** People domain (Employees, Leave, Attendance), **1.2.0** charts, and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. **Financial Reports** and **Department reports** stay separate. **Payroll** inside People remains deferred.
+Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.4.0** adds People soft source **Payroll** (entitlement + `payroll.view`; no staff self-scope) on top of **1.3.1** mixed SPA chart types, **1.3.0** People domain (Employees, Leave, Attendance), **1.2.0** charts, and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged for non-payroll sources. **Financial Reports** and **Department reports** stay separate.
 
-**Go / No-Go:** **Go** for staging → production after migrate through **1.3.1** and human smoke (include People + chart UX).
+**Go / No-Go:** Ship **1.4.0** after migrate through **1.4.0** and human smoke (include People Payroll for manager+ + omit for staff).
 
 | Gate | Result |
 |------|--------|
-| Catalog: operations / `analytics` / **1.3.1** / free opt-in / sort 70 / not default-included | **Pass** (local DB verified) |
-| Migrate-only bumps: 1.1.0 → 1.2.0 → **1.3.0** → **1.3.1** (SemVer filename order) | **Pass** |
+| Catalog: operations / `analytics` / **1.4.0** / free opt-in / sort 70 / not default-included | **Pass** |
+| Migrate-only bumps: 1.1.0 → 1.2.0 → **1.3.0** → **1.3.1** → **1.4.0** (SemVer filename order) | **Pass** |
 | Route middleware: `module:analytics` then `can:analytics.view` | **Pass** |
 | Soft sections / domain sources including **people** (no hard `module_dependencies`) | **Pass** |
 | People leave/attendance aggregates mirror list-service self-scope | **Pass** |
@@ -35,9 +35,9 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Frontend Quality Gate (`tsc -b`) | **Pass** (PR #108 after cursor-type fix) |
 | Playwright `test:e2e:analytics:headed` | **Pass** (**14/14**, workers=1, 2026-08-16) |
 | Docs core set (user / developer / API / deploy / changelog / roadmap) | **Pass** (Docs Quality Gate **success** on PR #133) |
-| Marketing website SKU + timeline **1.3.1** + PR Quality Gate | **Pass** |
+| Marketing website SKU + timeline **1.4.0** + PR Quality Gate | **Pass** |
 | People / HR; mixed charts | **Shipped in scope** |
-| Report builder; saved reports; email analytics; Payroll in People | **Deferred** |
+| Report builder; saved reports; email analytics | **Deferred** |
 | Backend Laravel Tests on PR branch | **Pass** (workflow_dispatch; re-run after blocker fixes) |
 | Backend Code Quality Gate on PR branch | **Pass** (workflow_dispatch; re-run after blocker fixes) |
 
@@ -55,7 +55,7 @@ Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Cata
 | Nested Reports sidebar incl. People | n/a | Pass | Pass | n/a |
 | Permission `analytics.view` only | Pass | Pass | Pass | n/a |
 | Keep Financial Reports + Department reports separate | Pass | Pass | Pass | Pass |
-| Payroll deferred from People | Pass | Pass | Pass | n/a |
+| Payroll soft source (`payroll.view`) | Pass | Pass | Pass | Pass |
 
 ---
 
@@ -93,7 +93,7 @@ None.
 | Charts SPA-only | No chart-specific API endpoints |
 | No queues / schedulers / env vars | Deploy = migrate + SPA |
 | Authz e2e is SPA gate focused | API middleware covered by Pest; headed Herd API probes flaky under SPA load |
-| Payroll not in People | Documented deferred |
+| Payroll in People (`payroll.view`) | Shipped in **1.4.0** |
 | Backend Tests / Quality Gate remain `workflow_dispatch` | Org cost control; dispatch before merge |
 
 ---
@@ -186,7 +186,7 @@ No new queues, schedulers, or env vars.
 | Role | Name | Date | Decision |
 |------|------|------|----------|
 | Engineering | | 2026-08-16 | **Go** (blockers F16–F18 closed) |
-| Product | | | Accept Payroll / report builder deferred |
-| Ops | | | Staging migrate through **1.3.1** + smoke ☐ |
+| Product | | | Accept report builder deferred |
+| Ops | | | Staging migrate through **1.4.0** + smoke ☐ |
 
-**Recommendation:** Merge companions **Backend → Frontend → Docs → Website**, migrate to **1.3.1**, run staging smoke (include People self-scope + chart UX), ship. Do **not** add Payroll or report builder under this SKU without a new catalog version and DoD.
+**Recommendation:** Deploy companions **Backend → Frontend → Docs → Website**, migrate to **1.4.0**, run staging smoke (People Payroll soft gate + chart UX), ship. Do **not** add report builder under this SKU without a new catalog version and DoD.

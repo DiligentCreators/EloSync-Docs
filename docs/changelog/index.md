@@ -1,5 +1,14 @@
 # Changelog
 
+## Reports People Payroll soft source 1.4.0 (Analytics) (2026-08-16)
+
+Catalog version: **analytics 1.3.1 → 1.4.0**. Display name remains **Reports**.
+
+- People domain soft source **`payroll`**: pay runs overlapping the period, paid net (sum of line `net` for paid runs), payroll profile count, status mix rows (`draft` / `approved` / `paid`).
+- Soft gate: Payroll entitled + **`payroll.view`** (stricter than `analytics.view` alone; staff roles omit compensation by default; no self-scope).
+- SPA: People copy / nav `anyModules` / donut chart label for Payroll; CSV includes payroll rows when entitled.
+- Docs: [overview](/user-guide/analytics-overview), [user guide](/user-guide/analytics), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics), [deployment](/deployment/analytics), [roadmap](/getting-started/product-roadmap)
+
 ## Reports 1.3.1 production blockers closed — Go (2026-08-16)
 
 - Closed audit blockers before merge: People leave/attendance **self-scope** (F16), catalog bump **SemVer migration order** (F17), People period **whereDate** filters (F18), website PR **Quality Gate** (F15).
