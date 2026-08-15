@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:analytics`, `can:analytics.view`.
 
-Catalog slug `analytics` (display name Reports, version **1.3.0**). No hard Marketplace dependency on other modules. Overview sections and domain report sources are included only when that source module is entitled **and** the actor has `{module}.view`. Charts are SPA-rendered from the same payloads (no chart-specific endpoints).
+Catalog slug `analytics` (display name Reports, version **1.3.1**). No hard Marketplace dependency on other modules. Overview sections and domain report sources are included only when that source module is entitled **and** the actor has `{module}.view`. Charts are SPA-rendered from the same payloads (no chart-specific endpoints); the SPA picks pie / donut / bar / area / line by metric context.
 
 | Method | Path | Query |
 |--------|------|-------|

@@ -1,5 +1,14 @@
 # Changelog
 
+## Reports chart types 1.3.1 (Analytics) (2026-08-15)
+
+Catalog version: **analytics 1.3.0 → 1.3.1**. Display name remains **Reports**.
+
+- Hub and domain reports pick chart types by context: pie/donut for status mix, horizontal bars for currency, area/line for longer series, vertical bars for simple compares.
+- Card badges label chart intent (Share / Mix / Compare / Trend / Series / Bars). Empty periods show a clear placeholder.
+- No API contract change; SPA-only Recharts polish on existing overview + domain payloads.
+- Docs: [overview](/user-guide/analytics-overview), [developer](/developer-guide/analytics), [API](/api/tenant-v1-analytics)
+
 ## Reports People / HR domain 1.3.0 (Analytics) (2026-08-15)
 
 Catalog version: **analytics 1.2.0 → 1.3.0**. Display name remains **Reports**.

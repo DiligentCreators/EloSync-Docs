@@ -318,7 +318,7 @@ Implement workforce management.
 
 | Module | Status |
 |--------|--------|
-| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Completed (Reports suite **1.3.0**; free Operations Marketplace opt-in; slug `analytics`) |
+| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Completed (Reports suite **1.3.1**; free Operations Marketplace opt-in; slug `analytics`) |
 
 #### Reports suite (shipped)
 
@@ -345,7 +345,7 @@ The platform architecture supports additional modules without requiring architec
 - Recruitment
 - Customer Portal
 - Vendor Portal
-- Business Intelligence & Analytics — **shipped v1.3.0** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing/People + charts + CSV; see [Analytics Overview](/user-guide/analytics-overview)); Payroll in People report, report builder, and saved reports still planned
+- Business Intelligence & Analytics — **shipped v1.3.1** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing/People + mixed chart types + CSV; see [Analytics Overview](/user-guide/analytics-overview)); Payroll in People report, report builder, and saved reports still planned
 - Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned with Cloud API
 - Storage — **shipped v1.0.0** as free `storage` (1 GB) + billable capacity packs `storage-10` … `storage-1000` (see [Storage](/user-guide/storage)); task/lead images and email attachment persistence still planned
 - Marketing Automation

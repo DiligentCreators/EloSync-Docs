@@ -1,6 +1,6 @@
 # Analytics / Reports — User Guide
 
-Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v1.3.0).
+Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v1.3.1).
 
 1. Enable **Reports** from Marketplace (free Operations module; search `analytics` if needed).
 2. Open **Overview → Reports** for the executive dashboard (one chart per entitled module). Use the chevron beside **Reports** in the sidebar to expand CRM / Sales / Billing / Purchasing / People without leaving the Reports section.

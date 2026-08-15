@@ -1,6 +1,6 @@
 # Reports (Analytics) — Developer Guide
 
-Slug `analytics` (display name **Reports**). Free Operations Marketplace module (**1.3.0**). Soft-depends on source modules — **no** hard `module_dependencies` rows.
+Slug `analytics` (display name **Reports**). Free Operations Marketplace module (**1.3.1**). Soft-depends on source modules — **no** hard `module_dependencies` rows.
 
 ## Services
 
@@ -33,8 +33,8 @@ Do **not** merge [Department reports](/developer-guide/departments) or [Financia
 
 ## Frontend
 
-- Hub `/analytics` (Overview → Reports) — Recharts per entitled module
-- Domain pages `/analytics/crm|sales|billing|purchasing|people` — one chart per source module (+ value chart when amounts apply) + table + CSV
+- Hub `/analytics` (Overview → Reports) — Recharts per entitled module (pie / donut / bar / area / line by metric)
+- Domain pages `/analytics/crm|sales|billing|purchasing|people` — chart type chosen per source (status mix vs value compare) + table + CSV
 - Playwright: `npm run test:e2e:analytics` / `:modules` / `:authz` (+ `:headed`)
 
 ## Tests
@@ -43,7 +43,7 @@ Pest: `tests/Feature/Tenant/Analytics/` (overview + domain reports + CSV, includ
 
 ## Catalog
 
-Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts) → `1.3.0` (People / HR domain). Entitlements stay on slug `analytics`.
+Migrate-only bumps: `1.0.0` → `1.1.0` (Reports suite) → `1.2.0` (charts) → `1.3.0` (People / HR domain) → `1.3.1` (mixed chart types). Entitlements stay on slug `analytics`.
 
 ## Related
 

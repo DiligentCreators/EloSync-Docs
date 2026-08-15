@@ -7,7 +7,7 @@ Production readiness audit: [Analytics Production Readiness](./analytics-product
 - Catalog slug: `analytics` (display name **Reports**)
 - Category: `operations`, `sort_order = 70`
 - Free Marketplace opt-in (`is_billable = false`, not default-included)
-- Version **1.3.0** (was 1.2.0 charts; 1.1.0 Reports suite; 1.0.0 overview MVP)
+- Version **1.3.1** (was 1.3.0 People domain; 1.2.0 charts; 1.1.0 Reports suite; 1.0.0 overview MVP)
 - **No** hard `module_dependencies` — KPI sections and domain reports soft-gate on source module entitlement + view permission
 - **No** dedicated Analytics tables — aggregates existing tenant data
 

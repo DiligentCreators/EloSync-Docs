@@ -4,7 +4,7 @@
 |-------|--------|
 | **Date** | 2026-08-15 (Go audit — Reports suite **1.2.0**; People domain shipped later as **1.3.0**) |
 | **Status** | **Go** — companions green after tour CI fix, website 1.2.0, refetch/a11y polish, Backend CI dispatched |
-| **Scope** | Analytics module `analytics` **v1.2.0** charts Go; catalog now **1.3.0** with People / HR domain |
+| **Scope** | Analytics module `analytics` **v1.2.0** charts Go; catalog now **1.3.1** (People domain + mixed chart types) |
 | **Branch** | `feature/analytics-module-mvp-bc72` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
 
@@ -14,7 +14,7 @@
 
 ## Executive summary
 
-Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.3.0** adds the **People** domain report (Employees, Leave, Attendance) on top of **1.2.0** SPA charts and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. **Financial Reports** and **Department reports** stay separate. **Payroll** inside People remains deferred.
+Reports (`analytics` slug) is a **free** Operations Marketplace SKU (`$0`). Catalog **1.3.1** polishes SPA chart types (pie / donut / bar / area / line) on top of **1.3.0** People domain, **1.2.0** charts, and the **1.1.0** KPI + table + CSV suite. Soft gates and `analytics.view` are unchanged. **Financial Reports** and **Department reports** stay separate. **Payroll** inside People remains deferred.
 
 **Go / No-Go:** **Go** for staging → production after migrate + human smoke below.
 
