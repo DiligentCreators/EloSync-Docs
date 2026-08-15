@@ -1,5 +1,10 @@
 # Changelog
 
+## Backend CI: pause auto runs + faster Pest (2026-08-15)
+
+- `laravel.yml` and `quality-gate.yml` auto `push`/`pull_request` triggers **paused** — both are `workflow_dispatch` only (Actions → Run workflow) to cut GitHub Actions billing. Re-enable push/PR triggers when required checks should resume.
+- When run manually, Pest uses `--parallel --processes=4` on one `ubuntu-latest` runner (`:memory:` SQLite; timeout 15 minutes).
+
 ## Invoices status model 1.2.0 (2026-08-15)
 
 Catalog version: **invoices 1.1.1 → 1.2.0**.
