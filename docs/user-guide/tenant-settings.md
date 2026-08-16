@@ -87,7 +87,7 @@ Password length / special-character rules stay under Central Settings.
 |-------|----------|
 | **Button color** | Primary buttons, accents, and invoice PDF chrome for this workspace. |
 | **Support email** | Shown in tenant-facing emails and on invoice PDFs when set. |
-| **Logo / Favicon** | Upload immediately. Logo is embedded on invoice PDFs. If unset, the platform (Central) logo/favicon is used in the app; invoice PDFs omit the logo until you upload one. |
+| **Logo / Favicon** | Upload immediately. Logo is embedded on invoice PDFs. If unset, the app falls back to Central branding when uploaded, otherwise the EloSync press-kit App Store light icon. Invoice PDFs omit the logo until you upload one. |
 
 ### Invoice company profile
 
