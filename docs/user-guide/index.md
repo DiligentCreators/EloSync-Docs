@@ -52,6 +52,8 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Estimates Overview](./estimates-overview) | Estimates module guides index |
 | [Estimates](./estimates) | Pre-sale cost estimates and convert to invoice |
 | [Communication Templates](./communication-templates) | Template management and WhatsApp from Leads |
+| [WhatsApp Cloud Overview](./whatsapp-cloud-overview) | Cloud API inbox guides index |
+| [WhatsApp Cloud](./whatsapp-cloud) | Connect WABA, shared inbox, templates, Lead soft-link |
 | [Email](./email) | Personal IMAP/SMTP inbox, templates, signatures, CRM links |
 | [Announcements](./announcements) | Workspace announcements with read tracking |
 | [Team Chat](./team-chat) | Channels, DMs, mentions, threads, attachments, retention |

@@ -1,10 +1,10 @@
 # WhatsApp Cloud Integration
 
-> **Status: Planned — not implemented**
+> **Status: Shipped MVP 1.0.0** — billable Marketplace module `whatsapp-cloud`.
 >
-> This document is the **official architectural blueprint** for a future WhatsApp Cloud API integration. No Cloud API send/receive, conversations, webhooks, or shared inbox exists in application code today. Do not treat any class name, entity, route, or UI path below as shipped runtime behavior until an implementation PR lands and this status is updated.
+> MVP includes: Meta WABA/phone connect, text send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement. Deferred: media, Automation message triggers, WhatsApp Lead Source Driver, alternate BSPs.
 >
-> When implementation begins, follow the [Module Architecture](/architecture/module-architecture), [Module Development Standard](/developer-guide/module-development), [Documentation Governance](/developer-guide/documentation-governance) same-PR rule, the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract), and complementary blueprints: [Lead Source Driver Architecture](/developer-guide/lead-source-driver-architecture) and [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration).
+> Follow the [Module Architecture](/architecture/module-architecture), [Module Development Standard](/developer-guide/module-development), [Documentation Governance](/developer-guide/documentation-governance) same-PR rule, and the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
 ---
 
@@ -12,51 +12,56 @@
 
 Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **WhatsApp communication platform** built on the official **WhatsApp Cloud API**, while keeping business logic inside EloSync and provider specifics inside replaceable drivers.
 
-**Goals (future):**
+**Shipped in MVP 1.0.0:**
 
 - Connect tenant WhatsApp Business Accounts and phone numbers via Meta
-- Send and receive messages through EloSync (not the user’s personal WhatsApp client)
-- Conversations, shared inbox, templates, media, delivery/read status
-- Link conversations to Leads; surface messages on the Lead timeline
-- Automation and notifications on the existing platform contracts
-- Remain compatible with platform freeze (no foundation redesign)
+- Send and receive text through EloSync (not the user’s personal WhatsApp client)
+- Shared inbox, Meta Cloud templates, delivery/read status webhooks
+- Soft-link conversations to Leads; mirror messages on the Lead timeline
+- Notifications for inbound / send failed / needs reauth
 
-**Non-goals for this document:**
+**Still deferred:**
 
-- Implementing Cloud API, migrations, endpoints, or UI now
-- Replacing Communication Templates’ `wa.me` MVP before Cloud API ships
+- Media, Automation WhatsApp triggers, WhatsApp Lead Source Driver, alternate BSPs, AI
+- Replacing Communication Templates’ `wa.me` (kept as fallback when Cloud is not ready)
 - Making WhatsApp the only messaging channel forever (drivers must stay replaceable)
 
 ---
 
 ## Current state
 
-EloSync **already** supports a lightweight WhatsApp handoff via [Communication Templates](/developer-guide/communication-templates):
+### WhatsApp Cloud (`whatsapp-cloud`) — shipped MVP
 
-| Shipped today | Behavior |
-|---------------|----------|
-| WhatsApp button on Lead pages | Shown when Communication Templates is installed, user has `use` permission, and the lead has a valid phone |
+| Shipped | Behavior |
+|---------|----------|
+| Marketplace module | Billable CRM slug `whatsapp-cloud` ($29 / $290) |
+| Connect | Meta OAuth → WABA → phone; webhook subscribe; encrypted tokens |
+| Inbox | Shared conversation list + thread; text send/receive |
+| Templates | Sync Meta Cloud templates; required outside the 24h window |
+| Lead soft link | Manual `lead_id`; timeline via Lead APIs; no auto-create Lead |
+| Notifications | Inbound, send failed, needs reauth |
+
+Canonical user docs: [WhatsApp Cloud](/user-guide/whatsapp-cloud) · [API](/api/tenant-v1-whatsapp-cloud) · [Deploy](/deployment/whatsapp-cloud).
+
+### Communication Templates fallback (`wa.me`)
+
+EloSync **also** supports a lightweight WhatsApp handoff via [Communication Templates](/developer-guide/communication-templates):
+
+| Fallback | Behavior |
+|----------|----------|
+| WhatsApp button on Lead pages | Shown when Communication Templates is installed and Cloud is not ready / not entitled |
 | Opens `wa.me` / WhatsApp Desktop / WhatsApp Web | API returns `wa_me_url`; the browser opens it |
 | User manually sends messages | The agent completes send inside WhatsApp; EloSync does not transmit the message |
 
-This is **not** a WhatsApp API integration.
-
-### Not supported today
+### Deferred (post-MVP)
 
 | Capability | Status |
 |------------|--------|
-| Sending through EloSync | ❌ Not supported |
-| Receiving replies | ❌ Not supported |
-| Delivery status | ❌ Not supported |
-| Read receipts | ❌ Not supported |
-| Media synchronization | ❌ Not supported |
-| Conversations | ❌ Not supported |
-| Shared inbox | ❌ Not supported |
-| Meta message templates (Cloud API) | ❌ Not supported (plain-text Communication Templates only) |
-| Webhooks | ❌ Not supported |
-| Automation driven by WhatsApp events | ❌ Not supported |
-
-Canonical user docs: [Communication Templates](/user-guide/communication-templates) · [Leads — WhatsApp](/user-guide/leads#whatsapp-communication-templates).
+| Media upload/download | ⬜ Deferred |
+| Automation WhatsApp triggers/actions | ⬜ Deferred |
+| WhatsApp Lead Source Driver (auto-create Leads) | ⬜ Deferred |
+| Alternate BSPs (Twilio / 360dialog) | ⬜ Deferred |
+| AI Features | ⬜ Deferred |
 
 ---
 
@@ -522,60 +527,60 @@ Both respect driver boundaries: no Meta parsing inside `LeadService`; no convers
 
 ---
 
-## Implementation checklist (when building)
+## Implementation checklist (MVP delivered)
 
 ### Backend
 
-- [ ] Central Meta App settings for WhatsApp Cloud (encrypted secrets, verify token)
-- [ ] Tenant connect / reconnect / disconnect + encrypted WABA/phone tokens
-- [ ] `WhatsAppCloudDriver` + messaging driver registry
-- [ ] Webhook verify + signature rejection path + tenant resolution by phone/WABA id
-- [ ] Conversation / Message conceptual model → real migrations
-- [ ] Outbound send queue + inbound process queue + idempotency
-- [ ] Lead timeline / activity integration via Lead-owned services
-- [ ] Template sync from Meta
-- [ ] Notification types for inbound / failed / template rejection
-- [ ] Pest: signature, tenancy, idempotency, no direct Lead DB writes from driver
+- [x] Central Meta App settings for WhatsApp Cloud (encrypted secrets, verify token)
+- [x] Tenant connect / reconnect / disconnect + encrypted WABA/phone tokens
+- [x] `WhatsAppCloudDriver` + messaging driver registry
+- [x] Webhook verify + signature rejection path + tenant resolution by phone/WABA id
+- [x] Conversation / Message migrations + services
+- [x] Outbound send queue + inbound process queue + idempotency
+- [x] Lead timeline / activity integration via Lead-owned services
+- [x] Template sync from Meta + outside-24h enforcement
+- [x] Notification types for inbound / failed / needs_reauth
+- [x] Pest: signature, tenancy, idempotency, no direct Lead DB writes from driver
 
 ### Frontend
 
-- [ ] Connection wizard (Business → WABA → phone)
-- [ ] Shared inbox + conversation thread on Lead
-- [ ] Compose send + template picker (Cloud templates)
-- [ ] Playwright smokes with mocked Cloud API
+- [x] Connection wizard (Business → WABA → phone)
+- [x] Shared inbox + Lead soft-link entry
+- [x] Compose send + template picker (Cloud templates)
+- [x] Playwright smokes with mocked Cloud API
 
 ### Docs / ops
 
-- [ ] Flip this page from Planned → shipped sections
-- [ ] User Guide + Deployment webhook/env notes
-- [ ] CHANGELOG + Product Roadmap status
+- [x] Flip this page from Planned → shipped sections
+- [x] User Guide + Deployment webhook/env notes
+- [x] CHANGELOG + Product Roadmap status
 
 ---
 
 ## Implementation status
 
-### Current
+### Shipped MVP 1.0.0
 
 | Capability | Status |
 |------------|--------|
-| Open WhatsApp manually (`wa.me` / Desktop / Web) | ✅ Shipped |
+| Open WhatsApp manually (`wa.me` / Desktop / Web) | ✅ Shipped (Communication Templates fallback) |
+| Cloud API connect + text send/receive | ✅ Shipped |
+| Incoming messages | ✅ Shipped |
+| Shared Inbox | ✅ Shipped |
+| Templates (Meta Cloud) | ✅ Shipped |
+| Conversation History | ✅ Shipped |
+| Delivery Tracking / Read Receipts | ✅ Shipped (webhook statuses) |
+| Soft Lead link + timeline | ✅ Shipped |
 
-### Future
+### Deferred
 
 | Capability | Status |
 |------------|--------|
-| Cloud API | ⬜ Planned |
-| Incoming messages | ⬜ Planned |
-| Shared Inbox | ⬜ Planned |
-| Templates (Meta Cloud) | ⬜ Planned |
-| Automation | ⬜ Planned |
-| Conversation History | ⬜ Planned |
-| Delivery Tracking | ⬜ Planned |
-| Read Receipts | ⬜ Planned |
-| Media | ⬜ Planned |
-| AI Features | ⬜ Planned |
-
-This document is an **architectural roadmap only**. No implementation, migrations, API endpoints, or UI are implied by publishing it.
+| Automation WhatsApp triggers | ⬜ Deferred |
+| Media | ⬜ Deferred |
+| AI Features | ⬜ Deferred |
+| Lead Source WhatsApp Driver | ⬜ Deferred |
+| Alternate BSPs | ⬜ Deferred |
 
 ---
 
@@ -583,7 +588,10 @@ This document is an **architectural roadmap only**. No implementation, migration
 
 - [Lead Source Driver Architecture](/developer-guide/lead-source-driver-architecture)
 - [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration)
-- [Communication Templates](/developer-guide/communication-templates) (current `wa.me` MVP)
+- [Communication Templates](/developer-guide/communication-templates) (`wa.me` fallback)
+- [WhatsApp Cloud — User Guide](/user-guide/whatsapp-cloud)
+- [Tenant WhatsApp Cloud API](/api/tenant-v1-whatsapp-cloud)
+- [WhatsApp Cloud Deployment](/deployment/whatsapp-cloud)
 - [Leads — Developer Guide](/developer-guide/leads)
 - [Notification Architecture Contract](/developer-guide/notification-architecture-contract)
 - [Payment Gateway Webhooks](/developer-guide/payment-gateways-webhooks) (ingress / signature patterns)

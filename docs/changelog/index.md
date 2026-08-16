@@ -1,5 +1,20 @@
 # Changelog
 
+## WhatsApp Cloud 1.0.0 production readiness — Conditional Go (2026-08-16)
+
+- Audit: staff connection-status access, needs_reauth notify, outbound Queued-only send, OAuth HashRouter callback, headed e2e **6/6**.
+- **Conditional Go** pending CI + staging smoke / Forge WhatsApp queues / Meta App setup.
+- Canonical page: [WhatsApp Cloud production readiness](/deployment/whatsapp-cloud-production-readiness).
+
+## WhatsApp Cloud module 1.0.0 (2026-08-16)
+
+Catalog version: **whatsapp-cloud 1.0.0** (new billable CRM module, $29 / $290).
+
+- Meta WhatsApp Cloud API: connect WABA/phone, shared inbox, text send/receive, status webhooks, Meta template sync + outside-24h enforcement.
+- Soft optional Lead link + timeline activity; Communication Templates `wa.me` remains fallback.
+- Deferred: media, Automation triggers, Lead Source WhatsApp Driver.
+- Docs: [overview](/user-guide/whatsapp-cloud-overview), [user](/user-guide/whatsapp-cloud), [developer](/developer-guide/whatsapp-cloud-integration), [API](/api/tenant-v1-whatsapp-cloud), [deployment](/deployment/whatsapp-cloud), [production readiness](/deployment/whatsapp-cloud-production-readiness), [roadmap](/getting-started/product-roadmap)
+
 ## Reports 1.4.0 production readiness — Go (2026-08-16)
 
 - Closed audit openers: companion PRs Backend [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28); Backend Laravel Tests + Code Quality Gate **success**; local catalog migrated to **1.4.0**.

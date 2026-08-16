@@ -239,6 +239,21 @@ Until steps 1–3 are done, only Meta test apps / app-role users work. See [Lead
 
 ---
 
+## Part E — WhatsApp Cloud (optional product on the same Meta App)
+
+WhatsApp Cloud may reuse the platform Meta App / Business Portfolio. Tenant WABA/phone tokens stay in **separate** tables from Lead Ads Page tokens.
+
+| Purpose | Path |
+|---------|------|
+| OAuth redirect | `{APP_URL}/api/oauth/whatsapp/cloud/callback` |
+| Webhook callback | `{APP_URL}/webhooks/whatsapp/cloud` (`messages`) |
+
+Configure Central `PUT /api/central/v1/integrations/whatsapp-cloud` or env `META_WHATSAPP_*` (falls back to `META_LEAD_ADS_*`). Workers must process `whatsapp-inbound` and `whatsapp-outbound`.
+
+See [WhatsApp Cloud Deployment](/deployment/whatsapp-cloud) and [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration).
+
+---
+
 ## Related
 
 - [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration) — architecture, driver, multi-tenant design
@@ -247,4 +262,4 @@ Until steps 1–3 are done, only Meta test apps / app-role users work. See [Lead
 - [Leads — Production Guide](/deployment/leads)
 - [Leads — User Guide](/user-guide/leads-overview)
 - [Tenant Leads API](/api/tenant-v1-leads)
-- [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) — separate Meta products; may share a Business Portfolio later
+- [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) — messaging; may share Business Portfolio with Lead Ads
