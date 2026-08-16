@@ -107,10 +107,10 @@ Until the in-app channel is live, founding beta participants may use the agreed 
 
 ## 8. Product roadmap relationship
 
-- The [Product Roadmap](/getting-started/product-roadmap) remains the long-term CRM → modular SaaS ERP direction.
+- The [Product Roadmap](/getting-started/product-roadmap) remains the long-term **Business Operating System** direction (Phases 1–8 shipped; Future Expansion is a tiered candidate backlog).
 - Founding Beta does **not** rewrite platform freeze or module architecture standards.
-- Feedback informs **priority** within the roadmap — it does not invent parallel product foundations.
-- Marketing positioning during beta emphasizes **Business Operating System** (connected modular operations), not “another CRM.”
+- Feedback informs **priority within** Near-term / Parked / Out-of-scope tiers — it does not invent parallel product foundations or resurrect demoted verticals (manufacturing, POS, e-commerce) without clear demand.
+- Marketing positioning during beta emphasizes **Business Operating System** (connected modular operations), not “another CRM” and not unfinished SAP.
 
 ---
 

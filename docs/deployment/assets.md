@@ -42,4 +42,4 @@ On large tenant fleets, run migrate in a maintenance window (or raise PHP `max_e
 
 ## Roadmap context
 
-Assets is the first **Future Expansion** Marketplace SKU after Phases 1–8. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Assets ships as free Operations Marketplace opt-in **v1.0.0** (shipped). Near-term Future Expansion focus is **Documents** — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
