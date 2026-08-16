@@ -1,6 +1,6 @@
 # Product Roadmap
 
-Long-term direction of the platform: evolution from a CRM foundation into a complete modular **Business Operating System** / SaaS ERP. Modules should be implemented in the order below unless business priorities require otherwise.
+Long-term direction of the platform: evolution from a CRM foundation into a complete modular **Business Operating System**. Numbered phases below are the delivered BOS core. **Future Expansion** is a prioritized candidate backlog — not a promise to ship every enterprise ERP vertical. Founding Beta feedback may reorder items within these tiers.
 
 > **Founding Beta**
 >
@@ -362,36 +362,64 @@ Implement workforce management.
 
 ## Future Expansion
 
-The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
+Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, Automation, Storage, and WhatsApp Cloud MVP are **shipped**. What remains is a **candidate backlog** for the Business Operating System — not a build-everything ERP ladder.
 
-- Documents
-- Manufacturing
-- Quality Assurance
-- Recruitment
-- Customer Portal
-- Vendor Portal
-- Business Intelligence & Analytics — **shipped v1.4.0** as free Marketplace module `analytics` (Reports suite: executive dashboard + CRM/Sales/Billing/Purchasing/People including Payroll soft source + mixed chart types + CSV; see [Analytics Overview](/user-guide/analytics-overview)); report builder and saved reports still planned
-- Workflow Automation — **shipped v1.0.0** as billable Marketplace module `automation` (see [Automation Overview](/user-guide/automation-overview)); WhatsApp message triggers still planned post Cloud MVP
-- Storage — **shipped v1.0.0** as free `storage` (1 GB) + billable capacity packs `storage-10` … `storage-1000` (see [Storage](/user-guide/storage)); task/lead images and email attachment persistence still planned
-- Marketing Automation
-- Email Campaigns
-- SMS & WhatsApp provider integrations — Communication Templates `wa.me` + Cloud API MVP (`whatsapp-cloud`) shipped; Twilio / media / Automation WA triggers still deferred: [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration)
-- API & Webhooks
-- **AI Integration (Planning)** — optional integrations with Leads, Tasks, CRM, and other domain modules
-- Multi-Branch Management
-- Multi-Currency Accounting
-- POS (Point of Sale)
-- E-Commerce Integrations
+> **Priority rule**
+>
+> Build **Near-term** first. Promote from **Parked** only when Founding Beta (or paid) demand is clear. Do **not** sequence **Out of active scope** items as the next Marketplace SKUs.
+
+### Already shipped (called out so they are not re-planned)
+
+| Capability | Status |
+|------------|--------|
+| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Shipped v1.4.0 — report builder / saved / scheduled reports still parked |
+| [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
+| [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped MVP 1.0.0 — media, Automation WA triggers, Lead Source WhatsApp driver deferred post-MVP |
+
+### Near-term (active focus)
+
+| Item | Notes |
+|------|--------|
+| **Documents** | Next net-new Marketplace module — internal document library on Storage; soft record links later |
+| **API & Webhooks** (tenant product surface) | Deepen public/integration story for operators replacing other tools |
+| WhatsApp Cloud post-MVP polish | Media, Automation WA triggers, Lead Source WhatsApp driver — deepen CRM, not a new category |
+| **Customer Portal** | On demand after Help Desk / Billing self-serve signal |
+| **Recruitment** | On demand as an HR extension after Employees workflows stick |
+
+### Parked (do not promise; wait for multi-tenant signal)
+
+| Item | Notes |
+|------|--------|
+| Marketing Automation | CRM upsell after core workflows stick |
+| Email Campaigns | Same |
+| Vendor Portal | Narrower than Customer Portal |
+| Multi-Currency Accounting | Finance depth for a subset of tenants |
+| Multi-Branch Management | Enterprise-ish; not founding-beta SMB core |
+| Analytics report builder / saved / scheduled reports | Reports suite v2 |
+| Storage attachment persistence (task/lead images, email files) | Completes Storage MVP gaps |
+| **AI Integration (Planning)** | Optional cross-cutting capability — planning only until near-term BOS gaps close |
+
+### Out of active scope (unless demanded)
+
+These are **not** sequenced after Documents. Leave them off public “what’s next” marketing until a real workflow forces them:
+
+| Item | Why demoted |
+|------|-------------|
+| Manufacturing | MES/MRP — different product category than EloSync BOS |
+| Quality Assurance | Manufacturing-adjacent |
+| POS (Point of Sale) | Retail stack — sideways from operator BOS |
+| E-Commerce Integrations | Channel platform work — only if a tenant forces it |
 
 ### AI
 
 | Capability | Status |
 |------------|--------|
-| AI Integration (Planning) | Planned |
+| AI Integration (Planning) | Parked (planning) |
 
-AI is documented as a future cross-cutting capability. Integrations with Leads, Tasks, CRM, and similar modules should be **optional**. See [Module Dependencies](/architecture/module-dependencies).
+AI remains a future **optional** cross-cutting capability. Integrations with Leads, Tasks, CRM, and similar modules must not require every domain module. See [Module Dependencies](/architecture/module-dependencies).
 
-These modules will follow the same [Module Architecture](/architecture/module-architecture) and [Module Development Standard](/developer-guide/module-development) established by Leads and Tasks.
+Any module that *is* promoted from this backlog still follows [Module Architecture](/architecture/module-architecture) and the [Module Development Standard](/developer-guide/module-development) established by Leads and Tasks.
 
 ---
 
@@ -567,7 +595,7 @@ Full checklist: [Module Development Standard](/developer-guide/module-developmen
 
 ## Long-Term Vision
 
-Evolve the platform into a modular, enterprise-grade SaaS ERP where organizations subscribe only to the modules they require. Each module integrates with the shared platform foundation while remaining independently licensable, maintainable, and scalable.
+Evolve EloSync into a modular **Business Operating System** where organizations subscribe only to the modules they require. Each module integrates with the shared platform foundation while remaining independently licensable, maintainable, and scalable. Industry-vertical ERP capabilities (manufacturing, POS, e-commerce channels) stay optional and demand-driven — they are not required to complete the BOS story.
 
 ## Related
 

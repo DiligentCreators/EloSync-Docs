@@ -1,5 +1,13 @@
 # Changelog
 
+## Product roadmap — Future Expansion tiers (2026-08-16)
+
+Documentation + marketing alignment (no new Marketplace SKU).
+
+- [Product Roadmap](/getting-started/product-roadmap) **Future Expansion** rewritten into **Near-term** (Documents → API & Webhooks → on-demand Customer Portal / Recruitment; WhatsApp post-MVP polish), **Parked** (marketing campaigns, portals/finance depth, AI planning, report builder), and **Out of active scope** (Manufacturing, QA, POS, E-Commerce) unless tenant demand forces them.
+- Founding Beta roadmap relationship and Getting Started index updated for Business Operating System framing (not an open-ended ERP ladder).
+- Marketing site roadmap / marketplace placeholders aligned: next focus **Documents**; POS and email-campaign cards removed from “planned” marketplace teasers.
+
 ## Assets module 1.0.0 (2026-08-16)
 
 Catalog version: **assets 1.0.0** (new free Operations Marketplace opt-in; `is_default_included = false`, `is_billable = false`; **no** hard module dependencies).

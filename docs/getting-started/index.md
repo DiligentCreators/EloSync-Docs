@@ -9,7 +9,7 @@ Welcome to **EloSync** documentation. Start here to understand the frozen platfo
 | [Installation & Local Configuration](./installation) | Local Herd/Vite setup; production uses [Laravel Forge](/deployment/laravel-forge) |
 | [Platform Freeze](./platform-freeze) | Locked foundation; when refactoring is allowed |
 | [Architecture](/architecture/) | Modular architecture, dependencies, and licensing conventions |
-| [Product Roadmap](./product-roadmap) | CRM → ERP module phases and delivery order |
+| [Product Roadmap](./product-roadmap) | Shipped BOS phases + prioritized Future Expansion backlog |
 | [Documentation Governance](/developer-guide/documentation-governance) | Same-PR rule: code + tests + docs |
 | [Local Demo Data](./local-demo-data) | Seed users, leads, and tasks for local development |
 
