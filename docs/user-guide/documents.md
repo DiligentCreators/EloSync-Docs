@@ -50,8 +50,11 @@ Edit metadata (title, description, category) from the row menu or detail drawer.
 ## Soft delete & restore
 
 - **Delete** soft-deletes the document row; the file remains on disk but **stops counting** toward Storage used bytes
+- Only the **uploader** or the **workspace owner** can delete or permanently delete a document (having delete permission alone is not enough for someone else’s files)
+- Select multiple active documents you own (or all, if you are the owner) and use **Delete (N)** for bulk soft delete
 - **Restore** brings it back into the library and quota (blocked if restoring would exceed Storage allowance)
-- **Delete permanently** removes the row and deletes the object from storage
+- **Delete permanently** removes the row and deletes the object from storage (trash / Deleted only) — same ownership rule
+- In **Deleted only**, select rows and use **Delete permanently (N)** for bulk permanent delete
 - Soft-deleted documents older than your workspace **trash retention** (Settings → General) are purged automatically — including the file on disk (`trash:purge-expired`). Retention `0` keeps trash forever.
 
 ## Permissions

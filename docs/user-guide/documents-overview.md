@@ -19,6 +19,7 @@ Operations module on the frozen platform. A workspace **flat file library** — 
 - Flat categories (name/slug/sort/active) — no nested folders
 - Download original file by authenticated API
 - Soft delete / restore; permanent delete removes the object from disk
+- Bulk soft delete (active list) and bulk permanent delete (Deleted only)
 - Table view with search, category filter, and trash filters
 - KPIs via `GET /documents/stats` (total, categorized, uncategorized)
 - File bytes count toward the workspace **Storage** quota (`documents.size_bytes`)
@@ -30,11 +31,13 @@ Operations module on the frozen platform. A workspace **flat file library** — 
 
 `documents.view` · `create` · `update` · `delete` · `restore` · `force.delete`
 
+**Delete / force delete ownership:** users may only soft-delete or permanently delete documents they uploaded (`created_by`), even when they hold `documents.delete` / `documents.force.delete`. The workspace owner (`superadmin` role) may delete any document. View / create / update / restore are unchanged permission gates.
+
 Default roles: **admin** = all except `force.delete`; **manager** = view / create / update; **staff** = view.
 
 ## Catalog
 
-Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.0.1**.
+Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.1.0**.
 
 **Hard dependency:** Storage (`storage`) must be entitled first. Install fails without it.
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## Documents module 1.1.0 (2026-08-17)
+
+Catalog version: **documents 1.1.0** (MINOR — bulk soft delete + bulk force delete + uploader ownership).
+
+- `POST /documents/bulk-delete` (`documents.delete`) and `POST /documents/bulk-force-delete` (`documents.force.delete`); max 100 ids; returns `processed` / `failed`.
+- Force delete (single + bulk) requires the document to already be soft-deleted (Assets parity).
+- **Ownership:** delete / force delete only for the uploader (`created_by`) or workspace owner (`superadmin`); permission alone is not enough for another user’s file.
+- SPA: row selection on Active / Deleted-only lists with bulk Delete and Delete permanently toolbar actions (selection limited to deletable rows).
+- Docs: user / API / developer / deploy notes; production readiness remains Go.
+
 ## Documents module 1.0.1 (2026-08-17)
 
 Catalog version: **documents 1.0.1** (PATCH — production-readiness remediations).

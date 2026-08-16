@@ -362,7 +362,7 @@ Implement workforce management.
 
 | Module | Status |
 |--------|--------|
-| [Documents](/user-guide/documents-overview) | ✅ Completed (flat file library on Storage; free Operations opt-in; catalog **1.0.1**) |
+| [Documents](/user-guide/documents-overview) | ✅ Completed (flat file library on Storage; free Operations opt-in; catalog **1.1.0**) |
 
 #### Documents (shipped)
 
@@ -387,7 +387,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 
 | Capability | Status |
 |------------|--------|
-| [Documents](/user-guide/documents-overview) | ✅ Shipped v1.0.1 — soft record links / nested folders still deferred |
+| [Documents](/user-guide/documents-overview) | ✅ Shipped v1.1.0 — soft record links / nested folders still deferred |
 | [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Shipped v1.4.0 — report builder / saved / scheduled reports still parked |
 | [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
 | [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
@@ -399,7 +399,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 |------|--------|
 | **API & Webhooks** (tenant product surface) | Deepen public/integration story for operators replacing other tools |
 | WhatsApp Cloud post-MVP polish | Media, Automation WA triggers, Lead Source WhatsApp driver — deepen CRM, not a new category |
-| Documents polish (on demand) | Soft record links / nested folders — deferred from Documents **1.0.1**; promote only with clear demand |
+| Documents polish (on demand) | Soft record links / nested folders — deferred from Documents **1.1.0**; promote only with clear demand |
 | **Customer Portal** | On demand after Help Desk / Billing self-serve signal |
 | **Recruitment** | On demand as an HR extension after Employees workflows stick |
 
