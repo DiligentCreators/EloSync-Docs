@@ -45,9 +45,9 @@ Workers must listen to both queues (or `*` in non-prod). See Forge notes in [Lar
 
 ## Smoke
 
-1. Install module → connect OAuth → select WABA/phone.
-2. Inbound test message creates conversation.
+1. Install module → connect OAuth → select WABA → select phone.
+2. Inbound test message creates conversation; soft-link a Lead from the inbox header.
 3. Reply text inside 24h; template outside 24h.
-4. Disconnect retains history; tokens cleared.
+4. Disconnect retains history and releases the Meta phone id for reclaim; tokens cleared.
 
 Full go-live checklist: [WhatsApp Cloud production readiness](./whatsapp-cloud-production-readiness).
