@@ -24,7 +24,9 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 - Create requires multipart `file` (max 51200 KB / 50 MB). `DocumentService::create` calls `WorkspaceStorageService::assertCanStore` then `FileUploadService::store` under `FileUploadService::tenantDirectory($tenantId, 'documents')` (`public: false`).
 - Update may replace the file via `FileUploadService::replace`; quota check uses the positive size delta only.
 - Soft delete does **not** remove the object until force delete or trash retention purge; `forceDeleting` deletes via `FileUploadService` (covers API + `trash:purge-expired`).
+- **Ownership:** `DocumentPolicy::delete` / `forceDelete` require the Spatie permission **and** (`created_by === actor` **or** workspace owner / `superadmin` role). Bulk endpoints use the same Gate checks per id.
 - Restore calls `assertCanStore` for the document's `size_bytes` before un-trashed bytes count again.
+- Bulk: `DocumentService::bulkDelete` / `bulkForceDelete` (max 100 ids) with per-id failure reporting; force requires soft-deleted rows (single + bulk).
 - File replace: prefer `POST /documents/{id}` (named `documents.update.post`); JSON metadata-only updates may use `PUT`. PHP does not populate multipart files on true HTTP PUT.
 - `Document` / `DocumentCategory` are registered in `TrashPurgeRegistry` (workspace `trash.retention_days`).
 - `WorkspaceStorageService::usedBytes()` sums non-trashed `documents.size_bytes` with chat/feedback/lead-import usage.
@@ -32,7 +34,7 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 - Platform audit events: `document_created`, `document_updated`, `document_deleted`, `document_restored`, `document_force_deleted`.
 - `documents.force.delete` is not granted to default roles — owner/superadmin only, matching Vendors / Assets.
 - Production readiness: [Documents production readiness](/deployment/documents-production-readiness).
-- Catalog version **1.0.1**
+- Catalog version **1.1.0**
 
 ## Permissions
 
@@ -47,7 +49,7 @@ Routes use `module:documents` then `can:documents.*` / policies. Category CRUD r
 ## Catalog
 
 - Slug `documents`, category `operations`, `sort_order` 85, icon `file-text`
-- `is_default_included = false`, `is_billable = false`, version **1.0.1**
+- `is_default_included = false`, `is_billable = false`, version **1.1.0**
 - Hard `module_dependencies` row: **documents → storage** (`is_optional = false`)
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule` (no seeder in production)
 

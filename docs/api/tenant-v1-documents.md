@@ -61,9 +61,25 @@ Permission: `documents.update` (named route `documents.update.post`)
 
 **File replace:** use this `POST` twin — PHP does not populate uploaded files on a true HTTP `PUT`. The official SPA posts FormData here (no `_method` spoofing required). Method-spoofed `POST` + `_method=PUT` also works.
 
+### POST `/documents/bulk-delete`
+
+Permission: `documents.delete`
+
+Body: `{ "ids": [1, 2, …] }` — required array, 1–100 distinct positive integers.
+
+Soft-deletes active documents the actor is allowed to delete (uploader or workspace owner). Already-trashed / missing / unauthorized ids are listed under `failed`. Response data: `processed` (int), `failed` (`[{ id, message }]`). Returns `422` when `processed === 0`.
+
+### POST `/documents/bulk-force-delete`
+
+Permission: `documents.force.delete`
+
+Body: same `ids` shape as bulk-delete.
+
+Permanently deletes **soft-deleted** documents the actor is allowed to force-delete (uploader or workspace owner) and removes objects from storage. Active documents are reported in `failed` (must soft-delete first). Returns `422` when `processed === 0`.
+
 ### DELETE `/documents/{id}`
 
-Soft delete. Permission: `documents.delete`. Soft-deleted bytes stop counting toward Storage used. Objects remain on disk until force delete or workspace trash retention purge (`trash:purge-expired`).
+Soft delete. Permission: `documents.delete`, and the actor must be the **uploader** (`created_by`) or the **workspace owner**. Soft-deleted bytes stop counting toward Storage used. Objects remain on disk until force delete or workspace trash retention purge (`trash:purge-expired`). Already-trashed rows return not found.
 
 ### POST `/documents/{id}/restore`
 
@@ -71,7 +87,7 @@ Restore a soft-deleted document. Permission: `documents.restore`. Re-checks Stor
 
 ### DELETE `/documents/{id}/force`
 
-Permanently delete a soft-deleted document and remove the object from storage. Permission: `documents.force.delete`.
+Permanently delete a **soft-deleted** document and remove the object from storage. Permission: `documents.force.delete`, and the actor must be the **uploader** or the **workspace owner**. Active documents return `400` (must soft-delete first).
 
 ### GET `/documents/{id}/download`
 
