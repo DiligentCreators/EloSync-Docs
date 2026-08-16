@@ -365,6 +365,17 @@ Assets installs as a free Operations Marketplace opt-in (`assets` **1.0.0**) wit
 
 **Status:** Shipped — see [Assets Overview](/user-guide/assets-overview) and [Product Roadmap](/getting-started/product-roadmap).
 
+### Documents → Storage (required, shipped)
+
+```text
+Documents
+  └── depends on Storage   (required)
+```
+
+Documents installs as a free Operations Marketplace opt-in (`documents` **1.0.0**) with a **hard** `module_dependencies` row on free **Storage**. Install is blocked until Storage is entitled. Uploaded file bytes (`documents.size_bytes`) count toward workspace Storage used quota; soft-deleted documents are excluded until restored. Flat categories only — soft links to other modules and nested folders are deferred and must remain soft/optional if added later.
+
+**Status:** Shipped — see [Documents Overview](/user-guide/documents-overview) and [Product Roadmap](/getting-started/product-roadmap).
+
 ### Analytics / Reports → CRM / Sales / Billing / Purchasing modules (optional, shipped)
 
 ```text
@@ -399,7 +410,7 @@ storage-10 / storage-50 / storage-100 / storage-500 / storage-1000
   └── depends on storage   (required)
 ```
 
-Billable capacity packs cannot install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel current pack before buying another size). Content upload modules (Team Chat, Feedback, Lead imports) soft-check Storage allowance; they do not declare a hard `module_dependencies` row on Storage. Team Chat soft-companion installs free Storage when Team Chat is activated.
+Billable capacity packs cannot install until free **Storage** is entitled. Packs are mutually exclusive in product logic (cancel current pack before buying another size). Content upload surfaces (Team Chat, Feedback, Lead imports) soft-check Storage allowance; they do not declare a hard `module_dependencies` row on Storage. **Documents** is different: it declares a **required** dependency on Storage. Team Chat soft-companion installs free Storage when Team Chat is activated.
 
 **Status:** [Storage](/user-guide/storage-overview) shipped.
 

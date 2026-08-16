@@ -1,6 +1,6 @@
 # Storage
 
-Workspace content storage for chat attachments, feedback screenshots, and lead imports. Logos, favicons, and profile avatars stay on the app server and do **not** count toward this quota.
+Workspace content storage for chat attachments, feedback screenshots, lead imports, and **Documents** library files. Logos, favicons, and profile avatars stay on the app server and do **not** count toward this quota.
 
 ## Enable Storage
 
@@ -40,11 +40,13 @@ Cancelling a pack returns the workspace to the free 1 GB (while `storage` remain
 - Team Chat message attachments
 - Feedback screenshots / attachments
 - Lead import source files (and generated error reports when present)
+- Documents module files (`documents.size_bytes` for non-deleted documents)
 
 **Not included**
 
 - Workspace / Central branding logos and favicons
 - Profile avatars
+- Soft-deleted Documents (until restored; force-delete removes the object)
 
 ## Settings
 
@@ -61,3 +63,4 @@ Cancelling a pack returns the workspace to the free 1 GB (while `storage` remain
 ## Related
 
 - [Storage overview](/user-guide/storage-overview)
+- [Documents](/user-guide/documents) (bytes count toward this quota; requires Storage)

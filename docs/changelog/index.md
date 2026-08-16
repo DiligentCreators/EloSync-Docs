@@ -1,5 +1,17 @@
 # Changelog
 
+## Documents module 1.0.0 (2026-08-16)
+
+Catalog version: **documents 1.0.0** (new free Operations Marketplace opt-in; `is_default_included = false`, `is_billable = false`; **hard** dependency on Storage).
+
+- Flat internal document library: upload, categorize, download, soft delete / restore / force delete.
+- Categories are flat (no nested folders); soft/force delete blocked while documents still reference the category.
+- Uploads via `FileUploadService`; `WorkspaceStorageService::usedBytes()` includes active `documents.size_bytes` (soft-deleted excluded).
+- Permissions: `documents.view|create|update|delete|restore|force.delete` — admin defaults exclude force.delete; manager = view/create/update; staff = view.
+- To make billable later: Central → Modules → Documents → set `is_billable` + prices (existing Update Module API; no new Central UI).
+- Deferred: soft record links, nested folders, versioning, preview, dashboard widget, Automation triggers.
+- Docs: [overview](/user-guide/documents-overview), [user](/user-guide/documents), [developer](/developer-guide/documents), [API](/api/tenant-v1-documents), [deployment](/deployment/documents), [roadmap](/getting-started/product-roadmap)
+
 ## Product roadmap — Future Expansion tiers (2026-08-16)
 
 Documentation + marketing alignment (no new Marketplace SKU).

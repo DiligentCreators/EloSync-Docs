@@ -64,6 +64,8 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Attendance](./attendance) | Attendance module ops |
 | [Payroll](./payroll) | Payroll module ops |
 | [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
+| [Assets](./assets) | Assets Marketplace opt-in ops |
+| [Documents](./documents) | Documents Marketplace opt-in ops (hard Storage dependency) |
 | [WhatsApp Cloud](./whatsapp-cloud) | WhatsApp Cloud API ops (env, webhook, queues) |
 | [WhatsApp Cloud Production Readiness](./whatsapp-cloud-production-readiness) | Go-live audit / Conditional Go |
 | [Reports (Analytics)](./analytics) | Reports suite ops (slug `analytics`; migrate-only catalog + permissions) |

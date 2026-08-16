@@ -358,11 +358,26 @@ Implement workforce management.
 
 **Goal:** Give workspaces an installable company asset register without forcing Inventory or HR. ✅ **Achieved** for v1.0.0.
 
+## Documents (shipped)
+
+| Module | Status |
+|--------|--------|
+| [Documents](/user-guide/documents-overview) | ✅ Completed (flat file library on Storage; free Operations opt-in; catalog **1.0.0**) |
+
+#### Documents (shipped)
+
+- Upload / download workspace files; optional flat categories; soft delete / restore / force delete
+- **Hard** dependency on Storage — install blocked without it; `documents.size_bytes` counts toward Storage quota
+- Free Marketplace opt-in: `is_default_included = false`, `is_billable = false` (flip billable later via Central Update Module API)
+- Explicitly deferred: soft links to CRM/HR/records, nested folders / directory trees, versioning, preview, dashboard widget, Automation triggers
+
+**Goal:** Give workspaces a shared internal document library on Storage without folders or cross-module links yet. ✅ **Achieved** for v1.0.0.
+
 ---
 
 ## Future Expansion
 
-Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, Automation, Storage, and WhatsApp Cloud MVP are **shipped**. What remains is a **candidate backlog** for the Business Operating System — not a build-everything ERP ladder.
+Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, Documents, Automation, Storage, and WhatsApp Cloud MVP are **shipped**. What remains is a **candidate backlog** for the Business Operating System — not a build-everything ERP ladder.
 
 > **Priority rule**
 >
@@ -372,6 +387,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, A
 
 | Capability | Status |
 |------------|--------|
+| [Documents](/user-guide/documents-overview) | ✅ Shipped v1.0.0 — soft record links / nested folders still deferred |
 | [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Shipped v1.4.0 — report builder / saved / scheduled reports still parked |
 | [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
 | [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
@@ -381,9 +397,9 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, A
 
 | Item | Notes |
 |------|--------|
-| **Documents** | Next net-new Marketplace module — internal document library on Storage; soft record links later |
 | **API & Webhooks** (tenant product surface) | Deepen public/integration story for operators replacing other tools |
 | WhatsApp Cloud post-MVP polish | Media, Automation WA triggers, Lead Source WhatsApp driver — deepen CRM, not a new category |
+| Documents polish (on demand) | Soft record links / nested folders — deferred from Documents **1.0.0**; promote only with clear demand |
 | **Customer Portal** | On demand after Help Desk / Billing self-serve signal |
 | **Recruitment** | On demand as an HR extension after Employees workflows stick |
 
@@ -402,7 +418,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, A
 
 ### Out of active scope (unless demanded)
 
-These are **not** sequenced after Documents. Leave them off public “what’s next” marketing until a real workflow forces them:
+These are **not** sequenced as the next Marketplace SKUs. Leave them off public “what’s next” marketing until a real workflow forces them:
 
 | Item | Why demoted |
 |------|-------------|

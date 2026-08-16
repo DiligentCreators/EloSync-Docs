@@ -64,6 +64,10 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Automation](./automation) | Workflows, templates, runs, and permissions |
 | [Help Desk Overview](./help-desk-overview) | Help Desk module guides index |
 | [Help Desk](./help-desk) | Internal tickets, categories, assignment, and status workflow |
+| [Assets Overview](./assets-overview) | Assets module guides index |
+| [Assets](./assets) | Equipment / fixed-asset register |
+| [Documents Overview](./documents-overview) | Documents module guides index |
+| [Documents](./documents) | Flat file library on Storage (upload, categories, download) |
 
 | [Knowledge Base Overview](./knowledge-base-overview) | Knowledge Base module guides index |
 | [Knowledge Base](./knowledge-base) | Internal articles, categories, notes, and permissions |
