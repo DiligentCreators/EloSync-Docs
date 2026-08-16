@@ -33,6 +33,7 @@ Call `WorkspaceStorageService::assertCanStore($tenant, $incomingBytes)` **before
 - `ChatMessageService::attachFile`
 - `FeedbackService::attachFile`
 - `ImportManager::upload`
+- `DocumentService::create` / `update` (when replacing a file)
 
 Do **not** gate `UserAvatarService` or branding uploads in `TenantSettingService`.
 
@@ -44,10 +45,11 @@ Sum of:
 
 - `chat_message_attachments.size_bytes`
 - `feedback_attachments.size_bytes`
+- `documents.size_bytes` (non-trashed Documents module rows)
 - `lead_imports.file_size`
 - Disk size of import `error_report_path` / `failed_records_path` when present
 
-Branding and avatars use separate disks and are never counted.
+Branding and avatars use separate disks and are never counted. Soft-deleted Documents are excluded from the sum until restored.
 
 ## Pack exclusivity
 

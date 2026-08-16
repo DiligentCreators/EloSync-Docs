@@ -18,8 +18,9 @@ Free Marketplace module that unlocks **1 GB** of workspace content storage, with
 - Upgrade with mutually exclusive packs: **10 / 50 / 100 / 500 / 1000 GB** (pack size replaces the free 1 GB)
 - Soft-block uploads when quota is exceeded (`STORAGE_QUOTA_EXCEEDED`)
 - Settings → **Storage** usage panel (used / allowance / current pack)
-- Counts: Team Chat attachments, feedback screenshots, lead import files
+- Counts: Team Chat attachments, feedback screenshots, lead import files, and **Documents** module files (`documents.size_bytes`; soft-deleted excluded)
 - Does **not** count: branding logos/favicons, profile avatars (served from the app server)
+- **Documents** (Operations) requires Storage as a hard Marketplace dependency — see [Documents overview](/user-guide/documents-overview)
 
 ## Catalog
 

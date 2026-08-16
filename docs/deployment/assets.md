@@ -42,4 +42,4 @@ On large tenant fleets, run migrate in a maintenance window (or raise PHP `max_e
 
 ## Roadmap context
 
-Assets ships as free Operations Marketplace opt-in **v1.0.0** (shipped). Near-term Future Expansion focus is **Documents** — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Assets ships as free Operations Marketplace opt-in **v1.0.0** (shipped). Documents (**1.0.0**, hard Storage dependency) is also shipped — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
