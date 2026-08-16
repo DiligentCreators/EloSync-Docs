@@ -488,6 +488,7 @@ export default defineConfig({
             { text: 'Payroll', link: '/deployment/payroll' },
             { text: 'Help Desk', link: '/deployment/help-desk' },
             { text: 'WhatsApp Cloud', link: '/deployment/whatsapp-cloud' },
+            { text: 'WhatsApp Cloud Production Readiness', link: '/deployment/whatsapp-cloud-production-readiness' },
             { text: 'Communication Templates', link: '/deployment/communication-templates' },
             { text: 'Email', link: '/deployment/email' },
             { text: 'Branded', link: '/deployment/branded' },

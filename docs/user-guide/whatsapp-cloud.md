@@ -12,7 +12,7 @@
 - Conversations list on the left; thread on the right.
 - Inside the **24-hour customer service window** (after an inbound message): send free-form text.
 - Outside the window: send an **approved** Meta Cloud template.
-- Link a Lead from conversation details when the Leads module is installed (optional).
+- Soft Lead link: open from Lead detail **Inbox** (`?lead=` filter) when Leads is installed. Linking/unlinking a conversation to a Lead is available via API (`PATCH` `lead_id`); full inbox link UI is deferred.
 
 ## Lead detail
 

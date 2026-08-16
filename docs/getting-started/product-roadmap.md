@@ -38,6 +38,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 | [Activities](/user-guide/activities-overview) | ✅ Completed (loggable call/email/note/follow-up engagements; Contact/Company/Lead links; complete + timeline mirrors) |
 | **Lead Source Driver Architecture** | ✅ Implemented ([standard](/developer-guide/lead-source-driver-architecture); Custom Webhook + Meta drivers shipped) |
 | **Meta Lead Ads Integration** | ✅ Shipped ([Meta App Setup](/developer-guide/meta-app-setup) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration)) |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Completed (billable `whatsapp-cloud` 1.0.0: connect, inbox, templates, Lead soft link; `wa.me` fallback retained) |
 
 #### Calendar (shipped)
 

@@ -20,6 +20,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [RC1 Production Readiness](./rc1-production-readiness) | Release candidate hardening notes (absorbed into v1.1.0) |
 | [Phase 7 HR Production Readiness](./hr-phase7-production-readiness) | HR go-live checklist, smoke, rollback, sign-off |
 | [Automation Production Readiness](./automation-production-readiness) | Automation go-live checklist, smoke, rollback, sign-off |
+| [WhatsApp Cloud Production Readiness](./whatsapp-cloud-production-readiness) | WhatsApp Cloud MVP go-live checklist, smoke, residual risk |
 | [Knowledge Base Production Readiness](./knowledge-base-production-readiness) | Knowledge Base audit, go-live checklist, smoke, rollback, sign-off |
 | [Storage Production Readiness](./storage-production-readiness) | Storage module audit, blockers, smoke, rollback, sign-off |
 | [Invoices Production Readiness](./invoices-production-readiness) | Invoices 1.1.0 recurring + PDF audit, smoke, rollback, sign-off |
@@ -63,6 +64,8 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Attendance](./attendance) | Attendance module ops |
 | [Payroll](./payroll) | Payroll module ops |
 | [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
+| [WhatsApp Cloud](./whatsapp-cloud) | WhatsApp Cloud API ops (env, webhook, queues) |
+| [WhatsApp Cloud Production Readiness](./whatsapp-cloud-production-readiness) | Go-live audit / Conditional Go |
 | [Reports (Analytics)](./analytics) | Reports suite ops (slug `analytics`; migrate-only catalog + permissions) |
 | [Reports Production Readiness](./analytics-production-readiness) | Reports suite 1.1.0 Go / No-Go audit |
 

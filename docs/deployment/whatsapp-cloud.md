@@ -41,7 +41,7 @@ See [Meta App Setup](/developer-guide/meta-app-setup) (WhatsApp section).
 | `whatsapp-inbound` | `ProcessWhatsAppWebhookJob` |
 | `whatsapp-outbound` | `SendWhatsAppMessageJob` |
 
-Workers must listen to both queues (or `*` in non-prod).
+Workers must listen to both queues (or `*` in non-prod). See Forge notes in [Laravel Forge](./laravel-forge) and the [production readiness](./whatsapp-cloud-production-readiness) pre-flight.
 
 ## Smoke
 
@@ -49,3 +49,5 @@ Workers must listen to both queues (or `*` in non-prod).
 2. Inbound test message creates conversation.
 3. Reply text inside 24h; template outside 24h.
 4. Disconnect retains history; tokens cleared.
+
+Full go-live checklist: [WhatsApp Cloud production readiness](./whatsapp-cloud-production-readiness).

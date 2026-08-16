@@ -82,4 +82,4 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Custom Lead Webhook](./custom-lead-webhook) | Per-tenant webhook ingress |
 | [Meta App Setup](./meta-app-setup) | Create Meta Developer App + wire EloSync / EloSync (operator guide) |
 | [Meta Lead Ads](./meta-lead-ads-integration) | Shipped — `MetaLeadAdsDriver`, OAuth, webhooks |
-| [WhatsApp Cloud Integration](./whatsapp-cloud-integration) | Planned — Cloud API messaging beyond `wa.me` |
+| [WhatsApp Cloud Integration](./whatsapp-cloud-integration) | Shipped MVP 1.0.0 — Cloud API inbox + templates |

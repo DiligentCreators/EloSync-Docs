@@ -34,6 +34,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Attendance](./tenant-v1-attendance) | Daily attendance records and stats |
 | [Tenant Payroll](./tenant-v1-payroll) | Payroll profiles, pay runs, optional journal post |
 | [Tenant Help Desk](./tenant-v1-help-desk) | Internal tickets CRUD, status/close/reopen, notes, timeline |
+| [Tenant WhatsApp Cloud](./tenant-v1-whatsapp-cloud) | Connect, inbox, messages, Meta templates |
 | [Tenant Communication Templates](./tenant-v1-communication-templates) | Templates, placeholders, WhatsApp render |
 | [Tenant Email](./tenant-v1-email) | Personal accounts, folders, labels, messages, templates, signatures, links |
 | [Tenant Notifications](./tenant-v1-notifications) | In-app notifications |
