@@ -1,5 +1,12 @@
 # Changelog
 
+## Tenant Impersonation history and Audit Logs (2026-08-17)
+
+Central tenant details now surfaces real history instead of empty placeholders:
+
+- **Impersonation** tab: `GET /tenants/{tenant}/impersonation-sessions` (`impersonation.list`) — reason, admin, start/end, duration.
+- **Audit Logs** tab: `GET /tenants/{tenant}/audit-logs` (`tenants.read`) — platform `activity_log` rows for the workspace (including impersonation events and reason in properties).
+
 ## Central defaults: SalesOS → EloSync (2026-08-17)
 
 - Central `SystemSettingsSeeder` `app_name` / `company_name` defaults are **EloSync** (were still `SalesOS`).

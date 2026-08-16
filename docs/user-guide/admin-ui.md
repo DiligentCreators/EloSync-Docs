@@ -36,7 +36,7 @@ Not in the sidebar (reached via in-page links): `/central/tenants/:id`, `/centra
 | Screen | Primary APIs |
 |--------|----------------|
 | Tenants | `/tenants`, archive/unarchive/restore/force |
-| Tenant details | `/tenants/{id}`, `/tenants/{id}/entitlements`, `/tenants/{id}/invoices`, `/tenants/{id}/payments`, `/tenants/{id}/modules`, `/tenants/{id}/impersonate` |
+| Tenant details | `/tenants/{id}`, `/tenants/{id}/entitlements`, `/tenants/{id}/invoices`, `/tenants/{id}/payments`, `/tenants/{id}/modules`, `/tenants/{id}/impersonate`, `/tenants/{id}/impersonation-sessions`, `/tenants/{id}/audit-logs` |
 | Marketplace | `/marketplace/modules`, `/marketplace/modules/{id}`, install via `/tenants/{id}/modules` |
 | Module subscriptions | `/module-subscriptions`, cancel/deactivate |
 | Users | `/users`, invite, activity, suspend, change-password, login-as (`users.impersonate`) |
@@ -66,11 +66,13 @@ Tabbed layout:
 | **Overview** | Contact, domain, localization, logo, timeline | `GET /tenants/{id}` |
 | **Modules** | Installed subscriptions — status, source, price; cancel/deactivate actions | `installed_modules` on tenant, `/module-subscriptions/...` |
 | **Billing** | Invoice and payment history tables | `/tenants/{id}/invoices`, `/tenants/{id}/payments` |
+| **Impersonation** | Central impersonation session history (reason, admin, start/end, duration) | `GET /tenants/{id}/impersonation-sessions` (`impersonation.list`) |
+| **Audit Logs** | Platform audit trail for the workspace (`activity` log name `platform`) | `GET /tenants/{id}/audit-logs` (`tenants.read`) |
 
 Header actions:
 
 - Lifecycle: edit, archive, delete, restore, force-delete
-- **Impersonate** (`impersonation.start`): reason dialog → `POST /tenants/{id}/impersonate`; end via `POST /impersonation/{id}/end`
+- **Impersonate** (`impersonation.start`): reason dialog → `POST /tenants/{id}/impersonate`; end via `POST /impersonation/{id}/end`. The reason is stored on `impersonation_sessions` and in platform audit properties, and appears on the Impersonation and Audit Logs tabs.
 
 Plan subscription and usage-limit cards removed.
 
