@@ -66,8 +66,8 @@ Tabbed layout:
 | **Overview** | Contact, domain, localization, logo, timeline | `GET /tenants/{id}` |
 | **Modules** | Installed subscriptions — status, source, price; cancel/deactivate actions | `installed_modules` on tenant, `/module-subscriptions/...` |
 | **Billing** | Invoice and payment history tables | `/tenants/{id}/invoices`, `/tenants/{id}/payments` |
-| **Impersonation** | Central impersonation session history (reason, admin, start/end, duration) | `GET /tenants/{id}/impersonation-sessions` (`impersonation.list`) |
-| **Audit Logs** | Platform audit trail for the workspace (`activity` log name `platform`) | `GET /tenants/{id}/audit-logs` (`tenants.read`) |
+| **Impersonation** | Central impersonation session history (reason, admin, start/end, duration). Status badges: **Active**, **Ended**, or **Expired** (open session past `expires_at`). Gated by `impersonation.list`; restricted empty state when missing. Failed fetch shows **ErrorState** with retry. | `GET /tenants/{id}/impersonation-sessions` (`impersonation.list`) |
+| **Audit Logs** | Platform audit trail for the workspace (`activity` log name `platform`). `properties` in the table are **allowlisted** (reason, session ids, duration, tenant/actor/ip — no before/after blobs). Gated by `tenants.read`; restricted empty state when missing. Failed fetch shows **ErrorState** with retry. | `GET /tenants/{id}/audit-logs` (`tenants.read`) |
 
 Header actions:
 

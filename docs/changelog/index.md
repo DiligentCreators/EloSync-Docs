@@ -4,10 +4,11 @@
 
 Central tenant details now surfaces real history instead of empty placeholders:
 
-- **Impersonation** tab: `GET /tenants/{tenant}/impersonation-sessions` (`impersonation.list`) — reason, admin, start/end, duration.
-- **Audit Logs** tab: `GET /tenants/{tenant}/audit-logs` (`tenants.read`) — platform `activity_log` rows for the workspace (including impersonation events and reason in properties).
-- Frontend hardens Central resume after end (`resumeToken` + `skipSessionExpiry`).
-- Production readiness: [Tenant Audit & Impersonation History](/deployment/tenant-audit-impersonation-production-readiness) — **Go**.
+- **Impersonation** tab: `GET /tenants/{tenant}/impersonation-sessions` (`impersonation.list`) — reason, admin, start/end, duration; **Active** / **Ended** / **Expired** status from `is_active` / `is_expired`.
+- **Audit Logs** tab: `GET /tenants/{tenant}/audit-logs` (`tenants.read`) — platform `activity_log` rows for the workspace; list **`properties` allowlisted** (reason, session ids, duration, tenant/actor/ip) with `before` / `after` blobs omitted from API responses.
+- Frontend: Central resume after end (`resumeToken` in `sessionStorage` + `skipSessionExpiry` on end); **Impersonation** and **Audit Logs** tabs permission-gated with restricted empty states; **ErrorState** + retry on failed fetches.
+- Backend: `ImpersonationSession::isActive()` / `isExpired()` honour `expires_at`; MySQL virtual column + index on `activity_log.properties->tenant_id` for tenant audit list filters.
+- Production-readiness residuals **M1 / L1 / L2 / L3 remediated** — [Tenant Audit & Impersonation History](/deployment/tenant-audit-impersonation-production-readiness) — **Go**.
 
 ## Central defaults: SalesOS → EloSync (2026-08-17)
 

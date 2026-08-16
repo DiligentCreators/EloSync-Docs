@@ -108,6 +108,25 @@ Admin verify/resend cannot target self or (for non-owners) the workspace owner. 
 Login and registration issue tokens through `TenantAuthBootstrapService::issueAccessToken()` only — that service has **no authorization side effects**.  
 `ImpersonationService` (Central) reuses the same token helper for Central → Tenant owner handoff when issuing a tenant token.
 
+### Central platform impersonation
+
+Central administrators with `impersonation.start` impersonate a workspace owner via `POST /api/central/v1/tenants/{tenant}/impersonate` (required `reason`, 5–1000 chars). The SPA:
+
+1. Stashes the active Central Sanctum token as **`resumeToken`** in `sessionStorage` (via `impersonationStorage`) before swapping to the short-lived tenant bearer returned by the start response.
+2. Ends the session with `POST /api/central/v1/impersonation/{id}/end`, passing **`skipSessionExpiry: true`** on the axios request so a transient 401 during token handoff does not clear the stashed Central session before `endImpersonation()` restores `resumeToken`.
+3. Restores the Central admin context from `resumeToken` even when the end API fails (local cleanup + redirect to `/central/dashboard`).
+
+History and audit surfaces (tenant details tabs):
+
+| Endpoint | Permission | Notes |
+|----------|------------|-------|
+| `GET /api/central/v1/tenants/{tenant}/impersonation-sessions` | `impersonation.list` | Paginated; reason, admin, start/end, duration; **no tokens**; `is_active` / `is_expired` reflect `ended_at` and `expires_at` |
+| `GET /api/central/v1/tenants/{tenant}/audit-logs` | `tenants.read` | Paginated platform `activity_log` rows scoped to the workspace |
+
+List responses for audit logs **allowlist** `properties` keys (reason, impersonation session ids, duration, `tenant_id`, actor/ip metadata, module/subscription hints). Nested `before` / `after` blobs and other unreviewed keys are omitted from the API payload. Full write-path audit rows are unchanged; only the Central list resource redacts.
+
+See [Central API v1 — Impersonation](/api/central-v1#impersonation) and [Admin UI — Tenant details](/user-guide/admin-ui#tenants).
+
 ### Tenant user impersonation
 
 Workspace owners (permission `users.impersonate`) can start a same-workspace session as another non-owner user via `POST /api/tenant/v1/users/{user}/impersonate`. The SPA stashes the actor Sanctum token, swaps to the returned `target_token`, and restores the actor on `POST /api/tenant/v1/user-impersonation/{id}/end`. Nested impersonation is blocked when the active bearer token name is `impersonation` or `user-impersonation`. See [Tenant Users API](/api/tenant-v1-users#user-impersonation-login-as-user).

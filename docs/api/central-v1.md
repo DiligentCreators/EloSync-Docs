@@ -163,7 +163,7 @@ Also accepts `billing.manage` as an alternate permission.
 
 Start returns session metadata plus a short-lived `tenant_token`. List responses never include tokens.
 
-Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) include `impersonation_started` / `impersonation_ended` (and other platform events for that workspace), with the impersonation reason in `properties` when present.
+Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) include `impersonation_started` / `impersonation_ended` (and other platform events for that workspace). List responses **allowlist** `properties` to a safe subset — e.g. `reason`, impersonation session ids, `duration_seconds`, `tenant_id`, actor/ip metadata — and **omit** nested `before` / `after` blobs and other unreviewed keys. Full audit rows remain in the database; only the list resource redacts.
 
 ## Stripe / gateway / email webhooks
 
