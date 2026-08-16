@@ -30,6 +30,7 @@ These postures can change over product releases without redesigning the moduleâ€
 | Collaboration | Team Chat | Free Marketplace opt-in under category `collaboration` (`team-chat`, catalog **1.3.2**; not billable yet) |
 | Operations | Help Desk | Free Marketplace opt-in under category `operations` (`help-desk`, catalog **1.0.0**; internal ticketing MVP) |
 | Operations | Knowledge Base, Projects | Free Marketplace opt-in under category `operations` (`knowledge-base`, `projects`; catalog **1.0.0**; KB internal-only; not billable) |
+| Operations | Assets | Free Marketplace opt-in under category `operations` (`assets`, catalog **1.0.0**; equipment/fixed-asset register; not billable; no hard deps) |
 | Storage | Storage (+ packs) | Free `storage` unlocks 1 GB; billable packs `storage-10` â€¦ `storage-1000` set total allowance (mutually exclusive) |
 
 Default-included today: **Leads**, **Tasks**, **ToDos** only. Paid examples: **Branded**, **Automation**, **Storage packs**. See [Entitlements](/developer-guide/entitlements).

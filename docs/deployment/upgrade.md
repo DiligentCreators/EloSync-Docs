@@ -155,6 +155,17 @@ After migrate, free `storage` and billable packs are catalog-only except: worksp
 
 After migrate, existing workspaces do **not** auto-install Knowledge Base. Operators install `knowledge-base` from Marketplace (internal articles only; not billable). See [Knowledge Base production](/deployment/knowledge-base).
 
+## Assets module v1.0.0
+
+After migrate, existing workspaces do **not** auto-install Assets. Operators enable `assets` from Marketplace. Registration is migrate-only via `DefaultModuleRegistrar` — do **not** run `db:seed`. Permissions ship additively via `TenantPermissionSynchronizer`. No hard module dependencies.
+
+```bash
+php artisan migrate --force   # assets / asset_notes / asset_activities + catalog registration + assets.* permissions
+# then deploy Frontend, then Docs
+```
+
+See [Assets production](/deployment/assets).
+
 ## Related
 
 - [Release Process](/deployment/release-process)
@@ -167,5 +178,7 @@ After migrate, existing workspaces do **not** auto-install Knowledge Base. Opera
 - [Tenant provisioning](/developer-guide/tenant-provisioning)
 - [Expenses production](/deployment/expenses)
 - [Help Desk production](/deployment/help-desk)
+
+- [Assets production](/deployment/assets)
 
 - [Projects production](/deployment/projects)
