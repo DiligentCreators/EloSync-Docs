@@ -24,6 +24,8 @@ No stage seeder — status and category are enums on the asset row. Numbering us
 
 New Assets permissions for **existing** workspaces ship as an additive **data migration** using `TenantPermissionSynchronizer::grantMissingDefaultRolePermissions([...])`. Do **not** re-seed roles or rely on login/dashboard to repair RBAC.
 
+On large tenant fleets, run migrate in a maintenance window (or raise PHP `max_execution_time`). The synchronizer grants missing links only and swallows concurrent `role_has_permissions` unique races.
+
 ## Monitoring
 
 - Platform audit events: `asset_created`, `asset_updated`, `asset_deleted`, `asset_assigned`, `asset_note_added`

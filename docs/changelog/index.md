@@ -6,6 +6,8 @@ Catalog version: **assets 1.0.0** (new free Operations Marketplace opt-in; `is_d
 
 - Equipment / fixed-asset register: auto-number (`AST-`), status, category, identity + purchase/warranty fields, free-text location, assignment, notes/timeline.
 - Soft optional Vendor / Employee links (`LinkableVendor`, `LinkableEmployee`).
+- Assignee eligibility matches CRM lead pool (owners excluded for explicit assign; create still defaults to creator).
+- Permission grant migrate hardened against concurrent `role_has_permissions` unique races.
 - Deferred: depreciation/Accounting, Products/Inventory/Warehouse FKs, Help Desk maintenance, attachments/barcodes, dashboard widget, Automation triggers.
 - Docs: [overview](/user-guide/assets-overview), [user](/user-guide/assets), [developer](/developer-guide/assets), [API](/api/tenant-v1-assets), [deployment](/deployment/assets), [roadmap](/getting-started/product-roadmap)
 

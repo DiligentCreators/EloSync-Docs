@@ -35,7 +35,7 @@ Body:
 | `purchased_at`, `warranty_ends_at` | optional dates |
 | `purchase_cost` | optional numeric |
 | `currency` | optional, max 3 chars |
-| `assigned_to` | optional user id (`EligibleAssetAssignee`) |
+| `assigned_to` | optional user id (`EligibleAssetAssignee` — same pool as leads; owners excluded for explicit assign; `null` clears) |
 | `vendor_id` | optional; requires Vendors entitled (`LinkableVendor`) |
 | `employee_id` | optional; requires Employees entitled (`LinkableEmployee`) |
 
@@ -65,7 +65,7 @@ Permanently delete a soft-deleted asset. Permission: `assets.force.delete`.
 
 ### POST `/assets/{id}/assign`
 
-`{ "assigned_to": number|null }`
+`{ "assigned_to": number|null }` — must be an eligible custodian (CRM lead pool) or `null` to unassign. Workspace owners cannot be selected for explicit assign.
 
 ### POST `/assets/{id}/notes`
 

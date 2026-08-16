@@ -22,6 +22,7 @@ Mirror of the [Vendors developer guide](/developer-guide/vendors). Prefer copyin
 ## Domain notes
 
 - Assignee scoping via `ScopesToAssignee` with `assets.assign`; without it, users only see assets assigned to them.
+- `EligibleAssetAssignee` reuses the CRM lead eligibility pool (`User::isEligibleLeadAssignee`): excludes suspended users, workspace owners/superadmin, and `exclude_from_lead_auto_assign`. Create defaults `assigned_to` to the creator without requiring eligibility; explicit assign/update to an owner fails validation. `assigned_to: null` unassigns.
 - `assets.force.delete` is not granted to default roles — owner/superadmin only, matching Vendors.
 - Auto-number `AST-` via `assets_number_prefix` tenant setting (default `AST-`).
 - Status enum: `active` \| `in_repair` \| `retired` \| `disposed`.
