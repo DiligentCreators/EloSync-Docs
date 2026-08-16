@@ -48,6 +48,8 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 | POST | `/tenants/{tenant}/modules` | `module-subscriptions.create` | Install module — body: `module_id`, optional `billing_cycle` |
 | GET | `/tenants/{tenant}/invoices` | `invoices.list` | Paginated workspace invoices |
 | GET | `/tenants/{tenant}/payments` | `payments.list` | Paginated workspace payments |
+| GET | `/tenants/{tenant}/impersonation-sessions` | `impersonation.list` | Paginated sessions for this workspace (reason, admin, start/end; no token) |
+| GET | `/tenants/{tenant}/audit-logs` | `tenants.read` | Paginated platform `activity_log` rows for this workspace |
 | POST | `/tenants/{tenant}/impersonate` | `impersonation.start` | Body: `reason` (required, 5–1000 chars) |
 
 Tenant create/update body: `company_name`, `workspace_name?`, `slug?`, `email`, `phone?`, `logo?` (image upload), `notes?`, `status?`, `timezone?`, `currency?`, `country?`, `locale?`. Multipart form-data is supported for logo uploads. Response includes `logo_path` and `logo_url`. Platform domain is **auto-generated** from the slug + `PLATFORM_DOMAIN_SUFFIXES` (client `domain` values are ignored). Custom domains are tenant self-service via the Branded module.
@@ -155,10 +157,13 @@ Also accepts `billing.manage` as an alternate permission.
 
 | Method | Path | Permission | Notes |
 |--------|------|-------------|-------|
+| GET | `/tenants/{tenant}/impersonation-sessions` | `impersonation.list` | Paginated history for the workspace; optional `search` on reason / admin |
 | POST | `/tenants/{tenant}/impersonate` | `impersonation.start` | Creates session; audits reason, IP, user-agent |
 | POST | `/impersonation/{impersonation}/end` | `impersonation.end` (or session owner) | Sets `ended_at`, `duration_seconds` |
 
-Returns session metadata only — tenant-app login token exchange is out of scope for Central v1.
+Start returns session metadata plus a short-lived `tenant_token`. List responses never include tokens.
+
+Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) include `impersonation_started` / `impersonation_ended` (and other platform events for that workspace). List responses **allowlist** `properties` to a safe subset — e.g. `reason`, impersonation session ids, `duration_seconds`, `tenant_id`, actor/ip metadata — and **omit** nested `before` / `after` blobs and other unreviewed keys. Full audit rows remain in the database; only the list resource redacts.
 
 ## Stripe / gateway / email webhooks
 
