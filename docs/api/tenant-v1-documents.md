@@ -51,15 +51,23 @@ Includes category and creator when loaded. Does **not** expose `path` / `disk`.
 
 Permission: `documents.update`
 
+JSON body (partial): `title`, `description`, `category_id`. Prefer this for metadata-only updates.
+
+### POST `/documents/{id}`
+
+Permission: `documents.update` (named route `documents.update.post`)
+
 `multipart/form-data` (partial): `title`, `description`, `category_id`, optional `file` (same mime/size rules as create). Replacing a larger file checks quota on the positive size delta only.
+
+**File replace:** use this `POST` twin — PHP does not populate uploaded files on a true HTTP `PUT`. The official SPA posts FormData here (no `_method` spoofing required). Method-spoofed `POST` + `_method=PUT` also works.
 
 ### DELETE `/documents/{id}`
 
-Soft delete. Permission: `documents.delete`. Soft-deleted bytes stop counting toward Storage used.
+Soft delete. Permission: `documents.delete`. Soft-deleted bytes stop counting toward Storage used. Objects remain on disk until force delete or workspace trash retention purge (`trash:purge-expired`).
 
 ### POST `/documents/{id}/restore`
 
-Restore a soft-deleted document. Permission: `documents.restore`.
+Restore a soft-deleted document. Permission: `documents.restore`. Re-checks Storage quota for the document's `size_bytes` (soft-deleted rows are excluded from used bytes until restored). Returns `422` with `STORAGE_QUOTA_EXCEEDED` when restore would exceed allowance.
 
 ### DELETE `/documents/{id}/force`
 

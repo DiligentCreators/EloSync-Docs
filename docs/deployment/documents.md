@@ -1,11 +1,13 @@
 # Documents — Production Guide
 
+Full go-live audit / checklist: [Documents production readiness](./documents-production-readiness).
+
 ## Licensing
 
 - Catalog slug: `documents`
 - Category: `operations` (**Operations**), `category_sort_order = 40`
 - **Free Marketplace opt-in** module (not auto-installed)
-- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 85`, version **1.0.0**
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 85`, version **1.0.1**
 - **Hard** `module_dependencies` row: Documents → Storage (`is_optional = false`)
 - New workspaces receive only **Leads** + **Tasks** (+ ToDos) by default; enable Storage, then Documents from Marketplace
 - To flip billable later: Central → Modules → Documents → set `is_billable` + prices via existing Update Module API (no new Central UI)
@@ -29,9 +31,10 @@ On large tenant fleets, run migrate in a maintenance window (or raise PHP `max_e
 
 ## Monitoring
 
-- Platform audit events: `document_created`, `document_updated`, `document_deleted`
+- Platform audit events: `document_created`, `document_updated`, `document_deleted`, `document_restored`, `document_force_deleted`
 - Spatie activity log names: `documents`, `document-categories`
 - Storage used bytes include active `documents.size_bytes`
+- Soft-deleted document objects remain on disk until **force delete** or workspace **trash retention** purge (`trash:purge-expired`, Settings → General → trash retention)
 
 ## Deploy checklist
 
@@ -39,16 +42,19 @@ On large tenant fleets, run migrate in a maintenance window (or raise PHP `max_e
 2. Register the `documents` catalog module (migration, not seeder) as free opt-in under `operations`
 3. Register hard dependency Documents → Storage (`module_dependencies`)
 4. Confirm `module:documents` + `documents.*` permissions on target roles (permission sync migration)
-5. Confirm Storage is entitled before Documents smoke
-6. Deploy frontend (Documents nav item, list/form/categories)
-7. Smoke:
+5. Confirm catalog version **1.0.1** (`100005` bump)
+6. Confirm Storage is entitled before Documents smoke
+7. Confirm `trash:purge-expired` is scheduled (removes expired soft-deleted documents **and** disk objects)
+8. Deploy frontend (Documents nav item, list/form/categories; multipart update via POST)
+9. Smoke:
    - Create a **new** workspace → install Storage → install Documents
    - Confirm Documents install fails when Storage is missing
    - Upload / categorize / download a file
    - Soft delete → used bytes drop → restore → used bytes return
+   - Restore blocked when over quota
    - Force delete removes the object
    - Soft-delete category blocked while documents still use it
 
 ## Roadmap context
 
-Documents ships as free Operations Marketplace opt-in **v1.0.0** (shipped) with hard Storage dependency. Soft record links and nested folders remain deferred — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Documents ships as free Operations Marketplace opt-in **v1.0.1** (shipped) with hard Storage dependency. Soft record links and nested folders remain deferred — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).

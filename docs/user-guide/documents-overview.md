@@ -8,7 +8,7 @@ Operations module on the frozen platform. A workspace **flat file library** — 
 |----------|----------|
 | Operators / workspace users | [documents.md](/user-guide/documents) |
 | Engineers | [documents.md](/developer-guide/documents) |
-| Production / ops | [documents.md](/deployment/documents) |
+| Production / ops | [documents.md](/deployment/documents) · [production readiness](/deployment/documents-production-readiness) |
 | Module Development Standard | [module-development.md](/developer-guide/module-development) |
 | Reference blueprint | [assets-overview.md](/user-guide/assets-overview) |
 | Tenant API | [../api/tenant-v1-documents.md](/api/tenant-v1-documents) |
@@ -23,7 +23,8 @@ Operations module on the frozen platform. A workspace **flat file library** — 
 - KPIs via `GET /documents/stats` (total, categorized, uncategorized)
 - File bytes count toward the workspace **Storage** quota (`documents.size_bytes`)
 - Module licensing (`module:documents`) + Spatie permissions — **free Marketplace opt-in**, **requires Storage**
-- Audit logging on create / update / soft delete
+- Audit logging on create / update / soft delete / restore / force delete
+- Soft-deleted files purged with workspace trash retention (`trash:purge-expired`)
 
 ## Permissions
 
@@ -33,7 +34,7 @@ Default roles: **admin** = all except `force.delete`; **manager** = view / creat
 
 ## Catalog
 
-Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.0.0**.
+Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.0.1**.
 
 **Hard dependency:** Storage (`storage`) must be entitled first. Install fails without it.
 

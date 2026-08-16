@@ -50,8 +50,9 @@ Edit metadata (title, description, category) from the row menu or detail drawer.
 ## Soft delete & restore
 
 - **Delete** soft-deletes the document row; the file remains on disk but **stops counting** toward Storage used bytes
-- **Restore** brings it back into the library and quota
+- **Restore** brings it back into the library and quota (blocked if restoring would exceed Storage allowance)
 - **Delete permanently** removes the row and deletes the object from storage
+- Soft-deleted documents older than your workspace **trash retention** (Settings → General) are purged automatically — including the file on disk (`trash:purge-expired`). Retention `0` keeps trash forever.
 
 ## Permissions
 

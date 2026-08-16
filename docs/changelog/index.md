@@ -1,5 +1,14 @@
 # Changelog
 
+## Documents module 1.0.1 (2026-08-17)
+
+Catalog version: **documents 1.0.1** (PATCH — production-readiness remediations).
+
+- Restore re-checks Storage quota; multipart file replace via `POST /documents/{id}`.
+- Soft-deleted documents join workspace trash retention (`TrashPurgeRegistry` + `trash:purge-expired`); `forceDeleting` removes disk objects (API + purge).
+- Platform audit: `document_restored`, `document_force_deleted` (plus existing create/update/delete).
+- Canonical go-live: [Documents production readiness](/deployment/documents-production-readiness) — **Go**.
+
 ## Documents module 1.0.0 (2026-08-16)
 
 Catalog version: **documents 1.0.0** (new free Operations Marketplace opt-in; `is_default_included = false`, `is_billable = false`; **hard** dependency on Storage).
@@ -10,7 +19,7 @@ Catalog version: **documents 1.0.0** (new free Operations Marketplace opt-in; `i
 - Permissions: `documents.view|create|update|delete|restore|force.delete` — admin defaults exclude force.delete; manager = view/create/update; staff = view.
 - To make billable later: Central → Modules → Documents → set `is_billable` + prices (existing Update Module API; no new Central UI).
 - Deferred: soft record links, nested folders, versioning, preview, dashboard widget, Automation triggers.
-- Docs: [overview](/user-guide/documents-overview), [user](/user-guide/documents), [developer](/developer-guide/documents), [API](/api/tenant-v1-documents), [deployment](/deployment/documents), [roadmap](/getting-started/product-roadmap)
+- Docs: [overview](/user-guide/documents-overview), [user](/user-guide/documents), [developer](/developer-guide/documents), [API](/api/tenant-v1-documents), [deployment](/deployment/documents), [production readiness](/deployment/documents-production-readiness), [roadmap](/getting-started/product-roadmap)
 
 ## Product roadmap — Future Expansion tiers (2026-08-16)
 

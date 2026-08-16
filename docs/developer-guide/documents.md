@@ -23,11 +23,16 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 - Categories: `name`, auto `slug` (`Str::slug` when omitted), `sort_order`, `is_active`. Soft/force delete blocked while documents still reference the category.
 - Create requires multipart `file` (max 51200 KB / 50 MB). `DocumentService::create` calls `WorkspaceStorageService::assertCanStore` then `FileUploadService::store` under `FileUploadService::tenantDirectory($tenantId, 'documents')` (`public: false`).
 - Update may replace the file via `FileUploadService::replace`; quota check uses the positive size delta only.
-- Soft delete does **not** remove the object; `forceDelete` deletes the DB row then `FileUploadService::delete`.
+- Soft delete does **not** remove the object until force delete or trash retention purge; `forceDeleting` deletes via `FileUploadService` (covers API + `trash:purge-expired`).
+- Restore calls `assertCanStore` for the document's `size_bytes` before un-trashed bytes count again.
+- File replace: prefer `POST /documents/{id}` (named `documents.update.post`); JSON metadata-only updates may use `PUT`. PHP does not populate multipart files on true HTTP PUT.
+- `Document` / `DocumentCategory` are registered in `TrashPurgeRegistry` (workspace `trash.retention_days`).
 - `WorkspaceStorageService::usedBytes()` sums non-trashed `documents.size_bytes` with chat/feedback/lead-import usage.
 - Spatie activity log name `documents` / `document-categories` (path/disk excluded from document attribute logs).
-- Platform audit events: `document_created`, `document_updated`, `document_deleted`.
+- Platform audit events: `document_created`, `document_updated`, `document_deleted`, `document_restored`, `document_force_deleted`.
 - `documents.force.delete` is not granted to default roles — owner/superadmin only, matching Vendors / Assets.
+- Production readiness: [Documents production readiness](/deployment/documents-production-readiness).
+- Catalog version **1.0.1**
 
 ## Permissions
 
@@ -42,7 +47,7 @@ Routes use `module:documents` then `can:documents.*` / policies. Category CRUD r
 ## Catalog
 
 - Slug `documents`, category `operations`, `sort_order` 85, icon `file-text`
-- `is_default_included = false`, `is_billable = false`, version **1.0.0**
+- `is_default_included = false`, `is_billable = false`, version **1.0.1**
 - Hard `module_dependencies` row: **documents → storage** (`is_optional = false`)
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule` (no seeder in production)
 
@@ -57,8 +62,8 @@ Flip catalog flags with the existing Central **Update Module** API (Central → 
 | Install gate | `ModuleSubscriptionService` rejects Documents without entitled Storage |
 | Upload gate | `assertCanStore` before store/replace |
 | Used bytes | Active `documents.size_bytes` included in quota |
-| Soft delete | Excluded from `usedBytes` (SoftDeletes default scope) |
-| Force delete | Object removed from disk |
+| Soft delete | Excluded from `usedBytes`; object remains until force delete or trash purge |
+| Force delete / trash purge | Object removed from disk in `forceDeleting` |
 
 ## API (tenant)
 
