@@ -342,13 +342,27 @@ Implement workforce management.
 
 **Goal:** Give workspaces a cross-module executive KPI surface and operational report pages without a full BI builder. ✅ **Achieved** for Reports suite **v1.4.0** (People includes Payroll).
 
+## Assets (shipped)
+
+| Module | Status |
+|--------|--------|
+| [Assets](/user-guide/assets-overview) | ✅ Completed (equipment/fixed-asset register; free Operations opt-in; catalog **1.0.0**) |
+
+#### Assets (shipped)
+
+- Auto-number (`AST-`), status (`active` / `in_repair` / `retired` / `disposed`), category enum
+- Identity + purchase/warranty fields; free-text location
+- Assignment, notes, domain timeline; soft optional Vendor / Employee links
+- **No** hard `module_dependencies` — installs standalone
+- Explicitly deferred: depreciation/Accounting, Products/Inventory/Warehouse FKs, Help Desk maintenance, attachments/barcodes, dashboard widget, Automation triggers
+
+**Goal:** Give workspaces an installable company asset register without forcing Inventory or HR. ✅ **Achieved** for v1.0.0.
+
 ---
 
 ## Future Expansion
 
 The platform architecture supports additional modules without requiring architectural refactoring. Candidates include:
-
-- Assets
 
 - Documents
 - Manufacturing

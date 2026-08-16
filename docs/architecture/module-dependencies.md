@@ -353,6 +353,18 @@ Knowledge Base installs as a free Operations Marketplace opt-in (`knowledge-base
 
 **Status:** Shipped — see [Knowledge Base Overview](/user-guide/knowledge-base-overview) and [Product Roadmap](/getting-started/product-roadmap).
 
+### Assets (standalone, shipped)
+
+```text
+Assets
+  ├── may link Vendor                 (soft, when Vendors entitled)
+  └── may link Employee               (soft, when Employees entitled)
+```
+
+Assets installs as a free Operations Marketplace opt-in (`assets` **1.0.0**) with **no** `module_dependencies` rows. The register works alone (name, number, status, category, location, purchase/warranty, assignee, notes/timeline). Optional `vendor_id` / `employee_id` are validated only at the point of use (`LinkableVendor`, `LinkableEmployee`) — soft entitlement, no hard install dependency. Location is free-text in v1 (no Warehouse FK). Depreciation / Accounting, Products / Inventory coupling, and Help Desk maintenance tickets are deferred.
+
+**Status:** Shipped — see [Assets Overview](/user-guide/assets-overview) and [Product Roadmap](/getting-started/product-roadmap).
+
 ### Analytics / Reports → CRM / Sales / Billing / Purchasing modules (optional, shipped)
 
 ```text

@@ -1,5 +1,14 @@
 # Changelog
 
+## Assets module 1.0.0 (2026-08-16)
+
+Catalog version: **assets 1.0.0** (new free Operations Marketplace opt-in; `is_default_included = false`, `is_billable = false`; **no** hard module dependencies).
+
+- Equipment / fixed-asset register: auto-number (`AST-`), status, category, identity + purchase/warranty fields, free-text location, assignment, notes/timeline.
+- Soft optional Vendor / Employee links (`LinkableVendor`, `LinkableEmployee`).
+- Deferred: depreciation/Accounting, Products/Inventory/Warehouse FKs, Help Desk maintenance, attachments/barcodes, dashboard widget, Automation triggers.
+- Docs: [overview](/user-guide/assets-overview), [user](/user-guide/assets), [developer](/developer-guide/assets), [API](/api/tenant-v1-assets), [deployment](/deployment/assets), [roadmap](/getting-started/product-roadmap)
+
 ## WhatsApp Cloud 1.0.0 production readiness — Conditional Go (2026-08-16)
 
 - Audit: staff connection-status access, needs_reauth notify, outbound Queued-only send, OAuth HashRouter callback, headed e2e **6/6**.

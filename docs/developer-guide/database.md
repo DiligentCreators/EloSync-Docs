@@ -379,6 +379,16 @@ Notes (author + body) and expense timeline (`type`, `description`, `properties` 
 
 Notes (author + body) and ticket timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
 
+## Assets module tables
+
+### `assets`
+
+`tenant_id`, `uuid`, `number` (unique per tenant; prefix `AST-` / `assets_number_prefix`), `name`, `status` (`active`|`in_repair`|`retired`|`disposed`), nullable `category` (`equipment`|`furniture`|`vehicle`|`electronics`|`software_license`|`other`), nullable `manufacturer` / `model` / `serial_number` / `location`, nullable `purchased_at` / `warranty_ends_at` (dates), nullable `purchase_cost` / `currency`, `assigned_to`, `created_by`, nullable `vendor_id` (FK → `vendors`, null on delete; soft entitlement), nullable `employee_id` (FK → `employees`, null on delete; soft entitlement), soft deletes. Spatie activity log name `assets`.
+
+### `asset_notes` / `asset_activities`
+
+Notes (author + body) and asset timeline (`type`, `description`, `properties` JSON).
+
 ## Products module tables
 
 ### `product_categories`
