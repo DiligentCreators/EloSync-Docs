@@ -9,7 +9,7 @@ Central admins configure platform identity and behavior under **Settings** (not 
 | **General** | **Application Name** — browser title, sidebar, auth screens. **Company Name** — copyrights and email salutations only. Timezone / Locale / Currency (searchable). Registration enabled. |
 | **Localization** | Date format + 12/24-hour time. Tables and timelines across Central use these formats. |
 | **Mail** | Provider (SMTP, Postmark, Mailgun, Log, …), provider credentials, From / Reply-To / timeout. For Postmark/Mailgun: copy the **Webhook URL**, set the signing secret, and select which delivery events to process. Use **Send test** (can use unsaved form values). Leave secrets blank to keep existing values. |
-| **Branding** | Button color (primary buttons), support email (shown on maintenance/registration-closed and tenant emails), logo + favicon uploads with preview. |
+| **Branding** | Button color (primary buttons), support email (shown on maintenance/registration-closed and tenant emails), logo + favicon uploads with preview. Until you upload a logo/favicon, the SPA uses the EloSync press-kit App Store light icon (`/brand/elosync-app-icon-light.png`) for the shell, tab icon, and (via `FRONTEND_URL`) default web push / non-Branded email chrome. |
 | **Security** | Session timeout (minutes), minimum password length, require special character. Applies to Central and Tenant password forms. |
 | **Maintenance** | Tenant Application only. Central stays fully usable so you can turn maintenance off. Optional message + ETA. |
 | **Billing** | Invoice prefix, proration mode, default gateway code, trial / Stripe flags. Gateway secrets are managed under **Billing → Payment Gateways**. |

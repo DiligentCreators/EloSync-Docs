@@ -56,6 +56,10 @@ REVERB_APP_ACCEPT_CLIENT_EVENTS_FROM=none
 VAPID_SUBJECT=mailto:ops@example.com
 VAPID_PUBLIC_KEY=<public-key>
 VAPID_PRIVATE_KEY=<private-key>
+# Default push chrome (relative to FRONTEND_URL; press-kit App Store light icon)
+BRAND_DEFAULT_ICON=/brand/elosync-app-icon-light.png
+WEBPUSH_ICON=/brand/elosync-app-icon-light.png
+WEBPUSH_BADGE=/brand/elosync-app-icon-light.png
 
 # Native FCM HTTP v1 (optional — skip locally / when unused)
 FCM_PROJECT_ID=<firebase-project-id>
@@ -124,6 +128,8 @@ On Laravel Forge, place these values in the site environment used to generate `/
    ```
 
    All Web Push settings are read via `config('webpush.*')`, so `config:cache` is fully supported; `env()` is only referenced inside `config/webpush.php`.
+
+   Default `WEBPUSH_ICON` / `WEBPUSH_BADGE` (and `BRAND_DEFAULT_ICON` for mail fallback) point at the SPA press-kit asset `/brand/elosync-app-icon-light.png` served from `FRONTEND_URL`. Workspaces with the **Branded** module entitled override push chrome with their uploaded logo/favicon.
 
 4. **Browser requirements** (client side):
    - The SPA must be served over **HTTPS** (or `http://localhost` in development) — service workers require a secure context.

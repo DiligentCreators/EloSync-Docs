@@ -44,11 +44,10 @@ Central / public registration never accept a client `domain`. `TenantService` al
 
 - `App\Support\BrandedMail::apply()` on tenant mail notifications
   - **Branded entitled:** tenant `applicationName`, `logoUrl`, `buttonColor`, frontend URL
-  - **Otherwise:** central `SystemSettingService` app name + logo (platform/EloSync chrome) + default button color
+  - **Otherwise:** central `SystemSettingService` app name + logo (platform/EloSync chrome) + default button color; if central `logo_path` is empty, falls back to `FRONTEND_URL` + `config('branding.default_icon')` (press-kit `/brand/elosync-app-icon-light.png`)
 - Published `resources/views/vendor/mail/html/message.blade.php` (+ button) for logo / brand name
 - `EmailConfigResolver` overrides From name when branded is active
-- `PlatformNotificationPayloadMapper` uses tenant logo/favicon + title prefix **only when Branded is active**
-
+- `PlatformNotificationPayloadMapper` uses tenant logo/favicon + title prefix **only when Branded is active**; otherwise default web push icon/badge from `config('webpush.*')` (same press-kit path)
 ## Cancel / deactivate
 
 `ModuleSubscriptionService::cancel` / `deactivate` clears custom-domain verification when the module slug is `branded`.

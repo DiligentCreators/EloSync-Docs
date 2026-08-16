@@ -1,5 +1,15 @@
 # Changelog
 
+## Central defaults: SalesOS → EloSync (2026-08-17)
+
+- Central `SystemSettingsSeeder` `app_name` / `company_name` defaults are **EloSync** (were still `SalesOS`).
+- Idempotent migration renames leftover `SaleOS` / `SalesOS` values only; custom Central branding is unchanged.
+- `config('app.name')` fallback is `EloSync` when `APP_NAME` is unset.
+
+## Press-kit brand defaults (2026-08-17)
+
+Platform shell, favicon, web push chrome, and non-Branded email headers use the marketing press-kit **App Store light** icon (`/brand/elosync-app-icon-light.png`) when no Central/tenant branding upload is set. Custom logo/favicon uploads still override. `WEBPUSH_ICON` / `WEBPUSH_BADGE` / `BRAND_DEFAULT_ICON` default to that path relative to `FRONTEND_URL`.
+
 ## Documents module 1.1.0 (2026-08-17)
 
 Catalog version: **documents 1.1.0** (MINOR — bulk soft delete + bulk force delete + uploader ownership).
