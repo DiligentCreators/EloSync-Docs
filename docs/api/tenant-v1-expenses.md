@@ -46,7 +46,7 @@ Status always starts at `draft`; `number` is auto-generated (`EXP-00001`, config
 
 ### GET `/expenses/{id}`
 
-Includes vendor, purchase order, assignee, creator, notes, and timeline activities.
+Includes vendor, purchase order, assignee, creator, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/expenses/{id}`
 

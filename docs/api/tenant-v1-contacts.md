@@ -30,7 +30,7 @@ When `company_id` is set and the company exists, the legacy `company` string is 
 
 ### GET `/contacts/{id}`
 
-Includes assignee, creator, notes, activities. May include `company_id` and `linked_company` (`id`, `uuid`, `name`) when the relationship is loaded.
+Includes assignee, creator, notes, activities. May include `company_id` and `linked_company` (`id`, `uuid`, `name`) when the relationship is loaded. Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/contacts/{id}`
 

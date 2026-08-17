@@ -116,7 +116,7 @@ Many-to-many: `lead_id`, `lead_tag_id` (unique pair).
 
 ### `lead_notes` / `lead_note_mentions` / `lead_follow_ups` / `lead_activities`
 
-Notes (author + body), mention rows (`lead_note_id`, `user_id`, `tenant_id` — unique per note+user), follow-ups (`due_at` / complete / status, nullable `lead_tag_id` for auto/force tag follow-ups), and CRM timeline (`type`, `description`, `properties` JSON). Mention tokens in note bodies use `@[Display Name](user:ID)`.
+Notes (author + body), mention rows (`lead_note_id`, `user_id`, `tenant_id` — unique per note+user), follow-ups (`due_at` / complete / status, nullable `lead_tag_id` for auto/force tag follow-ups), and CRM timeline (`type`, `description`, `properties` JSON). Mention tokens in note bodies use `@[Display Name](user:ID)`. Module `*_notes` tables (and `lead_assignment_histories`) carry `(tenant_id, parent_id, created_at)` indexes so show/timeline **newest-first** order stays index-friendly; domain `*_activities` already used the same pattern.
 
 ### `lead_assignment_histories`
 

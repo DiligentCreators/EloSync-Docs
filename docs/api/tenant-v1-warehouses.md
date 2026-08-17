@@ -16,7 +16,7 @@ Requires `warehouses.create`. Body: `code`, `name` (required); optional `address
 
 ### GET/PUT/DELETE `/warehouses/{warehouse}`
 
-View, update, or soft-delete. The sole default warehouse cannot be deleted. Updates require `warehouses.update`; deletion requires `warehouses.delete`.
+View, update, or soft-delete. The sole default warehouse cannot be deleted. Updates require `warehouses.update`; deletion requires `warehouses.delete`. Show embeds notes and activities **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### POST `/warehouses/{warehouse}/restore`
 

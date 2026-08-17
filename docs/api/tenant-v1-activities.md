@@ -30,7 +30,7 @@ At least one of `contact_id`, `company_id`, `lead_id` is required. Each FK requi
 
 ### GET `/activities/{id}`
 
-Includes assignee, creator, notes, timeline activities, and related refs.
+Includes assignee, creator, notes, timeline activities, and related refs. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/activities/{id}`
 

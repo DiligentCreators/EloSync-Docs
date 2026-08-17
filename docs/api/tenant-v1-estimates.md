@@ -47,7 +47,7 @@ Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `valid_
 
 ### GET `/estimates/{id}`
 
-Includes contact, company, opportunity, quotation, converted invoice, assignee, creator, lines, notes, and timeline activities.
+Includes contact, company, opportunity, quotation, converted invoice, assignee, creator, lines, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/estimates/{id}`
 

@@ -452,6 +452,7 @@ export default defineConfig({
             { text: 'Invoices Production Readiness', link: '/deployment/invoices-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
             { text: 'Founding Beta Invite Production Readiness', link: '/deployment/founding-beta-invite-production-readiness' },
+            { text: 'Newest-first Notes & Activity Production Readiness', link: '/deployment/newest-first-notes-activity-production-readiness' },
             { text: 'Go-Live Hardening', link: '/deployment/go-live-hardening-2026-07-15' },
             { text: 'Authentication', link: '/deployment/authentication' },
             { text: 'Tenant RBAC', link: '/deployment/tenant-rbac' },

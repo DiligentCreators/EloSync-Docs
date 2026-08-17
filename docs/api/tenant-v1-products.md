@@ -18,7 +18,7 @@ Requires `products.create`. Body: `sku` and `name` (required); optional `categor
 
 ### GET/PUT/DELETE `/products/{product}`
 
-View, update, or soft-delete a product. Update requires `products.update`; delete requires `products.delete`.
+View, update, or soft-delete a product. Update requires `products.update`; delete requires `products.delete`. Show embeds notes and activities **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### POST `/products/{product}/restore`
 

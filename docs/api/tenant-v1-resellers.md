@@ -28,7 +28,7 @@ Permission: `resellers.create`.
 
 ### GET `/resellers/{id}`
 
-Includes assignee, creator, linked login `user` when present, plus nested `note_entries` (threaded notes) and `activities` (domain timeline). Scalar `notes` remains the profile field. Soft-deleted → 404 for show.
+Includes assignee, creator, linked login `user` when present, plus nested `note_entries` (threaded notes) and `activities` (domain timeline). Scalar `notes` remains the profile field. Soft-deleted → 404 for show. Embedded `note_entries` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/resellers/{id}`
 

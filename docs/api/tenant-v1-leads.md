@@ -73,7 +73,7 @@ Body: `name` (required), `lead_type` (required: `direct` | `company`), `email`, 
 
 ### GET `/leads/{id}`
 
-Includes stage, assignee, tags, notes, follow-ups, activities, assignment histories. Exposes `converted_at` / `is_converted`.
+Includes stage, assignee, tags, notes, follow-ups, activities, assignment histories. Exposes `converted_at` / `is_converted`. Embedded `notes`, `activities`, and `assignment_histories` are **newest-first** (`created_at` DESC, then `id` DESC). Follow-ups keep product scheduling order (not reversed as a chat feed).
 
 ### PUT `/leads/{id}`
 

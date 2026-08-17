@@ -58,7 +58,7 @@ Related FKs are optional. Each FK requires the corresponding module to be entitl
 
 ### GET `/opportunities/{id}`
 
-Includes stage, assignee, creator, notes, timeline activities, related refs, and `tags`.
+Includes stage, assignee, creator, notes, timeline activities, related refs, and `tags`. Embedded `notes` and timeline `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/opportunities/{id}`
 

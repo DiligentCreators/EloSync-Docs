@@ -1,5 +1,14 @@
 # Changelog
 
+## Module notes and activity newest-first (2026-08-17)
+
+- Show payloads for Leads, Tasks, and other modules with notes/comments and domain activity history return those collections **newest-first** (`created_at`, then `id`).
+- Aligns detail-sheet tabs with existing `GET …/timeline` ordering (and Reseller, which already used `latest()`).
+- Feedback ticket comments remain oldest-first (conversation thread).
+- Playwright: Leads/Tasks detail flows assert newest note/comment first; Lead Import e2e enables the free **Storage** module before CSV upload.
+- **Audit residuals remediated:** broader Pest coverage (Contact/Company/Opportunity + all-model relation dataset), API show contract documented newest-first, composite indexes on `*_notes` / lead assignment histories for DESC order (no hard embed limit).
+- Production readiness: [Newest-first notes & activity](/deployment/newest-first-notes-activity-production-readiness) — **Go** (L1–L3 remediated).
+
 ## Founding Beta invites (2026-08-17)
 
 - Central **Beta Applications** can accept an applicant and send, copy, or resend a time-limited workspace registration invite.

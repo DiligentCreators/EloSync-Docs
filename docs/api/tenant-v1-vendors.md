@@ -28,7 +28,7 @@ Body: `name` (required), `email`, `phone`, `website`, `address`, `tax_id`, `paym
 
 ### GET `/vendors/{id}`
 
-Includes assignee, creator, notes, and activities.
+Includes assignee, creator, notes, and activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/vendors/{id}`
 
