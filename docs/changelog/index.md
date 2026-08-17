@@ -6,6 +6,7 @@
 - Aligns detail-sheet tabs with existing `GET …/timeline` ordering (and Reseller, which already used `latest()`).
 - Feedback ticket comments remain oldest-first (conversation thread).
 - Playwright: Leads/Tasks detail flows assert newest note/comment first; Lead Import e2e enables the free **Storage** module before CSV upload.
+- Production readiness: [Newest-first notes & activity](/deployment/newest-first-notes-activity-production-readiness) — **Go**.
 
 ## Founding Beta invites (2026-08-17)
 

@@ -26,6 +26,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Invoices Production Readiness](./invoices-production-readiness) | Invoices 1.1.0 recurring + PDF audit, smoke, rollback, sign-off |
 | [Documents Production Readiness](./documents-production-readiness) | Documents 1.0.1 free opt-in audit, smoke, rollback, sign-off |
 | [Tenant Audit & Impersonation History](./tenant-audit-impersonation-production-readiness) | Central Impersonation history + Audit Logs tabs — Go |
+| [Newest-first notes & activity](./newest-first-notes-activity-production-readiness) | Module show notes/activities DESC — Go |
 | [Phase 7 HR Security Audit](./hr-phase7-security-audit) | HR findings, remediations, residual risk |
 | [Go-Live Hardening](./go-live-hardening-2026-07-15) | Hardening delivery notes |
 
