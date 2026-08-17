@@ -48,6 +48,17 @@ Not in the sidebar (reached via in-page links): `/central/tenants/:id`, `/centra
 | Payment Gateways | `/payment-gateways`, enable/disable/default/config/mode/test-connection/logs; **Product Mapping** for Stripe (`price_…`) and Creem (`prod_…`) |
 | Invoices / Payments (global) | `/invoices`, `/payments` |
 
+## Beta Applications
+
+Open **Platform → Beta Applications** to review the public Founding Beta intake.
+
+- **Accept & send invite** changes the application to Accepted, creates a time-limited registration token, and emails the applicant.
+- **Copy link** copies the invite URL returned after issuing it so an operator can send it through an approved channel.
+- **Resend invite** rotates the token and expiry and sends a replacement email. The previous link stops working.
+- Activated applications cannot receive another invite. Applicants with an accepted, unactivated application can also request a replacement from the public beta page.
+
+Invite management uses the existing `beta-applications.update` permission; it does not add another authentication or provisioning path.
+
 ## Marketplace (`/marketplace`)
 
 - Lists published modules from `GET /marketplace/modules` (search, category filter)

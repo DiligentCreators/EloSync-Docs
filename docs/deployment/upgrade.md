@@ -33,6 +33,17 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Founding Beta invites
+
+After migrate (`2026_08_16_232506_add_founding_beta_invites_to_beta_applications_table`):
+
+1. Confirm `founding_beta_enabled`, `founding_beta_apply_url`, and `founding_beta_invite_ttl_days` exist (seeded via `updateOrInsert` in that migration).
+2. Ensure a queue worker listens to `emails` (Founding Beta invite notification).
+3. Set `FRONTEND_URL` to the SPA that serves `/#/register?invite=…`.
+4. Keep marketing origins off `SANCTUM_STATEFUL_DOMAINS` (public apply/resend use Bearer-less JSON + CSRF except).
+
+Go-live checklist: [Founding Beta invite production readiness](/deployment/founding-beta-invite-production-readiness).
+
 ## Invoices 1.2.0 (status model)
 
 After migrate:

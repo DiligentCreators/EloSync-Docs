@@ -116,12 +116,18 @@ Routes live in `routes/tenant/v1.php` and `routes/central/v1.php`. Feedback is a
 
 ### Beta applications
 
-| Method | Path | Auth |
-|--------|------|------|
-| `POST` | `/api/central/v1/public/beta-applications` | Public + throttle (marketing site) |
+| Method | Path | Auth / purpose |
+|--------|------|----------------|
+| `POST` | `/api/central/v1/public/beta-applications` | Public + throttle; marketing application |
+| `GET` | `/api/central/v1/public/beta-invites/{token}` | Public + throttle; preview validity, expiry, activation, and applicant details for registration |
+| `POST` | `/api/central/v1/public/beta-invites/resend` | Public + throttle; body `{ "email": "…" }`; rotates an eligible accepted invite and always returns a non-enumerating message |
+| `POST` | `/api/central/v1/public/register-workspace` | Public + throttle; optional `invite_token` bypasses disabled open registration after server-side token, status, expiry, activation, and email checks |
 | `GET` | `/api/central/v1/beta-applications` | `beta-applications.list` |
 | `GET` | `/api/central/v1/beta-applications/{beta_application}` | `beta-applications.read` |
 | `PATCH` | `/api/central/v1/beta-applications/{beta_application}` | `beta-applications.update` |
+| `POST` | `/api/central/v1/beta-applications/{beta_application}/invite` | `beta-applications.update`; accepts the application, rotates the hashed token, queues mail, and returns `invite_url` for copy-link UI |
+
+Invite tokens are stored only as SHA-256 hashes. Registration atomically consumes the invite by linking the application to the new tenant, setting `activated_at`, and clearing the token.
 
 Envelope: existing `ApiResponseService` `{ status, message, data, meta }`.
 

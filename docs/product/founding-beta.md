@@ -6,7 +6,7 @@ EloSync is in **Founding Beta** — a pre-launch phase focused on recruiting rea
 >
 > We're building EloSync **with** real businesses, not only **for** them.
 
-Related: [Product Roadmap](/getting-started/product-roadmap) · [Central Feedback System](/developer-guide/central-feedback-system) (architecture) · Marketing site campaign: `https://elosync.com/beta/`
+Related: [Product Roadmap](/getting-started/product-roadmap) · [Central Feedback System](/developer-guide/central-feedback-system) (architecture) · [Production readiness](/deployment/founding-beta-invite-production-readiness) · Marketing site campaign: `https://elosync.com/beta/`
 
 ---
 
@@ -46,7 +46,28 @@ Not a priority for founding beta:
 | Entitlements | Participants receive workspace access to available Marketplace modules per current catalog rules |
 | Pricing narrative | Catalog pricing (included / free opt-in / paid add-ons such as Branded) may be published for transparency but is **not** the conversion goal during beta |
 | Intake | Public application via marketing site `/beta/` → Central public API (see feedback / beta intake implementation notes) |
-| Activation | Central team reviews applications and provisions / invites workspaces |
+| Activation | Central reviews the application, chooses **Accept & send invite**, and the applicant registers with the tokenized link |
+| Expired links | An accepted applicant can request a replacement invite from the marketing beta page; the response does not reveal whether an eligible application exists |
+
+### Invite-led access flow
+
+```text
+Apply on /beta/
+→ Central reviews the application
+→ Accept & send invite
+→ Applicant opens the tokenized registration link
+→ Workspace registration consumes the invite
+```
+
+Public self-service registration stays off during Founding Beta (`registration_enabled = false`). A valid `invite_token` is the only bypass: it must belong to an accepted, unactivated application that already received an invite, must not be expired, and registration must use the application's email address.
+
+If the link expires, the applicant uses **Resend your workspace invite** on `/beta/`. Resending only works after Central has already issued an invite (status **Accepted** alone is not enough). It rotates the token and expiry, invalidating the previous link.
+
+When public registration is later enabled, an invalid/expired/activated `invite_token` falls back to normal workspace registration; an email mismatch on a still-valid invite still fails validation.
+
+`founding_beta_enabled` and `founding_beta_apply_url` (absolute URL) control the registration-closed call to action. Invite lifetime is **1–90 days** (`founding_beta_invite_ttl_days`). Keep the beta flag on and point the URL to the public application page during the cohort. Later, operators can turn the beta CTA off or change its destination without enabling open registration.
+
+Go-live: [Founding Beta invite production readiness](/deployment/founding-beta-invite-production-readiness).
 
 ---
 
@@ -156,7 +177,7 @@ When launch begins:
 | Surface | Status |
 |---------|--------|
 | Marketing Founding Beta pages | Shipped (`/`, `/beta/`, `/pricing/`, module pages) |
-| Public beta application API | Shipped (`POST /api/central/v1/public/beta-applications`) |
+| Public beta application + invite APIs | Shipped (apply, invite preview, self-resend, token registration) |
 | Tenant in-app feedback submission | Shipped (user menu + command palette → Give Feedback) |
 | Central feedback + beta applications UI | Shipped (**Platform → Feedback**, **Platform → Beta Applications**) |
 | This product page | Living — update when access model or expectations change |
