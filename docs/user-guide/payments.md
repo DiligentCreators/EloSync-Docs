@@ -19,10 +19,9 @@ Open **Payments** from the sidebar (**Billing**, under Invoices). Search by paym
 
 1. Click **New payment**
 2. Enter the amount, currency, method (Cash, Bank Transfer, Cheque, Card (manual), Other), date paid, reference, and notes
-3. Optionally link a contact or company (when Contacts/Companies is installed)
-4. Add one or more **allocations** — pick an outstanding invoice and the amount of this payment to apply to it. You can allocate to several invoices, or leave it unallocated and add allocations later while still in Draft
-5. Optionally set an assignee (requires **assign**)
-6. Save
+3. Add one or more **allocations** — pick an outstanding invoice and the amount of this payment to apply to it. The invoice picker shows **contact name · company · invoice number — balance due**, and you can search by contact name, company name, or invoice number. Choosing an invoice auto-fills **Contact**, **Company**, and **Assignee** from that invoice when those fields are set on the invoice (you can still change them). You can allocate to several invoices, or leave the payment unallocated and add allocations later while still in Draft
+4. Optionally adjust the contact, company, or assignee (Contacts/Companies when installed; assignee requires **assign**)
+5. Save
 
 You can also start recording a payment from an invoice's detail view — the **Related payments** link jumps you to the Payments module.
 

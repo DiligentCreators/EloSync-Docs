@@ -1,5 +1,14 @@
 # Changelog
 
+## Payments allocation picker UX (2026-08-17)
+
+Catalog version: **payments 1.0.1** (PATCH — allocation picker labels + auto-fill).
+
+- Create/edit payment: invoice allocation options show **contact · company · invoice number — balance due**.
+- Search allocations by contact name, company name, or invoice number.
+- Selecting an invoice auto-fills Contact, Company, and Assignee from that invoice when those fields exist (still editable afterward).
+- Docs: [Payments user guide](/user-guide/payments), [Payments developer guide](/developer-guide/payments).
+
 ## Module notes and activity newest-first (2026-08-17)
 
 - Show payloads for Leads, Tasks, and other modules with notes/comments and domain activity history return those collections **newest-first** (`created_at`, then `id`).
