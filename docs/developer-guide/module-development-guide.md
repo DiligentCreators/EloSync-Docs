@@ -42,6 +42,8 @@ Route::middleware(['auth:tenant-api', 'tenant.user', 'verified', 'module:{slug}'
 | Activity | Spatie `LogsActivity` on primary model | Attribute-level change history |
 | Timeline | Domain `*_activities` table (when UX needs it) | User-facing history (notes, stage moves, assignments) |
 
+Domain **notes** and **activities** relationships on show payloads default to **newest-first** (`->latest('created_at')->latest('id')`), matching dedicated `GET …/timeline` endpoints. Detail UIs map API order as-is. Do not leave these `HasMany` relations unordered.
+
 ## Events
 
 Dispatch domain events from the service layer. Listeners handle audit side-effects and notifications. Do **not** build per-module notification stacks outside Laravel notifications.
