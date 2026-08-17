@@ -47,7 +47,7 @@ Publishing on create sets `published_at`.
 
 Permission: `knowledge-base.view` (policy enforces published-only for non-editors). Soft-deleted rows return not found on show.
 
-Includes category, creator, notes, and activities when loaded.
+Includes category, creator, notes, and activities when loaded. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/knowledge-base/{id}`
 

@@ -46,7 +46,7 @@ Status always starts at `open`; `number` is auto-generated (`HD-00001`, configur
 
 ### GET `/help-desk/{id}`
 
-Includes category, contact, company, assignee, creator, notes, and timeline activities.
+Includes category, contact, company, assignee, creator, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/help-desk/{id}`
 

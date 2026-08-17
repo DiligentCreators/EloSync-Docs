@@ -26,7 +26,7 @@ Body: `opportunity_id` (required), `quotation_id` (optional — only valid when 
 
 ### GET `/contracts/{id}`
 
-Includes opportunity, quotation (when linked), assignee, creator, notes, and timeline activities.
+Includes opportunity, quotation (when linked), assignee, creator, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/contracts/{id}`
 

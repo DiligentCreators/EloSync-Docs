@@ -53,7 +53,7 @@ Initial `due_at` on create does not require `tasks.change_due_date`.
 
 ### GET `/tasks/{id}`
 
-Includes assignee, creator, notes, activities, `tags`, and optional `project`.
+Includes assignee, creator, notes, activities, `tags`, and optional `project`. Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/tasks/{id}`
 

@@ -47,7 +47,7 @@ Body: `customer_invoice_id` (required, tenant-scoped existence check), `title` (
 
 ### GET `/credit-notes/{id}`
 
-Includes contact, company, the linked customer invoice, assignee, creator, lines, notes, and timeline activities.
+Includes contact, company, the linked customer invoice, assignee, creator, lines, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/credit-notes/{id}`
 

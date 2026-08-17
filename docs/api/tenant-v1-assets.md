@@ -43,7 +43,7 @@ Body:
 
 ### GET `/assets/{id}`
 
-Includes assignee, creator, vendor, employee, notes, and activities.
+Includes assignee, creator, vendor, employee, notes, and activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/assets/{id}`
 

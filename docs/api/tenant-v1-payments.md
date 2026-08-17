@@ -44,7 +44,7 @@ Status always starts at `draft`; `number` is auto-generated (`PAY-00001`, config
 
 ### GET `/payments/{id}`
 
-Includes contact, company, assignee, creator, allocations (each with its `customer_invoice` ref: `number`/`total`/`balance_due`/`status`), notes, and timeline activities.
+Includes contact, company, assignee, creator, allocations (each with its `customer_invoice` ref: `number`/`total`/`balance_due`/`status`), notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/payments/{id}`
 

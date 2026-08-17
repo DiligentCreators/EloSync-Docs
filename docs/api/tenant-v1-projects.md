@@ -56,7 +56,7 @@ Status always starts at `planned`. Without `projects.assign`, `assigned_to` / `m
 
 ### GET `/projects/{id}`
 
-Includes contact, company, opportunity, assignee, creator, members, notes, and timeline activities.
+Includes contact, company, opportunity, assignee, creator, members, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/projects/{id}`
 

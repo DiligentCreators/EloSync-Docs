@@ -46,7 +46,7 @@ Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `issue_
 
 ### GET `/invoices/{id}`
 
-Includes contact, company, quotation, assignee, creator, lines, notes, timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists.
+Includes contact, company, quotation, assignee, creator, lines, notes, timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### GET `/invoices/{id}/pdf`
 

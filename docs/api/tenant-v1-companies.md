@@ -28,7 +28,7 @@ Body: `name` (required), `email`, `phone`, `website`, `industry`, `address`, `so
 
 ### GET `/companies/{id}`
 
-Includes assignee, creator, notes, activities, and linked contacts (when loaded).
+Includes assignee, creator, notes, activities, and linked contacts (when loaded). Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/companies/{id}`
 

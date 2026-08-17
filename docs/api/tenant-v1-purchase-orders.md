@@ -43,7 +43,7 @@ Body: `vendor_id` (required, must belong to the tenant and the Vendors module mu
 
 ### GET `/purchase-orders/{id}`
 
-Includes vendor, assignee, creator, lines, notes, and timeline activities.
+Includes vendor, assignee, creator, lines, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/purchase-orders/{id}`
 

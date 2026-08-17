@@ -28,7 +28,7 @@ Body: `opportunity_id` (required), `contact_id`, `company_id` (optional, module-
 
 ### GET `/quotations/{id}`
 
-Includes opportunity, assignee, creator, lines, notes, and timeline activities.
+Includes opportunity, assignee, creator, lines, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/quotations/{id}`
 

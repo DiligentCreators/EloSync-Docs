@@ -2,6 +2,8 @@
 
 REST API documentation for Central and Tenant surfaces of EloSync.
 
+**Show contract — notes & activity history:** On module `GET …/{id}` payloads, embedded `notes` / `note_entries` / domain `activities` (and Lead `assignment_histories`) are ordered **newest-first** (`created_at` DESC, then `id` DESC), matching dedicated `GET …/timeline` endpoints. Clients must not assume ascending chronological order on show. Feedback ticket comments remain oldest-first (conversation thread).
+
 | Document | Description |
 |----------|-------------|
 | [Central v1](./central-v1) | Central admin REST API |
