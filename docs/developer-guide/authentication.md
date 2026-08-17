@@ -58,7 +58,7 @@ Spatie roles/permissions are isolated by `guard_name` (`central-api` vs `tenant-
 
 ## Registration
 
-`POST /api/central/v1/public/register-workspace` (honours `registration_enabled`):
+`POST /api/central/v1/public/register-workspace` honours `registration_enabled` for ordinary self-service registration. It also accepts an optional `invite_token`; a valid accepted, unexpired, unactivated Founding Beta invite bypasses disabled open registration:
 
 1. Creates workspace + domain
 2. `TenantProvisioningService` — billing profile, default-included modules (Leads, Tasks, ToDos), authorization defaults, module seed data
@@ -67,9 +67,9 @@ Spatie roles/permissions are isolated by `guard_name` (`central-api` vs `tenant-
 
 Login and subsequent authenticated requests **do not** create or repair roles/permissions. See [tenant-provisioning.md](/developer-guide/tenant-provisioning).
 
-Required body fields: `company_name`, `owner_name`, `email`, `password`, `password_confirmation`.
+Required body fields: `company_name`, `owner_name`, `email`, `password`, `password_confirmation`. The invite-led path adds `invite_token` (64 characters), requires the submitted email to match the beta application, and atomically marks the application activated after provisioning.
 
-When registration is disabled, the API returns 403 with message *We are not currently accepting new registrations.* The SPA `/register` route redirects to `/registration-closed`.
+When registration is disabled and no invite token is supplied, the API returns 403 with message *We are not currently accepting new registrations.* The SPA `/register` route redirects to `/registration-closed`; tokenized invite links may still open registration.
 
 ## Password reset
 

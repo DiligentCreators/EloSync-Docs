@@ -42,7 +42,20 @@ Enforced by `App\Rules\PasswordRule` on registration, reset, and change-password
 - Soft-deleted and suspended users receive a generic credentials error
 - Email verification is enforced for protected Central and tenant application endpoints; the SPA `VerifyEmailGate` **Sign out** action clears the session and navigates to the context login route
 - CSRF: SPA uses Bearer tokens; stateful Sanctum cookie auth remains available when configured
-- Registration gated by `registration_enabled`
+- Open registration is gated by `registration_enabled`; an accepted, valid Founding Beta `invite_token` may register while it is off
+
+## Registration and Founding Beta access
+
+| Setting | Purpose |
+|---------|---------|
+| `registration_enabled` | Enables ordinary self-service workspace registration. Keep off for an invite-only beta. |
+| `founding_beta_enabled` | Shows the Founding Beta action on the registration-closed screen. It does not enable registration by itself. |
+| `founding_beta_apply_url` | Absolute application URL for the registration-closed beta CTA (validated as URL). |
+| `founding_beta_invite_ttl_days` | Invite lifetime in days (**1–90**; runtime clamp matches). |
+
+The public application, invite preview/resend, and workspace registration endpoints are API routes using throttling and JSON. Marketing-site requests do not use Sanctum cookie authentication and therefore do not require a CSRF-cookie handshake; keep allowed CORS origins explicit.
+
+`SANCTUM_STATEFUL_DOMAINS` is only for first-party SPAs that intentionally use Sanctum's stateful cookie authentication. Do **not** add marketing or Vite development origins merely to make public beta requests work. Doing so unnecessarily makes those origins eligible for stateful-cookie handling; configure CORS for public cross-origin requests instead.
 
 ## Session configuration
 
@@ -60,6 +73,8 @@ API auth for the React apps is primarily Bearer token based; remember-me stores 
 - [ ] `FRONTEND_URL` points at the production SPA
 - [ ] Mail delivers reset emails to a real inbox
 - [ ] Registration enabled/disabled matches business policy
+- [ ] Founding Beta CTA URL and invite lifetime match cohort policy
+- [ ] Marketing/Vite origins are absent from `SANCTUM_STATEFUL_DOMAINS`
 - [ ] Password policy matches compliance requirements
 - [ ] Rate limiters confirmed under load
 - [ ] Central (`/central/login`) and tenant (`/login`, including Workspace entry) both verified

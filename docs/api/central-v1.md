@@ -180,10 +180,13 @@ Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) inclu
 
 | Method | Path | Notes |
 |--------|------|-------|
-| GET | `/public/settings` | Unauthenticated bootstrap (branding, formats, registration/maintenance flags). No secrets. |
+| GET | `/public/settings` | Unauthenticated bootstrap (branding, formats, registration/Founding Beta/maintenance flags). No secrets. |
 | GET | `/public/stats` | Unauthenticated marketing Trust metrics: `workspaces` (active non-archived), `module_installations` (active/trial subscriptions), `published_modules`, `uptime_percent`, `currency` (platform default). |
 | GET | `/public/modules` | Unauthenticated marketing catalog: `{ currency, modules[] }` with `availability` (`available` / `in-progress` / `planned`), `pricing` (`included` / `free` / `paid` when available), and prices in **catalog `modules.currency`** (not workspace default `system_settings.currency`). Excludes deprecated. |
-| POST | `/public/register-workspace` | Self-service workspace create when `registration_enabled`; otherwise `403` with dedicated message. Body: `company_name`, `owner_name`, `email`, `password` (+ confirmation); platform domain auto-generated from slug (client `domain` ignored). |
+| POST | `/public/beta-applications` | Public beta intake, throttled 10/min. Returns the application UUID. |
+| GET | `/public/beta-invites/{token}` | Public invite preview, throttled 60/min. Returns `valid`, `expired`, `activated`, `email`, `name`, `company`, and `message`. |
+| POST | `/public/beta-invites/resend` | Body: `email`; throttled 5/min. Rotates and emails only if Central already issued an invite (`invite_sent_at` / token present), status accepted, and not activated. Always returns the same non-enumerating success message. |
+| POST | `/public/register-workspace` | Self-service workspace create when `registration_enabled`; otherwise `403` unless `invite_token` identifies an accepted, active, unactivated Founding Beta invite and `email` matches the application. Body: `company_name`, `owner_name`, `email`, `password` (+ confirmation), optional `invite_token`; platform domain auto-generated from slug (client `domain` ignored). |
 | GET | `/system-settings` | All admin settings (secrets masked). Response `meta.mail_webhook` includes webhook URL + event catalog when the active provider supports webhooks. |
 | PUT | `/system-settings` | `{ "settings": { "key": value } }` — per-key validation; may include `mail_webhook_events` / `mail_webhook_secret` |
 | POST | `/system-settings/test-mail` | `{ "email": "…" }` — sends test mail using runtime SMTP config |
@@ -198,7 +201,7 @@ Settings groups: `general`, `localization`, `mail`, `branding`, `security`, `mai
 
 | Group | Keys | Runtime use |
 |-------|------|-------------|
-| general | `app_name`, `company_name`, `timezone`, `locale`, `currency`, `registration_enabled` | App title/config, tenant defaults, self-service registration |
+| general | `app_name`, `company_name`, `timezone`, `locale`, `currency`, `registration_enabled`, `founding_beta_enabled`, `founding_beta_apply_url`, `founding_beta_invite_ttl_days` | App title/config, tenant defaults, self-service registration, registration-closed beta CTA, invite lifetime |
 | localization | `date_format`, `time_format` | Central SPA formatters |
 | mail | `mail_provider`, SMTP / Postmark / Mailgun credentials, `mail_webhook_secret`, `mail_webhook_events`, From identity | Laravel mail + delivery webhooks |
 | branding | `button_color`, `support_email`, `logo_path`, `favicon_path` | SPA CSS/`document.title`/sidebar; support footer on tenant-facing emails |
@@ -207,6 +210,17 @@ Settings groups: `general`, `localization`, `mail`, `branding`, `security`, `mai
 | billing | `invoice_prefix`, `proration_mode`, `default_payment_gateway`, `trial_enabled`, `stripe_enabled`, `stripe_webhook_configured` | Billing engine / invoices |
 
 Removed: `primary_color`, `feature_registration`, `feature_invites`, `queue_connection_display`, `filesystem_disk`.
+
+### Founding Beta application administration
+
+All administration endpoints require Central authentication. Listing/reading uses the matching `beta-applications.list` / `beta-applications.read` permission; update and invite actions use `beta-applications.update`.
+
+| Method | Path | Notes |
+|--------|------|-------|
+| GET | `/beta-applications` | Paginated list; filters `status`, `search`; sort by `created_at`, `updated_at`, `name`, or `status`. |
+| GET | `/beta-applications/{beta_application}` | Full application including invite timestamps and `has_active_invite`, `invite_expired`, `activated`. |
+| PATCH | `/beta-applications/{beta_application}` | Update `status` and internal `notes`. |
+| POST | `/beta-applications/{beta_application}/invite` | Accepts the application (unless already activated — then 422), rotates the hashed token and expiry, queues the encrypted invite email, and returns the application plus one-time plaintext `invite_url`. |
 
 ## Dashboard payload
 
@@ -234,6 +248,8 @@ Seeded by `Database\Seeders\Central\PermissionsSeeder`, guard `central-api`.
 | `payments` | `list`, `read`, `update` |
 | `impersonation` | `start`, `end`, `list` |
 | `system-settings` | `list`, `update` |
+| `beta-applications` | `list`, `read`, `update` |
+| `feedback` | `list`, `read`, `update`, `comment`, `stats` |
 
 ## Removed
 

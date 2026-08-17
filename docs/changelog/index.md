@@ -1,5 +1,14 @@
 # Changelog
 
+## Founding Beta invites (2026-08-17)
+
+- Central **Beta Applications** can accept an applicant and send, copy, or resend a time-limited workspace registration invite.
+- Accepted applicants register with `invite_token` while public registration remains disabled; tokens are hashed, single-use (via `activated_at`), expiry-checked, and tied to the application email. After activation the hash is retained so the same link shows “already activated”.
+- The public beta page can self-resend an eligible invite without revealing whether an application exists.
+- General settings add `founding_beta_enabled`, `founding_beta_apply_url`, and `founding_beta_invite_ttl_days`; public bootstrap exposes these non-secret values for registration-closed CTA behavior.
+- Playwright: `npm run test:e2e:beta-applications` — one Central admin session covering settings validation, registration-closed CTA, invite issue, invite register validation/activation, and expired + Central resend.
+- Production readiness: [Founding Beta invite](/deployment/founding-beta-invite-production-readiness) — **Go** (H1–H3 / M2 / M4 / L1 / L5 remediated).
+
 ## Tenant Impersonation history and Audit Logs (2026-08-17)
 
 Central tenant details now surfaces real history instead of empty placeholders:
