@@ -36,4 +36,8 @@ Delete is a soft delete. Restore requires `products.restore`; permanent deletion
 
 ## Inventory and purchasing
 
-Only products with **Track stock** enabled can receive stock adjustments, Purchase Order receipts, or transfers. Product selection on Purchase Order lines is optional; ordinary description-only lines still work.
+Only products with **Track stock** enabled can receive stock adjustments, Purchase Order receipts, or transfers. Product selection on Purchase Order lines is optional; ordinary description-only lines still work. The picker requires the Products module and `products.view`, and only **Active** products appear.
+
+## Billing documents (quotations, estimates, invoices)
+
+When Products is installed and you have `products.view`, quotation / estimate / invoice line editors show an optional **Product** picker. Selecting a product fills the line **name**, rich **details** (from the product description), and **unit price**. You can edit those fields afterward. Clearing the product link does **not** clear your edited text. Inactive products cannot be linked on new lines.

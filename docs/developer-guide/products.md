@@ -18,13 +18,14 @@ Products is gated by `module:products` and `products.view|create|update|delete|r
 ## Domain rules
 
 - `sku` is unique per tenant; category is nullable and is nullified if removed.
-- Product `description` accepts sanitized HTML (same allowlist as billing document notes); empty HTML is stored as `null`.
+- Product `description` accepts sanitized HTML (same allowlist as billing document notes; `style` stripped, `javascript:` / `data:` hrefs neutralized); empty HTML is stored as `null`.
 - There is no separate product/service type. Services are catalog rows with `track_stock = false`.
 - `track_stock` controls whether `StockService` can mutate a product's stock.
 - Product notes and `product_activities` provide the domain timeline; the model also uses Spatie `LogsActivity`.
-- `product_id` on `purchase_order_lines` is nullable and validated by `LinkableProduct` when supplied.
+- `product_id` on `purchase_order_lines` and billing document lines (`quotation_lines`, `estimate_lines`, `customer_invoice_lines`) is nullable and validated by `LinkableProduct` when supplied: Products module entitled, actor has `products.view` (or superadmin), product is active and not soft-deleted, same tenant.
+- Billing SPA line pickers (and purchase-order picker) gate on Products + `products.view`, list **active** products with server search, auto-fill line text on select, and leave edited fields intact when clearing the link. Convert estimate → invoice and recurring invoice generation copy `product_id`.
 
-Catalog: slug `products`, version **1.1.0** (HTML description).
+Catalog: slug `products`, version **1.1.1** (HTML description + link hardening).
 
 ## Frontend and verification
 

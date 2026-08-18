@@ -31,7 +31,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - `send` / `accept` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
 - **Send is status-only** — no outbound email delivery; PDF download is available separately via **Download PDF**.
 - Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `QuotationLine` rows plus document `line_discount_type`. Tax is calculated after line discounts.
-- Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct` when Products is entitled). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
+- Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct`: Products entitled, `products.view` or superadmin, active non-trashed). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
 - Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store only `discount_value`. Validation lives in `DocumentDiscountRules`.
 - PDF: `GET …/pdf` (`quotations.view`, assignee-scoped, `throttle:quotations-pdf`) renders from `resources/views/quotations/pdf.blade.php` via `QuotationPdfService` — same branded layout as invoices.
 - Assignee scoping via `ScopesToAssignee` with `quotations.assign`.
@@ -46,7 +46,7 @@ quotations.view | create | update | delete | restore | force.delete | assign | s
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.3.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 bumped with optional product line picker.
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.3.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer.
 
 ## API (tenant)
 

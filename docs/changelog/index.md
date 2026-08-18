@@ -1,5 +1,21 @@
 # Changelog
 
+## Billing product line picker — production ready (2026-08-18)
+
+Catalog versions: **products 1.1.1**, **quotations 1.3.1**, **estimates 1.3.1**, **invoices 1.5.1**.
+
+- Hardened `LinkableProduct`: requires `products.view` (or superadmin), rejects soft-deleted and inactive products.
+- `DocumentHtmlSanitizer` strips inline `style` and neutralizes `data:` / `javascript:` hrefs.
+- Billing line picker uses server-side product search with `status=active` (SPA).
+- Pest coverage for estimate/invoice entitlement reject, convert + recurring `product_id`, sanitizer cases.
+- Playwright: clear product without wiping edited name; picker hidden without Products.
+- Canonical audit: [Billing product line picker production readiness](/deployment/billing-product-line-picker-production-readiness) — **Go** (migrate-first).
+
+## Billing product line picker — production readiness draft (2026-08-18)
+
+- Canonical go-live audit draft (superseded by **Go** note above).
+- `database.md` quotation / estimate / invoice line schemas updated for `name` / `body` / optional `product_id`.
+
 ## Billing documents: product line picker (2026-08-18)
 
 Catalog versions: **quotations 1.3.0**, **estimates 1.3.0**, **invoices 1.5.0**.
