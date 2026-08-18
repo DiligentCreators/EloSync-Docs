@@ -1,5 +1,13 @@
 # Changelog
 
+## Products: auto-generated SKU (2026-08-18)
+
+Catalog version: **products 1.2.0**.
+
+- Creating a product auto-fills the next SKU (`SKU-00001` style). You can override it or click **Generate SKU** to refresh.
+- API: `sku` is optional on create; omit/blank to auto-assign. `GET /products/next-sku` returns the preview. Optional tenant setting `products_sku_prefix`.
+- Docs: [Products user guide](/user-guide/products), [Products API](/api/tenant-v1-products), [Products developer guide](/developer-guide/products).
+
 ## Billing product line picker — production ready (2026-08-18)
 
 Catalog versions: **products 1.1.1**, **quotations 1.3.1**, **estimates 1.3.1**, **invoices 1.5.1**.

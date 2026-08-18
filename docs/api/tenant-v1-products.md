@@ -8,13 +8,17 @@ Base path: `/api/tenant/v1`. All endpoints require authenticated, verified tenan
 
 Returns product KPI totals.
 
+### GET `/products/next-sku`
+
+Requires `products.create`. Returns the next suggested SKU (`{ sku }`), using tenant setting `products_sku_prefix` (default `SKU-`) plus a zero-padded sequence. Soft-deleted products count toward the sequence. The value is a preview — concurrent creates may advance it; omit `sku` on create to let the server assign safely.
+
 ### GET `/products`
 
 Query: `search`, `category_id`, `status` (`active|inactive`), `trashed` (`true|only`), `sort`, `direction`, `page`, `per_page`.
 
 ### POST `/products`
 
-Requires `products.create`. Body: `sku` and `name` (required); optional `category_id`, `description` (HTML, sanitized server-side, max 50000), `unit`, `cost`, `price`, `currency`, `track_stock`, `reorder_level`, `status`.
+Requires `products.create`. Body: `name` (required); `sku` optional (unique per tenant). When `sku` is omitted or blank, the server auto-generates one (`SKU-00001` style, or `products_sku_prefix`). Optional `category_id`, `description` (HTML, sanitized server-side, max 50000), `unit`, `cost`, `price`, `currency`, `track_stock`, `reorder_level`, `status`.
 
 ### GET/PUT/DELETE `/products/{product}`
 

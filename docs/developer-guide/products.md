@@ -18,6 +18,7 @@ Products is gated by `module:products` and `products.view|create|update|delete|r
 ## Domain rules
 
 - `sku` is unique per tenant; category is nullable and is nullified if removed.
+- On create, `sku` may be omitted or blank — `ProductService` assigns the next SKU (`products_sku_prefix` tenant setting, default `SKU-`, plus a 5-digit sequence including soft-deleted rows) and retries on unique collisions. Clients may override with an explicit SKU. `GET /products/next-sku` previews the next value for the SPA.
 - Product `description` accepts sanitized HTML (same allowlist as billing document notes; `style` stripped, `javascript:` / `data:` hrefs neutralized); empty HTML is stored as `null`.
 - There is no separate product/service type. Services are catalog rows with `track_stock = false`.
 - `track_stock` controls whether `StockService` can mutate a product's stock.
@@ -25,7 +26,7 @@ Products is gated by `module:products` and `products.view|create|update|delete|r
 - `product_id` on `purchase_order_lines` and billing document lines (`quotation_lines`, `estimate_lines`, `customer_invoice_lines`) is nullable and validated by `LinkableProduct` when supplied: Products module entitled, actor has `products.view` (or superadmin), product is active and not soft-deleted, same tenant.
 - Billing SPA line pickers (and purchase-order picker) gate on Products + `products.view`, list **active** products with server search, auto-fill line text on select, and leave edited fields intact when clearing the link. Convert estimate → invoice and recurring invoice generation copy `product_id`.
 
-Catalog: slug `products`, version **1.1.1** (HTML description + link hardening).
+Catalog: slug `products`, version **1.2.0** (auto SKU + HTML description + link hardening).
 
 ## Frontend and verification
 
