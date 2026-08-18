@@ -2,7 +2,7 @@
 
 ## Who can use Quotations
 
-Your workspace must have the **Opportunities** module installed, then the **Quotations** module (free from Marketplace — not auto-installed). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `send`, `accept` as needed).
+Your workspace must have the **Opportunities** module installed, then the **Quotations** module (free from Marketplace — not auto-installed). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `send`, `accept`, `convert` as needed).
 
 Without **assign**, you only see quotations assigned to you.
 
@@ -33,6 +33,16 @@ A quotation starts in **Draft**. Move it forward with:
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.
 
+## Convert to invoice
+
+Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use **Convert to invoice** from the detail sheet or row menu (`quotations.convert`):
+
+- Creates a new **draft** invoice with the same title, notes, terms & conditions, currency, line discounts, contact/company, assignee, and a copy of every line item
+- Marks the quotation **Accepted** automatically if it wasn't already
+- The quotation detail sheet then shows a link to the **converted invoice**
+- A quotation can only be converted **once** — the action is hidden once any invoice already has this quotation linked (including invoices created from a linked estimate or contract)
+- Without Invoices installed, the action is hidden; the API returns a validation error if called directly
+
 ## Download PDF
 
 **Download PDF** is on the quotation detail drawer and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Sending still does not email the customer.
@@ -45,4 +55,4 @@ Users with **assign** can set or clear the assignee from the detail drawer or th
 
 - **Overview** — shows the quotation memo from the create/edit **Notes** field (also printed on the PDF)
 - **Notes** tab — internal activity notes the team adds after the quotation exists (not the same as the memo)
-- **Activity** — timeline of create, update, assignment, status change, note, and delete/restore events
+- **Activity** — timeline of create, update, assignment, status change, conversion, note, and delete/restore events

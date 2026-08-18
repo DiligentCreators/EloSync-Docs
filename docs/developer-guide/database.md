@@ -224,6 +224,10 @@ Domain timeline. `tenant_id`, `reseller_id` (cascade), `type` (string; see `Rese
 
 `tenant_id`, `uuid`, `reseller_id` (cascade), `customer_invoice_id` (cascade), `party` (`reseller`|`owner`), nullable `party_user_id`, `invoice_total` / `rate` / `amount`, `currency` (3-char, default `USD`), `status` (`accrued`|`approved`|`paid`|`void`), approve/pay/void timestamps + actor FKs. Unique `(customer_invoice_id, party)`. Spatie activity log name `reseller_commission_entries`. Accrues only when invoice status becomes fully **Paid** and `reseller-payouts` is entitled.
 
+### `customer_invoices.contract_id`
+
+Nullable FK → `contracts` (`nullOnDelete`), indexed with `tenant_id`. Set by `POST /contracts/{id}/convert`. Repeatable — no unique index. Catalog **invoices 1.6.0**.
+
 ### `customer_invoices.reseller_id`
 
 Nullable FK → `resellers` (`nullOnDelete`), indexed with `tenant_id`. Optional link validated via `LinkableReseller` when Resellers is entitled. (Customer invoice module tables are documented in the Invoices developer guide; this column is the Phase 1 Resellers extension.) Recurrence columns on the same table (1.1.0): `is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurrence_due_days`, `recurring_source_invoice_id` (self-FK, null on delete).

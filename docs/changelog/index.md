@@ -1,5 +1,20 @@
 # Changelog
 
+## Invoices: auto-fill next recurring date from frequency (2026-08-19)
+
+- Turning on **Recurring invoice** (or changing weekly / monthly / quarterly / semi-annually / yearly) fills **Next invoice date** one period after the issue date (or today). The date stays editable.
+- Docs: [Invoices user guide](/user-guide/invoices).
+
+## Sales documents: convert quotations and contracts to invoices (2026-08-18)
+
+Catalog versions: **quotations 1.4.0**, **contracts 1.2.0**, **invoices 1.6.0**, **estimates 1.3.2**.
+
+- **Quotations:** one-shot **Convert to invoice** (sent or accepted) when Invoices is installed. Copies lines, links `quotation_id`, auto-accepts if sent, then hides convert. Soft Invoices entitlement (like PO → expense) — not a Marketplace hard dependency.
+- **Contracts:** repeatable **Create invoice** from **Active** contracts. Copies linked quotation lines, or a single line from contract `value`. Sets `customer_invoices.contract_id`. Warns if the linked quotation already has an invoice; the API still allows more contract invoices.
+- **Estimates:** convert stays one-shot. Blocked with 422 if the linked quotation is already invoiced (quote convert, prior estimate convert, or a contract invoice that copied `quotation_id`).
+- Permissions: `quotations.convert` and `contracts.convert` (admin/manager). `customer_invoices.quotation_id` is **not** unique.
+- Docs: [Quotations](/user-guide/quotations), [Contracts](/user-guide/contracts), [Estimates](/user-guide/estimates), [Invoices](/user-guide/invoices); matching API + developer guides; [Module Dependencies](/architecture/module-dependencies).
+
 ## Contracts: opportunity auto-fill and rich HTML memos (2026-08-18)
 
 Catalog version: **contracts 1.1.0**.
@@ -7,7 +22,7 @@ Catalog version: **contracts 1.1.0**.
 - Creating a contract: selecting an **Opportunity** auto-fills title (when empty), party name (from contact or company), value, currency, and assignee when those are set on the opportunity.
 - **Linked quotation:** auto-selected only when that opportunity has exactly one quotation; with multiple quotations, leave unset for manual choice.
 - New **description** field plus existing **notes** use TipTap rich HTML (headings, lists, bold/italic/underline), sanitized on save and display. Timeline comments stay plain text.
-- Docs: [Contracts user guide](/user-guide/contracts), [Contracts API](/api/tenant-v1-contracts), [Contracts developer guide](/developer-guide/contracts).
+- Docs: [Contracts user guide](/user-guide/contracts), [Contracts API](/api/tenant-v1-contracts), [Contracts developer guide](/developer-guide/contracts). Go-live: [Contracts 1.1.0 production readiness](/deployment/contracts-production-readiness) — **Go** (migrate-first).
 
 ## Products: auto-generated SKU (2026-08-18)
 

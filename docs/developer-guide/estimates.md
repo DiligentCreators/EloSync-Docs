@@ -35,10 +35,11 @@ Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (ass
 - **`convertToInvoice()`** (`EstimateService`):
   1. Rejects if a `CustomerInvoice` already has this `estimate_id` (including soft-deleted ones) — an estimate converts **at most once**.
   2. Rejects unless `Estimate::isConvertible()` (`status` is `sent` or `accepted`).
-  3. Inside a DB transaction: copies `title`, `notes`, `terms_and_conditions`, `currency`, `line_discount_type`, `contact_id`, `company_id`, `quotation_id`, `assigned_to`, and a mapped copy of every `EstimateLine` (`product_id`, `name`, `body`, `discount_value`, quantities/prices/tax) into `CustomerInvoiceService::create()`, producing a **draft** invoice; sets `invoice->estimate_id` and saves.
-  4. Transitions the estimate to `accepted` if it wasn't already (reuses `transitionStatus()`).
-  5. Records a `converted` activity on the estimate and fires `EstimateConverted($estimate, $invoice, $actor)`.
-  6. Returns the created `CustomerInvoice` (loaded with its own relations) — the controller renders it via `CustomerInvoiceResource`, not an Estimate resource.
+  3. Rejects if `quotation_id` is set and `QuotationInvoiceGuard::alreadyInvoiced()` — the linked quotation already produced an invoice.
+  4. Inside a DB transaction: copies `title`, `notes`, `terms_and_conditions`, `currency`, `line_discount_type`, `contact_id`, `company_id`, `quotation_id`, `assigned_to`, and a mapped copy of every `EstimateLine` (`product_id`, `name`, `body`, `discount_value`, quantities/prices/tax) into `CustomerInvoiceService::create()`, producing a **draft** invoice; sets `invoice->estimate_id` and saves.
+  5. Transitions the estimate to `accepted` if it wasn't already (reuses `transitionStatus()`).
+  6. Records a `converted` activity on the estimate and fires `EstimateConverted($estimate, $invoice, $actor)`.
+  7. Returns the created `CustomerInvoice` (loaded with its own relations) — the controller renders it via `CustomerInvoiceResource`, not an Estimate resource.
 - Lines are a first-class child table (`estimate_lines`), not embedded JSON — each row is `{ product_id?, name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`. Parent stores shared `line_discount_type`. `subtotal`/`discount_total`/`tax_total`/`total` are recomputed server-side via `DocumentTotalsCalculator` on create/update. Tax is calculated after line discounts.
 - Shared line discounts use `DocumentDiscountTypeEnum` with validation in `DocumentDiscountRules`. Lines support optional `product_id` via `LinkableProduct` (Products entitled, `products.view` or superadmin, active non-trashed product). Memo `notes` / terms / bodies accept sanitized HTML via `DocumentHtmlSanitizer`.
 - PDF: `GET …/pdf` (`estimates.view`, assignee-scoped, `throttle:estimates-pdf`) renders from `resources/views/estimates/pdf.blade.php` via `EstimatePdfService` — same branded layout as invoices.
@@ -55,7 +56,7 @@ estimates.view | create | update | delete | restore | force.delete | assign | se
 
 Routes use `module:estimates` then `can:estimates.*` / policies.
 
-Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.3.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer.
+Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.3.2**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced.
 
 ## API (tenant)
 

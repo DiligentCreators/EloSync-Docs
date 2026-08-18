@@ -8,7 +8,7 @@ Full go-live audit / checklist: [Invoices 1.1.0 production readiness](./invoices
 - Category: **Billing** (`billing`)
 - **Free Marketplace opt-in** (not auto-installed)
 - Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 10`
-- Catalog version: **1.2.0** (status model `draft` / `unpaid` / `paid` / `cancelled`; recurring + branded PDF)
+- Catalog version: **1.6.0** (`contract_id` for invoices created from contracts; status model `draft` / `unpaid` / `paid` / `cancelled`; recurring + branded PDF)
 - **No hard dependency** — unlike Quotations/Contracts, Invoices does **not** require Opportunities (or any other module) and can be installed standalone
 - The **Payments** module (shipped — see [deployment/payments.md](/deployment/payments)) declares a required `module_dependencies` row on Invoices, so Invoices must be installed first before a workspace can enable Payments
 

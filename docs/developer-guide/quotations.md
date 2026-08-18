@@ -8,7 +8,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 |-------|------|
 | Models | `app/Models/Quotation.php`, `QuotationLine`, `QuotationNote`, `QuotationActivity` |
 | Enums | `QuotationStatusEnum`, `QuotationActivityTypeEnum`, `DocumentDiscountTypeEnum` |
-| Support | `app/Support/Billing/DocumentTotalsCalculator.php`, `DocumentDiscountRules.php`, `DocumentHtmlSanitizer.php` |
+| Support | `app/Support/Billing/DocumentTotalsCalculator.php`, `DocumentDiscountRules.php`, `DocumentHtmlSanitizer.php`, `QuotationInvoiceGuard.php` |
 | PDF | `app/Services/Tenant/QuotationPdfService.php`, `resources/views/quotations/pdf.blade.php` |
 | Service | `app/Services/Tenant/QuotationService.php` (+ `ScopesToAssignee`) |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/QuotationController.php` |
@@ -28,7 +28,8 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - Status machine lives on `QuotationStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → sent → accepted|rejected|expired`. `QuotationService::transitionStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions, **including re-entering the same status** (e.g. sending an already-sent quotation).
 - Content updates (`PUT`) and line sync are **draft-only** via `Quotation::isEditable()`. Assignment remains available after send via `POST …/assign`.
 - `POST …/status` maps target status to permissions: `sent` → `quotations.send`, `accepted` → `quotations.accept`, otherwise `quotations.update`.
-- `send` / `accept` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
+- `send` / `accept` / `convert` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
+- **Convert to invoice** (`QuotationService::convertToInvoice()`): soft Invoices entitlement (422 if not installed). One-shot via `QuotationInvoiceGuard` (any invoice with this `quotation_id`, including soft-deleted, estimate converts, or contract bills). Copies lines into a draft `CustomerInvoice`, sets `quotation_id`, auto-accepts if sent, records `converted`, fires `QuotationConverted`.
 - **Send is status-only** — no outbound email delivery; PDF download is available separately via **Download PDF**.
 - Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `QuotationLine` rows plus document `line_discount_type`. Tax is calculated after line discounts.
 - Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct`: Products entitled, `products.view` or superadmin, active non-trashed). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
@@ -41,12 +42,12 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 ## Permissions
 
 ```
-quotations.view | create | update | delete | restore | force.delete | assign | send | accept
+quotations.view | create | update | delete | restore | force.delete | assign | send | accept | convert
 ```
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.3.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer.
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.4.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement).
 
 ## API (tenant)
 

@@ -19,6 +19,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 - Contract fields: opportunity (required), optional quotation link, title, party name, start date (required), optional end date, value, currency, rich-text description and notes
 - Status workflow: `draft → active → expired | terminated` (`POST /contracts/{id}/status`)
+- **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check)
 - Assignment with assignee scoping via `contracts.assign`
 - Notes + domain activity timeline (mirrors Opportunities / Quotations)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -27,13 +28,13 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 ## Permissions
 
-`contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
+`contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `convert`
 
 Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`.
 
 ## Related modules
 
-**Hard dependency:** Opportunities (see [Module Dependencies](/architecture/module-dependencies)). **Optional:** Quotations — the quotation picker on a contract only appears (and validates) when Quotations is entitled.
+**Hard dependency:** Opportunities (see [Module Dependencies](/architecture/module-dependencies)). **Optional:** Quotations — the quotation picker on a contract only appears (and validates) when Quotations is entitled. **Optional:** Invoices — create-invoice is hidden until Invoices is entitled.
 
 ## Explicitly deferred
 

@@ -36,6 +36,7 @@ New Estimates permissions for **existing** workspaces ship as an additive **data
 6. Confirm `module:estimates` + `estimates.*` permissions on target roles
 7. Deploy Frontend SPA with Estimates nav (Billing sidebar group, after Credit Notes) — verify a workspace **without** Invoices installed cannot install Estimates from Marketplace
 8. Verify converting an estimate correctly creates a linked draft invoice and marks the estimate **Accepted**, in a staging smoke test before rollout
+9. After catalog **1.3.2**: confirm convert is blocked (422) when the estimate’s linked quotation already has an invoice
 
 ::: warning MySQL identifier length
 The `customer_invoice_activities`, `customer_payment_activities`, and `customer_credit_note_activities` migrations from this same Phase 3 batch originally generated composite index names that exceeded MySQL's 64-character identifier limit (`{table}_tenant_id_{fk}_created_at_index`), as did the `customer_payment_allocations` unique constraint and the `customer_credit_note_notes` / `customer_credit_note_lines` indexes. These were given explicit, shorter index names before this module shipped — if you're migrating an environment that already partially applied the original migrations, drop the affected tables first so they can be recreated with the corrected index names.

@@ -23,7 +23,7 @@ New Quotations permissions for **existing** workspaces ship as an additive **dat
 
 ## Monitoring
 
-- Platform audit events: `quotation_created`, `quotation_updated`, `quotation_deleted`, `quotation_assigned`, `quotation_status_changed`, `quotation_note_added`
+- Platform audit events: `quotation_created`, `quotation_updated`, `quotation_deleted`, `quotation_assigned`, `quotation_status_changed`, `quotation_converted`, `quotation_note_added`
 - Notifications: assignment via `QuotationAssignedNotification`
 
 ## Deploy checklist
@@ -34,3 +34,4 @@ New Quotations permissions for **existing** workspaces ship as an additive **dat
 4. Run quotations permissions migration so default roles receive missing `quotations.*` grants
 5. Confirm `module:quotations` + `quotations.*` permissions on target roles
 6. Deploy Frontend SPA with Quotations nav/pages (mirror Opportunities table + form) when the SPA ships
+7. After catalog **1.4.0**: confirm `quotations.convert` grants and that convert stays hidden until Invoices is entitled

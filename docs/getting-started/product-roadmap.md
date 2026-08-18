@@ -107,6 +107,7 @@ Once CRM is complete, extend it into a full sales workflow.
 - Required Opportunity link; optional Contact/Company links
 - Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
 - Status workflow: `draft → sent → accepted|rejected|expired`
+- **Convert to invoice** when Invoices is installed (one-shot; soft entitlement)
 - Notes, assignment, domain timeline; **hard dependency** on Opportunities; free Marketplace opt-in under category `sales`
 
 #### Contracts (shipped)
@@ -114,6 +115,7 @@ Once CRM is complete, extend it into a full sales workflow.
 - Required Opportunity link; optional Quotation link (only when Quotations is entitled)
 - Party name, start/end dates, value/currency
 - Status workflow: `draft → active → expired|terminated`
+- **Create invoice** from active contracts when Invoices is installed (repeatable; soft entitlement)
 - Notes, assignment, domain timeline; **hard dependency** on Opportunities; free Marketplace opt-in under category `sales`
 
 **Goal:** Manage the entire sales lifecycle from opportunity creation through quotation, negotiation, and contract execution. ✅ **Achieved** — Opportunities, Quotations, and Contracts are all shipped.
@@ -134,7 +136,7 @@ Build a comprehensive billing and invoicing solution that integrates with the ex
 #### Invoices (shipped)
 
 - No hard `module_dependencies` row — installs standalone (unlike Quotations/Contracts, which require Opportunities)
-- Optional Contact/Company links and optional Quotation link (only when their module is entitled)
+- Optional Contact/Company links and optional Quotation / Estimate / Contract links (set by convert actions; quotation_id is not unique)
 - Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
 - Balance fields (`amount_paid`, `amount_credited`, `balance_due`) driven by the Payments module — read-only via this API
 - Status workflow: `draft → sent → partial|paid → void` (`send` / `void` / `status` actions)
@@ -163,7 +165,7 @@ Build a comprehensive billing and invoicing solution that integrates with the ex
 - Estimate fields (title, notes, currency, valid-until) plus line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
 - Optional Contact/Company links, plus optional Opportunity/Quotation links (each validated only when that module is entitled)
 - Status workflow: `draft → sent → accepted|rejected|expired` (identical shape to Quotations)
-- **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with a copy of the estimate's lines, links it back via `customer_invoices.estimate_id`, and marks the estimate `accepted`; one-way and one-time per estimate
+- **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with a copy of the estimate's lines, links it back via `customer_invoices.estimate_id`, and marks the estimate `accepted`; one-way and one-time per estimate. Blocked if the linked quotation is already invoiced.
 - Assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
 
 **Goal:** Provide complete customer billing, payment tracking, and financial document management. ✅ **Achieved** — Invoices, Payments, Credit Notes, and Estimates are all shipped, completing Phase 3.

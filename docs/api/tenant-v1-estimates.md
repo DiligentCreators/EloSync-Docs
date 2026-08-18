@@ -105,7 +105,7 @@ Converts a **sent** or **accepted** estimate into a **draft** `CustomerInvoice`:
 - Transitions the estimate to `accepted` if it wasn't already
 - Records a `converted` activity on the estimate
 
-Permission: `estimates.convert` (assignee-scoped unless the actor has `estimates.assign` or is superadmin). Rejects with a 422 on `status` if the estimate is `draft`/`rejected`/`expired`, or if it has already been converted (an estimate converts at most once). Returns the created **invoice** (`CustomerInvoiceResource`), not an estimate, with HTTP 201.
+Permission: `estimates.convert` (assignee-scoped unless the actor has `estimates.assign` or is superadmin). Rejects with a 422 on `status` if the estimate is `draft`/`rejected`/`expired`, if it has already been converted (an estimate converts at most once), or if the estimate’s linked quotation already has any invoice (`QuotationInvoiceGuard` — avoids double billing the same quote). Returns the created **invoice** (`CustomerInvoiceResource`), not an estimate, with HTTP 201.
 
 ### POST `/estimates/{id}/notes`
 

@@ -112,6 +112,22 @@ Contracts
 
 Contracts works without Quotations. When Quotations is entitled, a Contract may optionally link `quotation_id`; validated by `LinkableQuotation` (soft entitlement + assignee scope). No hard `module_dependencies` row for this optional link.
 
+### Quotations / Contracts → Invoices (optional, shipped, reverse direction)
+
+```text
+Quotations
+  └── may use Invoices   (optional — convert to invoice)
+
+Contracts
+  └── may use Invoices   (optional — create invoice)
+```
+
+`POST /quotations/{id}/convert` creates a draft CustomerInvoice from a `sent`/`accepted` quotation. `POST /contracts/{id}/convert` creates a draft CustomerInvoice from an `active` contract (repeatable). Both are **soft, call-time** entitlement checks inside `QuotationService::convertToInvoice()` / `ContractService::createInvoice()` — not `module_dependencies` rows — so Quotations and Contracts keep working with Invoices uninstalled; only those endpoints 422 until Invoices is installed.
+
+Quotation convert is one-shot: any invoice with that `quotation_id` (including from an estimate convert or a contract bill) blocks a second quote convert. Contract billing stays repeatable. Estimate convert is also blocked when the estimate’s quotation is already invoiced (`QuotationInvoiceGuard`).
+
+**Status:** shipped with quotations **1.4.0**, contracts **1.2.0**, invoices **1.6.0**, estimates **1.3.2**.
+
 ### Invoices → Contacts / Companies / Quotations (optional)
 
 ```text
