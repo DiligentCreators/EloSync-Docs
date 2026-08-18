@@ -9,8 +9,10 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 | Piece | Path |
 |-------|------|
 | Models | `app/Models/CustomerInvoice.php`, `CustomerInvoiceLine`, `CustomerInvoiceNote`, `CustomerInvoiceActivity` |
-| Enums | `CustomerInvoiceStatusEnum`, `CustomerInvoiceActivityTypeEnum`, `CustomerInvoiceRecurrenceFrequencyEnum`, `CustomerInvoiceRecurrenceStatusEnum` |
+| Enums | `CustomerInvoiceStatusEnum`, `CustomerInvoiceActivityTypeEnum`, `CustomerInvoiceRecurrenceFrequencyEnum`, `CustomerInvoiceRecurrenceStatusEnum`, `DocumentDiscountTypeEnum` |
+| Support | `app/Support/Billing/DocumentTotalsCalculator.php`, `DocumentDiscountRules.php`, `DocumentHtmlSanitizer.php`, `BrandedDocumentPdfContext.php` |
 | Service | `app/Services/Tenant/CustomerInvoiceService.php` (+ `ScopesToAssignee`) |
+| PDF | `app/Services/Tenant/CustomerInvoicePdfService.php`, `resources/views/invoices/pdf.blade.php` |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/CustomerInvoiceController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/CustomerInvoice/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/CustomerInvoice/*` |
@@ -33,8 +35,10 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - `send()` backfills `issue_date` to today if unset, then transitions to `sent`. If the invoice is a recurring **series root**, this also sets `recurrence_status=active`. **`recurrence_next_issue_on`** is the date the operator chose on the draft (required when recurring); Send keeps it when it is after the issue date, otherwise it falls back to one frequency step from the issue date. **Status-only** — no outbound email delivery.
 - Recurring series live on `customer_invoices` (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurrence_due_days`, `recurring_source_invoice_id`). The original invoice is the template. `invoices:generate-recurring` (daily) clones **draft** occurrences from the root’s current lines; children are not themselves recurring. `POST …/recurrence/stop` ends the series (`ended`) and optionally voids the latest unpaid generated invoice (`void_latest_unpaid`). Voiding the root also ends an active series.
 - Generator: `chunkById` over due series roots, per-series `try/catch`, `withTrashed()` uniqueness for `(tenant, source, issue_date)`, catch-up cap (`config('invoices.recurring_catchup_cap')`, default 52) and per-tenant time budget. Command returns `FAILURE` if any entitled tenant had a failed series. Remaining due periods run on the next daily tick.
-- PDF: `GET …/pdf` (`invoices.view`, assignee-scoped, `throttle:invoices-pdf`) renders a Dompdf document from `resources/views/invoices/pdf.blade.php` on the fly (no stored `pdf_path`). Layout uses workspace `button_color`, embedded logo (base64 from branding disk), and invoice settings (`company_*`, `invoice_bank_*`, `invoice_payment_terms`, `invoice_default_notes`). Cached (base64) by id + `updated_at` + settings fingerprint so database/Redis JSON stores stay valid UTF-8 and branding edits invalidate the cache. `send()` dispatches `WarmCustomerInvoicePdfJob` on the default queue.
-- Line items are fully replaced on create/update (`CustomerInvoiceService::syncLines()`); `CustomerInvoice::recalculateTotals()` derives `subtotal` / `tax_total` / `total` from persisted `CustomerInvoiceLine` rows. `balance_due` is then derived from `total - amount_paid - amount_credited` via `recalculateBalanceFromAmounts()`, called by [Payments](/developer-guide/payments) on post/void and by [Credit Notes](/developer-guide/credit-notes) on apply.
+- PDF: `GET …/pdf` (`invoices.view`, assignee-scoped, `throttle:invoices-pdf`) renders a Dompdf document from `resources/views/invoices/pdf.blade.php` via `CustomerInvoicePdfService` on the fly (no stored `pdf_path`). Layout uses workspace `button_color`, embedded logo (base64 from branding disk), and invoice settings (`company_*`, `invoice_bank_*`, `invoice_payment_terms`, `invoice_default_notes`). Includes discount rows when `discount_total > 0`, sanitized memo HTML, and a **Payments received** table for posted payment allocations. Shows a **Partial** chip when unpaid with partial payments. Cached (base64) by id + `updated_at` + settings fingerprint so database/Redis JSON stores stay valid UTF-8 and branding edits invalidate the cache. `send()` dispatches `WarmCustomerInvoicePdfJob` on the default queue.
+- Line items are fully replaced on create/update (`CustomerInvoiceService::syncLines()`); `CustomerInvoice::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `CustomerInvoiceLine` rows plus document `line_discount_type`. Tax is calculated after line discounts. `balance_due` is then derived from `total - amount_paid - amount_credited` via `recalculateBalanceFromAmounts()`, called by [Payments](/developer-guide/payments) on post/void and by [Credit Notes](/developer-guide/credit-notes) on apply.
+- Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store `name`, optional `body`, optional `product_id` (`LinkableProduct`: Products entitled, `products.view` or superadmin, active non-trashed), and `discount_value`. Validation in `DocumentDiscountRules`. Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`. Recurring generation copies `product_id` onto occurrence lines.
+- **Partial** is UI-only: the SPA shows a Partial badge when `status === unpaid`, `amount_paid > 0`, and `balance_due > 0`. The API has no `partial` status — partial settlement keeps `unpaid` until the balance clears.
 - Assignee scoping via `ScopesToAssignee` with `invoices.assign`.
 - `invoices.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`), same as Quotations/Opportunities. `quotation_id` is optional and only existence/tenant-checked — a tenant can link any of its own quotations even if Quotations is not currently entitled (no soft-entitlement guard, unlike Contracts → Quotations).
@@ -49,7 +53,7 @@ invoices.view | create | update | delete | restore | force.delete | assign | sen
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.2.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.1.x/1.2.0 bumped with `bumpVersion`.
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.5.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer.
 
 ## API (tenant)
 
@@ -62,7 +66,8 @@ SPA mirrors **Quotations** (table + form dialog, detail sheet) under the existin
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/invoices/` (`invoices-page.tsx`, `invoice-form-dialog.tsx`, `invoice-detail-sheet.tsx`) |
-| Detail sheet tabs | Overview, Lines, Notes, Timeline — actions: download PDF, stop recurring (active series root), assign, add note, send, cancel (`/void`), edit (draft only), delete. No **accept** action (Invoices has no `accepted` status). |
+| Detail sheet tabs | Overview, Lines, Notes, Timeline — actions: download PDF, stop recurring (active series root), assign, add note, send, cancel (`/void`), edit (draft only), delete. No **accept** action (Invoices has no `accepted` status). List/detail show **Partial** badge (display-only) when unpaid with partial payments. |
+| Shared billing UI | `src/components/billing/document-lines-editor.tsx`, `document-totals-panel.tsx`, `src/components/common/rich-text-editor.tsx`, `src/lib/billing/document-totals.ts`, `src/lib/sanitize-html.ts` |
 | Service | `customerInvoiceService` in `src/api/services.ts` |
 | Types | `CustomerInvoice*` in `src/types/api.ts` (kept distinct from the pre-existing Central `Invoice*` types) |
 | Query keys | `QUERY_KEYS.customerInvoices` / `customerInvoice(id)` / `customerInvoiceTimeline(id)` / `customerInvoiceStats` |

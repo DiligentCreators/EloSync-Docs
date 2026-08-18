@@ -1,5 +1,77 @@
 # Changelog
 
+## Products: auto-generated SKU (2026-08-18)
+
+Catalog version: **products 1.2.0**.
+
+- Creating a product auto-fills the next SKU (`SKU-00001` style). You can override it or click **Generate SKU** to refresh.
+- API: `sku` is optional on create; omit/blank to auto-assign. `GET /products/next-sku` returns the preview. Optional tenant setting `products_sku_prefix`.
+- Docs: [Products user guide](/user-guide/products), [Products API](/api/tenant-v1-products), [Products developer guide](/developer-guide/products).
+
+## Billing product line picker — production ready (2026-08-18)
+
+Catalog versions: **products 1.1.1**, **quotations 1.3.1**, **estimates 1.3.1**, **invoices 1.5.1**.
+
+- Hardened `LinkableProduct`: requires `products.view` (or superadmin), rejects soft-deleted and inactive products.
+- `DocumentHtmlSanitizer` strips inline `style` and neutralizes `data:` / `javascript:` hrefs.
+- Billing line picker uses server-side product search with `status=active` (SPA).
+- Pest coverage for estimate/invoice entitlement reject, convert + recurring `product_id`, sanitizer cases.
+- Playwright: clear product without wiping edited name; picker hidden without Products.
+- Canonical audit: [Billing product line picker production readiness](/deployment/billing-product-line-picker-production-readiness) — **Go** (migrate-first).
+
+## Billing product line picker — production readiness draft (2026-08-18)
+
+- Canonical go-live audit draft (superseded by **Go** note above).
+- `database.md` quotation / estimate / invoice line schemas updated for `name` / `body` / optional `product_id`.
+
+## Billing documents: product line picker (2026-08-18)
+
+Catalog versions: **quotations 1.3.0**, **estimates 1.3.0**, **invoices 1.5.0**.
+
+- Optional **product** on quotation, estimate, and invoice lines (when Products is installed).
+- Selecting a product in the form auto-fills **name**, rich **details** (from product description), and **unit price**; you can still edit those fields afterward.
+- Clearing the product link does not wipe edited line text. The API stores the client-sent values plus optional `product_id` (no server-side re-copy from the product catalog on save).
+- Docs: [Quotations](/user-guide/quotations), [Estimates](/user-guide/estimates), [Invoices](/user-guide/invoices); matching API + developer guides.
+
+## Products: rich HTML description (2026-08-18)
+
+Catalog version: **products 1.1.0**.
+
+- Product **description** uses TipTap rich HTML (headings, lists, bold/italic/underline), sanitized on save and display.
+- Docs: [Products user guide](/user-guide/products), [Products API](/api/tenant-v1-products), [Products developer guide](/developer-guide/products).
+
+## Billing documents: HTML line details & terms (2026-08-18)
+
+Catalog versions: **quotations 1.2.0**, **estimates 1.2.0**, **invoices 1.4.0**.
+
+- Line **body** uses the same TipTap rich HTML editor as document notes (headings, lists, bold/italic/underline).
+- New document field **Terms & conditions** (HTML) on quotations, estimates, and invoices — shown on detail overview and branded PDFs under Notes.
+- Server sanitizes notes, terms, and line bodies on save; PDFs render sanitized HTML for line details and terms.
+- Docs: [Quotations](/user-guide/quotations), [Estimates](/user-guide/estimates), [Invoices](/user-guide/invoices); API + developer guides.
+
+## Estimate create: opportunity auto-fill and quotation pick (2026-08-18)
+
+- Creating an estimate: selecting an **Opportunity** auto-fills Contact, Company, and Assignee when set on the opportunity.
+- **Linked quotation:** auto-selected only when that opportunity has exactly one quotation; with multiple quotations, leave unset for manual choice.
+- Docs: [Estimates user guide](/user-guide/estimates).
+
+## Quotation create: auto-fill from opportunity (2026-08-18)
+
+- Creating a quotation: selecting an **Opportunity** auto-fills Contact, Company, and Assignee when those fields are set on the opportunity (still editable afterward).
+- Docs: [Quotations user guide](/user-guide/quotations).
+
+## Billing documents: line name/body, shared discounts, rich notes, PDFs (2026-08-18)
+
+Catalog versions: **quotations 1.1.0**, **estimates 1.1.0**, **invoices 1.3.0**.
+
+- Line items use short **name** (required) plus optional long **body** under the row (UI + PDF). Former `description` column renamed.
+- Shared document `line_discount_type` (`none` \| `percent` \| `fixed`) applies to every line; each line has only `discount_value`. `discount_total` is the sum of line discounts (no separate document-level discount amount). Tax after discounts; `total = subtotal − discount_total + tax_total`.
+- Rich HTML notes (headings, lists, bold/italic/underline) on document memos via TipTap; sanitized on display and PDF.
+- Downloadable branded PDFs for quotations and estimates (same branding as invoices).
+- Invoice PDF: discount rows, payments received table for posted allocations, PARTIAL status chip when partially paid.
+- UI: line grid Name | Qty | Unit price | Discount | Tax | Total + body; shared totals panel (subtotal / discount / tax / total; invoices also paid / credits / balance). Invoice list/detail shows **Partial** badge when unpaid with `amount_paid > 0` and `balance_due > 0` (DB status stays `unpaid`).
+- Docs: [Quotations user guide](/user-guide/quotations), [Estimates user guide](/user-guide/estimates), [Invoices user guide](/user-guide/invoices); [Quotations API](/api/tenant-v1-quotations), [Estimates API](/api/tenant-v1-estimates), [Invoices API](/api/tenant-v1-invoices); [Quotations developer guide](/developer-guide/quotations), [Estimates developer guide](/developer-guide/estimates), [Invoices developer guide](/developer-guide/invoices).
+
 ## Payments allocation picker UX (2026-08-17)
 
 Catalog version: **payments 1.0.1** (PATCH — allocation picker labels + auto-fill).

@@ -16,11 +16,11 @@ Open **Estimates** from the sidebar (**Billing**, after Credit Notes). Search by
 ## Create an estimate
 
 1. Click **New estimate**
-2. Enter a title, currency (defaults to your workspace currency; full shared currency list), valid-until date, and notes
-3. Optionally link a **Contact** or **Company** (when Contacts/Companies is installed)
-4. Optionally link an **Opportunity**, and a **Quotation** for that opportunity, for traceability back to the sales pipeline
-5. Add line items (description, quantity, unit price, tax rate) — subtotal, tax, and total are calculated automatically
-6. Optionally set an assignee (requires **assign**)
+2. Optionally choose an **Opportunity** first — this auto-fills **Contact**, **Company**, and **Assignee** when those are set on the opportunity
+3. **Linked quotation:** if the opportunity has exactly one quotation it is selected automatically; if there are multiple, pick one manually (or leave none)
+4. Enter a title, currency (defaults to your workspace currency; full shared currency list), valid-until date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
+5. Adjust contact/company/assignee if needed (when those modules/permissions apply)
+6. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts.
 7. Save
 
 Edit from the row menu or the detail sheet while the estimate is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
@@ -34,11 +34,15 @@ An estimate starts in **Draft**. Move it forward with:
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.
 
+## Download PDF
+
+**Download PDF** is on the estimate detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Sending still does not email the customer.
+
 ## Convert to invoice
 
 Once an estimate is **Sent** or **Accepted**, use **Convert to invoice** from the detail sheet or row menu:
 
-- Creates a new **draft** invoice with the same title, notes, currency, contact/company, quotation link, assignee, and a copy of every line item
+- Creates a new **draft** invoice with the same title, notes, terms & conditions, currency, `line_discount_type`, contact/company, quotation link, assignee, and a copy of every line item (name, body, discounts)
 - Marks the estimate **Accepted** automatically if it wasn't already
 - The estimate detail sheet then shows a link to the **converted invoice**
 - An estimate can only be converted **once** — the action is hidden once a converted invoice already exists
@@ -49,7 +53,8 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 ## Notes & activity
 
-- **Notes** — free-form notes on the estimate
+- **Overview** — shows the estimate memo from the create/edit **Notes** field (also printed on the PDF)
+- **Notes** tab — internal activity notes the team adds after the estimate exists (not the same as the memo)
 - **Activity** — timeline of create, update, assignment, status change, conversion, note, and delete/restore events
 
 ## Related records
@@ -58,4 +63,4 @@ Every estimate detail sheet shows its linked **Contact**, **Company**, **Opportu
 
 ## What's not here yet
 
-Estimate PDFs/e-mail delivery, reversing a conversion, and standalone estimates that don't require Invoices are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+E-mailing estimates to customers (with or without the PDF attached), reversing a conversion, and standalone estimates that don't require Invoices are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

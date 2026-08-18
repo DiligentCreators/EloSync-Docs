@@ -10,6 +10,7 @@ Without **assign**, you only see invoices assigned to you.
 
 Open **Invoices** from the sidebar (**Billing**). Search by title or number, filter by status or assignee, toggle **My invoices** or **Overdue only**, and switch KPI cards (Total, My Invoices, Draft, Sent, Overdue) to quick-filter the table. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
 
+- A **Partial** badge appears when an invoice is **Unpaid** but has payments posted (`amount_paid > 0`) and a remaining balance (`balance_due > 0`). This is display-only — the stored status stays **Unpaid** until the balance clears.
 - An **Overdue** badge appears next to the status badge for unpaid invoices past their due date
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted invoice from the row menu
 - **Delete permanently** requires `invoices.force.delete` — granted to the workspace **owner** by default
@@ -17,8 +18,8 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 ## Create & edit
 
 1. Click **New invoice**
-2. Enter a title, optional contact/company link (when Contacts/Companies is installed), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, and notes
-3. Add line items (description, quantity, unit price, tax rate) — subtotal, tax, and total are calculated automatically
+2. Enter a title, optional contact/company link (when Contacts/Companies is installed), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
+3. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts. The totals panel also shows **Paid**, **Credits**, and **Balance due** on existing invoices.
 4. Optionally set an assignee (requires **assign**)
 5. Save
 
@@ -39,9 +40,7 @@ Stopping the series does **not** void history by itself.
 
 ## Download PDF
 
-**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, totals, and balance due. Configure missing company/payment fields under Branding. Sending still does not email the customer.
-
-## Status workflow
+**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding. Sending still does not email the customer.
 
 ## Status workflow
 

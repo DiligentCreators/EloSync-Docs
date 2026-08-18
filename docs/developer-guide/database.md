@@ -174,15 +174,27 @@ Per-workspace opportunity tag catalog (`tenant_id`, `uuid`, `name`, `slug`, `col
 
 ### `quotations`
 
-`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `contact_id` / `company_id`, `title`, `status` (`draft`|`sent`|`accepted`|`rejected`|`expired`), `currency`, `valid_until`, `subtotal` / `tax_total` / `total`, `notes`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `quotations`. Content edits are **draft-only**.
+`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `contact_id` / `company_id`, `title`, `status` (`draft`|`sent`|`accepted`|`rejected`|`expired`), `currency`, `line_discount_type` (`none`|`percent`|`fixed`), `valid_until`, `subtotal` / `discount_total` / `tax_total` / `total`, `notes` (sanitized HTML memo), `terms_and_conditions` (sanitized HTML), `assigned_to`, `created_by`, soft deletes. Spatie activity log name `quotations`. Content edits are **draft-only**. Catalog version **1.3.0** (optional line `product_id`).
 
 ### `quotation_lines`
 
-`quotation_id`, `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Replaced in full on draft update; totals recalculated server-side.
+`quotation_id`, nullable `product_id` (FK → `products`, `nullOnDelete`; optional via `LinkableProduct` when Products is entitled), required short `name`, optional long `body` (sanitized HTML), `quantity`, `unit_price`, `discount_value`, `tax_rate`, `line_total`, `sort_order`. Replaced in full on draft update; totals recalculated server-side from `line_discount_type` + per-line values. Server stores client-sent `name`/`body`/`unit_price` (does not re-copy from the product catalog on save).
 
 ### `quotation_notes` / `quotation_activities`
 
 Notes (author + body) and quote timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+
+## Estimates / Invoices line items (billing documents)
+
+Estimate and customer-invoice parents are documented in their module developer guides. Line tables mirror quotations:
+
+### `estimate_lines`
+
+`estimate_id`, nullable `product_id` (FK → `products`, `nullOnDelete`; `LinkableProduct`), `name`, optional `body` (sanitized HTML), `quantity`, `unit_price`, `discount_value`, `tax_rate`, `line_total`, `sort_order`. Catalog **estimates 1.3.0**. Convert-to-invoice copies `product_id` with the line snapshot.
+
+### `customer_invoice_lines`
+
+`customer_invoice_id`, nullable `product_id` (FK → `products`, `nullOnDelete`; `LinkableProduct`), `name`, optional `body` (sanitized HTML), `quantity`, `unit_price`, `discount_value`, `tax_rate`, `line_total`, `sort_order`. Catalog **invoices 1.5.0**. Recurring occurrence clone copies `product_id`.
 
 ## Contracts module tables
 

@@ -13,7 +13,7 @@ Phase 5 Inventory module on the frozen platform. Products is the tenant catalog 
 
 ## Capabilities
 
-- Catalog for goods and services (SKU, name, category, description, unit, cost, price, currency, status, stock-tracking)
+- Catalog for goods and services (auto SKU with override, name, category, description, unit, cost, price, currency, status, stock-tracking)
 - Turn off **Track stock** for services and non-stocked goods; Inventory only manages tracked items
 - Currency picker uses the shared workspace currency list and defaults to the tenant currency
 - Product categories managed in the same module

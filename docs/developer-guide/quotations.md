@@ -7,7 +7,9 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 | Piece | Path |
 |-------|------|
 | Models | `app/Models/Quotation.php`, `QuotationLine`, `QuotationNote`, `QuotationActivity` |
-| Enums | `QuotationStatusEnum`, `QuotationActivityTypeEnum` |
+| Enums | `QuotationStatusEnum`, `QuotationActivityTypeEnum`, `DocumentDiscountTypeEnum` |
+| Support | `app/Support/Billing/DocumentTotalsCalculator.php`, `DocumentDiscountRules.php`, `DocumentHtmlSanitizer.php` |
+| PDF | `app/Services/Tenant/QuotationPdfService.php`, `resources/views/quotations/pdf.blade.php` |
 | Service | `app/Services/Tenant/QuotationService.php` (+ `ScopesToAssignee`) |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/QuotationController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Quotation/*` |
@@ -27,8 +29,11 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - Content updates (`PUT`) and line sync are **draft-only** via `Quotation::isEditable()`. Assignment remains available after send via `POST …/assign`.
 - `POST …/status` maps target status to permissions: `sent` → `quotations.send`, `accepted` → `quotations.accept`, otherwise `quotations.update`.
 - `send` / `accept` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
-- **Send is status-only** — no outbound email/PDF delivery in this phase.
-- Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` derives `subtotal` / `tax_total` / `total` from persisted `QuotationLine` rows.
+- **Send is status-only** — no outbound email delivery; PDF download is available separately via **Download PDF**.
+- Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `QuotationLine` rows plus document `line_discount_type`. Tax is calculated after line discounts.
+- Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct`: Products entitled, `products.view` or superadmin, active non-trashed). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
+- Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store only `discount_value`. Validation lives in `DocumentDiscountRules`.
+- PDF: `GET …/pdf` (`quotations.view`, assignee-scoped, `throttle:quotations-pdf`) renders from `resources/views/quotations/pdf.blade.php` via `QuotationPdfService` — same branded layout as invoices.
 - Assignee scoping via `ScopesToAssignee` with `quotations.assign`.
 - `quotations.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope, same as Opportunities.
@@ -41,7 +46,7 @@ quotations.view | create | update | delete | restore | force.delete | assign | s
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`. Registered via `DefaultModuleRegistrar` migration (migrate-only).
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.3.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer.
 
 ## API (tenant)
 
@@ -54,7 +59,7 @@ SPA should mirror **Opportunities** (table + form dialog, detail sheet) under th
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/quotations/` |
-| Form / detail | form dialog + detail sheet (Overview, Lines, Notes, Activity) |
+| Form / detail | form dialog + detail sheet (Overview, Lines, Notes, Activity) — shared `DocumentLinesEditor`, `DocumentTotalsPanel`, `RichTextEditor` for memo notes |
 | Service | `quotationService` in `src/api/services.ts` |
 | Nav | `permission: quotations.view`, `module: 'quotations'` (Sales) |
 | Playwright | `e2e/pages/quotations.page.ts`, `e2e/tests/quotations/`, `npm run test:e2e:quotations` |

@@ -70,6 +70,25 @@ After migrate:
 
 See [Invoices 1.1.0 production readiness](/deployment/invoices-production-readiness).
 
+## Billing product line picker (quotations / estimates / invoices + products)
+
+After migrate (Backend **before** SPA):
+
+```bash
+php artisan migrate --force
+# includes:
+# 2026_08_18_000658_bump_products_module_version_to_1_1_0
+# 2026_08_18_001042_add_product_id_to_billing_document_lines_tables
+# 2026_08_18_001043_bump_billing_document_modules_for_product_line_picker
+# 2026_08_18_063000_bump_modules_for_product_line_picker_hardening
+```
+
+1. Confirm catalog versions: products `1.1.1`, quotations `1.3.1`, estimates `1.3.1`, invoices `1.5.1`
+2. Existing entitled workspaces keep entitlements; catalog bump does **not** auto-install modules
+3. Smoke: create a line with `product_id` on a draft quotation/estimate/invoice; convert estimate → invoice; generate a recurring occurrence
+
+See [Billing product line picker production readiness](/deployment/billing-product-line-picker-production-readiness).
+
 ## Storage module (2026-08-13)
 
 After migrating Storage:

@@ -36,25 +36,29 @@ Same filters as list (minus pagination/sort). Response:
 
 Query: `search` (matches `title` or `number`), `status`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_invoices`, `overdue` (`true`), `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `currency`, `subtotal`/`tax_total`/`total`/`amount_paid`/`amount_credited`/`balance_due`, `issue_date`/`due_date`, recurrence fields (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurring_source_invoice_id` / `recurring_source`), `contact`/`company`/`quotation` refs, assignee/creator refs, and `latest_note`. Query also accepts `recurring=true` (series roots only).
+List items include `status`, `currency`, `subtotal`/`discount_total`/`tax_total`/`total`/`amount_paid`/`amount_credited`/`balance_due`, `issue_date`/`due_date`, recurrence fields (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurring_source_invoice_id` / `recurring_source`), `contact`/`company`/`quotation` refs, assignee/creator refs, and `latest_note`. Query also accepts `recurring=true` (series roots only).
+
+The SPA may show a **Partial** label when `status` is `unpaid`, `amount_paid > 0`, and `balance_due > 0`. This is UI-only — the API still returns `status: unpaid`; there is no `partial` enum value.
 
 ### POST `/invoices`
 
-Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `issue_date`, `due_date` (dates), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id` (optional, tenant-scoped existence check only), `reseller_id` (optional; requires Resellers entitled — `LinkableReseller`), `assigned_to`, `is_recurring` (boolean), `recurrence_frequency` (`weekly`\|`monthly`\|`quarterly`\|`semi_annually`\|`yearly`, required when recurring), `recurrence_next_issue_on` (date, required when recurring; must be after `issue_date` or today if issue date is empty), `recurrence_ends_on` (optional date; must be on or after the next invoice date), `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
+Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and_conditions` (HTML, sanitized server-side), `currency` (3-letter, default `USD`), `issue_date`, `due_date` (dates), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id` (optional, tenant-scoped existence check only), `reseller_id` (optional; requires Resellers entitled — `LinkableReseller`), `assigned_to`, `is_recurring` (boolean), `recurrence_frequency` (`weekly`\|`monthly`\|`quarterly`\|`semi_annually`\|`yearly`, required when recurring), `recurrence_next_issue_on` (date, required when recurring; must be after `issue_date` or today if issue date is empty), `recurrence_ends_on` (optional date; must be on or after the next invoice date), `line_discount_type` (`none`\|`percent`\|`fixed`), `lines` (array of `{ product_id?, name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`). `product_id` is optional and requires the Products module, `products.view` (or superadmin), and an active non-trashed product (`LinkableProduct`). `body` is optional HTML line details. `discount_value` is required on a line when `line_discount_type` is not `none`. The server stores client-sent `name`/`body`/`unit_price` as-is (does not re-copy from the product catalog).
 
-`subtotal`, `tax_total`, `total`, and `balance_due` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`INV-00001`, configurable prefix).
+`subtotal`, `discount_total`, `tax_total`, `total`, and `balance_due` are computed server-side from `lines` and document discount — do not send them. Tax is calculated after discounts. Status always starts at `draft`; `number` is auto-generated (`INV-00001`, configurable prefix).
 
 ### GET `/invoices/{id}`
 
-Includes contact, company, quotation, assignee, creator, lines, notes, timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, quotation, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### GET `/invoices/{id}/pdf`
 
 Permission: `invoices.view` (assignee-scoped). Extra limiter `throttle:invoices-pdf` (`INVOICES_PDF_PER_MINUTE`, default 30/user; disabled in tests). Returns `application/pdf` attachment `{number}.pdf`. Body is cached by invoice id + `updated_at` (`INVOICES_PDF_CACHE_SECONDS`, default 300). 404 if the invoice is deleted.
 
+PDF includes sanitized memo HTML, line items, subtotal/discount/tax/total, balance due, and — when posted payments exist — a **Payments received** table (date, payment number, method, reference, amount). Shows a **Partial** chip when unpaid with partial payments. Discount rows appear when `discount_total > 0`.
+
 ### PUT `/invoices/{id}`
 
-Partial update of **draft** invoices only. Sending `lines` replaces the full line-item set and recalculates totals. Non-draft invoices return 422 on `status` (`Only draft invoices can be edited.`). Assignment after send uses `POST /invoices/{id}/assign`.
+Partial update of **draft** invoices only. Sending `lines` replaces the full line-item set and recalculates totals (including `line_discount_type` and per-line `discount_value`). Non-draft invoices return 422 on `status` (`Only draft invoices can be edited.`). Assignment after send uses `POST /invoices/{id}/assign`.
 
 ### DELETE `/invoices/{id}`
 
