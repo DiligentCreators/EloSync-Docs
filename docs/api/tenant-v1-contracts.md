@@ -22,11 +22,11 @@ List items include `status`, `opportunity`, `quotation` (when linked), assignee/
 
 ### POST `/contracts`
 
-Body: `opportunity_id` (required), `quotation_id` (optional — only valid when the **Quotations** module is entitled, the quotation is not soft-deleted, the actor may access the quotation, and the quotation belongs to the same opportunity; see `LinkableQuotation`), `title` (required), `party_name`, `start_date` (required), `end_date`, `value`, `currency` (3-letter, default `USD`), `notes`, `assigned_to`.
+Body: `opportunity_id` (required), `quotation_id` (optional — only valid when the **Quotations** module is entitled, the quotation is not soft-deleted, the actor may access the quotation, and the quotation belongs to the same opportunity; see `LinkableQuotation`), `title` (required), `party_name`, `start_date` (required), `end_date`, `value`, `currency` (3-letter, default `USD`), `description` (HTML memo, sanitized server-side, max 50000), `notes` (HTML memo, sanitized server-side, max 50000), `assigned_to`.
 
 ### GET `/contracts/{id}`
 
-Includes opportunity, quotation (when linked), assignee, creator, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes opportunity, quotation (when linked), assignee, creator, `description` / `notes` HTML memos, comments (`contract_notes`), and timeline activities. Embedded `contract_notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/contracts/{id}`
 

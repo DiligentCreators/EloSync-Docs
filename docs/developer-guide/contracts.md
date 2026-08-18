@@ -8,6 +8,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) an
 |-------|------|
 | Models | `app/Models/Contract.php`, `ContractNote`, `ContractActivity` |
 | Enums | `ContractStatusEnum`, `ContractActivityTypeEnum` |
+| Support | `app/Support/Billing/DocumentHtmlSanitizer.php`, `DocumentDiscountRules.php` (notes max length) |
 | Service | `app/Services/Tenant/ContractService.php` (+ `ScopesToAssignee`) |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/ContractController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Contract/*` |
@@ -27,6 +28,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) an
 - Status machine lives on `ContractStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → active → expired|terminated` (also `draft → terminated`). `ContractService::changeStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions, including re-entering the same status.
 - Content updates are **draft-only** (`Contract::isEditable()`); assignment stays available via `POST …/assign` after activate.
 - No line items / totals — `value` is a single optional decimal field.
+- Memo `description` and `notes` accept sanitized HTML via `DocumentHtmlSanitizer` (same allowlist as billing document notes; empty HTML is stored as `null`). Timeline comments (`contract_notes`) remain plain text.
 - Assignee scoping via `ScopesToAssignee` with `contracts.assign`.
 - `contracts.force.delete` is not granted to any default role — owner/superadmin only.
 
@@ -38,7 +40,7 @@ contracts.view | create | update | delete | restore | force.delete | assign
 
 Routes use `module:contracts` then `can:contracts.*` / policies.
 
-Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`. Registered via `DefaultModuleRegistrar` migration (migrate-only).
+Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.1.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only).
 
 ## API (tenant)
 
@@ -46,7 +48,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-contracts.md](/api/tenant-v
 
 ## Frontend
 
-SPA should mirror **Opportunities** / **Quotations** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA should mirror **Opportunities** / **Quotations** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell. Create form: selecting an opportunity auto-fills party, value, currency, assignee, and title (when empty); quotation auto-links only when that opportunity has exactly one quotation. Description and notes use the shared TipTap `RichTextEditor`.
 
 | Piece | Path (expected) |
 |-------|-----------------|

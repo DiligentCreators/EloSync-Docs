@@ -200,7 +200,7 @@ Estimate and customer-invoice parents are documented in their module developer g
 
 ### `contracts`
 
-`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `quotation_id` (null on quotation hard delete; soft-optional via `LinkableQuotation` — same opportunity, Quotations entitled, not soft-deleted), `title`, `status` (`draft`|`active`|`expired`|`terminated`), `party_name`, `start_date`, `end_date`, `value`, `currency`, `notes`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `contracts`. Content edits are **draft-only**; status/assign remain available after activate.
+`tenant_id`, `uuid`, `opportunity_id` (required FK → `opportunities`, restrict on delete), nullable `quotation_id` (null on quotation hard delete; soft-optional via `LinkableQuotation` — same opportunity, Quotations entitled, not soft-deleted), `title`, `status` (`draft`|`active`|`expired`|`terminated`), `party_name`, `start_date`, `end_date`, `value`, `currency`, `notes` (HTML memo, sanitized), `description` (HTML memo, sanitized), `assigned_to`, `created_by`, soft deletes. Spatie activity log name `contracts`. Content edits are **draft-only**; status/assign remain available after activate.
 
 ### `contract_notes` / `contract_activities`
 

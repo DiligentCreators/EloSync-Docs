@@ -1,5 +1,14 @@
 # Changelog
 
+## Contracts: opportunity auto-fill and rich HTML memos (2026-08-18)
+
+Catalog version: **contracts 1.1.0**.
+
+- Creating a contract: selecting an **Opportunity** auto-fills title (when empty), party name (from contact or company), value, currency, and assignee when those are set on the opportunity.
+- **Linked quotation:** auto-selected only when that opportunity has exactly one quotation; with multiple quotations, leave unset for manual choice.
+- New **description** field plus existing **notes** use TipTap rich HTML (headings, lists, bold/italic/underline), sanitized on save and display. Timeline comments stay plain text.
+- Docs: [Contracts user guide](/user-guide/contracts), [Contracts API](/api/tenant-v1-contracts), [Contracts developer guide](/developer-guide/contracts).
+
 ## Products: auto-generated SKU (2026-08-18)
 
 Catalog version: **products 1.2.0**.

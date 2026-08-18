@@ -16,9 +16,9 @@ Open **Contracts** from the sidebar (Sales). Search by title, filter by status, 
 ## Create & edit
 
 1. Click **New contract**
-2. Choose the related **Opportunity** (required)
-3. Optionally link a **Quotation** (only shown when the Quotations module is installed)
-4. Enter a title, party name, start date (required), optional end date, value, currency, and notes
+2. Choose the related **Opportunity** (required) — this auto-fills **Title** (when empty), **Party name** (from the opportunity contact or company), **Value**, **Currency**, and **Assignee** when those are set on the opportunity (you can still change them)
+3. Optionally link a **Quotation** (only shown when the Quotations module is installed). If the opportunity has exactly one quotation, it is selected automatically; with multiple quotations, pick one or leave none
+4. Enter a start date (required), optional end date, and optional rich-text **Description** and **Notes** (headings, lists, bold/italic/underline)
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
@@ -39,5 +39,6 @@ Users with **assign** can set or clear the assignee from the detail drawer or th
 
 ## Notes & activity
 
-- **Notes** — free-form notes on the contract
+- **Description** and **Notes** — rich-text memos on the contract (shown on the overview)
+- **Notes tab** — free-form comments on the contract
 - **Activity** — timeline of create, update, assignment, status change, note, and delete/restore events

@@ -17,7 +17,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 ## Capabilities
 
-- Contract fields: opportunity (required), optional quotation link, title, party name, start date (required), optional end date, value, currency, notes
+- Contract fields: opportunity (required), optional quotation link, title, party name, start date (required), optional end date, value, currency, rich-text description and notes
 - Status workflow: `draft → active → expired | terminated` (`POST /contracts/{id}/status`)
 - Assignment with assignee scoping via `contracts.assign`
 - Notes + domain activity timeline (mirrors Opportunities / Quotations)
