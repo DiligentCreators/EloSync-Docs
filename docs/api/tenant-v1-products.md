@@ -14,7 +14,7 @@ Query: `search`, `category_id`, `status` (`active|inactive`), `trashed` (`true|o
 
 ### POST `/products`
 
-Requires `products.create`. Body: `sku` and `name` (required); optional `category_id`, `description`, `unit`, `cost`, `price`, `currency`, `track_stock`, `reorder_level`, `status`.
+Requires `products.create`. Body: `sku` and `name` (required); optional `category_id`, `description` (HTML, sanitized server-side, max 50000), `unit`, `cost`, `price`, `currency`, `track_stock`, `reorder_level`, `status`.
 
 ### GET/PUT/DELETE `/products/{product}`
 

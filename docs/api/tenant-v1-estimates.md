@@ -41,13 +41,13 @@ List items include `status`, `currency`, `subtotal`/`discount_total`/`tax_total`
 
 ### POST `/estimates`
 
-Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and_conditions` (HTML, sanitized server-side), `currency` (3-letter, default `USD`), `valid_until` (date), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id`, `opportunity_id` (optional, tenant-scoped existence checks), `assigned_to`, `line_discount_type` (`none`\|`percent`\|`fixed`), `lines` (array of `{ name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`). `body` is optional HTML line details. `discount_value` is required on a line when `line_discount_type` is not `none`.
+Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and_conditions` (HTML, sanitized server-side), `currency` (3-letter, default `USD`), `valid_until` (date), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id`, `opportunity_id` (optional, tenant-scoped existence checks), `assigned_to`, `line_discount_type` (`none`\|`percent`\|`fixed`), `lines` (array of `{ product_id?, name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`). `product_id` is optional and requires the Products module (`LinkableProduct`). `body` is optional HTML line details. `discount_value` is required on a line when `line_discount_type` is not `none`. The server stores client-sent `name`/`body`/`unit_price` as-is (does not re-copy from the product catalog).
 
 `subtotal`, `discount_total`, `tax_total`, and `total` are computed server-side from `lines` and document discount — do not send them. Tax is calculated after discounts. Status always starts at `draft`; `number` is auto-generated (`EST-00001`, configurable via the `estimates_number_prefix` tenant setting).
 
 ### GET `/estimates/{id}`
 
-Includes contact, company, opportunity, quotation, converted invoice, assignee, creator, lines (`name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, opportunity, quotation, converted invoice, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### GET `/estimates/{id}/pdf`
 

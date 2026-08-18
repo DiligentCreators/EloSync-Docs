@@ -37,7 +37,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - Generator: `chunkById` over due series roots, per-series `try/catch`, `withTrashed()` uniqueness for `(tenant, source, issue_date)`, catch-up cap (`config('invoices.recurring_catchup_cap')`, default 52) and per-tenant time budget. Command returns `FAILURE` if any entitled tenant had a failed series. Remaining due periods run on the next daily tick.
 - PDF: `GET …/pdf` (`invoices.view`, assignee-scoped, `throttle:invoices-pdf`) renders a Dompdf document from `resources/views/invoices/pdf.blade.php` via `CustomerInvoicePdfService` on the fly (no stored `pdf_path`). Layout uses workspace `button_color`, embedded logo (base64 from branding disk), and invoice settings (`company_*`, `invoice_bank_*`, `invoice_payment_terms`, `invoice_default_notes`). Includes discount rows when `discount_total > 0`, sanitized memo HTML, and a **Payments received** table for posted payment allocations. Shows a **Partial** chip when unpaid with partial payments. Cached (base64) by id + `updated_at` + settings fingerprint so database/Redis JSON stores stay valid UTF-8 and branding edits invalidate the cache. `send()` dispatches `WarmCustomerInvoicePdfJob` on the default queue.
 - Line items are fully replaced on create/update (`CustomerInvoiceService::syncLines()`); `CustomerInvoice::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `CustomerInvoiceLine` rows plus document `line_discount_type`. Tax is calculated after line discounts. `balance_due` is then derived from `total - amount_paid - amount_credited` via `recalculateBalanceFromAmounts()`, called by [Payments](/developer-guide/payments) on post/void and by [Credit Notes](/developer-guide/credit-notes) on apply.
-- Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store `name`, optional `body`, and `discount_value`. Validation in `DocumentDiscountRules`. Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
+- Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store `name`, optional `body`, optional `product_id` (`LinkableProduct`), and `discount_value`. Validation in `DocumentDiscountRules`. Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
 - **Partial** is UI-only: the SPA shows a Partial badge when `status === unpaid`, `amount_paid > 0`, and `balance_due > 0`. The API has no `partial` status — partial settlement keeps `unpaid` until the balance clears.
 - Assignee scoping via `ScopesToAssignee` with `invoices.assign`.
 - `invoices.force.delete` is not granted to any default role — owner/superadmin only.
@@ -53,7 +53,7 @@ invoices.view | create | update | delete | restore | force.delete | assign | sen
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.4.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.4.0 bumped with HTML line details and terms & conditions.
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.5.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 bumped with optional product line picker.
 
 ## API (tenant)
 

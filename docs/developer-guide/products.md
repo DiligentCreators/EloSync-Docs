@@ -18,10 +18,13 @@ Products is gated by `module:products` and `products.view|create|update|delete|r
 ## Domain rules
 
 - `sku` is unique per tenant; category is nullable and is nullified if removed.
+- Product `description` accepts sanitized HTML (same allowlist as billing document notes); empty HTML is stored as `null`.
 - There is no separate product/service type. Services are catalog rows with `track_stock = false`.
 - `track_stock` controls whether `StockService` can mutate a product's stock.
 - Product notes and `product_activities` provide the domain timeline; the model also uses Spatie `LogsActivity`.
 - `product_id` on `purchase_order_lines` is nullable and validated by `LinkableProduct` when supplied.
+
+Catalog: slug `products`, version **1.1.0** (HTML description).
 
 ## Frontend and verification
 

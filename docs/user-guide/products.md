@@ -14,7 +14,7 @@ The Products catalog covers both **goods** and **services**. Use one record type
 
 1. Select **New product**.
 2. Enter a unique SKU and a name.
-3. Optionally choose a category and add description, unit, cost, price, and reorder level.
+3. Optionally choose a category and add a rich-text description (headings, lists, bold/italic/underline), unit, cost, price, and reorder level.
 4. Choose a **currency** from the shared workspace currency list (defaults to your workspace currency from Settings).
 5. Keep **Track stock** enabled for goods whose quantities should be managed by Inventory. Turn **Track stock** off for services and other non-stocked items.
 6. Save.

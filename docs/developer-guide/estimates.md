@@ -40,7 +40,7 @@ Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (ass
   5. Records a `converted` activity on the estimate and fires `EstimateConverted($estimate, $invoice, $actor)`.
   6. Returns the created `CustomerInvoice` (loaded with its own relations) — the controller renders it via `CustomerInvoiceResource`, not an Estimate resource.
 - Lines are a first-class child table (`estimate_lines`), not embedded JSON — each row is `{ name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`. Parent stores shared `line_discount_type`. `subtotal`/`discount_total`/`tax_total`/`total` are recomputed server-side via `DocumentTotalsCalculator` on create/update. Tax is calculated after line discounts.
-- Shared line discounts use `DocumentDiscountTypeEnum` with validation in `DocumentDiscountRules`. Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
+- Shared line discounts use `DocumentDiscountTypeEnum` with validation in `DocumentDiscountRules`. Lines support optional `product_id` (`LinkableProduct`). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
 - PDF: `GET …/pdf` (`estimates.view`, assignee-scoped, `throttle:estimates-pdf`) renders from `resources/views/estimates/pdf.blade.php` via `EstimatePdfService` — same branded layout as invoices.
 - Assignee scoping via `ScopesToAssignee` with `estimates.assign`.
 - `estimates.force.delete` is not granted to any default role — owner/superadmin only.
@@ -55,7 +55,7 @@ estimates.view | create | update | delete | restore | force.delete | assign | se
 
 Routes use `module:estimates` then `can:estimates.*` / policies.
 
-Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.2.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.2.0 bumped with HTML line details and terms & conditions.
+Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.3.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 bumped with optional product line picker.
 
 ## API (tenant)
 

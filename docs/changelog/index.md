@@ -1,5 +1,21 @@
 # Changelog
 
+## Billing documents: product line picker (2026-08-18)
+
+Catalog versions: **quotations 1.3.0**, **estimates 1.3.0**, **invoices 1.5.0**.
+
+- Optional **product** on quotation, estimate, and invoice lines (when Products is installed).
+- Selecting a product in the form auto-fills **name**, rich **details** (from product description), and **unit price**; you can still edit those fields afterward.
+- Clearing the product link does not wipe edited line text. The API stores the client-sent values plus optional `product_id` (no server-side re-copy from the product catalog on save).
+- Docs: [Quotations](/user-guide/quotations), [Estimates](/user-guide/estimates), [Invoices](/user-guide/invoices); matching API + developer guides.
+
+## Products: rich HTML description (2026-08-18)
+
+Catalog version: **products 1.1.0**.
+
+- Product **description** uses TipTap rich HTML (headings, lists, bold/italic/underline), sanitized on save and display.
+- Docs: [Products user guide](/user-guide/products), [Products API](/api/tenant-v1-products), [Products developer guide](/developer-guide/products).
+
 ## Billing documents: HTML line details & terms (2026-08-18)
 
 Catalog versions: **quotations 1.2.0**, **estimates 1.2.0**, **invoices 1.4.0**.

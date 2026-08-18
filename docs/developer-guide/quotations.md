@@ -31,7 +31,8 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - `send` / `accept` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
 - **Send is status-only** — no outbound email delivery; PDF download is available separately via **Download PDF**.
 - Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `QuotationLine` rows plus document `line_discount_type`. Tax is calculated after line discounts.
-- Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store only `discount_value`. Validation lives in `DocumentDiscountRules`. Lines use required short `name` plus optional long `body`. Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
+- Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct` when Products is entitled). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
+- Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store only `discount_value`. Validation lives in `DocumentDiscountRules`.
 - PDF: `GET …/pdf` (`quotations.view`, assignee-scoped, `throttle:quotations-pdf`) renders from `resources/views/quotations/pdf.blade.php` via `QuotationPdfService` — same branded layout as invoices.
 - Assignee scoping via `ScopesToAssignee` with `quotations.assign`.
 - `quotations.force.delete` is not granted to any default role — owner/superadmin only.
@@ -45,7 +46,7 @@ quotations.view | create | update | delete | restore | force.delete | assign | s
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.2.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.2.0 bumped with HTML line details and terms & conditions.
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.3.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 bumped with optional product line picker.
 
 ## API (tenant)
 

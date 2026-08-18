@@ -18,7 +18,7 @@ Open **Quotations** from the sidebar (Sales). Search by title, filter by status,
 1. Click **New quotation**
 2. Choose the related **Opportunity** (required) — this auto-fills **Contact**, **Company**, and **Assignee** when those are set on the opportunity (you can still change them)
 3. Enter a title, optional contact/company link, currency, valid-until date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
-4. Choose a shared **line discount type** (none, percent, or fixed) for the document, then add lines: **Name**, Qty, Unit price, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts.
+4. Choose a shared **line discount type** (none, percent, or fixed) for the document, then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts.
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
