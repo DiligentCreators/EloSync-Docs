@@ -1,5 +1,37 @@
 # Changelog
 
+## Billing documents: HTML line details & terms (2026-08-18)
+
+Catalog versions: **quotations 1.2.0**, **estimates 1.2.0**, **invoices 1.4.0**.
+
+- Line **body** uses the same TipTap rich HTML editor as document notes (headings, lists, bold/italic/underline).
+- New document field **Terms & conditions** (HTML) on quotations, estimates, and invoices — shown on detail overview and branded PDFs under Notes.
+- Server sanitizes notes, terms, and line bodies on save; PDFs render sanitized HTML for line details and terms.
+- Docs: [Quotations](/user-guide/quotations), [Estimates](/user-guide/estimates), [Invoices](/user-guide/invoices); API + developer guides.
+
+## Estimate create: opportunity auto-fill and quotation pick (2026-08-18)
+
+- Creating an estimate: selecting an **Opportunity** auto-fills Contact, Company, and Assignee when set on the opportunity.
+- **Linked quotation:** auto-selected only when that opportunity has exactly one quotation; with multiple quotations, leave unset for manual choice.
+- Docs: [Estimates user guide](/user-guide/estimates).
+
+## Quotation create: auto-fill from opportunity (2026-08-18)
+
+- Creating a quotation: selecting an **Opportunity** auto-fills Contact, Company, and Assignee when those fields are set on the opportunity (still editable afterward).
+- Docs: [Quotations user guide](/user-guide/quotations).
+
+## Billing documents: line name/body, shared discounts, rich notes, PDFs (2026-08-18)
+
+Catalog versions: **quotations 1.1.0**, **estimates 1.1.0**, **invoices 1.3.0**.
+
+- Line items use short **name** (required) plus optional long **body** under the row (UI + PDF). Former `description` column renamed.
+- Shared document `line_discount_type` (`none` \| `percent` \| `fixed`) applies to every line; each line has only `discount_value`. `discount_total` is the sum of line discounts (no separate document-level discount amount). Tax after discounts; `total = subtotal − discount_total + tax_total`.
+- Rich HTML notes (headings, lists, bold/italic/underline) on document memos via TipTap; sanitized on display and PDF.
+- Downloadable branded PDFs for quotations and estimates (same branding as invoices).
+- Invoice PDF: discount rows, payments received table for posted allocations, PARTIAL status chip when partially paid.
+- UI: line grid Name | Qty | Unit price | Discount | Tax | Total + body; shared totals panel (subtotal / discount / tax / total; invoices also paid / credits / balance). Invoice list/detail shows **Partial** badge when unpaid with `amount_paid > 0` and `balance_due > 0` (DB status stays `unpaid`).
+- Docs: [Quotations user guide](/user-guide/quotations), [Estimates user guide](/user-guide/estimates), [Invoices user guide](/user-guide/invoices); [Quotations API](/api/tenant-v1-quotations), [Estimates API](/api/tenant-v1-estimates), [Invoices API](/api/tenant-v1-invoices); [Quotations developer guide](/developer-guide/quotations), [Estimates developer guide](/developer-guide/estimates), [Invoices developer guide](/developer-guide/invoices).
+
 ## Payments allocation picker UX (2026-08-17)
 
 Catalog version: **payments 1.0.1** (PATCH — allocation picker labels + auto-fill).

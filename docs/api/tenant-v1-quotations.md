@@ -18,21 +18,25 @@ Same filters as list (minus pagination/sort).
 
 Query: `search`, `status`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_quotations`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `opportunity`, assignee/creator refs, totals, and `latest_note`.
+List items include `status`, `opportunity`, assignee/creator refs, `subtotal`/`discount_total`/`tax_total`/`total`, and `latest_note`.
 
 ### POST `/quotations`
 
-Body: `opportunity_id` (required), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated), `title` (required), `notes`, `currency` (3-letter, default `USD`), `valid_until` (date), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
+Body: `opportunity_id` (required), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated), `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and_conditions` (HTML, sanitized server-side), `currency` (3-letter, default `USD`), `valid_until` (date), `assigned_to`, `line_discount_type` (`none`\|`percent`\|`fixed`), `lines` (array of `{ name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`). `body` is optional HTML line details. `discount_value` is required on a line when `line_discount_type` is not `none`.
 
-`subtotal`, `tax_total`, and `total` are computed server-side from `lines` — do not send them.
+`subtotal`, `discount_total`, `tax_total`, and `total` are computed server-side from `lines` and `line_discount_type` — do not send them. Tax is calculated after line discounts. `discount_total` is the sum of line discounts only.
 
 ### GET `/quotations/{id}`
 
-Includes opportunity, assignee, creator, lines, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes opportunity, assignee, creator, lines (`name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+
+### GET `/quotations/{id}/pdf`
+
+Permission: `quotations.view` (assignee-scoped). Extra limiter `throttle:quotations-pdf`. Returns `application/pdf` attachment. Branded layout matches invoices (logo, button color, company profile). Includes sanitized memo HTML, line items, and discount/tax/total breakdown.
 
 ### PUT `/quotations/{id}`
 
-Partial update of **draft** quotations only. Sending `lines` replaces the full line-item set and recalculates totals. Non-draft quotations return 422 on `status` (`Only draft quotations can be edited.`). Assignment after send uses `POST /quotations/{id}/assign`.
+Partial update of **draft** quotations only. Sending `lines` replaces the full line-item set and recalculates totals (including `line_discount_type` and per-line `discount_value`). Non-draft quotations return 422 on `status` (`Only draft quotations can be edited.`). Assignment after send uses `POST /quotations/{id}/assign`.
 
 ### DELETE `/quotations/{id}`
 

@@ -37,21 +37,25 @@ Same filters as list (minus pagination/sort). Response:
 
 Query: `search` (matches `title` or `number`), `status` (`draft`\|`sent`\|`accepted`\|`rejected`\|`expired`), `contact_id`, `company_id`, `quotation_id`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_estimates`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `currency`, `subtotal`/`tax_total`/`total`, `issue_date`, `valid_until`, `contact`/`company`/`opportunity`/`quotation` refs, `converted_invoice` ref (`number`/`status`) when present, assignee/creator refs, and `latest_note`.
+List items include `status`, `currency`, `subtotal`/`discount_total`/`tax_total`/`total`, `issue_date`, `valid_until`, `contact`/`company`/`opportunity`/`quotation` refs, `converted_invoice` ref (`number`/`status`) when present, assignee/creator refs, and `latest_note`.
 
 ### POST `/estimates`
 
-Body: `title` (required), `notes`, `currency` (3-letter, default `USD`), `valid_until` (date), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id`, `opportunity_id` (optional, tenant-scoped existence checks), `assigned_to`, `lines` (array of `{ description, quantity, unit_price, tax_rate, sort_order }`).
+Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and_conditions` (HTML, sanitized server-side), `currency` (3-letter, default `USD`), `valid_until` (date), `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `quotation_id`, `opportunity_id` (optional, tenant-scoped existence checks), `assigned_to`, `line_discount_type` (`none`\|`percent`\|`fixed`), `lines` (array of `{ name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`). `body` is optional HTML line details. `discount_value` is required on a line when `line_discount_type` is not `none`.
 
-`subtotal`, `tax_total`, and `total` are computed server-side from `lines` — do not send them. Status always starts at `draft`; `number` is auto-generated (`EST-00001`, configurable via the `estimates_number_prefix` tenant setting).
+`subtotal`, `discount_total`, `tax_total`, and `total` are computed server-side from `lines` and document discount — do not send them. Tax is calculated after discounts. Status always starts at `draft`; `number` is auto-generated (`EST-00001`, configurable via the `estimates_number_prefix` tenant setting).
 
 ### GET `/estimates/{id}`
 
-Includes contact, company, opportunity, quotation, converted invoice, assignee, creator, lines, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, opportunity, quotation, converted invoice, assignee, creator, lines (`name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+
+### GET `/estimates/{id}/pdf`
+
+Permission: `estimates.view` (assignee-scoped). Extra limiter `throttle:estimates-pdf`. Returns `application/pdf` attachment. Branded layout matches invoices (logo, button color, company profile). Includes sanitized memo HTML, line items, and discount/tax/total breakdown.
 
 ### PUT `/estimates/{id}`
 
-Partial update of **draft** estimates only — including replacing the full `lines` set (recalculates totals). Non-draft estimates return 422 on `status` (`Only draft estimates can be edited.`). Assignment after send uses `POST /estimates/{id}/assign`.
+Partial update of **draft** estimates only — including replacing the full `lines` set (recalculates totals from `line_discount_type` and per-line `discount_value`). Non-draft estimates return 422 on `status` (`Only draft estimates can be edited.`). Assignment after send uses `POST /estimates/{id}/assign`.
 
 ### DELETE `/estimates/{id}`
 
@@ -96,7 +100,7 @@ Rejects disallowed transitions (including re-sending an already-`sent` estimate)
 
 Converts a **sent** or **accepted** estimate into a **draft** `CustomerInvoice`:
 
-- Creates the invoice with the estimate's `title`, `notes`, `currency`, `contact_id`, `company_id`, `quotation_id`, `assigned_to`, and a copy of every line item
+- Creates the invoice with the estimate's `title`, `notes`, `terms_and_conditions`, `currency`, `line_discount_type`, `contact_id`, `company_id`, `quotation_id`, `assigned_to`, and a copy of every line item (`name`, `body`, `discount_value`, quantities/prices/tax)
 - Sets `customer_invoices.estimate_id` on the new invoice
 - Transitions the estimate to `accepted` if it wasn't already
 - Records a `converted` activity on the estimate
