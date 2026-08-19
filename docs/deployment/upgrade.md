@@ -33,6 +33,41 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
+
+After migrate:
+
+1. Confirm catalog versions: quotations `1.4.1`, contracts `1.2.1`, invoices `1.6.1`, estimates `1.3.3`
+2. Confirm `customer_invoices.contract_id` exists (nullable FK) and **unique** nullable `estimate_id`
+3. Confirm `quotations.convert` and `contracts.convert` are granted to default admin/manager roles
+4. Deploy the SPA **after** migrate — convert actions 422 until Invoices is entitled; contract re-bills need `acknowledge_repeat_billing`
+
+Do **not** unique-index `customer_invoices.quotation_id`. Contract billing is repeatable. Quote/estimate one-shot uses `QuotationInvoiceGuard` plus `lockForUpdate` (and unique `estimate_id`).
+
+Go-live: [Sales document convert production readiness](/deployment/sales-document-convert-production-readiness).
+
+## Sales document invoice conversion (quotations 1.4.0 / contracts 1.2.0 / invoices 1.6.0 / estimates 1.3.2)
+
+Superseded by **1.4.1 / 1.2.1 / 1.6.1 / 1.3.3** integrity hardening above. Historical checklist:
+
+1. Confirm catalog versions: quotations `1.4.0`, contracts `1.2.0`, invoices `1.6.0`, estimates `1.3.2`
+2. Confirm `customer_invoices.contract_id` exists (nullable FK)
+3. Confirm `quotations.convert` and `contracts.convert` are granted to default admin/manager roles
+4. Deploy the SPA **after** migrate — convert actions 422 until Invoices is entitled on the workspace
+
+Do **not** unique-index `customer_invoices.quotation_id`. Contract billing is repeatable; the quotation/estimate one-shot guard is application-level (`QuotationInvoiceGuard`).
+
+## Contracts 1.1.0 — auto-fill and HTML memos
+
+After migrate:
+
+1. Confirm catalog `contracts` version is `1.1.0`
+2. Confirm `contracts.description` exists (nullable text)
+3. Deploy the SPA **after** migrate — posting `description` before the column exists will 500
+4. Store allows the creating actor as `assigned_to`. The SPA copies assignee only when that user is in the eligible picker; omitted `assigned_to` still defaults to the actor.
+
+See [Contracts 1.1.0 production readiness](/deployment/contracts-production-readiness).
+
 ## Founding Beta invites
 
 After migrate (`2026_08_16_232506_add_founding_beta_invites_to_beta_applications_table`):

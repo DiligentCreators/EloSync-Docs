@@ -27,7 +27,7 @@ Edit from the row menu or the detail sheet while the invoice is still **Draft**.
 
 ## Recurring invoices
 
-Turn on **Recurring invoice** when you create (or edit a draft). Choose a frequency (weekly, monthly, quarterly, semi-annually, or yearly) and a **Next invoice date** — the day EloSync should create the next **Draft**. That date does not have to match the issue day: you can invoice on 15 August and set the next draft for 1 September. After that, later invoices follow the frequency from the next-invoice date (1 October, 1 November, …). Optional end date stops generation after that date.
+Turn on **Recurring invoice** when you create (or edit a draft). Choose a frequency (weekly, monthly, quarterly, semi-annually, or yearly). **Next invoice date** fills automatically — one week, month, quarter, six months, or year after the issue date (or after today if the issue date is empty). Month-end dates stay in range (31 January monthly → 28 February). You can still pick a different date. After that, later invoices follow the frequency from the next-invoice date. Optional end date stops generation after that date.
 
 The first invoice is a normal invoice. After you **Send** it, EloSync creates the **next** invoice as a **Draft** on the **Next invoice date** you chose (workspace timezone), copying line items, customer, currency, and assignee. Generated invoices do not copy payments or credits.
 
@@ -66,6 +66,8 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 ## Related payments and credit notes
 
 If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice detail sheet shows a **Related payments** link to jump to the Payments module and record or review payments against this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.
+
+Converted invoices also show the source **Quotation**, **Estimate**, and/or **Contract** when those links are set.
 
 ## What's not here yet
 

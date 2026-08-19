@@ -46,6 +46,7 @@ Once an estimate is **Sent** or **Accepted**, use **Convert to invoice** from th
 - Marks the estimate **Accepted** automatically if it wasn't already
 - The estimate detail sheet then shows a link to the **converted invoice**
 - An estimate can only be converted **once** — the action is hidden once a converted invoice already exists
+- Convert is also blocked if the estimate’s linked quotation already has an invoice (from converting that quote, another estimate, or billing a contract that copied the quotation). Use a new estimate or invoice from scratch if you still need another bill
 
 ## Assignment
 

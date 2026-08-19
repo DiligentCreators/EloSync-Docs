@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:quotations`, plus permission middleware / policies.
 
-Assignee scoping: without `quotations.assign` (and not superadmin), list/stats/view/update/**send**/**accept** only include quotations where `assigned_to` is the current user.
+Assignee scoping: without `quotations.assign` (and not superadmin), list/stats/view/update/**send**/**accept**/**convert** only include quotations where `assigned_to` is the current user.
 
 ## Stats
 
@@ -18,7 +18,7 @@ Same filters as list (minus pagination/sort).
 
 Query: `search`, `status`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_quotations`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `opportunity`, assignee/creator refs, `subtotal`/`discount_total`/`tax_total`/`total`, and `latest_note`.
+List items include `status`, `opportunity`, assignee/creator refs, `subtotal`/`discount_total`/`tax_total`/`total`, `converted_invoice` ref (`number`/`status`) when present, and `latest_note`.
 
 ### POST `/quotations`
 
@@ -28,7 +28,7 @@ Body: `opportunity_id` (required), `contact_id`, `company_id` (optional, module-
 
 ### GET `/quotations/{id}`
 
-Includes opportunity, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes opportunity, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, `converted_invoice` when present, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### GET `/quotations/{id}/pdf`
 
@@ -66,6 +66,18 @@ Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unl
 
 Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scoped unless the actor has `quotations.assign` or is superadmin).
 
+### POST `/quotations/{id}/convert`
+
+Converts a **sent** or **accepted** quotation into a **draft** `CustomerInvoice`:
+
+- Requires the **Invoices** module to be entitled (soft, call-time check — no `module_dependencies` row). Returns 422 if Invoices is not installed.
+- Creates the invoice with the quotation's `title`, `notes`, `terms_and_conditions`, `currency`, `line_discount_type`, `contact_id`, `company_id`, `assigned_to`, and a copy of every line item
+- Sets `customer_invoices.quotation_id` on the new invoice
+- Transitions the quotation to `accepted` if it wasn't already
+- Records a `converted` activity on the quotation
+
+Permission: `quotations.convert` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). Rejects with a 422 if the quotation is not sent/accepted, or if any invoice (including soft-deleted) already has this `quotation_id` — one-shot, including invoices created from a linked estimate or contract. Soft-deleted invoices still block convert; the error message tells operators to restore or permanently delete the invoice. Concurrent converts are serialized with `lockForUpdate` on the quotation row. Returns the created **invoice** (`CustomerInvoiceResource`), not a quotation, with HTTP 201.
+
 ### POST `/quotations/{id}/status`
 
 `{ "status": "draft"|"sent"|"accepted"|"rejected"|"expired" }`
@@ -85,4 +97,4 @@ Permission: `quotations.update`.
 
 ### GET `/quotations/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`).

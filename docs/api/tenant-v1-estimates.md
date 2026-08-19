@@ -100,12 +100,14 @@ Rejects disallowed transitions (including re-sending an already-`sent` estimate)
 
 Converts a **sent** or **accepted** estimate into a **draft** `CustomerInvoice`:
 
+- Requires the **Invoices** module to be entitled (soft, call-time check in addition to the hard Marketplace dependency). Returns 422 if Invoices is not installed.
 - Creates the invoice with the estimate's `title`, `notes`, `terms_and_conditions`, `currency`, `line_discount_type`, `contact_id`, `company_id`, `quotation_id`, `assigned_to`, and a copy of every line item (`name`, `body`, `discount_value`, quantities/prices/tax)
-- Sets `customer_invoices.estimate_id` on the new invoice
+- Sets `customer_invoices.estimate_id` on create (unique nullable column — one-shot at the database)
 - Transitions the estimate to `accepted` if it wasn't already
 - Records a `converted` activity on the estimate
+- Serializes with `lockForUpdate` on the estimate (and linked quotation when present)
 
-Permission: `estimates.convert` (assignee-scoped unless the actor has `estimates.assign` or is superadmin). Rejects with a 422 on `status` if the estimate is `draft`/`rejected`/`expired`, or if it has already been converted (an estimate converts at most once). Returns the created **invoice** (`CustomerInvoiceResource`), not an estimate, with HTTP 201.
+Permission: `estimates.convert` (assignee-scoped unless the actor has `estimates.assign` or is superadmin). Rejects with a 422 on `status` if the estimate is `draft`/`rejected`/`expired`, if it has already been converted (including soft-deleted invoices — restore or force-delete to recover), or if the estimate’s linked quotation already has any invoice (`QuotationInvoiceGuard`). Returns the created **invoice** (`CustomerInvoiceResource`), not an estimate, with HTTP 201.
 
 ### POST `/estimates/{id}/notes`
 

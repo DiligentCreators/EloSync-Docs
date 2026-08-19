@@ -450,6 +450,7 @@ export default defineConfig({
             { text: 'Reports Production Readiness', link: '/deployment/analytics-production-readiness' },
             { text: 'Storage Production Readiness', link: '/deployment/storage-production-readiness' },
             { text: 'Invoices Production Readiness', link: '/deployment/invoices-production-readiness' },
+            { text: 'Contracts Production Readiness', link: '/deployment/contracts-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
             { text: 'Founding Beta Invite Production Readiness', link: '/deployment/founding-beta-invite-production-readiness' },
             { text: 'Newest-first Notes & Activity Production Readiness', link: '/deployment/newest-first-notes-activity-production-readiness' },

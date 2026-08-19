@@ -16,8 +16,8 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant ToDos](./tenant-v1-todos) | Personal ToDos CRUD and board |
 | [Tenant Activities](./tenant-v1-activities) | Activities CRUD, complete, notes, timeline |
 | [Tenant Opportunities](./tenant-v1-opportunities) | Opportunities CRUD, board, stages, notes |
-| [Tenant Quotations](./tenant-v1-quotations) | Quotations CRUD, lines, send/accept, notes |
-| [Tenant Contracts](./tenant-v1-contracts) | Contracts CRUD, status, optional quotation link |
+| [Tenant Quotations](./tenant-v1-quotations) | Quotations CRUD, lines, send/accept/convert to invoice, notes |
+| [Tenant Contracts](./tenant-v1-contracts) | Contracts CRUD, status, optional quotation link, create invoice |
 | [Tenant Invoices](./tenant-v1-invoices) | Invoices CRUD, lines, send/void, notes |
 | [Tenant Payments](./tenant-v1-payments) | Payments CRUD, allocations, post/void, notes |
 | [Tenant Credit Notes](./tenant-v1-credit-notes) | Credit notes CRUD, lines, issue/apply/void, notes |

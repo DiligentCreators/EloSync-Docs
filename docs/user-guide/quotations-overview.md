@@ -20,6 +20,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 - Quote fields: opportunity (required), title, optional contact/company link, currency, valid-until date, notes
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side
 - Status workflow: `draft → sent → accepted | rejected | expired` (`POST /quotations/{id}/send`, `.../accept`, `.../status`)
+- **Convert to invoice** (`POST /quotations/{id}/convert`) — one-shot draft CustomerInvoice when Invoices is entitled (soft check; not a Marketplace hard dependency)
 - Assignment with assignee scoping via `quotations.assign`
 - Notes + domain activity timeline (mirrors Opportunities)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -28,16 +29,16 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 
 ## Permissions
 
-`quotations.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept`
+`quotations.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
 Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`.
 
 ## Related modules
 
-**Hard dependency:** Opportunities (see [Module Dependencies](/architecture/module-dependencies)). Contracts may optionally link a Quotation once both modules are entitled.
+**Hard dependency:** Opportunities (see [Module Dependencies](/architecture/module-dependencies)). **Optional:** Invoices — convert-to-invoice is hidden until Invoices is entitled. Contracts may optionally link a Quotation once both modules are entitled.
 
 ## Explicitly deferred
 
-- Quote PDF export / e-signature
+- Quote PDF export / e-signature (PDF download already ships)
 - Multi-currency conversion
 - Approval workflow beyond the status enum
