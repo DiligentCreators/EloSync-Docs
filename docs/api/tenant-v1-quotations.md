@@ -76,7 +76,7 @@ Converts a **sent** or **accepted** quotation into a **draft** `CustomerInvoice`
 - Transitions the quotation to `accepted` if it wasn't already
 - Records a `converted` activity on the quotation
 
-Permission: `quotations.convert` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). Rejects with a 422 if the quotation is not sent/accepted, or if any invoice (including soft-deleted) already has this `quotation_id` — one-shot, including invoices created from a linked estimate or contract. Returns the created **invoice** (`CustomerInvoiceResource`), not a quotation, with HTTP 201.
+Permission: `quotations.convert` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). Rejects with a 422 if the quotation is not sent/accepted, or if any invoice (including soft-deleted) already has this `quotation_id` — one-shot, including invoices created from a linked estimate or contract. Soft-deleted invoices still block convert; the error message tells operators to restore or permanently delete the invoice. Concurrent converts are serialized with `lockForUpdate` on the quotation row. Returns the created **invoice** (`CustomerInvoiceResource`), not a quotation, with HTTP 201.
 
 ### POST `/quotations/{id}/status`
 

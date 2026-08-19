@@ -29,7 +29,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - Content updates (`PUT`) and line sync are **draft-only** via `Quotation::isEditable()`. Assignment remains available after send via `POST …/assign`.
 - `POST …/status` maps target status to permissions: `sent` → `quotations.send`, `accepted` → `quotations.accept`, otherwise `quotations.update`.
 - `send` / `accept` / `convert` policies are assignee-scoped (same as `view` / `update`) unless the actor has `quotations.assign` or is superadmin.
-- **Convert to invoice** (`QuotationService::convertToInvoice()`): soft Invoices entitlement (422 if not installed). One-shot via `QuotationInvoiceGuard` (any invoice with this `quotation_id`, including soft-deleted, estimate converts, or contract bills). Copies lines into a draft `CustomerInvoice`, sets `quotation_id`, auto-accepts if sent, records `converted`, fires `QuotationConverted`.
+- **Convert to invoice** (`QuotationService::convertToInvoice()`): soft Invoices entitlement (422 if not installed). One-shot via `QuotationInvoiceGuard` (any invoice with this `quotation_id`, including soft-deleted, estimate converts, or contract bills) inside a transaction with `lockForUpdate` on the quotation. Soft-deleted invoices still block; errors tell ops to restore or force-delete. Copies lines into a draft `CustomerInvoice`, sets `quotation_id`, auto-accepts if sent, records `converted`, fires `QuotationConverted`.
 - **Send is status-only** — no outbound email delivery; PDF download is available separately via **Download PDF**.
 - Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `QuotationLine` rows plus document `line_discount_type`. Tax is calculated after line discounts.
 - Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct`: Products entitled, `products.view` or superadmin, active non-trashed). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
@@ -47,7 +47,7 @@ quotations.view | create | update | delete | restore | force.delete | assign | s
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.4.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement).
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.4.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement); 1.4.1 adds convert row locks + soft-delete recovery messaging.
 
 ## API (tenant)
 

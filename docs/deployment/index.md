@@ -26,6 +26,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Invoices Production Readiness](./invoices-production-readiness) | Invoices 1.1.0 recurring + PDF audit, smoke, rollback, sign-off |
 | [Contracts Production Readiness](./contracts-production-readiness) | Contracts 1.1.0 auto-fill + HTML memos — **Go** |
 | [Billing product line picker](./billing-product-line-picker-production-readiness) | Quotes/estimates/invoices optional `product_id` + Products HTML — **Go** |
+| [Sales document convert](./sales-document-convert-production-readiness) | Quote/estimate/contract → invoice integrity — **Go** |
 | [Documents Production Readiness](./documents-production-readiness) | Documents 1.0.1 free opt-in audit, smoke, rollback, sign-off |
 | [Tenant Audit & Impersonation History](./tenant-audit-impersonation-production-readiness) | Central Impersonation history + Audit Logs tabs — Go |
 | [Newest-first notes & activity](./newest-first-notes-activity-production-readiness) | Module show notes/activities DESC — Go |

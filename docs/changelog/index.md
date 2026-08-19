@@ -1,5 +1,16 @@
 # Changelog
 
+## Sales document convert integrity hardening (2026-08-19)
+
+Catalog versions: **quotations 1.4.1**, **contracts 1.2.1**, **estimates 1.3.3**, **invoices 1.6.1**.
+
+- Quote/estimate convert uses row locks (`lockForUpdate`) so concurrent converts cannot double-bill.
+- Unique nullable `customer_invoices.estimate_id` enforces one-shot estimate convert at the database.
+- Estimate convert soft-checks Invoices entitlement (same pattern as quotes/contracts).
+- Soft-deleted invoices still block one-shot convert; API errors tell operators to restore or permanently delete.
+- Contract progress billing: second and later invoices require `acknowledge_repeat_billing=true` (SPA confirm sends it).
+- Go-live: [Sales document convert production readiness](/deployment/sales-document-convert-production-readiness) — **Go**.
+
 ## Invoices: auto-fill next recurring date from frequency (2026-08-19)
 
 - Turning on **Recurring invoice** (or changing weekly / monthly / quarterly / semi-annually / yearly) fills **Next invoice date** one period after the issue date (or today). The date stays editable.

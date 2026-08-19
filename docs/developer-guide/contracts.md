@@ -25,7 +25,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) an
 
 - **Hard dependency**: Contracts declares a required `module_dependencies` row on Opportunities — Marketplace install is blocked until Opportunities is entitled.
 - **Soft optional dependency**: `quotation_id` is nullable and validated by `LinkableQuotation` — it fails validation when the Quotations module is not entitled for the tenant, when the quotation is soft-deleted, when the actor cannot view that quotation (same assignee-scope pattern as `LinkableCompanyForOpportunity`), or when the quotation’s `opportunity_id` does not match the contract’s opportunity.
-- **Create invoice** (`ContractService::createInvoice()`): soft Invoices entitlement. Active contracts only (`isBillable()`). Repeatable. Copies quotation lines when present, else a lump-sum line from `value`. Sets `contract_id` and optional `quotation_id`. Does not unique-index `quotation_id`. Fires `ContractInvoiceCreated`. `QuotationInvoiceGuard` is used only for the detail flag `quotation_already_invoiced` (UI warning).
+- **Create invoice** (`ContractService::createInvoice()`): soft Invoices entitlement. Active contracts only (`isBillable()`). Repeatable with `lockForUpdate` on the contract. Copies quotation lines when present, else a lump-sum line from `value`. Sets `contract_id` and optional `quotation_id`. Second and later bills require `acknowledge_repeat_billing=true`. Does not unique-index `quotation_id`. Fires `ContractInvoiceCreated`. `QuotationInvoiceGuard` is used only for the detail flag `quotation_already_invoiced` (UI warning).
 - Status machine lives on `ContractStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → active → expired|terminated` (also `draft → terminated`). `ContractService::changeStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions, including re-entering the same status.
 - Content updates are **draft-only** (`Contract::isEditable()`); assignment stays available via `POST …/assign` after activate.
 - No line items / totals — `value` is a single optional decimal field.
@@ -41,7 +41,7 @@ contracts.view | create | update | delete | restore | force.delete | assign | co
 
 Routes use `module:contracts` then `can:contracts.*` / policies.
 
-Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.2.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only). 1.1.0 added opportunity auto-fill + HTML memos; 1.2.0 adds create-invoice (soft Invoices entitlement). Production readiness: [Contracts 1.1.0](/deployment/contracts-production-readiness).
+Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.2.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only). 1.1.0 added opportunity auto-fill + HTML memos; 1.2.0 adds create-invoice (soft Invoices entitlement); 1.2.1 requires `acknowledge_repeat_billing` for second+ bills. Production readiness: [Sales document convert](/deployment/sales-document-convert-production-readiness).
 
 ## API (tenant)
 

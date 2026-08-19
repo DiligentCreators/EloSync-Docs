@@ -41,7 +41,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - **Partial** is UI-only: the SPA shows a Partial badge when `status === unpaid`, `amount_paid > 0`, and `balance_due > 0`. The API has no `partial` status — partial settlement keeps `unpaid` until the balance clears.
 - Assignee scoping via `ScopesToAssignee` with `invoices.assign`.
 - `invoices.force.delete` is not granted to any default role — owner/superadmin only.
-- `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`), same as Quotations/Opportunities. `quotation_id` is optional and only existence/tenant-checked — a tenant can link any of its own quotations even if Quotations is not currently entitled (no soft-entitlement guard, unlike Contracts → Quotations). `estimate_id` and `contract_id` are set by convert actions (`nullOnDelete`); `quotation_id` is **not** unique so contracts can bill more than once.
+- `estimate_id` and `contract_id` are set by convert actions (`nullOnDelete`); `estimate_id` is **unique** when not null (one-shot estimate convert); `quotation_id` is **not** unique so contracts can bill more than once.
 - Auto-numbering: `CustomerInvoiceService::nextNumber()` reads the `invoices_number_prefix` tenant setting (default `INV-`), then zero-pads a running count (`CustomerInvoice::withTrashed()->count() + 1`) to 5 digits. `customer_invoices` has a `unique(tenant_id, number)` DB index; `create()` wraps the insert with the shared `RetriesOnDuplicateNumber` trait (`app/Services/Tenant/Concerns/RetriesOnDuplicateNumber.php`), retrying up to 3 times with a freshly generated number if two concurrent requests race to the same count-derived sequence. The same trait/index pattern is used by Payments, Credit Notes, and Estimates.
 - Overdue definition (shared by list `overdue=true` filter and `stats.overdue`): `due_date < today`, `status` = `unpaid`, `balance_due > 0`.
 
@@ -53,7 +53,7 @@ invoices.view | create | update | delete | restore | force.delete | assign | sen
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.6.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer; 1.6.0 adds `contract_id` for contract-created invoices.
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.6.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer; 1.6.0 adds `contract_id` for contract-created invoices; 1.6.1 adds unique nullable `estimate_id` for one-shot estimate convert.
 
 ## API (tenant)
 

@@ -65,7 +65,8 @@ Creates a **draft** `CustomerInvoice` from an **active** contract (repeatable �
 - Requires the **Invoices** module to be entitled (soft, call-time check — no `module_dependencies` row). Returns 422 if Invoices is not installed.
 - Copies linked quotation lines when present; otherwise a single line from `value`. Rejects if there is no value and no quotation lines.
 - Sets `customer_invoices.contract_id` and copies `quotation_id` when the contract is linked to a quotation
-- Does **not** block when the quotation is already invoiced — the confirm UI warns; the API allows another invoice
+- Does **not** hard-block when the quotation is already invoiced — the confirm UI warns; the API allows another invoice
+- **Second and later** invoices for the same contract require `{ "acknowledge_repeat_billing": true }` (422 on `acknowledge_repeat_billing` otherwise). The SPA confirm dialog always sends this flag.
 - Records a `converted` activity (`Created invoice {number}`)
 
 Permission: `contracts.convert` (assignee-scoped unless the actor has `contracts.assign` or is superadmin). Rejects with a 422 if the contract is not active. Returns the created **invoice** (`CustomerInvoiceResource`) with HTTP 201.

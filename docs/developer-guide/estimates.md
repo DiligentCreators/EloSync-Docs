@@ -56,7 +56,7 @@ estimates.view | create | update | delete | restore | force.delete | assign | se
 
 Routes use `module:estimates` then `can:estimates.*` / policies.
 
-Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.3.2**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced.
+Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.3.3**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced; 1.3.3 adds soft Invoices entitlement check, `lockForUpdate`, unique `estimate_id`, and soft-delete recovery messaging.
 
 ## API (tenant)
 
