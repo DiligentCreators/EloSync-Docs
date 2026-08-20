@@ -1,5 +1,11 @@
 # Changelog
 
+## Form 422 validation visibility (all tenant modules) (2026-08-20)
+
+- Server validation errors (HTTP 422) now always toast the first API message and map onto react-hook-form fields via shared `applyServerValidationErrors`.
+- Assignee pickers filter ineligible users (workspace owners / excluded assignees) and show `assigned_to` field errors; quotation/estimate opportunity auto-fill only copies eligible assignees (fixes silent create failures).
+- Applies across tenant create/edit forms (sales, CRM, ops, HR, inventory, and related dialogs).
+
 ## Branded PDF long line-body pagination (2026-08-20)
 
 Catalog PATCH bumps (old → new): **quotations 1.5.1 → 1.5.2**, **estimates 1.4.1 → 1.4.2**, **invoices 1.7.1 → 1.7.2**.
