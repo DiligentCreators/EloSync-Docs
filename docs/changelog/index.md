@@ -1,5 +1,13 @@
 # Changelog
 
+## Branded PDF long line-body pagination (2026-08-20)
+
+Catalog PATCH bumps (old → new): **quotations 1.5.1 → 1.5.2**, **estimates 1.4.1 → 1.4.2**, **invoices 1.7.1 → 1.7.2**.
+
+- Dompdf no longer clips long line-item body HTML off-page. Each pricing row stays in a short table; line body is a block-level `.line-body` below so multi-page scope text paginates.
+- Same layout fix on quotation, estimate, and invoice PDF Blade templates.
+- Pest: long quotation line body asserts more than two `/Type /Page` objects.
+
 ## Branded PDF long-notes pagination (2026-08-20)
 
 Catalog PATCH bumps (old → new): **quotations 1.5.0 → 1.5.1**, **estimates 1.4.0 → 1.4.1**, **invoices 1.7.0 → 1.7.1**.
