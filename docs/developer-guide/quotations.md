@@ -34,7 +34,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (a
 - Line items are fully replaced on create/update (`QuotationService::syncLines()`); `Quotation::recalculateTotals()` delegates to `DocumentTotalsCalculator` for `subtotal` / `discount_total` / `tax_total` / `total` from persisted `QuotationLine` rows plus document `line_discount_type`. Tax is calculated after line discounts.
 - Lines use required short `name` plus optional long `body`, optional `product_id` (`LinkableProduct`: Products entitled, `products.view` or superadmin, active non-trashed). Memo `notes` accept sanitized HTML via `DocumentHtmlSanitizer`.
 - Shared line discounts use `DocumentDiscountTypeEnum` (`none`, `percent`, `fixed`) on the parent as `line_discount_type`; lines store only `discount_value`. Validation lives in `DocumentDiscountRules`.
-- PDF: `GET …/pdf` (`quotations.view`, assignee-scoped, `throttle:quotations-pdf`) renders from `resources/views/quotations/pdf.blade.php` via `QuotationPdfService` — same branded layout as invoices. Totals are right-aligned; Notes / Terms are full-width blocks below (not a side-by-side table cell) so Dompdf paginates long HTML across all pages.
+- PDF: `GET …/pdf` (`quotations.view`, assignee-scoped, `throttle:quotations-pdf`) renders from `resources/views/quotations/pdf.blade.php` via `QuotationPdfService` — same branded layout as invoices. Totals are right-aligned; Notes / Terms are full-width blocks below (not a side-by-side table cell) so Dompdf paginates long HTML across all pages. Line-item body HTML is a block-level `.line-body` under each short pricing row (not a tall table cell).
 - Assignee scoping via `ScopesToAssignee` with `quotations.assign`.
 - `quotations.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope, same as Opportunities.
@@ -47,7 +47,7 @@ quotations.view | create | update | delete | restore | force.delete | assign | s
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.5.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement); 1.4.1 adds convert row locks + soft-delete recovery messaging; 1.5.0 dedicated record pages; 1.5.1 PDF long-notes pagination.
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.5.2**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement); 1.4.1 adds convert row locks + soft-delete recovery messaging; 1.5.0 dedicated record pages; 1.5.1 PDF long-notes pagination; 1.5.2 PDF long line-body pagination.
 
 ## API (tenant)
 
