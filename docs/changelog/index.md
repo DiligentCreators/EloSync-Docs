@@ -1,5 +1,15 @@
 # Changelog
 
+## AI Assistant platform foundation (2026-08-21)
+
+Catalog: billable **`ai`** module v1.0.0 plus prepaid packs `ai-credits-1k`, `ai-credits-5k`, `ai-credits-20k` (depend on `ai`).
+
+- Tenant API: conversations, messages, credit wallet, Lead Copilot, pending write confirmation (`ai.use`, `ai.confirm`, `ai.manage`).
+- Platform billing: dual-balance wallet (included monthly + prepaid packs), prorated activation grant, rollover command `ai:rollover-monthly-credits`, HTTP 402 when credits exhausted.
+- BYOK + Central provider resolution via `AiConfigResolver`; API keys masked in settings responses.
+- Pest: `tests/Feature/Tenant/Ai/*`, `tests/Unit/AI/AiConfigResolverTest.php`.
+- Docs: [AI platform](/architecture/ai-platform), [AI tools](/developer-guide/ai-tools), [AI credits](/developer-guide/ai-credits), [Tenant AI API](/api/tenant-v1-ai), [User guide](/user-guide/ai-assistant).
+
 ## Form 422 validation visibility (all tenant modules) (2026-08-20)
 
 - Server validation errors (HTTP 422) now always toast the first API message and map onto react-hook-form fields via shared `applyServerValidationErrors` (tenant CRUD forms plus auth, settings, email, users, and related dialogs).
