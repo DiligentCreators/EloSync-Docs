@@ -1,5 +1,11 @@
 # Changelog
 
+## Dedicated record pages UX — production Go (2026-08-20)
+
+- Production readiness: [Dedicated record pages UX](/deployment/dedicated-record-pages-production-readiness) — **Go** (form validation visibility + Playwright hardeners remediated; migrate-first).
+- Required-field errors now surface on floating inputs for Employees, Payroll profiles, and Reseller commission rates.
+- Playwright: shared-demo authz skips, settings load retry, email empty-state / opt-in IMAP, team-chat settings save/delete hardeners, journal search after create.
+
 ## Floating labels, search clear, semantic status badges (2026-08-20)
 
 - Form text fields use **floating labels** (`FloatingInput` / `FloatingTextarea`) on tenant create/edit pages.
