@@ -1,5 +1,11 @@
 # Changelog
 
+## Form 422 validation visibility (all tenant modules) (2026-08-20)
+
+- Server validation errors (HTTP 422) now always toast the first API message and map onto react-hook-form fields via shared `applyServerValidationErrors` (tenant CRUD forms plus auth, settings, email, users, and related dialogs).
+- Assignee pickers filter ineligible users (workspace owners / excluded assignees) and show `assigned_to` field errors; quotation/estimate opportunity auto-fill only copies eligible assignees (fixes silent create failures).
+- Vitest covers the shared helper; Playwright dismisses multi-unread announcement inboxes so create actions stay clickable on the shared demo workspace.
+
 ## Branded PDF long line-body pagination (2026-08-20)
 
 Catalog PATCH bumps (old → new): **quotations 1.5.1 → 1.5.2**, **estimates 1.4.1 → 1.4.2**, **invoices 1.7.1 → 1.7.2**.
