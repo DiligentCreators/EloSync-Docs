@@ -36,7 +36,7 @@ Invalid transitions (e.g. accepting directly from Draft) are rejected with a val
 
 ## Download PDF
 
-**Download PDF** is on the estimate record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Sending still does not email the customer.
+**Download PDF** is on the estimate record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Long notes and terms continue across as many pages as needed. Sending still does not email the customer.
 
 ## Convert to invoice
 

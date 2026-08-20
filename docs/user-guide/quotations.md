@@ -45,7 +45,7 @@ Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use 
 
 ## Download PDF
 
-**Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Sending still does not email the customer.
+**Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Long notes and terms continue across as many pages as needed. Sending still does not email the customer.
 
 ## Assignment
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## Branded PDF long-notes pagination (2026-08-20)
+
+Catalog PATCH bumps (old → new): **quotations 1.5.0 → 1.5.1**, **estimates 1.4.0 → 1.4.1**, **invoices 1.7.0 → 1.7.1**.
+
+- Dompdf no longer clips long Notes / Terms & Conditions to ~2 pages. Totals stay in a short right-aligned block; memo HTML is rendered as full-width blocks below so multi-page content paginates.
+- Same layout fix on quotation, estimate, and invoice PDF Blade templates.
+- Pest: long quotation notes assert end-marker text is present and the PDF has more than two `/Type /Page` objects.
+
 ## Dedicated record pages UX — production Go (2026-08-20)
 
 - Production readiness: [Dedicated record pages UX](/deployment/dedicated-record-pages-production-readiness) — **Go** (form validation visibility + Playwright hardeners remediated; migrate-first).
