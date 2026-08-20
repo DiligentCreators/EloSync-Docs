@@ -24,7 +24,7 @@ Routes require `module:warehouses` and `warehouses.view|create|update|delete|res
 
 ## Frontend and verification
 
-Pages are in `src/pages/warehouses/` and follow the existing AppLayout, entitlement-gated nav, and shared DataTable/form/detail-sheet patterns.
+Pages are in `src/pages/warehouses/` (`warehouses-page.tsx`, `warehouse-form.tsx`, `warehouse-form-page.tsx`, `warehouse-view-page.tsx`) and follow the existing AppLayout, entitlement-gated nav, and dedicated record-page pattern (same as Expenses).
 
 ```bash
 php artisan test --compact tests/Feature/Tenant/Warehouse

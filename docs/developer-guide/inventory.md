@@ -1,4 +1,4 @@
-# Inventory — Developer Guide
+﻿# Inventory — Developer Guide
 
 Inventory is the Phase 5 stock module. It hard-depends on Products and soft-uses Warehouses for its default warehouse and UI integration.
 
@@ -27,7 +27,7 @@ Routes use `module:inventory`; permissions are `inventory.view|adjust|transfer|d
 
 ## Frontend and verification
 
-`src/pages/inventory/` uses the existing inventory list, adjustment dialog, transfer dialog/detail sheet, shared route guards, permissions, and query cache conventions.
+`src/pages/inventory/` uses the existing inventory list, adjustment dialog, transfer dialog/record page, shared route guards, permissions, and query cache conventions.
 
 ```bash
 php artisan test --compact tests/Feature/Tenant/Inventory

@@ -1,4 +1,4 @@
-# ToDos — User Guide
+﻿# ToDos — User Guide
 
 ## Who can use ToDos
 
@@ -33,9 +33,9 @@ Status labels in the UI:
 3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
 4. Save
 
-Edit from the row menu or the detail drawer — only when you are the creator. Owners viewing someone else’s to-do see a read-only detail panel.
+Edit from the row menu or the record page — only when you are the creator. Owners viewing someone else’s to-do see a read-only detail panel.
 
-Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
+Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The record page shows tag badges — change assignments from Edit.
 
 ## Delete
 

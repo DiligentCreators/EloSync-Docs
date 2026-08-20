@@ -37,7 +37,7 @@ See [tenant-v1-employees.md](/api/tenant-v1-employees).
 
 ## Frontend
 
-- Page: `src/pages/employees/` (list, form dialog, detail sheet)
+- Page: `src/pages/employees/` (list, dedicated create/edit form pages, record view page)
 - Service / keys / permissions: `employeeService`, `QUERY_KEYS.employees*`, `PERMISSIONS.employees`
 - Nav group **HR**, dual-gated `module: employees` + `PERMISSIONS.employees.view`
 - Playwright: `e2e/tests/employees/`, `npm run test:e2e:employees`

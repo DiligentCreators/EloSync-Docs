@@ -1,4 +1,4 @@
-# Opportunities — Developer Guide
+﻿# Opportunities — Developer Guide
 
 Mirror of the [Leads developer guide](/developer-guide/leads) (pipeline board) and [Activities developer guide](/developer-guide/activities) (soft related FKs, notes, assignee scope). Prefer copying those patterns over inventing new ones.
 
@@ -48,12 +48,12 @@ Colored tags are **create-only** for MVP (`GET/POST /opportunity-tags`, assign v
 
 ## Frontend
 
-SPA should mirror **Leads** (board default + table, form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA should mirror **Leads** (board default + table, create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/opportunities/` |
-| Form / detail | form dialog + detail sheet (Overview, Notes, Activity); board DnD auto-saves stage on the list page |
+| Form / detail | create/edit page + record page (Overview, Notes, Activity); board DnD auto-saves stage on the list page |
 | Service | `opportunityService` in `src/api/services.ts` |
 | Nav | `permission: opportunities.view`, `module: 'opportunities'` (Sales) |
 | Playwright | `e2e/pages/opportunities.page.ts`, `e2e/tests/opportunities/`, `npm run test:e2e:opportunities` |

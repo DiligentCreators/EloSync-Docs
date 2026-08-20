@@ -28,10 +28,7 @@ Manage categories from the product category action. A category has a name and op
 
 ## Notes, activity, and deletion
 
-The detail sheet contains:
-
-- **Notes** for free-form product context
-- **Activity** for create, update, note, delete, and restore events
+Open a product to see **Notes** and **Timeline** on the record page (create, update, note, delete, and restore events). Categories still open in a dialog from **Manage categories**.
 
 Delete is a soft delete. Restore requires `products.restore`; permanent deletion requires `products.force.delete` and the product must already be deleted.
 

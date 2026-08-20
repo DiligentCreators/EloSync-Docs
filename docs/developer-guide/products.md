@@ -30,7 +30,7 @@ Catalog: slug `products`, version **1.2.0** (auto SKU + HTML description + link 
 
 ## Frontend and verification
 
-Pages are in `src/pages/products/`; service/types/query keys/permissions live in the shared API, type, constants, and navigation layers. The route and nav item use `module:products` plus `products.view`. Currency uses shared `currencyOptions()` / `SearchableSelect` and defaults to tenant `settings.currency` on create.
+Pages are in `src/pages/products/` (`products-page.tsx`, `product-form.tsx` + `product-form-page.tsx`, `product-view-page.tsx`). Category CRUD stays in `product-categories-dialog.tsx`. Service/types/query keys/permissions live in the shared API, type, constants, and navigation layers. The route and nav item use `module:products` plus `products.view`. Currency uses shared `currencyOptions()` / `SearchableSelect` and defaults to tenant `settings.currency` on create.
 
 Run:
 

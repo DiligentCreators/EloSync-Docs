@@ -49,6 +49,7 @@ See [tenant-v1-leave-management.md](/api/tenant-v1-leave-management).
 - API clients: `leaveTypeService`, `leaveBalanceService`, `leaveRequestService` in `src/api/services.ts`
 - Keys / permissions: `QUERY_KEYS.leave*`, `PERMISSIONS.leaveManagement`
 - Nav under **HR** (module `leave-management`)
+- Dedicated request pages: `leave-request-form.tsx` + `leave-request-form-page.tsx` + `leave-request-view-page.tsx`; leave types stay in a dialog
 - Form locks employee for non-admin; review dialog collects notes + deduct toggle
 
 ## Payroll integration

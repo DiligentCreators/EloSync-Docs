@@ -1,4 +1,4 @@
-# Tasks — Developer Guide
+﻿# Tasks — Developer Guide
 
 Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Leads patterns over inventing new ones.
 
@@ -74,7 +74,7 @@ Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). 
 | Form | `task-form-dialog.tsx` |
 | Detail | `task-detail-sheet.tsx` (Comments + History; Comments use `MentionComposer`; board DnD auto-saves status on the list page) |
 | Shared board | `src/components/crm/kanban-board.tsx` |
-| Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
+| Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |
 | Service | `taskService` in `src/api/services.ts` |
 | Nav | `permission: tasks.view`, `module: 'tasks'` |

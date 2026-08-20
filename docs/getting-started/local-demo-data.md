@@ -6,11 +6,18 @@ Populate a dedicated demo workspace with realistic CRM data for local developmen
 
 ## Prerequisites
 
-1. Migrate and seed the central platform:
+1. Migrate and seed the central platform (local also creates the demo workspace):
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Or migrate + central seed only, then demo separately:
 
 ```bash
 php artisan migrate
 php artisan db:seed --class=Database\\Seeders\\Central\\CentralDatabaseSeeder
+php artisan local:seed-demo
 ```
 
 2. Ensure `APP_ENV=local` in `.env`.
@@ -18,6 +25,8 @@ php artisan db:seed --class=Database\\Seeders\\Central\\CentralDatabaseSeeder
 ## Quick start
 
 ```bash
+php artisan migrate:fresh --seed
+# or, if central is already seeded:
 php artisan local:seed-demo
 ```
 
@@ -32,12 +41,14 @@ This will:
 | Field | Value |
 |-------|-------|
 | Domain | `demo-crm.localhost` |
-| Owner email | `owner@demo-crm.local` |
+| Owner email | `demo@demo.com` |
 | Password | `password` |
 
 Additional demo users use `{slug}@demo-crm.local` with the same password.
 
 Configure these values in [`config/local-demo.php`](https://github.com/DiligentCreators/SaaS-Backend/blob/main/config/local-demo.php).
+
+In the SPA (`npm run dev`), `/login` prefills `demo@demo.com` / `password` and `/central/login` prefills the central superadmin. Playwright tenant suites sign in to this same workspace via `E2E_DEMO_*` (see Frontend `.env.e2e.example`).
 
 ## Dataset sizes
 

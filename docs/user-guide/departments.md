@@ -32,7 +32,7 @@ Employees without a linked login still appear on the roster for HR, but are excl
 
 ## Performance
 
-Managers and admins can open the **Performance** tab on a department:
+Managers and admins can open a department record to see **Users**, **Employees**, and **Performance** sections:
 
 - Headcount (users, employees, performance-eligible, unlinked)
 - Lead totals (open / won / lost) when Leads is installed

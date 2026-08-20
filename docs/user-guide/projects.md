@@ -1,4 +1,4 @@
-# Projects — User Guide
+﻿# Projects — User Guide
 
 ## Who can use Projects
 
@@ -36,7 +36,7 @@ Status labels:
 5. Optionally set an assignee and members (requires **assign**)
 6. Save — new projects start as **Planned**; without assign permission the creator becomes the assignee
 
-Edit from the row menu or the detail sheet. Status changes use the status action (not free-form field edits of status).
+Edit from the row menu or the record page. Status changes use the status action (not free-form field edits of status).
 
 ## Status workflow
 

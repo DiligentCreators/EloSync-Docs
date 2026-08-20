@@ -1,4 +1,4 @@
-# Payments — Developer Guide
+﻿# Payments — Developer Guide
 
 Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee scope, notes, domain timeline), with one structural difference: Payments declares a **required** `module_dependencies` row on Invoices — the first Phase 3 module to do so.
 
@@ -51,7 +51,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-payments.md](/api/tenant-v1
 
 ## Frontend
 
-SPA mirrors **Invoices** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA mirrors **Invoices** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path |
 |-------|------|
@@ -65,7 +65,7 @@ SPA mirrors **Invoices** (table + form dialog, detail sheet) under the existing 
 | Nav | **Billing** sidebar group, after Invoices — `permission: PERMISSIONS.customerPayments.view`, `module: 'payments'`. Kept separate from the Central Billing nav. |
 | Route | `tenantRoutes.payments = '/payments'`, lazy-loaded in `App.tsx` behind `RequireAccess module="payments"` |
 | Notifications | `src/notifications/modules/payments.ts` — `customer_payment.assigned` → `/payments?payment={id}` |
-| Cross-link | Invoice detail sheet shows a "Related payments" link to `/payments` when the Payments module + `payments.view` are both present |
+| Cross-link | Invoice record page shows a "Related payments" link to `/payments` when the Payments module + `payments.view` are both present |
 | Playwright | `e2e/pages/payments.page.ts`, `e2e/tests/payments/`, `npm run test:e2e:payments` |
 
 ## Tests

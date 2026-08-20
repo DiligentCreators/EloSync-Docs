@@ -1,5 +1,46 @@
 # Changelog
 
+## Dedicated record pages UX — production Go (2026-08-20)
+
+- Production readiness: [Dedicated record pages UX](/deployment/dedicated-record-pages-production-readiness) — **Go** (form validation visibility + Playwright hardeners remediated; migrate-first).
+- Required-field errors now surface on floating inputs for Employees, Payroll profiles, and Reseller commission rates.
+- Playwright: shared-demo authz skips, settings load retry, email empty-state / opt-in IMAP, team-chat settings save/delete hardeners, journal search after create.
+
+## Floating labels, search clear, semantic status badges (2026-08-20)
+
+- Form text fields use **floating labels** (`FloatingInput` / `FloatingTextarea`) on tenant create/edit pages.
+- Module list search (`Ctrl/⌘+F`) no longer shows two clear (X) icons — native browser clear is hidden; only the app clear button remains.
+- Status badges use semantic colors (paid/posted/accepted → green, unpaid/partial/pending → amber, sent → sky, cancelled/void → red) instead of the tenant brand primary for every “positive” status.
+
+## Local demo login + shared Playwright tenant (2026-08-20)
+
+- Local Vite prefills `/central/login` with `superadmin@saas.com` / `password` and `/login` with `demo@demo.com` / `password` (dev builds only).
+- `php artisan migrate:fresh --seed` (`APP_ENV=local`) also runs `local:seed-demo` and creates the **demo-crm** workspace owned by `demo@demo.com`.
+- Playwright tenant suites sign in to that shared demo workspace via `E2E_DEMO_*` (see Frontend `.env.e2e.example`).
+- Docs: [Installation](/getting-started/installation), [Local Demo Data](/getting-started/local-demo-data).
+
+## Dedicated record pages UX (all tenant CRUD modules) (2026-08-20)
+
+Catalog MINOR bumps (old → new): **leads 1.2.1 → 1.3.0**, **tasks 1.2.0 → 1.3.0**, **invoices 1.6.1 → 1.7.0**, **payments 1.0.1 → 1.1.0**, **quotations 1.4.1 → 1.5.0**, **estimates 1.3.3 → 1.4.0**, **contracts 1.2.1 → 1.3.0**, **products 1.2.0 → 1.3.0**, **expenses 1.1.0 → 1.2.0**, **documents 1.1.0 → 1.2.0**, **opportunities 1.1.1 → 1.2.0**, **todos 1.1.1 → 1.2.0**, **attendance 1.0.1 → 1.1.0**, and **1.0.0 → 1.1.0** for remaining migrated modules (companies, contacts, credit-notes, purchase-orders, projects, meetings, activities, announcements, knowledge-base, help-desk, assets, warehouses, inventory, vendors, employees, departments, leave-management, payroll, accounting, resellers, reseller-payouts).
+
+- Tenant CRUD uses **list + dedicated create/view/edit pages** with stacked cards (`RecordPage` / `RecordSection` / `FormSubmitSplit`). Dialogs remain only for secondary flows (confirm, import, tags/categories).
+- Create/edit forms use **separate submit buttons** (no dropdown): **Create** (return to list) and **Create & View**; edit uses **Save**, **Save & View**, and **Save & return to list**. Invoices add **Create & Send** / **Save & Send**; payments add **Post** (save then post).
+- Old query deep links (`/invoices?invoice=12`) **redirect** to `/invoices/12`. List **filters** such as `/payments?invoice=` and `/credit-notes?invoice=` are unchanged.
+- Notification hrefs and backend task/lead route resolvers emit path URLs (`/tasks/:id`, `/leads/:id`).
+- Blueprint: mirror **Leads** pages — [Module Development](/developer-guide/module-development), [Shared Layout](/developer-guide/shared-layout).
+
+## Dedicated record pages: Products, Vendors, HR modules (2026-08-20)
+
+- Products, Vendors, Employees, Departments, Leave requests, and Attendance now use dedicated create, view, and edit pages (same pattern as Expenses) instead of form dialogs and detail sheets. Product categories, leave types, and leave review stay as dialogs.
+- Vendor assignment notifications deep-link to `/vendors/:id`. Query-param list redirects (`?product=`, `?vendor=`, `?employee=`, `?department=`, `?request=`, `?record=`) still land on the record page.
+- Docs: [Products](/user-guide/products), [Vendors](/user-guide/vendors), [Employees](/user-guide/employees), [Departments](/user-guide/departments), [Leave Management](/user-guide/leave-management), [Attendance](/user-guide/attendance).
+
+## Dedicated record pages for operations modules (2026-08-20)
+
+- Announcements, Knowledge Base, Help Desk, Documents, Assets, and Warehouses now use dedicated create, view, and edit pages (same pattern as Expenses) instead of form dialogs and detail sheets. Category dialogs stay as secondary flows.
+- Notification deep links go to `/announcements/:id`, `/help-desk/:id`, and `/assets/:id`. Query-param list redirects (`?announcement=`, `?ticket=`, `?article=`, `?document=`, `?asset=`, `?warehouse=`) still land on the record page.
+- Docs: [Announcements](/user-guide/announcements), [Knowledge Base](/user-guide/knowledge-base), [Help Desk](/user-guide/help-desk), [Documents](/user-guide/documents), [Assets](/user-guide/assets), [Warehouses](/user-guide/warehouses).
+
 ## Sales document convert integrity hardening (2026-08-19)
 
 Catalog versions: **quotations 1.4.1**, **contracts 1.2.1**, **estimates 1.3.3**, **invoices 1.6.1**.

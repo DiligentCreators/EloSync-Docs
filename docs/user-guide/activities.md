@@ -1,4 +1,4 @@
-# Activities — User Guide
+﻿# Activities — User Guide
 
 ## Who can use Activities
 
@@ -25,15 +25,15 @@ Open **Activities** from the sidebar (after Meetings).
 4. Link at least one **Contact**, **Company**, or **Lead** (pickers appear when those modules are installed)
 5. Save
 
-Edit from the row menu or the detail drawer.
+Edit from the row menu or the record page.
 
 ## Complete
 
-From the detail drawer (or row menu when available), **Complete** sets the completed timestamp. Open activities have no `completed_at`.
+From the record page (or row menu when available), **Complete** sets the completed timestamp. Open activities have no `completed_at`.
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail drawer or the create/edit form.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form.
 
 ## Notes & activity
 

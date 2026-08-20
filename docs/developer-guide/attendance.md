@@ -43,6 +43,7 @@ See [tenant-v1-attendance.md](/api/tenant-v1-attendance).
 - API client: `attendanceRecordService` in `src/api/services.ts`
 - Keys / permissions: `QUERY_KEYS.attendance*`, `PERMISSIONS.attendance`
 - Nav under **HR** (module `attendance`)
+- Dedicated record pages: `attendance-form.tsx` + `attendance-form-page.tsx` + `attendance-view-page.tsx`; self check-in/out stays on the list
 
 ## Tests
 

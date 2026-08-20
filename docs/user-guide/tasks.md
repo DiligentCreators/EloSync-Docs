@@ -1,4 +1,4 @@
-# Tasks — User Guide
+﻿# Tasks — User Guide
 
 ## Who can use Tasks
 
@@ -11,7 +11,7 @@ Without **assign**, you only see tasks assigned to you.
 Open **Tasks** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by title or description
-- Each status column header and its cards use a fixed status color; Status badges in the list and detail drawer match
+- Each status column header and its cards use a fixed status color; Status badges in the list and record page match
 - Filter by status, priority, assignee, **tag**, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show **tags** and the **latest note**; hover a truncated preview to read the full note
@@ -36,9 +36,9 @@ Status labels in the UI:
 4. If **Projects** is installed, optionally link a **project**
 5. Save
 
-Edit from the row menu or the detail drawer. Dragging a card on the board auto-saves the new status (no drawer).
+Edit from the row menu or the record page. Dragging a card on the board auto-saves the new status (no drawer).
 
-Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
+Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The record page shows tag badges — change assignments from Edit.
 
 The project link is **soft** — it only appears when Projects is enabled, and you can only pick projects you are allowed to see (assignee, member, creator, or with `projects.assign`).
 
@@ -56,7 +56,7 @@ Users with **assign** can set or clear the assignee. The assignee always receive
 
 ## Complete & reopen
 
-Users with **complete** can mark a task completed (sets `completed_at`) or reopen it from the detail drawer.
+Users with **complete** can mark a task completed (sets `completed_at`) or reopen it from the record page.
 
 ## Comments & history
 

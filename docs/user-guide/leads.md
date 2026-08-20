@@ -1,4 +1,4 @@
-# Leads — User Guide
+﻿# Leads — User Guide
 
 ## Who can use Leads
 
@@ -15,7 +15,7 @@ Use the **help** icon in the Leads page header to walk through KPIs, filters, cr
 Open **Leads** from the sidebar. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
 
 - Search by name, email, phone, or company
-- Each stage column header and its cards use that stage’s color; Stage badges in the table and detail drawer use the same colors
+- Each stage column header and its cards use that stage’s color; Stage badges in the table and record page use the same colors
 - Filter by stage, status, priority, tag, assignee, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
 - Table and board both show **lead type**, **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
@@ -30,17 +30,17 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 3. Optionally set stage, tags, and assignee (assignee requires **assign**). Applying Follow Up Later requires a follow-up title and due date
 4. Save
 
-Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the detail drawer.
+Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the record page.
 
 ## High Priority (dashboard)
 
-With **update** permission, open a lead’s detail drawer and click **Mark High Priority** on Overview. That sets priority to **High**; click again to clear it. If you marked High from another priority in this browser tab, clear **restores that previous priority** (for example Urgent → High → Urgent). If High was set elsewhere and no restore value is known, clear falls back to **Medium**.
+With **update** permission, open a lead’s record page and click **Mark High Priority** on Overview. That sets priority to **High**; click again to clear it. If you marked High from another priority in this browser tab, clear **restores that previous priority** (for example Urgent → High → Urgent). If High was set elsewhere and no restore value is known, clear falls back to **Medium**.
 
 The Dashboard **High Priority** widget lists open-pipeline leads with priority **High** only. **Urgent is intentionally excluded** from that widget (use the Leads priority filter for Urgent). Existing Urgent open deals that previously appeared on the widget will leave the card after this change until marked High.
 
 ## Pipeline vs status vs tags
 
-- **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Drag a card on the board to move stages — the change saves immediately (no drawer). You can also change stage from the detail drawer and **Save**.
+- **Stage** — where the lead sits in the sales pipeline (New … Won / Lost). Drag a card on the board to move stages — the change saves immediately (no drawer). You can also change stage from the record page and **Save**.
 - **Status** — lifecycle state managed separately: Active, Waiting, On hold, Closed, Archived. Changing stage does **not** automatically change status.
 - **Tags** — multi-select disposition labels. Applying tags never changes stage or status. No Response schedules an auto follow-up using the tag’s day count (workspace timezone).
 - **Lead type** — Direct or Company. Saved on the lead and mirrored by the system tags Direct Lead / Company Lead (only one type tag at a time).
@@ -80,7 +80,7 @@ WhatsApp opens with the message pre-filled. EloSync does not send the message fo
 
 ## Convert
 
-Users with **convert** can convert a lead from the detail drawer. Behavior depends on which Marketplace modules are installed:
+Users with **convert** can convert a lead from the record page. Behavior depends on which Marketplace modules are installed:
 
 - **Contacts** — creates a linked Contact from lead fields (name, email, phone, job title) with lifecycle **On Boarded Clients**. Requires `contacts.create`. No separate contact form.
 - **Companies** — when the lead has a company name, creates a Company or reuses an existing one (case-insensitive name match) and links it to the Contact. Requires `companies.create` when a new company must be created.

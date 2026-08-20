@@ -1,4 +1,4 @@
-# Quotations — Developer Guide
+﻿# Quotations — Developer Guide
 
 Mirror of the [Opportunities developer guide](/developer-guide/opportunities) (assignee scope, notes, domain timeline), kept leaner: no pipeline/board, no related Contact/Company/Lead FKs beyond the required Opportunity link. Prefer copying those patterns over inventing new ones.
 
@@ -55,12 +55,12 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-quotations.md](/api/tenant-
 
 ## Frontend
 
-SPA should mirror **Opportunities** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA should mirror **Opportunities** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/quotations/` |
-| Form / detail | form dialog + detail sheet (Overview, Lines, Notes, Activity) — shared `DocumentLinesEditor`, `DocumentTotalsPanel`, `RichTextEditor` for memo notes |
+| Form / detail | create/edit page + record page (Overview, Lines, Notes, Activity) — shared `DocumentLinesEditor`, `DocumentTotalsPanel`, `RichTextEditor` for memo notes |
 | Service | `quotationService` in `src/api/services.ts` |
 | Nav | `permission: quotations.view`, `module: 'quotations'` (Sales) |
 | Playwright | `e2e/pages/quotations.page.ts`, `e2e/tests/quotations/`, `npm run test:e2e:quotations` |

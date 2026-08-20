@@ -1,4 +1,4 @@
-# Payments — User Guide
+﻿# Payments — User Guide
 
 ## Who can use Payments
 
@@ -21,11 +21,11 @@ Open **Payments** from the sidebar (**Billing**, under Invoices). Search by paym
 2. Enter the amount, currency, method (Cash, Bank Transfer, Cheque, Card (manual), Other), date paid, reference, and notes
 3. Add one or more **allocations** — pick an outstanding invoice and the amount of this payment to apply to it. The invoice picker shows **contact name · company · invoice number — balance due**, and you can search by contact name, company name, or invoice number. Choosing an invoice auto-fills **Contact**, **Company**, and **Assignee** from that invoice when those fields are set on the invoice (you can still change them). You can allocate to several invoices, or leave the payment unallocated and add allocations later while still in Draft
 4. Optionally adjust the contact, company, or assignee (Contacts/Companies when installed; assignee requires **assign**)
-5. Save
+5. Save with **Create** (returns to the list), **Create & View**, or **Post** (creates then posts when you have permission)
 
 You can also start recording a payment from an invoice's detail view — the **Related payments** link jumps you to the Payments module.
 
-Edit from the row menu or the detail sheet while the payment is still **Draft**. Editing replaces the full allocation list. After **Post**, content is locked; use **Void** and assignment instead.
+Edit from the row menu or the record page while the payment is still **Draft**. Editing replaces the full allocation list. After **Post**, content is locked; use **Void** and assignment instead.
 
 ## Status workflow
 
@@ -38,7 +38,7 @@ Invalid transitions (e.g. voiding a draft payment, or posting an already-posted 
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 

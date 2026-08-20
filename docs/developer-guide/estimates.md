@@ -1,4 +1,4 @@
-# Estimates — Developer Guide
+﻿# Estimates — Developer Guide
 
 Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (assignee scope, notes, domain timeline, hard dependency on Invoices, first-class `lines` child table), plus a **convert-to-invoice** action modeled after Quotations' status machine. Prefer copying those patterns over inventing new ones.
 
@@ -64,7 +64,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-estimates.md](/api/tenant-v
 
 ## Frontend
 
-SPA mirrors **Invoices**/**Quotations** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA mirrors **Invoices**/**Quotations** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path |
 |-------|------|

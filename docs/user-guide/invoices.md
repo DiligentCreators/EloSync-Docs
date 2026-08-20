@@ -1,4 +1,4 @@
-# Invoices — User Guide
+﻿# Invoices — User Guide
 
 ## Who can use Invoices
 
@@ -21,9 +21,9 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 2. Enter a title, optional contact/company link (when Contacts/Companies is installed), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
 3. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts. The totals panel also shows **Paid**, **Credits**, and **Balance due** on existing invoices.
 4. Optionally set an assignee (requires **assign**)
-5. Save
+5. Save with **Create** (returns to the list) or **Create & View** (opens the record). Invoices also offer **Create & Send**.
 
-Edit from the row menu or the detail sheet while the invoice is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the invoice is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
 ## Recurring invoices
 
@@ -40,7 +40,7 @@ Stopping the series does **not** void history by itself.
 
 ## Download PDF
 
-**Download PDF** is on the invoice detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding. Sending still does not email the customer.
+**Download PDF** is on the invoice record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding. Sending still does not email the customer.
 
 ## Status workflow
 
@@ -55,7 +55,7 @@ Invalid transitions (e.g. sending an already-cancelled invoice) are rejected wit
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 
@@ -65,7 +65,7 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 ## Related payments and credit notes
 
-If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice detail sheet shows a **Related payments** link to jump to the Payments module and record or review payments against this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.
+If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice record page shows a **Related payments** link to jump to the Payments module and record or review payments against this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.
 
 Converted invoices also show the source **Quotation**, **Estimate**, and/or **Contract** when those links are set.
 

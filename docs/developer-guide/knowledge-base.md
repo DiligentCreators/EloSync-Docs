@@ -40,7 +40,7 @@ Marketplace Operations module (`knowledge-base` **1.0.0**). Flat namespaces (no 
 
 ## Frontend
 
-- Pages: `src/pages/knowledge-base/`
+- Pages: `src/pages/knowledge-base/` (`knowledge-base-page.tsx`, `knowledge-base-form.tsx`, `knowledge-base-form-page.tsx`, `knowledge-base-view-page.tsx`, `knowledge-base-categories-dialog.tsx`)
 - Tour: `tourId="knowledge-base"` (`src/tours/knowledge-base.ts`)
 - Nav: `module:knowledge-base` + `knowledge-base.view`
 - Playwright: `npm run test:e2e:knowledge-base`

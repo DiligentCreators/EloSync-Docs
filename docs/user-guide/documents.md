@@ -45,7 +45,7 @@ Open a document and use **Download**, or call the download endpoint. Download re
 
 ## Edit & replace file
 
-Edit metadata (title, description, category) from the row menu or detail drawer. Optionally replace the file on update — the new size must fit remaining Storage quota (only the delta counts when the new file is larger).
+Edit metadata (title, description, category) from the row menu or the document page. Optionally replace the file on update — the new size must fit remaining Storage quota (only the delta counts when the new file is larger).
 
 ## Soft delete & restore
 

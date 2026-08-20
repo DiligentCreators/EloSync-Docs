@@ -65,7 +65,7 @@ Do **not** duplicate Sidebar/Topbar for Tenant. Parameterize via navigation conf
 
 **Page chrome**
 
-- `PageHeader`, `LoadingState`, `ErrorState`, `EmptyState`, `WidgetContainer`
+- `PageHeader`, `RecordPage`, `RecordSection`, `FormSubmitSplit` (separate Create / Create & View buttons — no dropdown; module extras like Create & Send or Post), `LoadingState`, `ErrorState`, `EmptyState`, `WidgetContainer`
 
 **Primitives**
 
@@ -80,8 +80,8 @@ Do **not** duplicate Sidebar/Topbar for Tenant. Parameterize via navigation conf
 | Route | Page |
 |-------|------|
 | `/dashboard` | Tenant dashboard (widget registry: pipeline, tasks, activity, notifications, quick actions) |
-| `/leads` | Leads Kanban/table + detail drawer |
-| `/tasks` | Tasks board/list + detail drawer |
+| `/leads` | Leads Kanban/table; create/view/edit on dedicated pages |
+| `/tasks` | Tasks board/list; create/view/edit on dedicated pages |
 | `/settings` | Workspace Settings (General / Branding / Mail) |
 | `/profile` | Shared `ProfilePage` (API context from pathname) |
 
@@ -91,8 +91,8 @@ Central remains under `/central/*` with the same shell and its own navigation gr
 
 1. Add the path to `tenantRoutes` in `src/config/routes.ts`.
 2. Add a `NavigationItem` under `tenantNavigationGroups` with `permission` **and** `module` slug.
-3. Register the route under `TenantProtectedRoute` → `AppLayout` in `App.tsx`.
-4. Ship list/form/detail UI mirroring Leads (not a long-lived `PlaceholderPage`).
+3. Register list + `/new` + `/:id` + `/:id/edit` under `TenantProtectedRoute` → `AppLayout` in `App.tsx`.
+4. Ship list/create/view/edit UI mirroring Leads (not a long-lived `PlaceholderPage`).
 
 Nav visibility is filtered by installed module subscriptions and Spatie permissions.
 

@@ -1,4 +1,4 @@
-# Credit Notes — Developer Guide
+﻿# Credit Notes — Developer Guide
 
 Mirror of the [Payments developer guide](/developer-guide/payments) (assignee scope, notes, domain timeline, hard dependency on Invoices), with a `lines` child table (subtotal/tax/total) instead of Payments' `allocations`.
 
@@ -53,7 +53,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-credit-notes.md](/api/tenan
 
 ## Frontend
 
-SPA mirrors **Invoices**/**Payments** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA mirrors **Invoices**/**Payments** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path |
 |-------|------|
@@ -67,7 +67,7 @@ SPA mirrors **Invoices**/**Payments** (table + form dialog, detail sheet) under 
 | Nav | **Billing** sidebar group, after Payments — `permission: PERMISSIONS.customerCreditNotes.view`, `module: 'credit-notes'` |
 | Route | `tenantRoutes.creditNotes = '/credit-notes'`, lazy-loaded in `App.tsx` behind `RequireAccess module="credit-notes"` |
 | Notifications | `src/notifications/modules/credit-notes.ts` — `customer_credit_note.assigned` → `/credit-notes?credit-note={id}` |
-| Cross-link | Invoice detail sheet shows a "Credit notes" link to `/credit-notes?invoice={id}` when the Credit Notes module + `credit-notes.view` are both present |
+| Cross-link | Invoice record page shows a "Credit notes" link to `/credit-notes?invoice={id}` when the Credit Notes module + `credit-notes.view` are both present |
 | Playwright | `e2e/pages/credit-notes.page.ts`, `e2e/tests/credit-notes/`, `npm run test:e2e:credit-notes` |
 
 ## Tests

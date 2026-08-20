@@ -1,4 +1,4 @@
-# Projects — Developer Guide
+﻿# Projects — Developer Guide
 
 Lean Operations module mirroring Tasks / Opportunities patterns (board, stats, assignee, notes, domain timeline) with **members**, date-only schedule fields, and soft CRM / Task links. Prefer copying those patterns over inventing new ones. Field is **`title`** (not `name`).
 
@@ -30,7 +30,7 @@ Lean Operations module mirroring Tasks / Opportunities patterns (board, stats, a
 - **Visibility** without `projects.assign` (and not superadmin): `assigned_to` OR `created_by` OR `project_members` (`Project::isVisibleTo()` / `ProjectService::applyVisibilityScope()`). With `projects.assign`, org-wide.
 - Assignee is **not** stored as a member — `normalizeMemberIds()` strips the assignee id from `member_ids`.
 - `PUT /projects/{project}/members` accepts `member_ids: []` (`present|array`) to clear all members.
-- **Assignee/member pickers:** `GET /users` excludes the authenticated user (Users admin list). The Projects form and detail sheet merge the signed-in user into picker options (same pattern as Departments) so a solo owner can assign themselves.
+- **Assignee/member pickers:** `GET /users` excludes the authenticated user (Users admin list). The Projects form and record page merge the signed-in user into picker options (same pattern as Departments) so a solo owner can assign themselves.
 - `starts_on` / `ends_on` are `date` casts. Overdue = open status + non-null `ends_on` + `ends_on` **before** workspace “today” (`TenantSettingService::applyRuntimeConfig` so `now()->toDateString()` is workspace TZ).
 - Soft Task link: nullable `tasks.project_id` FK → `projects` (`nullOnDelete`). Validated by `LinkableProject` (Projects entitled + project visible to actor). Catalog bump Tasks **1.2.0**.
 - `projects.force.delete` is not granted to any default role — owner/superadmin only.
@@ -68,12 +68,12 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-projects.md](/api/tenant-v1
 
 ## Frontend
 
-SPA should mirror **Tasks** (board default + list, form dialog, detail sheet) under AppLayout — do not invent a parallel shell. Nav: **Workspace** after Tasks.
+SPA should mirror **Tasks** (board default + list, create/edit page, record page) under AppLayout — do not invent a parallel shell. Nav: **Workspace** after Tasks.
 
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/projects/` (board + list) |
-| Form / detail | form dialog + detail sheet (overview, members, notes, timeline) |
+| Form / detail | create/edit page + record page (overview, members, notes, timeline) |
 | Service | `projectService` in `src/api/services.ts` |
 | Types | `Project*` in `src/types/api.ts`; Task gains optional `project_id` / `project` |
 | Query keys | `QUERY_KEYS.projects` / `project(id)` / `projectTimeline(id)` / `projectStats` / `projectBoard` |

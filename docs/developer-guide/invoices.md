@@ -1,4 +1,4 @@
-# Invoices — Developer Guide
+﻿# Invoices — Developer Guide
 
 Mirror of the [Quotations developer guide](/developer-guide/quotations) (assignee scope, notes, domain timeline, line items), kept module-standalone: **no required FK / hard dependency**, unlike Quotations/Contracts which require Opportunities.
 
@@ -61,7 +61,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-invoices.md](/api/tenant-v1
 
 ## Frontend
 
-SPA mirrors **Quotations** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA mirrors **Quotations** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path |
 |-------|------|
