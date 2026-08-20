@@ -41,7 +41,7 @@ Every business capability on this platform is a **module**. Modules are licensed
 A module is complete only when:
 
 - [ ] Backend implementation complete (models, migrations, services, controllers, requests, resources, policies, events, notifications)
-- [ ] Frontend complete (pages, forms, tables, filters, dialogs/drawers, loading/empty/error states)
+- [ ] Frontend complete (list + dedicated create/view/edit pages, forms, tables, filters, loading/empty/error states; dialogs only for secondary flows)
 - [ ] Module list `PageHeader` wires `tourId` with steps under `src/tours/{slug}.ts` ([Module Tours](/developer-guide/module-tours))
 - [ ] Permissions enforced (Spatie + UI gates)
 - [ ] Module licensing enforced (`module:` middleware + SPA nav)

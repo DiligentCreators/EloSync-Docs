@@ -1,4 +1,4 @@
-# Contacts Module
+﻿# Contacts Module
 
 Third product module on the frozen platform. Mirrors the [Leads](/user-guide/leads-overview) / [Tasks](/user-guide/tasks-overview) reference architecture — a workspace directory of people, with assignment, notes, and an activity timeline. Organizations are first-class in [Companies](/user-guide/companies-overview); contacts may link via `company_id`.
 
@@ -34,7 +34,7 @@ Enable Contacts from Marketplace (free). Only Leads and Tasks install automatica
 
 ## Lead conversion
 
-When both **Leads** and **Contacts** are installed, converting a lead creates (or links) a real Contact (default lifecycle **On Boarded Clients**) and stores `contact_id` on the lead. The Lead detail drawer shows a **View contact** link after conversion. Without Contacts installed, conversion remains the earlier status-only placeholder.
+When both **Leads** and **Contacts** are installed, converting a lead creates (or links) a real Contact (default lifecycle **On Boarded Clients**) and stores `contact_id` on the lead. The Lead record page shows a **View contact** link after conversion. Without Contacts installed, conversion remains the earlier status-only placeholder.
 
 ## Company link
 

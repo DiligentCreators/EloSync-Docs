@@ -23,11 +23,11 @@ Open **Vendors** from the sidebar, under the **Purchasing** group.
 2. Enter name (required) and optional email, phone, website, address, tax ID, payment terms, currency, status, and assignee
 3. Save
 
-Edit from the row menu or the detail drawer.
+Edit from the row menu or the vendor record page.
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail drawer or the create/edit form.
+Users with **assign** can set or clear the assignee from the vendor record page or the create/edit form.
 
 ## Notes & activity
 

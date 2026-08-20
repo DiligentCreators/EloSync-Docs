@@ -1,4 +1,4 @@
-# Expenses — User Guide
+﻿# Expenses — User Guide
 
 ## Who can use Expenses
 
@@ -24,7 +24,7 @@ Use **Manage categories** (visible with `expenses.create`, `expenses.update`, or
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the detail sheet while the expense is still **Draft**. After **Submit**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the expense is still **Draft**. After **Submit**, content is locked; use status actions and assignment instead.
 
 ## Status workflow
 
@@ -44,7 +44,7 @@ Both links are **soft** — they only appear in the create/edit form when the co
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & timeline
 

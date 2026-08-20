@@ -1,4 +1,4 @@
-# Opportunities — User Guide
+﻿# Opportunities — User Guide
 
 ## Who can use Opportunities
 
@@ -11,7 +11,7 @@ Without **assign**, you only see opportunities assigned to you.
 Open **Opportunities** from the sidebar (Sales). The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
 
 - Search by deal name
-- Each stage column header and its cards use that stage’s color; Stage badges in the table and detail drawer use the same colors
+- Each stage column header and its cards use that stage’s color; Stage badges in the table and record page use the same colors
 - Filter by stage, assignee, **tag**, related Contact / Company / Lead, or toggle **My Opportunities**
 - KPI cards summarize totals, open / won / lost, pipeline value, weighted pipeline, won value, and conversion rate for your scope
 - Table and board show **tags** and the **latest note**; hover a truncated preview to read the full note
@@ -27,9 +27,9 @@ Open **Opportunities** from the sidebar (Sales). The default view is the **Kanba
 5. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
 6. Save
 
-Edit from the row menu or the detail drawer.
+Edit from the row menu or the record page.
 
-Tags are an **Opportunities-only** catalog (separate from Leads disposition tags and Tasks / ToDos tags). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The detail drawer shows tag badges — change assignments from Edit.
+Tags are an **Opportunities-only** catalog (separate from Leads disposition tags and Tasks / ToDos tags). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The record page shows tag badges — change assignments from Edit.
 
 ## Sales pipeline (stages)
 
@@ -42,7 +42,7 @@ Seeded stages: **Prospecting** (default) → **Qualification** → **Proposal** 
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail drawer or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 

@@ -63,8 +63,8 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/vendors/vendors-page.tsx` (table + filters + KPIs) |
-| Form | `vendor-form-dialog.tsx` |
-| Detail | `vendor-detail-sheet.tsx` (Overview, Notes, Activity tabs) |
+| Form | `vendor-form.tsx` + `vendor-form-page.tsx` |
+| Detail | `vendor-view-page.tsx` (Details, Notes, Timeline sections) |
 | Service | `vendorService` in `src/api/services.ts` |
 | Nav | `permission: vendors.view`, `module: 'vendors'` — new **Purchasing** group after Billing |
 

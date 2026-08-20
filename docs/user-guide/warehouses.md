@@ -19,7 +19,7 @@ Only active warehouses can be used for stock posting. Review existing stock befo
 
 ## Notes and activity
 
-The detail sheet provides notes and an activity timeline for create, update, note, delete, and restore actions.
+The warehouse page provides notes and an activity timeline for create, update, note, delete, and restore actions.
 
 ## Delete and restore
 

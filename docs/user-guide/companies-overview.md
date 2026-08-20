@@ -1,4 +1,4 @@
-# Companies Module
+﻿# Companies Module
 
 CRM organizations module on the frozen platform. Mirrors the [Contacts](/user-guide/contacts-overview) / [Leads](/user-guide/leads-overview) reference architecture — a workspace directory of companies (organizations), with assignment, notes, and an activity timeline. Contacts can link to a Company via `company_id`.
 
@@ -19,7 +19,7 @@ CRM organizations module on the frozen platform. Mirrors the [Contacts](/user-gu
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `companies.assign`
 - Notes (comments) + activity timeline
 - Table view with search, industry filter, and **My Companies** toggle
-- Linked contacts shown on the company detail drawer
+- Linked contacts shown on the company record page
 - KPIs via `GET /companies/stats`
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:companies`) + Spatie permissions — **free Marketplace opt-in**

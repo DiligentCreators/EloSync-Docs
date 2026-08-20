@@ -69,8 +69,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-assets.md](/api/tenant-v1-a
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/assets/assets-page.tsx` |
-| Form | `asset-form-dialog.tsx` |
-| Detail | `asset-detail-sheet.tsx` |
+| Form | `asset-form.tsx`, `asset-form-page.tsx` |
+| View | `asset-view-page.tsx` |
 | Service | `assetService` in `src/api/services.ts` |
 | Nav | `permission: assets.view`, `module: 'assets'` |
 

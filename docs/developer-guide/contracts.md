@@ -1,4 +1,4 @@
-# Contracts — Developer Guide
+﻿# Contracts — Developer Guide
 
 Mirror of the [Opportunities developer guide](/developer-guide/opportunities) and [Quotations developer guide](/developer-guide/quotations) (assignee scope, notes, domain timeline), kept lean: no line items, no pipeline/board — a contract is a single agreement record. Prefer copying those patterns over inventing new ones.
 
@@ -49,12 +49,12 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-contracts.md](/api/tenant-v
 
 ## Frontend
 
-SPA should mirror **Opportunities** / **Quotations** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell. Create form: selecting an opportunity auto-fills party, value, currency, and title (when empty); assignee is copied only when that user appears in the eligible picker (`filterLeadAssigneeOptions` — owners/suspended/excluded are omitted). Quotation auto-links only when that opportunity has exactly one quotation. Description and notes use the shared TipTap `RichTextEditor`. Store allows the creating actor to pass `assigned_to` as themselves; otherwise `EligibleOpportunityAssignee` applies. Service still defaults `assigned_to` to the actor when the field is null.
+SPA should mirror **Opportunities** / **Quotations** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell. Create form: selecting an opportunity auto-fills party, value, currency, and title (when empty); assignee is copied only when that user appears in the eligible picker (`filterLeadAssigneeOptions` — owners/suspended/excluded are omitted). Quotation auto-links only when that opportunity has exactly one quotation. Description and notes use the shared TipTap `RichTextEditor`. Store allows the creating actor to pass `assigned_to` as themselves; otherwise `EligibleOpportunityAssignee` applies. Service still defaults `assigned_to` to the actor when the field is null.
 
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/contracts/` |
-| Form / detail | form dialog + detail sheet (Overview, Notes, Activity) |
+| Form / detail | create/edit page + record page (Overview, Notes, Activity) |
 | Service | `contractService` in `src/api/services.ts` |
 | Nav | `permission: contracts.view`, `module: 'contracts'` (Sales) |
 | Playwright | `e2e/pages/contracts.page.ts`, `e2e/tests/contracts/`, `npm run test:e2e:contracts` |

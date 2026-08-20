@@ -1,4 +1,4 @@
-# Expenses — Developer Guide
+﻿# Expenses — Developer Guide
 
 Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Estimates](/developer-guide/estimates) (numbering, status machine, assignee scoping, notes, domain timeline) — no line-item child table (single `amount` + `tax_amount` MVP), and **no** hard module dependencies. `vendor_id` and `purchase_order_id` are both nullable soft links, validated only when the corresponding module is entitled.
 
@@ -64,7 +64,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-expenses.md](/api/tenant-v1
 
 ## Frontend
 
-SPA mirrors **Purchase Orders** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA mirrors **Purchase Orders** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path |
 |-------|------|
@@ -78,7 +78,7 @@ SPA mirrors **Purchase Orders** (table + form dialog, detail sheet) under the ex
 | Nav | **Purchasing** sidebar group, after Purchase Orders — `permission: PERMISSIONS.expenses.view`, `module: 'expenses'` |
 | Route | `tenantRoutes.expenses = '/expenses'`, lazy-loaded in `App.tsx` behind `RequireAccess module="expenses"` |
 | Notifications | `src/notifications/modules/expenses.ts` — `expense.assigned` → `/expenses?expense={id}` |
-| PO detail sheet | `purchase-order-detail-sheet.tsx` renders a **Convert to expense** button when `hasModule('expenses') && hasPermission('purchase-orders.convert')` and the PO status is convertible and not already converted; shows a link to the created expense afterward |
+| PO record page | `purchase-order-detail-sheet.tsx` renders a **Convert to expense** button when `hasModule('expenses') && hasPermission('purchase-orders.convert')` and the PO status is convertible and not already converted; shows a link to the created expense afterward |
 | Playwright | `e2e/pages/expenses.page.ts`, `e2e/tests/expenses/`, `npm run test:e2e:expenses` |
 
 ## Tests

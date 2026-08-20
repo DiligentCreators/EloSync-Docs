@@ -1,4 +1,4 @@
-# Purchase Orders — Developer Guide
+﻿# Purchase Orders — Developer Guide
 
 Mirror of the [Estimates developer guide](/developer-guide/estimates) (assignee scope, notes, domain timeline, hard module dependency, first-class `lines` child table, status machine) and the optional related-record pickers — swapped for a single **required** `vendor_id`. A **soft** convert-to-expense action was added in Phase 4 Milestone 3 (see [Expenses developer guide](/developer-guide/expenses)). Prefer copying those patterns over inventing new ones.
 
@@ -56,7 +56,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-purchase-orders.md](/api/te
 
 ## Frontend
 
-SPA mirrors **Estimates** (table + form dialog, detail sheet) under the existing AppLayout — do not invent a parallel shell.
+SPA mirrors **Estimates** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell.
 
 | Piece | Path |
 |-------|------|

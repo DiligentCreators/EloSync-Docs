@@ -69,7 +69,7 @@ Digest delivery tracking reuses `DailySummaryDelivery` with `kind = department_w
 
 ## Frontend
 
-- Page: `src/pages/departments/` (list, form dialog, detail sheet with Overview / Members / Performance)
+- Page: `src/pages/departments/` (list, dedicated create/edit form pages, record view with Details / Users / Employees / Performance sections)
 - Reports page: `src/pages/reports/department-reports-page.tsx` at `/reports/departments`
 - Service / keys / permissions: `departmentService`, `departmentReportService`, `QUERY_KEYS.departments*`, `QUERY_KEYS.departmentPerformanceReport`, `PERMISSIONS.dashboard.view` + owner/manager gate
 - Nav group **HR**, dual-gated `module: departments` + owner/manager (`requiresDepartmentReportAccess`)

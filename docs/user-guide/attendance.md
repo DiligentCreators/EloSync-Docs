@@ -21,7 +21,7 @@ When a workspace user who is linked to an **active** employee signs in, the syst
 - The browser may also send **GPS coordinates** (if the user allows location access); denied/unavailable location still allows login
 - Later logins the same day do not change check-in
 - Check-out remains manual on the Attendance page (IP/coordinates can be stored when provided)
-- On the attendance detail sheet, stored coordinates open in **Google Maps** via a standard maps URL (no Google API integration)
+- On the attendance record page, stored coordinates open in **Google Maps** via a standard maps URL (no Google API integration)
 
 Users without a linked employee are skipped. If Attendance is not installed, login is unchanged.
 
@@ -52,7 +52,7 @@ Managers and admins can:
 4. Choose status: Present, Absent, Half day, Remote, or Late.
 5. Add notes if needed.
 
-Status badges use fixed colors so presence is easy to scan: **Present** (green), **Late** (red), **Absent** (slate), **Half day** (amber), **Remote** (blue). The same colors appear in the list table and the detail sheet.
+Status badges use fixed colors so presence is easy to scan: **Present** (green), **Late** (red), **Absent** (slate), **Half day** (amber), **Remote** (blue). The same colors appear in the list table and the record page.
 
 ## List & stats
 

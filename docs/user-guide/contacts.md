@@ -1,4 +1,4 @@
-# Contacts — User Guide
+﻿# Contacts — User Guide
 
 ## Who can use Contacts
 
@@ -25,11 +25,11 @@ Open **Contacts** from the sidebar.
 3. Optionally pick a **Company** (when the Companies module is installed and you can view companies). Selecting a Company links `company_id` and syncs the legacy company text to that organization name. Leaving the picker empty keeps any existing free-text company value on edit; clearing a previously linked Company removes the link
 4. Save
 
-Edit from the row menu or the detail drawer.
+Edit from the row menu or the record page.
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail drawer or the create/edit form.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form.
 
 ## Notes & activity
 
@@ -38,4 +38,4 @@ Users with **assign** can set or clear the assignee from the detail drawer or th
 
 ## Converting a Lead to a Contact
 
-When your workspace has both **Leads** and **Contacts** installed, converting a Lead (from the Lead detail drawer) creates a linked Contact with lifecycle **On Boarded Clients**. If **Companies** is also installed and the lead has a company name, convert creates or reuses that Company and links it on the Contact. You can optionally create an **Opportunity** in the same step when Opportunities is installed. After conversion, the Lead detail drawer shows **View contact** (and company / opportunity links when applicable).
+When your workspace has both **Leads** and **Contacts** installed, converting a Lead (from the Lead record page) creates a linked Contact with lifecycle **On Boarded Clients**. If **Companies** is also installed and the lead has a company name, convert creates or reuses that Company and links it on the Contact. You can optionally create an **Opportunity** in the same step when Opportunities is installed. After conversion, the Lead record page shows **View contact** (and company / opportunity links when applicable).

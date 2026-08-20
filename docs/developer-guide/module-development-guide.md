@@ -134,8 +134,10 @@ Paid modules: catalog `is_billable`, marketplace install, `ModuleSubscriptionSer
 
 ## Frontend checklist
 
-- Pages, forms, tables, filters, dialogs/drawers
-- Shared design system (`PageHeader`, `DataTable`, `PermissionGate`, empty/error/loading states)
+- Pages, forms, tables, filters, dedicated create/view/edit record pages (no overlay tabs)
+- Shared design system (`PageHeader`, `RecordPage`, `RecordSection`, `FormSubmitSplit` — separate Create / Create & View buttons, no dropdown — `DataTable`, `PermissionGate`, empty/error/loading states)
+- Dialogs only for secondary flows (confirm, import, tags/categories)
+- Old list deep links (`?entity=`) redirect to `/{slug}/:id`; list **filters** such as `/payments?invoice=` stay on the list
 - Nav + breadcrumbs respect **installed modules** and **user permissions**
 - Auth payload includes active module slugs for SPA gating
 - Module list shortcuts via `useModuleShortcuts`: bare `n` (create, permission-gated; Chromium blocks `Ctrl/⌘N`) and `mod+f` (focus module `SearchInput` with `ref` + `shortcutHint`). Do **not** bind create/search on the app shell — keep them route-scoped like Leads.

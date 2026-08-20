@@ -95,7 +95,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-documents.md](/api/tenant-v
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/documents/documents-page.tsx` |
-| Form | `document-form-dialog.tsx` |
+| Form | `document-form.tsx`, `document-form-page.tsx` |
+| View | `document-view-page.tsx` |
 | Service | `documentService` / `documentCategoryService` in `src/api/services.ts` |
 | Nav | `permission: documents.view`, `module: 'documents'` |
 

@@ -1,4 +1,4 @@
-# Help Desk — Developer Guide
+﻿# Help Desk — Developer Guide
 
 Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-guide/tasks) (numbering, status machine, assignee scoping, notes, domain timeline) — **no** hard module dependencies. `contact_id` and `company_id` are both nullable soft links, validated only when the corresponding module is entitled.
 
@@ -51,13 +51,13 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-help-desk.md](/api/tenant-v
 
 ## Frontend
 
-SPA mirrors **Expenses** (table + form dialog, detail sheet) under AppLayout.
+SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page or record page) under AppLayout.
 
 | Piece | Path |
 |-------|------|
-| Page | `src/pages/help-desk/` (`help-desk-page.tsx`, `help-desk-form-dialog.tsx`, `help-desk-detail-sheet.tsx`, `help-desk-categories-dialog.tsx`) |
-| Detail sheet | Overview (category, priority, status, due date, assignee, related contact/company), notes, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
-| Form dialog | Subject, description, category picker, priority, due date, and **conditional** contact / company pickers when `hasModule('contacts')` / `hasModule('companies')` |
+| Page | `src/pages/help-desk/` (`help-desk-page.tsx`, `help-desk-form.tsx`, `help-desk-form-page.tsx`, `help-desk-view-page.tsx`, `help-desk-categories-dialog.tsx`) |
+| View page | Details (category, priority, status, due date, assignee, related contact/company), notes, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
+| Form page | Subject, description, category picker, priority, due date, and **conditional** contact / company pickers when `hasModule('contacts')` / `hasModule('companies')` |
 | Service | `helpDeskService` + `helpDeskCategoryService` in `src/api/services.ts` |
 | Types | `HelpDesk*` in `src/types/api.ts` |
 | Query keys | `QUERY_KEYS.helpDesk` / `helpDeskTicket(id)` / `helpDeskTimeline(id)` / `helpDeskStats` / `helpDeskCategories` |
@@ -65,7 +65,7 @@ SPA mirrors **Expenses** (table + form dialog, detail sheet) under AppLayout.
 | Nav | **Operations** sidebar group — `permission: PERMISSIONS.helpDesk.view`, `module: 'help-desk'` |
 | Route | `tenantRoutes.helpDesk = '/help-desk'`, lazy-loaded in `App.tsx` behind `RequireAccess module="help-desk"` |
 | Dashboard | `tenant-dashboard-widgets.tsx` — `help_desk_my_open` widget |
-| Notifications | `src/notifications/modules/help-desk.ts` — `help_desk.assigned`, `help_desk.closed`, `help_desk.reopened` |
+| Notifications | `src/notifications/modules/help-desk.ts` — `help_desk.assigned`, `help_desk.closed`, `help_desk.reopened` (deep link `/help-desk/:id`) |
 | Playwright | `e2e/pages/help-desk.page.ts`, `e2e/tests/help-desk/`, `npm run test:e2e:help-desk` |
 
 ## Tests

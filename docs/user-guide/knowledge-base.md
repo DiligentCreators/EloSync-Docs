@@ -43,7 +43,7 @@ On the articles list, search matches title, excerpt, and body. Editors with upda
 
 ## Notes and activity
 
-Open an article detail sheet to:
+Open an article to:
 
 - Add **notes** (requires `knowledge-base.update`)
 - Review the **activity** timeline (created, updated, status changed, note, deleted, restored)

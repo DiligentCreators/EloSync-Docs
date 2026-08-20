@@ -1,4 +1,4 @@
-# Estimates — User Guide
+﻿# Estimates — User Guide
 
 ## Who can use Estimates
 
@@ -23,7 +23,7 @@ Open **Estimates** from the sidebar (**Billing**, after Credit Notes). Search by
 6. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts.
 7. Save
 
-Edit from the row menu or the detail sheet while the estimate is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the estimate is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
 ## Status workflow
 
@@ -36,21 +36,21 @@ Invalid transitions (e.g. accepting directly from Draft) are rejected with a val
 
 ## Download PDF
 
-**Download PDF** is on the estimate detail sheet and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Sending still does not email the customer.
+**Download PDF** is on the estimate record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Sending still does not email the customer.
 
 ## Convert to invoice
 
-Once an estimate is **Sent** or **Accepted**, use **Convert to invoice** from the detail sheet or row menu:
+Once an estimate is **Sent** or **Accepted**, use **Convert to invoice** from the record page or row menu:
 
 - Creates a new **draft** invoice with the same title, notes, terms & conditions, currency, `line_discount_type`, contact/company, quotation link, assignee, and a copy of every line item (name, body, discounts)
 - Marks the estimate **Accepted** automatically if it wasn't already
-- The estimate detail sheet then shows a link to the **converted invoice**
+- The estimate record page then shows a link to the **converted invoice**
 - An estimate can only be converted **once** — the action is hidden once a converted invoice already exists
 - Convert is also blocked if the estimate’s linked quotation already has an invoice (from converting that quote, another estimate, or billing a contract that copied the quotation). Use a new estimate or invoice from scratch if you still need another bill
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 
@@ -60,7 +60,7 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 ## Related records
 
-Every estimate detail sheet shows its linked **Contact**, **Company**, **Opportunity**, **Quotation**, and — once converted — the resulting **Invoice**, each with a link to jump straight to that record's detail view.
+Every estimate record page shows its linked **Contact**, **Company**, **Opportunity**, **Quotation**, and — once converted — the resulting **Invoice**, each with a link to jump straight to that record's detail view.
 
 ## What's not here yet
 

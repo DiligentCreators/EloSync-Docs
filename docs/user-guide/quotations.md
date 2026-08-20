@@ -1,4 +1,4 @@
-# Quotations — User Guide
+﻿# Quotations — User Guide
 
 ## Who can use Quotations
 
@@ -22,7 +22,7 @@ Open **Quotations** from the sidebar (Sales). Search by title, filter by status,
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the detail drawer while the quotation is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the quotation is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
 ## Status workflow
 
@@ -35,21 +35,21 @@ Invalid transitions (e.g. accepting directly from Draft) are rejected with a val
 
 ## Convert to invoice
 
-Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use **Convert to invoice** from the detail sheet or row menu (`quotations.convert`):
+Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use **Convert to invoice** from the record page or row menu (`quotations.convert`):
 
 - Creates a new **draft** invoice with the same title, notes, terms & conditions, currency, line discounts, contact/company, assignee, and a copy of every line item
 - Marks the quotation **Accepted** automatically if it wasn't already
-- The quotation detail sheet then shows a link to the **converted invoice**
+- The quotation record page then shows a link to the **converted invoice**
 - A quotation can only be converted **once** — the action is hidden once any invoice already has this quotation linked (including invoices created from a linked estimate or contract)
 - Without Invoices installed, the action is hidden; the API returns a validation error if called directly
 
 ## Download PDF
 
-**Download PDF** is on the quotation detail drawer and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Sending still does not email the customer.
+**Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Sending still does not email the customer.
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail drawer or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 

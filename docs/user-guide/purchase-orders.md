@@ -1,4 +1,4 @@
-# Purchase Orders — User Guide
+﻿# Purchase Orders — User Guide
 
 ## Who can use Purchase Orders
 
@@ -22,7 +22,7 @@ Open **Purchase Orders** from the sidebar, under the **Purchasing** group (next 
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the detail sheet while the purchase order is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the purchase order is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
 
 ## Status workflow
 
@@ -39,7 +39,7 @@ Invalid transitions (e.g. receiving directly from Draft) are rejected with a val
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 

@@ -23,11 +23,11 @@ Open **Assets** from the sidebar (Operations area).
 2. Enter name (required). Optionally set status, category, manufacturer, model, serial number, location, purchase details, warranty end, assignee, and — when those modules are installed — vendor or employee custodian
 3. Save — EloSync assigns the next asset number (`AST-00001`, …)
 
-Edit from the row menu or the detail drawer. Focus search with `Ctrl/⌘+F`.
+Edit from the row menu or the asset page. Focus search with `Ctrl/⌘+F`.
 
 ## Assignment
 
-Users with **assign** can set or clear the workspace assignee from the detail drawer or the create/edit form.
+Users with **assign** can set or clear the workspace assignee from the asset page or the create/edit form.
 
 Assignees must be **eligible custodians**: active non-owner users who are not flagged **Exclude from lead assignment**. Workspace owners can still hold assets when they create them (default assignee = creator), but you cannot re-assign an asset *to* the owner through the assign picker. Clear assignee with **Unassigned**.
 

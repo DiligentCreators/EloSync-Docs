@@ -31,7 +31,7 @@ When Help Desk is installed and you have `help-desk.view`, the dashboard may sho
 6. Optionally set an assignee (requires **assign**); otherwise the ticket defaults to you
 7. Save
 
-Edit from the row menu or the detail sheet while the ticket is not **Closed**. Closed tickets must be **Reopened** before content edits.
+Edit from the row menu or the ticket page while the ticket is not **Closed**. Closed tickets must be **Reopened** before content edits.
 
 ## Status workflow
 
@@ -51,7 +51,7 @@ Both links are **soft** — they only appear in the create/edit form when the co
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the ticket page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & timeline
 

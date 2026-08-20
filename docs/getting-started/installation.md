@@ -148,13 +148,20 @@ After seeding:
 
 Also seeded: `tester@saas.com`, `developer@saas.com`, `admin@saas.com` (same password).
 
-### 1.6 Optional CRM demo data
+On local Vite (`npm run dev`), `/central/login` prefills these credentials.
 
-```bash
-php artisan local:seed-demo
-```
+### 1.6 Demo workspace (local seed)
 
-See [Local Demo Data](./local-demo-data). Aborts when `APP_ENV=production`.
+When `APP_ENV=local`, `php artisan migrate:fresh --seed` also runs `local:seed-demo` and creates the shared demo tenant:
+
+| Field | Value |
+|-------|-------|
+| Tenant URL | `http://localhost:5173/login` |
+| Domain | `demo-crm.localhost` |
+| Email | `demo@demo.com` |
+| Password | `password` |
+
+`/login` prefills these credentials in local Vite. Re-seed or enlarge data anytime with `php artisan local:seed-demo` — see [Local Demo Data](./local-demo-data). Aborts when `APP_ENV=production`.
 
 ---
 
@@ -203,9 +210,11 @@ Open the URL Vite prints (default `http://localhost:5173`).
 
 ```bash
 cp .env.e2e.example .env.e2e
-# Align E2E_API_URL / E2E_ADMIN_* with your backend seed
+# Align E2E_API_URL / E2E_ADMIN_* / E2E_DEMO_* with your backend seed
 npm run test:e2e
 ```
+
+Tenant Playwright suites sign in to the shared demo workspace (`demo@demo.com` / `demo-crm.localhost`) created by local `migrate:fresh --seed`. Registration-only specs still create disposable workspaces.
 
 ---
 
@@ -402,6 +411,7 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 
 - [ ] `GET http://saas-backend.test/up` returns 200
 - [ ] Central login works with `superadmin@saas.com` / `password`
+- [ ] Tenant login works with `demo@demo.com` / `password` (local demo workspace)
 - [ ] SPA calls API (`VITE_API_URL` matches Herd host; no CORS errors)
 - [ ] Password-reset mail appears in log / Mailpit when requested
 - [ ] Queue worker processes a test mail / notification job

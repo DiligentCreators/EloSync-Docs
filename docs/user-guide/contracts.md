@@ -1,4 +1,4 @@
-# Contracts — User Guide
+﻿# Contracts — User Guide
 
 ## Who can use Contracts
 
@@ -22,7 +22,7 @@ Open **Contracts** from the sidebar (Sales). Search by title, filter by status, 
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the detail drawer while the contract is still **Draft**. After **Activate**, content fields are locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the contract is still **Draft**. After **Activate**, content fields are locked; use status actions and assignment instead.
 
 ## Status workflow
 
@@ -35,7 +35,7 @@ Invalid transitions (e.g. expiring directly from Draft) are rejected with a vali
 
 ## Create invoice
 
-Once a contract is **Active** and **Invoices** is installed, use **Create invoice** from the detail sheet or row menu (`contracts.convert`):
+Once a contract is **Active** and **Invoices** is installed, use **Create invoice** from the record page or row menu (`contracts.convert`):
 
 - Creates a new **draft** invoice. Line items come from the linked quotation when it has lines; otherwise a single line uses the contract **value**
 - The invoice is linked via `contract_id` (and `quotation_id` when a quotation is linked)
@@ -45,7 +45,7 @@ Once a contract is **Active** and **Invoices** is installed, use **Create invoic
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail drawer or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 

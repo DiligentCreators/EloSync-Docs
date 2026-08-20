@@ -21,7 +21,7 @@ Open **Employees** from the sidebar, under the **HR** group.
 
 When the **Departments** module is installed, the free-text Department field is replaced by a multi-select of departments (synced via `department_ids`).
 
-Edit from the row menu or the detail drawer.
+Edit from the row menu or the employee record page.
 
 ## Convert from Users
 

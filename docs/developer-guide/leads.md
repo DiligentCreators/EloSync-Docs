@@ -1,4 +1,4 @@
-# Leads — Developer Guide
+﻿# Leads — Developer Guide
 
 Reference implementation. Copy this layout for Tasks and later modules.
 
@@ -110,12 +110,12 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/leads/leads-page.tsx` (board default + table) |
-| Form | `lead-form-dialog.tsx` |
-| Detail | `lead-detail-sheet.tsx` (Notes use `MentionComposer`; board DnD auto-saves stage on the list page) |
+| Form | `lead-form.tsx` + `lead-form-page.tsx` (`/leads/new`, `/leads/:id/edit`) |
+| Detail | `lead-view-page.tsx` (`/leads/:id`) — stacked cards (Details / Comments / Activity); board DnD auto-saves stage on the list page |
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |
-| Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in detail sheets + `latest-note-follow-up.tsx` list/board previews) |
+| Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`, `lead.inactive`, `lead.inactive_escalation`) |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |

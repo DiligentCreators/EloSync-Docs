@@ -1,4 +1,4 @@
-# Credit Notes — User Guide
+﻿# Credit Notes — User Guide
 
 ## Who can use Credit Notes
 
@@ -27,7 +27,7 @@ Open **Credit Notes** from the sidebar (**Billing**, after Payments). Search by 
 
 You can also jump to Credit Notes from an invoice's detail view — the **Credit notes** link filters the table to credit notes issued against that invoice.
 
-Edit from the row menu or the detail sheet while the credit note is still **Draft**. Editing replaces the full line-item list. After **Issue**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the credit note is still **Draft**. Editing replaces the full line-item list. After **Issue**, content is locked; use status actions and assignment instead.
 
 ## Status workflow
 
@@ -41,7 +41,7 @@ Invalid transitions (e.g. applying a draft credit note, or voiding an applied on
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee from the detail sheet or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
+Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
 ## Notes & activity
 
@@ -50,7 +50,7 @@ Users with **assign** can set or clear the assignee from the detail sheet or the
 
 ## Related invoice
 
-Every credit note detail sheet shows the **Invoice** it was issued against, with a link to jump straight to that invoice's detail view.
+Every credit note record page shows the **Invoice** it was issued against, with a link to jump straight to that invoice's detail view.
 
 ## What's not here yet
 
