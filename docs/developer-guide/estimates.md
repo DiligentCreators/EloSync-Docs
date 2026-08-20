@@ -42,7 +42,7 @@ Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (ass
   7. Returns the created `CustomerInvoice` (loaded with its own relations) — the controller renders it via `CustomerInvoiceResource`, not an Estimate resource.
 - Lines are a first-class child table (`estimate_lines`), not embedded JSON — each row is `{ product_id?, name, body?, quantity, unit_price, tax_rate, sort_order, discount_value }`. Parent stores shared `line_discount_type`. `subtotal`/`discount_total`/`tax_total`/`total` are recomputed server-side via `DocumentTotalsCalculator` on create/update. Tax is calculated after line discounts.
 - Shared line discounts use `DocumentDiscountTypeEnum` with validation in `DocumentDiscountRules`. Lines support optional `product_id` via `LinkableProduct` (Products entitled, `products.view` or superadmin, active non-trashed product). Memo `notes` / terms / bodies accept sanitized HTML via `DocumentHtmlSanitizer`.
-- PDF: `GET …/pdf` (`estimates.view`, assignee-scoped, `throttle:estimates-pdf`) renders from `resources/views/estimates/pdf.blade.php` via `EstimatePdfService` — same branded layout as invoices.
+- PDF: `GET …/pdf` (`estimates.view`, assignee-scoped, `throttle:estimates-pdf`) renders from `resources/views/estimates/pdf.blade.php` via `EstimatePdfService` — same branded layout as invoices. Totals are right-aligned; Notes / Terms are full-width blocks below so Dompdf paginates long HTML.
 - Assignee scoping via `ScopesToAssignee` with `estimates.assign`.
 - `estimates.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`). `opportunity_id` / `quotation_id` are optional, tenant-scoped `exists()` checks (a quotation belongs to an opportunity, but the estimate doesn't enforce that the two match).
@@ -56,7 +56,7 @@ estimates.view | create | update | delete | restore | force.delete | assign | se
 
 Routes use `module:estimates` then `can:estimates.*` / policies.
 
-Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.3.3**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced; 1.3.3 adds soft Invoices entitlement check, `lockForUpdate`, unique `estimate_id`, and soft-delete recovery messaging.
+Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.4.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced; 1.3.3 adds soft Invoices entitlement check, `lockForUpdate`, unique `estimate_id`, and soft-delete recovery messaging; 1.4.0 dedicated record pages; 1.4.1 PDF long-notes pagination.
 
 ## API (tenant)
 

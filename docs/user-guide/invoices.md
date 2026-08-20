@@ -40,7 +40,7 @@ Stopping the series does **not** void history by itself.
 
 ## Download PDF
 
-**Download PDF** is on the invoice record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding. Sending still does not email the customer.
+**Download PDF** is on the invoice record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. Long notes and terms continue across as many pages as needed. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding. Sending still does not email the customer.
 
 ## Status workflow
 
