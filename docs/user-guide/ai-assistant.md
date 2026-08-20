@@ -6,7 +6,7 @@ Your workspace must have the **AI Assistant** module installed from the Marketpl
 
 - **`ai.use`** — chat, Lead Copilot, credit balance
 - **`ai.confirm`** — approve tasks or other suggested writes
-- **`ai.manage`** — configure workspace AI settings (optional)
+- **`ai.manage`** — configure workspace AI settings (Settings → AI tab and AI settings API)
 
 Without the module, AI menu items and API routes are hidden.
 

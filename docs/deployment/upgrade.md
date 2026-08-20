@@ -33,6 +33,21 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## AI Assistant platform 1.0.0 → 1.0.1
+
+After migrate (`2026_08_21_010000`–`010300`):
+
+1. Confirm catalog rows `ai` (billable **1.0.1**), `ai-credits-1k`, `ai-credits-5k`, `ai-credits-20k` are published.
+2. Confirm permissions `ai.use`, `ai.manage`, `ai.confirm` exist and default admin/manager maps include them.
+3. Confirm scheduler runs `ai:rollover-monthly-credits` (daily, overlapping locked, one server).
+4. Set Central Settings → AI (`ai_enabled`, provider, encrypted `ai_api_key`, models, monthly included credits).
+5. Deploy the SPA **after** migrate — Ask EloSync / Settings AI (`ai.manage`) / Lead Copilot require the module entitlement.
+6. Smoke: entitle `ai` → wallet grant → Ask EloSync → Lead Copilot; platform mode returns **402** when credits are exhausted or below the pre-provider ceiling.
+
+**1.0.1** hardens credit integrity (wallet `lockForUpdate`, pre-provider credit ceiling, request-path `ensurePeriod`), enforces `ai.manage` on Settings AI, and adds `throttle:ai` on message/copilot routes.
+
+Go-live: [AI production readiness](/deployment/ai-production-readiness) · ops notes [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:

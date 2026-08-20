@@ -60,7 +60,7 @@ Scheduled command: `ai:rollover-monthly-credits` (see [AI credits guide](/develo
 | `ai_messages` | User/assistant turns + structured JSON |
 | `ai_pending_actions` | Write proposals awaiting confirmation |
 | `ai_wallets` | Dual-balance credit store |
-| `ai_credit_ledgers` | Immutable wallet movements |
+| `ai_credit_ledger` | Immutable wallet movements |
 | `ai_usage_events` | Token/credit telemetry |
 | `ai_tool_executions` | Tool audit trail |
 
@@ -75,3 +75,4 @@ Focused endpoints on a single lead (`summarize`, `next-action`, `draft-follow-up
 - [Tenant AI API](/api/tenant-v1-ai)
 - [AI Assistant — user guide](/user-guide/ai-assistant)
 - [Module dependencies — AI packs](/architecture/module-dependencies)
+- [AI deployment](/deployment/ai) · [Production readiness](/deployment/ai-production-readiness)

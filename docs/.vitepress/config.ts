@@ -504,6 +504,8 @@ export default defineConfig({
             { text: 'Documents', link: '/deployment/documents' },
             { text: 'WhatsApp Cloud', link: '/deployment/whatsapp-cloud' },
             { text: 'WhatsApp Cloud Production Readiness', link: '/deployment/whatsapp-cloud-production-readiness' },
+            { text: 'AI Assistant', link: '/deployment/ai' },
+            { text: 'AI Assistant Production Readiness', link: '/deployment/ai-production-readiness' },
             { text: 'Communication Templates', link: '/deployment/communication-templates' },
             { text: 'Email', link: '/deployment/email' },
             { text: 'Branded', link: '/deployment/branded' },

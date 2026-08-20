@@ -12,15 +12,13 @@ Billing: Platform mode burns wallet credits (HTTP **402** when insufficient). BY
 |------------|---------|
 | `ai.use` | Conversations, messages, credits summary, Lead Copilot |
 | `ai.confirm` | Confirm or cancel pending write actions |
-| `ai.manage` | Workspace AI settings (Settings API) |
+| `ai.manage` | Update/test workspace AI settings (`PUT /settings` AI keys, `POST /settings/test-ai`) |
 
 ## Credits
 
 ### GET `/ai/credits`
 
-Requires `ai.use`.
-
-Returns dual-balance wallet summary and recent ledger entries:
+Requires `ai.use`. Runs `ensurePeriod()` then returns dual-balance wallet summary and recent ledger entries.
 
 ```json
 {
@@ -71,7 +69,8 @@ Errors:
 
 | Code | When |
 |------|------|
-| **402** | Platform wallet empty (`insufficient_ai_credits`) |
+| **402** | Platform wallet empty or below pre-provider credit ceiling (`insufficient_ai_credits`) |
+| **429** | AI route rate limit (`throttle:ai`) |
 | **503** | AI disabled platform-wide or module not entitled |
 | **422** | Validation |
 
