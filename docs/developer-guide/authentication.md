@@ -6,7 +6,7 @@ Tenant and Central authentication are fully isolated: separate route trees, Sanc
 
 | Concern | Tenant Application | Central Application |
 |---------|--------------------|---------------------|
-| SPA routes | `/login`, `/register`, `/forgot-password`, `/reset-password/{token}` | `/central/login`, `/central/forgot-password`, `/central/reset-password/{token}` |
+| SPA routes | `/login`, `/register`, `/forgot-password`, `/reset-password/{token}` | `/{prefix}/login`, `/{prefix}/forgot-password`, `/{prefix}/reset-password/{token}` (default prefix `central`) |
 | API prefix | `/api/tenant/v1` | `/api/central/v1` |
 | Guard | `tenant-api` | `central-api` |
 | User model | `App\Models\User` (`users`) | `App\Models\CentralUser` (`central_users`) |
@@ -16,15 +16,35 @@ Tenant and Central authentication are fully isolated: separate route trees, Sanc
 
 A tenant login never authenticates a Central administrator, and a Central login never authenticates a tenant user.
 
-`/login` is the shared tenant entry point. It includes a **Workspace** field when the browser host does not already resolve a workspace; `/central/login` is always reserved for platform administrators and never accepts a workspace.
+`/login` is the shared tenant entry point. It includes a **Workspace** field when the browser host does not already resolve a workspace. Central login lives under the configurable HashRouter prefix (default `/central/login`) and never accepts a workspace.
+
+### Custom Central path prefix (per install)
+
+Operators who sell/host the platform can obscure the Central UI the same way WHMCS customizes `/admin`:
+
+| Layer | Env | Example |
+|-------|-----|---------|
+| SPA (`config.js` / Vite) | `VITE_CENTRAL_PATH_PREFIX` | `dc-s87s` → `/#/dc-s87s/login` |
+| API (password-reset / verify emails) | `CENTRAL_PATH_PREFIX` | must match the SPA value |
+
+Keep both in sync on every install. Invalid or tenant-reserved prefixes fall back to `central`. **API routes stay `/api/central/v1`** — only the SPA path changes. This is obscurity, not a substitute for strong passwords, lockout, or MFA.
+
+### Failed Central login alerts
+
+Wrong-password attempts against a live Central account email:
+
+- The targeted `CentralUser`
+- Platform `support_email` (when set and different from the user)
+
+Ordinary failures are throttled (one mail per account+IP per 15 minutes). Account lockouts always notify. Set **Central → Settings → Support email** so operators see probes even when the secret SPA path is guessed.
 
 ```mermaid
 flowchart LR
   subgraph SPA
     TAuth["/login /register /reset-password"]
-    CAuth["/central/login /central/reset-password"]
+    CAuth["/{prefix}/login /{prefix}/reset-password"]
     TDash["/dashboard widgets"]
-    CAdmin["/central/dashboard …"]
+    CAdmin["/{prefix}/dashboard …"]
   end
 
   subgraph API

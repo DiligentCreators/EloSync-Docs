@@ -181,6 +181,7 @@ Local Vite `.env`:
 VITE_APP_NAME=EloSync
 VITE_API_URL=http://saas-backend.test
 VITE_API_MODE=central
+# VITE_CENTRAL_PATH_PREFIX=dc-s87s
 VITE_REVERB_APP_KEY=elosync-reverb-key
 VITE_REVERB_HOST=localhost
 VITE_REVERB_PORT=8080
@@ -191,6 +192,7 @@ VITE_REVERB_SCHEME=http
 |----------|---------|
 | `VITE_API_URL` | Backend base URL (no trailing `/api`) |
 | `VITE_API_MODE` | `central` or `tenant` default context |
+| `VITE_CENTRAL_PATH_PREFIX` | Optional Central SPA HashRouter prefix (default `central`; match API `CENTRAL_PATH_PREFIX`) |
 | `VITE_REVERB_*` | Must match backend `REVERB_*` / public Echo settings |
 
 Production does **not** bake these into CI artifacts. Forge generates `/config.js` → `window.env` from the site `.env` at deploy time ([frontend build artifacts](/developer-guide/frontend-build-artifacts)).

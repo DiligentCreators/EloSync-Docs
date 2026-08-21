@@ -1,5 +1,10 @@
 # Changelog
 
+## Custom Central path + failed-login alerts (2026-08-22)
+
+- Per-install WHMCS-style Central SPA prefix: `VITE_CENTRAL_PATH_PREFIX` (SPA `config.js`) + matching API `CENTRAL_PATH_PREFIX` for password-reset / verify deep links. Default remains `central`. API stays `/api/central/v1`.
+- Failed Central login (and lockout) emails go to the targeted admin and platform `support_email` (throttled for ordinary failures; lockouts always notify).
+
 ## Feedback detail page + Feature Board parked (2026-08-22)
 
 - Tenant reporters get a dedicated feedback detail page (`/#/feedback/{uuid}`) with public comments, attachments, and a public status/module activity timeline (never internal notes or triage priority).

@@ -2,12 +2,12 @@
 
 App: `SaaS-Frontend` (React 19 + Vite).
 
-Central Application routes are prefixed with `/central`. Tenant auth uses root paths (`/login`, `/register`, …). See [authentication/authentication-developer.md](/developer-guide/authentication).
+Central Application routes are prefixed with a configurable HashRouter segment (default `/central`). Set `VITE_CENTRAL_PATH_PREFIX` on the SPA site and matching `CENTRAL_PATH_PREFIX` on the API so password-reset / verify emails stay correct. Tenant auth uses root paths (`/login`, `/register`, …). See [authentication](/developer-guide/authentication).
 
 ## Navigation
 
-| Group | Screens | Route |
-|-------|---------|-------|
+| Group | Screens | Route (default prefix) |
+|-------|---------|------------------------|
 | Overview | Dashboard | `/central/dashboard` |
 | Platform | Tenants, Users, Roles | `/central/tenants`, `/central/users`, `/central/roles` |
 | Catalog | Marketplace, Modules | `/central/marketplace`, `/central/modules` |
@@ -18,9 +18,9 @@ Tenant Application uses the **same AppLayout shell** with its own nav (`/dashboa
 
 Auth:
 
-| Screen | Route |
-|--------|-------|
-| Central login | `/central/login` |
+| Screen | Route (default) |
+|--------|-----------------|
+| Central login | `/central/login` (or `/{VITE_CENTRAL_PATH_PREFIX}/login`) |
 | Central forgot / reset | `/central/forgot-password`, `/central/reset-password/{token}` |
 | Tenant login / register | `/login`, `/register` |
 | Tenant forgot / reset | `/forgot-password`, `/reset-password/{token}` |

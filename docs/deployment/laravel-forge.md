@@ -257,13 +257,14 @@ Forge Environment for the **SPA site** (not the API site):
 VITE_API_URL=https://api.example.com
 VITE_APP_NAME=EloSync
 VITE_API_MODE=central
+# VITE_CENTRAL_PATH_PREFIX=dc-s87s
 VITE_REVERB_APP_KEY=<same-as-REVERB_APP_KEY>
 VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
 ```
 
-`VITE_API_URL` has **no** trailing `/api`. Reverb host/port/scheme must match backend `REVERB_HOST` / public WebSocket endpoint.
+`VITE_API_URL` has **no** trailing `/api`. Reverb host/port/scheme must match backend `REVERB_HOST` / public WebSocket endpoint. Keep `VITE_CENTRAL_PATH_PREFIX` in sync with the API site’s `CENTRAL_PATH_PREFIX` when customizing the Central login path.
 
 ### 2.3 Deploy script (SPA)
 
@@ -282,6 +283,7 @@ echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_URL: \"$VITE_API_URL\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-EloSync}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_MODE: \"${VITE_API_MODE:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_CENTRAL_PATH_PREFIX: \"${VITE_CENTRAL_PATH_PREFIX:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_PORT: \"$VITE_REVERB_PORT\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
