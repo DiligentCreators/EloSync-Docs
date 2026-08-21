@@ -274,6 +274,24 @@ Payroll installs and runs without Accounting. `POST /pay-runs/{id}/post` is a so
 
 **Status:** Shipped — see [Tenant Payroll API](/api/tenant-v1-payroll#post-pay-runspayrunpost).
 
+### Payments → Accounting (optional, shipped)
+
+```text
+Payments
+  └── may use Accounting   (optional — deposit account + auto-posted journal on payment post)
+```
+
+Payments installs without Accounting (still requires Invoices). When Accounting is entitled, payment post creates a posted journal (Dr cash/bank deposit / Cr AR) via `CashMovementJournalService` and stores `deposit_account_id` + `journal_entry_id`. Void voids the linked journal. Optional `module_dependencies` row.
+
+### Expenses → Accounting (optional, shipped)
+
+```text
+Expenses
+  └── may use Accounting   (optional — paid-from account + auto-posted journal on mark paid)
+```
+
+Expenses installs standalone. When Accounting is entitled, `POST /expenses/{id}/pay` requires `paid_from_account_id` (cash/bank) and posts Dr expense / Cr paid-from for amount+tax. Optional `module_dependencies` row.
+
 ### Help Desk → Contacts, Companies (optional, shipped)
 
 ```text
@@ -340,7 +358,7 @@ Accounting
   └── may depend on Inventory   (optional)
 ```
 
-Accounting ships standalone (manual double-entry). A future milestone may optionally integrate stock valuations or COGS-related flows through contracts/services. Auto-posting from Expenses / Invoices / Payments / Credit Notes is also deferred (soft integrations, not hard install deps).
+Accounting ships standalone (manual double-entry) plus soft cash movements from Payments/Expenses and Finance → Transfers. A future milestone may optionally integrate stock valuations or COGS-related flows through contracts/services. Auto-posting from Invoices / Credit Notes / Purchase Orders / Inventory remains deferred.
 
 ### Projects (standalone) + Tasks → Projects (optional, shipped)
 

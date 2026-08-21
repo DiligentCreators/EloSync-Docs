@@ -38,7 +38,7 @@ List items include `status`, `amount`, `currency`, `method`, `paid_at`, `referen
 
 ### POST `/payments`
 
-Body: `amount` (required, numeric, min `0.01`), `currency` (3-letter, optional), `method` (required — `cash`\|`bank_transfer`\|`cheque`\|`card_manual`\|`other`), `paid_at` (optional date), `reference`, `notes`, `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `assigned_to`, `allocations` (optional array of `{ customer_invoice_id, amount }`).
+Body: `amount` (required, numeric, min `0.01`), `currency` (3-letter, optional), `method` (required — `cash`\|`bank_transfer`\|`cheque`\|`card_manual`\|`other`), `paid_at` (optional date), `reference`, `notes`, `contact_id`, `company_id` (optional, module-entitlement + assignee-scope validated via `LinkableContact`/`LinkableCompany`), `assigned_to`, `deposit_account_id` (optional — active cash/bank account when Accounting is entitled; ignored otherwise), `allocations` (optional array of `{ customer_invoice_id, amount }`).
 
 Status always starts at `draft`; `number` is auto-generated (`PAY-00001`, configurable via the `payments_number_prefix` tenant setting). `number` is unique per tenant at the database level; on the rare concurrent-create collision, the service retries with a freshly generated number (up to 3 attempts). Allocations are stored on the draft but **not** applied to any invoice balance until the payment is posted — so allocation amounts are **not** validated against the invoice's balance due at create/update time, only at post time (see below).
 
@@ -79,11 +79,13 @@ Transitions `draft → posted`. Every allocation's invoice is locked (`SELECT ..
 - the allocation amount exceeds the invoice's current `balance_due` (0.01 tolerance for float rounding); or
 - the payment and invoice both have a `currency` set and they don't match.
 
-Once every allocation passes, each adds `amount` to its invoice's `amount_paid` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` and advances the invoice status (`sent → partial` or `sent → paid`). Permission: `payments.post`. Rejects with 422 on `status` if the payment isn't currently `draft`.
+Once every allocation passes, each adds `amount` to its invoice's `amount_paid` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` and advances the invoice status. Permission: `payments.post`. Rejects with 422 on `status` if the payment isn't currently `draft`.
+
+When **Accounting** is entitled: allocations must sum to the payment amount (0.01 tolerance); a posted journal is created (**Dr** `deposit_account_id` or system Cash `1000` / **Cr** AR `1100`) and linked via `journal_entry_id`.
 
 ### POST `/payments/{id}/void`
 
-Transitions `posted → void`. Reverses each allocation's amount from its invoice's `amount_paid` and recalculates the invoice balance/status. Unlike `post()`, this locks the invoice **with** `withTrashed()` and does not re-check its status — voiding a payment is a ledger correction that must succeed even if the invoice has since been fully paid, moved past `sent`/`partial`, or soft-deleted, otherwise the invoice's `amount_paid` would permanently disagree with the payment record. Permission: `payments.void`. Rejects with 422 on `status` if the payment isn't currently `posted`.
+Transitions `posted → void`. Reverses each allocation's amount from its invoice's `amount_paid` and recalculates the invoice balance/status. Unlike `post()`, this locks the invoice **with** `withTrashed()` and does not re-check its status — voiding a payment is a ledger correction that must succeed even if the invoice has since been fully paid, moved past open statuses, or soft-deleted, otherwise the invoice's `amount_paid` would permanently disagree with the payment record. When Accounting posted a journal for this payment, that journal is **voided**. Permission: `payments.void`. Rejects with 422 on `status` if the payment isn't currently `posted`.
 
 ### POST `/payments/{id}/notes`
 

@@ -88,6 +88,8 @@ Transitions `submitted → rejected` (terminal). Permission: `expenses.reject` (
 
 Transitions `approved → paid` (terminal). Permission: `expenses.pay` (not assignee-scoped).
 
+Body (optional unless Accounting is entitled): `paid_from_account_id` (required active cash/bank when Accounting installed), `expense_account_id` (optional expense-type account; defaults to system Operating Expenses `6000`). When Accounting is entitled, creates a posted journal (**Dr** expense / **Cr** paid-from) for `amount + tax_amount` and sets `journal_entry_id`.
+
 ### POST `/expenses/{id}/cancel`
 
 Transitions `draft|submitted → cancelled` (terminal). Permission: `expenses.cancel` (assignee-scoped unless the actor has `expenses.assign` or is superadmin).

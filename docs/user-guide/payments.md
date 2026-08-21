@@ -19,9 +19,10 @@ Open **Payments** from the sidebar (**Billing**, under Invoices). Search by paym
 
 1. Click **New payment**
 2. Enter the amount, currency, method (Cash, Bank Transfer, Cheque, Card (manual), Other), date paid, reference, and notes
-3. Add one or more **allocations** — pick an outstanding invoice and the amount of this payment to apply to it. The invoice picker shows **contact name · company · invoice number — balance due**, and you can search by contact name, company name, or invoice number. Choosing an invoice auto-fills **Contact**, **Company**, and **Assignee** from that invoice when those fields are set on the invoice (you can still change them). You can allocate to several invoices, or leave the payment unallocated and add allocations later while still in Draft
-4. Optionally adjust the contact, company, or assignee (Contacts/Companies when installed; assignee requires **assign**)
-5. Save with **Create** (returns to the list), **Create & View**, or **Post** (creates then posts when you have permission)
+3. If **Accounting** is installed, choose **Deposit to** — which cash or bank account will hold this money after collection (defaults to Cash when omitted on post). You can add multiple bank accounts under Finance → Accounts (asset + Cash or bank).
+4. Add one or more **allocations** — pick an outstanding invoice and the amount of this payment to apply to it. The invoice picker shows **contact name · company · invoice number — balance due**, and you can search by contact name, company name, or invoice number. Choosing an invoice auto-fills **Contact**, **Company**, and **Assignee** from that invoice when those fields are set on the invoice (you can still change them). You can allocate to several invoices, or leave the payment unallocated and add allocations later while still in Draft. When Accounting is installed, allocations must cover the full payment amount before post.
+5. Optionally adjust the contact, company, or assignee (Contacts/Companies when installed; assignee requires **assign**)
+6. Save with **Create** (returns to the list), **Create & View**, or **Post** (creates then posts when you have permission)
 
 You can also start recording a payment from an invoice's detail view — the **Related payments** link jumps you to the Payments module.
 
@@ -31,8 +32,8 @@ Edit from the row menu or the record page while the payment is still **Draft**. 
 
 A payment starts in **Draft**. Move it forward with:
 
-- **Post** (`draft → posted`) — applies every allocation to its invoice's balance: the invoice's amount paid increases and its status advances (e.g. `sent → partial` or `sent → paid`, depending on how much of the invoice is now covered). Posting is all-or-nothing: it's rejected if any allocated invoice has been deleted, is not currently Sent or Partial, or if the allocated amount would exceed that invoice's balance due
-- **Void** (`posted → void`) — reverses every allocation, rolling the linked invoices' balances and statuses back, even if an invoice has since been fully paid off by another payment or deleted
+- **Post** (`draft → posted`) — applies every allocation to its invoice's balance: the invoice's amount paid increases and its status advances (e.g. unpaid → paid, depending on how much of the invoice is now covered). Posting is all-or-nothing: it's rejected if any allocated invoice has been deleted, is not currently open for payment, or if the allocated amount would exceed that invoice's balance due. When **Accounting** is installed, posting also creates a posted journal (**Dr** deposit cash/bank / **Cr** Accounts Receivable) so the deposit account balance increases
+- **Void** (`posted → void`) — reverses every allocation, rolling the linked invoices' balances and statuses back, even if an invoice has since been fully paid off by another payment or deleted. When Accounting was used, the linked journal is voided as well
 
 Invalid transitions (e.g. voiding a draft payment, or posting an already-posted payment) are rejected with a validation error.
 

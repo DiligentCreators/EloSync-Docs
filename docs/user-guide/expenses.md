@@ -33,7 +33,7 @@ An expense starts in **Draft**. Move it forward with:
 - **Submit** (`draft → submitted`) — sends the expense for approval
 - **Approve** (`submitted → approved`) — requires `expenses.approve`, not limited to the assignee
 - **Reject** (`submitted → rejected`) — requires `expenses.reject`; terminal
-- **Mark as paid** (`approved → paid`) — requires `expenses.pay`; terminal
+- **Mark as paid** (`approved → paid`) — requires `expenses.pay`; terminal. When **Accounting** is installed, you must choose **Paid from** (cash/bank account); optionally pick an expense P&amp;L account (defaults to Operating Expenses). Accounting posts **Dr** expense / **Cr** paid-from for amount + tax so that bank's balance decreases
 - **Cancel** (`draft → cancelled` or `submitted → cancelled`) — terminal
 
 Invalid transitions (e.g. paying directly from Draft) are rejected with a validation error. `Rejected`, `Paid`, and `Cancelled` are terminal — no further transitions.

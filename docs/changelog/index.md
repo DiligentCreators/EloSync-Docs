@@ -1,5 +1,17 @@
 # Changelog
 
+## Cash & bank money movements (2026-08-21)
+
+Catalog MINOR bumps: **`accounting` 1.0.0 → 1.1.0**, **`payments` 1.0.1 → 1.1.0**, **`expenses` 1.1.0 → 1.2.0**. Soft optional deps: payments → accounting, expenses → accounting.
+
+- Accounts: `is_cash_bank` (asset only; starter Cash `1000` flagged), current **balance** on list/show, filter `?is_cash_bank=1`.
+- Shared `CashMovementJournalService` — create+post / void two-line journals.
+- Payments: `deposit_account_id` + auto JE on post (Dr deposit / Cr AR); void voids JE. SPA **Deposit to** picker when Accounting installed.
+- Expenses: on pay, `paid_from_account_id` (required with Accounting) + optional `expense_account_id` (default `6000`); JE Dr expense / Cr paid-from. SPA Mark as paid dialog.
+- Account transfers (`TRF-`): Finance → Transfers; create posts Dr to / Cr from; void reverses. API `/account-transfers`.
+- Pest: `CashBankAccountTest`, `AccountTransferTest`, `CustomerPaymentAccountingTest`, `ExpenseAccountingTest`. Playwright accounting suites include Transfers smoke.
+- Docs: Accounting / Payments / Expenses user + API + developer guides; this changelog.
+
 ## AI tools depth + Ask EloSync starters (2026-08-21)
 
 Catalog MINOR: **`ai` 1.0.1 → 1.1.0**.
