@@ -11,6 +11,7 @@ This section documents the **long-term modular architecture convention**. It is 
 | [Module Architecture](./module-architecture) | Self-contained modules, owned resources, and inter-module boundaries |
 | [Module Dependencies](./module-dependencies) | Required vs optional dependencies; free vs billable dependency relationships |
 | [Module Licensing](./module-licensing) | Independent licensing convention (included, free, or billable) |
+| [AI Platform](./ai-platform) | AI Assistant module, wallet billing, tools, and gateway |
 | [Platform Freeze](/getting-started/platform-freeze) | Locked platform foundation — do not redesign core subsystems |
 | [Module Development Standard](/developer-guide/module-development) | Engineering Definition of Done (mirror Leads) |
 | [Product Roadmap](/getting-started/product-roadmap) | Planned modules and delivery phases |

@@ -39,6 +39,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Assets](./tenant-v1-assets) | Assets CRUD, assign, notes, timeline, stats |
 | [Tenant Documents](./tenant-v1-documents) | Documents + document-categories CRUD, download, stats |
 | [Tenant WhatsApp Cloud](./tenant-v1-whatsapp-cloud) | Connect, inbox, messages, Meta templates |
+| [Tenant AI Assistant](./tenant-v1-ai) | Conversations, credits, Lead Copilot, pending actions |
 | [Tenant Communication Templates](./tenant-v1-communication-templates) | Templates, placeholders, WhatsApp render |
 | [Tenant Email](./tenant-v1-email) | Personal accounts, folders, labels, messages, templates, signatures, links |
 | [Tenant Notifications](./tenant-v1-notifications) | In-app notifications |

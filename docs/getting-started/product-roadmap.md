@@ -393,6 +393,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Shipped v1.4.0 — report builder / saved / scheduled reports still parked |
 | [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
 | [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
+| **AI Assistant** | ✅ Shipped foundation v1.0.0 — billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; frontend UX and broader tool surface in progress |
 | [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped MVP 1.0.0 — media, Automation WA triggers, Lead Source WhatsApp driver deferred post-MVP |
 
 ### Near-term (active focus)
@@ -416,7 +417,6 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | Multi-Branch Management | Enterprise-ish; not founding-beta SMB core |
 | Analytics report builder / saved / scheduled reports | Reports suite v2 |
 | Storage attachment persistence (task/lead images, email files) | Completes Storage MVP gaps |
-| **AI Integration (Planning)** | Optional cross-cutting capability — planning only until near-term BOS gaps close |
 
 ### Out of active scope (unless demanded)
 
@@ -433,9 +433,10 @@ These are **not** sequenced as the next Marketplace SKUs. Leave them off public 
 
 | Capability | Status |
 |------------|--------|
-| AI Integration (Planning) | Parked (planning) |
+| AI Assistant (Platform + BYOK, wallet, tools, Lead Copilot) | ✅ Shipped foundation v1.0.0 — see [AI platform](/architecture/ai-platform) |
+| AI UX polish + additional tools | In progress |
 
-AI remains a future **optional** cross-cutting capability. Integrations with Leads, Tasks, CRM, and similar modules must not require every domain module. See [Module Dependencies](/architecture/module-dependencies).
+AI is an **optional** cross-cutting capability licensed as `module:ai`. Integrations with Leads, Tasks, and other modules respect independent entitlements — see [Module Dependencies](/architecture/module-dependencies).
 
 Any module that *is* promoted from this backlog still follows [Module Architecture](/architecture/module-architecture) and the [Module Development Standard](/developer-guide/module-development) established by Leads and Tasks.
 

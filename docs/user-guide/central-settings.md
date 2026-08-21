@@ -13,6 +13,7 @@ Central admins configure platform identity and behavior under **Settings** (not 
 | **Security** | Session timeout (minutes), minimum password length, require special character. Applies to Central and Tenant password forms. |
 | **Maintenance** | Tenant Application only. Central stays fully usable so you can turn maintenance off. Optional message + ETA. |
 | **Billing** | Invoice prefix, proration mode, default gateway code, trial / Stripe flags. Gateway secrets are managed under **Billing → Payment Gateways**. |
+| **AI** | Platform master switch, allow Platform / BYOK, provider (OpenAI or Anthropic), API key, and **Default / Fast / Advanced** models (dropdowns filtered by provider). Credit knobs and **Test AI connection**. |
 
 ## Registration closed
 

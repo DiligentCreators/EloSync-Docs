@@ -1,5 +1,36 @@
 # Changelog
 
+## AI Test connection empty model fallback (2026-08-21)
+
+- Central/Tenant Test AI no longer sends OpenAI an empty model when Default model is blank; resolver falls back to `gpt-4o-mini` / `gpt-4o`.
+- SPA test payloads omit blank provider/model fields.
+- Central (and tenant BYOK) Settings → AI: Default / Fast / Advanced models are searchable dropdowns scoped to the selected provider; switching provider resets incompatible models to suggested defaults.
+
+## AI Test connection agent API fix (2026-08-21)
+
+- Fixed Central/Tenant **Test AI connection** calling non-existent `Ai::text()` (laravel/ai v0.10 uses agents). Now uses `AiConnectionTestAgent::prompt()`.
+- Pest: `tests/Feature/AiTestConnectionTest.php`.
+
+## AI Assistant production readiness 1.0.1 (2026-08-21)
+
+Catalog PATCH: **`ai` 1.0.0 → 1.0.1**.
+
+- Credit integrity: wallet `lockForUpdate` on burn/grant/rollover; pre-provider credit ceiling + agent `maxTokens` cap; `ensurePeriod()` on chat, Lead Copilot, and credits summary.
+- RBAC: Settings AI update/test require `ai.manage`; SPA AI tab gated by module + `ai.manage`.
+- Rate limit: `throttle:ai` (30/min) on message send and Lead Copilot routes.
+- Production readiness: [AI Assistant](/deployment/ai-production-readiness) — **Go**.
+
+## AI Assistant platform foundation (2026-08-21)
+
+Catalog: billable **`ai`** module v1.0.0 plus prepaid packs `ai-credits-1k`, `ai-credits-5k`, `ai-credits-20k` (depend on `ai`).
+
+- Tenant API: conversations, messages, credit wallet, Lead Copilot, pending write confirmation (`ai.use`, `ai.confirm`, `ai.manage`).
+- Platform billing: dual-balance wallet (included monthly + prepaid packs), prorated activation grant, rollover command `ai:rollover-monthly-credits`, HTTP 402 when credits exhausted.
+- BYOK + Central provider resolution via `AiConfigResolver`; API keys masked in settings responses.
+- Pest: `tests/Feature/Tenant/Ai/*`, `tests/Unit/AI/AiConfigResolverTest.php`.
+- Playwright: `npm run test:e2e:ai` — one demo login session covering AI entitlement, Settings → AI validation/save, Ask EloSync send (graceful provider errors), and Lead Copilot summarize.
+- Docs: [AI platform](/architecture/ai-platform), [AI tools](/developer-guide/ai-tools), [AI credits](/developer-guide/ai-credits), [Tenant AI API](/api/tenant-v1-ai), [User guide](/user-guide/ai-assistant), [AI deployment](/deployment/ai).
+
 ## Form 422 validation visibility (all tenant modules) (2026-08-20)
 
 - Server validation errors (HTTP 422) now always toast the first API message and map onto react-hook-form fields via shared `applyServerValidationErrors` (tenant CRUD forms plus auth, settings, email, users, and related dialogs).
