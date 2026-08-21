@@ -80,6 +80,6 @@ Widget data respects module licensing, your permissions, and assignee scope (wit
 | App | Typical entry |
 |-----|----------------|
 | Tenant (workspace) | `/login` → `/dashboard` |
-| Central (platform admin) | `/central/login` → `/central/dashboard` |
+| Central (platform admin) | `/central/login` → `/central/dashboard` (customizable path prefix per install) |
 
 Sessions are isolated. Logging into one app does not automatically sign you into the other.

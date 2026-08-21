@@ -49,6 +49,7 @@ echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_URL: \"$VITE_API_URL\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_APP_NAME: \"${VITE_APP_NAME:-EloSync}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_API_MODE: \"${VITE_API_MODE:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_CENTRAL_PATH_PREFIX: \"${VITE_CENTRAL_PATH_PREFIX:-central}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_PORT: \"$VITE_REVERB_PORT\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
@@ -63,6 +64,7 @@ $ACTIVATE_RELEASE()
 | `VITE_API_URL` | API origin (required in production; no trailing `/api`) |
 | `VITE_APP_NAME` | Display name (optional; `VITE_CLIENT_NAME` also accepted) |
 | `VITE_API_MODE` | `central` (default) or `tenant` |
+| `VITE_CENTRAL_PATH_PREFIX` | HashRouter Central SPA prefix (default `central`; keep in sync with API `CENTRAL_PATH_PREFIX`) |
 | `VITE_REVERB_APP_KEY` | Same as backend `REVERB_APP_KEY` (public) |
 | `VITE_REVERB_HOST` | Public WebSocket hostname |
 | `VITE_REVERB_PORT` | Usually `443` behind TLS |
@@ -74,6 +76,7 @@ Example SPA site `.env`:
 VITE_API_URL=https://api.example.com
 VITE_APP_NAME=EloSync
 VITE_API_MODE=central
+# VITE_CENTRAL_PATH_PREFIX=dc-s87s
 VITE_REVERB_APP_KEY=<public-application-key>
 VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443

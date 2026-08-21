@@ -53,10 +53,10 @@ You should not remain on workspace pages seeing load errors after a real session
 
 ## Central Application (platform admins)
 
-Central auth lives under `/central/*`.
+Central auth lives under `/{prefix}/*` (default prefix `central`). Operators can set a custom prefix per install via `VITE_CENTRAL_PATH_PREFIX` / `CENTRAL_PATH_PREFIX` — see [Authentication (developer)](/developer-guide/authentication#custom-central-path-prefix-per-install).
 
-| Action | URL |
-|--------|-----|
+| Action | URL (default) |
+|--------|---------------|
 | Login | `/central/login` |
 | Forgot password | `/central/forgot-password` |
 | Reset password | `/central/reset-password/{token}?email=` |
@@ -65,3 +65,5 @@ Central auth lives under `/central/*`.
 Central users are invited by administrators; there is no public Central registration page.
 
 Central administrators must also verify their invited email address before accessing protected Central pages.
+
+Failed Central login attempts email the targeted admin and the platform support mailbox (when configured). After too many failures the account locks temporarily.
