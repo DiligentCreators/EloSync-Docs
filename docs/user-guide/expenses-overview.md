@@ -42,6 +42,8 @@ Purchase Orders hard-depends on Vendors because every purchase order **must** re
 
 - Receipt attachments / file uploads
 - Reimbursement workflows and payout tracking beyond the `paid` status flag
-- General ledger (GL) posting / accounting integration
+- Expense unpay / reverse the paid Accounting journal from the expense record
 - Multi-line expenses (itemized receipts) — this MVP is single-amount only
 - Dashboard widgets for Expenses
+
+> **Accounting soft integration (shipped):** when Accounting is installed, **Mark as paid** requires a cash/bank **Paid from** account and posts a journal. See [Accounting](/user-guide/accounting).

@@ -1,13 +1,14 @@
 # Accounting — User Guide
 
-Enable **Accounting** from Marketplace (free). Nav appears under **Finance**: Accounts, Journals, General Ledger.
+Enable **Accounting** from Marketplace (free). Nav appears under **Finance**: Accounts, Journals, Transfers, General Ledger.
 
 ## Chart of accounts
 
-1. Open **Accounts**. A starter chart loads automatically the first time.
-2. Use **New account** to add custom codes (code, name, type).
-3. System accounts cannot be deleted or renumbered; accounts with posted journal lines cannot be deleted.
-4. Soft-deleted custom accounts can be restored (or permanently deleted) via the trash filter when you have restore / force-delete permission.
+1. Open **Accounts**. A starter chart loads automatically the first time. Each row shows its **current balance** (from posted journals).
+2. Use **New account** to add custom codes (code, name, type). For bank or cash wallets, set type **Asset** and tick **Cash or bank account**.
+3. Starter **Cash (`1000`)** is already a cash/bank account. Add more banks (e.g. Bank – HBL) the same way so payments and expenses can deposit to / pay from them.
+4. System accounts cannot be deleted or renumbered; accounts with posted journal lines cannot be deleted.
+5. Soft-deleted custom accounts can be restored (or permanently deleted) via the trash filter when you have restore / force-delete permission.
 
 ## Journals
 
@@ -17,6 +18,20 @@ Enable **Accounting** from Marketplace (free). Nav appears under **Finance**: Ac
 4. Debits must equal credits before you can save.
 5. Open the entry → **Post** to make it immutable and visible on the general ledger.
 6. Posted entries can be **Void** (excluded from GL/reports; reason optional).
+
+## Transfers
+
+Move money between cash/bank accounts without treating it as income or expense:
+
+1. Open **Transfers** → **New transfer**.
+2. Choose **From** and **To** (both must be cash/bank), amount, date, optional reference/memo.
+3. Saving posts a journal immediately (Dr destination / Cr source) and updates both balances.
+4. Open a transfer → **Void** to reverse the journal (reason optional).
+
+## Payments & expenses (when those modules are installed)
+
+- **Payments**: choose **Deposit to** (cash/bank). On **Post**, Accounting creates Dr deposit / Cr Accounts Receivable.
+- **Expenses**: on **Mark as paid**, choose **Paid from** (cash/bank) and optionally an expense P&amp;L account (defaults to Operating Expenses). Accounting creates Dr expense / Cr paid-from.
 
 ## General ledger
 

@@ -17,9 +17,11 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 | POST | `/accounts/{account}/restore` | `accounting.restore` |
 | DELETE | `/accounts/{account}/force` | `accounting.force.delete` |
 
-Create body: `code`, `name`, `type` (`asset`\|`liability`\|`equity`\|`revenue`\|`expense`), optional `parent_id`, `is_active`, `description`.
+Create body: `code`, `name`, `type` (`asset`\|`liability`\|`equity`\|`revenue`\|`expense`), optional `parent_id`, `is_active`, `is_cash_bank` (asset only), `description`.
 
-Listing auto-seeds the starter chart when the tenant has no accounts.
+List query: optional `is_cash_bank=1` for deposit/paid-from pickers. List/show include **`balance`** (posted journals, signed by account normal balance).
+
+Listing auto-seeds the starter chart when the tenant has no accounts. Starter Cash `1000` has `is_cash_bank=true`.
 
 ## Journal entries
 
@@ -37,6 +39,18 @@ Listing auto-seeds the starter chart when the tenant has no accounts.
 | POST | `/journal-entries/{journalEntry}/void` | `accounting.void` |
 
 Create/update body: `entry_date`, optional `memo`, `lines[]` with `account_id`, `debit`, `credit`, optional `memo` / `sort_order`. Lines must balance; each line has debit XOR credit. Draft-only edit/delete. Void body optional `void_reason`.
+
+## Account transfers
+
+| Method | Path | Permission |
+|--------|------|------------|
+| GET | `/account-transfers` | `accounting.view` |
+| GET | `/account-transfers/stats` | `accounting.view` |
+| POST | `/account-transfers` | `accounting.create` |
+| GET | `/account-transfers/{accountTransfer}` | `accounting.view` |
+| POST | `/account-transfers/{accountTransfer}/void` | `accounting.void` |
+
+Create body: `from_account_id`, `to_account_id` (distinct active cash/bank accounts), `amount`, `transferred_at`, optional `currency`, `reference`, `memo`. Creates and **posts** a journal (Dr to / Cr from). Status starts `posted`. Void body optional `void_reason` — voids the linked journal.
 
 ## General ledger
 
