@@ -1,5 +1,49 @@
 # Changelog
 
+## Bank reconciliation and aged receivables (2026-08-22)
+
+Catalog MINOR: **`accounting` 1.5.0 → 1.6.0**, **`financial-reports` 1.0.1 → 1.1.0**.
+
+- Bank reconciliations API: start against cash/bank, clear lines, complete.
+- Aged receivables report: `GET financial-reports/aged-receivables` (+ SPA report kind).
+
+## Fiscal periods and year-end close (2026-08-22)
+
+Catalog MINOR: **`accounting` 1.4.0 → 1.5.0**.
+
+- Setting `fiscal_year_start_month` (1–12) under General.
+- Accounting periods CRUD + lock/unlock; journal post/void blocked in locked periods.
+- Year-end close posts net income into Retained Earnings `3100` and locks the FY period.
+- Balance Sheet Net Income uses fiscal YTD.
+
+## Chart hierarchy, headers, opening trial balance (2026-08-22)
+
+Catalog MINOR: **`accounting` 1.3.0 → 1.4.0**.
+
+- Accounts: `is_header` (non-postable), parent account on create/edit UI; starter CoA adds Tax Payable `2100` and Retained Earnings `3100`; existing workspaces get missing system accounts via `ensureMissingSystemAccounts`.
+- Opening balances: `POST /accounts/opening-balances` posts a balanced multi-line journal; SPA `/accounts/opening-balances`.
+- Header accounts rejected on journal lines.
+
+## Accrual invoice and credit-note journals (2026-08-22)
+
+Catalog MINOR: **`accounting` 1.2.1 → 1.3.0**. Soft optional deps: invoices → accounting, credit-notes → accounting.
+
+- Invoice **send**: when Accounting entitled, posts Dr AR `1100` / Cr Sales Revenue `4000` for invoice total; stores `journal_entry_id`; cancel voids the JE.
+- Credit note **apply**: posts Dr Revenue / Cr AR for credit total; stores `journal_entry_id` (applied remains irreversible).
+- Payment post still Dr cash / Cr AR (settles receivable booked on send).
+- No historical backfill for invoices issued before entitlement.
+- Pest: `CustomerInvoiceAccountingTest`, `CustomerCreditNoteAccountingTest`.
+
+## Accountant format presentation + CSV export (2026-08-22)
+
+Catalog PATCH: **`accounting` 1.2.0 → 1.2.1**, **`financial-reports` 1.0.0 → 1.0.1**.
+
+- Journals: classic Account / Debit / Credit / Memo grid on create/edit/view; list Amount column; currency formatting with blank zero Dr/Cr cells.
+- General Ledger: currency columns, journal deep links, **Export CSV**.
+- Financial Reports: currency formatting, classic two-pane Balance Sheet with Assets = L+E check, report chrome; **Export CSV** for TB / P&amp;L / BS.
+- API: `GET general-ledger/export`, `GET financial-reports/{trial-balance|profit-and-loss|balance-sheet}/export` (streamed CSV).
+- Pest: FinancialReportTest export cases.
+
 ## Account set balance / opening adjust (2026-08-21)
 
 Catalog MINOR: **`accounting` 1.1.0 → 1.2.0**.
