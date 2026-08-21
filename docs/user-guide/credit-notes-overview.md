@@ -37,7 +37,7 @@ Enable Credit Notes from Marketplace (free) — **Invoices must already be insta
 
 ## Related modules
 
-**Required:** [Invoices](/user-guide/invoices-overview) — Credit Notes cannot be installed or created without it. **Optional:** Contacts and Companies (customer pickers only appear/validate when entitled). See [Module Dependencies](/architecture/module-dependencies).
+**Required:** [Invoices](/user-guide/invoices-overview) — Credit Notes cannot be installed or created without it. **Optional:** Contacts and Companies (customer pickers only appear/validate when entitled), [Accounting](/user-guide/accounting-overview) (soft: **Apply** posts Dr Revenue / Cr AR). See [Module Dependencies](/architecture/module-dependencies).
 
 ## Explicitly deferred
 

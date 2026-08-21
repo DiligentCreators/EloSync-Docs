@@ -74,3 +74,9 @@ Permission: `accounting.view`.
 Query: `account_id`, `from`, `to`.
 
 Response includes `opening_balance`, `closing_balance`, and `lines` (posted only; void excluded).
+
+### GET `/general-ledger/export`
+
+Permission: `accounting.view`.
+
+Same query as the inquiry endpoint. Streams a CSV download of **all** matching posted lines (no page-size cap).

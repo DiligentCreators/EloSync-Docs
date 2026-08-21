@@ -40,7 +40,7 @@ Enable Invoices from Marketplace (free) — no other module is required first. C
 
 ## Related modules
 
-**No hard dependency.** **Optional:** Contacts and Companies (customer pickers only appear/validate when entitled), Quotations (an invoice may optionally reference the quotation it was generated from). [Payments](/user-guide/payments-overview) and [Credit Notes](/user-guide/credit-notes-overview) both hard-depend on Invoices (not the other way around). See [Module Dependencies](/architecture/module-dependencies).
+**No hard dependency.** **Optional:** Contacts and Companies (customer pickers only appear/validate when entitled), Quotations (an invoice may optionally reference the quotation it was generated from), [Accounting](/user-guide/accounting-overview) (soft: **Send** posts Dr AR / Cr Revenue). [Payments](/user-guide/payments-overview) and [Credit Notes](/user-guide/credit-notes-overview) both hard-depend on Invoices (not the other way around). See [Module Dependencies](/architecture/module-dependencies).
 
 ## Explicitly deferred
 

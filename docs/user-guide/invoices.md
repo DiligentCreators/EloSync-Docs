@@ -46,8 +46,8 @@ Stopping the series does **not** void history by itself.
 
 An invoice starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → unpaid`) — marks the invoice as unpaid in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series.
-- **Cancel** — available from Draft or Unpaid only; permanently cancels the invoice (`cancelled`). Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all). Partial payments keep the invoice **Unpaid** until the balance clears.
+- **Send** (`draft → unpaid`) — marks the invoice as unpaid in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series. When **Accounting** is installed, **Send** also posts Dr Accounts Receivable / Cr Sales Revenue for the invoice total.
+- **Cancel** — available from Draft or Unpaid only; permanently cancels the invoice (`cancelled`). Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all). Partial payments keep the invoice **Unpaid** until the balance clears. When Accounting posted a journal on send, cancel voids that journal.
 
 **Paid** is set automatically when Payments (or credits) bring the balance to zero.
 
