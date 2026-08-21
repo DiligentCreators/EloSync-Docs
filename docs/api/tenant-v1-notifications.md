@@ -12,7 +12,17 @@ Realtime: Laravel Reverb private channel `tenant.{tenantId}.user.{userId}` (even
 
 ### GET `/notifications`
 
-Paginated notifications for the authenticated user.
+Paginated notifications for the authenticated user. Response uses standard list `data` + `meta` (current_page, last_page, per_page, total).
+
+Query filters:
+
+| Param | Notes |
+|-------|--------|
+| `status` | Optional: `unread` or `read` |
+| `date_from` | Optional ISO date (`Y-m-d`) — inclusive lower bound on `created_at` |
+| `date_to` | Optional ISO date (`Y-m-d`) — inclusive upper bound; must be ≥ `date_from` |
+| `per_page` | Optional, max 100 (default from platform pagination) |
+| `page` | Optional page number |
 
 Transformed item shape:
 
@@ -27,6 +37,11 @@ Transformed item shape:
 ### GET `/notifications/unread-count`
 
 `{ "count": number }`
+
+## SPA surfaces
+
+- **Bell (topbar)** — unread inbox only (`status=unread`, `per_page=20`). Opening a notification marks it read and removes it from the dropdown so the next unread can appear. Footer link opens the full list.
+- **Full list** — `/#/notifications` (permission `dashboard.view`) with status (all / unread / read) and date-from / date-to filters.
 
 ## Mark read
 
