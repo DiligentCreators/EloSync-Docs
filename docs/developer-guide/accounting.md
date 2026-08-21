@@ -16,7 +16,7 @@ Mirrors the Leads/Expenses module layers under flat `app/` namespaces. Slug `acc
 
 Services: `AccountService`, `JournalEntryService`, `GeneralLedgerService`, `ChartOfAccountsSeederService`, `OpeningBalanceService`, `CashMovementJournalService`, `AccountTransferService`, `AccountBalanceAdjustmentService`, `AccountingPeriodService`, `YearEndCloseService`.
 
-Periods: setting `fiscal_year_start_month` (1–12); journal post/void blocked in locked periods; year-end close posts net income into Retained Earnings `3100` and locks the FY period. Balance Sheet Net Income uses fiscal YTD. Bank rec: start / clear lines / complete against cash/bank accounts.
+Periods: setting `fiscal_year_start_month` (1–12); journal post/void blocked in locked periods; year-end close zeros P&L into Retained Earnings `3100` (multi-line JE) and locks the FY period atomically / idempotently. Balance Sheet Net Income uses fiscal YTD (zero after a proper close). Bank rec: start / clear lines / complete against cash/bank accounts — book balance as of statement date, exclude prior cleared lines, require cleared = statement to complete. Invoice send/void and credit-note apply are transactional with period-lock checks.
 
 `ChartOfAccountsSeederService` seeds starter CoA (incl. Tax Payable `2100`, Retained Earnings `3100`) and `ensureMissingSystemAccounts` backfills missing system codes for existing workspaces.
 

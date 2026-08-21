@@ -26,7 +26,8 @@ Phase 6 Finance module on the frozen platform. Provides the financial backbone: 
 - **Account transfers** (`TRF-` numbers): move money between cash/bank accounts (auto-posted journal; void reverses)
 - Soft accrual journals from [Invoices](/user-guide/invoices-overview) (**Send**: Dr AR / Cr Revenue) and [Credit Notes](/user-guide/credit-notes-overview) (**Apply**: Dr Revenue / Cr AR) when Accounting is installed
 - Soft cash movements from [Payments](/user-guide/payments-overview) (Deposit to) and [Expenses](/user-guide/expenses-overview) (Paid from) when Accounting is installed
-- **Fiscal periods**: `fiscal_year_start_month` (Settings → General); period CRUD + lock/unlock; journal post/void blocked in locked periods; year-end close posts net income to Retained Earnings `3100`
+- **Fiscal periods**: `fiscal_year_start_month` (Settings → General); period CRUD + lock/unlock (`accounting.void` to unlock); journal post/void blocked in locked periods; year-end close zeros P&L into Retained Earnings `3100` and locks the FY
+- **Bank reconciliation**: clear posted cash/bank lines against a statement; complete only when cleared balance matches the statement
 - **Bank reconciliation**: start against cash/bank, clear lines, complete
 - General ledger inquiry over posted lines with optional account and date filters
 - Module licensing (`module:accounting`) + Spatie permissions — **free Marketplace opt-in**

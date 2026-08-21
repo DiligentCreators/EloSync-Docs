@@ -1,6 +1,6 @@
 # Financial Reports — Developer Guide
 
-Slug `financial-reports`. Hard dependency on `accounting` via `module_dependencies`. Service: `FinancialReportService` (trial balance, P&L, balance sheet, aged receivables). Catalog version **1.1.0**.
+Slug `financial-reports`. Hard dependency on `accounting` via `module_dependencies`. Service: `FinancialReportService` (trial balance, P&L, balance sheet, aged receivables). Catalog version **1.1.1**. Aged receivables uses historical open balances as of the selected date.
 
 ## Permissions
 

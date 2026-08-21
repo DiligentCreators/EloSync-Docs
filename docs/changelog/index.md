@@ -1,5 +1,15 @@
 # Changelog
 
+## Accounting production readiness (2026-08-22)
+
+Catalog PATCH: **`accounting` 1.6.0 → 1.6.1**, **`financial-reports` 1.1.0 → 1.1.1**.
+
+- Invoice send/void: atomic with accrual journal post/void; period lock checked before status change; unpaid invoices without a JE can be repaired via send.
+- Year-end close: zeros revenue/expense into Retained Earnings `3100` (multi-line), idempotent, period lock in the same transaction.
+- Aged receivables: historical open balance as of date (payments/credits dated on or before `as_of`).
+- Bank reconciliation: book balance as of statement date; excludes previously cleared lines; complete requires cleared = statement.
+- GL CSV export: uncapped filtered stream; period unlock requires `accounting.void`; opening balances / bank rec SPA gated by `post` / `create`.
+
 ## Bank reconciliation and aged receivables (2026-08-22)
 
 Catalog MINOR: **`accounting` 1.5.0 → 1.6.0**, **`financial-reports` 1.0.1 → 1.1.0**.
