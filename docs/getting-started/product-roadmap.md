@@ -393,6 +393,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Shipped v1.4.0 — report builder / saved / scheduled reports still parked |
 | [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
 | [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
+| **API & Webhooks** | ✅ Shipped — Settings → Developers (API tokens + outbound event webhooks); see [guide](/developer-guide/tenant-api-webhooks) |
 | **AI Assistant** | ✅ Shipped foundation v1.0.0 — billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; frontend UX and broader tool surface in progress |
 | [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped MVP 1.0.0 — media, Automation WA triggers, Lead Source WhatsApp driver deferred post-MVP |
 
@@ -400,7 +401,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 
 | Item | Notes |
 |------|--------|
-| **API & Webhooks** (tenant product surface) | Deepen public/integration story for operators replacing other tools |
+| **API & Webhooks** (tenant product surface) | ✅ Completed — Settings → Developers: integration API tokens (`es_…`) + outbound event webhooks; see [guide](/developer-guide/tenant-api-webhooks) · [API](/api/tenant-v1-developers) |
 | WhatsApp Cloud post-MVP polish | Media, Automation WA triggers, Lead Source WhatsApp driver — deepen CRM, not a new category |
 | Documents polish (on demand) | Soft record links / nested folders — deferred from Documents **1.1.0**; promote only with clear demand |
 | **Customer Portal** | On demand after Help Desk / Billing self-serve signal |

@@ -31,6 +31,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Multi-Provider Email](./multi-provider-email) | EmailManager, drivers, logs, queues, body capture, resend |
 | [Email Webhooks](./email-webhooks) | Postmark/Mailgun delivery webhooks |
 | [Tenant Settings](./tenant-settings) | Tenant configuration hierarchy |
+| [Tenant API & Webhooks](./tenant-api-webhooks) | Integration API tokens + outbound event webhooks |
 
 ## UI
 

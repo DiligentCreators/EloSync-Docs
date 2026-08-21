@@ -29,6 +29,7 @@ Also see Central [settings.md](/user-guide/central-settings-overview) for platfo
 | **Security** | Session timeout (minutes); `0` / Never timeout keeps users signed in until they sign out |
 | **Branding** | Logo, Favicon, Button Color, Support Email, invoice company profile + payment details |
 | **Mail** | SMTP host/port/user/password/encryption, From name/address |
+| **Developers** | API tokens and outbound event webhooks (`settings.manage_developers`) |
 
 Tenants **cannot** change platform registration, maintenance mode, password policy, billing flags, or Central branding.
 
