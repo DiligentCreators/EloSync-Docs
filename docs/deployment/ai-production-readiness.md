@@ -4,7 +4,7 @@
 |-------|--------|
 | **Date** | 2026-08-21 |
 | **Status** | **Go** — remediations merged; staging smoke + Central key + scheduler still required before Marketplace traffic |
-| **Scope** | Billable Marketplace module `ai` catalog **1.0.1** + packs `ai-credits-1k` / `5k` / `20k` |
+| **Scope** | Billable Marketplace module `ai` catalog **1.1.0** + packs `ai-credits-1k` / `5k` / `20k` |
 | **Branch** | `feature/ai-platform-byok-credits` |
 | **Companion** | [AI deployment](./ai) · [Architecture](/architecture/ai-platform) · [Credits](/developer-guide/ai-credits) · [Tools](/developer-guide/ai-tools) · [API](/api/tenant-v1-ai) · [User guide](/user-guide/ai-assistant) |
 
@@ -16,11 +16,11 @@
 
 EloSync AI is a **billable** Marketplace SKU (`$29/mo`, `$290/yr`), **not** default-included. Phase 1 ships Gateway orchestration over `laravel/ai`, dual-balance credit wallet, BYOK + Central keys, Ask EloSync panel, Lead Copilot, and write confirmation for `create_task`.
 
-**Go / No-Go:** **Go**. Credit-integrity hardenings (wallet row lock, pre-provider credit ceiling, request-path `ensurePeriod`), `ai.manage` enforcement on Settings AI, and dedicated `throttle:ai` are in place for catalog **1.0.1**. Complete staging smoke and Central AI key + scheduler setup before production Marketplace opt-in.
+**Go / No-Go:** **Go**. Credit-integrity hardenings (wallet row lock, pre-provider credit ceiling, request-path `ensurePeriod`), `ai.manage` enforcement on Settings AI, and dedicated `throttle:ai` are in place; catalog **1.1.0** adds Projects / Opportunities / Invoices read tools and Ask EloSync starters. Complete staging smoke and Central AI key + scheduler setup before production Marketplace opt-in.
 
 | Gate | Result |
 |------|--------|
-| Catalog billable `ai` / $29 / $290 / not default-included | **Pass** (version **1.0.1**) |
+| Catalog billable `ai` / $29 / $290 / not default-included | **Pass** (version **1.1.0**) |
 | Packs depend on `ai`; grant on activate | **Pass** |
 | Migrate-only register + permissions (`2026_08_21_010000`–`010300`) | **Pass** |
 | Gateway sole orchestration; `module:ai` + `can:ai.*` | **Pass** |
@@ -101,7 +101,7 @@ Suggested merge order: **Backend → Frontend → Docs**.
 | # | Check | Owner | Pass? |
 |---|-------|-------|-------|
 | 1 | Migrations `2026_08_21_010000`–`010300` applied (no production `db:seed`) | Ops | ☐ |
-| 2 | Catalog rows `ai`, `ai-credits-1k`, `ai-credits-5k`, `ai-credits-20k` published; `ai` billable **1.0.1** | Ops | ☐ |
+| 2 | Catalog rows `ai`, `ai-credits-1k`, `ai-credits-5k`, `ai-credits-20k` published; `ai` billable **1.1.0** | Ops | ☐ |
 | 3 | Permissions `ai.use`, `ai.manage`, `ai.confirm` granted to default admin/manager maps | Ops | ☐ |
 | 4 | Scheduler includes **`ai:rollover-monthly-credits`** (daily, `withoutOverlapping`, `onOneServer`) | Ops | ☐ |
 | 5 | Central AI: `ai_enabled`, `ai_allow_platform` / `ai_allow_byok`, provider + **`ai_api_key`**, models, credits knobs | Ops | ☐ |
@@ -110,7 +110,7 @@ Suggested merge order: **Backend → Frontend → Docs**.
 | 8 | Marketplace purchase → pending → payment/`activate` before entitlements | Ops | ☐ |
 | 9 | Pest AI suite green in CI | Eng | ☐ |
 | 10 | Playwright `npm run test:e2e:ai` green | QA | ☐ |
-| 11 | F1–F4 remediations shipped in **1.0.1** | Eng | ☑ |
+| 11 | F1–F4 remediations shipped in **1.0.1**; read-tool depth + Ask EloSync starters in **1.1.0** | Eng | ☑ |
 
 ---
 

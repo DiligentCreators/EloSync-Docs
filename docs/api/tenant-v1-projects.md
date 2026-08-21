@@ -44,7 +44,7 @@ One column per status (`planned`, `active`, `on_hold`, `completed`, `cancelled`)
 
 ### GET `/projects`
 
-Query: `search` (matches `title`), `status`, `contact_id`, `company_id`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_projects`, `trashed` (`true`|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `title`), `status`, `contact_id`, `company_id`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_projects`, `overdue` (open statuses with `ends_on` before workspace-local today), `trashed` (`true`|`only`), `sort`, `direction`, `page`, `per_page`.
 
 List items include `title`, `status`, `description`, `starts_on`, `ends_on`, soft CRM refs, assignee/creator, `members[]`, and `latest_note`.
 

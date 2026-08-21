@@ -106,7 +106,13 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Tasks** (`tasks.view` / `tasks.create`): `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `create_task` (pending confirmation)
 
-See [AI tools guide](/developer-guide/ai-tools).
+**Projects** (`projects.view`): `search_projects`, `get_project`, `get_overdue_projects`
+
+**Opportunities** (`opportunities.view`): `search_opportunities`, `get_pipeline_summary`
+
+**Invoices** (`invoices.view`): `get_overdue_invoices`, `get_invoice_balance_summary`
+
+Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). See [AI tools guide](/developer-guide/ai-tools).
 
 ## Related
 

@@ -394,7 +394,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
 | [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
 | **API & Webhooks** | ✅ Shipped — Settings → Developers (API tokens + outbound event webhooks); see [guide](/developer-guide/tenant-api-webhooks) |
-| **AI Assistant** | ✅ Shipped foundation v1.0.0 — billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; frontend UX and broader tool surface in progress |
+| **AI Assistant** | ✅ Shipped foundation v1.1.0 — billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; Projects / Opportunities / Invoices read tools + Ask EloSync starters; further UX/tools in progress |
 | [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped MVP 1.0.0 — media, Automation WA triggers, Lead Source WhatsApp driver deferred post-MVP |
 
 ### Near-term (active focus)
@@ -434,8 +434,8 @@ These are **not** sequenced as the next Marketplace SKUs. Leave them off public 
 
 | Capability | Status |
 |------------|--------|
-| AI Assistant (Platform + BYOK, wallet, tools, Lead Copilot) | ✅ Shipped foundation v1.0.0 — see [AI platform](/architecture/ai-platform) |
-| AI UX polish + additional tools | In progress |
+| AI Assistant (Platform + BYOK, wallet, tools, Lead Copilot) | ✅ Shipped foundation v1.1.0 — see [AI platform](/architecture/ai-platform) |
+| AI UX polish + additional tools | In progress (Projects / Opportunities / Invoices read tools + Ask EloSync starters shipped in 1.1.0) |
 
 AI is an **optional** cross-cutting capability licensed as `module:ai`. Integrations with Leads, Tasks, and other modules respect independent entitlements — see [Module Dependencies](/architecture/module-dependencies).
 

@@ -14,9 +14,11 @@ Without the module, AI menu items and API routes are hidden.
 
 ### Business chat
 
-Ask EloSync about your permitted data — open tasks, stale leads, pipeline focus, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
+Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
 
-Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
+On an empty conversation, starter chips (when the matching module is installed) can ask about overdue tasks, stale leads, pipeline summary, overdue invoices, or overdue projects.
+
+Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**. Citations link to record pages when the assistant includes a numeric id.
 
 ### Lead Copilot
 

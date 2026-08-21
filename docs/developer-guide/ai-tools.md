@@ -8,7 +8,12 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 
 - Leads: `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`
 - Tasks: `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`
+- Projects: `search_projects`, `get_project`, `get_overdue_projects`
+- Opportunities: `search_opportunities`, `get_pipeline_summary`
+- Invoices: `get_overdue_invoices`, `get_invoice_balance_summary`
 - Writes: `create_task` (confirmation required)
+
+List/detail tool payloads include both numeric **`id`** (for SPA deep links) and **`uuid`** (for tool lookups).
 
 `availableFor($user, $tenant, $entitlements)` filters tools when:
 
