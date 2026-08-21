@@ -1,5 +1,16 @@
 # Changelog
 
+## Account set balance / opening adjust (2026-08-21)
+
+Catalog MINOR: **`accounting` 1.1.0 → 1.2.0**.
+
+- Cash/bank **Set balance**: enter target + date; system posts delta journal (`ADJ-`) via `CashMovementJournalService`; default offset Owner Equity `3000`.
+- First-class `account_balance_adjustments` (voidable history); never edits a stored balance column.
+- API: `POST /accounts/{account}/balance-adjustments`, list/show/void under `/account-balance-adjustments`.
+- SPA: account view Set balance dialog + Balance adjustments list/void.
+- Pest: `AccountBalanceAdjustmentTest`.
+- Docs: Accounting user / overview / API / developer guides; this changelog.
+
 ## Cash & bank money movements (2026-08-21)
 
 Catalog MINOR bumps: **`accounting` 1.0.0 → 1.1.0**, **`payments` 1.0.1 → 1.1.0**, **`expenses` 1.1.0 → 1.2.0**. Soft optional deps: payments → accounting, expenses → accounting.

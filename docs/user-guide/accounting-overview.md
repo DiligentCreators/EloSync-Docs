@@ -17,6 +17,7 @@ Phase 6 Finance module on the frozen platform. Provides the financial backbone: 
 - Chart of accounts with types `asset` \| `liability` \| `equity` \| `revenue` \| `expense`
 - **Cash / bank** flag (`is_cash_bank`) on asset accounts; starter Cash `1000` is cash/bank; add multiple banks as custom asset + cash/bank
 - **Current balance** on account list/show (from posted journal lines)
+- **Set balance** on cash/bank accounts: target amount posts a delta journal (`ADJ-`); default offset Owner Equity `3000`; voidable history on the account
 - Starter system accounts seeded on first Accounts list (Cash, AR, AP, Equity, Revenue, common expenses)
 - Journal entries with balanced debit/credit lines (`JE-` numbers)
 - Lifecycle: **draft → post → void** (voided entries excluded from GL and reports)
@@ -30,7 +31,7 @@ Phase 6 Finance module on the frozen platform. Provides the financial backbone: 
 
 `accounting.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `post` · `void`
 
-Catalog: slug `accounting`, category `finance`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Version **1.1.0**.
+Catalog: slug `accounting`, category `finance`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Version **1.2.0**.
 
 ## Explicitly deferred
 

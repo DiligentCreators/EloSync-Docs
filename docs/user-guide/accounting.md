@@ -10,6 +10,15 @@ Enable **Accounting** from Marketplace (free). Nav appears under **Finance**: Ac
 4. System accounts cannot be deleted or renumbered; accounts with posted journal lines cannot be deleted.
 5. Soft-deleted custom accounts can be restored (or permanently deleted) via the trash filter when you have restore / force-delete permission.
 
+## Opening / set balance (cash & bank)
+
+Balances are never edited as a stored field. On an active cash/bank account:
+
+1. Open the account → **Set balance**.
+2. Enter the **target** amount and date. Offset defaults to **Owner Equity (`3000`)**; you can pick another active account.
+3. Saving posts a journal for the **difference** only (`ADJ-` number). Increase: Dr cash/bank / Cr offset. Decrease: Dr offset / Cr cash/bank.
+4. Recent adjustments appear under **Balance adjustments** on the account. **Void** reverses the linked journal (requires `accounting.void`).
+
 ## Journals
 
 1. Open **Journals** → **New journal**.
