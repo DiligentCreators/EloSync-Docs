@@ -71,9 +71,10 @@ Catalog **1.1.0** adds Projects / Opportunities / Invoices **read** tools, Ask E
 
 | ID | Severity | Finding | Resolution |
 |----|----------|---------|------------|
-| R5 | **High** | Ask EloSync citations trusted model `url` (open redirect / phishing) | Closed — `resolveAiReferenceHref` uses `isSafeRedirectPath`; unsafe urls fall back to numeric entity paths; no external AI anchors |
-| L1 | Low | No positive `availableFor` entitlement tests for new tools | Open — non-blocking follow-up |
-| L2 | Low | Project tool happy paths skip installing `projects` in Pest | Open — chat path still gated by registry |
+| R5 | **High** | Ask EloSync citations trusted model `url` (open redirect / phishing) | **Closed** — `resolveAiReferenceHref` uses `isSafeRedirectPath`; unsafe urls fall back to numeric entity paths; no external AI anchors |
+| L1 | Low | No positive `availableFor` entitlement tests for new tools | **Closed** — positive + module-absent registry Pest cases |
+| L2 | Low | Project tool happy paths skip installing `projects` in Pest | **Closed** — `installOptionalCrmModules(..., ['projects'])` on project tool tests |
+| L3 | Low | Starter chips gate on module only, not `*.view` | **Closed** — starters require module + view permission; citations suppress unentitled modules |
 
 ### Open / ops (ops checklist — not code blockers)
 

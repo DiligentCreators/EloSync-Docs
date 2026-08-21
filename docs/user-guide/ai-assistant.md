@@ -16,9 +16,9 @@ Without the module, AI menu items and API routes are hidden.
 
 Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
 
-On an empty conversation, starter chips (when the matching module is installed) can ask about overdue tasks, stale leads, pipeline summary, overdue invoices, or overdue projects.
+On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission. Citations link only to same-app record paths for modules you are entitled to.
 
-Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**. Citations link to record pages when the assistant includes a numeric id.
+Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
 
 ### Lead Copilot
 
