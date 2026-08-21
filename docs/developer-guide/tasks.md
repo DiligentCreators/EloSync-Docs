@@ -25,6 +25,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 
 - Comment bodies may include `@[Display Name](user:ID)` mention tokens (composer UI shows `@Name` chips). On `TaskNoteAdded`, `NoteMentionService` persists `task_note_mentions` and sends `task.mentioned` (skip self; idempotent via `dedupe_key`). Mail is optional via `email_notifications.task_mentioned` (default off).
 - Assignee scoping via `ScopesToAssignee` with `tasks.assign`.
+- Task assignee pickers use `filterTaskAssigneeOptions` (omit suspended only). They do **not** reuse `filterLeadAssigneeOptions` — `exclude_from_lead_auto_assign` and workspace owners remain assignable on Tasks. Backend assign/create only requires the user id exists in the tenant.
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue / due-today / due-this-week SQL uses `App\Support\UtcInstant` so non-UTC workspace timezones do not mark upcoming tasks overdue. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone), not raw `datetime-local` / ISO slice.
 - Board columns are one per `TaskStatusEnum` case.

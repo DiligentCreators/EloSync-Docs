@@ -6,6 +6,8 @@ Middleware: `auth:tenant-api`, `tenant.user`, `verified`, `module:tasks`, plus p
 
 Assignee scoping: without `tasks.assign` (and not superadmin), list/board/stats only include tasks where `assigned_to` is the current user.
 
+`assigned_to` on create/update/assign must be a tenant user id (or `null` to unassign). Unlike leads, Tasks do **not** enforce lead-assignee eligibility (`exclude_from_lead_auto_assign` / owner exclusion).
+
 ## Tags
 
 ### GET `/task-tags`
