@@ -1,5 +1,11 @@
 # Changelog
 
+## Tasks assignee picker ignores lead-exclude flag (2026-08-21)
+
+- Task create/edit/view assignee pickers no longer hide users flagged **Exclude from lead assignment** (or workspace owners). That flag remains leads-only.
+- SPA: `filterTaskAssigneeOptions` (suspended only); Vitest `src/lib/task-assignees.test.ts`.
+- Docs: [Tasks user guide](/user-guide/tasks#assignment), [Tasks developer guide](/developer-guide/tasks), [API](/api/tenant-v1-tasks).
+
 ## Tenant API & Webhooks (2026-08-21)
 
 Platform Settings → **Developers** (permission `settings.manage_developers`):
