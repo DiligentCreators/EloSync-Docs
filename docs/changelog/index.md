@@ -1,5 +1,16 @@
 # Changelog
 
+## AI Test connection empty model fallback (2026-08-21)
+
+- Central/Tenant Test AI no longer sends OpenAI an empty model when Default model is blank; resolver falls back to `gpt-4o-mini` / `gpt-4o`.
+- SPA test payloads omit blank provider/model fields.
+- Central (and tenant BYOK) Settings → AI: Default / Fast / Advanced models are searchable dropdowns scoped to the selected provider; switching provider resets incompatible models to suggested defaults.
+
+## AI Test connection agent API fix (2026-08-21)
+
+- Fixed Central/Tenant **Test AI connection** calling non-existent `Ai::text()` (laravel/ai v0.10 uses agents). Now uses `AiConnectionTestAgent::prompt()`.
+- Pest: `tests/Feature/AiTestConnectionTest.php`.
+
 ## AI Assistant production readiness 1.0.1 (2026-08-21)
 
 Catalog PATCH: **`ai` 1.0.0 → 1.0.1**.
