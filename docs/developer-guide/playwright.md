@@ -27,7 +27,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Marketplace | `e2e/tests/marketplace/` | `npm run test:e2e:marketplace` |
 | Billing | `e2e/tests/billing/` | `npm run test:e2e:billing` |
 | Impersonation | `e2e/tests/impersonation/` | `npm run test:e2e:impersonation` |
-| Settings | `e2e/tests/settings/` | `npm run test:e2e:settings` — Central identity/flags + `tenant-settings.spec.ts` workspace branding/mail fallback (`npm run test:e2e:tenant-settings`); Storage usage panel (`npm run test:e2e:storage`) |
+| Settings | `e2e/tests/settings/` | `npm run test:e2e:settings` — Central identity/flags + tenant branding/mail (`npm run test:e2e:tenant-settings`); Developers full workflow (`npm run test:e2e:developers`); Storage usage (`npm run test:e2e:storage`) |
 | Beta Applications (Founding Beta invite) | `e2e/tests/beta-applications/` | `npm run test:e2e:beta-applications` — one Central admin session: settings validation, registration-closed CTA, Accept & send invite, invite register validation + activation, expired resend |
 | Leads | `e2e/tests/leads/` | `npm run test:e2e:leads` |
 | Tasks | `e2e/tests/tasks/` | `npm run test:e2e:tasks` |

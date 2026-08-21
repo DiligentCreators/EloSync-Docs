@@ -129,6 +129,21 @@ Choose **Use system provider** to inherit Central Application mail, or **Use cus
 - Use **Send test** to verify delivery (uses the form values, including unsaved changes when supported).
 - Delivery history is available under **Email logs** — open a message to view the full body and **Resend** when permitted.
 
+## Developers
+
+Requires permission `settings.manage_developers` (workspace owners and admins by default).
+
+**Settings → Developers** is the workspace-wide integration surface (not a Marketplace module):
+
+| Section | What it does |
+|---------|----------------|
+| **API tokens** | Create long-lived Bearer tokens (`es_…`) for calling `/api/tenant/v1`. The plaintext secret is shown **once** on create/rotate. Tokens act as the creating user — prefer a dedicated integration user with least privilege. |
+| **Outbound webhooks** | Subscribe to domain events (`lead.created`, `task.completed`, …). EloSync POSTs a signed JSON envelope to your HTTPS URL. Signing secret shown once. Use **Send test**, **Enable/Disable**, and review **Recent deliveries**. Rotate/delete ask for confirmation. |
+
+This is separate from **Leads → Integrations** (inbound lead ingest) and Automation’s per-workflow webhook action.
+
+See [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) and [Tenant Developers API](/api/tenant-v1-developers).
+
 ## What you cannot change
 
 Platform registration, maintenance mode, password policy, and billing defaults stay under Central Settings.

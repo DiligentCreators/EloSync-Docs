@@ -177,7 +177,7 @@ Forge → Server → **Daemons** (or site Daemons). Use the site path Forge show
 
 | Field | Value |
 |-------|--------|
-| Command | `php artisan queue:work redis --queue=automations,whatsapp-inbound,whatsapp-outbound,emails,default --sleep=1 --tries=3 --timeout=90 --max-time=3600` |
+| Command | `php artisan queue:work redis --queue=automations,whatsapp-inbound,whatsapp-outbound,webhooks,emails,default --sleep=1 --tries=3 --timeout=90 --max-time=3600` |
 | User | `forge` |
 | Directory | `/home/forge/api.example.com/current` **or** `/home/forge/api.example.com` (match your zero-downtime layout) |
 | Processes | `2` (scale with load) |

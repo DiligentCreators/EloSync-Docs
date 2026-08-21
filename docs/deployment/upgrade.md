@@ -33,6 +33,18 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 - Manual SQL that reactivates cancelled module subscriptions
 - Any process that expects login to repair missing permissions
 
+## Tenant API & Webhooks (Settings → Developers)
+
+Migrate-first platform capability (not a Marketplace module).
+
+1. Deploy Backend + Frontend + Docs together.
+2. Run `php artisan migrate --force` — adds `personal_access_tokens.token_type`, `tenant_webhook_endpoints`, `tenant_webhook_deliveries`, and grants `settings.manage_developers` to owner/admin defaults.
+3. Ensure a queue worker processes the **`webhooks`** queue (`DeliverTenantWebhookJob`). Include `webhooks` in the Forge worker list (see [Laravel Forge](./laravel-forge)).
+4. Scheduler runs `webhooks:prune-deliveries --days=90` weekly (delivery payload retention).
+5. Smoke: Settings → Developers → create API token → Bearer call → create webhook → Send test.
+
+See [Tenant API & Webhooks production readiness](./tenant-api-webhooks-production-readiness).
+
 ## AI Assistant platform 1.0.0 → 1.0.1
 
 After migrate (`2026_08_21_010000`–`010300`):
