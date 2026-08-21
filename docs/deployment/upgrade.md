@@ -40,7 +40,8 @@ Migrate-first platform capability (not a Marketplace module).
 1. Deploy Backend + Frontend + Docs together.
 2. Run `php artisan migrate --force` — adds `personal_access_tokens.token_type`, `tenant_webhook_endpoints`, `tenant_webhook_deliveries`, and grants `settings.manage_developers` to owner/admin defaults.
 3. Ensure a queue worker processes the **`webhooks`** queue (`DeliverTenantWebhookJob`). Include `webhooks` in the Forge worker list (see [Laravel Forge](./laravel-forge)).
-4. Smoke: Settings → Developers → create API token → Bearer call → create webhook → Send test.
+4. Scheduler runs `webhooks:prune-deliveries --days=90` weekly (delivery payload retention).
+5. Smoke: Settings → Developers → create API token → Bearer call → create webhook → Send test.
 
 See [Tenant API & Webhooks production readiness](./tenant-api-webhooks-production-readiness).
 

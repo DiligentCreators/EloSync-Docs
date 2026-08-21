@@ -8,7 +8,7 @@ Platform Settings → **Developers** (permission `settings.manage_developers`):
 - Outbound event webhooks: subscribe to CRM/Sales/Meeting/Invoice events; signed envelope; delivery ledger; Send test; SSRF-safe POSTs on queue `webhooks`.
 - Shared `SignedOutboundHttpClient`; Automation webhook action reuses it (body-only HMAC kept for BC).
 - Pest: `tests/Feature/Tenant/Developers/*`, `tests/Unit/Http/SignedOutboundHttpClientTest.php`.
-- Playwright: `e2e/tests/settings/settings.developers.spec.ts`.
+- Playwright: `e2e/tests/settings/tenant-settings.developers.spec.ts` (full one-login workflow; `npm run test:e2e:developers`).
 - Docs: [User guide](/user-guide/tenant-settings#developers), [Developer guide](/developer-guide/tenant-api-webhooks), [API](/api/tenant-v1-developers), [Production readiness](/deployment/tenant-api-webhooks-production-readiness) — **Go** (migrate-first).
 
 ## AI Test connection empty model fallback (2026-08-21)

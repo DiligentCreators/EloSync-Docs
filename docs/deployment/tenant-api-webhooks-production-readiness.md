@@ -15,13 +15,15 @@ Tenant API & Webhooks ships as a **platform** capability (permission `settings.m
 
 | Gate | Result |
 |------|--------|
-| Migrate-only (`token_type`, webhook tables, permission sync) | **Pass** |
+| Migrate-only (`token_type` short index, webhook tables, permission sync) | **Pass** |
 | No parallel auth / route tree; Sanctum + Spatie unchanged | **Pass** |
-| SSRF guards on webhook URLs | **Pass** |
+| SSRF guards (private IP / localhost) + **no redirect follow** | **Pass** |
 | Timestamped HMAC envelope (`{timestamp}.{body}`) | **Pass** |
 | Automation still entitled-gated; webhooks independent | **Pass** |
-| Pest Developers + SignedOutboundHttpClient | **Pass** |
-| Playwright Settings → Developers smoke | **Pass** (create token once) |
+| Send test does not consume failure budget / auto-disable | **Pass** |
+| Delivery retention (`webhooks:prune-deliveries` weekly) | **Pass** |
+| Pest Developers + SignedOutboundHttpClient (incl. redirect test) | **Pass** |
+| Playwright Settings → Developers full one-login workflow | **Pass** |
 | Docs + CHANGELOG + roadmap | **Pass** |
 
 ---
@@ -29,9 +31,16 @@ Tenant API & Webhooks ships as a **platform** capability (permission `settings.m
 ## Deploy
 
 1. Deploy Backend + Frontend + Docs together.
-2. Run migrations (includes `settings.manage_developers` grant to owner/admin defaults).
+2. Run migrations (includes `settings.manage_developers` grant to owner/admin defaults). Index name is `pat_token_type_tokenable_index` (MySQL-safe).
 3. Ensure a queue worker processes the `webhooks` queue (include `webhooks` alongside `automations` / `emails` / `default` on Forge).
-4. Smoke: Settings → Developers → create API token → call a tenant endpoint with Bearer → create webhook → Send test.
+4. Scheduler already includes `webhooks:prune-deliveries --days=90` weekly (payload retention).
+5. Smoke: Settings → Developers → create API token → call a tenant endpoint with Bearer → create webhook → Send test → confirm Recent deliveries.
+
+## Operator notes
+
+- Integration tokens act as the creating user (`abilities: *`) — mint via a least-privilege integration user.
+- After 10 consecutive **event** delivery failures, endpoints auto-disable; **Send test** does not increment that budget. Operators can Enable again from the UI.
+- Outbound HTTP does not follow redirects (SSRF hardening).
 
 ## Explicitly deferred
 
@@ -39,3 +48,4 @@ Tenant API & Webhooks ships as a **platform** capability (permission `settings.m
 - `customer_payment.posted` event
 - Separate OpenAPI / integration-only route tree
 - OAuth client credentials
+- Full endpoint edit form (name/url/events) — Enable/Disable and rotate/delete are available

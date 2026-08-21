@@ -138,7 +138,7 @@ Requires permission `settings.manage_developers` (workspace owners and admins by
 | Section | What it does |
 |---------|----------------|
 | **API tokens** | Create long-lived Bearer tokens (`es_…`) for calling `/api/tenant/v1`. The plaintext secret is shown **once** on create/rotate. Tokens act as the creating user — prefer a dedicated integration user with least privilege. |
-| **Outbound webhooks** | Subscribe to domain events (`lead.created`, `task.completed`, …). EloSync POSTs a signed JSON envelope to your HTTPS URL. Signing secret shown once. Use **Send test** and review **Recent deliveries**. |
+| **Outbound webhooks** | Subscribe to domain events (`lead.created`, `task.completed`, …). EloSync POSTs a signed JSON envelope to your HTTPS URL. Signing secret shown once. Use **Send test**, **Enable/Disable**, and review **Recent deliveries**. Rotate/delete ask for confirmation. |
 
 This is separate from **Leads → Integrations** (inbound lead ingest) and Automation’s per-workflow webhook action.
 

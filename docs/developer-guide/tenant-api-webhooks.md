@@ -64,9 +64,11 @@ Automation outbound webhooks keep body-only HMAC for backward compatibility.
 ### Delivery
 
 - Queue: `webhooks` (`DeliverTenantWebhookJob`)
-- Up to 5 attempts with backoff `[30, 60, 120, 300]`
-- After 10 consecutive permanent failures, endpoint is deactivated
-- SSRF guards shared via `SignedOutboundHttpClient` (blocks loopback / private hosts)
+- Up to 5 attempts with backoff `[30, 60, 120, 300]`; `next_retry_at` is set on retryable HTTP failures
+- After 10 consecutive permanent **event** failures, endpoint is deactivated (UI Enable restores)
+- Manual **Send test** (`webhook.test`) does **not** increment the failure budget
+- SSRF: `SignedOutboundHttpClient` blocks loopback / private hosts and **does not follow redirects**
+- Retention: `webhooks:prune-deliveries --days=90` (scheduled weekly)
 
 ### Verify signature (PHP)
 
