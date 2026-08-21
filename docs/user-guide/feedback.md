@@ -28,11 +28,13 @@ Submitting shows a confirmation toast with the reference number (for example `FB
 
 So you do not have to describe your setup, the dialog also sends the page route and full URL you were on when you opened it, your browser user agent, and the app build version. The dialog tells you which page it captured before you submit.
 
-### My submissions
+### My submissions and ticket detail
 
-The **My submissions** tab in the same dialog lists your recent reports with their current status (New, Triaged, Planned, In progress, Resolved, Closed, Duplicate, Won't fix, Not reproducible). It refreshes automatically after you send something new.
+The **My submissions** tab in the same dialog lists your recent reports with their current status (New, Triaged, Planned, In progress, Resolved, Closed, Duplicate, Won't fix, Not reproducible). It refreshes automatically after you send something new. Open a row to go to that ticket’s **detail page** (`/#/feedback/…`) — description, attachments, public replies, and a status/module history track. Only **you** can see your own submissions; other workspaces (and other people in your workspace) cannot.
 
-When Central changes the status of your report or posts a **Public response**, you also receive an email at the address on your workspace account with the ticket number, title, and the update details. Status-change emails wait briefly so quick triage updates only notify for the final status. The email includes a link that opens **Give Feedback → My submissions**. Internal operator notes are never emailed.
+When Central changes the status of your report or posts a **Public response**, you also receive an email at the address on your workspace account with the ticket number, title, and the update details. Status-change emails wait briefly so quick triage updates only notify for the final status. The email includes a link that opens that ticket’s detail page. Internal operator notes and triage priority are never shown to you or emailed.
+
+Shared product ideation across tenants (vote / comment on sanitized feature ideas) is a future **Feature Board** — not this flow. See [Product Roadmap](/getting-started/product-roadmap#parked-do-not-promise-wait-for-multi-tenant-signal).
 
 ## Triaging feedback (Central operators)
 

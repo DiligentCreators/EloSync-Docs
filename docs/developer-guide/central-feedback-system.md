@@ -99,9 +99,11 @@ Routes live in `routes/tenant/v1.php` and `routes/central/v1.php`. Feedback is a
 |--------|------|---------|
 | `POST` | `/api/tenant/v1/feedback` | Create feedback (JSON, or multipart when an attachment is present). `module_slug` is **required** (`string`, `max:100`) — catalog slug or a short free-text area when the reporter chose Other in the SPA |
 | `GET` | `/api/tenant/v1/feedback` | List own submissions |
-| `GET` | `/api/tenant/v1/feedback/{feedback}` | Show (public fields + public comments only) |
+| `GET` | `/api/tenant/v1/feedback/{feedback}` | Show (public fields + public comments + public activity timeline; never priority or internal notes) |
 | `POST` | `/api/tenant/v1/feedback/{feedback}/comments` | Public comment |
 | `GET` | `/api/tenant/v1/feedback/attachments/{attachment}/download` | Download own attachment |
+
+Tenant SPA detail: `/#/feedback/{uuid}` (reporter only). Email status/public-reply CTAs deep-link to that page. The Give Feedback dialog **My submissions** tab still lists recent items and links into the detail page.
 
 ### Central (auth: `central-api`)
 
@@ -227,7 +229,7 @@ Reuse existing notification infrastructure — do not build a second bus.
 | Status changed (Central triage) | Submitting tenant user (`user_id`) | Mail (`FeedbackReporterUpdated`, kind `status_changed`) — delayed ~90s and suppressed if status moved again during debounce; skipped when the reporter is missing/soft-deleted or has no email; priority/module-only updates do not notify |
 | Public reply from Central | Submitting tenant user | Mail (`FeedbackReporterUpdated`, kind `public_reply`, immediate) — internal notes never notify |
 
-Reporter mail uses platform branding (same pattern as `CriticalFeedbackReported`), not tenant Branded chrome. Status/public-reply mail includes a **View my submissions** CTA (`/#/dashboard?feedback=submissions`) that opens the Give Feedback dialog on **My submissions**. In-app / CRM preference mute channels remain out of scope (transactional platform mail, same as critical-bug operator alerts).
+Reporter mail uses platform branding (same pattern as `CriticalFeedbackReported`), not tenant Branded chrome. Status/public-reply mail includes a **View feedback** CTA (`/#/feedback/{uuid}`) that opens the reporter’s dedicated ticket page (history, public comments, attachments). The shell dialog deep link (`/#/dashboard?feedback=submissions`) still opens **My submissions**. In-app / CRM preference mute channels remain out of scope (transactional platform mail, same as critical-bug operator alerts).
 
 ---
 
@@ -261,10 +263,17 @@ Pest + SPA unit/e2e coverage ships with the feature and includes:
 4. Validation rejects invalid types / oversized files
 5. Only Central can change status/priority
 6. Public comments visible; internal notes hidden on tenant show
-7. Critical bugs mail `support_email` (cache cleared after system-settings seed)
-8. Frontend: dialog schema + Playwright shell wiring (`test:e2e:feedback`) against a stubbed tenant API
+7. Public activity timeline on tenant show includes status/module changes; priority changes never leak
+8. Critical bugs mail `support_email` (cache cleared after system-settings seed)
+9. Frontend: dialog schema + detail page + Playwright shell wiring (`test:e2e:feedback`) against a stubbed tenant API
 
 ---
+
+## Feature Board (parked — do not build here)
+
+Cross-tenant or logged-in **shared ideation** (see what others request, vote, add requirements) is **out of scope** for Give Feedback. Feedback tickets may contain screenshots and customer PII; they stay **reporter-only** on the tenant API.
+
+When demand is clear, ship a separate **Feature Board** platform surface (sanitized titles/descriptions, no attachment dump by default). Tracked under [Product Roadmap → Future Expansion → Parked](/getting-started/product-roadmap#parked-do-not-promise-wait-for-multi-tenant-signal). Do not open cross-tenant lists on `feedback_items`.
 
 ## Future integrations (do not pre-build)
 
