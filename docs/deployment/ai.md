@@ -8,8 +8,8 @@ Companion readiness audit: [AI production readiness](./ai-production-readiness).
 
 | Piece | Notes |
 |-------|--------|
-| Catalog | `ai` ($29/$290) **1.0.1**, packs `ai-credits-1k` / `5k` / `20k` (require `ai`) |
-| Migrations | `2026_08_21_010000` register · `010100` permissions · `010200` tables · `010300` version bump **1.0.1** |
+| Catalog | `ai` ($29/$290) **1.1.0**, packs `ai-credits-1k` / `5k` / `20k` (require `ai`) |
+| Migrations | `2026_08_21_010000` register · `010100` permissions · `010200` tables · `010300` version bump **1.0.1** · `150423` version bump **1.1.0** |
 | Scheduler | `ai:rollover-monthly-credits` (daily UTC period rollover) |
 | Rate limits | `throttle:ai` (30/min) on message send + Lead Copilot |
 | Queues | None AI-specific — chat/copilot run **synchronously** on the web request |

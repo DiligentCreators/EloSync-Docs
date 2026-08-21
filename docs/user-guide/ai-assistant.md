@@ -14,7 +14,9 @@ Without the module, AI menu items and API routes are hidden.
 
 ### Business chat
 
-Ask EloSync about your permitted data — open tasks, stale leads, pipeline focus, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
+Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
+
+On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission. Citations link only to same-app record paths for modules you are entitled to.
 
 Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
 
