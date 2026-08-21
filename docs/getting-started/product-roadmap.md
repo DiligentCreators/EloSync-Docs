@@ -264,7 +264,7 @@ Expand into accounting and financial reporting.
 | General Ledger inquiry | Accounting |
 | Financial Reports (TB / P&L / BS) | Financial Reports |
 
-**Goal:** Provide the financial backbone required for a complete ERP solution. ✅ **Achieved** for the manual double-entry MVP (single currency). Soft auto-post from Payments (deposit) and Expenses (paid from) plus account transfers shipped in Accounting **1.1.0**; Invoices/Credit Notes/PO/Inventory auto-post still deferred.
+**Goal:** Provide the financial backbone required for a complete ERP solution. ✅ **Achieved** for the manual double-entry MVP (single currency). Soft auto-post from Payments (deposit) and Expenses (paid from), account transfers, and cash/bank **Set balance** (`ADJ-`) shipped through Accounting **1.2.0**; Invoices/Credit Notes/PO/Inventory auto-post still deferred.
 
 ---
 

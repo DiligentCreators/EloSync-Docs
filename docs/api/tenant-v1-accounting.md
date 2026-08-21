@@ -23,6 +23,19 @@ List query: optional `is_cash_bank=1` for deposit/paid-from pickers. List/show i
 
 Listing auto-seeds the starter chart when the tenant has no accounts. Starter Cash `1000` has `is_cash_bank=true`.
 
+## Account balance adjustments
+
+Cash/bank **Set balance** — posts a delta journal; never writes a stored balance column.
+
+| Method | Path | Permission |
+|--------|------|------------|
+| GET | `/account-balance-adjustments` | `accounting.view` |
+| GET | `/account-balance-adjustments/{accountBalanceAdjustment}` | `accounting.view` |
+| POST | `/accounts/{account}/balance-adjustments` | `accounting.create` |
+| POST | `/account-balance-adjustments/{accountBalanceAdjustment}/void` | `accounting.void` |
+
+Create body: `target_balance` (required), `entry_date`, optional `offset_account_id` (default system Owner Equity `3000`), `memo`, `currency`. Account must be active cash/bank. `delta = target − current`; `|delta| < 0.01` → 422. Increase: Dr account / Cr offset; decrease: Dr offset / Cr account. Numbers `ADJ-#####`. List query: optional `account_id`, `status`, `from`, `to`, `search`. Void body optional `void_reason`.
+
 ## Journal entries
 
 | Method | Path | Permission |

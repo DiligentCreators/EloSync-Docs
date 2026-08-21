@@ -1,6 +1,6 @@
 # Accounting — Developer Guide
 
-Mirrors the Leads/Expenses module layers under flat `app/` namespaces. Slug `accounting`, middleware `module:accounting`, permissions `accounting.*`. Catalog version **1.1.0**.
+Mirrors the Leads/Expenses module layers under flat `app/` namespaces. Slug `accounting`, middleware `module:accounting`, permissions `accounting.*`. Catalog version **1.2.0**.
 
 ## Domain
 
@@ -10,10 +10,13 @@ Mirrors the Leads/Expenses module layers under flat `app/` namespaces. Slug `acc
 | `JournalEntry` | `journal_entries` | `draft` \| `posted` \| `void`; `JE-` numbers |
 | `JournalEntryLine` | `journal_entry_lines` | debit XOR credit; FK to accounts |
 | `AccountTransfer` | `account_transfers` | `posted` \| `void`; `TRF-` numbers; linked `journal_entry_id` |
+| `AccountBalanceAdjustment` | `account_balance_adjustments` | `posted` \| `void`; `ADJ-` numbers; previous/target/delta + linked JE |
 
-Services: `AccountService`, `JournalEntryService`, `GeneralLedgerService`, `ChartOfAccountsSeederService`, `CashMovementJournalService`, `AccountTransferService`.
+Services: `AccountService`, `JournalEntryService`, `GeneralLedgerService`, `ChartOfAccountsSeederService`, `CashMovementJournalService`, `AccountTransferService`, `AccountBalanceAdjustmentService`.
 
-`CashMovementJournalService` creates+posts two-line journals and voids linked entries. Used by Payments post/void, Expenses pay, and Account Transfers.
+`CashMovementJournalService` creates+posts two-line journals and voids linked entries. Used by Payments post/void, Expenses pay, Account Transfers, and balance adjustments.
+
+`AccountBalanceAdjustmentService::create` reads current balance via `FinancialReportService::currentBalancesFor`, posts the delta, and stores an `ADJ-` row (default offset Equity `3000`).
 
 Events → `AccountingEventSubscriber` → `PlatformAuditService` + Spatie `LogsActivity`.
 
@@ -33,6 +36,7 @@ See [tenant-v1-accounting.md](/api/tenant-v1-accounting). Payments/expenses acco
 ## Frontend
 
 - Routes: `/accounts`, `/journals`, `/account-transfers`, `/general-ledger`
+- Account view: **Set balance** dialog + **Balance adjustments** list/void for cash/bank
 - Nav group **Finance**, dual-gated `module: accounting` + `PERMISSIONS.accounting.view`
 - Production notes: `JournalEntryService::post` / `void` use `DB::transaction` + `lockForUpdate()`; system account `code`/`type` immutable; GL inquiry paginated (100/500); cash movements auto-post (not draft-only like Payroll).
 - Playwright (tenant project, one login session per suite):
@@ -42,4 +46,4 @@ See [tenant-v1-accounting.md](/api/tenant-v1-accounting). Payments/expenses acco
 
 ## Tests
 
-Pest: `tests/Feature/Tenant/Accounting/` (CRUD, cash/bank + balances, transfers, journal post/void, GL), plus `CustomerPaymentAccountingTest`, `ExpenseAccountingTest`.
+Pest: `tests/Feature/Tenant/Accounting/` (CRUD, cash/bank + balances, transfers, balance adjustments, journal post/void, GL), plus `CustomerPaymentAccountingTest`, `ExpenseAccountingTest`.
