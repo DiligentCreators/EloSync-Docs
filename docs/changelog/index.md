@@ -1,5 +1,12 @@
 # Changelog
 
+## Feedback detail page + Feature Board parked (2026-08-22)
+
+- Tenant reporters get a dedicated feedback detail page (`/#/feedback/{uuid}`) with public comments, attachments, and a public status/module activity timeline (never internal notes or triage priority).
+- My submissions in Give Feedback links to the detail page; status/public-reply email CTA deep-links to the same page.
+- **Feature Board** (shared sanitized ideation across tenants) documented as **Parked** on the product roadmap — distinct from Give Feedback / Help Desk / Central triage; do not open raw cross-tenant feedback lists.
+- Docs: Give Feedback user guide, Central Feedback System, Product Roadmap, this changelog.
+
 ## Notifications list and filters (2026-08-22)
 
 - Bell dropdown shows **unread only** (up to 20); marking read removes the row so the next unread can fill in.

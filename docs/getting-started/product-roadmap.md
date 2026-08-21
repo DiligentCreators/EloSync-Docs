@@ -418,6 +418,7 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | Multi-Branch Management | Enterprise-ish; not founding-beta SMB core |
 | Analytics report builder / saved / scheduled reports | Reports suite v2 |
 | Storage attachment persistence (task/lead images, email files) | Completes Storage MVP gaps |
+| **Feature Board** | Platform surface (not a Marketplace module): sanitized feature requests with vote/comment so tenants can see shared product ideas. **Not** raw [Give Feedback](/user-guide/feedback) tickets — those stay reporter-only (PII / screenshots). Distinct from [Help Desk](/user-guide/help-desk-overview) (workspace support) and [Central Feedback](/developer-guide/central-feedback-system) (operator triage). Promote only when Founding Beta demand is clear. |
 
 ### Out of active scope (unless demanded)
 
