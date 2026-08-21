@@ -6,8 +6,9 @@ Catalog MINOR: **`ai` 1.0.1 → 1.1.0**.
 
 - Read tools: Projects (`search_projects`, `get_project`, `get_overdue_projects`), Opportunities (`search_opportunities`, `get_pipeline_summary`), Invoices (`get_overdue_invoices`, `get_invoice_balance_summary`); tool rows include numeric `id` + `uuid`.
 - `ProjectService` list supports `overdue=true` (planned/active/on_hold with `ends_on` before workspace-local today).
-- Ask EloSync empty-state starter chips (module-gated); reference deep links resolve from `url` or numeric `entity_type` + `entity_id`.
-- Pest: `tests/Feature/Tenant/Ai/AiReadToolsTest.php`; Vitest `src/lib/ai-reference-href.test.ts`; Playwright starter chip visibility.
+- Ask EloSync empty-state starter chips (module-gated); citation hrefs allowlisted via `isSafeRedirectPath` (unsafe model urls ignored; entity_type + numeric id fallback).
+- Pest: `tests/Feature/Tenant/Ai/AiReadToolsTest.php`; Vitest `src/lib/ai-reference-href.test.ts`; Playwright starter chip click.
+- Production readiness: [AI Assistant](/deployment/ai-production-readiness) — **Go** (citation hardening remediated).
 - Docs: [AI tools](/developer-guide/ai-tools), [User guide](/user-guide/ai-assistant), [Tenant AI API](/api/tenant-v1-ai).
 
 ## Tasks assignee picker ignores lead-exclude flag (2026-08-21)

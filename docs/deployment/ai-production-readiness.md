@@ -5,10 +5,10 @@
 | **Date** | 2026-08-21 |
 | **Status** | **Go** — remediations merged; staging smoke + Central key + scheduler still required before Marketplace traffic |
 | **Scope** | Billable Marketplace module `ai` catalog **1.1.0** + packs `ai-credits-1k` / `5k` / `20k` |
-| **Branch** | `feature/ai-platform-byok-credits` |
+| **Branch** | `feature/ai-tools-depth-ask-elosync` |
 | **Companion** | [AI deployment](./ai) · [Architecture](/architecture/ai-platform) · [Credits](/developer-guide/ai-credits) · [Tools](/developer-guide/ai-tools) · [API](/api/tenant-v1-ai) · [User guide](/user-guide/ai-assistant) |
 
-**PRs (open):** Backend / Frontend / Docs on `feature/ai-platform-byok-credits`
+**PRs (open):** Backend / Frontend / Docs on `feature/ai-tools-depth-ask-elosync`
 
 ---
 
@@ -16,7 +16,9 @@
 
 EloSync AI is a **billable** Marketplace SKU (`$29/mo`, `$290/yr`), **not** default-included. Phase 1 ships Gateway orchestration over `laravel/ai`, dual-balance credit wallet, BYOK + Central keys, Ask EloSync panel, Lead Copilot, and write confirmation for `create_task`.
 
-**Go / No-Go:** **Go**. Credit-integrity hardenings (wallet row lock, pre-provider credit ceiling, request-path `ensurePeriod`), `ai.manage` enforcement on Settings AI, and dedicated `throttle:ai` are in place; catalog **1.1.0** adds Projects / Opportunities / Invoices read tools and Ask EloSync starters. Complete staging smoke and Central AI key + scheduler setup before production Marketplace opt-in.
+Catalog **1.1.0** adds Projects / Opportunities / Invoices **read** tools, Ask EloSync starter chips, numeric deep-link ids, and citation URL allowlisting (`isSafeRedirectPath`).
+
+**Go / No-Go:** **Go**. Credit-integrity hardenings (wallet row lock, pre-provider credit ceiling, request-path `ensurePeriod`), `ai.manage` enforcement on Settings AI, and dedicated `throttle:ai` remain in place. Complete staging smoke and Central AI key + scheduler setup before production Marketplace opt-in.
 
 | Gate | Result |
 |------|--------|
@@ -47,6 +49,8 @@ EloSync AI is a **billable** Marketplace SKU (`$29/mo`, `$290/yr`), **not** defa
 | Dual wallet; burn included first | Pass | Pass (badge) | Pass |
 | Write tools require confirmation | Pass | Pass | Pass |
 | Phase-1 tools: Leads + Tasks (+ `create_task`) | Pass | Pass | Pass |
+| 1.1.0 read tools: Projects + Opportunities + Invoices | Pass | Pass (starters) | Pass |
+| Citation hrefs same-app only (`isSafeRedirectPath`) | Pass | Pass | Pass |
 | UUID conversation / message IDs | Pass | Pass (string IDs) | Pass |
 | No chatbot bolt-on / parallel auth | Pass | Pass | Pass |
 
@@ -62,6 +66,14 @@ EloSync AI is a **billable** Marketplace SKU (`$29/mo`, `$290/yr`), **not** defa
 | F2 | **High** | `burn()` lacked row lock | `lockForUpdate()` on wallet (and purchase ledger check) inside grant/burn/rollover transactions |
 | F3 | **High** | `ensurePeriod()` never called | Wired on chat, Lead Copilot, and `GET /ai/credits` |
 | F4 | **Medium** | `ai.manage` unused | Settings AI update/test require `ai.manage`; UI tab gated by module + `ai.manage` |
+
+### 1.1.0 tools depth (this delivery)
+
+| ID | Severity | Finding | Resolution |
+|----|----------|---------|------------|
+| R5 | **High** | Ask EloSync citations trusted model `url` (open redirect / phishing) | Closed — `resolveAiReferenceHref` uses `isSafeRedirectPath`; unsafe urls fall back to numeric entity paths; no external AI anchors |
+| L1 | Low | No positive `availableFor` entitlement tests for new tools | Open — non-blocking follow-up |
+| L2 | Low | Project tool happy paths skip installing `projects` in Pest | Open — chat path still gated by registry |
 
 ### Open / ops (ops checklist — not code blockers)
 
@@ -86,9 +98,9 @@ EloSync AI is a **billable** Marketplace SKU (`$29/mo`, `$290/yr`), **not** defa
 
 ## Deploy order
 
-1. **Backend** — migrate `2026_08_21_010000`–`010300`; confirm scheduler runs `ai:rollover-monthly-credits`  
+1. **Backend** — migrate through `2026_08_21_150423` (catalog **1.1.0**); confirm scheduler runs `ai:rollover-monthly-credits`  
 2. **Central Settings → AI** — enable platform AI; set encrypted `ai_api_key` + models  
-3. **Frontend** — SPA with Ask EloSync, Settings AI (`ai.manage`), Lead Copilot, Central usage  
+3. **Frontend** — SPA with Ask EloSync starters, safe citations, Settings AI (`ai.manage`), Lead Copilot, Central usage  
 4. **Docs** — including this readiness page  
 5. Staging smoke before production Marketplace opt-in  
 
@@ -100,7 +112,7 @@ Suggested merge order: **Backend → Frontend → Docs**.
 
 | # | Check | Owner | Pass? |
 |---|-------|-------|-------|
-| 1 | Migrations `2026_08_21_010000`–`010300` applied (no production `db:seed`) | Ops | ☐ |
+| 1 | Migrations `2026_08_21_010000`–`010300` **and** `150423` (ai **1.1.0**) applied (no production `db:seed`) | Ops | ☐ |
 | 2 | Catalog rows `ai`, `ai-credits-1k`, `ai-credits-5k`, `ai-credits-20k` published; `ai` billable **1.1.0** | Ops | ☐ |
 | 3 | Permissions `ai.use`, `ai.manage`, `ai.confirm` granted to default admin/manager maps | Ops | ☐ |
 | 4 | Scheduler includes **`ai:rollover-monthly-credits`** (daily, `withoutOverlapping`, `onOneServer`) | Ops | ☐ |
@@ -120,11 +132,13 @@ Suggested merge order: **Backend → Frontend → Docs**.
 2. Marketplace → install **AI** → activate (payment path or local activate)  
 3. Confirm credit badge / wallet after activation (prorated included if mid-month)  
 4. Settings → AI (`ai.manage`) → validation → save platform mode  
-5. Ask EloSync → empty Send disabled → send message (platform or BYOK)  
-6. Exhaust / zero wallet → expect **402** / clear UI error on platform mode  
-7. Lead detail → AI Copilot → Summarize / Next action / Draft (preview only)  
-8. Prompt a write (`create_task`) → pending action → confirm with `ai.confirm` / cancel  
-9. Optional: buy credit pack → prepaid balance increases; ledger idempotent on replay  
+5. Ask EloSync → starter chips (entitled modules) → send / graceful provider error  
+6. Ask overdue projects / pipeline summary / overdue invoices (when modules entitled)  
+7. Confirm citation chips never navigate off-app (unsafe model urls ignored)  
+8. Exhaust / zero wallet → expect **402** / clear UI error on platform mode  
+9. Lead detail → AI Copilot → Summarize / Next action / Draft (preview only)  
+10. Prompt a write (`create_task`) → pending action → confirm with `ai.confirm` / cancel  
+11. Optional: buy credit pack → prepaid balance increases; ledger idempotent on replay  
 
 ---
 
