@@ -1,5 +1,12 @@
 # Changelog
 
+## Notifications list and filters (2026-08-22)
+
+- Bell dropdown shows **unread only** (up to 20); marking read removes the row so the next unread can fill in.
+- Full page `/#/notifications` with status (all / unread / read) and date-from / date-to filters; Mark all read.
+- API `GET /notifications` accepts `status`, `date_from`, `date_to`; list responses include standard pagination `meta`.
+- Pest: `NotificationIndexFilterTest`. Docs: tenant notifications API + Tenant Application user guide.
+
 ## Accounting production readiness (2026-08-22)
 
 Catalog PATCH: **`accounting` 1.6.0 → 1.6.1**, **`financial-reports` 1.1.0 → 1.1.1**.

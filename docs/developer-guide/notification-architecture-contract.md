@@ -232,9 +232,10 @@ Generic payload shape:
 - Channel: `private-tenant.{tenantId}.user.{userId}`
 - Auth: authenticated user id matches `{userId}` **and** `user.tenant_id === {tenantId}`
 - Broadcast envelope: `{ id, data, unread_count? }` only after successful DB write
-- Echo updates the TanStack Query list/unread caches and invalidates dashboard data.
+- Echo updates the TanStack Query unread badge + unread inbox caches, invalidates the full list page query, and invalidates dashboard data.
 - The SPA uses a 90-second fallback poll only while Echo is disconnected; window focus also refetches.
 - Reconnect fetches recover missed database rows but never replay browser OS notifications.
+- Bell inbox is unread-only (`status=unread`); full history lives at `/#/notifications` with status + date filters.
 
 ## Modular Notification Registry (SPA)
 
@@ -295,7 +296,7 @@ Additive Laravel channel (`FcmChannel`) for registered FCM device tokens. Same n
 
 Inbox:
 
-- `GET /api/tenant/v1/notifications`
+- `GET /api/tenant/v1/notifications` — optional `status` (`unread`|`read`), `date_from`, `date_to`, pagination
 - `GET /api/tenant/v1/notifications/unread-count`
 - `POST /api/tenant/v1/notifications/{id}/read`
 - `POST /api/tenant/v1/notifications/read-all`

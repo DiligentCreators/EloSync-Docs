@@ -21,7 +21,7 @@ Header actions match Central:
 - Breadcrumbs
 - Search pages (`⌘K` / `Ctrl+K`) — jumps between sidebar pages
 - Theme toggle
-- **Notifications** — realtime in-app list and unread badge, with polling fallback when the live connection is unavailable
+- **Notifications** — unread inbox in the topbar bell (realtime + polling fallback). Opening an item marks it read and removes it from the bell so newer unread items can appear. Use **View all notifications** (or `/#/notifications`) for history with unread/read and date filters
 - Settings shortcut
 - Account menu (Profile, Settings, Log out)
 
