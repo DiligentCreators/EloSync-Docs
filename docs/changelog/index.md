@@ -1,5 +1,9 @@
 # Changelog
 
+## Entity search labels — name + company (2026-08-23)
+
+- **SaaS-Frontend:** Shared `src/lib/entity-display.ts` helpers show **name — company** together in module search dropdowns (contacts, leads, opportunities, resellers), billing list Customer columns, invoice pickers, activity related columns, and record view cards — so duplicate person names are distinguishable by company.
+
 ## Marketing pixels scaffold (2026-08-22)
 
 - **SaaS-Frontend:** `src/lib/marketing-pixels/` — optional env-gated GTM (existing), Meta Pixel, LinkedIn Insight Tag, and X Pixel; `initMarketingPixels()` + `MarketingPageView` for HashRouter SPA page views; Vitest coverage.
