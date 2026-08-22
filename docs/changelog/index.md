@@ -2,8 +2,8 @@
 
 ## Connected workflow polish — document prefixes + billing email (2026-08-23)
 
-- **SaaS-Frontend:** Settings → General → **Document number prefixes** for entitled modules (invoices, payments, credit notes, estimates, purchase orders, expenses, assets, Help Desk). Playwright: `tenant-settings.number-prefixes.spec.ts`.
-- **SaaS-Backend:** `POST /invoices|estimates|quotations/{id}/email` — email customers with optional PDF attachment (requires document already sent). Activity timeline `emailed` event; tenant email logs.
+- **SaaS-Frontend:** Settings → General → **Document number prefixes** for entitled modules (invoices, payments, credit notes, estimates, purchase orders, expenses, assets, Help Desk). Playwright: `tenant-settings.number-prefixes.spec.ts`, `billing/connected-workflow-polish.spec.ts`.
+- **SaaS-Backend:** `POST /invoices|estimates|quotations/{id}/email` — email customers with optional PDF attachment (requires document already sent). Activity timeline `emailed` event; tenant email logs. Queued mailable stores PDF as base64 so the `emails` queue payload serializes correctly.
 - Catalog MINOR: `invoices` **1.8.0**, `estimates` **1.5.0**, `quotations` **1.6.0**.
 - Docs: user guides, API, developer guides, tenant settings.
 
