@@ -29,6 +29,7 @@ Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (ass
 - **Hard dependency**: Estimates declares a required `module_dependencies` row on Invoices — Marketplace install is blocked until Invoices is entitled, same pattern as Payments/Credit Notes → Invoices.
 - Status machine lives on `EstimateStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → sent → accepted|rejected|expired` (identical shape to `QuotationStatusEnum`). `EstimateService::transitionStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions, **including re-entering the same status**.
 - `send()` backfills `issue_date` to today if it wasn't already set, then transitions `draft → sent`.
+- **Customer email:** `POST …/email` (`estimates.send`, assignee-scoped, `throttle:billing-document-email`) delivers a branded message with optional PDF attachment via `BillingDocumentMailer` + `EstimateEmailService`. Requires a sent estimate (`sent`/`accepted`/`rejected`/`expired`; draft → 422). Records `EstimateActivityTypeEnum::Emailed` and tenant email logs (`estimate.emailed`).
 - Content updates (`PUT`) and line sync are **draft-only** via `Estimate::isEditable()` (`status === draft`). Assignment remains available after send via `POST …/assign`.
 - `POST …/status` route middleware requires `estimates.update`; the controller then re-checks the specific gate per target status (`sent` → `send`, `accepted` → `accept`, otherwise `update`) before delegating to `EstimateService::changeStatus()`.
 - `send` / `accept` / `convert` policies are assignee-scoped (same as `view` / `update`) unless the actor has `estimates.assign` or is superadmin.
@@ -46,7 +47,7 @@ Mirror of the [Credit Notes developer guide](/developer-guide/credit-notes) (ass
 - Assignee scoping via `ScopesToAssignee` with `estimates.assign`.
 - `estimates.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`). `opportunity_id` / `quotation_id` are optional, tenant-scoped `exists()` checks (a quotation belongs to an opportunity, but the estimate doesn't enforce that the two match).
-- Auto-numbering: `EstimateService::nextNumber()` reads the `estimates_number_prefix` tenant setting (default `EST-`), then zero-pads a running count to 5 digits — same pattern as Invoices/Payments/Credit Notes. Not yet exposed in the Tenant Settings UI. `estimates` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
+- Auto-numbering: `EstimateService::nextNumber()` reads the `estimates_number_prefix` tenant setting (default `EST-`), then zero-pads a running count to 5 digits — same pattern as Invoices/Payments/Credit Notes. Prefix is editable under **Settings → General → Document number prefixes**. `estimates` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
 
 ## Permissions
 
@@ -56,7 +57,7 @@ estimates.view | create | update | delete | restore | force.delete | assign | se
 
 Routes use `module:estimates` then `can:estimates.*` / policies.
 
-Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.4.2**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced; 1.3.3 adds soft Invoices entitlement check, `lockForUpdate`, unique `estimate_id`, and soft-delete recovery messaging; 1.4.0 dedicated record pages; 1.4.1 PDF long-notes pagination; 1.4.2 PDF long line-body pagination.
+Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.5.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`. 1.3.0 added optional product line picker; 1.3.1 hardens `LinkableProduct` + sanitizer; 1.3.2 blocks convert when the linked quotation is already invoiced; 1.3.3 adds soft Invoices entitlement check, `lockForUpdate`, unique `estimate_id`, and soft-delete recovery messaging; 1.4.0 dedicated record pages; 1.4.1 PDF long-notes pagination; 1.4.2 PDF long line-body pagination; 1.5.0 customer email delivery (`POST …/email`).
 
 ## API (tenant)
 
@@ -69,7 +70,7 @@ SPA mirrors **Invoices**/**Quotations** (table + create/edit page, record page) 
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/estimates/` (`estimates-page.tsx`, `estimate-form-dialog.tsx`, `estimate-detail-sheet.tsx`) |
-| Detail sheet | Overview, linked contact/company/opportunity/quotation/converted invoice, line items, notes, timeline — actions: assign, add note, send, accept, reject, **convert to invoice**, edit (draft only), delete |
+| Detail sheet | Overview, linked contact/company/opportunity/quotation/converted invoice, line items, notes, timeline — actions: assign, add note, send, email customer (after send), accept, reject, **convert to invoice**, edit (draft only), delete |
 | Form dialog | Title, currency, valid-until, rich-text notes, contact/company pickers, opportunity picker (quotation picker filtered by the selected opportunity), and shared `DocumentLinesEditor` + `DocumentTotalsPanel` with live subtotal/discount/tax/total preview |
 | Service | `estimateService` in `src/api/services.ts` |
 | Types | `Estimate*` in `src/types/api.ts` |

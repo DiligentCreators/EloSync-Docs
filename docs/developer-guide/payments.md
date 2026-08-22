@@ -33,7 +33,7 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 - Assignee scoping via `ScopesToAssignee` with `payments.assign`.
 - `payments.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`), same pattern as Invoices.
-- Auto-numbering: `CustomerPaymentService::nextNumber()` reads the `payments_number_prefix` tenant setting (default `PAY-`), then zero-pads a running count to 5 digits — same pattern as Invoices' `invoices_number_prefix`. Neither prefix setting is exposed in the Tenant Settings UI yet. `customer_payments` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
+- Auto-numbering: `CustomerPaymentService::nextNumber()` reads the `payments_number_prefix` tenant setting (default `PAY-`), then zero-pads a running count to 5 digits — same pattern as Invoices' `invoices_number_prefix`. Both prefixes are editable under **Settings → General → Document number prefixes**. `customer_payments` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
 
 ## Permissions
 

@@ -81,6 +81,18 @@ Permission: `estimates.assign`.
 
 Transitions `draft → sent`. Backfills `issue_date` to today if unset. Permission: `estimates.send` (assignee-scoped unless the actor has `estimates.assign` or is superadmin). **Status-only** — does not email or generate a PDF.
 
+### POST `/estimates/{id}/email`
+
+`{ "to"?: string[], "cc"?: string[], "bcc"?: string[], "subject": string, "message": string, "attach_pdf"?: boolean }`
+
+Permission: `estimates.send` (assignee-scoped unless the actor has `estimates.assign` or is superadmin). Throttle: `billing-document-email` (10/min per user).
+
+Requires the estimate to already be sent — allowed statuses: `sent`, `accepted`, `rejected`, `expired`. Draft returns 422 on `status`.
+
+When `to` is omitted, resolves the recipient from the linked contact email, then company email. If no address is found, returns 422 on `to`.
+
+Queues a branded email via the tenant mailer (optional PDF attachment from `EstimatePdfService`). Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `estimate.emailed`).
+
 ### POST `/estimates/{id}/accept`
 
 Transitions `sent → accepted`. Permission: `estimates.accept` (assignee-scoped unless the actor has `estimates.assign` or is superadmin).
@@ -117,4 +129,4 @@ Permission: `estimates.update`.
 
 ### GET `/estimates/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`, `emailed`).

@@ -62,6 +62,18 @@ Permission: `quotations.assign`.
 
 Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). **Status-only** — does not email or generate a PDF.
 
+### POST `/quotations/{id}/email`
+
+`{ "to"?: string[], "cc"?: string[], "bcc"?: string[], "subject": string, "message": string, "attach_pdf"?: boolean }`
+
+Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). Throttle: `billing-document-email` (10/min per user).
+
+Requires the quotation to already be sent — allowed statuses: `sent`, `accepted`, `rejected`, `expired`. Draft returns 422 on `status`.
+
+When `to` is omitted, resolves the recipient from the linked contact email, then company email. If no address is found, returns 422 on `to`.
+
+Queues a branded email via the tenant mailer (optional PDF attachment from `QuotationPdfService`). Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `quotation.emailed`).
+
 ### POST `/quotations/{id}/accept`
 
 Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scoped unless the actor has `quotations.assign` or is superadmin).
@@ -97,4 +109,4 @@ Permission: `quotations.update`.
 
 ### GET `/quotations/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`, `emailed`).

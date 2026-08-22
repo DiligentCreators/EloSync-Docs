@@ -6,7 +6,7 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 > **Naming:** the model is `CustomerInvoice` — a tenant's invoices to *its own* customers. Central's own platform-billing `Invoice`/`tenant-v1-...` endpoints for subscription invoices are unrelated.
 
-Assignee scoping: without `invoices.assign` (and not superadmin), list/stats/view/update/**send**/**void** only include invoices where `assigned_to` is the current user.
+Assignee scoping: without `invoices.assign` (and not superadmin), list/stats/view/update/**send**/**void**/**email** only include invoices where `assigned_to` is the current user.
 
 ## Stats
 
@@ -84,6 +84,18 @@ Permission: `invoices.assign`.
 
 Transitions `draft → unpaid`. Backfills `issue_date` to today if unset. Permission: `invoices.send` (assignee-scoped unless the actor has `invoices.assign` or is superadmin). **Status-only** — does not email the customer. Recurring drafts become an **active** series. `recurrence_next_issue_on` stays the date chosen on the draft when it is after the issue date; otherwise it becomes one frequency period after the issue date.
 
+### POST `/invoices/{id}/email`
+
+`{ "to"?: string[], "cc"?: string[], "bcc"?: string[], "subject": string, "message": string, "attach_pdf"?: boolean }`
+
+Permission: `invoices.send` (assignee-scoped unless the actor has `invoices.assign` or is superadmin). Throttle: `billing-document-email` (10/min per user).
+
+Requires the invoice to already be sent — allowed statuses: `unpaid`, `partial` (display-only; stored as `unpaid`), `paid`. Draft and `cancelled` return 422 on `status` (`Send the document before emailing.`).
+
+When `to` is omitted, resolves the recipient from the linked contact email, then company email. If no address is found, returns 422 on `to`.
+
+Queues a branded email via the tenant mailer (optional PDF attachment from `CustomerInvoicePdfService`). Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `customer_invoice.emailed`).
+
 ### POST `/invoices/{id}/recurrence/stop`
 
 `{ "void_latest_unpaid": boolean }` (optional, default false)
@@ -113,4 +125,4 @@ Permission: `invoices.update`.
 
 ### GET `/invoices/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `note_added`, `voided`, `deleted`, `restored`, `recurrence_started`, `recurrence_stopped`, `recurrence_generated`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `note_added`, `voided`, `deleted`, `restored`, `recurrence_started`, `recurrence_stopped`, `recurrence_generated`, `emailed`).

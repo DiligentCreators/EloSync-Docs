@@ -29,14 +29,18 @@ Edit from the row menu or the record page while the estimate is still **Draft**.
 
 An estimate starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the estimate as sent to the customer (does not email the customer or attach a PDF yet)
+- **Send** (`draft → sent`) — marks the estimate as sent to the customer (does not email the customer by itself)
 - **Accept** (`sent → accepted`) or **Reject** / **Expire** via the status action
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.
 
 ## Download PDF
 
-**Download PDF** is on the estimate record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Long notes and terms continue across as many pages as needed. Sending still does not email the customer.
+**Download PDF** is on the estimate record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items, discount/tax/total breakdown, and the memo notes. Long notes and terms continue across as many pages as needed.
+
+## Email customer
+
+After you **Send** the estimate (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email customer** on the record page (`estimates.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
 
 ## Convert to invoice
 
@@ -61,7 +65,3 @@ Users with **assign** can set or clear the assignee from the record page or the 
 ## Related records
 
 Every estimate record page shows its linked **Contact**, **Company**, **Opportunity**, **Quotation**, and — once converted — the resulting **Invoice**, each with a link to jump straight to that record's detail view.
-
-## What's not here yet
-
-E-mailing estimates to customers (with or without the PDF attached), reversing a conversion, and standalone estimates that don't require Invoices are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

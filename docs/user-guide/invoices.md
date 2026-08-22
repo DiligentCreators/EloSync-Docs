@@ -40,13 +40,17 @@ Stopping the series does **not** void history by itself.
 
 ## Download PDF
 
-**Download PDF** is on the invoice record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. Long notes and terms continue across as many pages as needed. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding. Sending still does not email the customer.
+**Download PDF** is on the invoice record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. Long notes and terms continue across as many pages as needed. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding.
+
+## Email customer
+
+After you **Send** the invoice (status is **Unpaid**, **Partial**, or **Paid**), use **Email customer** on the record page (`invoices.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. Delivery uses your workspace email configuration and appears in **Settings → Email logs**. **Send** only changes status — it does not email the customer.
 
 ## Status workflow
 
 An invoice starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → unpaid`) — marks the invoice as unpaid in the CRM (does not e-mail the customer); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series. When **Accounting** is installed, **Send** also posts Dr Accounts Receivable / Cr Sales Revenue for the invoice total.
+- **Send** (`draft → unpaid`) — marks the invoice as unpaid in the CRM (does not e-mail the customer by itself); sets the issue date to today if it wasn't set. If the invoice is recurring, this also starts the series. When **Accounting** is installed, **Send** also posts Dr Accounts Receivable / Cr Sales Revenue for the invoice total.
 - **Cancel** — available from Draft or Unpaid only; permanently cancels the invoice (`cancelled`). Blocked once any payment has been posted or any credit note applied — void the payments first (an applied credit note can't be undone at all). Partial payments keep the invoice **Unpaid** until the balance clears. When Accounting posted a journal on send, cancel voids that journal.
 
 **Paid** is set automatically when Payments (or credits) bring the balance to zero.
@@ -61,14 +65,10 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 - **Overview** — shows the invoice memo from the create/edit **Notes** field (also printed on the PDF)
 - **Notes** tab — internal activity notes the team adds after the invoice exists (not the same as the memo)
-- **Timeline** — create, update, assignment, status change, note, void, delete/restore, and recurring start/stop/generate events
+- **Timeline** — create, update, assignment, status change, note, void, delete/restore, recurring start/stop/generate, and **emailed** events
 
 ## Related payments and credit notes
 
 If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice record page shows a **Related payments** link to jump to the Payments module and record or review payments against this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.
 
 Converted invoices also show the source **Quotation**, **Estimate**, and/or **Contract** when those links are set.
-
-## What's not here yet
-
-E-mailing invoices to customers (with or without the PDF attached) is still planned — see the [Product Roadmap](/getting-started/product-roadmap).
