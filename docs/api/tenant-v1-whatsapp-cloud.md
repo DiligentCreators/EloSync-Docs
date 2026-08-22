@@ -7,11 +7,12 @@ Middleware: `module:whatsapp-cloud` + Spatie `can:whatsapp-cloud.*`
 
 | Method | Path | Permission |
 |--------|------|------------|
-| GET | `/whatsapp/integrations` | `manage_integrations` |
+| GET | `/whatsapp/integrations` | `view` (connection status) |
 | GET | `/whatsapp/integrations/oauth/redirect` | `manage_integrations` |
 | GET | `/whatsapp/integrations/wabas` | `manage_integrations` |
 | GET | `/whatsapp/integrations/phones?waba_id=` | `manage_integrations` |
 | POST | `/whatsapp/integrations/phones` | `manage_integrations` |
+| PATCH | `/whatsapp/integrations` | `manage_integrations` (`auto_create_leads`, `default_lead_source`) |
 | POST | `/whatsapp/integrations/disconnect` | `manage_integrations` |
 
 OAuth callback (central web): `GET /api/oauth/whatsapp/cloud/callback`
@@ -26,7 +27,9 @@ OAuth callback (central web): `GET /api/oauth/whatsapp/cloud/callback`
 | PATCH | `/whatsapp/conversations/{id}` | `send` |
 | POST | `/whatsapp/conversations/{id}/read` | `view` |
 | GET | `/whatsapp/conversations/{id}/messages` | `view` |
+| GET | `/whatsapp/conversations/{id}/attachments/{attachment}` | `view` |
 | POST | `/whatsapp/conversations/{id}/messages` | `send` (text; requires open CS window) |
+| POST | `/whatsapp/conversations/{id}/media` | `send` (multipart file; requires open CS window) |
 | POST | `/whatsapp/conversations/{id}/templates` | `send` (approved template) |
 
 ## Templates

@@ -68,7 +68,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 
 | Module / capability | Status |
 |---------------------|--------|
-| Media, Automation WhatsApp triggers, Lead Source WhatsApp Driver | Deferred (post-MVP) |
+| Media | Deferred interactive buttons/lists only (Lead Source + Automation WA + media shipped through 1.3.0) |
 
 #### WhatsApp Cloud (shipped MVP 1.0.0)
 
@@ -395,14 +395,14 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
 | **API & Webhooks** | ✅ Shipped — Settings → Developers (API tokens + outbound event webhooks); see [guide](/developer-guide/tenant-api-webhooks) |
 | **AI Assistant** | ✅ Shipped foundation v1.1.0 — billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; Projects / Opportunities / Invoices read tools + Ask EloSync starters; further UX/tools in progress |
-| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped MVP 1.0.0 — media, Automation WA triggers, Lead Source WhatsApp driver deferred post-MVP |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped **1.3.0** — Lead Source, Automation WA, media |
 
 ### Near-term (active focus)
 
 | Item | Notes |
 |------|--------|
 | **API & Webhooks** (tenant product surface) | ✅ Completed — Settings → Developers: integration API tokens (`es_…`) + outbound event webhooks; see [guide](/developer-guide/tenant-api-webhooks) · [API](/api/tenant-v1-developers) |
-| WhatsApp Cloud post-MVP polish | Media, Automation WA triggers, Lead Source WhatsApp driver — deepen CRM, not a new category |
+| WhatsApp Cloud post-MVP polish | Lead Source ✅; Automation WA ✅; Media ✅ **1.3.0** |
 | Documents polish (on demand) | Soft record links / nested folders — deferred from Documents **1.1.0**; promote only with clear demand |
 | **Customer Portal** | On demand after Help Desk / Billing self-serve signal |
 | **Recruitment** | On demand as an HR extension after Employees workflows stick |

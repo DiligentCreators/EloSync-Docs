@@ -12,11 +12,20 @@ Billable CRM Marketplace module (`whatsapp-cloud` **1.0.0**) that connects a Wha
 
 ## What is deferred (not in MVP)
 
-- Media attachments, interactive buttons/lists
-- Automation message triggers
-- WhatsApp Lead Source Driver (auto-create leads from unknown numbers)
+- Interactive buttons/lists
 - Alternate BSPs (Twilio, etc.)
 
+## Lead Source (v1.1.0)
+
+Opt-in on the WhatsApp connection: **Auto-create leads from unknown numbers**. When enabled and Leads is installed, the first inbound message from an unlinked contact creates or links a Lead via the WhatsApp Lead Source driver (`source_reference = whatsapp_cloud`).
+
+## Automation (v1.2.0)
+
+Trigger `whatsapp.message_received` and action `send_whatsapp_template` when Automation is entitled.
+
+## Media (v1.3.0)
+
+Send/receive image, document, audio, and video in the shared inbox (Storage quota applies; soft Storage entitlement).
 ## Permissions
 
 | Permission | Use |

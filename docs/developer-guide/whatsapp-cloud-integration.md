@@ -1,8 +1,8 @@
 # WhatsApp Cloud Integration
 
-> **Status: Shipped MVP 1.0.0** — billable Marketplace module `whatsapp-cloud`.
+> **Status: Shipped 1.3.0** — billable Marketplace module `whatsapp-cloud`.
 >
-> MVP includes: Meta WABA/phone connect, text send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement. Deferred: media, Automation message triggers, WhatsApp Lead Source Driver, alternate BSPs.
+> Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template`. Deferred: interactive buttons/lists, alternate BSPs.
 >
 > Follow the [Module Architecture](/architecture/module-architecture), [Module Development Standard](/developer-guide/module-development), [Documentation Governance](/developer-guide/documentation-governance) same-PR rule, and the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
@@ -12,17 +12,19 @@
 
 Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **WhatsApp communication platform** built on the official **WhatsApp Cloud API**, while keeping business logic inside EloSync and provider specifics inside replaceable drivers.
 
-**Shipped in MVP 1.0.0:**
+**Shipped through 1.3.0:**
 
 - Connect tenant WhatsApp Business Accounts and phone numbers via Meta
-- Send and receive text through EloSync (not the user’s personal WhatsApp client)
+- Send and receive **text and media** through EloSync (not the user’s personal WhatsApp client)
 - Shared inbox, Meta Cloud templates, delivery/read status webhooks
 - Soft-link conversations to Leads; mirror messages on the Lead timeline
+- Opt-in WhatsApp Lead Source Driver (`auto_create_leads`, default off)
+- Automation trigger `whatsapp.message_received` and action `send_whatsapp_template`
 - Notifications for inbound / send failed / needs reauth
 
 **Still deferred:**
 
-- Media, Automation WhatsApp triggers, WhatsApp Lead Source Driver, alternate BSPs, AI
+- Interactive buttons / lists, alternate BSPs, AI WhatsApp features
 - Replacing Communication Templates’ `wa.me` (kept as fallback when Cloud is not ready)
 - Making WhatsApp the only messaging channel forever (drivers must stay replaceable)
 
@@ -30,15 +32,17 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 
 ## Current state
 
-### WhatsApp Cloud (`whatsapp-cloud`) — shipped MVP
+### WhatsApp Cloud (`whatsapp-cloud`) — shipped 1.3.0
 
 | Shipped | Behavior |
 |---------|----------|
 | Marketplace module | Billable CRM slug `whatsapp-cloud` ($29 / $290) |
 | Connect | Meta OAuth → WABA → phone; webhook subscribe; encrypted tokens |
-| Inbox | Shared conversation list + thread; text send/receive |
+| Inbox | Shared conversation list + thread; text + media send/receive |
 | Templates | Sync Meta Cloud templates; required outside the 24h window |
-| Lead soft link | Manual `lead_id`; timeline via Lead APIs; no auto-create Lead |
+| Lead soft link | Manual `lead_id`; timeline via Lead APIs |
+| Lead Source | Opt-in `auto_create_leads` + `default_lead_source` |
+| Automation | Soft dep: `whatsapp.message_received` / `send_whatsapp_template` |
 | Notifications | Inbound, send failed, needs reauth |
 
 Canonical user docs: [WhatsApp Cloud](/user-guide/whatsapp-cloud) · [API](/api/tenant-v1-whatsapp-cloud) · [Deploy](/deployment/whatsapp-cloud).
@@ -53,15 +57,21 @@ EloSync **also** supports a lightweight WhatsApp handoff via [Communication Temp
 | Opens `wa.me` / WhatsApp Desktop / WhatsApp Web | API returns `wa_me_url`; the browser opens it |
 | User manually sends messages | The agent completes send inside WhatsApp; EloSync does not transmit the message |
 
-### Deferred (post-MVP)
+### Deferred
 
 | Capability | Status |
 |------------|--------|
-| Media upload/download | ⬜ Deferred |
-| Automation WhatsApp triggers/actions | ⬜ Deferred |
-| WhatsApp Lead Source Driver (auto-create Leads) | ⬜ Deferred |
+| Interactive buttons / lists | ⬜ Deferred |
 | Alternate BSPs (Twilio / 360dialog) | ⬜ Deferred |
 | AI Features | ⬜ Deferred |
+
+### Post-MVP polish (shipped)
+
+| Capability | Status |
+|------------|--------|
+| Media upload/download | ✅ Shipped (1.3.0) |
+| Automation WhatsApp triggers/actions | ✅ Shipped (1.2.0 / automation 1.1.0) |
+| WhatsApp Lead Source Driver (auto-create Leads) | ✅ Shipped (opt-in `auto_create_leads`) |
 
 ---
 
@@ -137,7 +147,7 @@ Automation
 | `WhatsAppCloudDriver` | Cloud API auth, webhooks, templates, media, status mapping |
 | Lead module | Lead ownership, timeline/activity hooks via `LeadService` / activity services — not Graph parsing |
 | Notification system | In-app / mail digests per [Notification Architecture Contract](/developer-guide/notification-architecture-contract) |
-| Automation Engine | Domain-event workflows shipped as Marketplace module `automation`; WhatsApp message event triggers remain Planned |
+| Automation Engine | Domain-event workflows (`automation` module); WhatsApp `whatsapp.message_received` + `send_whatsapp_template` shipped in automation **1.1.0** / WA **1.2.0** |
 
 Business rules (who may send, assignment, logging, automation) stay in EloSync. Drivers only speak to external providers.
 
@@ -571,15 +581,16 @@ Both respect driver boundaries: no Meta parsing inside `LeadService`; no convers
 | Conversation History | ✅ Shipped |
 | Delivery Tracking / Read Receipts | ✅ Shipped (webhook statuses) |
 | Soft Lead link + timeline | ✅ Shipped |
+| WhatsApp Lead Source Driver (opt-in auto-create) | ✅ Shipped (1.1.0) |
+| Automation WhatsApp triggers / send template | ✅ Shipped (1.2.0) |
+| Media (image / document / audio / video) | ✅ Shipped (1.3.0) |
 
 ### Deferred
 
 | Capability | Status |
 |------------|--------|
-| Automation WhatsApp triggers | ⬜ Deferred |
-| Media | ⬜ Deferred |
+| Interactive buttons / lists | ⬜ Deferred |
 | AI Features | ⬜ Deferred |
-| Lead Source WhatsApp Driver | ⬜ Deferred |
 | Alternate BSPs | ⬜ Deferred |
 
 ---
