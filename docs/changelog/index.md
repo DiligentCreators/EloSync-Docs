@@ -1,5 +1,10 @@
 # Changelog
 
+## Mermaid diagrams on docs site (2026-08-22)
+
+- Enabled [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid) so fenced Mermaid blocks render as diagrams (not code fences) across Deployment, Developer Guide, and User Guide pages (e.g. [Laravel Forge](/deployment/laravel-forge) topology chart).
+- Dependencies: `mermaid`, `vitepress-plugin-mermaid`. Redeploy Docs from `build-artifacts` after CI rebuilds.
+
 ## WhatsApp Cloud media (2026-08-22)
 
 Catalog MINOR: **`whatsapp-cloud` 1.2.0 → 1.3.0**.

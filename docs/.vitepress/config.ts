@@ -1,6 +1,7 @@
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
 const configDir = fileURLToPath(new URL('.', import.meta.url))
 const SITE_URL = 'https://docs.elosync.com'
@@ -20,7 +21,7 @@ function pageUrl(relativePath: string): string {
   return `${SITE_URL}/${path.replace(/^\//, '')}`
 }
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
 
@@ -570,4 +571,10 @@ export default defineConfig({
       next: 'Next page',
     },
   },
-})
+
+  // Mermaid fenced blocks (```mermaid) render as diagrams, not code.
+  // Dark mode follows VitePress appearance (body class containing "dark").
+  mermaid: {
+    theme: 'default',
+  },
+}))

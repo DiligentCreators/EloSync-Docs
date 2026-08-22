@@ -17,6 +17,18 @@
   width: 100%;
 }
 
+/* Mermaid diagrams: keep wide flowcharts readable without breaking the layout */
+.vp-doc .mermaid {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.vp-doc .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 .not-found-actions {
   display: flex;
   flex-wrap: wrap;

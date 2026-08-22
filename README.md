@@ -20,6 +20,8 @@ npm run docs:dev
 
 Open the URL printed in the terminal (default `http://localhost:5173`).
 
+Fenced `mermaid` blocks (flowcharts, sequence diagrams, etc.) render as interactive diagrams via [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid). Without that plugin they appear as raw code — that is what production showed before this was enabled.
+
 ## Local production build
 
 ```bash
