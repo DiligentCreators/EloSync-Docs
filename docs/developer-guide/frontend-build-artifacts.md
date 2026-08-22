@@ -53,7 +53,11 @@ echo "  VITE_CENTRAL_PATH_PREFIX: \"${VITE_CENTRAL_PATH_PREFIX:-central}\"," >> 
 echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_PORT: \"$VITE_REVERB_PORT\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  VITE_REVERB_SCHEME: \"$VITE_REVERB_SCHEME\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_REVERB_SCHEME: \"$VITE_REVERB_SCHEME\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_GTM_ID: \"${VITE_GTM_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_META_PIXEL_ID: \"${VITE_META_PIXEL_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_LINKEDIN_PARTNER_ID: \"${VITE_LINKEDIN_PARTNER_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_X_PIXEL_ID: \"${VITE_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 
 $ACTIVATE_RELEASE()
@@ -69,6 +73,10 @@ $ACTIVATE_RELEASE()
 | `VITE_REVERB_HOST` | Public WebSocket hostname |
 | `VITE_REVERB_PORT` | Usually `443` behind TLS |
 | `VITE_REVERB_SCHEME` | `https` in production |
+| `VITE_GTM_ID` | Optional Google Tag Manager ([marketing pixels](/deployment/marketing-pixels)) |
+| `VITE_META_PIXEL_ID` | Optional Meta Pixel |
+| `VITE_LINKEDIN_PARTNER_ID` | Optional LinkedIn Insight Tag |
+| `VITE_X_PIXEL_ID` | Optional X Pixel |
 
 Example SPA site `.env`:
 
@@ -81,6 +89,11 @@ VITE_REVERB_APP_KEY=<public-application-key>
 VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
+# Optional marketing pixels
+# VITE_GTM_ID=GTM-XXXXXXX
+# VITE_META_PIXEL_ID=123456789012345
+# VITE_LINKEDIN_PARTNER_ID=1234567
+# VITE_X_PIXEL_ID=o1234
 ```
 
 Local Vite uses `.env` / `import.meta.env` when `window.env` is absent.

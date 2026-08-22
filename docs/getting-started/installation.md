@@ -186,6 +186,11 @@ VITE_REVERB_APP_KEY=elosync-reverb-key
 VITE_REVERB_HOST=localhost
 VITE_REVERB_PORT=8080
 VITE_REVERB_SCHEME=http
+# Optional marketing pixels — see /deployment/marketing-pixels
+# VITE_GTM_ID=GTM-XXXXXXX
+# VITE_META_PIXEL_ID=123456789012345
+# VITE_LINKEDIN_PARTNER_ID=1234567
+# VITE_X_PIXEL_ID=o1234
 ```
 
 | Variable | Purpose |
@@ -194,6 +199,10 @@ VITE_REVERB_SCHEME=http
 | `VITE_API_MODE` | `central` or `tenant` default context |
 | `VITE_CENTRAL_PATH_PREFIX` | Optional Central SPA HashRouter prefix (default `central`; match API `CENTRAL_PATH_PREFIX`) |
 | `VITE_REVERB_*` | Must match backend `REVERB_*` / public Echo settings |
+| `VITE_GTM_ID` | Optional Google Tag Manager container ID |
+| `VITE_META_PIXEL_ID` | Optional Meta Pixel ID |
+| `VITE_LINKEDIN_PARTNER_ID` | Optional LinkedIn Insight Tag partner ID |
+| `VITE_X_PIXEL_ID` | Optional X Pixel ID |
 
 Production does **not** bake these into CI artifacts. Forge generates `/config.js` → `window.env` from the site `.env` at deploy time ([frontend build artifacts](/developer-guide/frontend-build-artifacts)).
 

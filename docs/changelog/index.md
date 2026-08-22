@@ -1,5 +1,12 @@
 # Changelog
 
+## Marketing pixels scaffold (2026-08-22)
+
+- **SaaS-Frontend:** `src/lib/marketing-pixels/` — optional env-gated GTM (existing), Meta Pixel, LinkedIn Insight Tag, and X Pixel; `initMarketingPixels()` + `MarketingPageView` for HashRouter SPA page views; Vitest coverage.
+- **saas-website:** `MarketingScripts` / `MarketingPageView` with `NEXT_PUBLIC_*` vars; client navigations push GTM virtual page views + Meta/X PageView.
+- **Deploy:** Forge `config.js` keys `VITE_META_PIXEL_ID`, `VITE_LINKEDIN_PARTNER_ID`, `VITE_X_PIXEL_ID` (alongside `VITE_GTM_ID`). No prod IDs required until operators enable each vendor.
+- Docs: [Marketing pixels](/deployment/marketing-pixels).
+
 ## Mermaid diagrams on docs site (2026-08-22)
 
 - Enabled [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid) so fenced Mermaid blocks render as diagrams (not code fences) across Deployment, Developer Guide, and User Guide pages (e.g. [Laravel Forge](/deployment/laravel-forge) topology chart).
