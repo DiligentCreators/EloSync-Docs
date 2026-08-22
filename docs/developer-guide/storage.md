@@ -46,6 +46,7 @@ Sum of:
 - `chat_message_attachments.size_bytes`
 - `feedback_attachments.size_bytes`
 - `documents.size_bytes` (non-trashed Documents module rows)
+- `whatsapp_message_attachments.size_bytes` (WhatsApp Cloud media)
 - `lead_imports.file_size`
 - Disk size of import `error_report_path` / `failed_records_path` when present
 

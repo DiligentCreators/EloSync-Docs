@@ -113,7 +113,7 @@ Planned drivers. Additional drivers may be introduced over time **without changi
 | Public API Driver | Planned | External create API → normalize → pipeline |
 | Website Form Driver | Planned | Generic hosted / embedded web forms |
 | Meta Lead Ads Driver | **Shipped** | See [Meta Lead Ads](/developer-guide/meta-lead-ads-integration) |
-| WhatsApp Driver | Planned | Inbound lead capture from WhatsApp — see also [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) (messaging) |
+| WhatsApp Driver | Shipped | Opt-in auto-create from inbound WhatsApp (`auto_create_leads`); see [WhatsApp Cloud Integration](/developer-guide/whatsapp-cloud-integration) |
 | Google Ads Driver | Planned | Lead form extensions / offline import |
 | Google Forms Driver | Planned | Form responses → leads |
 | LinkedIn Lead Gen Driver | Planned | LinkedIn Lead Gen Forms |

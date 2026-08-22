@@ -1,8 +1,8 @@
 # WhatsApp Cloud Integration
 
-> **Status: Shipped MVP 1.0.0** — billable Marketplace module `whatsapp-cloud`.
+> **Status: Shipped 1.3.0** — billable Marketplace module `whatsapp-cloud`.
 >
-> MVP includes: Meta WABA/phone connect, text send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement. Deferred: media, Automation message triggers, WhatsApp Lead Source Driver, alternate BSPs.
+> Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template`. Deferred: interactive buttons/lists, alternate BSPs.
 >
 > Follow the [Module Architecture](/architecture/module-architecture), [Module Development Standard](/developer-guide/module-development), [Documentation Governance](/developer-guide/documentation-governance) same-PR rule, and the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
@@ -57,9 +57,9 @@ EloSync **also** supports a lightweight WhatsApp handoff via [Communication Temp
 
 | Capability | Status |
 |------------|--------|
-| Media upload/download | ⬜ Deferred |
-| Automation WhatsApp triggers/actions | ⬜ Deferred |
-| WhatsApp Lead Source Driver (auto-create Leads) | ⬜ Deferred |
+| Media upload/download | ✅ Shipped (1.3.0) |
+| Automation WhatsApp triggers/actions | ✅ Shipped (1.2.0 / automation 1.1.0) |
+| WhatsApp Lead Source Driver (auto-create Leads) | ✅ Shipped (opt-in `auto_create_leads`) |
 | Alternate BSPs (Twilio / 360dialog) | ⬜ Deferred |
 | AI Features | ⬜ Deferred |
 
@@ -571,15 +571,16 @@ Both respect driver boundaries: no Meta parsing inside `LeadService`; no convers
 | Conversation History | ✅ Shipped |
 | Delivery Tracking / Read Receipts | ✅ Shipped (webhook statuses) |
 | Soft Lead link + timeline | ✅ Shipped |
+| WhatsApp Lead Source Driver (opt-in auto-create) | ✅ Shipped (1.1.0) |
+| Automation WhatsApp triggers / send template | ✅ Shipped (1.2.0) |
+| Media (image / document / audio / video) | ✅ Shipped (1.3.0) |
 
 ### Deferred
 
 | Capability | Status |
 |------------|--------|
-| Automation WhatsApp triggers | ⬜ Deferred |
-| Media | ⬜ Deferred |
+| Interactive buttons / lists | ⬜ Deferred |
 | AI Features | ⬜ Deferred |
-| Lead Source WhatsApp Driver | ⬜ Deferred |
 | Alternate BSPs | ⬜ Deferred |
 
 ---

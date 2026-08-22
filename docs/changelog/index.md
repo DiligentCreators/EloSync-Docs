@@ -1,5 +1,31 @@
 # Changelog
 
+## WhatsApp Cloud media (2026-08-22)
+
+Catalog MINOR: **`whatsapp-cloud` 1.2.0 → 1.3.0**.
+
+- Inbound image/document/audio/video: webhook captures Meta media id; `DownloadWhatsAppMediaJob` stores privately under `tenants/{id}/whatsapp/...` and counts toward Storage quota (soft Storage gate).
+- Outbound media inside the 24h window: `POST /whatsapp/conversations/{id}/media`; download via `GET .../attachments/{id}`.
+- SPA inbox: attach control + attachment download links.
+- Pest: `WhatsAppMediaTest`.
+
+## WhatsApp Automation triggers (2026-08-22)
+
+Catalog MINOR: **`automation` 1.0.0 → 1.1.0**, **`whatsapp-cloud` 1.1.0 → 1.2.0**.
+
+- Trigger `whatsapp.message_received` (wired; requires `whatsapp-cloud`) via `WhatsAppMessageReceived` → `IntegrationEventDispatcher`.
+- Action `send_whatsapp_template` (wired; requires `whatsapp-cloud`) — resolves conversation by `conversation_id` or `lead_id`.
+- Pest: `WhatsAppAutomationTest`.
+
+## WhatsApp Lead Source Driver (2026-08-22)
+
+Catalog MINOR: **`whatsapp-cloud` 1.0.0 → 1.1.0**.
+
+- Opt-in connection settings: `auto_create_leads` (default off) + `default_lead_source` (default `WhatsApp`).
+- Inbound messages for unlinked conversations create/link Leads via `WhatsAppCloudLeadSourceDriver` (`source_reference = whatsapp_cloud`, `external_id = customer_wa_id`) when Leads is entitled.
+- API: `PATCH /whatsapp/integrations`; SPA settings toggle on the WhatsApp page when Leads is installed.
+- Pest: auto-create / duplicate link / Leads-not-entitled / settings update cases in `WhatsAppCloudModuleTest`.
+
 ## Custom Central path + failed-login alerts (2026-08-22)
 
 - Per-install WHMCS-style Central SPA prefix: `VITE_CENTRAL_PATH_PREFIX` (SPA `config.js`) + matching API `CENTRAL_PATH_PREFIX` for password-reset / verify deep links. Default remains `central`. API stays `/api/central/v1`.
