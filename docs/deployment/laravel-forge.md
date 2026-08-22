@@ -48,7 +48,7 @@ flowchart LR
 - SPA, Docs, and Marketing: CI builds on merge to `main`; Forge deploys **compiled** `build-artifacts` only. Never run `npm ci` / `vite` / VitePress / `next build` on the Forge server for those sites.
 - API: Forge runs Composer + `artisan` on each deploy. Prefer **zero-downtime** / quick deploy with shared `.env` and storage.
 - One SPA artifact serves many clients: each Forge SPA site owns its own `.env` and generated `/config.js`.
-- Marketing is a static Next.js export (`out/`) — no runtime Node, no `config.js`.
+- Marketing is a static Next.js export (`out/`) — no runtime Node; Forge writes `/config.js` for API URL and marketing pixels.
 
 ---
 
@@ -368,10 +368,24 @@ $CREATE_RELEASE()
 
 cd $FORGE_RELEASE_DIRECTORY
 
+if [ -f ../../.env ]; then
+  set -a
+  source ../../.env
+  set +a
+fi
+
+echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_API_URL: \"${NEXT_PUBLIC_API_URL:-https://api.elosync.com}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_GTM_ID: \"${NEXT_PUBLIC_GTM_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_META_PIXEL_ID: \"${NEXT_PUBLIC_META_PIXEL_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_LINKEDIN_PARTNER_ID: \"${NEXT_PUBLIC_LINKEDIN_PARTNER_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_X_PIXEL_ID: \"${NEXT_PUBLIC_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+
 $ACTIVATE_RELEASE()
 ```
 
-CI (`Website production build`) runs `next build` with `output: "export"` and publishes the `out/` directory to `build-artifacts`. Forge only activates the release — never run `npm` / `next` on the server.
+CI (`Website production build`) runs `next build` with `output: "export"` and publishes the `out/` directory to `build-artifacts`. Forge activates the release and writes `/config.js` from the marketing site `.env` — never run `npm` / `next` on the server.
 
 Optional Nginx 404 fallback:
 
@@ -383,9 +397,9 @@ location / {
 
 Details: [SaaS-Website README](https://github.com/DiligentCreators/SaaS-Website) and repo `docs/ci-cd/website-build-artifacts.md`.
 
-### 4.3 Environment (build-time)
+### 4.3 Environment (runtime)
 
-Marketing `NEXT_PUBLIC_*` pixel IDs are **not** Forge runtime env — they are set as GitHub repository variables and inlined during CI `next build`. Local dev uses `.env.local` (see `.env.example`). Guide: [Marketing pixels](./marketing-pixels).
+Marketing site reads `NEXT_PUBLIC_*` keys from Forge `/config.js` (`window.env`) at runtime — same model as the SPA. Local dev uses `.env.local`. Guide: [Marketing pixels](./marketing-pixels).
 
 ---
 

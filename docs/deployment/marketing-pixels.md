@@ -37,18 +37,43 @@ echo "  VITE_X_PIXEL_ID: \"${VITE_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/
 
 No SPA rebuild is required to enable or disable pixels in production — only redeploy so Forge regenerates `config.js`.
 
-### saas-website (`.env.local` / hosting env)
+### saas-website (Forge `config.js` + local `.env.local`)
 
 | Variable | Vendor |
 |----------|--------|
+| `NEXT_PUBLIC_API_URL` | Central API origin (stats, modules, beta form) |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager |
 | `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel |
 | `NEXT_PUBLIC_LINKEDIN_PARTNER_ID` | LinkedIn Insight Tag |
 | `NEXT_PUBLIC_X_PIXEL_ID` | X Pixel |
 
-Restart `npm run dev` after changing local env. Rebuild/redeploy the marketing site when changing production env.
+Local: copy keys into `.env.local` (see `.env.example` in saas-website). `public/config.js` is an empty stub; local `.env.local` is the fallback when `window.env` keys are absent.
 
-**Production (CI):** set GitHub repository variables `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `NEXT_PUBLIC_LINKEDIN_PARTNER_ID`, and `NEXT_PUBLIC_X_PIXEL_ID` on `SaaS-Website` — values are baked in at `next build` (see [website build artifacts](https://github.com/DiligentCreators/SaaS-Website/blob/main/docs/ci-cd/website-build-artifacts.md)).
+Production: add keys to the **marketing** Forge site `.env` and extend the deploy script `config.js` block (see [website build artifacts](https://github.com/DiligentCreators/SaaS-Website/blob/main/docs/ci-cd/website-build-artifacts.md)):
+
+```bash
+echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_API_URL: \"${NEXT_PUBLIC_API_URL:-https://api.elosync.com}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_GTM_ID: \"${NEXT_PUBLIC_GTM_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_META_PIXEL_ID: \"${NEXT_PUBLIC_META_PIXEL_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_LINKEDIN_PARTNER_ID: \"${NEXT_PUBLIC_LINKEDIN_PARTNER_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  NEXT_PUBLIC_X_PIXEL_ID: \"${NEXT_PUBLIC_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+```
+
+No website rebuild is required to change API URL or pixels in production — only redeploy so Forge regenerates `config.js`.
+
+## Code layout (saas-website)
+
+```
+lib/
+  runtime-env.ts       # resolveRuntimeEnv(), getApiBaseUrl()
+  marketing-pixels.ts  # getMarketingPixelIds(), trackMarketingPageView()
+components/analytics/
+  MarketingScripts.tsx # client init from window.env
+  MarketingPageView.tsx
+public/config.js       # local stub; Forge overwrites in production
+```
 
 ## Code layout (SaaS-Frontend)
 
