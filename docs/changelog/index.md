@@ -8,6 +8,7 @@ Catalog MINOR: **`whatsapp-cloud` 1.2.0 → 1.3.0**.
 - Outbound media inside the 24h window: `POST /whatsapp/conversations/{id}/media`; download via `GET .../attachments/{id}`.
 - SPA inbox: attach control + attachment download links.
 - Pest: `WhatsAppMediaTest`.
+- Production readiness: [WhatsApp Cloud production readiness](/deployment/whatsapp-cloud-production-readiness) — **Go** (inbound MIME/quota gates, attachment IDOR Pest, CatalogSeeder versions, Automation WA trigger e2e).
 
 ## WhatsApp Automation triggers (2026-08-22)
 
