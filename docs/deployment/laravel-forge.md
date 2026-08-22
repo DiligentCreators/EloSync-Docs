@@ -262,9 +262,14 @@ VITE_REVERB_APP_KEY=<same-as-REVERB_APP_KEY>
 VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
+# Optional marketing pixels — see Marketing Pixels guide
+# VITE_GTM_ID=GTM-XXXXXXX
+# VITE_META_PIXEL_ID=123456789012345
+# VITE_LINKEDIN_PARTNER_ID=1234567
+# VITE_X_PIXEL_ID=o1234
 ```
 
-`VITE_API_URL` has **no** trailing `/api`. Reverb host/port/scheme must match backend `REVERB_HOST` / public WebSocket endpoint. Keep `VITE_CENTRAL_PATH_PREFIX` in sync with the API site’s `CENTRAL_PATH_PREFIX` when customizing the Central login path.
+`VITE_API_URL` has **no** trailing `/api`. Reverb host/port/scheme must match backend `REVERB_HOST` / public WebSocket endpoint. Keep `VITE_CENTRAL_PATH_PREFIX` in sync with the API site’s `CENTRAL_PATH_PREFIX` when customizing the Central login path. Optional marketing pixel keys: [Marketing pixels](./marketing-pixels).
 
 ### 2.3 Deploy script (SPA)
 
@@ -287,7 +292,11 @@ echo "  VITE_CENTRAL_PATH_PREFIX: \"${VITE_CENTRAL_PATH_PREFIX:-central}\"," >> 
 echo "  VITE_REVERB_APP_KEY: \"$VITE_REVERB_APP_KEY\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_HOST: \"$VITE_REVERB_HOST\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "  VITE_REVERB_PORT: \"$VITE_REVERB_PORT\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  VITE_REVERB_SCHEME: \"$VITE_REVERB_SCHEME\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_REVERB_SCHEME: \"$VITE_REVERB_SCHEME\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_GTM_ID: \"${VITE_GTM_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_META_PIXEL_ID: \"${VITE_META_PIXEL_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_LINKEDIN_PARTNER_ID: \"${VITE_LINKEDIN_PARTNER_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
+echo "  VITE_X_PIXEL_ID: \"${VITE_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 
 $ACTIVATE_RELEASE()
@@ -373,6 +382,10 @@ location / {
 ```
 
 Details: [SaaS-Website README](https://github.com/DiligentCreators/SaaS-Website) and repo `docs/ci-cd/website-build-artifacts.md`.
+
+### 4.3 Environment (build-time)
+
+Marketing `NEXT_PUBLIC_*` pixel IDs are **not** Forge runtime env — they are set as GitHub repository variables and inlined during CI `next build`. Local dev uses `.env.local` (see `.env.example`). Guide: [Marketing pixels](./marketing-pixels).
 
 ---
 

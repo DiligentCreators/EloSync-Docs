@@ -442,6 +442,7 @@ export default withMermaid(defineConfig({
           items: [
             { text: 'Overview', link: '/deployment/' },
             { text: 'Laravel Forge', link: '/deployment/laravel-forge' },
+            { text: 'Marketing Pixels', link: '/deployment/marketing-pixels' },
             { text: 'Production Runbook', link: '/deployment/platform-production-runbook' },
             { text: 'Upgrade Guide', link: '/deployment/upgrade' },
             { text: 'Release Process', link: '/deployment/release-process' },
