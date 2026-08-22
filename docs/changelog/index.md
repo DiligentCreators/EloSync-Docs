@@ -1,5 +1,11 @@
 # Changelog
 
+## Marketing site runtime config (2026-08-23)
+
+- **saas-website:** API URL and marketing pixels (`NEXT_PUBLIC_*`) resolve from Forge `/config.js` (`window.env`) at runtime — same model as SaaS-Frontend. Local dev uses `.env.local` with `public/config.js` stub. CI no longer bakes pixel IDs into the static export.
+- **Deploy:** Marketing Forge deploy script writes `config.js` from site `.env`; redeploy only (no CI rebuild) to change pixels or API URL.
+- Docs: [Marketing pixels](/deployment/marketing-pixels), [Laravel Forge — Marketing](/deployment/laravel-forge#42-deploy-script-marketing).
+
 ## Entity search labels — name + company (2026-08-23)
 
 - **SaaS-Frontend:** Shared `src/lib/entity-display.ts` helpers show **name — company** together in module search dropdowns (contacts, leads, opportunities, resellers), billing list Customer columns, invoice pickers, activity related columns, and record view cards — so duplicate person names are distinguishable by company.
