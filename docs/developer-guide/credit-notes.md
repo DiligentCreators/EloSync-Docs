@@ -35,7 +35,7 @@ Mirror of the [Payments developer guide](/developer-guide/payments) (assignee sc
 - Assignee scoping via `ScopesToAssignee` with `credit-notes.assign`.
 - `credit-notes.force.delete` is not granted to any default role — owner/superadmin only.
 - `contact_id` / `company_id` are optional and validated for module entitlement + assignee scope (`LinkableContact` / `LinkableCompany`); when omitted, the frontend form pre-fills them from the selected invoice, but the backend does not auto-default them — a blank value is stored as `null`.
-- Auto-numbering: `CustomerCreditNoteService::nextNumber()` reads the `credit_notes_number_prefix` tenant setting (default `CN-`), then zero-pads a running count to 5 digits — same pattern as Invoices/Payments. Not yet exposed in the Tenant Settings UI. `customer_credit_notes` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
+- Auto-numbering: `CustomerCreditNoteService::nextNumber()` reads the `credit_notes_number_prefix` tenant setting (default `CN-`), then zero-pads a running count to 5 digits — same pattern as Invoices/Payments. Prefix is editable under **Settings → General → Document number prefixes**. `customer_credit_notes` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
 
 ## Permissions
 

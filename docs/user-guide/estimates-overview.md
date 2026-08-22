@@ -18,7 +18,7 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 ## Capabilities
 
 - Estimate fields: title, optional contact/company link, optional opportunity/quotation link, currency, valid-until date, notes
-- Auto-numbered (`EST-00001`; prefix backed by the `estimates_number_prefix` tenant setting, default `EST-` — not yet exposed in the Tenant Settings UI)
+- Auto-numbered (`EST-00001`; prefix backed by the `estimates_number_prefix` tenant setting, default `EST-` — editable under **Settings → General → Document number prefixes**)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side, same pattern as Invoices/Quotations
 - Status workflow: `draft → sent → accepted | rejected | expired` (`POST /estimates/{id}/send`, `.../accept`, `.../status`)
 - **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with the estimate's lines, links it back via `estimate_id`, and marks the estimate **Accepted** if it wasn't already. One-way and one-time per estimate. Blocked if the linked quotation is already invoiced.
