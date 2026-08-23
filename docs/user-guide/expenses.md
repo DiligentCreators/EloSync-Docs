@@ -21,10 +21,15 @@ Use **Manage categories** (visible with `expenses.create`, `expenses.update`, or
 2. Enter a title, category (from your workspace list), amount, and optional tax amount
 3. Optionally set currency and an expense date
 4. If **Vendors** or **Purchase Orders** are installed on your workspace, optionally link a vendor and/or a purchase order
-5. Optionally set an assignee (requires **assign**)
-6. Save
+5. Optionally attach a **receipt** file (images or PDF, up to 5 MB) — counts toward your workspace [Storage](/user-guide/storage) quota
+6. Optionally set an assignee (requires **assign**)
+7. Save
 
-Edit from the row menu or the record page while the expense is still **Draft**. After **Submit**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the expense is still **Draft**. After **Submit**, content is locked; use status actions and assignment instead. You can add a receipt while editing a draft expense.
+
+## Receipts
+
+On the expense record page, the **Receipts** section lists uploaded files with a **Download** action. Receipts are stored privately in your workspace Storage quota (not public URLs). Upload failures due to quota or missing Storage entitlement show inline errors on the form.
 
 ## Status workflow
 
@@ -53,4 +58,6 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 ## What's not here yet
 
-Receipt attachments, reimbursement/payout tracking, general ledger posting, and multi-line (itemized) expenses are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Reimbursement/payout tracking beyond the **paid** status, and multi-line (itemized) expenses are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+
+> **Accounting (shipped):** when Accounting is installed, **Mark as paid** posts a journal — see [Accounting](/user-guide/accounting).

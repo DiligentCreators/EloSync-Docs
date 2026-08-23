@@ -28,6 +28,8 @@ php artisan local:seed-demo
 php artisan migrate:fresh --seed
 # or, if central is already seeded:
 php artisan local:seed-demo
+# full cross-module story (modules + reports + linked CRM/billing/support data):
+php artisan local:seed-demo --full
 ```
 
 This will:
@@ -63,6 +65,23 @@ Use `--size` to control volume:
 ```bash
 php artisan local:seed-demo --size=small
 php artisan local:seed-demo --size=large
+php artisan local:seed-demo --full --size=small
+```
+
+### Full demo (`--full`)
+
+Pass `--full` to opt into a richer local workspace:
+
+1. Installs the modules listed in `config/local-demo.php` → `demo_modules` (Companies, Contacts, Opportunities, Invoices, Help Desk, Knowledge Base, Analytics, and related bundles).
+2. Seeds the standard CRM dataset (`--size` still applies).
+3. Chains `LocalReportsDemoDataService` for Reports KPI rows.
+4. Adds a cross-module story: Companies/Contacts linked to Leads, a sales→billing chain (Opportunity → Quotation → Contract → Invoice → Payment), and a Help Desk ticket linked to a Knowledge Base article.
+
+`--full` defaults **off** so existing `local:seed-demo` runs stay CRM-only.
+
+```bash
+php artisan local:seed-demo --full
+php artisan local:seed-demo --full --fresh --size=medium
 ```
 
 ## Reset demo data
@@ -79,6 +98,7 @@ The reset removes:
 - Demo users (`*@demo-crm.local`, except the owner)
 - All leads, tasks, and related notes, follow-ups, activities, and assignment history
 - Demo notifications
+- When `--full` was used with `--fresh`, cross-module entities (companies, contacts, opportunities, invoices, help desk, knowledge base, projects, vendors, purchase orders, expenses)
 
 It does **not** delete the workspace, billing records, or central platform data.
 
@@ -138,7 +158,7 @@ Seeded data supports:
 | Config | `config/local-demo.php` |
 | Master seeder | `database/seeders/Local/LocalDevelopmentSeeder.php` |
 | Child seeders | `TenantUsersSeeder`, `LeadsSeeder`, `TasksSeeder`, `TodosSeeder`, `DemoNotificationsSeeder` |
-| Services | `app/Services/Local/LocalDemoDataService.php` |
+| Services | `app/Services/Local/LocalDemoDataService.php`, `LocalDemoTenantService.php`, `LocalReportsDemoDataService.php`, `LocalDemoCrossModuleStoryService.php` |
 
 Demo seeders are **not** registered in `DatabaseSeeder` or `TenantDatabaseSeeder`.
 

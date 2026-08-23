@@ -1,6 +1,6 @@
 # Documents Module
 
-Operations module on the frozen platform. A workspace **flat file library** — upload shared files, organize them with flat categories, and download them — built on the free **Storage** quota. Documents is a **free Marketplace opt-in** with a **hard dependency on Storage**. Soft links to CRM/HR records and nested folders are **not** in v1.
+Operations module on the frozen platform. A workspace **flat file library** — upload shared files, organize them with flat categories, optionally link them to CRM/HR/project records, and download them — built on the free **Storage** quota. Documents is a **free Marketplace opt-in** with a **hard dependency on Storage**.
 
 ## Guides
 
@@ -17,6 +17,7 @@ Operations module on the frozen platform. A workspace **flat file library** — 
 
 - Upload workspace files (title, optional description, optional category, file blob)
 - Flat categories (name/slug/sort/active) — no nested folders
+- **Soft links** to entitled Leads, Contacts, Companies, Projects, Employees, Assets, and Tasks (optional; module + permission gated per record type)
 - Download original file by authenticated API
 - Soft delete / restore; permanent delete removes the object from disk
 - Bulk soft delete (active list) and bulk permanent delete (Deleted only)
@@ -37,7 +38,7 @@ Default roles: **admin** = all except `force.delete`; **manager** = view / creat
 
 ## Catalog
 
-Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.1.0**.
+Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.3.0**.
 
 **Hard dependency:** Storage (`storage`) must be entitled first. Install fails without it.
 
@@ -51,7 +52,6 @@ See [Storage](/user-guide/storage).
 
 ## Explicitly deferred
 
-- Soft links to Leads / Contacts / Companies / Tasks / Projects / Assets / etc.
 - Nested folders / directory trees
 - Versioning / check-in / check-out
 - Preview / in-browser viewers

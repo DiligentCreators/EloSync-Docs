@@ -22,6 +22,8 @@ Phase 4 Purchasing module (Milestone 2) on the frozen platform. Mirrors the [Est
 - Notes (comments) + activity timeline
 - Table view with search, status filter, assignee filter, and **My Purchase Orders** toggle
 - KPIs via `GET /purchase-orders/stats` (total, mine, draft, sent, partially received, received, cancelled)
+- Dashboard widget `open_purchase_orders` (module + `purchase-orders.view`)
+- Download PO PDF + **email vendor** after Send (`GET /purchase-orders/{id}/pdf`, `POST /purchase-orders/{id}/email`, `purchase-orders.send`)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:purchase-orders`) + Spatie permissions — **free Marketplace opt-in**, hard-depends on `vendors`
 - Audit + activity logging
@@ -42,6 +44,4 @@ Sent, partially received, or received purchase orders can be converted to a draf
 
 ## Explicitly deferred
 
-- Purchase order PDFs / e-mail delivery to vendors
 - Partial-quantity receiving per line item (status is currently header-level only)
-- Dashboard widgets for Purchase Orders

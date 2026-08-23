@@ -6,8 +6,8 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Document.php`, `DocumentCategory` |
-| Services | `app/Services/Tenant/DocumentService.php`, `DocumentCategoryService.php` |
+| Models | `app/Models/Document.php`, `DocumentCategory`, `DocumentLink` |
+| Services | `app/Services/Tenant/DocumentService.php`, `DocumentCategoryService.php`, `DocumentLinkService.php` |
 | Upload / quota | `app/Services/Storage/FileUploadService.php`, `WorkspaceStorageService.php` |
 | Controllers | `app/Http/Controllers/Tenant/Api/V1/DocumentController.php`, `DocumentCategoryController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Document/*`, `DocumentCategory/*` |
@@ -19,7 +19,8 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 
 ## Domain notes
 
-- Flat library only — optional `category_id` FK (`nullOnDelete`); no folder tree, no soft record links in v1.
+- Flat library only — optional `category_id` FK (`nullOnDelete`); no folder tree.
+- **Soft record links** via `document_links` polymorphic pivot (`DocumentLink` / `DocumentLinkService::sync` on create + update). Optional arrays: `lead_ids`, `contact_ids`, `company_ids`, `project_ids`, `employee_ids`, `asset_ids`, `task_ids`. Each id validated with the matching `Linkable*` rule (module entitlement + assignee / visibility scope). Omitted keys leave that link type unchanged; an empty array clears links for that type.
 - Categories: `name`, auto `slug` (`Str::slug` when omitted), `sort_order`, `is_active`. Soft/force delete blocked while documents still reference the category.
 - Create requires multipart `file` (max 51200 KB / 50 MB). `DocumentService::create` calls `WorkspaceStorageService::assertCanStore` then `FileUploadService::store` under `FileUploadService::tenantDirectory($tenantId, 'documents')` (`public: false`).
 - Update may replace the file via `FileUploadService::replace`; quota check uses the positive size delta only.
@@ -34,7 +35,7 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 - Platform audit events: `document_created`, `document_updated`, `document_deleted`, `document_restored`, `document_force_deleted`.
 - `documents.force.delete` is not granted to default roles — owner/superadmin only, matching Vendors / Assets.
 - Production readiness: [Documents production readiness](/deployment/documents-production-readiness).
-- Catalog version **1.1.0**
+- Catalog version **1.3.0**
 
 ## Permissions
 
@@ -49,7 +50,7 @@ Routes use `module:documents` then `can:documents.*` / policies. Category CRUD r
 ## Catalog
 
 - Slug `documents`, category `operations`, `sort_order` 85, icon `file-text`
-- `is_default_included = false`, `is_billable = false`, version **1.1.0**
+- `is_default_included = false`, `is_billable = false`, version **1.3.0**
 - Hard `module_dependencies` row: **documents → storage** (`is_optional = false`)
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule` (no seeder in production)
 
@@ -95,8 +96,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-documents.md](/api/tenant-v
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/documents/documents-page.tsx` |
-| Form | `document-form.tsx`, `document-form-page.tsx` |
-| View | `document-view-page.tsx` |
+| Form | `document-form.tsx`, `document-form-page.tsx` (optional related-record pickers when entitled modules + view permissions are present) |
+| View | `document-view-page.tsx` (Related records cards from `links`) |
 | Service | `documentService` / `documentCategoryService` in `src/api/services.ts` |
 | Nav | `permission: documents.view`, `module: 'documents'` |
 
