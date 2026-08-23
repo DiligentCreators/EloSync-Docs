@@ -24,8 +24,8 @@ Platform polish lanes A/B/C ship attachments, billing document delivery, dashboa
 | `npm run typecheck` + `npm run build` (Frontend) | **Pass** |
 | Backend migrations idempotent + migrate-only | **Pass** |
 | Storage quota (`usedBytes`) for new attachment types | **Pass** |
-| Pest polish suite (attachments, links, PDF/email, onboarding, widgets) | **Pass** on Backend `main` |
-| Playwright module smoke (documents, expenses, AI, dashboard, help-desk) | **Pass** with cached demo login |
+| Pest polish suite (86 tests: attachments, links, PDF/email, onboarding, widgets) | **Pass** on Backend `main` (2026-08-23) |
+| Playwright module smoke (documents, expenses, AI, dashboard, help-desk) | **Pass** — verified 2026-08-23 (workers=1) |
 | Docs changelog + deployment page | **Pass** |
 | Platform freeze respected | **Pass** |
 
