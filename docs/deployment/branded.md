@@ -44,6 +44,8 @@ Purges unverified custom-domain claims past the claim TTL so hostnames can be re
 
 The application verifies DNS ownership and binds hosts. **TLS certificates for custom hostnames** are terminated at your proxy / Laravel Cloud / Forge — configure wildcard or per-host certs there. The app does not issue Let’s Encrypt certificates.
 
+After DNS verification, tenants see **Pending SSL certificate** until an operator marks the domain SSL-provisioned (Central API or `php artisan branded:mark-ssl-provisioned {hostname}`) after Forge / proxy certificate is live.
+
 Recommended topology:
 
 1. Proxy terminates TLS for each verified custom host (or a wildcard covering them).
@@ -60,4 +62,4 @@ Also allow custom hosts on Reverb / WebSocket if realtime is used from those Ori
 - [ ] `BRANDED_SERVER_IPV4` (and/or CNAME target) set to the **real edge IP** (not a laptop/dev IP by mistake)
 - [ ] Scheduler runs `branded:expire-stale-domain-claims`
 - [ ] Proxy accepts traffic for verified custom hosts and routes to the same app (TLS + SPA path decided)
-- [ ] Smoke: purchase Branded → Settings → Domain → propose → DNS → verify → host resolves; remove → re-propose works; cancel module → host unbinds
+- [ ] Smoke: purchase Branded → Settings → Domain → propose → DNS → verify → tenant sees SSL pending → Forge SSL → mark provisioned → host resolves; remove → re-propose works; cancel module → host unbinds

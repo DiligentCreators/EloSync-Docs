@@ -25,13 +25,25 @@ Without the module, the Settings **Domain** tab is hidden and custom hostnames n
 1. Open **Settings → Domain**.
 2. **Step 1 — Enter your website address** (for example `myai.com.pk` or `app.domain.co.uk`; multi-part ccTLDs are supported) and choose **Continue**.
 3. **Step 2 — Connect it at your domain provider** (GoDaddy, Namecheap, Cloudflare, etc.):
-   - Copy the **TXT** ownership values (Name / Host and Value) and paste them as a TXT record.
-   - Copy the recommended **A** record (Name / Host and Points to IP). Advanced options cover AAAA / CNAME when your operator provides them.
+   - **TXT** — prove you own the address (`_elosync-verification.{hostname}`).
+   - **A** — point `{hostname}` to the platform IP shown in Settings.
+   - **CNAME** — point `www.{hostname}` to `{hostname}` so the `www` version works too.
+   - Advanced: optional AAAA or platform CNAME target when your operator provides them.
 4. **Step 3 — Check the connection**: choose **I’ve added the records — Check now**.
 
-DNS can take a few minutes (sometimes up to 24 hours). The address becomes active only after the check succeeds **and** Branded remains licensed. Pointing an IP alone does not activate the workspace.
+DNS can take a few minutes (sometimes up to 24 hours). After the check succeeds, Settings shows **DNS verified** and **Pending SSL certificate** while the platform operator enables secure hosting (TLS certificate) on the server. Your custom `https://` address becomes fully **Active** only after that step — often within 24 hours. Continue using your platform address (for example `app.elosync.com`) until the custom URL works in your browser.
+
+Pointing an IP alone does not activate the workspace. **Active** in the UI means DNS + SSL are both complete.
 
 Platform subdomains (for example `acme.localhost`) stay managed by Central — they are not configured on this tab.
+
+## Hosting status
+
+| UI badge | Meaning |
+|----------|---------|
+| Waiting for DNS | TXT / A records not verified yet |
+| DNS verified + Pending SSL certificate | Records are correct; secure hosting is being set up |
+| Connected + Active | Custom `https://` address is ready |
 
 ## Brand in notifications
 

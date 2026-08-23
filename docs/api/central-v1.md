@@ -44,6 +44,8 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 | DELETE | `/tenants/{tenant}/force` | `tenants.force.delete` | Force-deletes users, domains, module subscriptions, then the tenant |
 | POST | `/tenants/{tenant}/archive` | `tenants.archive` | Sets `archived_at`; independent of soft delete |
 | POST | `/tenants/{tenant}/unarchive` | `tenants.archive` | Clears `archived_at` |
+| POST | `/tenants/{tenant}/verify-owner` | `tenants.verify` | Marks workspace owner email verified |
+| POST | `/tenants/{tenant}/branded-domain/mark-ssl-provisioned` | `tenants.update` | After Forge / proxy TLS is live for the workspace custom domain |
 | GET | `/tenants/{tenant}/entitlements` | `tenants.read` | `{ core, modules }` — licensing only |
 | POST | `/tenants/{tenant}/modules` | `module-subscriptions.create` | Install module — body: `module_id`, optional `billing_cycle` |
 | GET | `/tenants/{tenant}/invoices` | `invoices.list` | Paginated workspace invoices |
