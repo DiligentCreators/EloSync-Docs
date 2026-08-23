@@ -25,6 +25,7 @@ Tenant customer-billing module on the frozen platform — the third Phase 3 (Bil
 - Status workflow: `draft → issued → applied`, with `void` available from `draft` or `issued` (`POST /credit-notes/{id}/issue`, `.../apply`, `.../void`) — **applying** a credit note adds its total to the invoice's `amount_credited` and recalculates `balance_due`
 - Assignment with assignee scoping via `credit-notes.assign`
 - Notes + domain activity timeline (mirrors Invoices/Payments)
+- Download credit note PDF + **email customer** after Issue (`GET /credit-notes/{id}/pdf`, `POST /credit-notes/{id}/email`, `credit-notes.send`)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:credit-notes`) + Spatie permissions — **free Marketplace opt-in** (Billing category), **requires Invoices**
 - Audit + activity logging; assignment notification
@@ -42,6 +43,5 @@ Enable Credit Notes from Marketplace (free) — **Invoices must already be insta
 ## Explicitly deferred
 
 - Refunding an already-applied credit note (once applied, a credit note is terminal — void is only available before applying)
-- Credit note PDF export / e-mail delivery to the customer
 - Standalone credit notes not tied to an invoice
 - Multi-currency conversion

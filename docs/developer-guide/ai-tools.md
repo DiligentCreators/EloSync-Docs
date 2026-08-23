@@ -11,7 +11,8 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 - Projects: `search_projects`, `get_project`, `get_overdue_projects`
 - Opportunities: `search_opportunities`, `get_pipeline_summary`
 - Invoices: `get_overdue_invoices`, `get_invoice_balance_summary`
-- Writes: `create_task` (confirmation required)
+- Writes: `create_task`, `update_lead_status`, `log_activity` (confirmation required)
+- Reads: `get_help_desk_open_tickets`, `get_expense_pending_approval` (module + permission gated)
 
 List/detail tool payloads include both numeric **`id`** (for SPA deep links) and **`uuid`** (for tool lookups).
 
@@ -52,7 +53,7 @@ Implement `App\AI\Tools\Contracts\AiToolDefinition`:
 4. **Write actions** that mutate data:
    - Set `requiresConfirmation(): true` and return `pending_confirmation` via `PendingAiActionService`, **or**
    - Keep read-only and return DTO arrays only.
-5. **Confirm path** — add a `match` arm in `PendingAiActionService::confirm()` when introducing a new write tool.
+5. **Confirm path** — add a `match` arm in `PendingAiActionService::confirm()` when introducing a new write tool (`create_task`, `update_lead_status`, `log_activity`).
 6. **Tests** — extend `tests/Feature/Tenant/Ai/AiAuthorizationTest.php` (permissions) and write confirmation tests when applicable.
 7. **Docs** — update [Tenant AI API](/api/tenant-v1-ai) tool list and user guide if user-visible.
 

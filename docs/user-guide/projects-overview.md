@@ -23,6 +23,7 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 - Soft optional Contact / Company / Opportunity links (validated only when that module is entitled)
 - Soft Task `project_id` (Tasks → Projects optional; Tasks catalog **1.1.2 → 1.2.0**)
 - Board + stats + notes/timeline
+- **Calendar projection** — all-day events on `starts_on` / `ends_on` (assignee as organizer); cancelled projects cancel/remove projection
 - Dashboard widgets: `active_projects`, `overdue_projects`
 - Overdue uses workspace **Timezone** calendar “today” vs `ends_on` (open statuses only)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -45,7 +46,6 @@ Contact, Company, and Opportunity links are optional cross-references — a proj
 - Milestones
 - Task dependencies
 - Workload heatmaps
-- Calendar projection
 - Automation `create_project` action
 - Project tags
 - Human-readable `PRJ-` numbers

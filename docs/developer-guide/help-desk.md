@@ -6,7 +6,7 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/HelpDeskTicket.php`, `HelpDeskCategory`, `HelpDeskNote`, `HelpDeskActivity` |
+| Models | `app/Models/HelpDeskTicket.php`, `HelpDeskCategory`, `HelpDeskNote`, `HelpDeskActivity`, `HelpDeskTicketAttachment` |
 | Enums | `HelpDeskStatusEnum`, `HelpDeskPriorityEnum`, `HelpDeskActivityTypeEnum` |
 | Service | `app/Services/Tenant/HelpDeskTicketService.php` (+ `ScopesToAssignee`, `RetriesOnDuplicateNumber`), `HelpDeskCategoryService`, `HelpDeskCategorySeederService` |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/HelpDeskTicketController.php`, `HelpDeskCategoryController` |

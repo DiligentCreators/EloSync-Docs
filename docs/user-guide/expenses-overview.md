@@ -23,7 +23,9 @@ Phase 4 Purchasing module (Milestone 3, final) on the frozen platform. A simplif
 - Notes (comments) + activity timeline
 - Table view with search, status filter, category filter, assignee filter, and **My Expenses** toggle; **Manage categories** dialog (same `expenses.*` permissions as Product Categories)
 - KPIs via `GET /expenses/stats` (total, mine, draft, submitted, approved, rejected, paid, cancelled, approved value, paid value)
+- Dashboard widget `pending_expenses` (module + `expenses.view`; submitted awaiting approval)
 - Trash filtering plus **Restore** and **Delete permanently**
+- **Receipt attachments** (optional `receipt` file on create/draft edit; jpg/png/pdf and common types; counts toward [Storage](/user-guide/storage-overview) quota; download from expense record)
 - Module licensing (`module:expenses`) + Spatie permissions — **free Marketplace opt-in**, no hard dependencies
 - **Soft convert**: a `purchase-orders.convert` action creates a draft Expense from a sent/partially received/received Purchase Order (one-way, one-time) — see [Purchase Orders — User Guide](/user-guide/purchase-orders#convert-to-expense)
 - Audit + activity logging
@@ -32,7 +34,7 @@ Phase 4 Purchasing module (Milestone 3, final) on the frozen platform. A simplif
 
 `expenses.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `submit` · `approve` · `reject` · `pay` · `cancel`
 
-Enable Expenses from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Vendors / Purchase Orders. Catalog: slug `expenses`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 30`.
+Enable Expenses from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Vendors / Purchase Orders. Catalog: slug `expenses`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.3.0**.
 
 ## Why standalone (soft dependencies)
 
@@ -40,10 +42,8 @@ Purchase Orders hard-depends on Vendors because every purchase order **must** re
 
 ## Explicitly deferred
 
-- Receipt attachments / file uploads
 - Reimbursement workflows and payout tracking beyond the `paid` status flag
 - Expense unpay / reverse the paid Accounting journal from the expense record
 - Multi-line expenses (itemized receipts) — this MVP is single-amount only
-- Dashboard widgets for Expenses
 
 > **Accounting soft integration (shipped):** when Accounting is installed, **Mark as paid** requires a cash/bank **Paid from** account and posts a journal. See [Accounting](/user-guide/accounting).
