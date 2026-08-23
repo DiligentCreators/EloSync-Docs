@@ -21,6 +21,9 @@ Returns current custom domain status and DNS instructions.
       "type": "custom",
       "verified": false,
       "verified_at": null,
+      "ssl_provisioned": false,
+      "ssl_provisioned_at": null,
+      "hosting_status": "dns_pending",
       "is_primary": true,
       "claimed_at": "2026-07-24T00:00:00+00:00"
     },
@@ -28,6 +31,10 @@ Returns current custom domain status and DNS instructions.
       "hostname": "app.example.co.uk",
       "txt_name": "_elosync-verification.app.example.co.uk",
       "txt_value": "elosync-verify-…",
+      "a_record_name": "app.example.co.uk",
+      "a_record_value": "203.0.113.10",
+      "www_cname_name": "www.app.example.co.uk",
+      "www_cname_value": "app.example.co.uk",
       "server_ipv4": ["203.0.113.10"],
       "server_ipv6": [],
       "cname_target": "workspaces.example.test",
@@ -48,7 +55,9 @@ Proposes / replaces the workspace custom hostname (must not be a platform subdom
 
 Permission: `branded.manage`
 
-Checks TXT ownership and A/AAAA/CNAME pointing. Sets `verified_at` on success.
+Checks TXT ownership and A/AAAA/CNAME pointing. Sets `verified_at` on success and `hosting_status` to `ssl_pending` until SSL is provisioned on the edge.
+
+`hosting_status` values: `dns_pending` (unverified), `ssl_pending` (DNS verified, TLS not yet live), `active` (DNS + SSL complete).
 
 ## DELETE `/branded/domain`
 

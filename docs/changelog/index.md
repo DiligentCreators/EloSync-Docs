@@ -1,5 +1,11 @@
 # Changelog
 
+## Branded custom domain — SSL pending status (2026-08-23)
+
+- **SaaS-Backend:** Custom domains track `ssl_provisioned_at` and `hosting_status` (`dns_pending` / `ssl_pending` / `active`). DNS verify leaves SSL pending until operator marks provisioned (`POST /api/central/v1/tenants/{tenant}/branded-domain/mark-ssl-provisioned` or `php artisan branded:mark-ssl-provisioned {hostname}`). Email/deep links use custom host only when SSL is provisioned. Grandfather migration sets `ssl_provisioned_at` for existing verified custom domains.
+- **SaaS-Frontend:** Settings → Domain shows **Pending SSL certificate** after DNS verify until hosting is active.
+- Docs: Branded user/deployment/API/developer guides; Central API route table.
+
 ## Short Links module (2026-08-23)
 
 - **SaaS-Backend:** New free Operations module `short-links` (catalog **1.0.0**, not default-included). CRUD API, click analytics, public redirect `GET /r/{uuid}`, async click recording job, Pest coverage.

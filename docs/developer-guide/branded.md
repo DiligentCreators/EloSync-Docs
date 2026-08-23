@@ -11,7 +11,8 @@ Stancl `domains` rows:
 | `type` | `platform` \| `custom` |
 | `verification_token` | TXT ownership token |
 | `verified_at` | Set after DNS verify |
-| `is_primary` | Preferred custom host for frontend links |
+| `ssl_provisioned_at` | Set when operator marks TLS live (Central API or artisan) |
+| `is_primary` | Preferred custom host for frontend links (only when SSL provisioned) |
 | `claimed_at` | Unverified claim TTL (`branded.claim_ttl_hours`) |
 
 `PlatformDomainClassifier` treats `{label}.{suffix}` under `config('branded.platform_domain_suffixes')` as platform. Everything else (including `myai.com.pk`, `app.domain.co.uk`) is custom — no two-label TLD assumption.
