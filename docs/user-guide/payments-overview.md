@@ -25,15 +25,16 @@ Tenant customer-billing module on the frozen platform — the second Phase 3 (Bi
 - Status workflow: `draft → posted → void` (`POST /payments/{id}/post`, `.../void`) — posting a payment adds each allocation to its invoice's `amount_paid` and recalculates the invoice balance/status; when Accounting is installed, also posts Dr deposit / Cr AR; voiding reverses allocations and voids the linked journal
 - Assignment with assignee scoping via `payments.assign`
 - Notes + domain activity timeline (mirrors Invoices)
+- **Posted** payments: branded **receipt PDF** (`GET /payments/{id}/pdf`) and **email receipt** (`POST /payments/{id}/email`, `payments.send`) — mirrors invoice/estimate/quotation email; only `posted` status (draft/void → 422)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:payments`) + Spatie permissions — **free Marketplace opt-in** (Billing category), **requires Invoices**; optional soft dep on Accounting
 - Audit + activity logging; assignment notification
 
 ## Permissions
 
-`payments.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `post` · `void`
+`payments.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `post` · `void` · `send`
 
-Enable Payments from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Version **1.1.0**.
+Enable Payments from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Version **1.2.0**.
 
 ## Related modules
 
@@ -42,6 +43,5 @@ Enable Payments from Marketplace (free) — **Invoices must already be installed
 ## Explicitly deferred
 
 - Partial refunds of a posted payment (today, voiding reverses the full allocation set)
-- Payment receipt PDF export / e-mail delivery to the customer
 - Payment gateway capture (online card/bank payments) — this module only records payments received through other channels
 - Multi-currency conversion

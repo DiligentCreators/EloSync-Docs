@@ -19,7 +19,8 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 | Subscriber | `app/Listeners/CustomerPaymentEventSubscriber.php` (audit + assignment notification) |
 | Notifications | `app/Notifications/Tenant/CustomerPayment/CustomerPaymentAssignedNotification.php` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `EligiblePaymentAssignee` — `allocations.*.customer_invoice_id` is a plain tenant-scoped `Rule::exists()` on `CustomerInvoice` |
-| Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php` |
+| PDF / email | `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `resources/views/payments/receipt.blade.php` — posted-only; mirrors invoice billing document mailer |
+| Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php` |
 
 ## Domain notes
 
@@ -38,7 +39,7 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 ## Permissions
 
 ```
-payments.view | create | update | delete | restore | force.delete | assign | post | void
+payments.view | create | update | delete | restore | force.delete | assign | post | void | send
 ```
 
 Routes use `module:payments` then `can:payments.*` / policies.
@@ -62,6 +63,7 @@ SPA mirrors **Invoices** (table + create/edit page, record page) under the exist
 | Types | `CustomerPayment*` in `src/types/api.ts` (kept distinct from the pre-existing Central `Payment*` types) |
 | Query keys | `QUERY_KEYS.customerPayments` / `customerPayment(id)` / `customerPaymentTimeline(id)` / `customerPaymentStats` |
 | Permissions | `PERMISSIONS.customerPayments.*` (maps to `payments.*` permission strings) |
+| Receipt actions | `payment-view-page.tsx` — **Download receipt** + **Email receipt** (`payments.send`) when `status === posted`; shared `BillingDocumentEmailDialog` with `kind: 'payment'` |
 | Nav | **Billing** sidebar group, after Invoices — `permission: PERMISSIONS.customerPayments.view`, `module: 'payments'`. Kept separate from the Central Billing nav. |
 | Route | `tenantRoutes.payments = '/payments'`, lazy-loaded in `App.tsx` behind `RequireAccess module="payments"` |
 | Notifications | `src/notifications/modules/payments.ts` — `customer_payment.assigned` → `/payments?payment={id}` |
@@ -71,7 +73,7 @@ SPA mirrors **Invoices** (table + create/edit page, record page) under the exist
 ## Tests
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php
+php artisan test --compact tests/Feature/Tenant/CustomerPayment/
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:payments
 ```

@@ -297,19 +297,20 @@ Implement workforce management.
 
 | Marketplace SKU | Status |
 |-----------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | ✅ Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget; free Operations opt-in) |
+| [Help Desk](/user-guide/help-desk-overview) | ✅ Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget, soft KB article links; free Operations opt-in **1.1.0**) |
 
 #### Help Desk (shipped)
 
 - Internal workspace ticketing — distinct from [Central Give Feedback](/user-guide/feedback) (platform bug/feature intake)
 - Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
 - Optional soft links to Contacts / Companies when those modules are entitled
+- Optional soft links to Knowledge Base articles when KB is entitled (M2M pivot; no hard dependency)
 - Tenant-managed categories (General, Technical, Billing, Account, Other)
 - Assignee scoping, notes, domain timeline, `due_at` with workspace timezone convention for overdue
 - Dashboard widget `help_desk_my_open`
 - Free Marketplace opt-in under category `operations` — **no** hard module dependencies
 
-**Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, customer portal, or Knowledge Base yet).
+**Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, or customer portal yet).
 
 ## Knowledge Base (shipped)
 
@@ -322,7 +323,8 @@ Implement workforce management.
 - Internal workspace articles: title, slug, excerpt, TipTap HTML body, optional flat category, status `draft` / `published` / `archived`, `published_at`
 - View-only users see published only; editors with update see drafts / archived / trash
 - Notes + domain timeline + Spatie activity log + platform audit; no hard module dependencies
-- Explicitly deferred: public URLs, Help Desk links, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
+- Soft Help Desk backlinks on article show when Help Desk is entitled
+- Explicitly deferred: public URLs, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
 
 **Goal:** Give teams an installable internal FAQ / SOP library without a customer portal. ✅ **Achieved** for internal-only v1.
 

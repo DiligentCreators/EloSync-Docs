@@ -1,5 +1,13 @@
 # Changelog
 
+## Connected workflow polish — payment receipts + Help Desk ↔ Knowledge Base (2026-08-23)
+
+- **SaaS-Backend:** Posted payments — `GET /payments/{id}/pdf` (receipt PDF) and `POST /payments/{id}/email` (`payments.send`, throttled like invoices). `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `Emailed` timeline event. Catalog PATCH: `payments` **1.1.0 → 1.2.0**.
+- **SaaS-Frontend:** Payment record page — **Download receipt** + **Email receipt** (shared billing email dialog); Playwright coverage in `payments.workflow.spec.ts`.
+- **SaaS-Backend:** Soft Help Desk ↔ Knowledge Base M2M (`help_desk_ticket_knowledge_base_article` pivot, `LinkableKnowledgeBaseArticle`, `knowledge_base_article_ids` on create/update, `PUT /help-desk/{id}/articles`, `articles_synced` timeline). Catalog MINOR: `help-desk` **1.0.0 → 1.1.0**.
+- **SaaS-Frontend:** KB article multi-select on Help Desk create/edit; **Related articles** on ticket view; **Linked tickets** on article view when Help Desk is entitled; Playwright in `help-desk.workflow.spec.ts`.
+- Docs: payments + Help Desk + Knowledge Base user/dev/API/deployment guides; roadmap deferred lists updated.
+
 ## Connected workflow polish — document prefixes + billing email (2026-08-23)
 
 - **SaaS-Frontend:** Settings → General → **Document number prefixes** for entitled modules (invoices, payments, credit notes, estimates, purchase orders, expenses, assets, Help Desk). Playwright: `tenant-settings.number-prefixes.spec.ts`, `billing/connected-workflow-polish.spec.ts`.
@@ -1647,7 +1655,7 @@ Toggles: task assigned, task completed/reopened, task mentioned, follow-up creat
 
 **Deferred**
 
-- Credit Notes (`amount_credited`), Estimates, payment receipt PDF export / e-mail delivery, partial refunds of a posted payment, online payment-gateway capture, multi-currency conversion
+- Credit Notes (`amount_credited`), Estimates, partial refunds of a posted payment, online payment-gateway capture, multi-currency conversion
 
 ---
 

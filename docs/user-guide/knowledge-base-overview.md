@@ -17,6 +17,7 @@ Free Operations Marketplace module for **internal** team help articles, categori
 - Articles: title, slug, excerpt, TipTap HTML body, optional category, status (`draft` / `published` / `archived`), `published_at`
 - Flat categories (delete blocked while articles still use them)
 - Search across title, excerpt, and body; status and trash filters for editors
+- Soft **Help Desk** backlinks on article show when `help-desk` is entitled (`help_desk_tickets` on `GET /knowledge-base/{id}`)
 - Notes + domain timeline; Spatie `LogsActivity` + platform audit events
 - Module licensing (`module:knowledge-base`) for install; Spatie permissions for all access
 - Internal workspace only — no public URLs or customer portal
@@ -40,7 +41,6 @@ View-only users see **published** articles only. Users with `knowledge-base.upda
 ## Explicitly deferred
 
 - Public / customer-facing URLs
-- Help Desk ticket links
 - Attachments / image upload
 - Nested categories
 - Dashboard widget

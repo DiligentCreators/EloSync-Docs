@@ -38,7 +38,7 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 
 ## Deploy checklist
 
-1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, `help_desk_notes`, `help_desk_activities`) and register catalog module **1.0.0**
+1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, `help_desk_notes`, `help_desk_activities`, `help_desk_ticket_knowledge_base_article` pivot) and register catalog module **1.1.0**
 2. Register the `help-desk` catalog module (migration, not seeder) as free opt-in under the `operations` category — **no** `module_dependencies` row
 3. Migrate `help-desk.*` permissions and grant to existing `admin` / `manager` / `staff` roles per default maps
 4. Confirm `module:help-desk` + `help-desk.*` permissions on target roles
@@ -46,7 +46,8 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 6. Smoke: create a **new** workspace → enable Help Desk (alone, no CRM modules) → Manage categories → create a custom category → create/edit/assign/note a ticket → transition statuses → close → reopen → soft delete/restore
 7. Smoke (soft links): on a workspace with Contacts + Companies + Help Desk → create a ticket with contact/company links → confirm links resolve in detail
 8. Smoke (soft-gate off): on a workspace with Help Desk but **without** Contacts → confirm contact/company pickers are hidden
+9. Smoke (KB links): on a workspace with Help Desk + Knowledge Base → create a ticket linked to a published article → confirm **Related articles** on ticket view and **Linked tickets** on article view
 
 ## Roadmap context
 
-Help Desk is the first **Operations** Marketplace SKU — internal ticketing MVP only. SLAs, multi-channel intake, customer portal, and Knowledge Base remain future. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Help Desk is the first **Operations** Marketplace SKU — internal ticketing MVP. SLAs, multi-channel intake, and customer portal remain future. Soft Knowledge Base article links shipped in **1.1.0**. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
