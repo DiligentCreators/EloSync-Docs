@@ -1,5 +1,11 @@
 # Changelog
 
+## Short Links module (2026-08-23)
+
+- **SaaS-Backend:** New free Operations module `short-links` (catalog **1.0.0**, not default-included). CRUD API, click analytics, public redirect `GET /r/{uuid}`, async click recording job, Pest coverage.
+- **SaaS-Frontend:** List/create/view/edit pages, KPI strip, analytics section, nav gated by module + `short-links.view`. Playwright `test:e2e:short-links`.
+- Docs: [user guide](/user-guide/short-links), [developer guide](/developer-guide/short-links), [API](/api/tenant-v1-short-links).
+
 ## Connected workflow polish — payment receipts + Help Desk ↔ Knowledge Base (2026-08-23)
 
 - **SaaS-Backend:** Posted payments — `GET /payments/{id}/pdf` (receipt PDF) and `POST /payments/{id}/email` (`payments.send`, throttled like invoices). `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `Emailed` timeline event. Catalog PATCH: `payments` **1.1.0 → 1.2.0**.
