@@ -1,5 +1,12 @@
 # Changelog
 
+## Platform polish lanes A, B, C (2026-08-23)
+
+- **SaaS-Backend (draft PR #148):** Expense / Help Desk / KB attachments; document polymorphic links; credit note & purchase order PDF + email; lead import retry guard; projects calendar projection; dashboard widget data; `local:seed-demo --full`; AI write tools + Opportunity Copilot API. Catalog MINOR/PATCH bumps across billing, expenses, help-desk, documents, knowledge-base, projects.
+- **SaaS-Frontend (merged PR #143):** Workspace checklist card, Ask EloSync dashboard section, marketplace starter paths, attachment UI, billing email dialogs, Opportunity Copilot, dashboard widgets. **Requires Backend polish APIs in the same deploy.**
+- **SaaS-Docs (draft PR #170):** API, user/developer guides, changelog; [production readiness audit](/deployment/platform-polish-a-b-c-production-readiness) (**No-Go** until Backend/Docs merge).
+- **Verification:** Targeted Playwright (documents, expenses, AI, dashboard, help-desk) passes with Backend on `feature/platform-polish-a-b-c`; full tenant suite not used as a single release gate (demo login rate limits).
+
 ## Branded custom domain — SSL pending status (2026-08-23)
 
 - **SaaS-Backend:** Custom domains track `ssl_provisioned_at` and `hosting_status` (`dns_pending` / `ssl_pending` / `active`). DNS verify leaves SSL pending until operator marks provisioned (`POST /api/central/v1/tenants/{tenant}/branded-domain/mark-ssl-provisioned` or `php artisan branded:mark-ssl-provisioned {hostname}`). Email/deep links use custom host only when SSL is provisioned. Grandfather migration sets `ssl_provisioned_at` for existing verified custom domains.

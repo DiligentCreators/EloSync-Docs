@@ -45,6 +45,17 @@ Migrate-first platform capability (not a Marketplace module).
 
 See [Tenant API & Webhooks production readiness](./tenant-api-webhooks-production-readiness).
 
+## Platform polish lanes A, B, C
+
+Deploy **Backend + Frontend + Docs together**. Frontend PR #143 is already on `main`; Backend PR #148 and Docs PR #170 must merge before production.
+
+1. `php artisan migrate --force` — attachment tables, `document_links`, catalog version bumps (`2026_08_23_*`).
+2. Deploy Backend **before or with** the SPA (receipt upload, document links, credit note / PO PDF+email APIs).
+3. Confirm `emails` queue workers and Storage upload disk ([Storage production readiness](./storage-production-readiness)).
+4. Smoke: documents, expenses, help-desk, tenant-dashboard, AI module Playwright scripts (`--workers=1`).
+
+Go-live audit: [Platform polish A/B/C production readiness](./platform-polish-a-b-c-production-readiness) — **No-Go** until Backend/Docs PRs merge.
+
 ## AI Assistant platform 1.0.0 → 1.0.1
 
 After migrate (`2026_08_21_010000`–`010300`):
