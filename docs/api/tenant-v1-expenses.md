@@ -42,15 +42,23 @@ List items include `status`, `category_id`, embedded `category` (`{ id, name, sl
 
 Body: `title` (required), `category_id` (optional — tenant `expense_categories` id, must be active; defaults to the seeded **Other** category), `amount` (required), `tax_amount` (optional, default `0`), `currency` (3-letter, default `USD`), `expense_date`, `notes`, `vendor_id` (optional — must belong to the tenant and the Vendors module must be entitled), `purchase_order_id` (optional — must belong to the tenant and the Purchase Orders module must be entitled), `assigned_to`.
 
+Optional multipart field `receipt` (file, max 5120 KB): jpg/jpeg/png/gif/webp/pdf/txt/log. Stored as `ExpenseAttachment`; bytes count toward workspace Storage quota (`WorkspaceStorageService::assertCanStore`). Returns `attachments` array on the expense resource.
+
 Status always starts at `draft`; `number` is auto-generated (`EXP-00001`, configurable via the `expenses_number_prefix` tenant setting). There is no server-computed total — `amount` and `tax_amount` are stored as given.
 
 ### GET `/expenses/{id}`
 
-Includes vendor, purchase order, assignee, creator, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes vendor, purchase order, assignee, creator, notes, timeline activities, and `attachments` (`uuid`, `original_name`, `mime`, `size_bytes`, `created_at`). Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/expenses/{id}`
 
 Partial update of **draft** expenses only. Non-draft expenses return 422 on `status` (`Only draft expenses can be edited.`). Assignment after submit uses `POST /expenses/{id}/assign`.
+
+Optional `receipt` on draft update uses the same validation as create. For multipart file upload, use `POST /expenses/{id}` (POST twin) — PHP does not populate uploaded files on true HTTP PUT.
+
+### GET `/expenses/attachments/{uuid}/download`
+
+Permission: parent expense `view` via `ExpenseAttachmentPolicy`. Returns the stored file as a download (`original_name`). 404 if the file is missing on disk.
 
 ### DELETE `/expenses/{id}`
 

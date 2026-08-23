@@ -39,7 +39,7 @@ New Expenses permissions (and `purchase-orders.convert`) for **existing** worksp
 
 ## Deploy checklist
 
-1. Migrate expense tables (`expenses`, `expense_notes`, `expense_activities`, `expense_categories`) and catalog bump **1.0.0 → 1.1.0** — **before** deploying the SPA (`category` string → `category_id` + embed)
+1. Migrate expense tables (`expenses`, `expense_notes`, `expense_activities`, `expense_categories`, `expense_attachments`) and catalog bumps — **before** deploying the SPA when schema or API embeds change (`category` string → `category_id`; receipt attachments **1.3.0**)
 2. Register the `expenses` catalog module (migration, not seeder) as free opt-in under the `purchasing` category — **no** `module_dependencies` row
 3. Migrate the `purchase-orders.convert` permission and grant it to existing `admin`/`manager` roles
 4. Confirm `module:expenses` + `expenses.*` permissions on target roles (category CRUD reuses the same permissions)
@@ -47,6 +47,7 @@ New Expenses permissions (and `purchase-orders.convert`) for **existing** worksp
 6. Smoke: create a **new** workspace → enable Expenses (alone, no other Purchasing modules) → Manage categories → create a custom category → create/edit/assign/note an expense → submit → approve → mark as paid → soft delete/restore
 7. Smoke (soft convert): on a workspace with Vendors + Purchase Orders + Expenses all enabled → create a purchase order → send it → **Convert to expense** → confirm a draft expense with the PO's amount/vendor and **Other** category was created and the action is now hidden
 8. Smoke (soft-gate off): on a workspace with Purchase Orders but **without** Expenses enabled → confirm the Convert button does not appear and the API returns a clear error if called directly
+9. Smoke (receipts): create a draft expense with an optional **receipt** file → confirm **Receipts** on the record view and download succeeds; bytes count toward [Storage](/user-guide/storage-overview) quota
 
 ## Phase 4 roadmap context
 

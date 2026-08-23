@@ -1,5 +1,46 @@
 # Changelog
 
+## Platform polish lanes A, B, C (2026-08-23)
+
+- **SaaS-Backend:** Expense / Help Desk / KB attachments; document polymorphic links; credit note & purchase order PDF + email; lead import retry guard; projects calendar projection; dashboard widget data; `local:seed-demo --full`; AI write tools + Opportunity Copilot API. Catalog MINOR/PATCH bumps across billing, expenses, help-desk, documents, knowledge-base, projects. Merged to `main` (PR #148).
+- **SaaS-Frontend:** Workspace checklist card, Ask EloSync dashboard section, marketplace starter paths, attachment UI, billing email dialogs, Opportunity Copilot, dashboard widgets. E2e + TypeScript production fixes on `main` (PR #143 + follow-up).
+- **SaaS-Docs:** API, user/developer guides, changelog; [production readiness audit](/deployment/platform-polish-a-b-c-production-readiness) (**Go** after joint migrate + smoke).
+- **Verification:** Pest polish suite green on Backend `main`; Playwright module scripts (documents, expenses, AI, dashboard, help-desk) with cached demo login.
+
+## Documents soft record links — A7 (2026-08-23)
+
+- **SaaS-Backend:** `document_links` polymorphic pivot, `DocumentLink` model, `DocumentLinkService::sync` on create/update, `LinkableAsset` + `LinkableTask` validation rules, `links` on document API resources. Catalog MINOR: `documents` **1.1.0 → 1.3.0**. Pest: link sync, entitlement gating, forbidden link in `DocumentTest`.
+- **SaaS-Frontend:** Related-record pickers on document create/edit (module + permission gated); **Related records** section on document view. Playwright: `documents.workflow.spec.ts`.
+- Docs: [documents overview](/user-guide/documents-overview), [developer guide](/developer-guide/documents), [API](/api/tenant-v1-documents).
+
+## Platform polish — rich demo, workspace checklist, marketplace starters (2026-08-23)
+
+- **SaaS-Backend:** `local:seed-demo --full` installs `config/local-demo.php` → `demo_modules`, chains `LocalReportsDemoDataService` + `LocalDemoCrossModuleStoryService` (Companies/Contacts linked to Leads, sales→billing chain, Help Desk ticket linked to KB). `--full` defaults off.
+- **SaaS-Backend:** Workspace onboarding checklist — `onboarding_checklist` tenant setting, `GET/PATCH /settings/onboarding`, auto-detect for timezone/branding/first lead, mail-test + marketplace visit timestamps. Pest: `WorkspaceOnboardingTest`.
+- **SaaS-Frontend:** Dismissible `WorkspaceChecklistCard` on tenant dashboard (owner/admin). Dashboard marketplace upsell widgets when starter modules are missing; Marketplace **Starter paths** section (CRM / Billing / Operations slug bundles).
+- **SaaS-Docs:** [Local demo data](/getting-started/local-demo-data) `--full` section; changelog note.
+
+## Platform polish — Knowledge Base attachments + AI tools (2026-08-23)
+
+- **SaaS-Backend (A5):** `knowledge_base_article_attachments` table, model/policy/resource, `KnowledgeBaseArticleService::attachFile` on create/update (multipart `attachment` field), `GET /knowledge-base/attachments/{uuid}/download`, workspace storage `usedBytes()` integration. Catalog MINOR: `knowledge-base` **1.0.0 → 1.1.0**. Pest: `KnowledgeBaseAttachmentTest`.
+- **SaaS-Frontend (A5):** Attachment file input on article create/edit; download links on article view.
+- **SaaS-Backend (C2):** New AI tools — write: `update_lead_status`, `log_activity` (pending confirmation); read: `get_help_desk_open_tickets`, `get_expense_pending_approval`. Opportunity Copilot endpoints (`/ai/opportunities/{id}/summarize`, `next-action`, `draft-follow-up`). Extended `AiWriteConfirmationTest` + `AiAuthorizationTest`.
+- **SaaS-Frontend (C2):** `OpportunityAiCopilotSection` on opportunity view; Ask EloSync starter chips on tenant dashboard (module-entitled prompts); shared `ai-starter-prompts` for panel + dashboard.
+- Docs: [AI tools developer guide](/developer-guide/ai-tools).
+
+## Billing docs sync — overview + production readiness (2026-08-23)
+
+- **SaaS-Docs:** User-guide overviews for [Invoices](/user-guide/invoices-overview), [Estimates](/user-guide/estimates-overview), and [Quotations](/user-guide/quotations-overview) now list shipped **Download PDF** + **Email customer** capabilities and catalog versions (**1.8.0** / **1.5.0** / **1.6.0**). Removed stale “e-mail delivery deferred” bullets.
+- **SaaS-Docs:** [Invoices production readiness](/deployment/invoices-production-readiness) — customer email marked **Shipped** (1.8.0); API and user guide cross-links.
+
+## Expense receipt attachments (2026-08-23)
+
+- **SaaS-Backend:** `expense_attachments` table, `ExpenseAttachment` model/policy/resource, `ExpenseService::attachReceipt` on create/update (multipart `receipt` field), `GET /expenses/attachments/{uuid}/download`, workspace storage `usedBytes()` integration, POST twin for multipart update. Catalog MINOR: `expenses` **1.2.0 → 1.3.0**.
+- **SaaS-Frontend:** Receipt file input on expense create/edit; download links on expense view. Pest: `ExpenseAttachmentTest`.
+- **SaaS-Backend:** Help Desk ticket attachments — `help_desk_ticket_attachments`, attach on create (`attachment` field), download route, storage usage. Catalog MINOR: `help-desk` **1.1.0 → 1.2.0**.
+- **SaaS-Frontend:** Attachment input on ticket create; download on ticket view. Pest: `HelpDeskAttachmentTest`.
+- Docs: developer guides + API snippets for both modules (user guide deferred list updates).
+
 ## Branded custom domain — SSL pending status (2026-08-23)
 
 - **SaaS-Backend:** Custom domains track `ssl_provisioned_at` and `hosting_status` (`dns_pending` / `ssl_pending` / `active`). DNS verify leaves SSL pending until operator marks provisioned (`POST /api/central/v1/tenants/{tenant}/branded-domain/mark-ssl-provisioned` or `php artisan branded:mark-ssl-provisioned {hostname}`). Email/deep links use custom host only when SSL is provisioned. Grandfather migration sets `ssl_provisioned_at` for existing verified custom domains.

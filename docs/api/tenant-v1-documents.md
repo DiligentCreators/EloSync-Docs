@@ -37,6 +37,13 @@ Permission: `documents.create`
 | `title` | required, string, max 255 |
 | `description` | optional string, max 5000 |
 | `category_id` | optional; must exist in tenant `document_categories` and not soft-deleted |
+| `lead_ids` | optional array of lead ids (requires entitled **Leads** + `LinkableLead` scope) |
+| `contact_ids` | optional array of contact ids (requires entitled **Contacts** + `LinkableContact` scope) |
+| `company_ids` | optional array of company ids (requires entitled **Companies** + `LinkableCompany` scope) |
+| `project_ids` | optional array of project ids (requires entitled **Projects** + `LinkableProject` scope) |
+| `employee_ids` | optional array of employee ids (requires entitled **Employees** + `LinkableEmployee` scope) |
+| `asset_ids` | optional array of asset ids (requires entitled **Assets** + `LinkableAsset` scope) |
+| `task_ids` | optional array of task ids (requires entitled **Tasks** + `LinkableTask` scope) |
 | `file` | required file, max **51200** KB (50 MB); mimes: `pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,rtf,odt,ods,odp,jpg,jpeg,png,gif,webp,zip,rar,7z` |
 
 Stores under the tenant Documents directory on the uploads disk. Counts toward Storage used bytes.
@@ -45,19 +52,19 @@ Stores under the tenant Documents directory on the uploads disk. Counts toward S
 
 Permission: `documents.view`. Soft-deleted rows return not found on show.
 
-Includes category and creator when loaded. Does **not** expose `path` / `disk`.
+Includes category, creator, and `links` (with `label` per linkable) when loaded. Does **not** expose `path` / `disk`.
 
 ### PUT `/documents/{id}`
 
 Permission: `documents.update`
 
-JSON body (partial): `title`, `description`, `category_id`. Prefer this for metadata-only updates.
+JSON body (partial): `title`, `description`, `category_id`, and any of the optional `*_ids` link arrays above. Omitted link arrays leave that type unchanged; send `[]` to clear links for a type.
 
 ### POST `/documents/{id}`
 
 Permission: `documents.update` (named route `documents.update.post`)
 
-`multipart/form-data` (partial): `title`, `description`, `category_id`, optional `file` (same mime/size rules as create). Replacing a larger file checks quota on the positive size delta only.
+`multipart/form-data` (partial): `title`, `description`, `category_id`, optional link arrays (`lead_ids[]`, …), optional `file` (same mime/size rules as create). Replacing a larger file checks quota on the positive size delta only.
 
 **File replace:** use this `POST` twin — PHP does not populate uploaded files on a true HTTP `PUT`. The official SPA posts FormData here (no `_method` spoofing required). Method-spoofed `POST` + `_method=PUT` also works.
 

@@ -57,11 +57,11 @@ Workspaces that already entitled Invoices pick up recurring + PDF after migrate.
 | Item | Notes |
 |------|-------|
 | No new permissions | Reuse `invoices.view` (PDF), `invoices.update` (stop), `invoices.void` (optional child void) |
-| Generated invoices are **Draft** | Operator sends; no auto-email |
+| Generated invoices are **Draft** | Operator sends; recurring generator does not auto-email |
 | Stopping does not void paid history | Optional checkbox only voids latest unpaid generated draft/sent |
 | No stored `pdf_path` | Rendered on the fly (cached) |
 | No new queue name | Warm job uses the **default** Redis queue |
-| Emailing invoices | Deferred (roadmap) |
+| Customer email delivery | **Shipped** in **1.8.0** — `POST …/email` (`invoices.send`, `throttle:billing-document-email`); see [API](/api/tenant-v1-invoices) and [User guide](/user-guide/invoices#email-customer) |
 
 ---
 

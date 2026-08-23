@@ -21,6 +21,8 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 - Auto-numbered (`EST-00001`; prefix backed by the `estimates_number_prefix` tenant setting, default `EST-` — editable under **Settings → General → Document number prefixes**)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side, same pattern as Invoices/Quotations
 - Status workflow: `draft → sent → accepted | rejected | expired` (`POST /estimates/{id}/send`, `.../accept`, `.../status`)
+- Download estimate PDF (workspace-branded; same layout family as invoices)
+- **Email customer** after Send (`POST /estimates/{id}/email`, `estimates.send`) — optional PDF attachment; default recipient from linked contact/company; records `emailed` timeline + tenant email log
 - **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with the estimate's lines, links it back via `estimate_id`, and marks the estimate **Accepted** if it wasn't already. One-way and one-time per estimate. Blocked if the linked quotation is already invoiced.
 - Assignment with assignee scoping via `estimates.assign`
 - Notes + domain activity timeline (mirrors Invoices/Quotations)
@@ -32,7 +34,7 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 
 `estimates.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Estimates from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`.
+Enable Estimates from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.5.0**.
 
 ## Related modules
 
@@ -40,7 +42,6 @@ Enable Estimates from Marketplace (free) — **Invoices must already be installe
 
 ## Explicitly deferred
 
-- Estimate PDF export / e-mail delivery to the customer
 - Re-converting or reversing a converted estimate (conversion is one-way, one-time)
 - Multi-currency conversion
 - Approval workflow beyond the status enum

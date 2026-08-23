@@ -1,6 +1,6 @@
 # Knowledge Base Module
 
-Free Operations Marketplace module for **internal** team help articles, categories, and searchable FAQs. Catalog version **1.0.0**. There is no public or customer portal in v1.
+Free Operations Marketplace module for **internal** team help articles, categories, and searchable FAQs. Catalog version **1.1.0**. There is no public or customer portal in v1.
 
 ## Guides
 
@@ -18,6 +18,7 @@ Free Operations Marketplace module for **internal** team help articles, categori
 - Flat categories (delete blocked while articles still use them)
 - Search across title, excerpt, and body; status and trash filters for editors
 - Soft **Help Desk** backlinks on article show when `help-desk` is entitled (`help_desk_tickets` on `GET /knowledge-base/{id}`)
+- Optional **article attachments** on create/edit (counts toward [Storage](/user-guide/storage-overview) quota)
 - Notes + domain timeline; Spatie `LogsActivity` + platform audit events
 - Module licensing (`module:knowledge-base`) for install; Spatie permissions for all access
 - Internal workspace only — no public URLs or customer portal
@@ -41,7 +42,6 @@ View-only users see **published** articles only. Users with `knowledge-base.upda
 ## Explicitly deferred
 
 - Public / customer-facing URLs
-- Attachments / image upload
 - Nested categories
 - Dashboard widget
 - Automation triggers

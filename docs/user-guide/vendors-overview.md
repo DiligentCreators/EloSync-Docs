@@ -20,6 +20,7 @@ Phase 4 Purchasing module (Milestone 1) on the frozen platform. Mirrors the [Com
 - Notes (comments) + activity timeline
 - Table view with search (including tax ID), status filter, and **My Vendors** toggle
 - KPIs via `GET /vendors/stats` (total, my vendors, unassigned, active, inactive)
+- Dashboard widget `active_vendors` (module + `vendors.view`)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:vendors`) + Spatie permissions — **free Marketplace opt-in**
 - Audit + activity logging
@@ -36,9 +37,6 @@ Unlike Companies, Vendors do **not** link to Contacts. Vendors is a standalone s
 
 ## Explicitly deferred
 
-- Purchase Orders (Phase 4 Milestone 2)
-- Expenses (Phase 4 Milestone 3)
 - Vendor scorecards / performance tracking
 - Vendor portal / self-service
 - Vendor import/export
-- Dashboard widgets for Vendors

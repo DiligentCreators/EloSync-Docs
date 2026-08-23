@@ -6,20 +6,20 @@ Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Esti
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Expense.php`, `ExpenseCategory`, `ExpenseNote`, `ExpenseActivity` |
+| Models | `app/Models/Expense.php`, `ExpenseCategory`, `ExpenseNote`, `ExpenseActivity`, `ExpenseAttachment` |
 | Enums | `ExpenseStatusEnum`, `ExpenseActivityTypeEnum` |
 | Service | `app/Services/Tenant/ExpenseService.php` (+ `ScopesToAssignee`, `RetriesOnDuplicateNumber`), `ExpenseCategoryService`, `ExpenseCategorySeederService` |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/ExpenseController.php`, `ExpenseCategoryController` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Expense/*`, `ExpenseCategory/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/Expense/*`, `ExpenseCategory/*` |
-| Policy | `app/Policies/ExpensePolicy.php`, `ExpenseCategoryPolicy` (maps to `expenses.*`) |
+| Policy | `app/Policies/ExpensePolicy.php`, `ExpenseCategoryPolicy`, `ExpenseAttachmentPolicy` (maps to `expenses.*`) |
 | Events | `app/Events/Expense*.php` |
 | Subscriber | `app/Listeners/ExpenseEventSubscriber.php` (audit + assignment notification) |
 | Notifications | `app/Notifications/Tenant/Expense/ExpenseAssignedNotification.php` |
 | Link rules | `app/Rules/LinkableVendor.php` (reused), `app/Rules/LinkablePurchaseOrder.php` — both optional, tenant-scoped, module-entitlement-checked |
 | Assignee rule | `app/Rules/EligibleExpenseAssignee.php` |
 | Factories | `ExpenseFactory`, `ExpenseCategoryFactory`, `ExpenseNoteFactory`, `ExpenseActivityFactory` |
-| Tests | `tests/Feature/Tenant/Expense/ExpenseTest.php`, `ExpenseCategoryTest.php` |
+| Tests | `tests/Feature/Tenant/Expense/ExpenseTest.php`, `ExpenseCategoryTest.php`, `ExpenseAttachmentTest.php` |
 | Migrations | `database/migrations/2026_08_01_130000_create_expenses_table.php` … `130005_add_purchase_orders_convert_permission.php`; `2026_08_13_171652`+ expense categories + catalog bump `1.0.0 → 1.1.0` |
 
 ## Domain notes
@@ -34,6 +34,7 @@ Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Esti
 - No line-item child table — `amount` and `tax_amount` are plain decimal columns set directly from the request; there's no server-side computed total (the frontend renders `amount + tax_amount` for display).
 - `expenses.force.delete` is not granted to any default role — owner/superadmin only.
 - Auto-numbering: `ExpenseService::nextNumber()` reads the `expenses_number_prefix` tenant setting (default `EXP-`), then zero-pads a running count to 5 digits — same pattern as Purchase Orders/Estimates/Invoices/Payments. Exposed via `PUT /settings` (`UpdateTenantSettingsRequest`). `expenses` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
+- **Receipt attachments**: optional multipart `receipt` on `POST /expenses` and draft `PUT` / `POST` update (POST twin for file upload). Stored via `ExpenseService::attachReceipt()` in `FileUploadService::tenantDirectory(..., 'expenses')`; counts toward workspace storage. Download: `GET /expenses/attachments/{uuid}/download` (gated by `ExpenseAttachmentPolicy` → parent expense `view`). Catalog **1.3.0**.
 
 ## Convert-from-Purchase-Order (soft)
 
@@ -56,7 +57,7 @@ purchase-orders.convert
 
 Routes use `module:expenses` then `can:expenses.*` / policies. The convert route lives under the existing `module:purchase-orders` group and only needs `can:purchase-orders.convert` — the Expenses module check happens in the service layer (soft), not route middleware (hard).
 
-Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.1.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`).
+Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.3.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`); receipt attachments are **1.3.0**.
 
 ## API (tenant)
 
@@ -69,8 +70,8 @@ SPA mirrors **Purchase Orders** (table + create/edit page, record page) under th
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/expenses/` (`expenses-page.tsx`, `expense-form-dialog.tsx`, `expense-detail-sheet.tsx`, `expense-categories-dialog.tsx`) |
-| Detail sheet | Overview (category name, amount/tax/total, date, assignee, related vendor/PO), notes, timeline — actions: assign, add note, submit, approve, reject, mark as paid, cancel, edit (draft only), delete |
-| Form dialog | Title, category picker (`category_id`, active categories), amount, tax amount, currency, expense date, notes, and **conditional** vendor / purchase order pickers (`SearchableSelect`) shown only when `hasModule('vendors')` / `hasModule('purchase-orders')` is true |
+| Detail sheet | Overview (category name, amount/tax/total, date, assignee, related vendor/PO), **Receipts** (download links), notes, timeline — actions: assign, add note, submit, approve, reject, mark as paid, cancel, edit (draft only), delete |
+| Form dialog | Title, category picker (`category_id`, active categories), amount, tax amount, currency, expense date, notes, optional **receipt** file input, and **conditional** vendor / purchase order pickers (`SearchableSelect`) shown only when `hasModule('vendors')` / `hasModule('purchase-orders')` is true |
 | Service | `expenseService` + `expenseCategoryService` in `src/api/services.ts`; `purchaseOrderService.convert()` for the PO action |
 | Types | `Expense*` / `ExpenseCategory*` in `src/types/api.ts`; `PurchaseOrder.converted_expense_id` added for the convert UI |
 | Query keys | `QUERY_KEYS.expenses` / `expense(id)` / `expenseTimeline(id)` / `expenseStats` / `expenseCategories` |
@@ -86,6 +87,7 @@ SPA mirrors **Purchase Orders** (table + create/edit page, record page) under th
 ```bash
 php artisan test --compact tests/Feature/Tenant/Expense/ExpenseTest.php
 php artisan test --compact tests/Feature/Tenant/Expense/ExpenseCategoryTest.php
+php artisan test --compact tests/Feature/Tenant/Expense/ExpenseAttachmentTest.php
 php artisan test --compact tests/Feature/Tenant/PurchaseOrder/PurchaseOrderTest.php
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:expenses
@@ -109,7 +111,6 @@ npm run test:e2e:expenses
 
 ## Deferred
 
-- Receipt attachments / file uploads
 - Reimbursement / payout tracking beyond the `paid` status
 - General ledger (GL) posting / accounting integration
 - Multi-line (itemized) expenses
