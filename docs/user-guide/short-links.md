@@ -29,7 +29,7 @@ Open **Short Links** from the sidebar (Operations).
 
 1. Click **New short link** (shortcut: `n` when the list is focused and you have create permission)
 2. Enter a destination URL (required) and optional title, status, expiry, and UTM parameters
-3. Save — EloSync generates a public short URL on `{APP_URL}/r/{uuid}`
+3. Save — EloSync generates a public short URL on `https://go.elosync.com/r/{code}` (7-character code). Your operator may use a different short domain via `SHORT_LINK_BASE_URL`.
 
 Edit from the row menu or the record page. Focus search with `Ctrl/⌘+F`.
 

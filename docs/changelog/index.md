@@ -5,6 +5,7 @@
 - **SaaS-Backend:** New free Operations module `short-links` (catalog **1.0.0**, not default-included). CRUD API, click analytics, public redirect `GET /r/{uuid}`, async click recording job, Pest coverage.
 - **SaaS-Frontend:** List/create/view/edit pages, KPI strip, analytics section, nav gated by module + `short-links.view`. Playwright `test:e2e:short-links`.
 - Docs: [user guide](/user-guide/short-links), [developer guide](/developer-guide/short-links), [API](/api/tenant-v1-short-links).
+- **Short Links 1.1.0:** Public URLs use 7-character codes on `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/abc1234`). Legacy UUID redirects remain supported. Catalog bump **1.0.0 → 1.1.0**.
 
 ## Connected workflow polish — payment receipts + Help Desk ↔ Knowledge Base (2026-08-23)
 

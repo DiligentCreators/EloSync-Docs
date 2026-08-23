@@ -18,7 +18,7 @@ Same filters as list (minus pagination/sort). Payload:
 
 Query: `search` (title, destination_url), `status`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `short_url`, `click_count`, `last_clicked_at`, and nested `creator`.
+List items include `code`, `short_url`, `click_count`, `last_clicked_at`, and nested `creator`.
 
 ### POST `/short-links`
 
@@ -30,7 +30,7 @@ List items include `short_url`, `click_count`, `last_clicked_at`, and nested `cr
 | `expires_at` | optional datetime (workspace TZ in UI; stored UTC) |
 | `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` | optional strings |
 
-`uuid` and `short_url` are server-generated.
+`uuid`, `code`, and `short_url` are server-generated. `short_url` uses `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/abc1234`).
 
 ### GET `/short-links/{id}`
 
@@ -68,9 +68,12 @@ Paginated click log (`clicked_at`, `device_type`, `referrer`, `user_agent`).
 
 ## Public redirect (central)
 
-### GET `/r/{uuid}`
+### GET `/r/{code}`
 
 No authentication. Returns `302` to the destination URL with configured UTM query params appended.
+
+- Primary lookup: 7-character `code` (e.g. `/r/s87f89`)
+- Legacy: UUID still accepted (`/r/{uuid}`) for links created before 1.1.0
 
 - Active, non-expired link + entitled workspace → redirect + async click record
 - Paused, expired, missing, or soft-deleted → `404`

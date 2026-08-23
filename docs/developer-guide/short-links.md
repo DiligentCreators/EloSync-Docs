@@ -20,7 +20,7 @@ Mirror the **Assets** / **Announcements** module pattern. Public redirects live 
 
 ## Domain notes
 
-- `uuid` is globally unique and used in public URLs: `{APP_URL}/r/{uuid}`.
+- `uuid` is globally unique for internal/API use; public URLs use a 7-character `code` on `{SHORT_LINK_BASE_URL}/r/{code}` (default production: `https://go.elosync.com/r/{code}`). Legacy `{APP_URL}/r/{uuid}` redirects still work.
 - `expires_at` and `last_clicked_at` use `UtcDateTime`; compare with `UtcInstant` in scopes.
 - Click rows store `ip_hash` (SHA-256) — not raw IPs.
 - Bot user agents still redirect but skip click recording (`ShortLinkDeviceDetector`).
@@ -37,7 +37,7 @@ short-links.view | create | update | delete | restore | force.delete | view_anal
 ## Catalog
 
 - Slug `short-links`, category `operations`, `sort_order` 90
-- `is_default_included = false`, `is_billable = false`, version **1.0.0**
+- `is_default_included = false`, `is_billable = false`, version **1.1.0**
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule`
 
 ## API (tenant)
@@ -46,7 +46,15 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-short-links.md](/api/tenant
 
 ## Public redirect
 
-`GET /r/{uuid}` — no auth. Initializes tenancy from the link row, checks `module:short-links` entitlement, dispatches `RecordShortLinkClickJob`, returns `302` to destination (+ UTM).
+`GET /r/{code}` — no auth. Also accepts legacy `GET /r/{uuid}`. Initializes tenancy from the link row, checks `module:short-links` entitlement, dispatches `RecordShortLinkClickJob`, returns `302` to destination (+ UTM).
+
+## Configuration
+
+| Env | Purpose |
+|-----|---------|
+| `SHORT_LINK_BASE_URL` | Public short domain (e.g. `https://go.elosync.com`). Defaults to `APP_URL`. |
+
+Point `go.elosync.com` DNS at the same Laravel app as the API. Local dev: add `go.elosync.test` in Herd and set `SHORT_LINK_BASE_URL=http://go.elosync.test`.
 
 ## Frontend
 
