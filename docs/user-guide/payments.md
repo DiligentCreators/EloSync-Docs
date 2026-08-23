@@ -2,7 +2,7 @@
 
 ## Who can use Payments
 
-Your workspace must have **Invoices** installed first, then the **Payments** module (both free from Marketplace). Marketplace blocks installing Payments until Invoices is entitled. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `post`, `void` as needed).
+Your workspace must have **Invoices** installed first, then the **Payments** module (both free from Marketplace). Marketplace blocks installing Payments until Invoices is entitled. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `post`, `void`, `send` as needed).
 
 Without **assign**, you only see payments assigned to you.
 
@@ -41,13 +41,19 @@ Invalid transitions (e.g. voiding a draft payment, or posting an already-posted 
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
+## Receipt PDF & email
+
+After you **Post** a payment, use **Download receipt** on the record page to get a branded PDF (workspace branding, payment number, paid-at, method, reference, amount, bill-to contact/company, and invoice allocation table).
+
+Users with **send** (`payments.send`) can **Email receipt** — same dialog pattern as invoices. The **To** field pre-fills from the linked contact or company email when available; you can add CC recipients and edit the subject/message. Only **Posted** payments support PDF download and email (draft and void return an error). Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
+
 ## Notes & activity
 
 - **Notes** — free-form notes on the payment
-- **Activity** — timeline of create, update, assignment, post, void, note, and delete/restore events
+- **Activity** — timeline of create, update, assignment, post, void, note, emailed, and delete/restore events
 
 ## What's not here yet
 
-Partial refunds of a posted payment, payment receipt PDFs/e-mail delivery, and online payment-gateway capture are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Partial refunds of a posted payment and online payment-gateway capture are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
 
 To credit an invoice directly (independent of a payment), see [Credit Notes](/user-guide/credit-notes).

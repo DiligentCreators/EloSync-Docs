@@ -21,6 +21,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 
 - Header ticket: number (`HD-` prefix, configurable), subject, description, tenant-managed category, priority (`low` / `medium` / `high` / `urgent`), status, optional `due_at`
 - Optional `contact_id` and `company_id` — soft links, only validated (and only pickable in the UI) when the corresponding module is entitled on the workspace
+- Optional **Knowledge Base** article links (soft M2M) when `knowledge-base` is entitled — pick published articles (or drafts when the actor has `knowledge-base.update`); backlinks on article view when Help Desk is entitled
 - Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
 - Content edits blocked when status is **Closed** — use status actions, assignment, and notes instead
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `help-desk.assign`
@@ -44,7 +45,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | **manager** | `view`, `create`, `update`, `assign`, `close`, `reopen` |
 | **staff** | `view`, `create`, `update`, `close`, `reopen` |
 
-Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.0.0**.
+Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.1.0**.
 
 ## Why standalone (soft dependencies)
 
@@ -55,7 +56,6 @@ Most internal tickets (IT requests, billing questions) do not require a CRM cont
 - SLAs and SLA breach automation
 - Email ingest / multi-channel intake (email, chat, social)
 - Customer portal (external submit / track)
-- Knowledge Base articles linked to tickets
 - File attachments on tickets or notes
 - `@mentions` in notes
 - Automation module triggers for Help Desk events

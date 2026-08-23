@@ -28,8 +28,9 @@ When Help Desk is installed and you have `help-desk.view`, the dashboard may sho
 3. Choose category (from your workspace list) and priority
 4. Optionally set a due date (interpreted in your workspace timezone)
 5. If **Contacts** or **Companies** are installed, optionally link a contact and/or company
-6. Optionally set an assignee (requires **assign**); otherwise the ticket defaults to you
-7. Save
+6. If **Knowledge Base** is installed, optionally link one or more articles (published articles for view-only users; editors with `knowledge-base.update` can also link drafts)
+7. Optionally set an assignee (requires **assign**); otherwise the ticket defaults to you
+8. Save
 
 Edit from the row menu or the ticket page while the ticket is not **Closed**. Closed tickets must be **Reopened** before content edits.
 
@@ -49,6 +50,10 @@ Invalid transitions are rejected with a validation error. Use **Close** for a te
 
 Both links are **soft** — they only appear in the create/edit form when the corresponding module (**Contacts** / **Companies**) is installed on your workspace, and they're always optional even when installed. A ticket without either link works the same; the links are for cross-referencing to CRM records.
 
+## Optional Knowledge Base links
+
+When **Knowledge Base** is installed, the create/edit form shows a **Knowledge base articles** multi-select. Linked articles appear under **Related articles** on the ticket view (links open the article record). On the article view, **Linked tickets** lists tickets that reference that article when Help Desk is also installed. No hard module dependency — either module can be installed without the other; links are simply unavailable until both are entitled.
+
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the ticket page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
@@ -64,4 +69,4 @@ Set an optional **due date** on create or edit. Overdue filtering and KPIs compa
 
 ## What's not here yet
 
-SLAs, email/multi-channel intake, customer portal, Knowledge Base, attachments, `@mentions`, Automation triggers, Communication Template handoff, and Kanban are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+SLAs, email/multi-channel intake, customer portal, attachments, `@mentions`, Automation triggers, Communication Template handoff, and Kanban are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

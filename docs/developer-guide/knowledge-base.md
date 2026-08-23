@@ -36,11 +36,12 @@ Marketplace Operations module (`knowledge-base` **1.0.0**). Flat namespaces (no 
 - Category soft/force delete blocked while articles (including trashed for force) still reference the category
 - Articles: notes + `knowledge_base_article_activities` timeline; model uses Spatie `LogsActivity` (`useLogName('knowledge-base')`)
 - Platform audit: `knowledge_base_article_created|updated|deleted|note_added`
+- Soft Help Desk backlinks: `KnowledgeBaseArticle::helpDeskTickets()` — loaded on article show when `module:help-desk` entitled; exposed as `help_desk_tickets` on `KnowledgeBaseArticleResource`
 - No hard `module_dependencies`
 
 ## Frontend
 
-- Pages: `src/pages/knowledge-base/` (`knowledge-base-page.tsx`, `knowledge-base-form.tsx`, `knowledge-base-form-page.tsx`, `knowledge-base-view-page.tsx`, `knowledge-base-categories-dialog.tsx`)
+- Pages: `src/pages/knowledge-base/` — article view includes **Linked tickets** when Help Desk is entitled
 - Tour: `tourId="knowledge-base"` (`src/tours/knowledge-base.ts`)
 - Nav: `module:knowledge-base` + `knowledge-base.view`
 - Playwright: `npm run test:e2e:knowledge-base`

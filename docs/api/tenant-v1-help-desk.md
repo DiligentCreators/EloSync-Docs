@@ -36,21 +36,21 @@ Same filters as list (minus pagination/sort). Response:
 
 Query: `search` (matches `subject`, `number`, or `description`), `status` (`open`\|`in_progress`\|`waiting`\|`resolved`\|`closed`), `priority` (`low`\|`medium`\|`high`\|`urgent`), `category_id`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_tickets`, `overdue`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `priority`, `category_id`, embedded `category` (`{ id, name, slug }` when loaded), `due_at`, contact/company refs (when linked), assignee/creator refs, and `latest_note`.
+List items include `status`, `priority`, `category_id`, embedded `category` (`{ id, name, slug }` when loaded), `due_at`, contact/company refs (when linked), `knowledge_base_articles` summary (`[{ id, uuid, title, slug, status }]` when KB entitled), assignee/creator refs, and `latest_note`.
 
 ### POST `/help-desk`
 
-Body: `subject` (required), `description` (optional), `priority` (optional, default `medium`), `category_id` (optional — tenant `help_desk_categories` id, must be active; defaults to seeded **Other**), `contact_id` (optional — Contacts module must be entitled), `company_id` (optional — Companies module must be entitled), `due_at` (optional ISO datetime), `assigned_to` (optional — requires actor to hold `help-desk.assign`; otherwise defaults to creator).
+Body: `subject` (required), `description` (optional), `priority` (optional, default `medium`), `category_id` (optional — tenant `help_desk_categories` id, must be active; defaults to seeded **Other**), `contact_id` (optional — Contacts module must be entitled), `company_id` (optional — Companies module must be entitled), `knowledge_base_article_ids` (optional `int[]` — Knowledge Base module must be entitled; each id validated via `LinkableKnowledgeBaseArticle`: published for view-only actors, or draft/archived when actor has `knowledge-base.update`), `due_at` (optional ISO datetime), `assigned_to` (optional — requires actor to hold `help-desk.assign`; otherwise defaults to creator).
 
 Status always starts at `open`; `number` is auto-generated (`HD-00001`, configurable via `help_desk_number_prefix` tenant setting).
 
 ### GET `/help-desk/{id}`
 
-Includes category, contact, company, assignee, creator, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/help-desk/{id}`
 
-Partial update of non-**closed** tickets only. Closed tickets return 422 (`Closed tickets cannot be edited.`). Assignment after create uses `POST /help-desk/{id}/assign`.
+Partial update of non-**closed** tickets only. Closed tickets return 422 (`Closed tickets cannot be edited.`). Accepts `knowledge_base_article_ids` (same rules as create). Assignment after create uses `POST /help-desk/{id}/assign`.
 
 ### DELETE `/help-desk/{id}`
 
@@ -94,7 +94,11 @@ Permission: `help-desk.update`.
 
 ### GET `/help-desk/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `note_added`, `articles_synced`, `deleted`, `restored`).
+
+### PUT `/help-desk/{id}/articles`
+
+`{ "article_ids": number[] }` — replace linked Knowledge Base articles (same validation as `knowledge_base_article_ids`). Permission: `help-desk.update`. Records `articles_synced` when the set changes.
 
 ## Help desk categories
 

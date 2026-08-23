@@ -16,10 +16,9 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 | Events | `app/Events/HelpDeskTicket*.php` |
 | Subscriber | `app/Listeners/HelpDeskEventSubscriber.php` (audit + assignment/status notifications) |
 | Notifications | `app/Notifications/Tenant/HelpDesk/HelpDeskAssignedNotification.php`, `HelpDeskStatusNotification` |
-| Link rules | `app/Rules/LinkableContact.php`, `app/Rules/LinkableCompany.php` — both optional, tenant-scoped, module-entitlement-checked |
-| Assignee rule | `app/Rules/EligibleHelpDeskAssignee.php` |
-| Factories | `HelpDeskTicketFactory`, `HelpDeskCategoryFactory`, `HelpDeskNoteFactory`, `HelpDeskActivityFactory` |
-| Tests | `tests/Feature/Tenant/HelpDesk/HelpDeskTicketTest.php`, `HelpDeskCategoryTest.php` |
+| Link rules | `app/Rules/LinkableContact.php`, `app/Rules/LinkableCompany.php`, `app/Rules/LinkableKnowledgeBaseArticle.php` — all optional, tenant-scoped, module-entitlement-checked |
+| Pivot | `help_desk_ticket_knowledge_base_article` — soft M2M to `knowledge_base_articles` (no `module_dependencies` row) |
+| Tests | `tests/Feature/Tenant/HelpDesk/HelpDeskTicketTest.php`, `HelpDeskCategoryTest.php`, `HelpDeskKnowledgeBaseLinkTest.php` |
 | Migrations | `database/migrations/2026_08_14_100000_create_help_desk_categories_table.php` … `100005_add_help_desk_permissions.php` |
 
 ## Domain notes
@@ -30,6 +29,7 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 - Content updates (`PUT`) blocked when `status === closed` via `HelpDeskTicket::isEditable()`. Assignment after submit uses `POST …/assign`.
 - `close()` / `reopen()` are assignee-scoped in `HelpDeskTicketPolicy` (same as `view` / `update`) unless the actor has `help-desk.assign` or is superadmin.
 - `contact_id` / `company_id` validated via `LinkableContact` / `LinkableCompany` — null always passes; non-null requires module entitlement, tenant scope, and assignee rules when applicable.
+- `knowledge_base_article_ids` on create/update and `PUT …/articles` sync via `HelpDeskTicketService::syncKnowledgeBaseArticles()` — requires `module:knowledge-base`; `LinkableKnowledgeBaseArticle` allows published for view-only actors or any visible article when actor has `knowledge-base.update`. Records `articles_synced` on the domain timeline when the set changes.
 - `help-desk.force.delete` is not granted to any default role — owner/superadmin only.
 - Auto-numbering: `HelpDeskTicketService::nextNumber()` reads `help_desk_number_prefix` tenant setting (default `HD-`), zero-pads running count to 5 digits. Exposed via `PUT /settings` (`UpdateTenantSettingsRequest`). `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via `RetriesOnDuplicateNumber`.
 - Overdue scope: open statuses (`open`, `in_progress`, `waiting`) with `due_at < UtcInstant::now()` — aligns with workspace timezone KPI fixes elsewhere.
@@ -43,7 +43,7 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies.
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.0.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.1.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## API (tenant)
 
@@ -56,8 +56,8 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/help-desk/` (`help-desk-page.tsx`, `help-desk-form.tsx`, `help-desk-form-page.tsx`, `help-desk-view-page.tsx`, `help-desk-categories-dialog.tsx`) |
-| View page | Details (category, priority, status, due date, assignee, related contact/company), notes, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
-| Form page | Subject, description, category picker, priority, due date, and **conditional** contact / company pickers when `hasModule('contacts')` / `hasModule('companies')` |
+| View page | Details (category, priority, status, due date, assignee, related contact/company, related KB articles), notes, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
+| Form page | Subject, description, category picker, priority, due date, conditional contact/company pickers, and **Knowledge base articles** multi-select when `hasModule('knowledge-base')` + `knowledge-base.view` |
 | Service | `helpDeskService` + `helpDeskCategoryService` in `src/api/services.ts` |
 | Types | `HelpDesk*` in `src/types/api.ts` |
 | Query keys | `QUERY_KEYS.helpDesk` / `helpDeskTicket(id)` / `helpDeskTimeline(id)` / `helpDeskStats` / `helpDeskCategories` |
@@ -71,8 +71,7 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 ## Tests
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/HelpDesk/HelpDeskTicketTest.php
-php artisan test --compact tests/Feature/Tenant/HelpDesk/HelpDeskCategoryTest.php
+php artisan test --compact tests/Feature/Tenant/HelpDesk/
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:help-desk
 ```
@@ -96,4 +95,4 @@ See [Central Feedback System](/developer-guide/central-feedback-system).
 
 ## Deferred
 
-- SLAs, email ingest, customer portal, Knowledge Base, attachments, `@mentions`, Automation triggers, Communication Template context, Kanban
+- SLAs, email ingest, customer portal, attachments, `@mentions`, Automation triggers, Communication Template context, Kanban

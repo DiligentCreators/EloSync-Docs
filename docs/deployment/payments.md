@@ -35,3 +35,4 @@ New Payments permissions for **existing** workspaces ship as an additive **data 
 5. Confirm `module:payments` + `payments.*` permissions on target roles
 6. Deploy Frontend SPA with Payments nav (Billing sidebar group, after Invoices) — verify a workspace **without** Invoices installed cannot install Payments from Marketplace
 7. Verify posting a payment correctly advances the linked invoice(s) to `partial`/`paid`, and voiding reverses it, in a staging smoke test before rollout
+8. Smoke **posted** payment: **Download receipt** PDF + **Email receipt** (`payments.send`) — draft/void must 422

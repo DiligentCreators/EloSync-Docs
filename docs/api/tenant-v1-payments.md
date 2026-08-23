@@ -95,4 +95,12 @@ Permission: `payments.update`.
 
 ### GET `/payments/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `posted`, `voided`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `posted`, `voided`, `note_added`, `emailed`, `deleted`, `restored`).
+
+### GET `/payments/{id}/pdf`
+
+Download a branded **receipt PDF** for a **posted** payment. Throttled (`payments-pdf`). Draft or void payments return 422. Permission: `payments.view`.
+
+### POST `/payments/{id}/email`
+
+Email the receipt to the customer with optional PDF attachment. Body matches billing document email (`to`, `cc`, `subject`, `message`, `attach_pdf`). Permission: `payments.send`. Throttled (`billing-document-email`). **Posted** only — draft/void → 422. Default `to` resolves from linked contact/company email (`ResolvesBillingDocumentRecipients`). Records `emailed` on the domain timeline.
