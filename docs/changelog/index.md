@@ -1,5 +1,10 @@
 # Changelog
 
+## Fix — workspace retention settings save (2026-08-24)
+
+- **SaaS-Frontend:** Settings → General **Trash retention** and Settings → Team Chat **Message & file retention** now persist reliably — save payload compares against loaded API values (not only RHF `dirtyFields`), Select changes explicitly mark the form dirty, and the settings query cache updates from the PUT response so a stale refetch cannot revert the UI.
+- **SaaS-Backend:** Pest coverage for `team-chat.retention_days` on `PUT /settings` (alongside existing `trash.retention_days` tests).
+
 ## Short Links UX — branded 404, vanity slugs, copy icons (2026-08-24)
 
 - **SaaS-Backend:** Branded public 404 page (`resources/views/short-links/unavailable.blade.php`) with EloSync marketing CTAs when links are missing, paused, expired, or deleted. Optional custom vanity `code` on create (3–64 chars, reserved-slug validation). `short_links.code` widened to 64 chars. Catalog MINOR: `short-links` **1.1.0 → 1.2.0**. Pest: branded 404, custom slug, soft-delete redirect tests.
