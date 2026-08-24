@@ -8,7 +8,22 @@ Requires **Accounting** module entitlement and `accounting.*` permissions.
 
 `GET /tax-types`
 
-Query: `search`, `kind`, `direction`, `is_active`, `trashed`, pagination.
+Query parameters:
+
+| Parameter | Purpose |
+|-----------|---------|
+| `search` | Filter by name, code, or authority reference |
+| `kind` | Filter: `sales_tax` or `withholding` |
+| `direction` | **Filter** when value is a tax direction enum (`add_on_sale`, `deduct_on_payment_in`, `deduct_on_payment_out`); **sort order** when value is `asc` or `desc` (with `sort`) |
+| `is_active` | Filter by active flag |
+| `trashed` | `true` (include soft-deleted) or `only` |
+| `sort` | Sort column: `name` (default), `code`, `kind`, `direction`, `rate`, `created_at`, `updated_at` — unknown values fall back to `name` |
+| `page`, `per_page` | Pagination |
+
+Examples:
+
+- Paginated list sorted by name: `?sort=name&direction=asc`
+- Withholding types for customer payments: `?kind=withholding&direction=deduct_on_payment_in`
 
 ## Create tax type
 
@@ -44,8 +59,8 @@ Withholding examples:
 ## Related endpoints
 
 - Billing lines accept `lines.*.tax_type_id` on invoices, credit notes, quotations, estimates, POs (when Accounting entitled).
-- Payments: `withholding_tax_type_id`, `withholding_authority_reference` on create/update; `withholding_amount` computed on post.
-- Expenses: same withholding fields on `POST /expenses/{id}/pay`.
+- Payments: `withholding_tax_type_id`, `withholding_authority_reference` on create/update; `withholding_amount` computed on post. Show responses include `withholding_tax_type` summary when loaded.
+- Expenses: same withholding fields on `POST /expenses/{id}/pay`; paid expense show includes `withholding_tax_type`.
 - Contacts / vendors: `default_withholding_tax_type_id`.
 
 See [developer guide](/developer-guide/tax-types) for journal semantics.

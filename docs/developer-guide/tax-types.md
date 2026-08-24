@@ -41,7 +41,10 @@ See [tenant-v1-tax-types](/api/tenant-v1-tax-types). Routes: `module:accounting`
 
 - `accounting` **1.7.0** — tax types CRUD, starter WHT accounts, invoice/credit tax split
 - `accounting` **1.7.1** — withholding on payments/expenses, counterparty defaults
+- `accounting` **1.7.2** — list API fix: `direction=asc|desc` sorts; enum values filter by tax direction
 - `invoices` **1.8.1** — `tax_type_id` on billing lines
+
+List query: use `sort` + `direction` (`asc`/`desc`) for ordering; pass tax direction enum values to filter. See [API](/api/tenant-v1-tax-types).
 
 ## Tests
 
