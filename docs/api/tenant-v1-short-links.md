@@ -25,12 +25,13 @@ List items include `code`, `short_url`, `click_count`, `last_clicked_at`, and ne
 | Field | Rules |
 |-------|--------|
 | `title` | optional string |
+| `code` | optional custom slug (3–64 chars, lowercase letters/numbers/hyphens, globally unique, not reserved); auto-generated when omitted |
 | `destination_url` | required URL |
 | `status` | `active` \| `paused` (default `active`) |
 | `expires_at` | optional datetime (workspace TZ in UI; stored UTC) |
 | `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` | optional strings |
 
-`uuid`, `code`, and `short_url` are server-generated. `short_url` uses `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/abc1234`).
+`uuid` and `short_url` are server-generated. `code` is set from the optional custom slug or auto-generated. `short_url` uses `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/launch-2026`). `code` cannot be changed after create.
 
 ### GET `/short-links/{id}`
 
@@ -72,11 +73,11 @@ Paginated click log (`clicked_at`, `device_type`, `referrer`, `user_agent`).
 
 No authentication. Returns `302` to the destination URL with configured UTM query params appended.
 
-- Primary lookup: 7-character `code` (e.g. `/r/s87f89`)
-- Legacy: UUID still accepted (`/r/{uuid}`) for links created before 1.1.0
+- Primary lookup: `code` (auto-generated 7-char or custom vanity slug, e.g. `/r/launch-2026`)
+- Legacy: UUID still accepted (`/r/{uuid}`) for links created before 1.1.0 (UUID checked before slug format)
 
-- Active, non-expired link + entitled workspace → redirect + async click record
-- Paused, expired, missing, or soft-deleted → `404`
+- Active, non-expired, non-deleted link + entitled workspace → redirect + async click record
+- Paused, expired, missing, or soft-deleted → branded `404` HTML page (EloSync marketing CTAs)
 - Module not entitled → `403`
 
 Rate limit: `short-link-redirects`.
