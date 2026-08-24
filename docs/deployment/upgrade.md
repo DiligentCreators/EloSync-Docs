@@ -45,6 +45,19 @@ Migrate-first platform capability (not a Marketplace module).
 
 See [Tenant API & Webhooks production readiness](./tenant-api-webhooks-production-readiness).
 
+## Short Links 1.1.0 → 1.2.0
+
+Deploy **Backend + Frontend + Docs together**.
+
+1. `php artisan migrate --force` — widens `short_links.code` to 64 chars; bumps catalog `short-links` to **1.2.0** (`2026_08_23_231224_widen_short_link_codes_and_bump_version`).
+2. Set production env: `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com`), `SHORT_LINK_MARKETING_URL`, `SHORT_LINK_BETA_URL`.
+3. Point short-domain DNS at the same Laravel app that serves `GET /r/{identifier}`.
+4. Confirm queue workers process `RecordShortLinkClickJob` (default queue).
+5. Deploy SPA after migrate — vanity slug create field and copy icons require the new frontend build.
+6. Smoke: create vanity slug → public redirect; pause/delete → branded 404; `npm run test:e2e:short-links`.
+
+Go-live: [Short Links production readiness](./short-links-production-readiness) · ops [Short Links deployment](./short-links).
+
 ## Platform polish lanes A, B, C
 
 Deploy **Backend + Frontend + Docs together**. Frontend PR #143 is already on `main`; Backend PR #148 and Docs PR #170 must merge before production.

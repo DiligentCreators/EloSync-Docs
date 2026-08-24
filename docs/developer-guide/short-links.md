@@ -2,6 +2,8 @@
 
 Mirror the **Assets** / **Announcements** module pattern. Public redirects live on `routes/web.php` (not tenant API).
 
+**Production:** [Short Links production readiness](/deployment/short-links-production-readiness) · [ops guide](/deployment/short-links)
+
 ## Backend layout
 
 | Piece | Path |
