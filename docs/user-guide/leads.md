@@ -27,7 +27,7 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 
 1. Click **New lead**, or press `N` when not typing in a field (requires **create**; browsers reserve `Ctrl+N` for a new window)
 2. Enter name (required), **lead type** (Direct or Company), and optional contact / company / source / **lead value** / priority / status
-3. Optionally set stage, tags, and assignee (assignee requires **assign**). Applying Follow Up Later requires a follow-up title and due date
+3. Optionally set stage and tags. New leads default to **you** as assignee (same as Contacts and Projects). Users with **assign** can pick another teammate or clear assignee before save; applying Follow Up Later requires a follow-up title and due date
 4. Save
 
 Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the record page.
@@ -47,7 +47,7 @@ The Dashboard **High Priority** widget lists open-pipeline leads with priority *
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee. Assignment changes are recorded in **Assignment history**. The assignee receives an in-app realtime notification when someone else assigns them. Lead-assignment email is disabled in v1.
+New leads created manually (or imported without an assignee column) default to the **creator** as assignee, matching Contacts, Opportunities, and Projects. Users with **assign** can set or clear the assignee on the create/edit form. Assignment changes are recorded in **Assignment history**. The assignee receives an in-app realtime notification when someone else assigns them. Lead-assignment email is disabled in v1.
 
 **Eligible assignees** exclude:
 
