@@ -1,5 +1,11 @@
 # Changelog
 
+## International tax & withholding (2026-08-24)
+
+- **SaaS-Backend:** Tenant **Tax types** catalog (`sales_tax`, `withholding` with payment in/out directions), starter GL accounts `1150` / `2150`, invoice/credit-note tax split to `2100`, `tax_type_id` on billing lines, withholding on customer payment post and expense pay (3-line journals), contact/vendor default withholding types. Catalog: `accounting` **1.7.0 → 1.7.1**, `invoices` **1.8.1**. Pest: `TaxTypeTest`, `PaymentWithholdingTest`, `ExpenseWithholdingTest`, updated invoice accounting tests.
+- **SaaS-Frontend:** Tax types list/create/view/edit, billing line tax type picker, payment and expense pay withholding UI, contact/vendor default withholding, workspace tax country/registration in Settings → General. Playwright: `e2e/tests/accounting/tax-types.spec.ts`.
+- Docs: [user guide](/user-guide/tax-types), [developer guide](/developer-guide/tax-types), [API](/api/tenant-v1-tax-types), [accounting overview](/user-guide/accounting-overview).
+
 ## Fix — workspace retention settings save (2026-08-24)
 
 - **SaaS-Frontend:** Settings → General **Trash retention** and Settings → Team Chat **Message & file retention** now persist reliably — save payload compares against loaded API values (not only RHF `dirtyFields`), Select changes explicitly mark the form dirty, and the settings query cache updates from the PUT response so a stale refetch cannot revert the UI.

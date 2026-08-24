@@ -30,6 +30,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | [Tenant Warehouses](./tenant-v1-warehouses) | Warehouse locations, notes, timeline |
 | [Tenant Inventory](./tenant-v1-inventory) | Stock levels, adjustments, transfers |
 | [Tenant Accounting](./tenant-v1-accounting) | Chart of accounts, journals, general ledger |
+| [Tenant Tax types](./tenant-v1-tax-types) | Sales tax and withholding catalog |
 | [Tenant Financial Reports](./tenant-v1-financial-reports) | Trial Balance, P&L, Balance Sheet |
 | [Tenant Employees](./tenant-v1-employees) | Employee directory CRUD and stats |
 | [Tenant Leave Management](./tenant-v1-leave-management) | Leave types, balances, request workflow |
