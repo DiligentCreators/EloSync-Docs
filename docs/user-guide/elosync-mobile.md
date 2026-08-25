@@ -34,4 +34,4 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 
 - [Leads user guide](/user-guide/leads-overview)
 - [Tasks user guide](/user-guide/tasks-overview)
-- [Notifications](/user-guide/notifications-overview)
+- [Tenant application guide](/user-guide/tenant-application)
