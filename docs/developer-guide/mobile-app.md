@@ -1,6 +1,6 @@
 # EloSync Mobile (tenant app)
 
-Official tenant workspace mobile client (`SaaS-Mobile` repo). **Tenant API only** â€” no Central admin surface.
+Official tenant workspace mobile client (`SaaS-Mobile` repo). **Tenant API only** Ã¢â‚¬â€� no Central admin surface.
 
 ## Stack
 
@@ -8,8 +8,8 @@ Official tenant workspace mobile client (`SaaS-Mobile` repo). **Tenant API only*
 |-------|--------|
 | Framework | Expo SDK 57 + React Native |
 | Navigation | Expo Router |
-| Dev workflow | **EAS development builds** (`expo-dev-client`) â€” not App Store Expo Go |
-| API | Axios â†’ `/api/tenant/v1` |
+| Dev workflow | **EAS development builds** (`expo-dev-client`) Ã¢â‚¬â€� not App Store Expo Go |
+| API | Axios Ã¢â€ â€™ `/api/tenant/v1` |
 | Auth | Laravel Sanctum Bearer tokens |
 | Token storage | `expo-secure-store` |
 
@@ -25,7 +25,7 @@ Tenant API base: `${EXPO_PUBLIC_API_URL}/api/tenant/v1`
 
 Native apps do not use browser CORS. Pin API TLS and rate limits on the backend as for any API client.
 
-Physical devices cannot use `http://saas-backend.test` unless that host resolves on the phone â€” use a LAN IP or production API URL in `.env` / `eas.json` profiles.
+Physical devices cannot use `http://saas-backend.test` unless that host resolves on the phone Ã¢â‚¬â€� use a LAN IP or production API URL in `.env` / `eas.json` profiles.
 
 ## Development builds (EAS)
 
@@ -83,7 +83,7 @@ Forgot password on mobile always includes **workspace** + email (the app is neve
 
 Reuse the web SPA model:
 
-- **Modules:** `user.modules` from login/`/me` â€” hide nav when module slug not entitled.
+- **Modules:** `user.modules` from login/`/me` Ã¢â‚¬â€� hide nav when module slug not entitled.
 - **Permissions:** Spatie permission strings on `user.permissions`; `superadmin` role bypasses checks.
 
 ## Module development
@@ -92,7 +92,7 @@ New mobile module screens should mirror the **Leads** web module (list / create 
 
 ## Store release
 
-One multi-tenant binary (Play Store + App Store) via EAS `production` profile. Workspace users sign in with email â€” not per-customer white-label builds unless product adds that later.
+One multi-tenant binary (Play Store + App Store) via EAS `production` profile. Workspace users sign in with email Ã¢â‚¬â€� not per-customer white-label builds unless product adds that later.
 
 ## Mobile module rollout
 
@@ -103,19 +103,19 @@ Extend `config/modules.ts` and add `app/(app)/(tabs)/{slug}/` stack screens per 
 - Nav registration in `config/modules.ts` + tab visibility gates
 - User guide slice + changelog line
 
-Current shipped mobile modules: **leads**, **tasks**, **notifications** (shell), **profile**.
+Current shipped mobile modules: **leads**, **tasks**, **contacts**, **notifications** (shell), **profile**.
 
 ### Leads (`module:leads`)
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/leads.ts` â€” `GET/POST /leads`, `GET/PUT/DELETE /leads/{id}`, `GET /lead-stages` |
+| API client | `lib/api/leads.ts` Ã¢â‚¬â€� `GET/POST /leads`, `GET/PUT/DELETE /leads/{id}`, `GET /lead-stages` |
 | Types | `types/leads.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/leads/` â€” `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
-| Nav | `config/modules.ts` â€” `permission: leads.view`, tab `/(app)/(tabs)/leads` |
+| Routes | `app/(app)/(tabs)/leads/` Ã¢â‚¬â€� `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` Ã¢â‚¬â€� `permission: leads.view`, tab `/(app)/(tabs)/leads` |
 | Permissions | `leads.view`, `leads.create`, `leads.update`, `leads.delete` |
 
-Tenant API reference: [Tenant API â€” Leads](/api/tenant-v1-leads).
+Tenant API reference: [Tenant API Ã¢â‚¬â€� Leads](/api/tenant-v1-leads).
 
 ### Tasks (`module:tasks`)
 
@@ -123,13 +123,27 @@ Mirrors the Leads mobile pattern (list / create / view / edit stack, React Query
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/tasks.ts` â€” `GET/POST /tasks`, `GET/PUT/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `POST /tasks/{id}/reopen` |
+| API client | `lib/api/tasks.ts` Ã¢â‚¬â€� `GET/POST /tasks`, `GET/PUT/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `POST /tasks/{id}/reopen` |
 | Types | `types/tasks.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/tasks/` â€” `index` (list + search), `new`, `[id]/index` (view + complete/reopen), `[id]/edit` |
-| Nav | `config/modules.ts` â€” `permission: tasks.view`, tab `/(app)/(tabs)/tasks` |
+| Routes | `app/(app)/(tabs)/tasks/` Ã¢â‚¬â€� `index` (list + search), `new`, `[id]/index` (view + complete/reopen), `[id]/edit` |
+| Nav | `config/modules.ts` Ã¢â‚¬â€� `permission: tasks.view`, tab `/(app)/(tabs)/tasks` |
 | Permissions | `tasks.view`, `tasks.create`, `tasks.update`, `tasks.delete`, `tasks.complete` |
 
-Tenant API reference: [Tenant API â€” Tasks](/api/tenant-v1-tasks).
+Tenant API reference: [Tenant API Ã¢â‚¬â€� Tasks](/api/tenant-v1-tasks).
+
+### Contacts (`module:contacts`)
+
+Mirrors the Leads mobile pattern (list / create / view / edit stack, React Query, permission gates).
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/contacts.ts` — `GET/POST /contacts`, `GET/PUT/DELETE /contacts/{id}` |
+| Types | `types/contacts.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/contacts/` — `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: contacts.view`, tab `/(app)/(tabs)/contacts` |
+| Permissions | `contacts.view`, `contacts.create`, `contacts.update`, `contacts.delete` |
+
+Tenant API reference: [Tenant API — Contacts](/api/tenant-v1-contacts).
 
 ## Related
 

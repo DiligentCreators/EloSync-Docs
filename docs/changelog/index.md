@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Contacts module (2026-08-26)
+
+- **SaaS-Mobile:** **Contacts** list, search, create, view, edit, delete (permission-gated). API client `lib/api/contacts.ts` mirrors Leads (`/contacts` CRUD). Routes under `app/(app)/(tabs)/contacts/`; registered in `config/modules.ts`.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Tasks module (2026-08-26)
 
 - **SaaS-Mobile:** **Tasks** list, search, create, view, edit, delete, complete/reopen (permission-gated). API client `lib/api/tasks.ts` mirrors Leads (`/tasks` CRUD + `complete`/`reopen`). Routes under `app/(app)/(tabs)/tasks/`; registered in `config/modules.ts`.
