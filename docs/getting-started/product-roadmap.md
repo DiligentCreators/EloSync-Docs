@@ -608,8 +608,8 @@ Native **iOS and Android** client (`SaaS-Mobile` repo). **Tenant API only** â€” 
 | Platform shell (dynamic module nav, React Query, shared list/record UI) | Shipped |
 | **Leads** â€” list, search, create, view, edit, delete | Shipped |
 | Notifications list | Shipped |
-| **Tasks** ï¿½ list, search, create, view, edit, delete, complete/reopen | Shipped |
-| Contacts, ï¿½ (PR-by-PR module program) | Planned |
+| **Tasks** — list, search, create, view, edit, delete, complete/reopen | Shipped |
+| Contacts, … (PR-by-PR module program) | Planned |
 
 Docs: [Mobile developer guide](/developer-guide/mobile-app) Â· [Mobile user guide](/user-guide/elosync-mobile).
 
