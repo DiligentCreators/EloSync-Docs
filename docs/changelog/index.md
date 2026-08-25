@@ -1,4 +1,14 @@
-# Changelog
+﻿# Changelog
+
+## EloSync Mobile — EAS development builds (2026-08-26)
+
+- **SaaS-Mobile:** `expo-dev-client`, `eas.json` profiles (`development`, `development-simulator`, `preview`, `production`), bundle ids `com.diligentcreators.elosync`, location/secure-store config plugins, npm scripts for EAS builds and `start:dev-client`. Replaces App Store Expo Go for SDK 57 device testing.
+- Docs: [Mobile app developer guide](/developer-guide/mobile-app).
+
+## EloSync Mobile — tenant auth scaffold (2026-08-25)
+
+- **SaaS-Mobile:** New Expo app (`elosync-mobile`) with tenant-only auth: login (email/password/remember, optional workspace branding), forgot password (workspace + email), email verification gate, SecureStore session, dashboard + profile shell. API client targets `/api/tenant/v1` only.
+- Docs: [Mobile app developer guide](/developer-guide/mobile-app).
 
 ## Ask EloSync — expanded AI provider catalog (2026-08-25)
 
