@@ -1,6 +1,6 @@
 # Product Roadmap
 
-Long-term direction of the platform: evolution from a CRM foundation into a complete modular **Business Operating System**. Numbered phases below are the delivered BOS core. **Future Expansion** is a prioritized candidate backlog — not a promise to ship every enterprise ERP vertical. Founding Beta feedback may reorder items within these tiers.
+Long-term direction of the platform: evolution from a CRM foundation into a complete modular **Business Operating System**. Numbered phases below are the delivered BOS core. **Future Expansion** is a prioritized candidate backlog â not a promise to ship every enterprise ERP vertical. Founding Beta feedback may reorder items within these tiers.
 
 > **Founding Beta**
 >
@@ -14,7 +14,7 @@ Long-term direction of the platform: evolution from a CRM foundation into a comp
 
 ---
 
-## Phase 1 — CRM (Completed / In Progress)
+## Phase 1 â CRM (Completed / In Progress)
 
 The CRM is the foundation of the platform and is the first functional area delivered.
 
@@ -22,23 +22,23 @@ The CRM is the foundation of the platform and is the first functional area deliv
 
 | Module / capability | Status |
 |---------------------|--------|
-| [Leads](/user-guide/leads-overview) | ✅ Completed (Sprint 2 UX + inbound Custom Webhook + Meta Lead Ads ingest) |
-| [Contacts](/user-guide/contacts-overview) | ✅ Completed (directory, assignment, notes/activity timeline; unlocks full lead convert) |
-| [Companies](/user-guide/companies-overview) | ✅ Completed (organizations directory, assignment, notes/activity timeline; Contact `company_id` link) |
-| [Tasks](/user-guide/tasks-overview) | ✅ Completed (Sprint 2 UX: board, KPIs, waiting status, due-date permission, comments/history) |
-| [ToDos](/user-guide/todos-overview) | ✅ Completed (personal creator-scoped checklists; board + list; owner view-all; creator-only delete) |
-| In-app notifications + Reverb | ✅ Completed (payload v1, NotificationBatch digests, Reverb/Echo, modular registry, browser toasts; poll fallback only) |
-| Tenant dashboard widgets | ✅ Completed (module/permission/assignee scoped; includes Calendar upcoming when entitled) |
-| [Communication Templates](/user-guide/communication-templates) | ✅ Completed (plain-text templates, placeholder registry, WhatsApp `wa.me` from Leads; migrate-only production registration) |
-| [Email](/user-guide/email) | ✅ Completed (personal IMAP/SMTP mailbox, folders, compose/drafts, templates/signatures, CRM links; free Marketplace opt-in; no OAuth v1) |
-| [Team Chat](/user-guide/team-chat) | ✅ Completed (channels/DMs, mentions, threads/reactions/pins/typing, attachments/search/retention; free Collaboration opt-in; catalog **1.3.2**) |
-| [Storage](/user-guide/storage-overview) | ✅ Completed (1 GB free + 10/50/100/500/1000 GB packs; quota on chat/feedback/imports; branding/avatars excluded) |
-| [Calendar](/user-guide/calendar-overview) | ✅ Completed (Week/Day time grids + DnD, Month/Agenda, view_all oversight, upcoming widget) |
-| [Meetings](/user-guide/meetings-overview) | ✅ Completed (host/invitees, Zoom/Google Meet OAuth, reminders, Calendar projection, completion) |
-| [Activities](/user-guide/activities-overview) | ✅ Completed (loggable call/email/note/follow-up engagements; Contact/Company/Lead links; complete + timeline mirrors) |
-| **Lead Source Driver Architecture** | ✅ Implemented ([standard](/developer-guide/lead-source-driver-architecture); Custom Webhook + Meta drivers shipped) |
-| **Meta Lead Ads Integration** | ✅ Shipped ([Meta App Setup](/developer-guide/meta-app-setup) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration)) |
-| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Completed (billable `whatsapp-cloud` 1.0.0: connect, inbox, templates, Lead soft link; `wa.me` fallback retained) |
+| [Leads](/user-guide/leads-overview) | â Completed (Sprint 2 UX + inbound Custom Webhook + Meta Lead Ads ingest) |
+| [Contacts](/user-guide/contacts-overview) | â Completed (directory, assignment, notes/activity timeline; unlocks full lead convert) |
+| [Companies](/user-guide/companies-overview) | â Completed (organizations directory, assignment, notes/activity timeline; Contact `company_id` link) |
+| [Tasks](/user-guide/tasks-overview) | â Completed (Sprint 2 UX: board, KPIs, waiting status, due-date permission, comments/history) |
+| [ToDos](/user-guide/todos-overview) | â Completed (personal creator-scoped checklists; board + list; owner view-all; creator-only delete) |
+| In-app notifications + Reverb | â Completed (payload v1, NotificationBatch digests, Reverb/Echo, modular registry, browser toasts; poll fallback only) |
+| Tenant dashboard widgets | â Completed (module/permission/assignee scoped; includes Calendar upcoming when entitled) |
+| [Communication Templates](/user-guide/communication-templates) | â Completed (plain-text templates, placeholder registry, WhatsApp `wa.me` from Leads; migrate-only production registration) |
+| [Email](/user-guide/email) | â Completed (personal IMAP/SMTP mailbox, folders, compose/drafts, templates/signatures, CRM links; free Marketplace opt-in; no OAuth v1) |
+| [Team Chat](/user-guide/team-chat) | â Completed (channels/DMs, mentions, threads/reactions/pins/typing, attachments/search/retention; free Collaboration opt-in; catalog **1.3.2**) |
+| [Storage](/user-guide/storage-overview) | â Completed (1 GB free + 10/50/100/500/1000 GB packs; quota on chat/feedback/imports; branding/avatars excluded) |
+| [Calendar](/user-guide/calendar-overview) | â Completed (Week/Day time grids + DnD, Month/Agenda, view_all oversight, upcoming widget) |
+| [Meetings](/user-guide/meetings-overview) | â Completed (host/invitees, Zoom/Google Meet OAuth, reminders, Calendar projection, completion) |
+| [Activities](/user-guide/activities-overview) | â Completed (loggable call/email/note/follow-up engagements; Contact/Company/Lead links; complete + timeline mirrors) |
+| **Lead Source Driver Architecture** | â Implemented ([standard](/developer-guide/lead-source-driver-architecture); Custom Webhook + Meta drivers shipped) |
+| **Meta Lead Ads Integration** | â Shipped ([Meta App Setup](/developer-guide/meta-app-setup) Â· [Meta Lead Ads](/developer-guide/meta-lead-ads-integration)) |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | â Completed (billable `whatsapp-cloud` 1.0.0: connect, inbox, templates, Lead soft link; `wa.me` fallback retained) |
 
 #### Calendar (shipped)
 
@@ -54,7 +54,7 @@ The CRM is the foundation of the platform and is the first functional area deliv
 - One reminder before start (in-app, web push, email) for creator, host, and invitees
 - Projects onto Calendar via `CalendarEventService::upsertFromSource`
 
-> **Dependency:** Meetings → Calendar (required). See [Module Dependencies](/architecture/module-dependencies) and [Meetings](/user-guide/meetings-overview).
+> **Dependency:** Meetings â Calendar (required). See [Module Dependencies](/architecture/module-dependencies) and [Meetings](/user-guide/meetings-overview).
 
 #### Activities (shipped)
 
@@ -77,27 +77,27 @@ The CRM is the foundation of the platform and is the first functional area deliv
 - Shared inbox: text send/receive; delivery/read status webhooks
 - Meta Cloud templates for outside the 24h customer service window
 - Soft optional Lead link + timeline mirrors; `wa.me` Communication Templates remain as fallback
-- User: [Overview](/user-guide/whatsapp-cloud-overview) · [Guide](/user-guide/whatsapp-cloud) · [API](/api/tenant-v1-whatsapp-cloud) · [Deploy](/deployment/whatsapp-cloud)
+- User: [Overview](/user-guide/whatsapp-cloud-overview) Â· [Guide](/user-guide/whatsapp-cloud) Â· [API](/api/tenant-v1-whatsapp-cloud) Â· [Deploy](/deployment/whatsapp-cloud)
 
 **Goal:** Provide a complete customer relationship management experience with lead tracking, task management, customer records, scheduling, meetings, activity history, and WhatsApp Cloud messaging.
 
 ---
 
-## Phase 2 — Sales
+## Phase 2 â Sales
 
 Once CRM is complete, extend it into a full sales workflow.
 
 | Module | Status |
 |--------|--------|
-| [Opportunities](/user-guide/opportunities-overview) | ✅ Completed (deals, stages, Kanban board + table, soft Contact/Company/Lead links; free Sales opt-in) |
-| Sales Pipeline | ✅ Delivered with Opportunities (stages + board inside the module — **not** a separate Marketplace SKU) |
-| [Quotations](/user-guide/quotations-overview) | ✅ Completed (line items with computed totals, status workflow, required Opportunity link; free Sales opt-in) |
-| [Contracts](/user-guide/contracts-overview) | ✅ Completed (agreement tracking, status workflow, required Opportunity link, optional Quotation link; free Sales opt-in) |
+| [Opportunities](/user-guide/opportunities-overview) | â Completed (deals, stages, Kanban board + table, soft Contact/Company/Lead links; free Sales opt-in) |
+| Sales Pipeline | â Delivered with Opportunities (stages + board inside the module â **not** a separate Marketplace SKU) |
+| [Quotations](/user-guide/quotations-overview) | â Completed (line items with computed totals, status workflow, required Opportunity link; free Sales opt-in) |
+| [Contracts](/user-guide/contracts-overview) | â Completed (agreement tracking, status workflow, required Opportunity link, optional Quotation link; free Sales opt-in) |
 
 #### Opportunities (shipped)
 
 - Deal amount / currency / probability / expected close date
-- Seeded pipeline: Prospecting → Qualification → Proposal → Negotiation → Won / Lost
+- Seeded pipeline: Prospecting â Qualification â Proposal â Negotiation â Won / Lost
 - Kanban board + table; KPIs (pipeline value, weighted, conversion)
 - Soft optional links to Contacts, Companies, Leads
 - Notes, assignment, domain timeline; free Marketplace opt-in under category `sales`
@@ -106,7 +106,7 @@ Once CRM is complete, extend it into a full sales workflow.
 
 - Required Opportunity link; optional Contact/Company links
 - Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
-- Status workflow: `draft → sent → accepted|rejected|expired`
+- Status workflow: `draft â sent â accepted|rejected|expired`
 - **Convert to invoice** when Invoices is installed (one-shot; soft entitlement)
 - Notes, assignment, domain timeline; **hard dependency** on Opportunities; free Marketplace opt-in under category `sales`
 
@@ -114,115 +114,115 @@ Once CRM is complete, extend it into a full sales workflow.
 
 - Required Opportunity link; optional Quotation link (only when Quotations is entitled)
 - Party name, start/end dates, value/currency
-- Status workflow: `draft → active → expired|terminated`
+- Status workflow: `draft â active â expired|terminated`
 - **Create invoice** from active contracts when Invoices is installed (repeatable; soft entitlement)
 - Notes, assignment, domain timeline; **hard dependency** on Opportunities; free Marketplace opt-in under category `sales`
 
-**Goal:** Manage the entire sales lifecycle from opportunity creation through quotation, negotiation, and contract execution. ✅ **Achieved** — Opportunities, Quotations, and Contracts are all shipped.
+**Goal:** Manage the entire sales lifecycle from opportunity creation through quotation, negotiation, and contract execution. â **Achieved** â Opportunities, Quotations, and Contracts are all shipped.
 
 ---
 
-## Phase 3 — Billing
+## Phase 3 â Billing
 
 Build a comprehensive billing and invoicing solution that integrates with the existing Marketplace and subscription platform.
 
 | Module | Status |
 |--------|--------|
-| [Invoices](/user-guide/invoices-overview) | ✅ Completed (line items, status workflow, recurring series, PDF download; free Billing opt-in) |
-| [Estimates](/user-guide/estimates-overview) | ✅ Completed (pre-sale cost estimates, line items, status workflow, convert-to-invoice; free Billing opt-in, requires Invoices) |
-| [Credit Notes](/user-guide/credit-notes-overview) | ✅ Completed (credit notes against invoices, line items, issue/apply/void workflow, apply credits `amount_credited` + `balance_due`; free Billing opt-in, requires Invoices) |
-| [Payments](/user-guide/payments-overview) | ✅ Completed (record customer payments, allocate to invoices, post/void drives invoice balance + status; free Billing opt-in, requires Invoices) |
+| [Invoices](/user-guide/invoices-overview) | â Completed (line items, status workflow, recurring series, PDF download; free Billing opt-in) |
+| [Estimates](/user-guide/estimates-overview) | â Completed (pre-sale cost estimates, line items, status workflow, convert-to-invoice; free Billing opt-in, requires Invoices) |
+| [Credit Notes](/user-guide/credit-notes-overview) | â Completed (credit notes against invoices, line items, issue/apply/void workflow, apply credits `amount_credited` + `balance_due`; free Billing opt-in, requires Invoices) |
+| [Payments](/user-guide/payments-overview) | â Completed (record customer payments, allocate to invoices, post/void drives invoice balance + status; free Billing opt-in, requires Invoices) |
 
 #### Invoices (shipped)
 
-- No hard `module_dependencies` row — installs standalone (unlike Quotations/Contracts, which require Opportunities)
+- No hard `module_dependencies` row â installs standalone (unlike Quotations/Contracts, which require Opportunities)
 - Optional Contact/Company links and optional Quotation / Estimate / Contract links (set by convert actions; quotation_id is not unique)
 - Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
-- Balance fields (`amount_paid`, `amount_credited`, `balance_due`) driven by the Payments module — read-only via this API
-- Status workflow: `draft → sent → partial|paid → void` (`send` / `void` / `status` actions)
+- Balance fields (`amount_paid`, `amount_credited`, `balance_due`) driven by the Payments module â read-only via this API
+- Status workflow: `draft â sent â partial|paid â void` (`send` / `void` / `status` actions)
 - Notes, assignment, domain timeline; free Marketplace opt-in under category `billing`
 - Recurring series (weekly / monthly / quarterly / semi-annually / yearly) generate the next **draft** after Send; **Stop recurring** ends the series; optional void of the latest unpaid generated invoice
 - Download PDF (`GET /invoices/{id}/pdf`)
 
 #### Payments (shipped)
 
-- **Hard `module_dependencies` row on Invoices** — the first Phase 3 module to require another; Marketplace blocks install until Invoices is entitled
+- **Hard `module_dependencies` row on Invoices** â the first Phase 3 module to require another; Marketplace blocks install until Invoices is entitled
 - Payment fields (amount, currency, method, paid-at, reference, notes) plus allocations against one or more invoices
-- Status workflow: `draft → posted → void` — posting applies allocations to invoice `amount_paid` and recalculates invoice balance/status; voiding reverses them
+- Status workflow: `draft â posted â void` â posting applies allocations to invoice `amount_paid` and recalculates invoice balance/status; voiding reverses them
 - Optional Contact/Company links, assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
-- `amount_credited` is not touched by Payments — see Credit Notes below
+- `amount_credited` is not touched by Payments â see Credit Notes below
 
 #### Credit Notes (shipped)
 
-- **Hard `module_dependencies` row on Invoices** — same pattern as Payments; Marketplace blocks install until Invoices is entitled
+- **Hard `module_dependencies` row on Invoices** â same pattern as Payments; Marketplace blocks install until Invoices is entitled
 - Credit note fields (title, notes, currency, issue date) plus line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
-- Status workflow: `draft → issued → applied`, with `void` available from `draft` or `issued` — applying adds the credit note's total to the invoice's `amount_credited` and recalculates `balance_due` (does not change invoice `status`)
+- Status workflow: `draft â issued â applied`, with `void` available from `draft` or `issued` â applying adds the credit note's total to the invoice's `amount_credited` and recalculates `balance_due` (does not change invoice `status`)
 - Optional Contact/Company links, assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
 
 #### Estimates (shipped)
 
-- **Hard `module_dependencies` row on Invoices** — same pattern as Payments/Credit Notes; Marketplace blocks install until Invoices is entitled
+- **Hard `module_dependencies` row on Invoices** â same pattern as Payments/Credit Notes; Marketplace blocks install until Invoices is entitled
 - Estimate fields (title, notes, currency, valid-until) plus line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
 - Optional Contact/Company links, plus optional Opportunity/Quotation links (each validated only when that module is entitled)
-- Status workflow: `draft → sent → accepted|rejected|expired` (identical shape to Quotations)
-- **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with a copy of the estimate's lines, links it back via `customer_invoices.estimate_id`, and marks the estimate `accepted`; one-way and one-time per estimate. Blocked if the linked quotation is already invoiced.
+- Status workflow: `draft â sent â accepted|rejected|expired` (identical shape to Quotations)
+- **Convert to invoice** (`POST /estimates/{id}/convert`) â creates a draft `CustomerInvoice` with a copy of the estimate's lines, links it back via `customer_invoices.estimate_id`, and marks the estimate `accepted`; one-way and one-time per estimate. Blocked if the linked quotation is already invoiced.
 - Assignment, notes, domain timeline; free Marketplace opt-in under category `billing`
 
-**Goal:** Provide complete customer billing, payment tracking, and financial document management. ✅ **Achieved** — Invoices, Payments, Credit Notes, and Estimates are all shipped, completing Phase 3.
+**Goal:** Provide complete customer billing, payment tracking, and financial document management. â **Achieved** â Invoices, Payments, Credit Notes, and Estimates are all shipped, completing Phase 3.
 
 > **Note:** Platform billing (module subscriptions, consolidated billing, gateway abstraction) already exists under Central. Phase 3 modules are **tenant product billing** (customer-facing invoices/payments), not a redesign of the Marketplace billing engine.
 
 ---
 
-## Phase 4 — Purchasing
+## Phase 4 â Purchasing
 
-Introduce purchasing and vendor management. New category: `purchasing` (**Purchasing**), `category_sort_order = 40`. ✅ **Achieved** — Vendors, Purchase Orders, and Expenses are all shipped, completing Phase 4.
+Introduce purchasing and vendor management. New category: `purchasing` (**Purchasing**), `category_sort_order = 40`. â **Achieved** â Vendors, Purchase Orders, and Expenses are all shipped, completing Phase 4.
 
 | Module | Status |
 |--------|--------|
-| [Vendors](/user-guide/vendors-overview) | ✅ Completed (supplier directory, assignment, notes/activity timeline, status; free Purchasing opt-in) |
-| [Purchase Orders](/user-guide/purchase-orders-overview) | ✅ Completed (header + lines, required vendor link, status workflow, assignment, notes/activity timeline, convert to expense; free Purchasing opt-in) |
-| [Expenses](/user-guide/expenses-overview) | ✅ Completed (single-amount MVP, optional vendor/PO links, status workflow, assignment, notes/activity timeline; free Purchasing opt-in) |
+| [Vendors](/user-guide/vendors-overview) | â Completed (supplier directory, assignment, notes/activity timeline, status; free Purchasing opt-in) |
+| [Purchase Orders](/user-guide/purchase-orders-overview) | â Completed (header + lines, required vendor link, status workflow, assignment, notes/activity timeline, convert to expense; free Purchasing opt-in) |
+| [Expenses](/user-guide/expenses-overview) | â Completed (single-amount MVP, optional vendor/PO links, status workflow, assignment, notes/activity timeline; free Purchasing opt-in) |
 
 #### Vendors (shipped)
 
 - Name, email, phone, website, address, tax ID, payment terms, currency, status (`active`/`inactive`)
-- No `contacts` relationship — first-class, standalone supplier record (unlike Companies)
+- No `contacts` relationship â first-class, standalone supplier record (unlike Companies)
 - Assignment, notes, domain timeline; free Marketplace opt-in under category `purchasing`
 - KPIs: total, my vendors, unassigned, active, inactive
 
 #### Purchase Orders (shipped)
 
-- Required Vendor link (**hard dependency** — Marketplace blocks install until Vendors is entitled)
+- Required Vendor link (**hard dependency** â Marketplace blocks install until Vendors is entitled)
 - Line items (description, quantity, unit price, tax rate) with server-computed subtotal / tax / total
-- Status workflow: `draft → sent → partially_received|received|cancelled` (also `sent → cancelled`, `partially_received → received|cancelled`)
+- Status workflow: `draft â sent â partially_received|received|cancelled` (also `sent â cancelled`, `partially_received â received|cancelled`)
 - `partially_received` is acknowledgement-only; a fully received PO posts stock-in for product-linked stock-tracked lines when Products and Inventory are entitled
-- Convert to Expense (`POST /purchase-orders/{id}/convert`) — one-way, one-time, gated by a **soft** (call-time) check that the Expenses module is entitled, not a hard `module_dependencies` row
+- Convert to Expense (`POST /purchase-orders/{id}/convert`) â one-way, one-time, gated by a **soft** (call-time) check that the Expenses module is entitled, not a hard `module_dependencies` row
 - Notes, assignment, domain timeline; free Marketplace opt-in under category `purchasing`
 
 #### Expenses (shipped)
 
-- No hard `module_dependencies` — installs standalone; optional Vendor and Purchase Order links are **soft dependencies**, validated only when those modules are entitled
-- Single-amount MVP — no line items, receipts, reimbursements, or GL posting
+- No hard `module_dependencies` â installs standalone; optional Vendor and Purchase Order links are **soft dependencies**, validated only when those modules are entitled
+- Single-amount MVP â no line items, receipts, reimbursements, or GL posting
 - Fields: number (`EXP-` prefix), title, category (`travel`/`office`/`software`/`utilities`/`other`), amount, tax amount, currency, expense date, notes
-- Status workflow: `draft → submitted → approved|rejected`, `approved → paid`, `draft|submitted → cancelled`
+- Status workflow: `draft â submitted â approved|rejected`, `approved â paid`, `draft|submitted â cancelled`
 - Draft-only field edits; workflow actions (`submit`/`approve`/`reject`/`pay`/`cancel`) available regardless of edit-lock
 - Notes, assignment, domain timeline; free Marketplace opt-in under category `purchasing`
 
-**Goal:** Manage supplier relationships, procurement workflows, and operational expenses. ✅ **Achieved.**
+**Goal:** Manage supplier relationships, procurement workflows, and operational expenses. â **Achieved.**
 
 ---
 
-## Phase 5 — Inventory
+## Phase 5 â Inventory
 
-Implement inventory and warehouse management. ✅ **Achieved** — Products, Warehouses, and Inventory are all shipped.
+Implement inventory and warehouse management. â **Achieved** â Products, Warehouses, and Inventory are all shipped.
 
 | Module | Status |
 |--------|--------|
-| [Products](/user-guide/products-overview) (including Categories) | ✅ Completed (catalog, categories, stock-tracking settings, notes/activity; free Inventory opt-in) |
-| [Warehouses](/user-guide/warehouses-overview) | ✅ Completed (locations, default `MAIN`, notes/activity; free Inventory opt-in) |
-| [Inventory](/user-guide/inventory-overview) — Stock Management | ✅ Completed (levels, movement ledger, controlled in/out/adjust changes; hard-depends on Products) |
-| [Inventory](/user-guide/inventory-overview) — Stock Transfers | ✅ Completed (draft → in transit → completed/cancelled; posts stock on completion) |
+| [Products](/user-guide/products-overview) (including Categories) | â Completed (catalog, categories, stock-tracking settings, notes/activity; free Inventory opt-in) |
+| [Warehouses](/user-guide/warehouses-overview) | â Completed (locations, default `MAIN`, notes/activity; free Inventory opt-in) |
+| [Inventory](/user-guide/inventory-overview) â Stock Management | â Completed (levels, movement ledger, controlled in/out/adjust changes; hard-depends on Products) |
+| [Inventory](/user-guide/inventory-overview) â Stock Transfers | â Completed (draft â in transit â completed/cancelled; posts stock on completion) |
 
 #### Products (shipped)
 
@@ -239,23 +239,23 @@ Implement inventory and warehouse management. ✅ **Achieved** — Products, War
 #### Inventory (shipped)
 
 - Per-product/per-warehouse levels, movement history, low-stock visibility, and non-negative transactional posting
-- Adjustments (`in`, `out`, `adjust`) and transfers (`draft → in_transit → completed|cancelled`)
+- Adjustments (`in`, `out`, `adjust`) and transfers (`draft â in_transit â completed|cancelled`)
 - Completing a transfer posts paired movements; a received Purchase Order posts stock-in once for product-linked stock-tracked lines when Products and Inventory are entitled
 
-**Goal:** Provide inventory control, stock tracking, warehouse operations, and product management. ✅ **Achieved.**
+**Goal:** Provide inventory control, stock tracking, warehouse operations, and product management. â **Achieved.**
 
 ---
 
-## Phase 6 — Finance
+## Phase 6 â Finance
 
 Expand into accounting and financial reporting.
 
 | Marketplace SKU | Status |
 |-----------------|--------|
-| [Accounting](/user-guide/accounting-overview) | ✅ Completed (CoA, journals draft/post/void, GL inquiry; free Finance opt-in) |
-| [Financial Reports](/user-guide/financial-reports-overview) | ✅ Completed (Trial Balance, P&L, Balance Sheet; hard-depends on Accounting) |
+| [Accounting](/user-guide/accounting-overview) | â Completed (CoA, journals draft/post/void, GL inquiry; free Finance opt-in) |
+| [Financial Reports](/user-guide/financial-reports-overview) | â Completed (Trial Balance, P&L, Balance Sheet; hard-depends on Accounting) |
 
-#### Capabilities (inside the SKUs — not separate Marketplace modules)
+#### Capabilities (inside the SKUs â not separate Marketplace modules)
 
 | Capability | Lives in |
 |------------|----------|
@@ -264,22 +264,22 @@ Expand into accounting and financial reporting.
 | General Ledger inquiry | Accounting |
 | Financial Reports (TB / P&L / BS) | Financial Reports |
 
-**Goal:** Provide the financial backbone required for a complete ERP solution. ✅ **Achieved** for the manual double-entry MVP (single currency). Soft auto-post from Payments (deposit) and Expenses (paid from), account transfers, and cash/bank **Set balance** (`ADJ-`) shipped through Accounting **1.2.0**; Invoices/Credit Notes/PO/Inventory auto-post still deferred.
+**Goal:** Provide the financial backbone required for a complete ERP solution. â **Achieved** for the manual double-entry MVP (single currency). Soft auto-post from Payments (deposit) and Expenses (paid from), account transfers, and cash/bank **Set balance** (`ADJ-`) shipped through Accounting **1.2.0**; Invoices/Credit Notes/PO/Inventory auto-post still deferred.
 
 ---
 
-## Phase 7 — Human Resources
+## Phase 7 â Human Resources
 
 Implement workforce management.
 
 | Marketplace SKU | Status |
 |-----------------|--------|
-| [Employees](/user-guide/employees-overview) | ✅ Completed (directory, employment type/status, optional user link; free HR opt-in) |
-| [Leave Management](/user-guide/leave-management-overview) | ✅ Completed (types, balances, request workflow; hard-depends on Employees) |
-| [Attendance](/user-guide/attendance-overview) | ✅ Completed (daily records, check-in/out, presence status; hard-depends on Employees) |
-| [Payroll](/user-guide/payroll-overview) | ✅ Completed (profiles, pay runs draft/approve/pay, optional Accounting journal post; hard-depends on Employees) |
+| [Employees](/user-guide/employees-overview) | â Completed (directory, employment type/status, optional user link; free HR opt-in) |
+| [Leave Management](/user-guide/leave-management-overview) | â Completed (types, balances, request workflow; hard-depends on Employees) |
+| [Attendance](/user-guide/attendance-overview) | â Completed (daily records, check-in/out, presence status; hard-depends on Employees) |
+| [Payroll](/user-guide/payroll-overview) | â Completed (profiles, pay runs draft/approve/pay, optional Accounting journal post; hard-depends on Employees) |
 
-#### Capabilities (inside the SKUs — not separate Marketplace modules)
+#### Capabilities (inside the SKUs â not separate Marketplace modules)
 
 | Capability | Lives in |
 |------------|----------|
@@ -289,34 +289,34 @@ Implement workforce management.
 | Payroll profiles | Payroll |
 | Pay runs (approve / pay / post) | Payroll |
 
-**Goal:** Provide employee management, attendance tracking, leave workflows, and payroll processing. ✅ **Achieved** for the HR MVP (no tax engine, biometric integrations, or accrual policies yet).
+**Goal:** Provide employee management, attendance tracking, leave workflows, and payroll processing. â **Achieved** for the HR MVP (no tax engine, biometric integrations, or accrual policies yet).
 
 ---
 
-## Phase 8 — Operations
+## Phase 8 â Operations
 
 | Marketplace SKU | Status |
 |-----------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | ✅ Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget, soft KB article links; free Operations opt-in **1.1.0**) |
+| [Help Desk](/user-guide/help-desk-overview) | â Completed (internal tickets, categories, assignment, status workflow, notes/timeline, KPIs, dashboard widget, soft KB article links; free Operations opt-in **1.1.0**) |
 
 #### Help Desk (shipped)
 
-- Internal workspace ticketing — distinct from [Central Give Feedback](/user-guide/feedback) (platform bug/feature intake)
-- Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
+- Internal workspace ticketing â distinct from [Central Give Feedback](/user-guide/feedback) (platform bug/feature intake)
+- Status workflow: `open â in_progress | waiting | resolved | closed`; `resolved â closed | open`; `closed â open`
 - Optional soft links to Contacts / Companies when those modules are entitled
 - Optional soft links to Knowledge Base articles when KB is entitled (M2M pivot; no hard dependency)
 - Tenant-managed categories (General, Technical, Billing, Account, Other)
 - Assignee scoping, notes, domain timeline, `due_at` with workspace timezone convention for overdue
 - Dashboard widget `help_desk_my_open`
-- Free Marketplace opt-in under category `operations` — **no** hard module dependencies
+- Free Marketplace opt-in under category `operations` â **no** hard module dependencies
 
-**Goal:** Provide lightweight internal support tracking inside the workspace. ✅ **Achieved** for the ticketing MVP (no SLAs, email ingest, or customer portal yet).
+**Goal:** Provide lightweight internal support tracking inside the workspace. â **Achieved** for the ticketing MVP (no SLAs, email ingest, or customer portal yet).
 
 ## Knowledge Base (shipped)
 
 | Module | Status |
 |--------|--------|
-| [Knowledge Base](/user-guide/knowledge-base-overview) | ✅ Completed (**internal-only** v1.0.0; free Operations Marketplace opt-in) |
+| [Knowledge Base](/user-guide/knowledge-base-overview) | â Completed (**internal-only** v1.0.0; free Operations Marketplace opt-in) |
 
 #### Knowledge Base (shipped)
 
@@ -326,62 +326,62 @@ Implement workforce management.
 - Soft Help Desk backlinks on article show when Help Desk is entitled
 - Explicitly deferred: public URLs, attachments/image upload, nested categories, dashboard widget, Automation triggers, publish fan-out
 
-**Goal:** Give teams an installable internal FAQ / SOP library without a customer portal. ✅ **Achieved** for internal-only v1.
+**Goal:** Give teams an installable internal FAQ / SOP library without a customer portal. â **Achieved** for internal-only v1.
 
 ## Analytics / Reports (shipped)
 
 | Module | Status |
 |--------|--------|
-| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Completed (Reports suite **1.4.0**; free Operations Marketplace opt-in; slug `analytics`) |
+| [Reports (Analytics)](/user-guide/analytics-overview) | â Completed (Reports suite **1.4.0**; free Operations Marketplace opt-in; slug `analytics`) |
 
 #### Reports suite (shipped)
 
 - Executive overview of KPIs from entitled modules (leads, opportunities, tasks, invoices, help-desk, projects)
-- Domain report pages: CRM, Sales, Billing, Purchasing, People — KPI + per-module charts + table + CSV export
+- Domain report pages: CRM, Sales, Billing, Purchasing, People â KPI + per-module charts + table + CSV export
 - People soft sources: Employees, Leave, Attendance, **Payroll** (Payroll gated by `payroll.view`; no staff self-scope)
 - Shared period filter (`DashboardPeriod`); soft-gated by module entitlement + view permission
 - Permission `analytics.view`; **no** hard `module_dependencies`
 - Explicitly deferred: report builder, saved/scheduled reports, email analytics
 - Keep separate: [Financial Reports](/user-guide/financial-reports-overview), [Department reports](/user-guide/departments)
 
-**Goal:** Give workspaces a cross-module executive KPI surface and operational report pages without a full BI builder. ✅ **Achieved** for Reports suite **v1.4.0** (People includes Payroll).
+**Goal:** Give workspaces a cross-module executive KPI surface and operational report pages without a full BI builder. â **Achieved** for Reports suite **v1.4.0** (People includes Payroll).
 
 ## Assets (shipped)
 
 | Module | Status |
 |--------|--------|
-| [Assets](/user-guide/assets-overview) | ✅ Completed (equipment/fixed-asset register; free Operations opt-in; catalog **1.0.0**) |
+| [Assets](/user-guide/assets-overview) | â Completed (equipment/fixed-asset register; free Operations opt-in; catalog **1.0.0**) |
 
 #### Assets (shipped)
 
 - Auto-number (`AST-`), status (`active` / `in_repair` / `retired` / `disposed`), category enum
 - Identity + purchase/warranty fields; free-text location
 - Assignment, notes, domain timeline; soft optional Vendor / Employee links
-- **No** hard `module_dependencies` — installs standalone
+- **No** hard `module_dependencies` â installs standalone
 - Explicitly deferred: depreciation/Accounting, Products/Inventory/Warehouse FKs, Help Desk maintenance, attachments/barcodes, dashboard widget, Automation triggers
 
-**Goal:** Give workspaces an installable company asset register without forcing Inventory or HR. ✅ **Achieved** for v1.0.0.
+**Goal:** Give workspaces an installable company asset register without forcing Inventory or HR. â **Achieved** for v1.0.0.
 
 ## Documents (shipped)
 
 | Module | Status |
 |--------|--------|
-| [Documents](/user-guide/documents-overview) | ✅ Completed (flat file library on Storage; free Operations opt-in; catalog **1.1.0**) |
+| [Documents](/user-guide/documents-overview) | â Completed (flat file library on Storage; free Operations opt-in; catalog **1.1.0**) |
 
 #### Documents (shipped)
 
 - Upload / download workspace files; optional flat categories; soft delete / restore / force delete
-- **Hard** dependency on Storage — install blocked without it; `documents.size_bytes` counts toward Storage quota
+- **Hard** dependency on Storage â install blocked without it; `documents.size_bytes` counts toward Storage quota
 - Free Marketplace opt-in: `is_default_included = false`, `is_billable = false` (flip billable later via Central Update Module API)
 - Explicitly deferred: soft links to CRM/HR/records, nested folders / directory trees, versioning, preview, dashboard widget, Automation triggers
 
-**Goal:** Give workspaces a shared internal document library on Storage without folders or cross-module links yet. ✅ **Achieved** for v1.0.0.
+**Goal:** Give workspaces a shared internal document library on Storage without folders or cross-module links yet. â **Achieved** for v1.0.0.
 
 ---
 
 ## Future Expansion
 
-Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, Documents, Automation, Storage, and WhatsApp Cloud MVP are **shipped**. What remains is a **candidate backlog** for the Business Operating System — not a build-everything ERP ladder.
+Phases **1â8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, Documents, Automation, Storage, and WhatsApp Cloud MVP are **shipped**. What remains is a **candidate backlog** for the Business Operating System â not a build-everything ERP ladder.
 
 > **Priority rule**
 >
@@ -391,21 +391,21 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 
 | Capability | Status |
 |------------|--------|
-| [Documents](/user-guide/documents-overview) | ✅ Shipped v1.1.0 — soft record links / nested folders still deferred |
-| [Reports (Analytics)](/user-guide/analytics-overview) | ✅ Shipped v1.4.0 — report builder / saved / scheduled reports still parked |
-| [Automation](/user-guide/automation-overview) | ✅ Shipped v1.0.0 — WhatsApp message triggers still near-term polish |
-| [Storage](/user-guide/storage) | ✅ Shipped v1.0.0 — task/lead images and email attachment persistence still parked |
-| **API & Webhooks** | ✅ Shipped — Settings → Developers (API tokens + outbound event webhooks); see [guide](/developer-guide/tenant-api-webhooks) |
-| **AI Assistant** | ✅ Shipped foundation v1.1.0 — billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; Projects / Opportunities / Invoices read tools + Ask EloSync starters; further UX/tools in progress |
-| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | ✅ Shipped **1.3.0** — Lead Source, Automation WA, media |
+| [Documents](/user-guide/documents-overview) | â Shipped v1.1.0 â soft record links / nested folders still deferred |
+| [Reports (Analytics)](/user-guide/analytics-overview) | â Shipped v1.4.0 â report builder / saved / scheduled reports still parked |
+| [Automation](/user-guide/automation-overview) | â Shipped v1.0.0 â WhatsApp message triggers still near-term polish |
+| [Storage](/user-guide/storage) | â Shipped v1.0.0 â task/lead images and email attachment persistence still parked |
+| **API & Webhooks** | â Shipped â Settings â Developers (API tokens + outbound event webhooks); see [guide](/developer-guide/tenant-api-webhooks) |
+| **AI Assistant** | â Shipped foundation v1.1.0 â billable `ai` module, Platform/BYOK providers, credit wallet + packs, chat + Lead Copilot + confirmed writes; Projects / Opportunities / Invoices read tools + Ask EloSync starters; further UX/tools in progress |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | â Shipped **1.3.0** â Lead Source, Automation WA, media |
 
 ### Near-term (active focus)
 
 | Item | Notes |
 |------|--------|
-| **API & Webhooks** (tenant product surface) | ✅ Completed — Settings → Developers: integration API tokens (`es_…`) + outbound event webhooks; see [guide](/developer-guide/tenant-api-webhooks) · [API](/api/tenant-v1-developers) |
-| WhatsApp Cloud post-MVP polish | Lead Source ✅; Automation WA ✅; Media ✅ **1.3.0** |
-| Documents polish (on demand) | Soft record links / nested folders — deferred from Documents **1.1.0**; promote only with clear demand |
+| **API & Webhooks** (tenant product surface) | â Completed â Settings â Developers: integration API tokens (`es_â¦`) + outbound event webhooks; see [guide](/developer-guide/tenant-api-webhooks) Â· [API](/api/tenant-v1-developers) |
+| WhatsApp Cloud post-MVP polish | Lead Source â; Automation WA â; Media â **1.3.0** |
+| Documents polish (on demand) | Soft record links / nested folders â deferred from Documents **1.1.0**; promote only with clear demand |
 | **Customer Portal** | On demand after Help Desk / Billing self-serve signal |
 | **Recruitment** | On demand as an HR extension after Employees workflows stick |
 
@@ -420,27 +420,27 @@ Phases **1–8** plus Projects, Knowledge Base, Reports (`analytics`), Assets, D
 | Multi-Branch Management | Enterprise-ish; not founding-beta SMB core |
 | Analytics report builder / saved / scheduled reports | Reports suite v2 |
 | Storage attachment persistence (task/lead images, email files) | Completes Storage MVP gaps |
-| **Feature Board** | Platform surface (not a Marketplace module): sanitized feature requests with vote/comment so tenants can see shared product ideas. **Not** raw [Give Feedback](/user-guide/feedback) tickets — those stay reporter-only (PII / screenshots). Distinct from [Help Desk](/user-guide/help-desk-overview) (workspace support) and [Central Feedback](/developer-guide/central-feedback-system) (operator triage). Promote only when Founding Beta demand is clear. |
+| **Feature Board** | Platform surface (not a Marketplace module): sanitized feature requests with vote/comment so tenants can see shared product ideas. **Not** raw [Give Feedback](/user-guide/feedback) tickets â those stay reporter-only (PII / screenshots). Distinct from [Help Desk](/user-guide/help-desk-overview) (workspace support) and [Central Feedback](/developer-guide/central-feedback-system) (operator triage). Promote only when Founding Beta demand is clear. |
 
 ### Out of active scope (unless demanded)
 
-These are **not** sequenced as the next Marketplace SKUs. Leave them off public “what’s next” marketing until a real workflow forces them:
+These are **not** sequenced as the next Marketplace SKUs. Leave them off public âwhatâs nextâ marketing until a real workflow forces them:
 
 | Item | Why demoted |
 |------|-------------|
-| Manufacturing | MES/MRP — different product category than EloSync BOS |
+| Manufacturing | MES/MRP â different product category than EloSync BOS |
 | Quality Assurance | Manufacturing-adjacent |
-| POS (Point of Sale) | Retail stack — sideways from operator BOS |
-| E-Commerce Integrations | Channel platform work — only if a tenant forces it |
+| POS (Point of Sale) | Retail stack â sideways from operator BOS |
+| E-Commerce Integrations | Channel platform work â only if a tenant forces it |
 
 ### AI
 
 | Capability | Status |
 |------------|--------|
-| AI Assistant (Platform + BYOK, wallet, tools, Lead Copilot) | ✅ Shipped foundation v1.1.0 — see [AI platform](/architecture/ai-platform) |
+| AI Assistant (Platform + BYOK, wallet, tools, Lead Copilot) | â Shipped foundation v1.1.0 â see [AI platform](/architecture/ai-platform) |
 | AI UX polish + additional tools | In progress (Projects / Opportunities / Invoices read tools + Ask EloSync starters shipped in 1.1.0) |
 
-AI is an **optional** cross-cutting capability licensed as `module:ai`. Integrations with Leads, Tasks, and other modules respect independent entitlements — see [Module Dependencies](/architecture/module-dependencies).
+AI is an **optional** cross-cutting capability licensed as `module:ai`. Integrations with Leads, Tasks, and other modules respect independent entitlements â see [Module Dependencies](/architecture/module-dependencies).
 
 Any module that *is* promoted from this backlog still follows [Module Architecture](/architecture/module-architecture) and the [Module Development Standard](/developer-guide/module-development) established by Leads and Tasks.
 
@@ -448,7 +448,7 @@ Any module that *is* promoted from this backlog still follows [Module Architectu
 
 ## Multi-Provider Email Delivery
 
-Platform-wide capability (Central + Tenant). Today outgoing mail is **SMTP-centric** (Central defaults with optional tenant SMTP override). The roadmap evolves that into a **provider-agnostic delivery architecture** so SMTP is one driver among many — not the core design.
+Platform-wide capability (Central + Tenant). Today outgoing mail is **SMTP-centric** (Central defaults with optional tenant SMTP override). The roadmap evolves that into a **provider-agnostic delivery architecture** so SMTP is one driver among many â not the core design.
 
 This is a **platform infrastructure** improvement (settings, mail transport, logging, ops), not a Marketplace-licensed business module. Implementation must extend the existing settings hierarchy and runtime config overlay; it must not redesign the frozen foundation.
 
@@ -460,7 +460,7 @@ This is a **platform infrastructure** improvement (settings, mail transport, log
 
 ### Email transport abstraction (Shipped)
 
-`EmailManager` resolves an `EmailDriverInterface` implementation from the active configuration. Application code (notifications, mailables, invites, password resets, digests) continues to send through Laravel Mail — the manager applies the active provider at runtime.
+`EmailManager` resolves an `EmailDriverInterface` implementation from the active configuration. Application code (notifications, mailables, invites, password resets, digests) continues to send through Laravel Mail â the manager applies the active provider at runtime.
 
 | Capability | Status |
 |------------|--------|
@@ -475,7 +475,7 @@ This is a **platform infrastructure** improvement (settings, mail transport, log
 | SparkPost driver | Future |
 | MailerSend driver | Future |
 
-New providers must be addable by registering a driver — without scattering provider-specific logic through Controllers, Notifications, or settings UIs.
+New providers must be addable by registering a driver â without scattering provider-specific logic through Controllers, Notifications, or settings UIs.
 
 ### Central email provider (Shipped)
 
@@ -492,8 +492,8 @@ Central administrators select the **default outgoing email provider** for the pl
 
 Every tenant has two configuration modes:
 
-1. **Use Central / System Email Provider** — inherit platform delivery (default).
-2. **Use Custom Email Provider** — tenant-owned white-label delivery.
+1. **Use Central / System Email Provider** â inherit platform delivery (default).
+2. **Use Custom Email Provider** â tenant-owned white-label delivery.
 
 When using a custom provider, the tenant may configure **SMTP**, **Postmark API**, or **Mailgun API** (same initial driver set as Central). Credentials remain tenant-scoped, encrypted, and never returned in clear text from admin APIs.
 
@@ -539,7 +539,7 @@ Filtering:
 
 ### Provider capabilities (Future)
 
-Optional **driver capabilities** — not required of every provider. Drivers advertise what they support; the platform enables features only when the active driver implements them.
+Optional **driver capabilities** â not required of every provider. Drivers advertise what they support; the platform enables features only when the active driver implements them.
 
 | Capability | Status |
 |------------|--------|
@@ -593,25 +593,26 @@ Dashboards for Central and Tenant (each scoped to its own mail traffic):
 | Rate limiting | Enterprise |
 | Provider health monitoring | Enterprise |
 
-**Goal:** Production-grade, extensible email delivery for Central and Tenant applications — provider-agnostic at the core, with SMTP as one interchangeable driver, white-label tenant providers, durable logs, and a clear path to reliability, analytics, and enterprise routing without redesigning the platform.
+**Goal:** Production-grade, extensible email delivery for Central and Tenant applications â provider-agnostic at the core, with SMTP as one interchangeable driver, white-label tenant providers, durable logs, and a clear path to reliability, analytics, and enterprise routing without redesigning the platform.
 
 ---
 
 ## EloSync Mobile (tenant app)
 
-Native **iOS and Android** client (`SaaS-Mobile` repo). **Tenant API only** — no Central admin. Development uses **EAS development builds** (`expo-dev-client`); App Store Expo Go does not support SDK 57.
+Native **iOS and Android** client (`SaaS-Mobile` repo). **Tenant API only** â no Central admin. Development uses **EAS development builds** (`expo-dev-client`); App Store Expo Go does not support SDK 57.
 
 | Milestone | Status |
 |-----------|--------|
 | Tenant auth (login, forgot password, verify email, SecureStore) | Shipped |
 | EAS profiles (development, preview, production) | Shipped |
 | Platform shell (dynamic module nav, React Query, shared list/record UI) | Shipped |
-| **Leads** — list, search, create, view, edit, delete | Shipped |
+| **Leads** â list, search, create, view, edit, delete | Shipped |
 | Notifications list | Shipped |
-| **Tasks** � list, search, create, view, edit, delete, complete/reopen | Shipped |
-| Contacts, � (PR-by-PR module program) | Planned |
+| **Tasks**  list, search, create, view, edit, delete, complete/reopen | Shipped |
+| **Contacts** — list, search, create, view, edit, delete | Shipped |
+| Companies, … (PR-by-PR module program) | Planned |
 
-Docs: [Mobile developer guide](/developer-guide/mobile-app) · [Mobile user guide](/user-guide/elosync-mobile).
+Docs: [Mobile developer guide](/developer-guide/mobile-app) Â· [Mobile user guide](/user-guide/elosync-mobile).
 
 ---
 
@@ -628,7 +629,7 @@ Every module must:
 - Generate audit and activity logs where applicable
 - Include automated testing (Pest and Playwright)
 - Pass manual browser QA
-- Update the Developer Guide, User Guide, API documentation, database documentation, testing documentation, and [CHANGELOG](/changelog/) before being considered complete — see [Documentation Governance](/developer-guide/documentation-governance) (same-PR rule)
+- Update the Developer Guide, User Guide, API documentation, database documentation, testing documentation, and [CHANGELOG](/changelog/) before being considered complete â see [Documentation Governance](/developer-guide/documentation-governance) (same-PR rule)
 
 Full checklist: [Module Development Standard](/developer-guide/module-development).
 
@@ -636,7 +637,7 @@ Full checklist: [Module Development Standard](/developer-guide/module-developmen
 
 ## Long-Term Vision
 
-Evolve EloSync into a modular **Business Operating System** where organizations subscribe only to the modules they require. Each module integrates with the shared platform foundation while remaining independently licensable, maintainable, and scalable. Industry-vertical ERP capabilities (manufacturing, POS, e-commerce channels) stay optional and demand-driven — they are not required to complete the BOS story.
+Evolve EloSync into a modular **Business Operating System** where organizations subscribe only to the modules they require. Each module integrates with the shared platform foundation while remaining independently licensable, maintainable, and scalable. Industry-vertical ERP capabilities (manufacturing, POS, e-commerce channels) stay optional and demand-driven â they are not required to complete the BOS story.
 
 ## Related
 
@@ -647,4 +648,4 @@ Evolve EloSync into a modular **Business Operating System** where organizations 
 - [Platform Architecture Freeze](/getting-started/platform-freeze)
 - [Module Development Standard](/developer-guide/module-development)
 - [Entitlements](/developer-guide/entitlements)
-- [Leads](/user-guide/leads-overview) · [Contacts](/user-guide/contacts-overview) · [Companies](/user-guide/companies-overview) · [Tasks](/user-guide/tasks-overview) · [ToDos](/user-guide/todos-overview) · [Vendors](/user-guide/vendors-overview) · [Purchase Orders](/user-guide/purchase-orders-overview) · [Expenses](/user-guide/expenses-overview)
+- [Leads](/user-guide/leads-overview) Â· [Contacts](/user-guide/contacts-overview) Â· [Companies](/user-guide/companies-overview) Â· [Tasks](/user-guide/tasks-overview) Â· [ToDos](/user-guide/todos-overview) Â· [Vendors](/user-guide/vendors-overview) Â· [Purchase Orders](/user-guide/purchase-orders-overview) Â· [Expenses](/user-guide/expenses-overview)
