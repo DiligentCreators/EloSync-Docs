@@ -1,5 +1,17 @@
 # Changelog
 
+## Central Pulse access (2026-08-25)
+
+- **SaaS-Backend:** Laravel Pulse at `/pulse` is limited to central roles **superadmin**, **developer**, and **tester** (role-based, not Spatie permissions). Central SPA users open Pulse via `GET /api/central/v1/pulse/enter`, which returns a signed web URL that stores a short-lived session bridge. Pulse uses a dedicated cache store resolver so Laravel 13's `cache.serializable_classes = false` does not break nested `Collection` query caches. Pulse dashboard cards disable Livewire lazy loading so `wire:poll` live updates stay stable. Pulse is enabled by default in production (`config/pulse.php`). Pest: `PulseAccessTest`, `PulseCacheSerializationTest`.
+- **SaaS-Frontend:** Central **Pulse** link (Settings) opens the full Laravel Pulse dashboard in a **new browser tab** and returns the Central SPA to the dashboard. Playwright: `e2e/tests/pulse/pulse.spec.ts` (`npm run test:e2e:pulse`).
+- Docs: [Installation — monitoring](/getting-started/installation#monitoring), [Central API](/api/central-v1).
+
+## Fix — manual lead create assigns to creator (2026-08-25)
+
+- **SaaS-Backend:** `LeadService::create` now defaults `assigned_to` to the authenticated creator when omitted, matching Contacts, Opportunities, and Projects. Users without `leads.assign` still cannot assign to someone else on create, but their new lead is assigned to them so assignee-scoped lists include it. Inbound webhook/Meta ingest (no actor) is unchanged. Catalog: `leads` **1.3.0 → 1.3.1**. Pest: `LeadTest` creator-default coverage.
+- **SaaS-Frontend:** Lead create form defaults assignee to the current user when the actor has `leads.assign`, and injects the signed-in user into assignee options when `users.list` is unavailable (same pattern as Projects).
+- Docs: [Leads user guide](/user-guide/leads), [developer guide](/developer-guide/leads), [API](/api/tenant-v1-leads).
+
 ## International tax & withholding (2026-08-24)
 
 - **SaaS-Backend:** Tenant **Tax types** catalog (`sales_tax`, `withholding` with payment in/out directions), starter GL accounts `1150` / `2150`, invoice/credit-note tax split to `2100`, `tax_type_id` on billing lines, withholding on customer payment post and expense pay (3-line journals), contact/vendor default withholding types. Catalog: `accounting` **1.7.0 → 1.7.2** (PATCH **1.7.2** fixes tax types list when `direction=asc|desc`), `invoices` **1.8.1**. Pest: `TaxTypeTest`, `PaymentWithholdingTest`, `ExpenseWithholdingTest`, updated invoice accounting tests.

@@ -400,6 +400,12 @@ Configure only what you are actively developing.
 | **Meta Lead Ads** | Central integrations / `META_LEAD_ADS_*` — [Meta App Setup](/developer-guide/meta-app-setup) (operator) · [Meta Lead Ads](/developer-guide/meta-lead-ads-integration) (architecture). |
 | **Automation webhooks** | Optional `AUTOMATION_WEBHOOK_SECRET` for default outbound HMAC when a workflow webhook action omits its own secret. |
 | **Nightwatch / Telescope / Sentry** | Disabled by default in `.env.example`; enable intentionally. |
+| **Laravel Pulse** | Enabled by default. Dashboard at `/pulse` on the **central domain**. Access: central roles **superadmin**, **developer**, **tester** — open from Central SPA **Settings → Pulse** (full-page redirect via signed session bridge). Not gated by Spatie permissions. |
+
+### Monitoring {#monitoring}
+
+- **Pulse** — In-app performance dashboard. Operators with the roles above open **Settings → Pulse** in the Central SPA; Pulse opens in a **new tab** on the backend domain (Livewire UI unchanged) while Central stays on the dashboard. Use **Back to Central** in the Pulse header to return to the SPA. Run `php artisan pulse:check` as a persistent process so the **Servers** card receives metrics (add to Supervisor in production).
+- **Nightwatch / Telescope** — Optional; enable per environment policy.
 
 ---
 
@@ -413,8 +419,9 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 | 2 | `php artisan reverb:start` | SaaS-Backend |
 | 3 | `php artisan queue:work --queue=automations,emails,default` | SaaS-Backend |
 | 4 | `php artisan schedule:work` | SaaS-Backend (optional) |
-| 5 | `npm run dev` | SaaS-Frontend |
-| 6 | `npm run docs:dev` | SaaS-Docs (when editing docs) |
+| 5 | `php artisan pulse:check` | SaaS-Backend (optional; Servers card) |
+| 6 | `npm run dev` | SaaS-Frontend |
+| 7 | `npm run docs:dev` | SaaS-Docs (when editing docs) |
 
 ---
 
@@ -429,6 +436,7 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 - [ ] Reverb is running; SPA has matching `VITE_REVERB_*` (notification bell updates live when Echo is enabled)
 - [ ] `php artisan local:seed-demo` (optional) creates demo workspace `demo-crm.localhost`
 - [ ] Docs site builds: `npm run docs:build` in SaaS-Docs
+- [ ] **Settings → Pulse** opens Laravel Pulse in a new tab (superadmin / developer / tester); live cards update without 500 errors
 
 ---
 

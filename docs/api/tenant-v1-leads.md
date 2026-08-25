@@ -71,6 +71,8 @@ List and board lead cards include:
 
 Body: `name` (required), `lead_type` (required: `direct` | `company`), `email`, `phone`, `company`, `job_title`, `source`, `lead_value` (or legacy alias `estimated_value`), `priority`, `status`, `stage_id`, `assigned_to`, optional `tag_ids` (defaults to workspace default tags; type tags are merged automatically), optional `follow_up` when creating with a force-follow-up tag.
 
+When `assigned_to` is omitted, the lead is assigned to the authenticated creator (even without `leads.assign`; explicit `assigned_to` for another user requires `leads.assign` and is stripped otherwise). Inbound ingest without an actor does not apply this default.
+
 ### GET `/leads/{id}`
 
 Includes stage, assignee, tags, notes, follow-ups, activities, assignment histories. Exposes `converted_at` / `is_converted`. Embedded `notes`, `activities`, and `assignment_histories` are **newest-first** (`created_at` DESC, then `id` DESC). Follow-ups keep product scheduling order (not reversed as a chat feed).
