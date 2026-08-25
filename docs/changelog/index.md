@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — ToDos module (2026-08-26)
+
+- **SaaS-Mobile:** **ToDos** list, search, create, view, edit, delete, mark complete (permission-gated). API client `lib/api/todos.ts` (`/todos` CRUD; complete via `status: completed`). Routes under `app/(app)/(tabs)/todos/`; ToDos tab in `config/modules.ts`.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Activities module (2026-08-26)
 
 - **SaaS-Mobile:** **Activities** list, search, create, view, edit, delete, complete (permission-gated). API client `lib/api/activities.ts` (`/activities` CRUD + `complete`). Routes under `app/(app)/(tabs)/activities/`; Log tab; `RelatedEntityPickers` for contact/company/lead links.
