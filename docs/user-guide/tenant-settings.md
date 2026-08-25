@@ -130,6 +130,21 @@ Choose **Use system provider** to inherit Central Application mail, or **Use cus
 - Use **Send test** to verify delivery (uses the form values, including unsaved changes when supported).
 - Delivery history is available under **Email logs** — open a message to view the full body and **Resend** when permitted.
 
+## AI (AI Assistant module)
+
+Shown when the **AI Assistant** module is installed and you have **`ai.manage`**.
+
+| Field | Behavior |
+|-------|----------|
+| **Billing mode** | **Platform** uses Central’s provider and burns workspace credits, or **BYOK** with your own key. |
+| **Provider** | Same catalog as Central: OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, Ollama. |
+| **API key / base URL** | Required for most providers; Ollama can use base URL only. Leave the key blank to keep the stored secret. |
+| **Default model** | Curated suggestions per provider; OpenRouter and self-hosted providers accept custom model IDs. |
+| **Assistant toggles** | Enable Ask EloSync and optional write suggestions. |
+| **Workspace instructions** | Trusted tone/policy hints included in chat context. |
+
+See [AI Assistant](/user-guide/ai-assistant).
+
 ## Developers
 
 Requires permission `settings.manage_developers` (workspace owners and admins by default).

@@ -43,7 +43,7 @@ Check **Settings → AI** or the credits panel for remaining balance. When credi
 
 ### Bring your own key (BYOK)
 
-If your operator allows it, workspace admins can switch to **BYOK** mode and supply your own provider API key. Usage is billed by your provider directly; EloSync does not burn platform credits in BYOK mode.
+If your operator allows it, workspace admins can switch to **BYOK** mode and supply your own provider API key (and optional base URL for Ollama or OpenAI-compatible gateways). Choose from the same provider catalog as Central — OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, and Ollama. OpenRouter and self-hosted providers accept custom model IDs (for example `meta-llama/llama-3.3-70b-instruct`). Usage is billed by your provider directly; EloSync does not burn platform credits in BYOK mode.
 
 ## Tips
 

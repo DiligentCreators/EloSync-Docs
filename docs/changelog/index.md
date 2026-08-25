@@ -1,5 +1,11 @@
 # Changelog
 
+## Ask EloSync — expanded AI provider catalog (2026-08-25)
+
+- **SaaS-Backend:** Central and tenant AI settings support ten text providers (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, Ollama) via `App\Support\AiProviderCatalog`. Provider-aware defaults in `AiConfigResolver`, runtime key/URL injection for all Laravel AI drivers, and read-only catalog APIs `GET /system-settings/ai-providers` and `GET /settings/ai-providers`. OpenRouter and self-hosted providers accept custom model IDs; Ollama can omit an API key when a base URL is set. Catalog: `ai` **1.1.0 → 1.2.0**. Pest: `AiProviderCatalogTest`, extended `AiConfigResolverTest`, `AiTestConnectionTest`, `AiProvidersCatalogTest`.
+- **SaaS-Frontend:** Settings → AI provider form loads the catalog API (fallback constants), shows base URL for self-hosted providers, and custom model inputs for OpenRouter/Ollama/OpenAI-compatible. Playwright: provider dropdown includes Gemini and OpenRouter.
+- Docs: [Central settings](/user-guide/central-settings), [Tenant settings — AI](/user-guide/tenant-settings#ai-ai-assistant-module), [AI Assistant](/user-guide/ai-assistant), [deployment AI](/deployment/ai).
+
 ## Ask EloSync — workspace scope + clickable references (2026-08-25)
 
 - **SaaS-Backend:** Ask EloSync now refuses obvious off-topic prompts (for example logo design) without calling the provider. Structured responses normalize reference aliases (`numeric_entity_id` / `relative_url` → `entity_id` / `url`), extract prose when models dump JSON into `answer`, and coerce string suggested actions into labeled objects. Workspace **AI instructions**, industry, and preferred language are injected into trusted chat context. System prompt **2026-08-25.1** tightens workspace-only scope and reference field names. Pest: `AiStructuredResponseNormalizerTest`, `AiWorkspaceScopeGuardTest`, `AiWorkspaceScopeTest`.
