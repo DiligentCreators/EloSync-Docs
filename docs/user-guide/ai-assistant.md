@@ -16,9 +16,13 @@ Without the module, AI menu items and API routes are hidden.
 
 Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
 
-On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission. Citations link only to same-app record paths for modules you are entitled to.
+Off-topic requests (for example logo design, recipes, or external tool recommendations) are declined — EloSync only answers using workspace data and entitled modules.
+
+On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission. Citations link only to same-app record paths for modules you are entitled to (for example **INV-00006** → `/invoices/6`).
 
 Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
+
+Workspace admins can add **Workspace instructions** under Settings → AI to tune tone and policies; those instructions are included in the assistant’s trusted context.
 
 ### Lead Copilot
 
@@ -39,7 +43,7 @@ Check **Settings → AI** or the credits panel for remaining balance. When credi
 
 ### Bring your own key (BYOK)
 
-If your operator allows it, workspace admins can switch to **BYOK** mode and supply your own provider API key. Usage is billed by your provider directly; EloSync does not burn platform credits in BYOK mode.
+If your operator allows it, workspace admins can switch to **BYOK** mode and supply your own provider API key (and optional base URL for Ollama or OpenAI-compatible gateways). Choose from the same provider catalog as Central — OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, and Ollama. OpenRouter and self-hosted providers accept custom model IDs (for example `meta-llama/llama-3.3-70b-instruct`). Usage is billed by your provider directly; EloSync does not burn platform credits in BYOK mode.
 
 ## Tips
 
