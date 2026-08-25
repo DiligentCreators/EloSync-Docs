@@ -1,15 +1,4 @@
-# Changelog
-
-## EloSync Mobile � Tasks module (2026-08-26)
-
-- **SaaS-Mobile:** **Tasks** list, search, create, view, edit, delete, complete/reopen (permission-gated). API client `lib/api/tasks.ts` mirrors Leads (`/tasks` CRUD + `complete`/`reopen`). Routes under `app/(app)/(tabs)/tasks/`; registered in `config/modules.ts`.
-- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap � Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
-
-## EloSync Mobile — platform shell + Leads module (2026-08-26)
-
-- **SaaS-Mobile:** React Query provider, shared screen/list/form components, dynamic module nav (`config/modules.ts`), notifications tab, **Leads** list/search/create/view/edit/delete (permission-gated). Home dashboard links entitled modules.
-- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
-- **saas-website:** Roadmap entry for EloSync Mobile (in development).
+﻿# Changelog
 
 ## EloSync Mobile — EAS development builds (2026-08-26)
 
