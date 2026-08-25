@@ -1,6 +1,6 @@
 # EloSync Mobile (tenant app)
 
-Official tenant workspace mobile client (`SaaS-Mobile` repo). **Tenant API only** ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ no Central admin surface.
+Official tenant workspace mobile client (`SaaS-Mobile` repo). **Tenant API only** ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ no Central admin surface.
 
 ## Stack
 
@@ -8,8 +8,8 @@ Official tenant workspace mobile client (`SaaS-Mobile` repo). **Tenant API only*
 |-------|--------|
 | Framework | Expo SDK 57 + React Native |
 | Navigation | Expo Router |
-| Dev workflow | **EAS development builds** (`expo-dev-client`) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ not App Store Expo Go |
-| API | Axios ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ `/api/tenant/v1` |
+| Dev workflow | **EAS development builds** (`expo-dev-client`) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ not App Store Expo Go |
+| API | Axios ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ `/api/tenant/v1` |
 | Auth | Laravel Sanctum Bearer tokens |
 | Token storage | `expo-secure-store` |
 
@@ -25,7 +25,7 @@ Tenant API base: `${EXPO_PUBLIC_API_URL}/api/tenant/v1`
 
 Native apps do not use browser CORS. Pin API TLS and rate limits on the backend as for any API client.
 
-Physical devices cannot use `http://saas-backend.test` unless that host resolves on the phone ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ use a LAN IP or production API URL in `.env` / `eas.json` profiles.
+Physical devices cannot use `http://saas-backend.test` unless that host resolves on the phone ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ use a LAN IP or production API URL in `.env` / `eas.json` profiles.
 
 ## Development builds (EAS)
 
@@ -83,7 +83,7 @@ Forgot password on mobile always includes **workspace** + email (the app is neve
 
 Reuse the web SPA model:
 
-- **Modules:** `user.modules` from login/`/me` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ hide nav when module slug not entitled.
+- **Modules:** `user.modules` from login/`/me` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ hide nav when module slug not entitled.
 - **Permissions:** Spatie permission strings on `user.permissions`; `superadmin` role bypasses checks.
 
 ## Module development
@@ -92,7 +92,7 @@ New mobile module screens should mirror the **Leads** web module (list / create 
 
 ## Store release
 
-One multi-tenant binary (Play Store + App Store) via EAS `production` profile. Workspace users sign in with email ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ not per-customer white-label builds unless product adds that later.
+One multi-tenant binary (Play Store + App Store) via EAS `production` profile. Workspace users sign in with email ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ not per-customer white-label builds unless product adds that later.
 
 ## Mobile module rollout
 
@@ -103,19 +103,19 @@ Extend `config/modules.ts` and add `app/(app)/(tabs)/{slug}/` stack screens per 
 - Nav registration in `config/modules.ts` + tab visibility gates
 - User guide slice + changelog line
 
-Current shipped mobile modules: **leads**, **tasks**, **contacts**, **companies**, **opportunities**, **activities**, **notifications** (shell), **profile**.
+Current shipped mobile modules: **leads**, **tasks**, **contacts**, **companies**, **opportunities**, **activities**, **todos**, **notifications** (shell), **profile**.
 
 ### Leads (`module:leads`)
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/leads.ts` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ `GET/POST /leads`, `GET/PUT/DELETE /leads/{id}`, `GET /lead-stages` |
+| API client | `lib/api/leads.ts` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ `GET/POST /leads`, `GET/PUT/DELETE /leads/{id}`, `GET /lead-stages` |
 | Types | `types/leads.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/leads/` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
-| Nav | `config/modules.ts` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ `permission: leads.view`, tab `/(app)/(tabs)/leads` |
+| Routes | `app/(app)/(tabs)/leads/` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ `permission: leads.view`, tab `/(app)/(tabs)/leads` |
 | Permissions | `leads.view`, `leads.create`, `leads.update`, `leads.delete` |
 
-Tenant API reference: [Tenant API ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ Leads](/api/tenant-v1-leads).
+Tenant API reference: [Tenant API ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ Leads](/api/tenant-v1-leads).
 
 ### Tasks (`module:tasks`)
 
@@ -123,13 +123,13 @@ Mirrors the Leads mobile pattern (list / create / view / edit stack, React Query
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/tasks.ts` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ `GET/POST /tasks`, `GET/PUT/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `POST /tasks/{id}/reopen` |
+| API client | `lib/api/tasks.ts` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ `GET/POST /tasks`, `GET/PUT/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `POST /tasks/{id}/reopen` |
 | Types | `types/tasks.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/tasks/` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ `index` (list + search), `new`, `[id]/index` (view + complete/reopen), `[id]/edit` |
-| Nav | `config/modules.ts` ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ `permission: tasks.view`, tab `/(app)/(tabs)/tasks` |
+| Routes | `app/(app)/(tabs)/tasks/` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ `index` (list + search), `new`, `[id]/index` (view + complete/reopen), `[id]/edit` |
+| Nav | `config/modules.ts` ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ `permission: tasks.view`, tab `/(app)/(tabs)/tasks` |
 | Permissions | `tasks.view`, `tasks.create`, `tasks.update`, `tasks.delete`, `tasks.complete` |
 
-Tenant API reference: [Tenant API ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½ Tasks](/api/tenant-v1-tasks).
+Tenant API reference: [Tenant API ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ Tasks](/api/tenant-v1-tasks).
 
 ### Contacts (`module:contacts`)
 
@@ -137,13 +137,13 @@ Mirrors the Leads mobile pattern (list / create / view / edit stack, React Query
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/contacts.ts` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ `GET/POST /contacts`, `GET/PUT/DELETE /contacts/{id}` |
+| API client | `lib/api/contacts.ts` ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã¯Â¿Â½ `GET/POST /contacts`, `GET/PUT/DELETE /contacts/{id}` |
 | Types | `types/contacts.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/contacts/` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
-| Nav | `config/modules.ts` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ `permission: contacts.view`, tab `/(app)/(tabs)/contacts` |
+| Routes | `app/(app)/(tabs)/contacts/` ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã¯Â¿Â½ `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã¯Â¿Â½ `permission: contacts.view`, tab `/(app)/(tabs)/contacts` |
 | Permissions | `contacts.view`, `contacts.create`, `contacts.update`, `contacts.delete` |
 
-Tenant API reference: [Tenant API ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ Contacts](/api/tenant-v1-contacts).
+Tenant API reference: [Tenant API ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã¯Â¿Â½ Contacts](/api/tenant-v1-contacts).
 
 ### Companies (`module:companies`)
 
@@ -151,13 +151,13 @@ Mirrors the Contacts mobile pattern (list / create / view / edit stack, React Qu
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/companies.ts` Ã¢â‚¬â€� `GET/POST /companies`, `GET/PUT/DELETE /companies/{id}` |
+| API client | `lib/api/companies.ts` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ `GET/POST /companies`, `GET/PUT/DELETE /companies/{id}` |
 | Types | `types/companies.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/companies/` Ã¢â‚¬â€� `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
-| Nav | `config/modules.ts` Ã¢â‚¬â€� `permission: companies.view`, tab `/(app)/(tabs)/companies` |
+| Routes | `app/(app)/(tabs)/companies/` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ `permission: companies.view`, tab `/(app)/(tabs)/companies` |
 | Permissions | `companies.view`, `companies.create`, `companies.update`, `companies.delete` |
 
-Tenant API reference: [Tenant API Ã¢â‚¬â€� Companies](/api/tenant-v1-companies).
+Tenant API reference: [Tenant API ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ï¿½ Companies](/api/tenant-v1-companies).
 
 ### Opportunities (`module:opportunities`)
 
@@ -165,13 +165,13 @@ Mirrors the Leads mobile pattern with pipeline stage picker (`GET /opportunity-s
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/opportunities.ts` â€” `GET/POST /opportunities`, `GET/PUT/DELETE /opportunities/{id}`, `GET /opportunity-stages` |
+| API client | `lib/api/opportunities.ts` Ã¢â‚¬â€� `GET/POST /opportunities`, `GET/PUT/DELETE /opportunities/{id}`, `GET /opportunity-stages` |
 | Types | `types/opportunities.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/opportunities/` â€” `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
-| Nav | `config/modules.ts` â€” `permission: opportunities.view`, tab `/(app)/(tabs)/opportunities` (label **Pipeline**) |
+| Routes | `app/(app)/(tabs)/opportunities/` Ã¢â‚¬â€� `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` Ã¢â‚¬â€� `permission: opportunities.view`, tab `/(app)/(tabs)/opportunities` (label **Pipeline**) |
 | Permissions | `opportunities.view`, `opportunities.create`, `opportunities.update`, `opportunities.delete` |
 
-Tenant API reference: [Tenant API â€” Opportunities](/api/tenant-v1-opportunities).
+Tenant API reference: [Tenant API Ã¢â‚¬â€� Opportunities](/api/tenant-v1-opportunities).
 
 ### Activities (`module:activities`)
 
@@ -179,14 +179,28 @@ CRM engagement log (call, email, note, follow-up) with required link to at least
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/activities.ts` — `GET/POST /activities`, `GET/PUT/DELETE /activities/{id}`, `POST /activities/{id}/complete` |
+| API client | `lib/api/activities.ts` â€” `GET/POST /activities`, `GET/PUT/DELETE /activities/{id}`, `POST /activities/{id}/complete` |
 | Types | `types/activities.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/activities/` — `index` (list + search), `new`, `[id]/index` (view + complete), `[id]/edit` |
-| Shared UI | `components/forms/RelatedEntityPickers.tsx` — contact/company/lead chips when entitled |
-| Nav | `config/modules.ts` — `permission: activities.view`, tab `/(app)/(tabs)/activities` (label **Log**) |
+| Routes | `app/(app)/(tabs)/activities/` â€” `index` (list + search), `new`, `[id]/index` (view + complete), `[id]/edit` |
+| Shared UI | `components/forms/RelatedEntityPickers.tsx` â€” contact/company/lead chips when entitled |
+| Nav | `config/modules.ts` â€” `permission: activities.view`, tab `/(app)/(tabs)/activities` (label **Log**) |
 | Permissions | `activities.view`, `activities.create`, `activities.update`, `activities.delete`, `activities.complete` |
 
-Tenant API reference: [Tenant API — Activities](/api/tenant-v1-activities).
+Tenant API reference: [Tenant API â€” Activities](/api/tenant-v1-activities).
+
+### ToDos (`module:todos`)
+
+Personal creator-scoped checklists (list CRUD on mobile; board view remains web-only).
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/todos.ts` — `GET/POST /todos`, `GET/PUT/DELETE /todos/{id}` |
+| Types | `types/todos.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/todos/` — `index` (list + search), `new`, `[id]/index` (view + mark complete), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: todos.view`, tab `/(app)/(tabs)/todos` (label **ToDos**) |
+| Permissions | `todos.view`, `todos.create`, `todos.update`, `todos.delete` |
+
+Tenant API reference: [Tenant API — ToDos](/api/tenant-v1-todos).
 
 ## Related
 
