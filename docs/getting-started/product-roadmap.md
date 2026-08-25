@@ -610,7 +610,8 @@ Native **iOS and Android** client (`SaaS-Mobile` repo). **Tenant API only** â
 | Notifications list | Shipped |
 | **Tasks**  list, search, create, view, edit, delete, complete/reopen | Shipped |
 | **Contacts** — list, search, create, view, edit, delete | Shipped |
-| Companies, … (PR-by-PR module program) | Planned |
+| **Companies** — list, search, create, view, edit, delete | Shipped |
+| Opportunities, … (PR-by-PR module program) | Planned |
 
 Docs: [Mobile developer guide](/developer-guide/mobile-app) Â· [Mobile user guide](/user-guide/elosync-mobile).
 

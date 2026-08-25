@@ -20,6 +20,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Leads** | List, search, create, view, edit, delete (permission-gated) |
 | **Tasks** | List, search, create, view, edit, delete, complete/reopen (permission-gated) |
 | **Contacts** | List, search, create, view, edit, delete (permission-gated) |
+| **Companies** | List, search, create, view, edit, delete (permission-gated) |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -36,4 +37,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Leads user guide](/user-guide/leads-overview)
 - [Tasks user guide](/user-guide/tasks-overview)
 - [Contacts user guide](/user-guide/contacts-overview)
+- [Companies user guide](/user-guide/companies-overview)
 - [Tenant application guide](/user-guide/tenant-application)
