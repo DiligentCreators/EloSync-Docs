@@ -1,5 +1,26 @@
 # Changelog
 
+## EloSync Mobile � Tasks module (2026-08-26)
+
+- **SaaS-Mobile:** **Tasks** list, search, create, view, edit, delete, complete/reopen (permission-gated). API client `lib/api/tasks.ts` mirrors Leads (`/tasks` CRUD + `complete`/`reopen`). Routes under `app/(app)/(tabs)/tasks/`; registered in `config/modules.ts`.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap � Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
+## EloSync Mobile — platform shell + Leads module (2026-08-26)
+
+- **SaaS-Mobile:** React Query provider, shared screen/list/form components, dynamic module nav (`config/modules.ts`), notifications tab, **Leads** list/search/create/view/edit/delete (permission-gated). Home dashboard links entitled modules.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+- **saas-website:** Roadmap entry for EloSync Mobile (in development).
+
+## EloSync Mobile — EAS development builds (2026-08-26)
+
+- **SaaS-Mobile:** `expo-dev-client`, `eas.json` profiles (`development`, `development-simulator`, `preview`, `production`), bundle ids `com.diligentcreators.elosync`, location/secure-store config plugins, npm scripts for EAS builds and `start:dev-client`. Replaces App Store Expo Go for SDK 57 device testing.
+- Docs: [Mobile app developer guide](/developer-guide/mobile-app).
+
+## EloSync Mobile — tenant auth scaffold (2026-08-25)
+
+- **SaaS-Mobile:** New Expo app (`elosync-mobile`) with tenant-only auth: login (email/password/remember, optional workspace branding), forgot password (workspace + email), email verification gate, SecureStore session, dashboard + profile shell. API client targets `/api/tenant/v1` only.
+- Docs: [Mobile app developer guide](/developer-guide/mobile-app).
+
 ## Ask EloSync — expanded AI provider catalog (2026-08-25)
 
 - **SaaS-Backend:** Central and tenant AI settings support ten text providers (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, Ollama) via `App\Support\AiProviderCatalog`. Provider-aware defaults in `AiConfigResolver`, runtime key/URL injection for all Laravel AI drivers, and read-only catalog APIs `GET /system-settings/ai-providers` and `GET /settings/ai-providers`. OpenRouter and self-hosted providers accept custom model IDs; Ollama can omit an API key when a base URL is set. Catalog: `ai` **1.1.0 → 1.2.0**. Pest: `AiProviderCatalogTest`, extended `AiConfigResolverTest`, `AiTestConnectionTest`, `AiProvidersCatalogTest`.
