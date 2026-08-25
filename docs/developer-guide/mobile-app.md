@@ -103,7 +103,7 @@ Extend `config/modules.ts` and add `app/(app)/(tabs)/{slug}/` stack screens per 
 - Nav registration in `config/modules.ts` + tab visibility gates
 - User guide slice + changelog line
 
-Current shipped mobile modules: **leads**, **notifications** (shell), **profile**.
+Current shipped mobile modules: **leads**, **tasks**, **notifications** (shell), **profile**.
 
 ### Leads (`module:leads`)
 
@@ -116,6 +116,20 @@ Current shipped mobile modules: **leads**, **notifications** (shell), **profile*
 | Permissions | `leads.view`, `leads.create`, `leads.update`, `leads.delete` |
 
 Tenant API reference: [Tenant API — Leads](/api/tenant-v1-leads).
+
+### Tasks (`module:tasks`)
+
+Mirrors the Leads mobile pattern (list / create / view / edit stack, React Query, permission gates).
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/tasks.ts` — `GET/POST /tasks`, `GET/PUT/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `POST /tasks/{id}/reopen` |
+| Types | `types/tasks.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/tasks/` — `index` (list + search), `new`, `[id]/index` (view + complete/reopen), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: tasks.view`, tab `/(app)/(tabs)/tasks` |
+| Permissions | `tasks.view`, `tasks.create`, `tasks.update`, `tasks.delete`, `tasks.complete` |
+
+Tenant API reference: [Tenant API — Tasks](/api/tenant-v1-tasks).
 
 ## Related
 
