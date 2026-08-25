@@ -1,5 +1,11 @@
 # Changelog
 
+## Ask EloSync — workspace scope + clickable references (2026-08-25)
+
+- **SaaS-Backend:** Ask EloSync now refuses obvious off-topic prompts (for example logo design) without calling the provider. Structured responses normalize reference aliases (`numeric_entity_id` / `relative_url` → `entity_id` / `url`), extract prose when models dump JSON into `answer`, and coerce string suggested actions into labeled objects. Workspace **AI instructions**, industry, and preferred language are injected into trusted chat context. System prompt **2026-08-25.1** tightens workspace-only scope and reference field names. Pest: `AiStructuredResponseNormalizerTest`, `AiWorkspaceScopeGuardTest`, `AiWorkspaceScopeTest`.
+- **SaaS-Frontend:** `resolveAiReferenceHref` accepts `numeric_entity_id` and `relative_url` so invoice/lead/task citations render as in-app links.
+- Docs: [AI Assistant user guide](/user-guide/ai-assistant).
+
 ## Central Pulse access (2026-08-25)
 
 - **SaaS-Backend:** Laravel Pulse at `/pulse` is limited to central roles **superadmin**, **developer**, and **tester** (role-based, not Spatie permissions). Central SPA users open Pulse via `GET /api/central/v1/pulse/enter`, which returns a signed web URL that stores a short-lived session bridge. Pulse uses a dedicated cache store resolver so Laravel 13's `cache.serializable_classes = false` does not break nested `Collection` query caches. Pulse dashboard cards disable Livewire lazy loading so `wire:poll` live updates stay stable. Pulse is enabled by default in production (`config/pulse.php`). Pest: `PulseAccessTest`, `PulseCacheSerializationTest`.
