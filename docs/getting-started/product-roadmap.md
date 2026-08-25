@@ -597,6 +597,24 @@ Dashboards for Central and Tenant (each scoped to its own mail traffic):
 
 ---
 
+## EloSync Mobile (tenant app)
+
+Native **iOS and Android** client (`SaaS-Mobile` repo). **Tenant API only** — no Central admin. Development uses **EAS development builds** (`expo-dev-client`); App Store Expo Go does not support SDK 57.
+
+| Milestone | Status |
+|-----------|--------|
+| Tenant auth (login, forgot password, verify email, SecureStore) | Shipped |
+| EAS profiles (development, preview, production) | Shipped |
+| Platform shell (dynamic module nav, React Query, shared list/record UI) | Shipped |
+| **Leads** — list, search, create, view, edit, delete | Shipped |
+| Notifications list | Shipped |
+| **Tasks** � list, search, create, view, edit, delete, complete/reopen | Shipped |
+| Contacts, � (PR-by-PR module program) | Planned |
+
+Docs: [Mobile developer guide](/developer-guide/mobile-app) · [Mobile user guide](/user-guide/elosync-mobile).
+
+---
+
 ## Development Principles
 
 Every module must:
