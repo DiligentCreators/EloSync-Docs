@@ -94,6 +94,29 @@ New mobile module screens should mirror the **Leads** web module (list / create 
 
 One multi-tenant binary (Play Store + App Store) via EAS `production` profile. Workspace users sign in with email â€” not per-customer white-label builds unless product adds that later.
 
+## Mobile module rollout
+
+Extend `config/modules.ts` and add `app/(app)/(tabs)/{slug}/` stack screens per module PR. Each PR should include:
+
+- API service + types
+- List / create / view / edit (or justified subset)
+- Nav registration in `config/modules.ts` + tab visibility gates
+- User guide slice + changelog line
+
+Current shipped mobile modules: **leads**, **notifications** (shell), **profile**.
+
+### Leads (`module:leads`)
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/leads.ts` — `GET/POST /leads`, `GET/PUT/DELETE /leads/{id}`, `GET /lead-stages` |
+| Types | `types/leads.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/leads/` — `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: leads.view`, tab `/(app)/(tabs)/leads` |
+| Permissions | `leads.view`, `leads.create`, `leads.update`, `leads.delete` |
+
+Tenant API reference: [Tenant API — Leads](/api/tenant-v1-leads).
+
 ## Related
 
 - [Tenant API index](/api/index)
