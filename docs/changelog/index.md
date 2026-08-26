@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Projects module (2026-08-26)
+
+- **SaaS-Mobile:** **Projects** list, search, create, view, edit, status transitions, delete (permission-gated). API client `lib/api/projects.ts` (`/projects` CRUD + `status`). Routes under `app/(app)/(tabs)/projects/`; `ProjectLinkPickers` for optional CRM links.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Meetings module (2026-08-26)
 
 - **SaaS-Mobile:** **Meetings** list (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated). API client `lib/api/meetings.ts` (`/meetings` CRUD + `cancel`/`complete`). Routes under `app/(app)/(tabs)/meetings/`; Meetings tab; manual-link meetings with optional guest + reminder on mobile.
