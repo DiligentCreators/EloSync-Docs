@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Accounting module (2026-08-27)
+
+- **SaaS-Mobile:** **Accounting** chart of accounts (list, search, create, view, edit, delete) and journal entries (list, search, create, view, edit draft, delete draft, post, void) with balanced multi-line forms (permission-gated). API clients `lib/api/accounts.ts` and `lib/api/journal-entries.ts` (`/accounts`, `/journal-entries`). Routes under `app/(app)/(tabs)/accounting/`. General ledger, transfers, bank reconciliation, periods, opening balances, and tax types remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Accounting delivery.
+
 ## EloSync Mobile — Financial Reports module (2026-08-27)
 
 - **SaaS-Mobile:** **Financial Reports** trial balance, profit and loss, balance sheet, and aged receivables with date filters (permission-gated). API client `lib/api/financial-reports.ts` (`/financial-reports/*`). Routes under `app/(app)/(tabs)/financial-reports/`. CSV export remains web-only on mobile v1.
