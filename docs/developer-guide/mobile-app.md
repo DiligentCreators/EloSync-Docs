@@ -465,6 +465,25 @@ Branded short URLs with optional vanity slug, destination URL, expiry, and basic
 
 Tenant API reference: [Tenant API — Short links](/api/tenant-v1-short-links).
 
+### Documents (`module:documents`)
+
+Workspace file library on Storage — upload files from the device, browse/search, edit title/description/category, download/share, and soft-delete. Requires entitled **Storage** plus **Documents**.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/documents.ts` — `GET/POST /documents`, `GET/PUT/DELETE /documents/{id}`; `GET /documents/{id}/download` via `lib/document-download.ts` |
+| Categories | `lib/api/document-categories.ts` — read-only list for create/edit pickers |
+| Types | `types/documents.ts` (re-exported from `types/api.ts`) |
+| Helpers | `lib/document-labels.ts` — file size formatting; `lib/document-upload.ts` — multipart file append |
+| Routes | `app/(app)/(tabs)/documents/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: documents.view`, tab `/(app)/(tabs)/documents` (label **Docs**) |
+| Permissions | `documents.view`, `documents.create`, `documents.update`, `documents.delete` |
+| Native modules | `expo-document-picker`, `expo-file-system`, `expo-sharing` |
+
+Record links, category CRUD, trash filters, restore/force delete, bulk delete, and file replace remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Documents](/api/tenant-v1-documents).
+
 ## Related
 
 - [Tenant API index](/api/index)
