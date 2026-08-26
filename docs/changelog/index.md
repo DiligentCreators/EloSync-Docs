@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Inventory module (2026-08-26)
+
+- **SaaS-Mobile:** **Inventory** stock level list and search, stock adjust (`POST /inventory/stock/adjust`), transfer list/create/view/edit (draft)/dispatch/complete/cancel/delete (permission-gated). API client `lib/api/inventory.ts`. Routes under `app/(app)/(tabs)/inventory/`; product and warehouse pickers when Products/Warehouses are entitled; single-line transfers on mobile v1; movement history deferred.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Warehouses module (2026-08-26)
 
 - **SaaS-Mobile:** **Warehouses** list, search, create, view, edit, delete (permission-gated). API client `lib/api/warehouses.ts` (`/warehouses` CRUD). Routes under `app/(app)/(tabs)/warehouses/`; active/default toggles on create/edit; notes and timeline deferred on mobile v1.
