@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Attendance module (2026-08-27)
+
+- **SaaS-Mobile:** **Attendance** daily records list, search, status filter, create, view, edit, delete, self check-in/check-out, and manager employee picker (permission-gated). API client `lib/api/attendance-records.ts` (`/attendance-records`). Routes under `app/(app)/(tabs)/attendance/`. KPI stats, date-range filters, trash/restore, and geolocation remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Attendance delivery.
+
 ## EloSync Mobile — Employees module (2026-08-27)
 
 - **SaaS-Mobile:** **Employees** directory list, search, create, view, edit, and delete (permission-gated). Department multi-select when Departments module is entitled; linked user picker when `users.list` is granted. API clients `lib/api/employees.ts` and `lib/api/departments.ts` (`/employees`, `/departments`). Routes under `app/(app)/(tabs)/employees/`. Payroll, attendance, leave, and department management remain web-only on mobile v1.

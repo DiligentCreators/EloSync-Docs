@@ -645,6 +645,25 @@ Payroll, attendance, leave, department CRUD, performance reports, and trash/rest
 
 Tenant API reference: [Tenant API — Employees](/api/tenant-v1-employees).
 
+### Attendance (`module:attendance`)
+
+Daily attendance records per employee: list and filter, record attendance, self check-in/check-out for linked employees, and manager corrections.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/attendance-records.ts` — list, CRUD on `/attendance-records` |
+| Types | `types/attendance.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/attendance-labels.ts` — status labels and time formatting |
+| Access | `lib/attendance-access.ts` — manager vs self-service role gate |
+| Form | `components/forms/AttendanceFormFields.tsx` — shared create/edit + employee picker |
+| Routes | `app/(app)/(tabs)/attendance/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: attendance.view`, tab `/(app)/(tabs)/attendance` (label **Clock**) |
+| Permissions | `attendance.view`, `attendance.create`, `attendance.update`, `attendance.delete` |
+
+KPI stats, date-range filters, trash/restore, geolocation, and office-hours automation remain web-only on mobile v1. Requires **Employees** module entitlement.
+
+Tenant API reference: [Tenant API — Attendance](/api/tenant-v1-attendance).
+
 ## Related
 
 - [Tenant API index](/api/index)
