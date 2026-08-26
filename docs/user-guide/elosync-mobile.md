@@ -42,6 +42,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Announcements** | Inbox, search, view, mark read; create/edit/delete for managers; News tab |
 | **Assets** | List, search, create, view, edit, delete (permission-gated); Assets tab |
 | **Short links** | List, search, create, view, edit, delete, share short URL (permission-gated); Links tab |
+| **Documents** | List, search, upload, view, edit metadata, delete, download/share (permission-gated); Docs tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -80,4 +81,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Announcements user guide](/user-guide/announcements-overview)
 - [Assets user guide](/user-guide/assets-overview)
 - [Short links user guide](/user-guide/short-links)
+- [Documents user guide](/user-guide/documents)
 - [Tenant application guide](/user-guide/tenant-application)
