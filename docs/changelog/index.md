@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Email module (2026-08-26)
+
+- **SaaS-Mobile:** **Email** mailbox browse and read (permission-gated). API client `lib/api/email.ts` (`GET /email/accounts`, folder messages, message detail, mark read). Routes under `app/(app)/(tabs)/email/`; account and folder pickers; inbox/sent/drafts focus on mobile v1; compose, account setup, labels, attachments, templates, and signatures deferred.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Communication Templates module (2026-08-26)
 
 - **SaaS-Mobile:** **Communication Templates** list, search, create, view, edit, delete (permission-gated). API client `lib/api/communication-templates.ts` (`/communication-templates` CRUD + `/meta/contexts` picker). Routes under `app/(app)/(tabs)/communication-templates/`; WhatsApp channel only on mobile v1; placeholder picker, preview, and render/use deferred.
