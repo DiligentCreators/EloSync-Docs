@@ -683,6 +683,24 @@ Leave type CRUD, balance administration, trash/restore, salary-deduction overrid
 
 Tenant API reference: [Tenant API — Leave Management](/api/tenant-v1-leave-management).
 
+### Payroll (`module:payroll`)
+
+Payroll profiles per employee and pay run workflow: generate periods from profiles, review lines, approve, mark paid, and post to the journal.
+
+| Piece | Location |
+|-------|----------|
+| API clients | `lib/api/payroll-profiles.ts`, `lib/api/pay-runs.ts` |
+| Types | `types/payroll.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/payroll-labels.ts` — frequency, status, amount formatting |
+| Forms | `components/forms/PayrollProfileFormFields.tsx`, `components/forms/PayRunFormFields.tsx` |
+| Routes | `app/(app)/(tabs)/payroll/` — hub, `profiles/*`, `pay-runs/*` |
+| Nav | `config/modules.ts` — `permission: payroll.view`, tab `/(app)/(tabs)/payroll` (label **Pay**) |
+| Permissions | `payroll.view`, `create`, `update`, `delete`, `approve`, `pay`, `post` |
+
+Pay run line editing, journal debit/credit account picker, trash/restore, and employee self pay stubs remain web-only on mobile v1. Requires **Employees** module entitlement for profile employee picker and deep links.
+
+Tenant API reference: [Tenant API — Payroll](/api/tenant-v1-payroll).
+
 ## Related
 
 - [Tenant API index](/api/index)

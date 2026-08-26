@@ -54,6 +54,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Employees** | Directory list, search, create, view, edit, delete; department chips and linked user when entitled (permission-gated); Staff tab |
 | **Attendance** | Daily records, search, status filter, self check-in/out, CRUD (permission-gated); Clock tab |
 | **Leave management** | Leave requests list, search, status filter, create, view, edit draft, submit, approve, reject, cancel, balances on view (permission-gated); Leave tab |
+| **Payroll** | Profiles and pay runs — list, search, CRUD, approve, pay, post (permission-gated); Pay tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -104,4 +105,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Employees user guide](/user-guide/employees-overview)
 - [Attendance user guide](/user-guide/attendance-overview)
 - [Leave management user guide](/user-guide/leave-management-overview)
+- [Payroll user guide](/user-guide/payroll-overview)
 - [Tenant application guide](/user-guide/tenant-application)
