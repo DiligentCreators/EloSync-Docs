@@ -401,10 +401,12 @@ Configure only what you are actively developing.
 | **Automation webhooks** | Optional `AUTOMATION_WEBHOOK_SECRET` for default outbound HMAC when a workflow webhook action omits its own secret. |
 | **Nightwatch / Telescope / Sentry** | Disabled by default in `.env.example`; enable intentionally. |
 | **Laravel Pulse** | Enabled by default. Dashboard at `/pulse` on the **central domain**. Access: central roles **superadmin**, **developer**, **tester** — open from Central SPA **Settings → Pulse** (full-page redirect via signed session bridge). Not gated by Spatie permissions. |
+| **Laravel Horizon** | Enabled when installed. Dashboard at `/horizon` on the **central domain**. Same role-only access as Pulse — open from Central SPA **Settings → Horizon**. Production queue workers run through Horizon (`php artisan horizon`); see [Laravel Forge](/deployment/laravel-forge). |
 
 ### Monitoring {#monitoring}
 
-- **Pulse** — In-app performance dashboard. Operators with the roles above open **Settings → Pulse** in the Central SPA; Pulse opens in a **new tab** on the backend domain (Livewire UI unchanged) while Central stays on the dashboard. Use **Back to Central** in the Pulse header to return to the SPA. Run `php artisan pulse:check` as a persistent process so the **Servers** card receives metrics (add to Supervisor in production).
+- **Pulse** — In-app performance dashboard (slow requests, queries, jobs, server metrics). Operators with the roles above open **Settings → Pulse** in the Central SPA; Pulse opens in a **new tab** on the backend domain while Central stays on the dashboard. Use **Back to Central** in the Pulse header to return to the SPA. Run `php artisan pulse:check` as a persistent process so the **Servers** card receives metrics (add to Supervisor in production).
+- **Horizon** — Redis queue dashboard (throughput, wait times, failed jobs, worker status). Same roles open **Settings → Horizon** in a new tab. Locally run `php artisan horizon` instead of `queue:work` when Horizon is installed. Production: one Forge daemon (`php artisan horizon`); remove separate `queue:work` processes after cutover.
 - **Nightwatch / Telescope** — Optional; enable per environment policy.
 
 ---
@@ -417,7 +419,7 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 |----------|---------|------|
 | 1 | (Herd — no command) | Backend site live |
 | 2 | `php artisan reverb:start` | SaaS-Backend |
-| 3 | `php artisan queue:work --queue=automations,emails,default` | SaaS-Backend |
+| 3 | `php artisan horizon` (or `queue:work --queue=automations,emails,default` without Horizon) | SaaS-Backend |
 | 4 | `php artisan schedule:work` | SaaS-Backend (optional) |
 | 5 | `php artisan pulse:check` | SaaS-Backend (optional; Servers card) |
 | 6 | `npm run dev` | SaaS-Frontend |

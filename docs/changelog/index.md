@@ -116,6 +116,13 @@
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 - **saas-website:** Roadmap entry for EloSync Mobile (in development).
 
+## Laravel Horizon queue dashboard (2026-08-26)
+
+- **SaaS-Backend:** Laravel Horizon at `/horizon` on the **central domain**, with the same role-only access as Pulse (**superadmin**, **developer**, **tester**). Central SPA users open Horizon via `GET /api/central/v1/horizon/enter` (signed session bridge). Production worker config in `config/horizon.php`: `supervisor-general` (`automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default`; max **3** processes) and `supervisor-email-sync` (`email-sync`; max **1** process, 300s timeout). Scheduler runs `horizon:snapshot` every five minutes. Pest: `HorizonAccessTest`.
+- **SaaS-Frontend:** Central **Horizon** link (Settings) opens the Horizon dashboard in a **new browser tab** and returns the Central SPA to the dashboard. Playwright: `e2e/tests/horizon/horizon.spec.ts` (`npm run test:e2e:horizon`).
+- **Ops:** Replace Forge `queue:work` daemons with a single `php artisan horizon` daemon; deploy script uses `horizon:terminate` after `$ACTIVATE_RELEASE()` instead of `queue:restart`. Keep `pulse:check`, Nightwatch, and Reverb as separate processes.
+- Docs: [Laravel Forge — Horizon](/deployment/laravel-forge#15-daemons-queue--reverb), [Installation — monitoring](/getting-started/installation#monitoring), [Central API](/api/central-v1).
+
 ## EloSync Mobile — EAS development builds (2026-08-26)
 
 - **SaaS-Mobile:** `expo-dev-client`, `eas.json` profiles (`development`, `development-simulator`, `preview`, `production`), bundle ids `com.diligentcreators.elosync`, location/secure-store config plugins, npm scripts for EAS builds and `start:dev-client`. Replaces App Store Expo Go for SDK 57 device testing.

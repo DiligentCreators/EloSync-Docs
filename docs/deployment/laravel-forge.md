@@ -151,13 +151,16 @@ $FORGE_COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autol
 $FORGE_PHP artisan storage:link --force || true
 $FORGE_PHP artisan migrate --force
 $FORGE_PHP artisan optimize
-$FORGE_PHP artisan queue:restart
 $FORGE_PHP artisan reverb:restart || true
 
 $ACTIVATE_RELEASE()
+
+$FORGE_PHP artisan horizon:terminate
 ```
 
 **Do not** add `php artisan db:seed`, `migrate:fresh`, or `local:seed-demo`.
+
+After Horizon is enabled, **remove** Forge `queue:work` daemons and run a single **`php artisan horizon`** daemon instead. Do **not** run both — they compete for the same Redis queues.
 
 After first Multi-Provider Email release on an older DB, run once (SSH or one-off):
 
@@ -169,33 +172,40 @@ php artisan email:migrate-tenant-mail-modes
 
 Forge → Site → **Scheduler** → enable (runs `schedule:run` every minute). Confirm jobs from the [Production Runbook](./platform-production-runbook) appear in `routes/console.php` / schedule definition.
 
-### 1.5 Daemons (queue + Reverb)
+### 1.5 Daemons (Horizon, Pulse, Reverb)
 
 Forge → Server → **Daemons** (or site Daemons). Use the site path Forge shows (example: `/home/forge/api.example.com`).
 
-**Queue worker (notifications / default)**
+**Horizon (Redis queue workers — replaces all `queue:work` daemons)**
 
 | Field | Value |
 |-------|--------|
-| Command | `php artisan queue:work redis --queue=automations,whatsapp-inbound,whatsapp-outbound,webhooks,emails,default --sleep=1 --tries=3 --timeout=90 --max-time=3600` |
+| Command | `php artisan horizon` |
 | User | `forge` |
 | Directory | `/home/forge/api.example.com/current` **or** `/home/forge/api.example.com` (match your zero-downtime layout) |
-| Processes | `2` (scale with load) |
+| Processes | `1` (Horizon spawns its own worker children) |
 
-Include `whatsapp-inbound` and `whatsapp-outbound` when the WhatsApp Cloud module is enabled ([WhatsApp Cloud deployment](./whatsapp-cloud)).
+Worker queues and process limits are defined in `config/horizon.php`:
 
-**Queue worker (personal Email module — IMAP sync + send)**
+- **`supervisor-general`** — `automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default` (production max **3** processes, 90s timeout)
+- **`supervisor-email-sync`** — `email-sync` only (production max **1** process, 300s timeout)
+
+Include `whatsapp-inbound` and `whatsapp-outbound` when the WhatsApp Cloud module is enabled ([WhatsApp Cloud deployment](./whatsapp-cloud)). On small servers (for example 2 GB RAM), keep `maxProcesses` conservative before scaling up.
+
+**Delete** legacy Forge daemons that run `php artisan queue:work redis --queue=...` once Horizon is live.
+
+**Laravel Pulse (`pulse:check`)**
 
 | Field | Value |
 |-------|--------|
-| Command | `php artisan queue:work redis --queue=email-sync --sleep=1 --tries=3 --timeout=300 --max-time=3600` |
+| Command | `php artisan pulse:check` |
 | User | `forge` |
 | Directory | Same as API release root |
 | Processes | `1` |
 
-Requires PHP `ext-imap` on the server. Details: [Email deployment](./email#queue-worker-email-sync).
+Required for the Pulse **Servers** card. Does not replace Horizon.
 
-Prefer Forge’s “directory = current release” pattern so deploys + `queue:restart` pick up new code. If Daemons point at a fixed path, ensure it is the active release symlink.
+**Nightwatch** — keep your existing `nightwatch:agent` (or `nightwatch:run`) daemon if enabled.
 
 **Reverb**
 
@@ -211,6 +221,10 @@ Enable Forge **Laravel Reverb** / WebSocket proxy for the API site when availabl
 - Public `wss://api.example.com` (or dedicated `ws.` host) matches SPA `VITE_REVERB_*`
 - `REVERB_ALLOWED_ORIGINS` is exactly the SPA origin
 - App secret never appears in SPA env
+
+Requires PHP `ext-imap` on the server for the Email module. Details: [Email deployment](./email#queue-worker-email-sync).
+
+Prefer Forge’s “directory = current release” pattern so deploys + `horizon:terminate` pick up new code. If Daemons point at a fixed path, ensure it is the active release symlink. Supervisor `stopwaitsecs` for Horizon must exceed the longest job timeout (**300s** for `email-sync`).
 
 Supervisor examples and troubleshooting: [Notification System](./notifications).
 
@@ -432,8 +446,9 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 
 ### Processes
 
-- [ ] API scheduler enabled
-- [ ] Queue daemon running (`emails,default`) — required for mail **and** Web Push notification jobs
+- [ ] API scheduler enabled (includes `horizon:snapshot` every five minutes when Horizon is installed)
+- [ ] Horizon daemon running (`php artisan horizon`) — replaces all `queue:work` daemons
+- [ ] Pulse daemon running (`php artisan pulse:check`) when Pulse Servers card is used
 - [ ] Reverb daemon + Nginx WebSocket proxy
 - [ ] Redis up; `CACHE_STORE` / `QUEUE_CONNECTION` = `redis`
 - [ ] `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` set (stable keys; `mailto:`/`https:` subject)
@@ -441,7 +456,7 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 
 ### Deploy paths
 
-- [ ] API deploys from `main` with migrate + optimize + queue/reverb restart
+- [ ] API deploys from `main` with migrate + optimize + `horizon:terminate` + reverb restart
 - [ ] SPA deploys from `build-artifacts` with `config.js` generation
 - [ ] Docs deploys from `build-artifacts` with activate-only script
 - [ ] Marketing deploys from `build-artifacts` with activate-only script

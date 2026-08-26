@@ -29,6 +29,7 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 | POST | `/me/logout` | Revokes tokens |
 | GET | `/dashboard` | Platform stats — permission `dashboard.view`; see [Dashboard payload](#dashboard-payload) |
 | GET | `/pulse/enter` | **Role-only:** `superadmin`, `developer`, or `tester`. Returns `{ url }` — a signed web URL that opens Laravel Pulse (`/pulse`) on the central domain. Not a Spatie permission. Requires verified email (`verified` middleware). |
+| GET | `/horizon/enter` | **Role-only:** `superadmin`, `developer`, or `tester`. Returns `{ url }` — a signed web URL that opens Laravel Horizon (`/horizon`) on the central domain. Not a Spatie permission. Requires verified email (`verified` middleware). |
 
 ## Platform
 
