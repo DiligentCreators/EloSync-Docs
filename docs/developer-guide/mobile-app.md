@@ -319,6 +319,21 @@ Issue credits against customer invoices with draft-only edit, issue, apply, and 
 
 Tenant API reference: [Tenant API — Credit Notes](/api/tenant-v1-credit-notes).
 
+### Estimates (`module:estimates`)
+
+Pre-sale cost estimates with draft-only edit, send, accept, reject, and convert to invoice (email and PDF remain web-only on mobile v1). Requires **Invoices** module entitlement for convert.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/estimates.ts` — `GET/POST /estimates`, `GET/PUT/DELETE /estimates/{id}`, `POST /estimates/{id}/send`, `POST /estimates/{id}/accept`, `POST /estimates/{id}/status`, `POST /estimates/{id}/convert` |
+| Types | `types/estimates.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/estimates/` — `index` (list + search), `new`, `[id]/index` (view + send/accept/reject/convert), `[id]/edit` (draft only) |
+| Shared UI | `components/forms/EstimateLinkPickers.tsx` — optional contact, company, quotation, and opportunity links |
+| Nav | `config/modules.ts` — `permission: estimates.view`, tab `/(app)/(tabs)/estimates` (label **Ests**) |
+| Permissions | `estimates.view`, `estimates.create`, `estimates.update`, `estimates.delete`, `estimates.send`, `estimates.accept`, `estimates.convert` |
+
+Tenant API reference: [Tenant API — Estimates](/api/tenant-v1-estimates).
+
 ## Related
 
 - [Tenant API index](/api/index)

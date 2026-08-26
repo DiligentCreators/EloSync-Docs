@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Estimates module (2026-08-26)
+
+- **SaaS-Mobile:** **Estimates** list, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated). API client `lib/api/estimates.ts` (`/estimates` CRUD + `send`/`accept`/`status`/`convert`). Routes under `app/(app)/(tabs)/estimates/`; `EstimateLinkPickers` for optional contact, company, quotation, and opportunity links; optional line item on create; email and PDF deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Credit Notes module (2026-08-26)
 
 - **SaaS-Mobile:** **Credit Notes** list, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated). API client `lib/api/credit-notes.ts` (`/credit-notes` CRUD + `issue`/`apply`/`void`). Routes under `app/(app)/(tabs)/credit-notes/`; required unpaid-invoice picker on create; optional line item; email and PDF deferred on mobile v1.
