@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Leave Management module (2026-08-27)
+
+- **SaaS-Mobile:** **Leave Management** leave requests list, search, status filter, create, view, edit (draft), delete, submit, approve, reject, cancel, self-service for linked employees, and read-only balance summary on view (permission-gated). API clients `lib/api/leave-requests.ts`, `lib/api/leave-types.ts`, `lib/api/leave-balances.ts`. Routes under `app/(app)/(tabs)/leave-management/`. Leave type CRUD, balance administration, trash/restore, and salary-deduction overrides remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Leave Management delivery.
+
 ## EloSync Mobile — Attendance module (2026-08-27)
 
 - **SaaS-Mobile:** **Attendance** daily records list, search, status filter, create, view, edit, delete, self check-in/check-out, and manager employee picker (permission-gated). API client `lib/api/attendance-records.ts` (`/attendance-records`). Routes under `app/(app)/(tabs)/attendance/`. KPI stats, date-range filters, trash/restore, and geolocation remain web-only on mobile v1.
