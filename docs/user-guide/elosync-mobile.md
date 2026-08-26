@@ -49,6 +49,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **WhatsApp Cloud** | Inbox, search, read thread, open chat, send text or approved templates (permission-gated); WA tab |
 | **Automation** | Workflow list, search, view, activate/deactivate, run now, delete, run history and logs (permission-gated); Auto tab |
 | **Analytics** | KPI overview, preset periods, CRM/Sales/Billing/Purchasing/People reports with metrics and rows (permission-gated); Stats tab |
+| **Financial reports** | Trial balance, P&L, balance sheet, aged receivables with date filters (permission-gated); Fin tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -94,4 +95,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [WhatsApp Cloud user guide](/user-guide/whatsapp-cloud)
 - [Automation user guide](/user-guide/automation-overview)
 - [Analytics user guide](/user-guide/analytics-overview)
+- [Financial reports user guide](/user-guide/financial-reports-overview)
 - [Tenant application guide](/user-guide/tenant-application)
