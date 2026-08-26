@@ -484,6 +484,113 @@ Record links, category CRUD, trash filters, restore/force delete, bulk delete, a
 
 Tenant API reference: [Tenant API — Documents](/api/tenant-v1-documents).
 
+### Help desk (`module:help-desk`)
+
+Support tickets with subject, description, priority, category, due date, notes, close/reopen, and status transitions. Assignee scoping matches web when the actor lacks `help-desk.assign`.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/help-desk.ts` — `GET/POST /help-desk`, `GET/PUT/DELETE /help-desk/{id}`, `POST .../close`, `POST .../reopen`, `POST .../status`, `POST .../notes` |
+| Categories | `lib/api/help-desk-categories.ts` — read-only list for create/edit pickers |
+| Types | `types/help-desk.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/help-desk-labels.ts` — status and priority display labels |
+| Routes | `app/(app)/(tabs)/help-desk/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: help-desk.view`, tab `/(app)/(tabs)/help-desk` (label **Tickets**) |
+| Permissions | `help-desk.view`, `help-desk.create`, `help-desk.update`, `help-desk.delete`, `help-desk.close`, `help-desk.reopen` |
+
+Attachments, assign, contact/company/KB links, category CRUD, timeline, stats, and trash/restore remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Help desk](/api/tenant-v1-help-desk).
+
+### Knowledge base (`module:knowledge-base`)
+
+Help articles with title, excerpt, plain-text body (stored as simple HTML), category, and draft/published/archived status. View-only actors see published articles from the API; editors can manage drafts and lifecycle.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/knowledge-base.ts` — `GET/POST /knowledge-base`, `GET/PUT/DELETE /knowledge-base/{id}` |
+| Categories | `lib/api/knowledge-base-categories.ts` — read-only list for create/edit pickers |
+| Types | `types/knowledge-base.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/knowledge-base-labels.ts` — status display labels |
+| HTML helpers | `lib/knowledge-base-html.ts` — plain text ↔ simple HTML for `body` |
+| Routes | `app/(app)/(tabs)/knowledge-base/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: knowledge-base.view`, tab `/(app)/(tabs)/knowledge-base` (label **KB**) |
+| Permissions | `knowledge-base.view`, `knowledge-base.create`, `knowledge-base.update`, `knowledge-base.delete` |
+
+Rich TipTap editor, attachments, notes, timeline, category CRUD, slug field, and trash/restore remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Knowledge base](/api/tenant-v1-knowledge-base).
+
+### Team chat (`module:team-chat`)
+
+Workspace channels and direct messages. List conversations, open a thread, join channels you can access, start DM or group DM (requires `users.list` for the people picker), send text messages when `team-chat.messages.create` is granted, and mark conversations read on open.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/team-chat.ts` — `GET/POST /conversations`, messages, join, read |
+| Users picker | `lib/api/users.ts` — `GET /users` (`per_page: 100`) for new DM/group flows |
+| Types | `types/team-chat.ts` (re-exported from `types/api.ts`) |
+| Helpers | `lib/team-chat-utils.ts` — conversation titles and message sort |
+| Routes | `app/(app)/(tabs)/team-chat/` — `index`, `new`, `[id]/index` |
+| Nav | `config/modules.ts` — `permission: team-chat.view`, tab `/(app)/(tabs)/team-chat` (label **Chat**) |
+| Permissions | `team-chat.view`, `team-chat.messages.create` (+ channel/message manage permissions on web) |
+
+Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, member management, and global message search remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Team chat](/api/tenant-v1-team-chat).
+
+### WhatsApp Cloud (`module:whatsapp-cloud`)
+
+Customer WhatsApp inbox when the workspace connection is active. Browse conversations, read threads, mark read, open chats by phone number (`whatsapp-cloud.send`), send free-form text inside the customer service window, and send approved templates when the window is closed.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/whatsapp-cloud.ts` — integration status, conversations, messages, templates |
+| Types | `types/whatsapp-cloud.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/whatsapp-cloud-labels.ts` — display names and message body helpers |
+| Routes | `app/(app)/(tabs)/whatsapp-cloud/` — `index`, `new`, `[id]/index` |
+| Nav | `config/modules.ts` — `permission: whatsapp-cloud.view`, tab `/(app)/(tabs)/whatsapp-cloud` (label **WA**) |
+| Permissions | `whatsapp-cloud.view`, `whatsapp-cloud.send` |
+
+OAuth connect, media send/download, lead link/assign, template sync, integration settings, and realtime inbox updates remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — WhatsApp Cloud](/api/tenant-v1-whatsapp-cloud).
+
+### Automation (`module:automation`)
+
+Monitor workspace workflows, toggle active state, trigger manual runs (`automation.run`), and inspect execution history with step logs.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/automation.ts` — workflows CRUD subset, activate/deactivate, run, runs list/detail |
+| Types | `types/automation.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/automation-labels.ts` — status and run title helpers |
+| Routes | `app/(app)/(tabs)/automation/` — `index`, `[id]/index`, `runs/index`, `runs/[id]/index` |
+| Nav | `config/modules.ts` — `permission: automation.view`, tab `/(app)/(tabs)/automation` (label **Auto**) |
+| Permissions | `automation.view`, `automation.update`, `automation.delete`, `automation.run` |
+
+Visual builder, create/edit workflows, templates, and trigger/action catalog browsing remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Automation](/api/tenant-v1-automation).
+
+### Analytics (`module:analytics`)
+
+Executive KPI overview and domain reports when the workspace has entitled source modules. Preset period filters (this month through last year); open CRM, Sales, Billing, Purchasing, or People for metrics plus row lists.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/analytics.ts` — overview and domain reports |
+| Types | `types/analytics.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/analytics-labels.ts` — area titles and metric formatting |
+| Periods | `lib/dashboard-period.ts` + `components/analytics/AnalyticsPeriodField.tsx` |
+| Routes | `app/(app)/(tabs)/analytics/` — `index`, `[area]/index` |
+| Nav | `config/modules.ts` — `permission: analytics.view`, tab `/(app)/(tabs)/analytics` (label **Stats**) |
+| Permissions | `analytics.view` |
+
+Charts, CSV export, and custom date ranges remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Analytics](/api/tenant-v1-analytics).
+
 ## Related
 
 - [Tenant API index](/api/index)

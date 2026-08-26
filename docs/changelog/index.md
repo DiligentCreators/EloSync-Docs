@@ -1,5 +1,35 @@
 ﻿# Changelog
 
+## EloSync Mobile — Analytics module (2026-08-27)
+
+- **SaaS-Mobile:** **Analytics** KPI overview with preset periods, domain report links (CRM, Sales, Billing, Purchasing, People), metrics, and tabular rows (permission-gated). API client `lib/api/analytics.ts` (`/analytics/overview`, `/analytics/reports/{area}`). Routes under `app/(app)/(tabs)/analytics/`. Charts, CSV export, and custom date ranges remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Analytics delivery.
+
+## EloSync Mobile — Automation module (2026-08-27)
+
+- **SaaS-Mobile:** **Automation** workflow list, search, view, activate/deactivate, manual run, delete (permission-gated), run history list, and run detail with execution logs. API client `lib/api/automation.ts` (`/automation/workflows`, `/automation/runs`). Routes under `app/(app)/(tabs)/automation/`. Visual builder, create/edit workflows, templates, and catalog browsing remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Automation delivery.
+
+## EloSync Mobile — WhatsApp Cloud module (2026-08-27)
+
+- **SaaS-Mobile:** **WhatsApp Cloud** inbox list, search, thread read, mark read, open chat by phone, send text inside the 24h service window, and send approved templates outside the window (permission-gated). API client `lib/api/whatsapp-cloud.ts` (`/whatsapp/integrations`, `/whatsapp/conversations`, messages, templates). Routes under `app/(app)/(tabs)/whatsapp-cloud/`. OAuth connect, media upload/download, lead linking, assignee changes, template sync, and integration settings remain web-only on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
+## EloSync Mobile — Team Chat module (2026-08-27)
+
+- **SaaS-Mobile:** **Team Chat** conversation list, search, thread read, join public channels, start DM/group DM, send text messages, and mark read (permission-gated). API clients `lib/api/team-chat.ts` and `lib/api/users.ts` (`/conversations`, `/users`). Routes under `app/(app)/(tabs)/team-chat/`. Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, and global message search deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
+## EloSync Mobile — Help Desk module (2026-08-26)
+
+- **SaaS-Mobile:** **Help Desk** list, search, create, view, edit, delete, close, reopen, add text notes, and status change on edit (permission-gated). API clients `lib/api/help-desk.ts` and `lib/api/help-desk-categories.ts` (`/help-desk`, `/help-desk-categories`). Routes under `app/(app)/(tabs)/help-desk/`; assignee scoping matches web. Attachments, assign, contact/company/KB links, category CRUD, timeline, and trash/restore deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
+## EloSync Mobile — Knowledge Base module (2026-08-26)
+
+- **SaaS-Mobile:** **Knowledge Base** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/knowledge-base.ts` and `lib/api/knowledge-base-categories.ts` (`/knowledge-base`, `/knowledge-base-categories`). Routes under `app/(app)/(tabs)/knowledge-base/`; plain-text body converted to simple HTML for TipTap storage. Rich editor, attachments, notes, timeline, category CRUD, and trash/restore deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Documents module (2026-08-26)
 
 - **SaaS-Mobile:** **Documents** list, search, upload, view, edit metadata, delete, and download/share (permission-gated). API clients `lib/api/documents.ts` and `lib/api/document-categories.ts` (`/documents`, `/document-categories`). Routes under `app/(app)/(tabs)/documents/`; file picker upload via `expo-document-picker`; authenticated download via `expo-file-system` + `expo-sharing`. Record links, category CRUD, trash/restore, bulk delete, and file replace deferred on mobile v1.
