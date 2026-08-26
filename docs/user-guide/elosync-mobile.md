@@ -26,6 +26,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **ToDos** | List, search, create, view, edit, delete, mark complete (permission-gated); ToDos tab |
 | **Quotations** | List, search, create, view, edit, delete, send, accept (permission-gated); Quotes tab |
 | **Calendar** | List (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated); Calendar tab |
+| **Meetings** | List (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated); Meetings tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -48,4 +49,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [ToDos user guide](/user-guide/todos-overview)
 - [Quotations user guide](/user-guide/quotations-overview)
 - [Calendar user guide](/user-guide/calendar-overview)
+- [Meetings user guide](/user-guide/meetings-overview)
 - [Tenant application guide](/user-guide/tenant-application)
