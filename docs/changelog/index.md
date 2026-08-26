@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Meetings module (2026-08-26)
+
+- **SaaS-Mobile:** **Meetings** list (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated). API client `lib/api/meetings.ts` (`/meetings` CRUD + `cancel`/`complete`). Routes under `app/(app)/(tabs)/meetings/`; Meetings tab; manual-link meetings with optional guest + reminder on mobile.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Calendar module (2026-08-26)
 
 - **SaaS-Mobile:** **Calendar** list (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated). API client `lib/api/calendar.ts` (`/calendar/events` CRUD + `cancel`, `/calendar/upcoming`). Routes under `app/(app)/(tabs)/calendar/`; Calendar tab in `config/modules.ts`.
