@@ -484,6 +484,24 @@ Record links, category CRUD, trash filters, restore/force delete, bulk delete, a
 
 Tenant API reference: [Tenant API — Documents](/api/tenant-v1-documents).
 
+### Help desk (`module:help-desk`)
+
+Support tickets with subject, description, priority, category, due date, notes, close/reopen, and status transitions. Assignee scoping matches web when the actor lacks `help-desk.assign`.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/help-desk.ts` — `GET/POST /help-desk`, `GET/PUT/DELETE /help-desk/{id}`, `POST .../close`, `POST .../reopen`, `POST .../status`, `POST .../notes` |
+| Categories | `lib/api/help-desk-categories.ts` — read-only list for create/edit pickers |
+| Types | `types/help-desk.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/help-desk-labels.ts` — status and priority display labels |
+| Routes | `app/(app)/(tabs)/help-desk/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: help-desk.view`, tab `/(app)/(tabs)/help-desk` (label **Tickets**) |
+| Permissions | `help-desk.view`, `help-desk.create`, `help-desk.update`, `help-desk.delete`, `help-desk.close`, `help-desk.reopen` |
+
+Attachments, assign, contact/company/KB links, category CRUD, timeline, stats, and trash/restore remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Help desk](/api/tenant-v1-help-desk).
+
 ## Related
 
 - [Tenant API index](/api/index)

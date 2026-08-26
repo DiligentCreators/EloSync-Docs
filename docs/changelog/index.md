@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Help Desk module (2026-08-26)
+
+- **SaaS-Mobile:** **Help Desk** list, search, create, view, edit, delete, close, reopen, add text notes, and status change on edit (permission-gated). API clients `lib/api/help-desk.ts` and `lib/api/help-desk-categories.ts` (`/help-desk`, `/help-desk-categories`). Routes under `app/(app)/(tabs)/help-desk/`; assignee scoping matches web. Attachments, assign, contact/company/KB links, category CRUD, timeline, and trash/restore deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Documents module (2026-08-26)
 
 - **SaaS-Mobile:** **Documents** list, search, upload, view, edit metadata, delete, and download/share (permission-gated). API clients `lib/api/documents.ts` and `lib/api/document-categories.ts` (`/documents`, `/document-categories`). Routes under `app/(app)/(tabs)/documents/`; file picker upload via `expo-document-picker`; authenticated download via `expo-file-system` + `expo-sharing`. Record links, category CRUD, trash/restore, bulk delete, and file replace deferred on mobile v1.
