@@ -378,6 +378,20 @@ Warehouse location CRUD with active and default toggles. Notes and timeline rema
 
 Tenant API reference: [Tenant API — Warehouses](/api/tenant-v1-warehouses).
 
+### Inventory (`module:inventory`)
+
+Stock level browsing, quantity adjustments, and warehouse transfers with draft-only transfer edit. Movement history and multi-line transfer UI remain web-only on mobile v1. Requires **Products** (stock-tracked SKUs) and **Warehouses** for transfers.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/inventory.ts` — `GET /inventory/stock`, `POST /inventory/stock/adjust`, transfer CRUD + `dispatch`/`complete`/`cancel` |
+| Types | `types/inventory.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/inventory/` — `index` (stock list), `adjust`, `transfers/*` |
+| Nav | `config/modules.ts` — `permission: inventory.view`, tab `/(app)/(tabs)/inventory` (label **Stock**) |
+| Permissions | `inventory.view`, `inventory.adjust`, `inventory.transfer`, `inventory.delete` |
+
+Tenant API reference: [Tenant API — Inventory](/api/tenant-v1-inventory).
+
 ## Related
 
 - [Tenant API index](/api/index)
