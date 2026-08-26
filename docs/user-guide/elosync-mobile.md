@@ -35,6 +35,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); Ests tab |
 | **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); Spend tab |
 | **Products** | List, search, create, view, edit, delete (permission-gated); Products tab |
+| **Warehouses** | List, search, create, view, edit, delete (permission-gated); WH tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -66,4 +67,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Estimates user guide](/user-guide/estimates-overview)
 - [Expenses user guide](/user-guide/expenses-overview)
 - [Products user guide](/user-guide/products-overview)
+- [Warehouses user guide](/user-guide/warehouses-overview)
 - [Tenant application guide](/user-guide/tenant-application)

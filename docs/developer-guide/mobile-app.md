@@ -364,6 +364,20 @@ Product catalogue CRUD with category picker, pricing fields, and stock-tracking 
 
 Tenant API reference: [Tenant API — Products](/api/tenant-v1-products).
 
+### Warehouses (`module:warehouses`)
+
+Warehouse location CRUD with active and default toggles. Notes and timeline remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/warehouses.ts` — `GET/POST /warehouses`, `GET/PUT/DELETE /warehouses/{id}` |
+| Types | `types/warehouses.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/warehouses/` — `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: warehouses.view`, tab `/(app)/(tabs)/warehouses` (label **WH**) |
+| Permissions | `warehouses.view`, `warehouses.create`, `warehouses.update`, `warehouses.delete` |
+
+Tenant API reference: [Tenant API — Warehouses](/api/tenant-v1-warehouses).
+
 ## Related
 
 - [Tenant API index](/api/index)
