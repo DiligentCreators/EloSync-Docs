@@ -503,6 +503,24 @@ Rich TipTap editor, attachments, notes, timeline, category CRUD, slug field, and
 
 Tenant API reference: [Tenant API — Knowledge base](/api/tenant-v1-knowledge-base).
 
+### Team chat (`module:team-chat`)
+
+Workspace channels and direct messages. List conversations, open a thread, join channels you can access, start DM or group DM (requires `users.list` for the people picker), send text messages when `team-chat.messages.create` is granted, and mark conversations read on open.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/team-chat.ts` — `GET/POST /conversations`, messages, join, read |
+| Users picker | `lib/api/users.ts` — `GET /users` (`per_page: 100`) for new DM/group flows |
+| Types | `types/team-chat.ts` (re-exported from `types/api.ts`) |
+| Helpers | `lib/team-chat-utils.ts` — conversation titles and message sort |
+| Routes | `app/(app)/(tabs)/team-chat/` — `index`, `new`, `[id]/index` |
+| Nav | `config/modules.ts` — `permission: team-chat.view`, tab `/(app)/(tabs)/team-chat` (label **Chat**) |
+| Permissions | `team-chat.view`, `team-chat.messages.create` (+ channel/message manage permissions on web) |
+
+Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, member management, and global message search remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Team chat](/api/tenant-v1-team-chat).
+
 ## Related
 
 - [Tenant API index](/api/index)

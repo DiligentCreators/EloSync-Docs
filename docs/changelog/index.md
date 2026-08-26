@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Team Chat module (2026-08-27)
+
+- **SaaS-Mobile:** **Team Chat** conversation list, search, thread read, join public channels, start DM/group DM, send text messages, and mark read (permission-gated). API clients `lib/api/team-chat.ts` and `lib/api/users.ts` (`/conversations`, `/users`). Routes under `app/(app)/(tabs)/team-chat/`. Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, and global message search deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Knowledge Base module (2026-08-26)
 
 - **SaaS-Mobile:** **Knowledge Base** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/knowledge-base.ts` and `lib/api/knowledge-base-categories.ts` (`/knowledge-base`, `/knowledge-base-categories`). Routes under `app/(app)/(tabs)/knowledge-base/`; plain-text body converted to simple HTML for TipTap storage. Rich editor, attachments, notes, timeline, category CRUD, and trash/restore deferred on mobile v1.
