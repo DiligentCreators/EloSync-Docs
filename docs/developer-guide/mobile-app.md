@@ -406,6 +406,21 @@ Reusable WhatsApp message templates with context picker on create/edit. Placehol
 
 Tenant API reference: [Tenant API — Communication Templates](/api/tenant-v1-communication-templates).
 
+### Email (`module:email`)
+
+Read synced personal mailboxes: pick account and folder, search messages, open detail, and mark read when permitted. Compose, IMAP account setup, labels, attachment download, templates, and signatures remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/email.ts` — `GET /email/accounts`, `GET /email/accounts/{uuid}/folders`, `GET /email/folders/{uuid}/messages`, `GET /email/messages/{uuid}`, `PUT /email/messages/{uuid}` (mark read) |
+| Types | `types/email.ts` (re-exported from `types/api.ts`) |
+| Helpers | `lib/email-format.ts` — address formatting and plain-text body preview |
+| Routes | `app/(app)/(tabs)/email/` — `index` (mailbox + folder list), `[id]/index` (message view) |
+| Nav | `config/modules.ts` — `permission: email.view`, tab `/(app)/(tabs)/email` (label **Mail**) |
+| Permissions | `email.view`, `email.update` (mark read) |
+
+Tenant API reference: [Tenant API — Email](/api/tenant-v1-email).
+
 ## Related
 
 - [Tenant API index](/api/index)
