@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Communication Templates module (2026-08-26)
+
+- **SaaS-Mobile:** **Communication Templates** list, search, create, view, edit, delete (permission-gated). API client `lib/api/communication-templates.ts` (`/communication-templates` CRUD + `/meta/contexts` picker). Routes under `app/(app)/(tabs)/communication-templates/`; WhatsApp channel only on mobile v1; placeholder picker, preview, and render/use deferred.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Inventory module (2026-08-26)
 
 - **SaaS-Mobile:** **Inventory** stock level list and search, stock adjust (`POST /inventory/stock/adjust`), transfer list/create/view/edit (draft)/dispatch/complete/cancel/delete (permission-gated). API client `lib/api/inventory.ts`. Routes under `app/(app)/(tabs)/inventory/`; product and warehouse pickers when Products/Warehouses are entitled; single-line transfers on mobile v1; movement history deferred.

@@ -392,6 +392,20 @@ Stock level browsing, quantity adjustments, and warehouse transfers with draft-o
 
 Tenant API reference: [Tenant API — Inventory](/api/tenant-v1-inventory).
 
+### Communication Templates (`module:communication-templates`)
+
+Reusable WhatsApp message templates with context picker on create/edit. Placeholder picker, preview, render, and use-from-record flows remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/communication-templates.ts` — `GET/POST /communication-templates`, `GET/PUT/DELETE /communication-templates/{id}`, `GET /communication-templates/meta/contexts` |
+| Types | `types/communication-templates.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/communication-templates/` — `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: communication-templates.view`, tab `/(app)/(tabs)/communication-templates` (label **Tmpl**) |
+| Permissions | `communication-templates.view`, `communication-templates.create`, `communication-templates.update`, `communication-templates.delete` |
+
+Tenant API reference: [Tenant API — Communication Templates](/api/tenant-v1-communication-templates).
+
 ## Related
 
 - [Tenant API index](/api/index)

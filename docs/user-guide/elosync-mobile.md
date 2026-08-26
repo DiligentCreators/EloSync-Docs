@@ -37,6 +37,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Products** | List, search, create, view, edit, delete (permission-gated); Products tab |
 | **Warehouses** | List, search, create, view, edit, delete (permission-gated); WH tab |
 | **Inventory** | Stock levels, adjust, transfers (create/view/edit draft/dispatch/complete/cancel/delete); Stock tab |
+| **Communication templates** | List, search, create, view, edit, delete (permission-gated); Tmpl tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -70,4 +71,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Products user guide](/user-guide/products-overview)
 - [Warehouses user guide](/user-guide/warehouses-overview)
 - [Inventory user guide](/user-guide/inventory-overview)
+- [Communication templates user guide](/user-guide/communication-templates)
 - [Tenant application guide](/user-guide/tenant-application)
