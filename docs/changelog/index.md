@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Assets module (2026-08-26)
+
+- **SaaS-Mobile:** **Assets** list, search, create, view, edit, delete (permission-gated). API client `lib/api/assets.ts` (`/assets` CRUD). Routes under `app/(app)/(tabs)/assets/`; status, category, purchase, and warranty fields on create/edit; vendor, employee, assign, notes, and timeline deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Announcements module (2026-08-26)
 
 - **SaaS-Mobile:** **Announcements** inbox for all entitled users; managers with `announcements.update` get admin list/search; create, view, edit, delete, and mark-read (permission-gated). API client `lib/api/announcements.ts`. Routes under `app/(app)/(tabs)/announcements/`; read-tracking list and restore/force-delete deferred on mobile v1.

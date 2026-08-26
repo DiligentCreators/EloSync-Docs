@@ -435,6 +435,21 @@ Workspace announcements with read tracking. Every entitled member sees the inbox
 
 Tenant API reference: [Tenant API — Announcements](/api/tenant-v1-announcements).
 
+### Assets (`module:assets`)
+
+Company equipment, vehicles, and licences with status, category, purchase, and warranty fields. Assignee, vendor, and employee links display on view when populated by the API; pickers and assign action remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/assets.ts` — `GET/POST /assets`, `GET/PUT/DELETE /assets/{id}` |
+| Types | `types/assets.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/asset-labels.ts` — status and category display labels |
+| Routes | `app/(app)/(tabs)/assets/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: assets.view`, tab `/(app)/(tabs)/assets` |
+| Permissions | `assets.view`, `assets.create`, `assets.update`, `assets.delete` |
+
+Tenant API reference: [Tenant API — Assets](/api/tenant-v1-assets).
+
 ## Related
 
 - [Tenant API index](/api/index)
