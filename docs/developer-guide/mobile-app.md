@@ -289,6 +289,21 @@ Customer billing documents with draft-only edit, send, and void (recurring serie
 
 Tenant API reference: [Tenant API â€” Invoices](/api/tenant-v1-invoices).
 
+### Payments (`module:payments`)
+
+Customer payment recording with draft-only edit, post, and void (email receipt, PDF, deposit account, and withholding remain web-only on mobile v1). Requires **Invoices** module entitlement.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/payments.ts` — `GET/POST /payments`, `GET/PUT/DELETE /payments/{id}`, `POST /payments/{id}/post`, `POST /payments/{id}/void` |
+| Types | `types/payments.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/payments/` — `index` (list + search), `new`, `[id]/index` (view + post/void), `[id]/edit` (draft only) |
+| Shared UI | `components/forms/PaymentLinkPickers.tsx` — optional contact and company links; unpaid invoice picker on create/edit when Invoices is entitled |
+| Nav | `config/modules.ts` — `permission: payments.view`, tab `/(app)/(tabs)/payments` (label **Payments**) |
+| Permissions | `payments.view`, `payments.create`, `payments.update`, `payments.delete`, `payments.post`, `payments.void` |
+
+Tenant API reference: [Tenant API — Payments](/api/tenant-v1-payments).
+
 ## Related
 
 - [Tenant API index](/api/index)

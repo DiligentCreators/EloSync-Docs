@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Payments module (2026-08-26)
+
+- **SaaS-Mobile:** **Payments** list, search, create, view, edit (draft only), post, void, delete (permission-gated). API client `lib/api/payments.ts` (`/payments` CRUD + `post`/`void`). Routes under `app/(app)/(tabs)/payments/`; `PaymentLinkPickers` for optional contact and company; optional single-invoice allocation when Invoices is entitled; email receipt, PDF, deposit account, and withholding deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Invoices module (2026-08-26)
 
 - **SaaS-Mobile:** **Invoices** list, search, create, view, edit (draft only), send, void, delete (permission-gated). API client `lib/api/invoices.ts` (`/invoices` CRUD + `send`/`void`). Routes under `app/(app)/(tabs)/invoices/`; `InvoiceLinkPickers` for optional contact, company, and quotation; recurring series, email, and PDF deferred on mobile v1.
