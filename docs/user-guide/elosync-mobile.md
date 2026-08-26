@@ -28,6 +28,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Calendar** | List (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated); Calendar tab |
 | **Meetings** | List (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated); Meetings tab |
 | **Projects** | List, search, create, view, edit, status transitions, delete (permission-gated); Projects tab |
+| **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); Contracts tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -52,4 +53,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Calendar user guide](/user-guide/calendar-overview)
 - [Meetings user guide](/user-guide/meetings-overview)
 - [Projects user guide](/user-guide/projects-overview)
+- [Contracts user guide](/user-guide/contracts-overview)
 - [Tenant application guide](/user-guide/tenant-application)
