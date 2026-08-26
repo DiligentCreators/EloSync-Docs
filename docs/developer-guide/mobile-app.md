@@ -641,7 +641,7 @@ Workspace employee directory: browse people records, create and edit employment 
 | Nav | `config/modules.ts` — `permission: employees.view`, tab `/(app)/(tabs)/employees` (label **Staff**) |
 | Permissions | `employees.view`, `employees.create`, `employees.update`, `employees.delete` |
 
-Payroll, department CRUD, performance reports, and trash/restore remain web-only on mobile v1.
+Payroll, department stats/reports, and trash/restore remain web-only on mobile v1.
 
 Tenant API reference: [Tenant API — Employees](/api/tenant-v1-employees).
 
@@ -700,6 +700,24 @@ Payroll profiles per employee and pay run workflow: generate periods from profil
 Pay run line editing, journal debit/credit account picker, trash/restore, and employee self pay stubs remain web-only on mobile v1. Requires **Employees** module entitlement for profile employee picker and deep links.
 
 Tenant API reference: [Tenant API — Payroll](/api/tenant-v1-payroll).
+
+### Departments (`module:departments`)
+
+Organize workspace teams: create departments, assign managers, tag users and employees, and review Leads/Tasks performance for linked members.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/departments.ts` — list, CRUD, performance read |
+| Types | `types/departments.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/department-labels.ts` — status labels and manager gate |
+| Form | `components/forms/DepartmentFormFields.tsx` — shared create/edit fields |
+| Routes | `app/(app)/(tabs)/departments/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: departments.view`, tab `/(app)/(tabs)/departments` (label **Depts**) |
+| Permissions | `departments.view`, `create`, `update`, `delete`, `manage_members`, `assign_manager`, `view_performance` |
+
+Stats dashboard, full performance reports, trash/restore, and dedicated attach/detach member endpoints remain web-only on mobile v1. Employee deep links require **Employees** module entitlement.
+
+Tenant API reference: [Tenant API — Departments](/api/tenant-v1-departments).
 
 ## Related
 
