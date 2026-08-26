@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Calendar module (2026-08-26)
+
+- **SaaS-Mobile:** **Calendar** list (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated). API client `lib/api/calendar.ts` (`/calendar/events` CRUD + `cancel`, `/calendar/upcoming`). Routes under `app/(app)/(tabs)/calendar/`; Calendar tab in `config/modules.ts`.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Quotations module (2026-08-26)
 
 - **SaaS-Mobile:** **Quotations** list, search, create, view, edit, delete, send, accept (permission-gated). API client `lib/api/quotations.ts` (`/quotations` CRUD + `send`/`accept`). Routes under `app/(app)/(tabs)/quotations/`; Quotes tab in `config/modules.ts`; opportunity-linked create with optional line item.
