@@ -591,6 +591,24 @@ Charts, CSV export, and custom date ranges remain web-only on mobile v1.
 
 Tenant API reference: [Tenant API — Analytics](/api/tenant-v1-analytics).
 
+### Financial Reports (`module:financial-reports`)
+
+Posted-journal financial statements: trial balance, profit and loss, balance sheet, and aged receivables. Pick a report, set as-of or from/to dates (`YYYY-MM-DD`), and run on device.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/financial-reports.ts` — trial balance, P&L, balance sheet, aged receivables |
+| Types | `types/financial-reports.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/financial-reports-labels.ts` — report titles and ledger amount formatting |
+| Dates | `lib/datetime.ts` — `todayAppDate()` helper |
+| Routes | `app/(app)/(tabs)/financial-reports/` — `index` |
+| Nav | `config/modules.ts` — `permission: financial-reports.view`, tab `/(app)/(tabs)/financial-reports` (label **Fin**) |
+| Permissions | `financial-reports.view` |
+
+CSV export remains web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Financial reports](/api/tenant-v1-financial-reports).
+
 ## Related
 
 - [Tenant API index](/api/index)
