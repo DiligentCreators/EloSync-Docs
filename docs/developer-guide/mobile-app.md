@@ -573,6 +573,24 @@ Visual builder, create/edit workflows, templates, and trigger/action catalog bro
 
 Tenant API reference: [Tenant API — Automation](/api/tenant-v1-automation).
 
+### Analytics (`module:analytics`)
+
+Executive KPI overview and domain reports when the workspace has entitled source modules. Preset period filters (this month through last year); open CRM, Sales, Billing, Purchasing, or People for metrics plus row lists.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/analytics.ts` — overview and domain reports |
+| Types | `types/analytics.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/analytics-labels.ts` — area titles and metric formatting |
+| Periods | `lib/dashboard-period.ts` + `components/analytics/AnalyticsPeriodField.tsx` |
+| Routes | `app/(app)/(tabs)/analytics/` — `index`, `[area]/index` |
+| Nav | `config/modules.ts` — `permission: analytics.view`, tab `/(app)/(tabs)/analytics` (label **Stats**) |
+| Permissions | `analytics.view` |
+
+Charts, CSV export, and custom date ranges remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Analytics](/api/tenant-v1-analytics).
+
 ## Related
 
 - [Tenant API index](/api/index)

@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Analytics module (2026-08-27)
+
+- **SaaS-Mobile:** **Analytics** KPI overview with preset periods, domain report links (CRM, Sales, Billing, Purchasing, People), metrics, and tabular rows (permission-gated). API client `lib/api/analytics.ts` (`/analytics/overview`, `/analytics/reports/{area}`). Routes under `app/(app)/(tabs)/analytics/`. Charts, CSV export, and custom date ranges remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Analytics delivery.
+
 ## EloSync Mobile — Automation module (2026-08-27)
 
 - **SaaS-Mobile:** **Automation** workflow list, search, view, activate/deactivate, manual run, delete (permission-gated), run history list, and run detail with execution logs. API client `lib/api/automation.ts` (`/automation/workflows`, `/automation/runs`). Routes under `app/(app)/(tabs)/automation/`. Visual builder, create/edit workflows, templates, and catalog browsing remain web-only on mobile v1.
