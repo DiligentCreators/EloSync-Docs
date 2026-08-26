@@ -450,6 +450,21 @@ Company equipment, vehicles, and licences with status, category, purchase, and w
 
 Tenant API reference: [Tenant API — Assets](/api/tenant-v1-assets).
 
+### Short links (`module:short-links`)
+
+Branded short URLs with optional vanity slug, destination URL, expiry, and basic UTM fields. Click analytics and click log remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/short-links.ts` — `GET/POST /short-links`, `GET/PUT/DELETE /short-links/{id}` |
+| Types | `types/short-links.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/short-link-labels.ts` — status display labels |
+| Routes | `app/(app)/(tabs)/short-links/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: short-links.view`, tab `/(app)/(tabs)/short-links` (label **Links**) |
+| Permissions | `short-links.view`, `short-links.create`, `short-links.update`, `short-links.delete` |
+
+Tenant API reference: [Tenant API — Short links](/api/tenant-v1-short-links).
+
 ## Related
 
 - [Tenant API index](/api/index)
