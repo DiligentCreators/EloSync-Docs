@@ -421,6 +421,20 @@ Read synced personal mailboxes: pick account and folder, search messages, open d
 
 Tenant API reference: [Tenant API — Email](/api/tenant-v1-email).
 
+### Announcements (`module:announcements`)
+
+Workspace announcements with read tracking. Every entitled member sees the inbox; users with `announcements.create` / `update` / `delete` manage drafts and publishes. No separate view permission — module entitlement gates the tab.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/announcements.ts` — `GET /announcements/inbox`, admin `GET /announcements`, CRUD, `POST /announcements/{id}/read` |
+| Types | `types/announcements.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/announcements/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — module only (no view permission), tab `/(app)/(tabs)/announcements` (label **News**) |
+| Permissions | `announcements.create`, `announcements.update`, `announcements.delete` |
+
+Tenant API reference: [Tenant API — Announcements](/api/tenant-v1-announcements).
+
 ## Related
 
 - [Tenant API index](/api/index)
