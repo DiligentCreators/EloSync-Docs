@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Expenses module (2026-08-26)
+
+- **SaaS-Mobile:** **Expenses** list, search, create, view, edit (draft only), submit, approve, reject, pay (when Accounting is not installed), cancel, delete (permission-gated). API clients `lib/api/expenses.ts` (`/expenses` CRUD + workflow actions) and `lib/api/expense-categories.ts` (`/expense-categories` picker). Routes under `app/(app)/(tabs)/expenses/`; category picker on create/edit; receipt upload, vendor/PO links, accounting account pickers, notes, and timeline deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Estimates module (2026-08-26)
 
 - **SaaS-Mobile:** **Estimates** list, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated). API client `lib/api/estimates.ts` (`/estimates` CRUD + `send`/`accept`/`status`/`convert`). Routes under `app/(app)/(tabs)/estimates/`; `EstimateLinkPickers` for optional contact, company, quotation, and opportunity links; optional line item on create; email and PDF deferred on mobile v1.

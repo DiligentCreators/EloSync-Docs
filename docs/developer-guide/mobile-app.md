@@ -334,6 +334,21 @@ Pre-sale cost estimates with draft-only edit, send, accept, reject, and convert 
 
 Tenant API reference: [Tenant API — Estimates](/api/tenant-v1-estimates).
 
+### Expenses (`module:expenses`)
+
+Workspace expense claims with draft-only edit, submit, approve, reject, pay (when Accounting is not installed), and cancel. Receipt upload, vendor/PO links, accounting account pickers, notes, and timeline remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/expenses.ts` — `GET/POST /expenses`, `GET/PUT/DELETE /expenses/{id}`, `POST /expenses/{id}/submit`, `approve`, `reject`, `pay`, `cancel` |
+| Categories | `lib/api/expense-categories.ts` — `GET /expense-categories` (picker on create/edit) |
+| Types | `types/expenses.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/expenses/` — `index` (list + search), `new`, `[id]/index` (view + workflow actions), `[id]/edit` (draft only) |
+| Nav | `config/modules.ts` — `permission: expenses.view`, tab `/(app)/(tabs)/expenses` (label **Spend**) |
+| Permissions | `expenses.view`, `expenses.create`, `expenses.update`, `expenses.delete`, `expenses.submit`, `expenses.approve`, `expenses.reject`, `expenses.pay`, `expenses.cancel` |
+
+Tenant API reference: [Tenant API — Expenses](/api/tenant-v1-expenses).
+
 ## Related
 
 - [Tenant API index](/api/index)
