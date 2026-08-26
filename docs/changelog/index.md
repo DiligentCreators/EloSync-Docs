@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Automation module (2026-08-27)
+
+- **SaaS-Mobile:** **Automation** workflow list, search, view, activate/deactivate, manual run, delete (permission-gated), run history list, and run detail with execution logs. API client `lib/api/automation.ts` (`/automation/workflows`, `/automation/runs`). Routes under `app/(app)/(tabs)/automation/`. Visual builder, create/edit workflows, templates, and catalog browsing remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Automation delivery.
+
 ## EloSync Mobile — WhatsApp Cloud module (2026-08-27)
 
 - **SaaS-Mobile:** **WhatsApp Cloud** inbox list, search, thread read, mark read, open chat by phone, send text inside the 24h service window, and send approved templates outside the window (permission-gated). API client `lib/api/whatsapp-cloud.ts` (`/whatsapp/integrations`, `/whatsapp/conversations`, messages, templates). Routes under `app/(app)/(tabs)/whatsapp-cloud/`. OAuth connect, media upload/download, lead linking, assignee changes, template sync, and integration settings remain web-only on mobile v1.

@@ -556,6 +556,23 @@ OAuth connect, media send/download, lead link/assign, template sync, integration
 
 Tenant API reference: [Tenant API — WhatsApp Cloud](/api/tenant-v1-whatsapp-cloud).
 
+### Automation (`module:automation`)
+
+Monitor workspace workflows, toggle active state, trigger manual runs (`automation.run`), and inspect execution history with step logs.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/automation.ts` — workflows CRUD subset, activate/deactivate, run, runs list/detail |
+| Types | `types/automation.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/automation-labels.ts` — status and run title helpers |
+| Routes | `app/(app)/(tabs)/automation/` — `index`, `[id]/index`, `runs/index`, `runs/[id]/index` |
+| Nav | `config/modules.ts` — `permission: automation.view`, tab `/(app)/(tabs)/automation` (label **Auto**) |
+| Permissions | `automation.view`, `automation.update`, `automation.delete`, `automation.run` |
+
+Visual builder, create/edit workflows, templates, and trigger/action catalog browsing remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Automation](/api/tenant-v1-automation).
+
 ## Related
 
 - [Tenant API index](/api/index)
