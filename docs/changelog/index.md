@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Payroll module (2026-08-27)
+
+- **SaaS-Mobile:** **Payroll** profiles and pay runs — list, search, create, view, edit, delete; pay run status filter, approve, mark paid, and post to journal (permission-gated). API clients `lib/api/payroll-profiles.ts` and `lib/api/pay-runs.ts`. Routes under `app/(app)/(tabs)/payroll/` (hub, `profiles/*`, `pay-runs/*`). Line gross/adjustment editing, journal account picker, trash/restore, and staff self-scope remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Payroll delivery.
+
 ## EloSync Mobile — Leave Management module (2026-08-27)
 
 - **SaaS-Mobile:** **Leave Management** leave requests list, search, status filter, create, view, edit (draft), delete, submit, approve, reject, cancel, self-service for linked employees, and read-only balance summary on view (permission-gated). API clients `lib/api/leave-requests.ts`, `lib/api/leave-types.ts`, `lib/api/leave-balances.ts`. Routes under `app/(app)/(tabs)/leave-management/`. Leave type CRUD, balance administration, trash/restore, and salary-deduction overrides remain web-only on mobile v1.
