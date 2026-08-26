@@ -51,6 +51,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Analytics** | KPI overview, preset periods, CRM/Sales/Billing/Purchasing/People reports with metrics and rows (permission-gated); Stats tab |
 | **Financial reports** | Trial balance, P&L, balance sheet, aged receivables with date filters (permission-gated); Fin tab |
 | **Accounting** | Chart of accounts and journal entries — list, search, create, view, edit, delete, post, void (permission-gated); Acct tab |
+| **Employees** | Directory list, search, create, view, edit, delete; department chips and linked user when entitled (permission-gated); Staff tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -98,4 +99,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Analytics user guide](/user-guide/analytics-overview)
 - [Financial reports user guide](/user-guide/financial-reports-overview)
 - [Accounting user guide](/user-guide/accounting-overview)
+- [Employees user guide](/user-guide/employees-overview)
 - [Tenant application guide](/user-guide/tenant-application)
