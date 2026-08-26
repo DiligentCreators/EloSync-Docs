@@ -349,6 +349,21 @@ Workspace expense claims with draft-only edit, submit, approve, reject, pay (whe
 
 Tenant API reference: [Tenant API — Expenses](/api/tenant-v1-expenses).
 
+### Products (`module:products`)
+
+Product catalogue CRUD with category picker, pricing fields, and stock-tracking toggle. Rich-text description, notes, timeline, and category management remain web-only on mobile v1.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/products.ts` — `GET/POST /products`, `GET/PUT/DELETE /products/{id}`, `GET /products/next-sku` |
+| Categories | `lib/api/product-categories.ts` — `GET /product-categories` (picker on create/edit) |
+| Types | `types/products.ts` (re-exported from `types/api.ts`) |
+| Routes | `app/(app)/(tabs)/products/` — `index` (list + search), `new`, `[id]/index` (view), `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: products.view`, tab `/(app)/(tabs)/products` (label **Products**) |
+| Permissions | `products.view`, `products.create`, `products.update`, `products.delete` |
+
+Tenant API reference: [Tenant API — Products](/api/tenant-v1-products).
+
 ## Related
 
 - [Tenant API index](/api/index)

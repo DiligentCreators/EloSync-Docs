@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Products module (2026-08-26)
+
+- **SaaS-Mobile:** **Products** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/products.ts` (`/products` CRUD + `next-sku`) and `lib/api/product-categories.ts` (`/product-categories` picker). Routes under `app/(app)/(tabs)/products/`; category picker, stock tracking, and pricing fields on create/edit; rich-text description, notes, timeline, and category management deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Expenses module (2026-08-26)
 
 - **SaaS-Mobile:** **Expenses** list, search, create, view, edit (draft only), submit, approve, reject, pay (when Accounting is not installed), cancel, delete (permission-gated). API clients `lib/api/expenses.ts` (`/expenses` CRUD + workflow actions) and `lib/api/expense-categories.ts` (`/expense-categories` picker). Routes under `app/(app)/(tabs)/expenses/`; category picker on create/edit; receipt upload, vendor/PO links, accounting account pickers, notes, and timeline deferred on mobile v1.
