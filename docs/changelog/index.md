@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Knowledge Base module (2026-08-26)
+
+- **SaaS-Mobile:** **Knowledge Base** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/knowledge-base.ts` and `lib/api/knowledge-base-categories.ts` (`/knowledge-base`, `/knowledge-base-categories`). Routes under `app/(app)/(tabs)/knowledge-base/`; plain-text body converted to simple HTML for TipTap storage. Rich editor, attachments, notes, timeline, category CRUD, and trash/restore deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Documents module (2026-08-26)
 
 - **SaaS-Mobile:** **Documents** list, search, upload, view, edit metadata, delete, and download/share (permission-gated). API clients `lib/api/documents.ts` and `lib/api/document-categories.ts` (`/documents`, `/document-categories`). Routes under `app/(app)/(tabs)/documents/`; file picker upload via `expo-document-picker`; authenticated download via `expo-file-system` + `expo-sharing`. Record links, category CRUD, trash/restore, bulk delete, and file replace deferred on mobile v1.

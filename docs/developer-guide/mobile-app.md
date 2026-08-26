@@ -484,6 +484,25 @@ Record links, category CRUD, trash filters, restore/force delete, bulk delete, a
 
 Tenant API reference: [Tenant API — Documents](/api/tenant-v1-documents).
 
+### Knowledge base (`module:knowledge-base`)
+
+Help articles with title, excerpt, plain-text body (stored as simple HTML), category, and draft/published/archived status. View-only actors see published articles from the API; editors can manage drafts and lifecycle.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/knowledge-base.ts` — `GET/POST /knowledge-base`, `GET/PUT/DELETE /knowledge-base/{id}` |
+| Categories | `lib/api/knowledge-base-categories.ts` — read-only list for create/edit pickers |
+| Types | `types/knowledge-base.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/knowledge-base-labels.ts` — status display labels |
+| HTML helpers | `lib/knowledge-base-html.ts` — plain text ↔ simple HTML for `body` |
+| Routes | `app/(app)/(tabs)/knowledge-base/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: knowledge-base.view`, tab `/(app)/(tabs)/knowledge-base` (label **KB**) |
+| Permissions | `knowledge-base.view`, `knowledge-base.create`, `knowledge-base.update`, `knowledge-base.delete` |
+
+Rich TipTap editor, attachments, notes, timeline, category CRUD, slug field, and trash/restore remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Knowledge base](/api/tenant-v1-knowledge-base).
+
 ## Related
 
 - [Tenant API index](/api/index)
