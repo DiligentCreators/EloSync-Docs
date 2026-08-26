@@ -539,6 +539,23 @@ Realtime (Reverb), attachments, reactions, pins, threads, channel create/setting
 
 Tenant API reference: [Tenant API — Team chat](/api/tenant-v1-team-chat).
 
+### WhatsApp Cloud (`module:whatsapp-cloud`)
+
+Customer WhatsApp inbox when the workspace connection is active. Browse conversations, read threads, mark read, open chats by phone number (`whatsapp-cloud.send`), send free-form text inside the customer service window, and send approved templates when the window is closed.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/whatsapp-cloud.ts` — integration status, conversations, messages, templates |
+| Types | `types/whatsapp-cloud.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/whatsapp-cloud-labels.ts` — display names and message body helpers |
+| Routes | `app/(app)/(tabs)/whatsapp-cloud/` — `index`, `new`, `[id]/index` |
+| Nav | `config/modules.ts` — `permission: whatsapp-cloud.view`, tab `/(app)/(tabs)/whatsapp-cloud` (label **WA**) |
+| Permissions | `whatsapp-cloud.view`, `whatsapp-cloud.send` |
+
+OAuth connect, media send/download, lead link/assign, template sync, integration settings, and realtime inbox updates remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — WhatsApp Cloud](/api/tenant-v1-whatsapp-cloud).
+
 ## Related
 
 - [Tenant API index](/api/index)

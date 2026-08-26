@@ -46,6 +46,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Help desk** | List, search, create, view, edit, delete, close, reopen, add notes (permission-gated); Tickets tab |
 | **Knowledge base** | List, search, create, view, edit, delete (permission-gated); KB tab |
 | **Team chat** | Conversation list, search, join channels, start DM/group, read thread, send text (permission-gated); Chat tab |
+| **WhatsApp Cloud** | Inbox, search, read thread, open chat, send text or approved templates (permission-gated); WA tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -88,4 +89,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Help desk user guide](/user-guide/help-desk)
 - [Knowledge base user guide](/user-guide/knowledge-base)
 - [Team chat user guide](/user-guide/team-chat)
+- [WhatsApp Cloud user guide](/user-guide/whatsapp-cloud)
 - [Tenant application guide](/user-guide/tenant-application)

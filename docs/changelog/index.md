@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — WhatsApp Cloud module (2026-08-27)
+
+- **SaaS-Mobile:** **WhatsApp Cloud** inbox list, search, thread read, mark read, open chat by phone, send text inside the 24h service window, and send approved templates outside the window (permission-gated). API client `lib/api/whatsapp-cloud.ts` (`/whatsapp/integrations`, `/whatsapp/conversations`, messages, templates). Routes under `app/(app)/(tabs)/whatsapp-cloud/`. OAuth connect, media upload/download, lead linking, assignee changes, template sync, and integration settings remain web-only on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Team Chat module (2026-08-27)
 
 - **SaaS-Mobile:** **Team Chat** conversation list, search, thread read, join public channels, start DM/group DM, send text messages, and mark read (permission-gated). API clients `lib/api/team-chat.ts` and `lib/api/users.ts` (`/conversations`, `/users`). Routes under `app/(app)/(tabs)/team-chat/`. Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, and global message search deferred on mobile v1.
