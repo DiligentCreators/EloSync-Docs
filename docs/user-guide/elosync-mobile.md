@@ -43,6 +43,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Assets** | List, search, create, view, edit, delete (permission-gated); Assets tab |
 | **Short links** | List, search, create, view, edit, delete, share short URL (permission-gated); Links tab |
 | **Documents** | List, search, upload, view, edit metadata, delete, download/share (permission-gated); Docs tab |
+| **Help desk** | List, search, create, view, edit, delete, close, reopen, add notes (permission-gated); Tickets tab |
 | **Knowledge base** | List, search, create, view, edit, delete (permission-gated); KB tab |
 | **Team chat** | Conversation list, search, join channels, start DM/group, read thread, send text (permission-gated); Chat tab |
 | **Notifications** | In-app notification list, mark read |
@@ -84,6 +85,7 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Assets user guide](/user-guide/assets-overview)
 - [Short links user guide](/user-guide/short-links)
 - [Documents user guide](/user-guide/documents)
+- [Help desk user guide](/user-guide/help-desk)
 - [Knowledge base user guide](/user-guide/knowledge-base)
 - [Team chat user guide](/user-guide/team-chat)
 - [Tenant application guide](/user-guide/tenant-application)
