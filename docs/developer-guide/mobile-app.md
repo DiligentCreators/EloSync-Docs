@@ -641,7 +641,7 @@ Workspace employee directory: browse people records, create and edit employment 
 | Nav | `config/modules.ts` — `permission: employees.view`, tab `/(app)/(tabs)/employees` (label **Staff**) |
 | Permissions | `employees.view`, `employees.create`, `employees.update`, `employees.delete` |
 
-Payroll, attendance, leave, department CRUD, performance reports, and trash/restore remain web-only on mobile v1.
+Payroll, department CRUD, performance reports, and trash/restore remain web-only on mobile v1.
 
 Tenant API reference: [Tenant API — Employees](/api/tenant-v1-employees).
 
@@ -663,6 +663,25 @@ Daily attendance records per employee: list and filter, record attendance, self 
 KPI stats, date-range filters, trash/restore, geolocation, and office-hours automation remain web-only on mobile v1. Requires **Employees** module entitlement.
 
 Tenant API reference: [Tenant API — Attendance](/api/tenant-v1-attendance).
+
+### Leave Management (`module:leave-management`)
+
+Leave requests workflow: list and filter requests, create and edit drafts, submit for approval, approve or reject pending requests, cancel, and view employee leave balances for the request year.
+
+| Piece | Location |
+|-------|----------|
+| API clients | `lib/api/leave-requests.ts`, `lib/api/leave-types.ts` (picker), `lib/api/leave-balances.ts` (read-only on view) |
+| Types | `types/leave-management.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/leave-management-labels.ts` — status labels |
+| Access | `lib/leave-management-access.ts` — admin vs self-service employee gate |
+| Form | `components/forms/LeaveRequestFormFields.tsx` — shared create/edit fields |
+| Routes | `app/(app)/(tabs)/leave-management/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: leave-management.view`, tab `/(app)/(tabs)/leave-management` (label **Leave**) |
+| Permissions | `leave-management.view`, `create`, `update`, `delete`, `approve` |
+
+Leave type CRUD, balance administration, trash/restore, salary-deduction override UI, and date-range list filters remain web-only on mobile v1. Requires **Employees** module entitlement for employee picker and deep links.
+
+Tenant API reference: [Tenant API — Leave Management](/api/tenant-v1-leave-management).
 
 ## Related
 
