@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Departments module (2026-08-27)
+
+- **SaaS-Mobile:** **Departments** list, search, status filter, create, view, edit, delete; manager assignment, user/employee member chips, and read-only performance summary when permitted (permission-gated). Expanded `lib/api/departments.ts`. Routes under `app/(app)/(tabs)/departments/`. Stats dashboard, performance reports, trash/restore, and separate attach/detach endpoints remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Departments delivery.
+
 ## EloSync Mobile — Payroll module (2026-08-27)
 
 - **SaaS-Mobile:** **Payroll** profiles and pay runs — list, search, create, view, edit, delete; pay run status filter, approve, mark paid, and post to journal (permission-gated). API clients `lib/api/payroll-profiles.ts` and `lib/api/pay-runs.ts`. Routes under `app/(app)/(tabs)/payroll/` (hub, `profiles/*`, `pay-runs/*`). Line gross/adjustment editing, journal account picker, trash/restore, and staff self-scope remain web-only on mobile v1.
