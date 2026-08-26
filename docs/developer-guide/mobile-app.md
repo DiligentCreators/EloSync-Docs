@@ -627,6 +627,24 @@ General ledger inquiry, transfers, bank reconciliation, accounting periods, open
 
 Tenant API reference: [Tenant API — Accounting](/api/tenant-v1-accounting).
 
+### Employees (`module:employees`)
+
+Workspace employee directory: browse people records, create and edit employment details, and link workspace users when permitted.
+
+| Piece | Location |
+|-------|----------|
+| API clients | `lib/api/employees.ts`, `lib/api/departments.ts` (picker when Departments entitled) |
+| Types | `types/employees.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/employee-labels.ts` — status, employment type, department formatting |
+| Form | `components/forms/EmployeeFormFields.tsx` — shared create/edit fields |
+| Routes | `app/(app)/(tabs)/employees/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: employees.view`, tab `/(app)/(tabs)/employees` (label **Staff**) |
+| Permissions | `employees.view`, `employees.create`, `employees.update`, `employees.delete` |
+
+Payroll, attendance, leave, department CRUD, performance reports, and trash/restore remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Employees](/api/tenant-v1-employees).
+
 ## Related
 
 - [Tenant API index](/api/index)

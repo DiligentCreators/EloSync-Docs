@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Employees module (2026-08-27)
+
+- **SaaS-Mobile:** **Employees** directory list, search, create, view, edit, and delete (permission-gated). Department multi-select when Departments module is entitled; linked user picker when `users.list` is granted. API clients `lib/api/employees.ts` and `lib/api/departments.ts` (`/employees`, `/departments`). Routes under `app/(app)/(tabs)/employees/`. Payroll, attendance, leave, and department management remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Employees delivery.
+
 ## EloSync Mobile — Accounting module (2026-08-27)
 
 - **SaaS-Mobile:** **Accounting** chart of accounts (list, search, create, view, edit, delete) and journal entries (list, search, create, view, edit draft, delete draft, post, void) with balanced multi-line forms (permission-gated). API clients `lib/api/accounts.ts` and `lib/api/journal-entries.ts` (`/accounts`, `/journal-entries`). Routes under `app/(app)/(tabs)/accounting/`. General ledger, transfers, bank reconciliation, periods, opening balances, and tax types remain web-only on mobile v1.
