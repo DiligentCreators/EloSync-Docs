@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Invoices module (2026-08-26)
+
+- **SaaS-Mobile:** **Invoices** list, search, create, view, edit (draft only), send, void, delete (permission-gated). API client `lib/api/invoices.ts` (`/invoices` CRUD + `send`/`void`). Routes under `app/(app)/(tabs)/invoices/`; `InvoiceLinkPickers` for optional contact, company, and quotation; recurring series, email, and PDF deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Contracts module (2026-08-26)
 
 - **SaaS-Mobile:** **Contracts** list, search, create, view, edit (draft only), status transitions, delete (permission-gated). API client `lib/api/contracts.ts` (`/contracts` CRUD + `status`). Routes under `app/(app)/(tabs)/contracts/`; `ContractLinkPickers` for opportunity (required) and optional quotation; convert-to-invoice deferred on mobile v1.
