@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Short Links module (2026-08-26)
+
+- **SaaS-Mobile:** **Short Links** list, search, create, view, edit, delete, and share short URL (permission-gated). API client `lib/api/short-links.ts` (`/short-links` CRUD). Routes under `app/(app)/(tabs)/short-links/`; vanity slug on create; basic UTM fields; click analytics and click log deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Assets module (2026-08-26)
 
 - **SaaS-Mobile:** **Assets** list, search, create, view, edit, delete (permission-gated). API client `lib/api/assets.ts` (`/assets` CRUD). Routes under `app/(app)/(tabs)/assets/`; status, category, purchase, and warranty fields on create/edit; vendor, employee, assign, notes, and timeline deferred on mobile v1.
