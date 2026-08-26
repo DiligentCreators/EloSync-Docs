@@ -609,6 +609,24 @@ CSV export remains web-only on mobile v1.
 
 Tenant API reference: [Tenant API — Financial reports](/api/tenant-v1-financial-reports).
 
+### Accounting (`module:accounting`)
+
+Chart of accounts and manual journal entries: browse accounts, create draft journals with balanced debit/credit lines, post, and void.
+
+| Piece | Location |
+|-------|----------|
+| API clients | `lib/api/accounts.ts`, `lib/api/journal-entries.ts` — accounts CRUD, journal CRUD, post, void |
+| Types | `types/accounting.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/accounting-labels.ts` — account types, journal status, picker labels |
+| Form | `components/forms/JournalEntryForm.tsx` — balanced multi-line journal editor |
+| Routes | `app/(app)/(tabs)/accounting/` — hub, `accounts/*`, `journals/*` |
+| Nav | `config/modules.ts` — `permission: accounting.view`, tab `/(app)/(tabs)/accounting` (label **Acct**) |
+| Permissions | `accounting.view`, `accounting.create`, `accounting.update`, `accounting.delete`, `accounting.post`, `accounting.void` |
+
+General ledger inquiry, transfers, bank reconciliation, accounting periods, opening balances, tax types, and set-balance on cash/bank accounts remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Accounting](/api/tenant-v1-accounting).
+
 ## Related
 
 - [Tenant API index](/api/index)
