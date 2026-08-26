@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Credit Notes module (2026-08-26)
+
+- **SaaS-Mobile:** **Credit Notes** list, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated). API client `lib/api/credit-notes.ts` (`/credit-notes` CRUD + `issue`/`apply`/`void`). Routes under `app/(app)/(tabs)/credit-notes/`; required unpaid-invoice picker on create; optional line item; email and PDF deferred on mobile v1.
+- Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
+
 ## EloSync Mobile — Payments module (2026-08-26)
 
 - **SaaS-Mobile:** **Payments** list, search, create, view, edit (draft only), post, void, delete (permission-gated). API client `lib/api/payments.ts` (`/payments` CRUD + `post`/`void`). Routes under `app/(app)/(tabs)/payments/`; `PaymentLinkPickers` for optional contact and company; optional single-invoice allocation when Invoices is entitled; email receipt, PDF, deposit account, and withholding deferred on mobile v1.

@@ -31,6 +31,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); Contracts tab |
 | **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); Invoices tab |
 | **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; Payments tab |
+| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated); Credits tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -58,4 +59,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Contracts user guide](/user-guide/contracts-overview)
 - [Invoices user guide](/user-guide/invoices-overview)
 - [Payments user guide](/user-guide/payments-overview)
+- [Credit notes user guide](/user-guide/credit-notes-overview)
 - [Tenant application guide](/user-guide/tenant-application)
