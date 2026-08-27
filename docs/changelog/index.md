@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Purchase Orders module (2026-08-27)
+
+- **SaaS-Mobile:** **Purchase Orders** list, search, status filter, create, view, edit (draft), delete; send, receive (with optional warehouse when Inventory + Warehouses entitled), cancel, convert to expense, notes, and vendor picker (permission-gated). API client `lib/api/purchase-orders.ts`. Routes under `app/(app)/(tabs)/purchase-orders/`. PDF, email vendor, stats, timeline, trash/restore, multi-line editor, and product picker remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Purchase Orders delivery.
+
 ## EloSync Mobile — Vendors module (2026-08-27)
 
 - **SaaS-Mobile:** **Vendors** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, notes list and add note on view (permission-gated). API client `lib/api/vendors.ts`. Routes under `app/(app)/(tabs)/vendors/`. Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint, and default withholding tax picker remain web-only on mobile v1.
