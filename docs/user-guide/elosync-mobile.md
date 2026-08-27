@@ -22,29 +22,29 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Contacts** | List, search, create, view, edit, delete; notes on view when update permitted |
 | **Companies** | List, search, create, view, edit, delete; notes on view when update permitted |
 | **Opportunities** | List, search, create, view, edit, delete; notes and AI copilot on view (permission-gated); Pipeline tab |
-| **Activities** | List, search, create, view, edit, delete, complete (permission-gated); Log tab |
+| **Activities** | List, search, create, view, edit, delete, complete (permission-gated); notes on view when update permitted; Log tab |
 | **ToDos** | List, search, create, view, edit, delete, mark complete (permission-gated); ToDos tab |
-| **Quotations** | List, search, create, view, edit, delete, send, accept (permission-gated); Quotes tab |
+| **Quotations** | List, search, create, view, edit, delete, send, accept (permission-gated); notes on view when update permitted; Quotes tab |
 | **Calendar** | List (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated); Calendar tab |
 | **Meetings** | List (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated); Meetings tab |
-| **Projects** | List, search, create, view, edit, status transitions, delete (permission-gated); Projects tab |
-| **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); Contracts tab |
-| **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); Invoices tab |
-| **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; Payments tab |
-| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated); Credits tab |
-| **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); Ests tab |
-| **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); Spend tab |
-| **Products** | List, search, create, view, edit, delete (permission-gated); Products tab |
-| **Warehouses** | List, search, create, view, edit, delete (permission-gated); WH tab |
+| **Projects** | List, search, create, view, edit, status transitions, delete (permission-gated); notes on view when update permitted; Projects tab |
+| **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); notes on view when update permitted; Contracts tab |
+| **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); notes on view when update permitted; Invoices tab |
+| **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; notes on view when update permitted; Payments tab |
+| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated); notes on view when update permitted; Credits tab |
+| **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); notes on view when update permitted; Ests tab |
+| **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); notes on view when update permitted; Spend tab |
+| **Products** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; Products tab |
+| **Warehouses** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; WH tab |
 | **Inventory** | Stock levels, adjust, transfers (create/view/edit draft/dispatch/complete/cancel/delete); Stock tab |
 | **Communication templates** | List, search, create, view, edit, delete (permission-gated); Tmpl tab |
 | **Email** | Mailbox list (inbox/sent/drafts), search, read, mark read (permission-gated); Mail tab |
 | **Announcements** | Inbox, search, view, mark read; create/edit/delete for managers; News tab |
-| **Assets** | List, search, create, view, edit, delete (permission-gated); Assets tab |
+| **Assets** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; Assets tab |
 | **Short links** | List, search, create, view, edit, delete, share short URL (permission-gated); Links tab |
 | **Documents** | List, search, upload, view, edit metadata, delete, download/share (permission-gated); Docs tab |
 | **Help desk** | List, search, create, view, edit, delete, close, reopen, add notes (permission-gated); Tickets tab |
-| **Knowledge base** | List, search, create, view, edit, delete (permission-gated); KB tab |
+| **Knowledge base** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; KB tab |
 | **Team chat** | Conversation list, search, join channels, start DM/group, read thread, send text (permission-gated); Chat tab |
 | **WhatsApp Cloud** | Inbox, search, read thread, open chat, send text or approved templates (permission-gated); WA tab |
 | **Automation** | Workflow list, search, view, activate/deactivate, run now, delete, run history and logs (permission-gated); Auto tab |
