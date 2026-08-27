@@ -806,6 +806,23 @@ Marketplace pack purchase and Settings → Storage panel remain web-only on mobi
 
 Tenant API reference: [Tenant API — Storage](/api/tenant-v1-storage).
 
+### Branded (`module:branded`)
+
+Custom website address for the workspace: view connection status, copy/share DNS records, propose a hostname, verify DNS, and remove the address when permitted.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/branded.ts` — show, propose, verify, remove |
+| Types | `types/branded.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/branded-labels.ts` — hosting status labels |
+| Routes | `app/(app)/(tabs)/branded/` — `index` (setup wizard) |
+| Nav | `config/modules.ts` — `permission: branded.view`, tab `/(app)/(tabs)/branded` (label **Brand**) |
+| Permissions | `branded.view`, `branded.manage` |
+
+Settings → General logo upload and full branding panel remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Branded](/api/tenant-v1-branded).
+
 ## Related
 
 - [Tenant API index](/api/index)

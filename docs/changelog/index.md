@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Branded module (2026-08-27)
+
+- **SaaS-Mobile:** **Branded** custom website address screen — status, DNS instructions (TXT, A, CNAME), propose/verify/remove when permitted, share DNS values, pull-to-refresh. API client `lib/api/branded.ts`. Routes under `app/(app)/(tabs)/branded/`. Settings → General branded panel parity on mobile v1; logo upload remains web-only.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Branded delivery.
+
 ## EloSync Mobile — Storage module (2026-08-27)
 
 - **SaaS-Mobile:** **Storage** workspace usage screen — used/allowance bytes, percent bar, pack label, pull-to-refresh (permission-gated). API client `lib/api/storage.ts`. Routes under `app/(app)/(tabs)/storage/`. Marketplace pack purchase and settings panel remain web-only on mobile v1.
