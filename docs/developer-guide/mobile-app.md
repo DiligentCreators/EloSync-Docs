@@ -789,6 +789,23 @@ Stats dashboard KPI strip remains web-only on mobile v1. Entries are system-gene
 
 Tenant API reference: [Tenant API — Reseller Payouts](/api/tenant-v1-reseller-payouts).
 
+### Storage (`module:storage`)
+
+Workspace file storage usage: see how much content storage your workspace has consumed and which capacity pack is active.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/storage.ts` — usage summary |
+| Types | `types/storage.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/storage-labels.ts` — byte formatting and pack labels |
+| Routes | `app/(app)/(tabs)/storage/` — `index` (usage dashboard) |
+| Nav | `config/modules.ts` — `permission: storage.view`, tab `/(app)/(tabs)/storage` (label **Store**) |
+| Permissions | `storage.view` |
+
+Marketplace pack purchase and Settings → Storage panel remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Storage](/api/tenant-v1-storage).
+
 ## Related
 
 - [Tenant API index](/api/index)

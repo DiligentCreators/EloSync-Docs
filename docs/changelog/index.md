@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Storage module (2026-08-27)
+
+- **SaaS-Mobile:** **Storage** workspace usage screen — used/allowance bytes, percent bar, pack label, pull-to-refresh (permission-gated). API client `lib/api/storage.ts`. Routes under `app/(app)/(tabs)/storage/`. Marketplace pack purchase and settings panel remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Storage delivery.
+
 ## EloSync Mobile — Reseller Payouts module (2026-08-27)
 
 - **SaaS-Mobile:** **Reseller Payouts** commission ledger list, search, status and party filters, view entry details, approve, mark paid, and void (permission-gated). API client `lib/api/reseller-payouts.ts`. Routes under `app/(app)/(tabs)/reseller-payouts/`. Stats dashboard KPI strip remains web-only on mobile v1; entries are system-generated (no create/edit).
