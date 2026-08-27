@@ -48,7 +48,7 @@ This will:
 
 Additional demo users use `{slug}@demo-crm.local` with the same password.
 
-Configure these values in [`config/local-demo.php`](https://github.com/DiligentCreators/SaaS-Backend/blob/main/config/local-demo.php).
+Configure these values in [`config/local-demo.php`](https://github.com/DiligentCreators/EloSync-Backend/blob/main/config/local-demo.php).
 
 In the SPA (`npm run dev`), `/login` prefills `demo@demo.com` / `password` and `/central/login` prefills the central superadmin. Playwright tenant suites sign in to this same workspace via `E2E_DEMO_*` (see Frontend `.env.e2e.example`).
 

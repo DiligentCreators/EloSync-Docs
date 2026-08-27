@@ -5,7 +5,7 @@
 | **Branch** | `feature/daily-crm-summary` |
 | **Date** | 2026-07-23 |
 | **Status** | **Ready for GA** after migrate + emails worker smoke (Critical/High audit items addressed) |
-| **Repos** | SaaS-Backend, SaaS-Frontend, SaaS-Docs |
+| **Repos** | EloSync-Backend, EloSync-Frontend, EloSync-Docs |
 
 ---
 

@@ -7,7 +7,7 @@
 | **Status** | **Go for production** after gateway pack mappings (ops) |
 | **Scope** | Free `storage` (1 GiB) + packs `storage-10`…`storage-1000` |
 | **Branch** | `feature/storage-module-packs-3d4f` |
-| **Repos** | Backend [#105](https://github.com/DiligentCreators/SaaS-Backend/pull/105) · Frontend [#103](https://github.com/DiligentCreators/SaaS-Frontend/pull/103) · Docs [#127](https://github.com/DiligentCreators/SaaS-Docs/pull/127) |
+| **Repos** | Backend [#105](https://github.com/DiligentCreators/EloSync-Backend/pull/105) · Frontend [#103](https://github.com/DiligentCreators/EloSync-Frontend/pull/103) · Docs [#127](https://github.com/DiligentCreators/EloSync-Docs/pull/127) |
 
 ---
 

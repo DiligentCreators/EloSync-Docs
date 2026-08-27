@@ -8,7 +8,7 @@
 | **Branch** | `feature/analytics-payroll-people-1-4-0` |
 | **Companion** | [Analytics production](./analytics) · [Developer guide](/developer-guide/analytics) · [User guide](/user-guide/analytics) · [API](/api/tenant-v1-analytics) |
 
-**PRs:** Backend [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28)
+**PRs:** Backend [#113](https://github.com/DiligentCreators/EloSync-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/EloSync-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/EloSync-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/EloSync-Website/pull/28)
 
 Prior Go audits for **1.2.0** / **1.3.0** / **1.3.1** remain valid for those slices; this audit covers the **1.4.0** Payroll People delta.
 
@@ -72,7 +72,7 @@ None (engineering). Staging smoke remains an ops pre-flight checkbox, not a code
 
 | ID | Severity | Finding | Resolution |
 |----|----------|---------|------------|
-| F19 | **MEDIUM** | Companion PRs missing; Backend CI manual-only | Opened [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113) · [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109) · [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134) · [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28); dispatched Laravel Tests + Code Quality Gate — both **success** |
+| F19 | **MEDIUM** | Companion PRs missing; Backend CI manual-only | Opened [#113](https://github.com/DiligentCreators/EloSync-Backend/pull/113) · [#109](https://github.com/DiligentCreators/EloSync-Frontend/pull/109) · [#134](https://github.com/DiligentCreators/EloSync-Docs/pull/134) · [#28](https://github.com/DiligentCreators/EloSync-Website/pull/28); dispatched Laravel Tests + Code Quality Gate — both **success** |
 | F20 | **MEDIUM** | Local catalog still **1.3.1** | Migrated; central `modules.version` for `analytics` verified **1.4.0** |
 
 ### Accepted / intentional
@@ -104,10 +104,10 @@ None (engineering). Staging smoke remains an ops pre-flight checkbox, not a code
 
 ## Deploy order
 
-1. **Backend** — merge [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113); `php artisan migrate --force` through `2026_08_16_034000_bump_analytics_module_to_reports_1_4_0`
-2. **SPA** — merge [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109)
-3. **Docs** — merge [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134)
-4. **Website** — merge [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28)
+1. **Backend** — merge [#113](https://github.com/DiligentCreators/EloSync-Backend/pull/113); `php artisan migrate --force` through `2026_08_16_034000_bump_analytics_module_to_reports_1_4_0`
+2. **SPA** — merge [#109](https://github.com/DiligentCreators/EloSync-Frontend/pull/109)
+3. **Docs** — merge [#134](https://github.com/DiligentCreators/EloSync-Docs/pull/134)
+4. **Website** — merge [#28](https://github.com/DiligentCreators/EloSync-Website/pull/28)
 5. Staging smoke below
 
 No new queues, schedulers, or env vars.

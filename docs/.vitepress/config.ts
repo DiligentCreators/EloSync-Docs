@@ -541,7 +541,7 @@ export default withMermaid(defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/DiligentCreators/SaaS-Docs' },
+      { icon: 'github', link: 'https://github.com/DiligentCreators/EloSync-Docs' },
     ],
 
     notFound: {
@@ -552,7 +552,7 @@ export default withMermaid(defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/DiligentCreators/SaaS-Docs/edit/main/docs/:path',
+      pattern: 'https://github.com/DiligentCreators/EloSync-Docs/edit/main/docs/:path',
       text: 'Edit this page on GitHub',
     },
 

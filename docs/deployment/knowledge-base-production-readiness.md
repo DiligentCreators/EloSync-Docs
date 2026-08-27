@@ -8,7 +8,7 @@
 | **Branch** | `feature/knowledge-base-module-22e6` |
 | **Companion** | [KB production](./knowledge-base) · [Developer guide](/developer-guide/knowledge-base) · [User guide](/user-guide/knowledge-base) · [API](/api/tenant-v1-knowledge-base) |
 
-**PRs:** Backend [#103](https://github.com/DiligentCreators/SaaS-Backend/pull/103) · Frontend [#101](https://github.com/DiligentCreators/SaaS-Frontend/pull/101) · Docs [#125](https://github.com/DiligentCreators/SaaS-Docs/pull/125) · Website [#23](https://github.com/DiligentCreators/SaaS-Website/pull/23)
+**PRs:** Backend [#103](https://github.com/DiligentCreators/EloSync-Backend/pull/103) · Frontend [#101](https://github.com/DiligentCreators/EloSync-Frontend/pull/101) · Docs [#125](https://github.com/DiligentCreators/EloSync-Docs/pull/125) · Website [#23](https://github.com/DiligentCreators/EloSync-Website/pull/23)
 
 ---
 

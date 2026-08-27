@@ -82,6 +82,8 @@ Production runbooks and operational checklists for hosting EloSync.
 
 ## Related repos
 
-- Backend: [SaaS-Backend](https://github.com/DiligentCreators/SaaS-Backend) (Laravel API)
-- Frontend: [SaaS-Frontend](https://github.com/DiligentCreators/SaaS-Frontend) (React SPA)
-- Docs: [SaaS-Docs](https://github.com/DiligentCreators/SaaS-Docs) (this site)
+- Backend: [EloSync-Backend](https://github.com/DiligentCreators/EloSync-Backend) (Laravel API)
+- Frontend: [EloSync-Frontend](https://github.com/DiligentCreators/EloSync-Frontend) (React SPA)
+- Docs: [EloSync-Docs](https://github.com/DiligentCreators/EloSync-Docs) (this site)
+- Website: [EloSync-Website](https://github.com/DiligentCreators/EloSync-Website) (marketing)
+- Mobile: [EloSync-Mobile](https://github.com/DiligentCreators/EloSync-Mobile) (Expo)

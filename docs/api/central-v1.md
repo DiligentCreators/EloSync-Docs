@@ -269,5 +269,5 @@ Seeded by `Database\Seeders\Central\PermissionsSeeder`, guard `central-api`.
 |---------|-------|
 | `billing:run-consolidated` | Daily scheduled; invoices all due workspaces |
 
-Postman: `SaaS-Backend/.docs/postman/Central.postman_collection.json` (refresh after API changes).
+Postman: `EloSync-Backend/.docs/postman/Central.postman_collection.json` (refresh after API changes).
 

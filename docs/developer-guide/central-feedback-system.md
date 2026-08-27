@@ -4,7 +4,7 @@ Architecture for EloSync product feedback: **submitted from the Tenant Applicati
 
 > **Status: Implemented**
 >
-> Shipped with Backend [#93](https://github.com/DiligentCreators/SaaS-Backend/pull/93) and Frontend [#88](https://github.com/DiligentCreators/SaaS-Frontend/pull/88). Architecture stays aligned with Sanctum dual-guard, Spatie RBAC, single-DB tenancy, Central React SPA, `FileUploadService`, and `PlatformAuditService`. User-facing flows: [Give Feedback](/user-guide/feedback).
+> Shipped with Backend [#93](https://github.com/DiligentCreators/EloSync-Backend/pull/93) and Frontend [#88](https://github.com/DiligentCreators/EloSync-Frontend/pull/88). Architecture stays aligned with Sanctum dual-guard, Spatie RBAC, single-DB tenancy, Central React SPA, `FileUploadService`, and `PlatformAuditService`. User-facing flows: [Give Feedback](/user-guide/feedback).
 
 Related: [Founding Beta](/product/founding-beta) · [Authentication](/developer-guide/authentication) · [Object Storage](/developer-guide/object-storage) · [Admin UI](/user-guide/admin-ui) · [Platform Freeze](/getting-started/platform-freeze)
 

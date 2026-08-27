@@ -9,7 +9,7 @@
 | **Branch** | `feature/documents-module-mvp-b5f1` |
 | **Companion** | [Documents ops](./documents) · [Developer](/developer-guide/documents) · [User](/user-guide/documents) · [API](/api/tenant-v1-documents) |
 
-**PRs:** Backend [#117](https://github.com/DiligentCreators/SaaS-Backend/pull/117) · Frontend [#112](https://github.com/DiligentCreators/SaaS-Frontend/pull/112) · Docs [#138](https://github.com/DiligentCreators/SaaS-Docs/pull/138) · Website [#31](https://github.com/DiligentCreators/SaaS-Website/pull/31)
+**PRs:** Backend [#117](https://github.com/DiligentCreators/EloSync-Backend/pull/117) · Frontend [#112](https://github.com/DiligentCreators/EloSync-Frontend/pull/112) · Docs [#138](https://github.com/DiligentCreators/EloSync-Docs/pull/138) · Website [#31](https://github.com/DiligentCreators/EloSync-Website/pull/31)
 
 ---
 

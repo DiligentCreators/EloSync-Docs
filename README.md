@@ -63,7 +63,7 @@ The workflow:
 
 The deploy branch never includes `node_modules`, Markdown/TypeScript sources, `package.json`, workflows, or README.
 
-This matches the SaaS-Frontend strategy: **build in CI, deploy compiled assets only**.
+This matches the EloSync-Frontend strategy: **build in CI, deploy compiled assets only**.
 
 ## Laravel Forge deployment
 
@@ -111,7 +111,7 @@ location / {
 
 | Setting | Value |
 |---------|--------|
-| Repository | `DiligentCreators/SaaS-Docs` |
+| Repository | `DiligentCreators/EloSync-Docs` |
 | Branch | `build-artifacts` |
 | Web Directory | `/` |
 | Deploy script | `$CREATE_RELEASE()` → `$ACTIVATE_RELEASE()` only |
@@ -126,7 +126,7 @@ Trigger a Forge deploy after each successful Actions publish to `build-artifacts
 | `GITHUB_TOKEN` | Secret (automatic) | Yes | Push compiled assets to `build-artifacts` |
 | `APP_VERSION` | Repository variable | No | Overrides `package.json` version in `build-info.json` |
 
-No Forge SSH secrets are required in Actions — the same pattern as SaaS-Frontend: CI publishes the branch; Forge pulls it.
+No Forge SSH secrets are required in Actions — the same pattern as EloSync-Frontend: CI publishes the branch; Forge pulls it.
 
 Ensure `github-actions[bot]` can push to `build-artifacts` (branch unprotected, or allow the bot).
 
@@ -201,5 +201,7 @@ https://docs.elosync.com
 
 ## Related repositories
 
-- Backend: [SaaS-Backend](https://github.com/DiligentCreators/SaaS-Backend)
-- Frontend: [SaaS-Frontend](https://github.com/DiligentCreators/SaaS-Frontend) (same `build-artifacts` CI pattern)
+- Backend: [EloSync-Backend](https://github.com/DiligentCreators/EloSync-Backend)
+- Frontend: [EloSync-Frontend](https://github.com/DiligentCreators/EloSync-Frontend) (same `build-artifacts` CI pattern)
+- Website: [EloSync-Website](https://github.com/DiligentCreators/EloSync-Website)
+- Mobile: [EloSync-Mobile](https://github.com/DiligentCreators/EloSync-Mobile)

@@ -1,6 +1,6 @@
 # Laravel Forge Deployment
 
-Production-oriented guide for hosting EloSync / EloSync on **[Laravel Forge](https://forge.laravel.com/)**: four sites (API, SPA, Docs, Marketing), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
+Production-oriented guide for hosting EloSync on **[Laravel Forge](https://forge.laravel.com/)**: four sites (API, SPA, Docs, Marketing), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
 
 Use this with the [Production Runbook](./platform-production-runbook) (launch blockers / smoke) and [Notification System](./notifications) (Redis, Reverb TLS, Web Push). Local machines stay on [Installation](/getting-started/installation).
 
@@ -10,18 +10,18 @@ Create **four Forge sites** (same server or separate servers). Do not mix PHP AP
 
 | Site | Domain example | Git repo | Branch | Web directory | Node on server |
 |------|----------------|----------|--------|---------------|----------------|
-| **API** | `api.example.com` | `DiligentCreators/SaaS-Backend` | `main` | `/public` | Not required |
-| **SPA** | `app.example.com` | `DiligentCreators/SaaS-Frontend` | `build-artifacts` | `/` (site root) | **Not required** |
-| **Docs** | `docs.example.com` | `DiligentCreators/SaaS-Docs` | `build-artifacts` | `/` (site root) | **Not required** |
-| **Marketing** | `elosync.com` / `www.example.com` | `DiligentCreators/SaaS-Website` | `build-artifacts` | `/` (site root) | **Not required** |
+| **API** | `api.example.com` | `DiligentCreators/EloSync-Backend` | `main` | `/public` | Not required |
+| **SPA** | `app.example.com` | `DiligentCreators/EloSync-Frontend` | `build-artifacts` | `/` (site root) | **Not required** |
+| **Docs** | `docs.example.com` | `DiligentCreators/EloSync-Docs` | `build-artifacts` | `/` (site root) | **Not required** |
+| **Marketing** | `elosync.com` / `www.example.com` | `DiligentCreators/EloSync-Website` | `build-artifacts` | `/` (site root) | **Not required** |
 
 ```mermaid
 flowchart LR
   subgraph github [GitHub]
-    Bmain[SaaS-Backend main]
-    Fmain[SaaS-Frontend main]
-    Dmain[SaaS-Docs main]
-    Wmain[SaaS-Website main]
+    Bmain[EloSync-Backend main]
+    Fmain[EloSync-Frontend main]
+    Dmain[EloSync-Docs main]
+    Wmain[EloSync-Website main]
     Fart[Frontend build-artifacts]
     Dart[Docs build-artifacts]
     Wart[Website build-artifacts]
@@ -70,13 +70,13 @@ Enable **Redis** before setting `CACHE_STORE=redis` / `QUEUE_CONNECTION=redis`. 
 
 ---
 
-## 1. API site (SaaS-Backend)
+## 1. API site (EloSync-Backend)
 
 ### 1.1 Site settings
 
 | Setting | Value |
 |---------|--------|
-| Repository | `DiligentCreators/SaaS-Backend` |
+| Repository | `DiligentCreators/EloSync-Backend` |
 | Branch | `main` (or your release branch) |
 | Project type | Laravel / PHP |
 | Web directory | `public` |
@@ -249,13 +249,13 @@ Provision the first central user through your approved ops process (manual inser
 
 ---
 
-## 2. SPA site (SaaS-Frontend)
+## 2. SPA site (EloSync-Frontend)
 
 ### 2.1 Site settings
 
 | Setting | Value |
 |---------|--------|
-| Repository | `DiligentCreators/SaaS-Frontend` |
+| Repository | `DiligentCreators/EloSync-Frontend` |
 | Branch | **`build-artifacts`** |
 | Web directory | `/` (compiled assets live at branch root) |
 | Node.js | **Not required** for deploy |
@@ -331,13 +331,13 @@ Details: [Frontend Build Artifacts](/developer-guide/frontend-build-artifacts).
 
 ---
 
-## 3. Docs site (SaaS-Docs)
+## 3. Docs site (EloSync-Docs)
 
 ### 3.1 Site settings
 
 | Setting | Value |
 |---------|--------|
-| Repository | `DiligentCreators/SaaS-Docs` |
+| Repository | `DiligentCreators/EloSync-Docs` |
 | Branch | **`build-artifacts`** |
 | Web directory | `/` |
 | Deploy script | Activate only |
@@ -363,13 +363,13 @@ location / {
 
 ---
 
-## 4. Marketing site (SaaS-Website / EloSync)
+## 4. Marketing site (EloSync-Website)
 
 ### 4.1 Site settings
 
 | Setting | Value |
 |---------|--------|
-| Repository | `DiligentCreators/SaaS-Website` |
+| Repository | `DiligentCreators/EloSync-Website` |
 | Branch | **`build-artifacts`** |
 | Web directory | `/` |
 | Deploy script | Activate only |
@@ -409,7 +409,7 @@ location / {
 }
 ```
 
-Details: [SaaS-Website README](https://github.com/DiligentCreators/SaaS-Website) and repo `docs/ci-cd/website-build-artifacts.md`.
+Details: [EloSync-Website README](https://github.com/DiligentCreators/EloSync-Website) and repo `docs/ci-cd/website-build-artifacts.md`.
 
 ### 4.3 Environment (runtime)
 
@@ -514,5 +514,5 @@ See [Release Process](./release-process).
 | SPA CI + `config.js` | [Frontend Build Artifacts](/developer-guide/frontend-build-artifacts) |
 | Migrate-only upgrades | [Upgrade Guide](./upgrade) |
 | Local install | [Installation](/getting-started/installation) |
-| Docs Forge notes | [SaaS-Docs README](https://github.com/DiligentCreators/SaaS-Docs) |
-| Marketing CI | [SaaS-Website](https://github.com/DiligentCreators/SaaS-Website) `docs/ci-cd/website-build-artifacts.md` |
+| Docs Forge notes | [EloSync-Docs README](https://github.com/DiligentCreators/EloSync-Docs) |
+| Marketing CI | [EloSync-Website](https://github.com/DiligentCreators/EloSync-Website) `docs/ci-cd/website-build-artifacts.md` |

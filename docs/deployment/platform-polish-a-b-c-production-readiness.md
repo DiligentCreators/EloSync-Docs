@@ -8,7 +8,7 @@
 | **Scope** | Cross-module polish wave (billing PDF/email, attachments, dashboard UX, demo seed, AI tools, docs sync) |
 | **Companion** | [Upgrade guide](./upgrade#platform-polish-lanes-a-b-c) · [Module development](./module-development) · [Release process](./release-process) |
 
-**PRs:** Backend [#148](https://github.com/DiligentCreators/SaaS-Backend/pull/148) (merged to `main`) · Frontend [#143](https://github.com/DiligentCreators/SaaS-Frontend/pull/143) + e2e follow-up on `main` · Docs [#170](https://github.com/DiligentCreators/SaaS-Docs/pull/170) (merged to `main`)
+**PRs:** Backend [#148](https://github.com/DiligentCreators/EloSync-Backend/pull/148) (merged to `main`) · Frontend [#143](https://github.com/DiligentCreators/EloSync-Frontend/pull/143) + e2e follow-up on `main` · Docs [#170](https://github.com/DiligentCreators/EloSync-Docs/pull/170) (merged to `main`)
 
 ---
 
@@ -35,9 +35,9 @@ Platform polish lanes A/B/C ship attachments, billing document delivery, dashboa
 
 | Repo | Branch | Polish on `main`? |
 |------|--------|-------------------|
-| **SaaS-Frontend** | `main` | **Yes** — PR #143 + e2e/TS follow-up |
-| **SaaS-Backend** | `main` | **Yes** — PR #148 merged |
-| **SaaS-Docs** | `main` | **Yes** — PR #170 + audit page |
+| **EloSync-Frontend** | `main` | **Yes** — PR #143 + e2e/TS follow-up |
+| **EloSync-Backend** | `main` | **Yes** — PR #148 merged |
+| **EloSync-Docs** | `main` | **Yes** — PR #170 + audit page |
 
 ---
 

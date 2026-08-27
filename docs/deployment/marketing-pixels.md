@@ -1,6 +1,6 @@
 # Marketing pixels (GTM, Meta, LinkedIn, X)
 
-Optional, **env-gated** marketing tags for acquisition analytics on the **product SPA** ([SaaS-Frontend](https://github.com/DiligentCreators/SaaS-Frontend)) and **marketing site** ([saas-website](https://github.com/DiligentCreators/SaaS-Website)). Omit an env var to disable that vendor — no scripts load and no network requests are made.
+Optional, **env-gated** marketing tags for acquisition analytics on the **product SPA** ([EloSync-Frontend](https://github.com/DiligentCreators/EloSync-Frontend)) and **marketing site** ([elosync-website](https://github.com/DiligentCreators/EloSync-Website)). Omit an env var to disable that vendor — no scripts load and no network requests are made.
 
 ::: warning Do not double-fire
 Configure each vendor **either** in code (env vars below) **or** inside Google Tag Manager — not both. Duplicate tags inflate metrics and conversion counts.
@@ -15,7 +15,7 @@ Configure each vendor **either** in code (env vars below) **or** inside Google T
 
 ## Environment variables
 
-### SaaS-Frontend (Forge `config.js` + local `.env`)
+### EloSync-Frontend (Forge `config.js` + local `.env`)
 
 | Variable | Vendor | Where to find the ID |
 |----------|--------|----------------------|
@@ -24,9 +24,9 @@ Configure each vendor **either** in code (env vars below) **or** inside Google T
 | `VITE_LINKEDIN_PARTNER_ID` | LinkedIn Insight Tag | LinkedIn Campaign Manager → Analyze → Insight Tag → Partner ID |
 | `VITE_X_PIXEL_ID` | X Pixel | X Ads → Events Manager → Pixel ID |
 
-Local: copy keys into `.env` (see `.env.example` in SaaS-Frontend).
+Local: copy keys into `.env` (see `.env.example` in EloSync-Frontend).
 
-Production: add keys to the Forge site `.env` and extend the deploy script `config.js` block (see [Frontend build artifacts](/developer-guide/frontend-build-artifacts) and SaaS-Frontend `README.md`):
+Production: add keys to the Forge site `.env` and extend the deploy script `config.js` block (see [Frontend build artifacts](/developer-guide/frontend-build-artifacts) and EloSync-Frontend `README.md`):
 
 ```bash
 echo "  VITE_GTM_ID: \"${VITE_GTM_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
@@ -37,7 +37,7 @@ echo "  VITE_X_PIXEL_ID: \"${VITE_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/
 
 No SPA rebuild is required to enable or disable pixels in production — only redeploy so Forge regenerates `config.js`.
 
-### saas-website (Forge `config.js` + local `.env.local`)
+### elosync-website (Forge `config.js` + local `.env.local`)
 
 | Variable | Vendor |
 |----------|--------|
@@ -47,9 +47,9 @@ No SPA rebuild is required to enable or disable pixels in production — only re
 | `NEXT_PUBLIC_LINKEDIN_PARTNER_ID` | LinkedIn Insight Tag |
 | `NEXT_PUBLIC_X_PIXEL_ID` | X Pixel |
 
-Local: copy keys into `.env.local` (see `.env.example` in saas-website). `public/config.js` is an empty stub; local `.env.local` is the fallback when `window.env` keys are absent.
+Local: copy keys into `.env.local` (see `.env.example` in elosync-website). `public/config.js` is an empty stub; local `.env.local` is the fallback when `window.env` keys are absent.
 
-Production: add keys to the **marketing** Forge site `.env` and extend the deploy script `config.js` block (see [website build artifacts](https://github.com/DiligentCreators/SaaS-Website/blob/main/docs/ci-cd/website-build-artifacts.md)):
+Production: add keys to the **marketing** Forge site `.env` and extend the deploy script `config.js` block (see [website build artifacts](https://github.com/DiligentCreators/EloSync-Website/blob/main/docs/ci-cd/website-build-artifacts.md)):
 
 ```bash
 echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
@@ -63,7 +63,7 @@ echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
 
 No website rebuild is required to change API URL or pixels in production — only redeploy so Forge regenerates `config.js`.
 
-## Code layout (saas-website)
+## Code layout (elosync-website)
 
 ```
 lib/
@@ -75,7 +75,7 @@ components/analytics/
 public/config.js       # local stub; Forge overwrites in production
 ```
 
-## Code layout (SaaS-Frontend)
+## Code layout (EloSync-Frontend)
 
 ```
 src/lib/marketing-pixels/
@@ -118,7 +118,7 @@ Wire these at the same points you consider product funnel milestones (e.g. after
 1. **Disabled:** With all env vars empty, Network tab shows no requests to `googletagmanager.com`, `facebook.net`, `licdn.com`, or `ads-twitter.com`.
 2. **Single vendor:** Set one ID; only that vendor's script loads.
 3. **SPA:** Navigate between routes; GTM `virtual_page_view` and Meta/X `PageView` fire once per navigation.
-4. **Unit tests:** `npm run test:unit -- src/lib/marketing-pixels/` in SaaS-Frontend.
+4. **Unit tests:** `npm run test:unit -- src/lib/marketing-pixels/` in EloSync-Frontend.
 
 ## Deferred
 
