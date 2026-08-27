@@ -754,6 +754,41 @@ PDF download, email vendor, stats dashboard, activity timeline, trash/restore, m
 
 Tenant API reference: [Tenant API — Purchase Orders](/api/tenant-v1-purchase-orders).
 
+### Resellers (`module:resellers`)
+
+Partner directory with commission rates: list resellers, capture contact and company details, assign owners, and add notes from your phone.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/resellers.ts` — list, CRUD, assign, add note |
+| Types | `types/resellers.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/reseller-labels.ts` — status and commission labels |
+| Form | `components/forms/ResellerFormFields.tsx` — shared create/edit fields |
+| Routes | `app/(app)/(tabs)/resellers/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: resellers.view`, tab `/(app)/(tabs)/resellers` (label **Resel**) |
+| Permissions | `resellers.view`, `create`, `update`, `delete`, `assign` |
+
+Stats dashboard, activity timeline, trash/restore, invite login, and dedicated assign endpoint UI remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Resellers](/api/tenant-v1-resellers).
+
+### Reseller Payouts (`module:reseller-payouts`)
+
+Commission ledger for reseller and owner payouts: browse accrued entries, filter by status and party, and approve, mark paid, or void from your phone.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/reseller-payouts.ts` — list, stats, get, approve, pay, void |
+| Types | `types/reseller-payouts.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/reseller-payout-labels.ts` — status, party, rate, and money labels |
+| Routes | `app/(app)/(tabs)/reseller-payouts/` — `index`, `[id]/index` |
+| Nav | `config/modules.ts` — `permission: reseller-payouts.view`, tab `/(app)/(tabs)/reseller-payouts` (label **Payout**) |
+| Permissions | `reseller-payouts.view`, `approve`, `pay`, `void` |
+
+Stats dashboard KPI strip remains web-only on mobile v1. Entries are system-generated when linked invoices are fully paid (no create/edit on mobile).
+
+Tenant API reference: [Tenant API — Reseller Payouts](/api/tenant-v1-reseller-payouts).
+
 ## Related
 
 - [Tenant API index](/api/index)
