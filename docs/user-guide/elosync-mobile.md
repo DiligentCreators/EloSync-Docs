@@ -17,34 +17,34 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 
 | Module | Mobile surface |
 |--------|----------------|
-| **Leads** | List, search, create, view, edit, delete; notes and AI copilot on view (permission-gated) |
-| **Tasks** | List, search, create, view, edit, delete, complete/reopen; notes on view when update permitted |
-| **Contacts** | List, search, create, view, edit, delete; notes on view when update permitted |
-| **Companies** | List, search, create, view, edit, delete; notes on view when update permitted |
-| **Opportunities** | List, search, create, view, edit, delete; notes and AI copilot on view (permission-gated); Pipeline tab |
-| **Activities** | List, search, create, view, edit, delete, complete (permission-gated); notes on view when update permitted; Log tab |
+| **Leads** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated) |
+| **Tasks** | List, search, create, view, edit, delete, complete/reopen; notes and activity timeline on view when update permitted |
+| **Contacts** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted |
+| **Companies** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted |
+| **Opportunities** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated); Pipeline tab |
+| **Activities** | List, search, create, view, edit, delete, complete (permission-gated); notes and activity timeline on view when update permitted; Log tab |
 | **ToDos** | List, search, create, view, edit, delete, mark complete (permission-gated); ToDos tab |
-| **Quotations** | List, search, create, view, edit, delete, send, accept (permission-gated); notes on view when update permitted; Quotes tab |
+| **Quotations** | List, search, create, view, edit, delete, send, accept (permission-gated); notes and activity timeline on view when update permitted; Quotes tab |
 | **Calendar** | List (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated); Calendar tab |
 | **Meetings** | List (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated); Meetings tab |
-| **Projects** | List, search, create, view, edit, status transitions, delete (permission-gated); notes on view when update permitted; Projects tab |
-| **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); notes on view when update permitted; Contracts tab |
-| **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); notes on view when update permitted; Invoices tab |
-| **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; notes on view when update permitted; Payments tab |
-| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated); notes on view when update permitted; Credits tab |
-| **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); notes on view when update permitted; Ests tab |
-| **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); notes on view when update permitted; Spend tab |
-| **Products** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; Products tab |
-| **Warehouses** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; WH tab |
+| **Projects** | List, search, create, view, edit, status transitions, delete (permission-gated); notes and activity timeline on view when update permitted; Projects tab |
+| **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); notes and activity timeline on view when update permitted; Contracts tab |
+| **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); notes and activity timeline on view when update permitted; Invoices tab |
+| **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; notes and activity timeline on view when update permitted; Payments tab |
+| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated); notes and activity timeline on view when update permitted; Credits tab |
+| **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); notes and activity timeline on view when update permitted; Ests tab |
+| **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); notes and activity timeline on view when update permitted; Spend tab |
+| **Products** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; Products tab |
+| **Warehouses** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; WH tab |
 | **Inventory** | Stock levels, adjust, transfers (create/view/edit draft/dispatch/complete/cancel/delete); Stock tab |
 | **Communication templates** | List, search, create, view, edit, delete (permission-gated); Tmpl tab |
 | **Email** | Mailbox list (inbox/sent/drafts), search, read, mark read (permission-gated); Mail tab |
 | **Announcements** | Inbox, search, view, mark read; create/edit/delete for managers; News tab |
-| **Assets** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; Assets tab |
+| **Assets** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; Assets tab |
 | **Short links** | List, search, create, view, edit, delete, share short URL (permission-gated); Links tab |
 | **Documents** | List, search, upload, view, edit metadata, delete, download/share (permission-gated); Docs tab |
-| **Help desk** | List, search, create, view, edit, delete, close, reopen, add notes (permission-gated); Tickets tab |
-| **Knowledge base** | List, search, create, view, edit, delete (permission-gated); notes on view when update permitted; KB tab |
+| **Help desk** | List, search, create, view, edit, delete, close, reopen, add notes (permission-gated); activity timeline on view; Tickets tab |
+| **Knowledge base** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; KB tab |
 | **Team chat** | Conversation list, search, join channels, start DM/group, read thread, send text (permission-gated); Chat tab |
 | **WhatsApp Cloud** | Inbox, search, read thread, open chat, send text or approved templates (permission-gated); WA tab |
 | **Automation** | Workflow list, search, view, activate/deactivate, run now, delete, run history and logs (permission-gated); Auto tab |
@@ -56,9 +56,9 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Leave management** | Leave requests list, search, status filter, create, view, edit draft, submit, approve, reject, cancel, balances on view (permission-gated); Leave tab |
 | **Payroll** | Profiles and pay runs — list, search, CRUD, approve, pay, post (permission-gated); Pay tab |
 | **Departments** | List, search, status filter, CRUD, manager and members, performance summary (permission-gated); Depts tab |
-| **Vendors** | List, search, status filter, CRUD, assignee, notes (permission-gated); Vend tab |
-| **Purchase orders** | List, search, status filter, CRUD, send, receive, cancel, convert, notes (permission-gated); POs tab |
-| **Resellers** | List, search, status filter, CRUD, assignee, commission rates, notes (permission-gated); Resel tab |
+| **Vendors** | List, search, status filter, CRUD, assignee, notes and activity timeline (permission-gated); Vend tab |
+| **Purchase orders** | List, search, status filter, CRUD, send, receive, cancel, convert, notes and activity timeline (permission-gated); POs tab |
+| **Resellers** | List, search, status filter, CRUD, assignee, commission rates, notes and activity timeline (permission-gated); Resel tab |
 | **Reseller payouts** | List, search, status and party filters, view, approve, pay, void (permission-gated); Payout tab |
 | **Storage** | Workspace usage, allowance, pack label, refresh (permission-gated); Store tab |
 | **Branded** | Custom address status, DNS instructions, propose, verify, remove (permission-gated); Brand tab |

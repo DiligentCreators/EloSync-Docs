@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — module polish wave 3 (2026-08-27)
+
+- **SaaS-Mobile:** Shared **RecordTimelineSection** on record view screens — reads `activities` from the show API and displays audit timeline entries (actor, timestamp, event type). Wired across CRM, sales, purchasing, inventory, and help-desk modules that expose timeline on show.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, and changelog updated for timeline polish.
+
 ## EloSync Mobile — module polish wave 2 (2026-08-27)
 
 - **SaaS-Mobile:** Extended shared **RecordNotesSection** to Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, and Knowledge base (list + add when update permitted). Refactored Vendors, Purchase orders, and Help desk ticket views to the shared component. `addNote` API methods added for each module.

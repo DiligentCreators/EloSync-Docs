@@ -336,7 +336,7 @@ Tenant API reference: [Tenant API — Estimates](/api/tenant-v1-estimates).
 
 ### Expenses (`module:expenses`)
 
-Workspace expense claims with draft-only edit, submit, approve, reject, pay (when Accounting is not installed), and cancel. Receipt upload, vendor/PO links, accounting account pickers, notes, and timeline remain web-only on mobile v1.
+Workspace expense claims with draft-only edit, submit, approve, reject, pay (when Accounting is not installed), and cancel. Record notes and activity timeline on view. Receipt upload, vendor/PO links, and accounting account pickers remain web-only on mobile v1.
 
 | Piece | Location |
 |-------|----------|
@@ -351,7 +351,7 @@ Tenant API reference: [Tenant API — Expenses](/api/tenant-v1-expenses).
 
 ### Products (`module:products`)
 
-Product catalogue CRUD with category picker, pricing fields, and stock-tracking toggle. Rich-text description, notes, timeline, and category management remain web-only on mobile v1.
+Product catalogue CRUD with category picker, pricing fields, and stock-tracking toggle. Record notes and activity timeline on view. Rich-text description and category management remain web-only on mobile v1.
 
 | Piece | Location |
 |-------|----------|
@@ -366,7 +366,7 @@ Tenant API reference: [Tenant API — Products](/api/tenant-v1-products).
 
 ### Warehouses (`module:warehouses`)
 
-Warehouse location CRUD with active and default toggles. Notes and timeline remain web-only on mobile v1.
+Warehouse location CRUD with active and default toggles. Record notes and activity timeline on view.
 
 | Piece | Location |
 |-------|----------|
@@ -498,7 +498,7 @@ Support tickets with subject, description, priority, category, due date, notes, 
 | Nav | `config/modules.ts` — `permission: help-desk.view`, tab `/(app)/(tabs)/help-desk` (label **Tickets**) |
 | Permissions | `help-desk.view`, `help-desk.create`, `help-desk.update`, `help-desk.delete`, `help-desk.close`, `help-desk.reopen` |
 
-Attachments, assign, contact/company/KB links, category CRUD, timeline, stats, and trash/restore remain web-only on mobile v1.
+Attachments, assign, contact/company/KB links, category CRUD, stats, and trash/restore remain web-only on mobile v1. Record notes and activity timeline on view.
 
 Tenant API reference: [Tenant API — Help desk](/api/tenant-v1-help-desk).
 
@@ -517,7 +517,7 @@ Help articles with title, excerpt, plain-text body (stored as simple HTML), cate
 | Nav | `config/modules.ts` — `permission: knowledge-base.view`, tab `/(app)/(tabs)/knowledge-base` (label **KB**) |
 | Permissions | `knowledge-base.view`, `knowledge-base.create`, `knowledge-base.update`, `knowledge-base.delete` |
 
-Rich TipTap editor, attachments, notes, timeline, category CRUD, slug field, and trash/restore remain web-only on mobile v1.
+Rich TipTap editor, attachments, category CRUD, slug field, and trash/restore remain web-only on mobile v1. Record notes and activity timeline on view.
 
 Tenant API reference: [Tenant API — Knowledge base](/api/tenant-v1-knowledge-base).
 
@@ -733,7 +733,7 @@ Supplier directory for purchasing: list vendors, capture billing details, assign
 | Nav | `config/modules.ts` — `permission: vendors.view`, tab `/(app)/(tabs)/vendors` (label **Vend**) |
 | Permissions | `vendors.view`, `create`, `update`, `delete`, `assign` |
 
-Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint UI, and default withholding tax picker remain web-only on mobile v1.
+Stats dashboard, trash/restore, dedicated assign endpoint UI, and default withholding tax picker remain web-only on mobile v1. Record notes and activity timeline on view.
 
 Tenant API reference: [Tenant API — Vendors](/api/tenant-v1-vendors).
 
@@ -750,7 +750,7 @@ Create supplier purchase orders, send them, mark receipt (with optional warehous
 | Nav | `config/modules.ts` — `permission: purchase-orders.view`, tab `/(app)/(tabs)/purchase-orders` (label **POs**) |
 | Permissions | `purchase-orders.view`, `create`, `update`, `delete`, `assign`, `send`, `receive`, `cancel`, `convert` |
 
-PDF download, email vendor, stats dashboard, activity timeline, trash/restore, multi-line editor, and product picker remain web-only on mobile v1.
+PDF download, email vendor, stats dashboard, trash/restore, multi-line editor, and product picker remain web-only on mobile v1. Record notes and activity timeline on view.
 
 Tenant API reference: [Tenant API — Purchase Orders](/api/tenant-v1-purchase-orders).
 
@@ -768,7 +768,7 @@ Partner directory with commission rates: list resellers, capture contact and com
 | Nav | `config/modules.ts` — `permission: resellers.view`, tab `/(app)/(tabs)/resellers` (label **Resel**) |
 | Permissions | `resellers.view`, `create`, `update`, `delete`, `assign` |
 
-Stats dashboard, activity timeline, trash/restore, invite login, and dedicated assign endpoint UI remain web-only on mobile v1.
+Stats dashboard, trash/restore, invite login, and dedicated assign endpoint UI remain web-only on mobile v1. Record notes and activity timeline on view.
 
 Tenant API reference: [Tenant API — Resellers](/api/tenant-v1-resellers).
 
@@ -849,9 +849,11 @@ Reusable record affordances added after the core module program shipped:
 | Piece | Location |
 |-------|----------|
 | Notes UI | `components/records/RecordNotesSection.tsx` — list note entries + add note form |
+| Timeline UI | `components/records/RecordTimelineSection.tsx` — read-only activity/audit timeline from show `activities` |
 | Note type | `types/notes.ts` — shared `RecordNote` shape |
+| Timeline type | `types/timeline.ts` — shared `RecordTimelineEntry` shape |
 | Record copilot | `components/records/RecordAiCopilotSection.tsx` — summarize, next action, draft follow-up modal |
-| Wired on view | Leads, Opportunities (notes + copilot), Contacts, Companies, Tasks, Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, Knowledge base (notes); Vendors, Purchase orders, Help desk, Resellers refactored to shared notes component |
+| Wired on view | Leads, Opportunities (notes + copilot + timeline), Contacts, Companies, Tasks, Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, Knowledge base (notes + timeline); Vendors, Purchase orders, Help desk, Resellers (notes + timeline) |
 
 Notes require `{module}.update` on each API. Copilot requires `module:ai`, `ai.use`, and the parent record view permission.
 
