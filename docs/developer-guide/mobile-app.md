@@ -851,7 +851,7 @@ Reusable record affordances added after the core module program shipped:
 | Notes UI | `components/records/RecordNotesSection.tsx` — list note entries + add note form |
 | Note type | `types/notes.ts` — shared `RecordNote` shape |
 | Record copilot | `components/records/RecordAiCopilotSection.tsx` — summarize, next action, draft follow-up modal |
-| Wired on view | Leads, Opportunities (notes + copilot), Contacts, Companies, Tasks (notes); Resellers refactored to shared notes component |
+| Wired on view | Leads, Opportunities (notes + copilot), Contacts, Companies, Tasks, Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, Knowledge base (notes); Vendors, Purchase orders, Help desk, Resellers refactored to shared notes component |
 
 Notes require `{module}.update` on each API. Copilot requires `module:ai`, `ai.use`, and the parent record view permission.
 

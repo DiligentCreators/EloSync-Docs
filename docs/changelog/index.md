@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — module polish wave 2 (2026-08-27)
+
+- **SaaS-Mobile:** Extended shared **RecordNotesSection** to Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, and Knowledge base (list + add when update permitted). Refactored Vendors, Purchase orders, and Help desk ticket views to the shared component. `addNote` API methods added for each module.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, and changelog updated for polish wave 2.
+
 ## EloSync Mobile — module polish (2026-08-27)
 
 - **SaaS-Mobile:** Shared **RecordNotesSection** on Leads, Opportunities, Contacts, Companies, Tasks (list + add when update permitted); **RecordAiCopilotSection** on Lead and Opportunity view (summarize, next action, draft follow-up with share). Resellers notes refactored to shared component. Copilot API methods added to `lib/api/ai.ts`.
