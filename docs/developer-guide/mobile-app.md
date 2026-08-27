@@ -719,6 +719,24 @@ Stats dashboard, full performance reports, trash/restore, and dedicated attach/d
 
 Tenant API reference: [Tenant API — Departments](/api/tenant-v1-departments).
 
+### Vendors (`module:vendors`)
+
+Supplier directory for purchasing: list vendors, capture billing details, assign owners, and add notes from your phone.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/vendors.ts` — list, CRUD, assign, add note |
+| Types | `types/vendors.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/vendor-labels.ts` — status labels |
+| Form | `components/forms/VendorFormFields.tsx` — shared create/edit fields |
+| Routes | `app/(app)/(tabs)/vendors/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: vendors.view`, tab `/(app)/(tabs)/vendors` (label **Vend**) |
+| Permissions | `vendors.view`, `create`, `update`, `delete`, `assign` |
+
+Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint UI, and default withholding tax picker remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Vendors](/api/tenant-v1-vendors).
+
 ## Related
 
 - [Tenant API index](/api/index)

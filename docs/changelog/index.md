@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — Vendors module (2026-08-27)
+
+- **SaaS-Mobile:** **Vendors** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, notes list and add note on view (permission-gated). API client `lib/api/vendors.ts`. Routes under `app/(app)/(tabs)/vendors/`. Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint, and default withholding tax picker remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Vendors delivery.
+
 ## EloSync Mobile — Departments module (2026-08-27)
 
 - **SaaS-Mobile:** **Departments** list, search, status filter, create, view, edit, delete; manager assignment, user/employee member chips, and read-only performance summary when permitted (permission-gated). Expanded `lib/api/departments.ts`. Routes under `app/(app)/(tabs)/departments/`. Stats dashboard, performance reports, trash/restore, and separate attach/detach endpoints remain web-only on mobile v1.
