@@ -1,5 +1,14 @@
 ﻿# Changelog
 
+## Tenant web — auth, invoices, quotations (2026-08-27)
+
+- **SaaS-Frontend:** Tenant bearer tokens always persist in `localStorage` so new tabs and “open in new tab” on records stay signed in without **Keep me signed in for 30 days**. That checkbox now only extends server token lifetime (30 days). Legacy tenant tokens in `sessionStorage` migrate on read. Tenant login label updated accordingly.
+- **SaaS-Frontend:** **Invoices** list — issue-date range filters (`date_from` / `date_to`) in the filter bar.
+- **SaaS-Backend:** Invoice list and stats accept `date_from` / `date_to` (filters on issue date, or created date when issue date is unset).
+- **SaaS-Frontend:** **Quotations** list — Contact, Company, Phone, and Email columns; view page shows phone and email on related contact/company cards.
+- **SaaS-Backend:** Quotation and invoice list APIs include `phone` on contact and company refs.
+- **SaaS-Frontend:** Module list layout — title + page tour, description, action buttons, then filters; breadcrumbs stay in the topbar only.
+
 ## EloSync Mobile — module polish wave 3 (2026-08-27)
 
 - **SaaS-Mobile:** Shared **RecordTimelineSection** on record view screens — reads `activities` from the show API and displays audit timeline entries (actor, timestamp, event type). Wired across CRM, sales, purchasing, inventory, and help-desk modules that expose timeline on show.

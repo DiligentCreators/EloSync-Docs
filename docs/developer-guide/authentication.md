@@ -74,6 +74,8 @@ When a Bearer token is present but cannot resolve a workspace (unknown, revoked,
 
 Tenant token TTL comes from the workspace `session_lifetime_minutes` setting (`0` = non-expiring token), falling back to Central when unset. Remember-me still extends a positive TTL to at least 30 days.
 
+The tenant SPA always stores the bearer token in **`localStorage`** (`dc_saas_token_tenant`) so new browser tabs share the same session. **Keep me signed in for 30 days** only affects the `remember` flag sent at login (server TTL). Central tokens still use `localStorage` when remember-me is checked and `sessionStorage` otherwise. Legacy tenant tokens found only in `sessionStorage` are promoted to `localStorage` on read.
+
 Spatie roles/permissions are isolated by `guard_name` (`central-api` vs `tenant-api`).
 
 ## Registration

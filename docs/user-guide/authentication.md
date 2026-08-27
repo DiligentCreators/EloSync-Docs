@@ -15,7 +15,7 @@ Registration creates your workspace, owner account, default roles, and default m
 
 1. Open `/login`.
 2. Enter your workspace, email, and password. The workspace is preselected when you open the application on its workspace domain.
-3. Optionally enable **Remember me**.
+3. Optionally enable **Keep me signed in for 30 days** to extend your session to about 30 days on the server. You stay signed in across browser tabs even when this is unchecked; your workspace session length still applies until the token expires.
 4. Verify your email when prompted; unverified accounts cannot open protected workspace pages. On the verify-email gate, **Sign out** ends the session and returns you to `/login` (or `/central/login` for Central).
 5. After success you land on `/dashboard`.
 
