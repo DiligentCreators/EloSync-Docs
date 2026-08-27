@@ -829,18 +829,31 @@ Workspace assistant chat: list conversations, start threads, send prompts, view 
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/ai.ts` — conversations, messages, credits, confirm/cancel actions |
+| API client | `lib/api/ai.ts` — conversations, messages, credits, confirm/cancel actions, lead/opportunity copilot |
 | Types | `types/ai.ts` (re-exported from `types/api.ts`) |
 | Starters | `lib/ai-starter-prompts.ts` — module/permission-gated quick prompts |
 | Utils | `lib/ai-utils.ts` — labels, reference routes, action previews |
-| Components | `components/ai/AiMessageBubble.tsx` — message rendering + confirmations |
+| Components | `components/ai/AiMessageBubble.tsx`, `components/ai/AiStructuredResult.tsx`, `components/records/RecordAiCopilotSection.tsx` |
 | Routes | `app/(app)/(tabs)/ai/` — `index`, `[id]/index` |
 | Nav | `config/modules.ts` — `permission: ai.use`, tab `/(app)/(tabs)/ai` (label **AI**) |
 | Permissions | `ai.use`, `ai.confirm` |
 
-Lead/opportunity record copilot sections and Settings → AI provider configuration remain web-only on mobile v1.
+Settings → AI provider configuration remains web-only on mobile v1. Record copilot also mounts on Lead and Opportunity view screens when AI + record view permissions apply.
 
 Tenant API reference: [Tenant API — AI](/api/tenant-v1-ai).
+
+### Module polish (shared record UX)
+
+Reusable record affordances added after the core module program shipped:
+
+| Piece | Location |
+|-------|----------|
+| Notes UI | `components/records/RecordNotesSection.tsx` — list note entries + add note form |
+| Note type | `types/notes.ts` — shared `RecordNote` shape |
+| Record copilot | `components/records/RecordAiCopilotSection.tsx` — summarize, next action, draft follow-up modal |
+| Wired on view | Leads, Opportunities (notes + copilot), Contacts, Companies, Tasks (notes); Resellers refactored to shared notes component |
+
+Notes require `{module}.update` on each API. Copilot requires `module:ai`, `ai.use`, and the parent record view permission.
 
 ## Related
 

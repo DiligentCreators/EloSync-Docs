@@ -17,11 +17,11 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 
 | Module | Mobile surface |
 |--------|----------------|
-| **Leads** | List, search, create, view, edit, delete (permission-gated) |
-| **Tasks** | List, search, create, view, edit, delete, complete/reopen (permission-gated) |
-| **Contacts** | List, search, create, view, edit, delete (permission-gated) |
-| **Companies** | List, search, create, view, edit, delete (permission-gated) |
-| **Opportunities** | List, search, create, view, edit, delete (permission-gated); Pipeline tab |
+| **Leads** | List, search, create, view, edit, delete; notes and AI copilot on view (permission-gated) |
+| **Tasks** | List, search, create, view, edit, delete, complete/reopen; notes on view when update permitted |
+| **Contacts** | List, search, create, view, edit, delete; notes on view when update permitted |
+| **Companies** | List, search, create, view, edit, delete; notes on view when update permitted |
+| **Opportunities** | List, search, create, view, edit, delete; notes and AI copilot on view (permission-gated); Pipeline tab |
 | **Activities** | List, search, create, view, edit, delete, complete (permission-gated); Log tab |
 | **ToDos** | List, search, create, view, edit, delete, mark complete (permission-gated); ToDos tab |
 | **Quotations** | List, search, create, view, edit, delete, send, accept (permission-gated); Quotes tab |
