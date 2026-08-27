@@ -57,6 +57,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Payroll** | Profiles and pay runs — list, search, CRUD, approve, pay, post (permission-gated); Pay tab |
 | **Departments** | List, search, status filter, CRUD, manager and members, performance summary (permission-gated); Depts tab |
 | **Vendors** | List, search, status filter, CRUD, assignee, notes (permission-gated); Vend tab |
+| **Purchase orders** | List, search, status filter, CRUD, send, receive, cancel, convert, notes (permission-gated); POs tab |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 
@@ -110,4 +111,5 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Payroll user guide](/user-guide/payroll-overview)
 - [Departments user guide](/user-guide/departments-overview)
 - [Vendors user guide](/user-guide/vendors-overview)
+- [Purchase orders user guide](/user-guide/purchase-orders-overview)
 - [Tenant application guide](/user-guide/tenant-application)

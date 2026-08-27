@@ -737,6 +737,23 @@ Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint UI,
 
 Tenant API reference: [Tenant API — Vendors](/api/tenant-v1-vendors).
 
+### Purchase Orders (`module:purchase-orders`)
+
+Create supplier purchase orders, send them, mark receipt (with optional warehouse for stock), cancel, convert to expenses, and add notes from your phone. Requires **Vendors** module entitlement for vendor picker.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/purchase-orders.ts` — list, CRUD, send, receive, cancel, convert, add note |
+| Types | `types/purchase-orders.ts` (re-exported from `types/api.ts`) |
+| Labels | `lib/purchase-order-labels.ts` — status labels and money formatting |
+| Routes | `app/(app)/(tabs)/purchase-orders/` — `index`, `new`, `[id]/index`, `[id]/edit` |
+| Nav | `config/modules.ts` — `permission: purchase-orders.view`, tab `/(app)/(tabs)/purchase-orders` (label **POs**) |
+| Permissions | `purchase-orders.view`, `create`, `update`, `delete`, `assign`, `send`, `receive`, `cancel`, `convert` |
+
+PDF download, email vendor, stats dashboard, activity timeline, trash/restore, multi-line editor, and product picker remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — Purchase Orders](/api/tenant-v1-purchase-orders).
+
 ## Related
 
 - [Tenant API index](/api/index)
