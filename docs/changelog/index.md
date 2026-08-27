@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — module polish (2026-08-27)
+
+- **SaaS-Mobile:** Shared **RecordNotesSection** on Leads, Opportunities, Contacts, Companies, Tasks (list + add when update permitted); **RecordAiCopilotSection** on Lead and Opportunity view (summarize, next action, draft follow-up with share). Resellers notes refactored to shared component. Copilot API methods added to `lib/api/ai.ts`.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, and changelog updated for polish delivery.
+
 ## EloSync Mobile — AI module (2026-08-27)
 
 - **SaaS-Mobile:** **EloSync AI** assistant — conversation list, new thread, chat with starter prompts, credit balance, structured insights/references, confirm/cancel write actions when permitted. API client `lib/api/ai.ts`. Routes under `app/(app)/(tabs)/ai/`. Record copilot panels and Settings → AI configuration remain web-only on mobile v1.
