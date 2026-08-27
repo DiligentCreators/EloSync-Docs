@@ -1,5 +1,15 @@
 ﻿# Changelog
 
+## EloSync Mobile — Reseller Payouts module (2026-08-27)
+
+- **SaaS-Mobile:** **Reseller Payouts** commission ledger list, search, status and party filters, view entry details, approve, mark paid, and void (permission-gated). API client `lib/api/reseller-payouts.ts`. Routes under `app/(app)/(tabs)/reseller-payouts/`. Stats dashboard KPI strip remains web-only on mobile v1; entries are system-generated (no create/edit).
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Reseller Payouts delivery.
+
+## EloSync Mobile — Resellers module (2026-08-27)
+
+- **SaaS-Mobile:** **Resellers** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, commission rates, internal notes field, note entries list and add note on view (permission-gated). API client `lib/api/resellers.ts`. Routes under `app/(app)/(tabs)/resellers/`. Stats dashboard, activity timeline, trash/restore, invite login, and dedicated assign endpoint remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Resellers delivery.
+
 ## EloSync Mobile — Purchase Orders module (2026-08-27)
 
 - **SaaS-Mobile:** **Purchase Orders** list, search, status filter, create, view, edit (draft), delete; send, receive (with optional warehouse when Inventory + Warehouses entitled), cancel, convert to expense, notes, and vendor picker (permission-gated). API client `lib/api/purchase-orders.ts`. Routes under `app/(app)/(tabs)/purchase-orders/`. PDF, email vendor, stats, timeline, trash/restore, multi-line editor, and product picker remain web-only on mobile v1.
