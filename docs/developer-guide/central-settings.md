@@ -80,6 +80,6 @@ Tenant + Central password-reset and invite notifications use:
 php artisan test --compact tests/Feature/Central/Settings/SystemSettingsTest.php
 ```
 
-Playwright: `npm run test:e2e:settings` in `SaaS-Frontend`.
+Playwright: `npm run test:e2e:settings` in `EloSync-Frontend`.
 
 Tenant workspace overrides: see [tenant-settings-developer.md](/developer-guide/tenant-settings).

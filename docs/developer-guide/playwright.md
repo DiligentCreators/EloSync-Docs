@@ -1,11 +1,11 @@
-﻿# Central Playwright E2E
+# Central Playwright E2E
 
 The Playwright suite for the **Central Application** lives in the Frontend repository:
 
-- Guide: [`SaaS-Frontend/docs/testing/PLAYWRIGHT.md`](https://github.com/DiligentCreators/SaaS-Frontend/blob/main/docs/testing/PLAYWRIGHT.md)
-- Tests: `SaaS-Frontend/e2e/tests/<module>/`
-- Shared POM / fixtures: `SaaS-Frontend/e2e/{pages,fixtures,helpers,utils,test-data}/`
-- Config: `SaaS-Frontend/playwright.config.ts`
+- Guide: [`EloSync-Frontend/docs/testing/PLAYWRIGHT.md`](https://github.com/DiligentCreators/EloSync-Frontend/blob/main/docs/testing/PLAYWRIGHT.md)
+- Tests: `EloSync-Frontend/e2e/tests/<module>/`
+- Shared POM / fixtures: `EloSync-Frontend/e2e/{pages,fixtures,helpers,utils,test-data}/`
+- Config: `EloSync-Frontend/playwright.config.ts`
 
 ## Scope
 
@@ -68,9 +68,9 @@ Setup project (`auth.setup.ts`) authenticates once for chromium suites. Auth and
 Playwright writes generated screenshots under:
 
 ```text
-SaaS-Frontend/docs/testing/images/
-SaaS-Frontend/test-results/
-SaaS-Frontend/playwright-report/
+EloSync-Frontend/docs/testing/images/
+EloSync-Frontend/test-results/
+EloSync-Frontend/playwright-report/
 ```
 
 Those paths are **gitignored** in Frontend and Backend — never commit e2e-generated images, videos, or traces there.
@@ -80,7 +80,7 @@ Curated documentation screenshots may be committed **only** in this Docs repo (`
 ## Quick start
 
 ```bash
-cd SaaS-Frontend
+cd EloSync-Frontend
 cp .env.e2e.example .env.e2e
 npm install
 npx playwright install chromium

@@ -15,9 +15,9 @@ Every tenant module list page ships a short **product tour** (driver.js) that ex
 | Piece | Location |
 |-------|----------|
 | Dependency | `driver.js` (CSS imported once in `src/main.tsx`) |
-| Helper | `SaaS-Frontend/src/tours/module-tour.ts` |
-| Per-module steps | `SaaS-Frontend/src/tours/{slug}.ts` |
-| Registry | `SaaS-Frontend/src/tours/registry.ts` |
+| Helper | `EloSync-Frontend/src/tours/module-tour.ts` |
+| Per-module steps | `EloSync-Frontend/src/tours/{slug}.ts` |
+| Registry | `EloSync-Frontend/src/tours/registry.ts` |
 | UI hook | `PageHeader` `tourId` prop |
 
 ```ts

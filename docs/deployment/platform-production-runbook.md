@@ -30,12 +30,12 @@ RC notes: [releases/rc1-production-readiness.md](/deployment/rc1-production-read
 
 Production builds are automated on merge to `main`. See [frontend-build-artifacts.md](/developer-guide/frontend-build-artifacts).
 
-**Preferred (Laravel Forge):** deploy from the **`build-artifacts`** branch. Generate `/config.js` (`window.env`) from the SPA site `.env` in the deploy script (`VITE_API_URL`, `VITE_APP_NAME`, `VITE_API_MODE`, `VITE_REVERB_*`). Do not bake the API URL into CI. Full scripts and site settings: [Laravel Forge Deployment](./laravel-forge#2-spa-site-saas-frontend).
+**Preferred (Laravel Forge):** deploy from the **`build-artifacts`** branch. Generate `/config.js` (`window.env`) from the SPA site `.env` in the deploy script (`VITE_API_URL`, `VITE_APP_NAME`, `VITE_API_MODE`, `VITE_REVERB_*`). Do not bake the API URL into CI. Full scripts and site settings: [Laravel Forge Deployment](./laravel-forge#2-spa-site-elosync-frontend).
 
 **Manual fallback:**
 
 ```bash
-cd SaaS-Frontend
+cd EloSync-Frontend
 npm ci
 # VITE_* must be set at build time (see .env.example)
 npm run build
@@ -67,7 +67,7 @@ On Forge, configure these as **Scheduler** + **Daemons** on the API site — see
    See the [Notification System runbook](/deployment/notifications) for environment variables, Supervisor examples, origin pinning, and health checks.
 4. **Scheduler** (every minute)
    ```bash
-   * * * * * cd /path/to/SaaS-Backend && php artisan schedule:run >> /dev/null 2>&1
+   * * * * * cd /path/to/EloSync-Backend && php artisan schedule:run >> /dev/null 2>&1
    ```
 
 Scheduled commands (all use `withoutOverlapping`):

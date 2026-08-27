@@ -178,7 +178,7 @@ Exact permission names: see [Tenant RBAC](/user-guide/tenant-rbac) and module de
 
 ```bash
 # Backend
-cd SaaS-Backend
+cd EloSync-Backend
 php artisan test --compact \
   tests/Feature/Tenant/Leave/LeaveManagementTest.php \
   tests/Feature/Tenant/Payroll/PayrollTest.php \
@@ -186,7 +186,7 @@ php artisan test --compact \
   tests/Feature/Tenant/Attendance/AttendanceTest.php
 
 # Frontend headed (per module)
-cd SaaS-Frontend
+cd EloSync-Frontend
 npm run test:e2e:employees:headed
 npm run test:e2e:leave-management:headed
 npm run test:e2e:attendance:headed
@@ -201,10 +201,10 @@ Security coverage: inflated leave days, insufficient balance on approve, soft + 
 
 | Repo | PR | Branch | CI (re-check) |
 |------|-----|--------|---------------|
-| SaaS-Backend | [#72](https://github.com/DiligentCreators/SaaS-Backend/pull/72) | `feature/phase-7-hr-9630` | Quality Gate ✅ · Pest ✅ · CLEAN (draft) |
-| SaaS-Frontend | [#66](https://github.com/DiligentCreators/SaaS-Frontend/pull/66) | `feature/phase-7-hr-9630` | Quality Gate ✅ · CLEAN (draft) |
-| SaaS-Docs | [#75](https://github.com/DiligentCreators/SaaS-Docs/pull/75) | `feature/phase-7-hr-9630` | Quality Gate ✅ · CLEAN (draft) |
-| saas-website | [#12](https://github.com/DiligentCreators/SaaS-Website/pull/12) | `feature/phase-7-hr-9630` | CLEAN (draft; no required checks) |
+| EloSync-Backend | [#72](https://github.com/DiligentCreators/EloSync-Backend/pull/72) | `feature/phase-7-hr-9630` | Quality Gate ✅ · Pest ✅ · CLEAN (draft) |
+| EloSync-Frontend | [#66](https://github.com/DiligentCreators/EloSync-Frontend/pull/66) | `feature/phase-7-hr-9630` | Quality Gate ✅ · CLEAN (draft) |
+| EloSync-Docs | [#75](https://github.com/DiligentCreators/EloSync-Docs/pull/75) | `feature/phase-7-hr-9630` | Quality Gate ✅ · CLEAN (draft) |
+| elosync-website | [#12](https://github.com/DiligentCreators/EloSync-Website/pull/12) | `feature/phase-7-hr-9630` | CLEAN (draft; no required checks) |
 
 ---
 

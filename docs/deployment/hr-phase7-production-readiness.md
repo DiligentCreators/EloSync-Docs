@@ -20,10 +20,10 @@ Phase 7 delivers four free HR Marketplace SKUs on the frozen platform. After sec
 | Gate | Result |
 |------|--------|
 | Security audit (no open Critical/High) | Pass — see companion |
-| Backend CI (Quality Gate + Pest) | Pass — [PR #72](https://github.com/DiligentCreators/SaaS-Backend/pull/72) |
-| Frontend CI (Quality Gate) | Pass — [PR #66](https://github.com/DiligentCreators/SaaS-Frontend/pull/66) |
-| Docs CI (VitePress) | Pass — [PR #75](https://github.com/DiligentCreators/SaaS-Docs/pull/75) |
-| Website marketing SKUs | Mergeable — [PR #12](https://github.com/DiligentCreators/SaaS-Website/pull/12) |
+| Backend CI (Quality Gate + Pest) | Pass — [PR #72](https://github.com/DiligentCreators/EloSync-Backend/pull/72) |
+| Frontend CI (Quality Gate) | Pass — [PR #66](https://github.com/DiligentCreators/EloSync-Frontend/pull/66) |
+| Docs CI (VitePress) | Pass — [PR #75](https://github.com/DiligentCreators/EloSync-Docs/pull/75) |
+| Website marketing SKUs | Mergeable — [PR #12](https://github.com/DiligentCreators/EloSync-Website/pull/12) |
 | Headed Playwright (2026-08-02) | 6/6 per HR module |
 | Draft PRs marked ready | ☐ Eng |
 | Staging smoke | ☐ QA / Ops |
@@ -46,10 +46,10 @@ All: `is_default_included: false`, `is_billable: false`, category `hr`.
 ## Deploy order
 
 1. **Backend migrate** (schema + catalog + permissions + dependencies via migrate-only registrars)
-2. Deploy **API** (`saas-backend`)
-3. Deploy **SPA** (`saas-frontend`) with HR nav group
+2. Deploy **API** (`EloSync-Backend`)
+3. Deploy **SPA** (`EloSync-Frontend`) with HR nav group
 4. Deploy **Docs** (this pack)
-5. Deploy **marketing site** (modules marked available)
+5. Deploy **marketing site** (`EloSync-Website`; modules marked available)
 6. Staging smoke (below) before production traffic
 
 Suggested merge order: **Backend → Frontend → Docs → Website**.
@@ -114,7 +114,7 @@ No new env vars are required for HR itself. Payroll journal post needs an entitl
 
 ```bash
 # Backend
-cd saas-backend
+cd EloSync-Backend
 php artisan test --compact \
   tests/Feature/Tenant/Employee/EmployeeTest.php \
   tests/Feature/Tenant/Leave/LeaveManagementTest.php \
@@ -122,7 +122,7 @@ php artisan test --compact \
   tests/Feature/Tenant/Payroll/PayrollTest.php
 
 # Frontend headed / CI
-cd saas-frontend
+cd EloSync-Frontend
 npm run test:e2e:employees
 npm run test:e2e:leave-management
 npm run test:e2e:attendance

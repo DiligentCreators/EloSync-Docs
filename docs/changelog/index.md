@@ -1,401 +1,401 @@
-﻿# Changelog
+# Changelog
 
 ## Tenant web — auth, invoices, quotations (2026-08-27)
 
-- **SaaS-Frontend:** Tenant bearer tokens always persist in `localStorage` so new tabs and “open in new tab” on records stay signed in without **Keep me signed in for 30 days**. That checkbox now only extends server token lifetime (30 days). Legacy tenant tokens in `sessionStorage` migrate on read. Tenant login label updated accordingly.
-- **SaaS-Frontend:** **Invoices** list — issue-date range filters (`date_from` / `date_to`) in the filter bar.
-- **SaaS-Backend:** Invoice list and stats accept `date_from` / `date_to` (filters on issue date, or created date when issue date is unset).
-- **SaaS-Frontend:** **Quotations** list — Contact, Company, Phone, and Email columns; view page shows phone and email on related contact/company cards.
-- **SaaS-Backend:** Quotation and invoice list APIs include `phone` on contact and company refs.
-- **SaaS-Frontend:** Module list layout — title + page tour, description, action buttons, then filters; breadcrumbs stay in the topbar only.
+- **EloSync-Frontend:** Tenant bearer tokens always persist in `localStorage` so new tabs and “open in new tab” on records stay signed in without **Keep me signed in for 30 days**. That checkbox now only extends server token lifetime (30 days). Legacy tenant tokens in `sessionStorage` migrate on read. Tenant login label updated accordingly.
+- **EloSync-Frontend:** **Invoices** list — issue-date range filters (`date_from` / `date_to`) in the filter bar.
+- **EloSync-Backend:** Invoice list and stats accept `date_from` / `date_to` (filters on issue date, or created date when issue date is unset).
+- **EloSync-Frontend:** **Quotations** list — Contact, Company, Phone, and Email columns; view page shows phone and email on related contact/company cards.
+- **EloSync-Backend:** Quotation and invoice list APIs include `phone` on contact and company refs.
+- **EloSync-Frontend:** Module list layout — title + page tour, description, action buttons, then filters; breadcrumbs stay in the topbar only.
 
 ## EloSync Mobile — module polish wave 3 (2026-08-27)
 
-- **SaaS-Mobile:** Shared **RecordTimelineSection** on record view screens — reads `activities` from the show API and displays audit timeline entries (actor, timestamp, event type). Wired across CRM, sales, purchasing, inventory, and help-desk modules that expose timeline on show.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, and changelog updated for timeline polish.
+- **EloSync-Mobile:** Shared **RecordTimelineSection** on record view screens — reads `activities` from the show API and displays audit timeline entries (actor, timestamp, event type). Wired across CRM, sales, purchasing, inventory, and help-desk modules that expose timeline on show.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, and changelog updated for timeline polish.
 
 ## EloSync Mobile — module polish wave 2 (2026-08-27)
 
-- **SaaS-Mobile:** Extended shared **RecordNotesSection** to Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, and Knowledge base (list + add when update permitted). Refactored Vendors, Purchase orders, and Help desk ticket views to the shared component. `addNote` API methods added for each module.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, and changelog updated for polish wave 2.
+- **EloSync-Mobile:** Extended shared **RecordNotesSection** to Activities, Products, Assets, Expenses, Quotations, Contracts, Projects, Invoices, Payments, Credit notes, Estimates, Warehouses, and Knowledge base (list + add when update permitted). Refactored Vendors, Purchase orders, and Help desk ticket views to the shared component. `addNote` API methods added for each module.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, and changelog updated for polish wave 2.
 
 ## EloSync Mobile — module polish (2026-08-27)
 
-- **SaaS-Mobile:** Shared **RecordNotesSection** on Leads, Opportunities, Contacts, Companies, Tasks (list + add when update permitted); **RecordAiCopilotSection** on Lead and Opportunity view (summarize, next action, draft follow-up with share). Resellers notes refactored to shared component. Copilot API methods added to `lib/api/ai.ts`.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, and changelog updated for polish delivery.
+- **EloSync-Mobile:** Shared **RecordNotesSection** on Leads, Opportunities, Contacts, Companies, Tasks (list + add when update permitted); **RecordAiCopilotSection** on Lead and Opportunity view (summarize, next action, draft follow-up with share). Resellers notes refactored to shared component. Copilot API methods added to `lib/api/ai.ts`.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, and changelog updated for polish delivery.
 
 ## EloSync Mobile — AI module (2026-08-27)
 
-- **SaaS-Mobile:** **EloSync AI** assistant — conversation list, new thread, chat with starter prompts, credit balance, structured insights/references, confirm/cancel write actions when permitted. API client `lib/api/ai.ts`. Routes under `app/(app)/(tabs)/ai/`. Record copilot panels and Settings → AI configuration remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for AI delivery.
+- **EloSync-Mobile:** **EloSync AI** assistant — conversation list, new thread, chat with starter prompts, credit balance, structured insights/references, confirm/cancel write actions when permitted. API client `lib/api/ai.ts`. Routes under `app/(app)/(tabs)/ai/`. Record copilot panels and Settings → AI configuration remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for AI delivery.
 
 ## EloSync Mobile — Branded module (2026-08-27)
 
-- **SaaS-Mobile:** **Branded** custom website address screen — status, DNS instructions (TXT, A, CNAME), propose/verify/remove when permitted, share DNS values, pull-to-refresh. API client `lib/api/branded.ts`. Routes under `app/(app)/(tabs)/branded/`. Settings → General branded panel parity on mobile v1; logo upload remains web-only.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Branded delivery.
+- **EloSync-Mobile:** **Branded** custom website address screen — status, DNS instructions (TXT, A, CNAME), propose/verify/remove when permitted, share DNS values, pull-to-refresh. API client `lib/api/branded.ts`. Routes under `app/(app)/(tabs)/branded/`. Settings → General branded panel parity on mobile v1; logo upload remains web-only.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Branded delivery.
 
 ## EloSync Mobile — Storage module (2026-08-27)
 
-- **SaaS-Mobile:** **Storage** workspace usage screen — used/allowance bytes, percent bar, pack label, pull-to-refresh (permission-gated). API client `lib/api/storage.ts`. Routes under `app/(app)/(tabs)/storage/`. Marketplace pack purchase and settings panel remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Storage delivery.
+- **EloSync-Mobile:** **Storage** workspace usage screen — used/allowance bytes, percent bar, pack label, pull-to-refresh (permission-gated). API client `lib/api/storage.ts`. Routes under `app/(app)/(tabs)/storage/`. Marketplace pack purchase and settings panel remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Storage delivery.
 
 ## EloSync Mobile — Reseller Payouts module (2026-08-27)
 
-- **SaaS-Mobile:** **Reseller Payouts** commission ledger list, search, status and party filters, view entry details, approve, mark paid, and void (permission-gated). API client `lib/api/reseller-payouts.ts`. Routes under `app/(app)/(tabs)/reseller-payouts/`. Stats dashboard KPI strip remains web-only on mobile v1; entries are system-generated (no create/edit).
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Reseller Payouts delivery.
+- **EloSync-Mobile:** **Reseller Payouts** commission ledger list, search, status and party filters, view entry details, approve, mark paid, and void (permission-gated). API client `lib/api/reseller-payouts.ts`. Routes under `app/(app)/(tabs)/reseller-payouts/`. Stats dashboard KPI strip remains web-only on mobile v1; entries are system-generated (no create/edit).
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Reseller Payouts delivery.
 
 ## EloSync Mobile — Resellers module (2026-08-27)
 
-- **SaaS-Mobile:** **Resellers** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, commission rates, internal notes field, note entries list and add note on view (permission-gated). API client `lib/api/resellers.ts`. Routes under `app/(app)/(tabs)/resellers/`. Stats dashboard, activity timeline, trash/restore, invite login, and dedicated assign endpoint remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Resellers delivery.
+- **EloSync-Mobile:** **Resellers** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, commission rates, internal notes field, note entries list and add note on view (permission-gated). API client `lib/api/resellers.ts`. Routes under `app/(app)/(tabs)/resellers/`. Stats dashboard, activity timeline, trash/restore, invite login, and dedicated assign endpoint remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Resellers delivery.
 
 ## EloSync Mobile — Purchase Orders module (2026-08-27)
 
-- **SaaS-Mobile:** **Purchase Orders** list, search, status filter, create, view, edit (draft), delete; send, receive (with optional warehouse when Inventory + Warehouses entitled), cancel, convert to expense, notes, and vendor picker (permission-gated). API client `lib/api/purchase-orders.ts`. Routes under `app/(app)/(tabs)/purchase-orders/`. PDF, email vendor, stats, timeline, trash/restore, multi-line editor, and product picker remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Purchase Orders delivery.
+- **EloSync-Mobile:** **Purchase Orders** list, search, status filter, create, view, edit (draft), delete; send, receive (with optional warehouse when Inventory + Warehouses entitled), cancel, convert to expense, notes, and vendor picker (permission-gated). API client `lib/api/purchase-orders.ts`. Routes under `app/(app)/(tabs)/purchase-orders/`. PDF, email vendor, stats, timeline, trash/restore, multi-line editor, and product picker remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Purchase Orders delivery.
 
 ## EloSync Mobile — Vendors module (2026-08-27)
 
-- **SaaS-Mobile:** **Vendors** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, notes list and add note on view (permission-gated). API client `lib/api/vendors.ts`. Routes under `app/(app)/(tabs)/vendors/`. Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint, and default withholding tax picker remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Vendors delivery.
+- **EloSync-Mobile:** **Vendors** list, search, status filter, create, view, edit, delete; assignee on create/edit when permitted, notes list and add note on view (permission-gated). API client `lib/api/vendors.ts`. Routes under `app/(app)/(tabs)/vendors/`. Stats dashboard, activity timeline, trash/restore, dedicated assign endpoint, and default withholding tax picker remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Vendors delivery.
 
 ## EloSync Mobile — Departments module (2026-08-27)
 
-- **SaaS-Mobile:** **Departments** list, search, status filter, create, view, edit, delete; manager assignment, user/employee member chips, and read-only performance summary when permitted (permission-gated). Expanded `lib/api/departments.ts`. Routes under `app/(app)/(tabs)/departments/`. Stats dashboard, performance reports, trash/restore, and separate attach/detach endpoints remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Departments delivery.
+- **EloSync-Mobile:** **Departments** list, search, status filter, create, view, edit, delete; manager assignment, user/employee member chips, and read-only performance summary when permitted (permission-gated). Expanded `lib/api/departments.ts`. Routes under `app/(app)/(tabs)/departments/`. Stats dashboard, performance reports, trash/restore, and separate attach/detach endpoints remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Departments delivery.
 
 ## EloSync Mobile — Payroll module (2026-08-27)
 
-- **SaaS-Mobile:** **Payroll** profiles and pay runs — list, search, create, view, edit, delete; pay run status filter, approve, mark paid, and post to journal (permission-gated). API clients `lib/api/payroll-profiles.ts` and `lib/api/pay-runs.ts`. Routes under `app/(app)/(tabs)/payroll/` (hub, `profiles/*`, `pay-runs/*`). Line gross/adjustment editing, journal account picker, trash/restore, and staff self-scope remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Payroll delivery.
+- **EloSync-Mobile:** **Payroll** profiles and pay runs — list, search, create, view, edit, delete; pay run status filter, approve, mark paid, and post to journal (permission-gated). API clients `lib/api/payroll-profiles.ts` and `lib/api/pay-runs.ts`. Routes under `app/(app)/(tabs)/payroll/` (hub, `profiles/*`, `pay-runs/*`). Line gross/adjustment editing, journal account picker, trash/restore, and staff self-scope remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Payroll delivery.
 
 ## EloSync Mobile — Leave Management module (2026-08-27)
 
-- **SaaS-Mobile:** **Leave Management** leave requests list, search, status filter, create, view, edit (draft), delete, submit, approve, reject, cancel, self-service for linked employees, and read-only balance summary on view (permission-gated). API clients `lib/api/leave-requests.ts`, `lib/api/leave-types.ts`, `lib/api/leave-balances.ts`. Routes under `app/(app)/(tabs)/leave-management/`. Leave type CRUD, balance administration, trash/restore, and salary-deduction overrides remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Leave Management delivery.
+- **EloSync-Mobile:** **Leave Management** leave requests list, search, status filter, create, view, edit (draft), delete, submit, approve, reject, cancel, self-service for linked employees, and read-only balance summary on view (permission-gated). API clients `lib/api/leave-requests.ts`, `lib/api/leave-types.ts`, `lib/api/leave-balances.ts`. Routes under `app/(app)/(tabs)/leave-management/`. Leave type CRUD, balance administration, trash/restore, and salary-deduction overrides remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Leave Management delivery.
 
 ## EloSync Mobile — Attendance module (2026-08-27)
 
-- **SaaS-Mobile:** **Attendance** daily records list, search, status filter, create, view, edit, delete, self check-in/check-out, and manager employee picker (permission-gated). API client `lib/api/attendance-records.ts` (`/attendance-records`). Routes under `app/(app)/(tabs)/attendance/`. KPI stats, date-range filters, trash/restore, and geolocation remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Attendance delivery.
+- **EloSync-Mobile:** **Attendance** daily records list, search, status filter, create, view, edit, delete, self check-in/check-out, and manager employee picker (permission-gated). API client `lib/api/attendance-records.ts` (`/attendance-records`). Routes under `app/(app)/(tabs)/attendance/`. KPI stats, date-range filters, trash/restore, and geolocation remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Attendance delivery.
 
 ## EloSync Mobile — Employees module (2026-08-27)
 
-- **SaaS-Mobile:** **Employees** directory list, search, create, view, edit, and delete (permission-gated). Department multi-select when Departments module is entitled; linked user picker when `users.list` is granted. API clients `lib/api/employees.ts` and `lib/api/departments.ts` (`/employees`, `/departments`). Routes under `app/(app)/(tabs)/employees/`. Payroll, attendance, leave, and department management remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Employees delivery.
+- **EloSync-Mobile:** **Employees** directory list, search, create, view, edit, and delete (permission-gated). Department multi-select when Departments module is entitled; linked user picker when `users.list` is granted. API clients `lib/api/employees.ts` and `lib/api/departments.ts` (`/employees`, `/departments`). Routes under `app/(app)/(tabs)/employees/`. Payroll, attendance, leave, and department management remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Employees delivery.
 
 ## EloSync Mobile — Accounting module (2026-08-27)
 
-- **SaaS-Mobile:** **Accounting** chart of accounts (list, search, create, view, edit, delete) and journal entries (list, search, create, view, edit draft, delete draft, post, void) with balanced multi-line forms (permission-gated). API clients `lib/api/accounts.ts` and `lib/api/journal-entries.ts` (`/accounts`, `/journal-entries`). Routes under `app/(app)/(tabs)/accounting/`. General ledger, transfers, bank reconciliation, periods, opening balances, and tax types remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Accounting delivery.
+- **EloSync-Mobile:** **Accounting** chart of accounts (list, search, create, view, edit, delete) and journal entries (list, search, create, view, edit draft, delete draft, post, void) with balanced multi-line forms (permission-gated). API clients `lib/api/accounts.ts` and `lib/api/journal-entries.ts` (`/accounts`, `/journal-entries`). Routes under `app/(app)/(tabs)/accounting/`. General ledger, transfers, bank reconciliation, periods, opening balances, and tax types remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Accounting delivery.
 
 ## EloSync Mobile — Financial Reports module (2026-08-27)
 
-- **SaaS-Mobile:** **Financial Reports** trial balance, profit and loss, balance sheet, and aged receivables with date filters (permission-gated). API client `lib/api/financial-reports.ts` (`/financial-reports/*`). Routes under `app/(app)/(tabs)/financial-reports/`. CSV export remains web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Financial Reports delivery.
+- **EloSync-Mobile:** **Financial Reports** trial balance, profit and loss, balance sheet, and aged receivables with date filters (permission-gated). API client `lib/api/financial-reports.ts` (`/financial-reports/*`). Routes under `app/(app)/(tabs)/financial-reports/`. CSV export remains web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Financial Reports delivery.
 
 ## EloSync Mobile — Analytics module (2026-08-27)
 
-- **SaaS-Mobile:** **Analytics** KPI overview with preset periods, domain report links (CRM, Sales, Billing, Purchasing, People), metrics, and tabular rows (permission-gated). API client `lib/api/analytics.ts` (`/analytics/overview`, `/analytics/reports/{area}`). Routes under `app/(app)/(tabs)/analytics/`. Charts, CSV export, and custom date ranges remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Analytics delivery.
+- **EloSync-Mobile:** **Analytics** KPI overview with preset periods, domain report links (CRM, Sales, Billing, Purchasing, People), metrics, and tabular rows (permission-gated). API client `lib/api/analytics.ts` (`/analytics/overview`, `/analytics/reports/{area}`). Routes under `app/(app)/(tabs)/analytics/`. Charts, CSV export, and custom date ranges remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Analytics delivery.
 
 ## EloSync Mobile — Automation module (2026-08-27)
 
-- **SaaS-Mobile:** **Automation** workflow list, search, view, activate/deactivate, manual run, delete (permission-gated), run history list, and run detail with execution logs. API client `lib/api/automation.ts` (`/automation/workflows`, `/automation/runs`). Routes under `app/(app)/(tabs)/automation/`. Visual builder, create/edit workflows, templates, and catalog browsing remain web-only on mobile v1.
-- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Automation delivery.
+- **EloSync-Mobile:** **Automation** workflow list, search, view, activate/deactivate, manual run, delete (permission-gated), run history list, and run detail with execution logs. API client `lib/api/automation.ts` (`/automation/workflows`, `/automation/runs`). Routes under `app/(app)/(tabs)/automation/`. Visual builder, create/edit workflows, templates, and catalog browsing remain web-only on mobile v1.
+- **EloSync-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for Automation delivery.
 
 ## EloSync Mobile — WhatsApp Cloud module (2026-08-27)
 
-- **SaaS-Mobile:** **WhatsApp Cloud** inbox list, search, thread read, mark read, open chat by phone, send text inside the 24h service window, and send approved templates outside the window (permission-gated). API client `lib/api/whatsapp-cloud.ts` (`/whatsapp/integrations`, `/whatsapp/conversations`, messages, templates). Routes under `app/(app)/(tabs)/whatsapp-cloud/`. OAuth connect, media upload/download, lead linking, assignee changes, template sync, and integration settings remain web-only on mobile v1.
+- **EloSync-Mobile:** **WhatsApp Cloud** inbox list, search, thread read, mark read, open chat by phone, send text inside the 24h service window, and send approved templates outside the window (permission-gated). API client `lib/api/whatsapp-cloud.ts` (`/whatsapp/integrations`, `/whatsapp/conversations`, messages, templates). Routes under `app/(app)/(tabs)/whatsapp-cloud/`. OAuth connect, media upload/download, lead linking, assignee changes, template sync, and integration settings remain web-only on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Team Chat module (2026-08-27)
 
-- **SaaS-Mobile:** **Team Chat** conversation list, search, thread read, join public channels, start DM/group DM, send text messages, and mark read (permission-gated). API clients `lib/api/team-chat.ts` and `lib/api/users.ts` (`/conversations`, `/users`). Routes under `app/(app)/(tabs)/team-chat/`. Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, and global message search deferred on mobile v1.
+- **EloSync-Mobile:** **Team Chat** conversation list, search, thread read, join public channels, start DM/group DM, send text messages, and mark read (permission-gated). API clients `lib/api/team-chat.ts` and `lib/api/users.ts` (`/conversations`, `/users`). Routes under `app/(app)/(tabs)/team-chat/`. Realtime (Reverb), attachments, reactions, pins, threads, channel create/settings, message edit/delete, and global message search deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Help Desk module (2026-08-26)
 
-- **SaaS-Mobile:** **Help Desk** list, search, create, view, edit, delete, close, reopen, add text notes, and status change on edit (permission-gated). API clients `lib/api/help-desk.ts` and `lib/api/help-desk-categories.ts` (`/help-desk`, `/help-desk-categories`). Routes under `app/(app)/(tabs)/help-desk/`; assignee scoping matches web. Attachments, assign, contact/company/KB links, category CRUD, timeline, and trash/restore deferred on mobile v1.
+- **EloSync-Mobile:** **Help Desk** list, search, create, view, edit, delete, close, reopen, add text notes, and status change on edit (permission-gated). API clients `lib/api/help-desk.ts` and `lib/api/help-desk-categories.ts` (`/help-desk`, `/help-desk-categories`). Routes under `app/(app)/(tabs)/help-desk/`; assignee scoping matches web. Attachments, assign, contact/company/KB links, category CRUD, timeline, and trash/restore deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Knowledge Base module (2026-08-26)
 
-- **SaaS-Mobile:** **Knowledge Base** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/knowledge-base.ts` and `lib/api/knowledge-base-categories.ts` (`/knowledge-base`, `/knowledge-base-categories`). Routes under `app/(app)/(tabs)/knowledge-base/`; plain-text body converted to simple HTML for TipTap storage. Rich editor, attachments, notes, timeline, category CRUD, and trash/restore deferred on mobile v1.
+- **EloSync-Mobile:** **Knowledge Base** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/knowledge-base.ts` and `lib/api/knowledge-base-categories.ts` (`/knowledge-base`, `/knowledge-base-categories`). Routes under `app/(app)/(tabs)/knowledge-base/`; plain-text body converted to simple HTML for TipTap storage. Rich editor, attachments, notes, timeline, category CRUD, and trash/restore deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Documents module (2026-08-26)
 
-- **SaaS-Mobile:** **Documents** list, search, upload, view, edit metadata, delete, and download/share (permission-gated). API clients `lib/api/documents.ts` and `lib/api/document-categories.ts` (`/documents`, `/document-categories`). Routes under `app/(app)/(tabs)/documents/`; file picker upload via `expo-document-picker`; authenticated download via `expo-file-system` + `expo-sharing`. Record links, category CRUD, trash/restore, bulk delete, and file replace deferred on mobile v1.
+- **EloSync-Mobile:** **Documents** list, search, upload, view, edit metadata, delete, and download/share (permission-gated). API clients `lib/api/documents.ts` and `lib/api/document-categories.ts` (`/documents`, `/document-categories`). Routes under `app/(app)/(tabs)/documents/`; file picker upload via `expo-document-picker`; authenticated download via `expo-file-system` + `expo-sharing`. Record links, category CRUD, trash/restore, bulk delete, and file replace deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Short Links module (2026-08-26)
 
-- **SaaS-Mobile:** **Short Links** list, search, create, view, edit, delete, and share short URL (permission-gated). API client `lib/api/short-links.ts` (`/short-links` CRUD). Routes under `app/(app)/(tabs)/short-links/`; vanity slug on create; basic UTM fields; click analytics and click log deferred on mobile v1.
+- **EloSync-Mobile:** **Short Links** list, search, create, view, edit, delete, and share short URL (permission-gated). API client `lib/api/short-links.ts` (`/short-links` CRUD). Routes under `app/(app)/(tabs)/short-links/`; vanity slug on create; basic UTM fields; click analytics and click log deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Assets module (2026-08-26)
 
-- **SaaS-Mobile:** **Assets** list, search, create, view, edit, delete (permission-gated). API client `lib/api/assets.ts` (`/assets` CRUD). Routes under `app/(app)/(tabs)/assets/`; status, category, purchase, and warranty fields on create/edit; vendor, employee, assign, notes, and timeline deferred on mobile v1.
+- **EloSync-Mobile:** **Assets** list, search, create, view, edit, delete (permission-gated). API client `lib/api/assets.ts` (`/assets` CRUD). Routes under `app/(app)/(tabs)/assets/`; status, category, purchase, and warranty fields on create/edit; vendor, employee, assign, notes, and timeline deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Announcements module (2026-08-26)
 
-- **SaaS-Mobile:** **Announcements** inbox for all entitled users; managers with `announcements.update` get admin list/search; create, view, edit, delete, and mark-read (permission-gated). API client `lib/api/announcements.ts`. Routes under `app/(app)/(tabs)/announcements/`; read-tracking list and restore/force-delete deferred on mobile v1.
+- **EloSync-Mobile:** **Announcements** inbox for all entitled users; managers with `announcements.update` get admin list/search; create, view, edit, delete, and mark-read (permission-gated). API client `lib/api/announcements.ts`. Routes under `app/(app)/(tabs)/announcements/`; read-tracking list and restore/force-delete deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Email module (2026-08-26)
 
-- **SaaS-Mobile:** **Email** mailbox browse and read (permission-gated). API client `lib/api/email.ts` (`GET /email/accounts`, folder messages, message detail, mark read). Routes under `app/(app)/(tabs)/email/`; account and folder pickers; inbox/sent/drafts focus on mobile v1; compose, account setup, labels, attachments, templates, and signatures deferred.
+- **EloSync-Mobile:** **Email** mailbox browse and read (permission-gated). API client `lib/api/email.ts` (`GET /email/accounts`, folder messages, message detail, mark read). Routes under `app/(app)/(tabs)/email/`; account and folder pickers; inbox/sent/drafts focus on mobile v1; compose, account setup, labels, attachments, templates, and signatures deferred.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Communication Templates module (2026-08-26)
 
-- **SaaS-Mobile:** **Communication Templates** list, search, create, view, edit, delete (permission-gated). API client `lib/api/communication-templates.ts` (`/communication-templates` CRUD + `/meta/contexts` picker). Routes under `app/(app)/(tabs)/communication-templates/`; WhatsApp channel only on mobile v1; placeholder picker, preview, and render/use deferred.
+- **EloSync-Mobile:** **Communication Templates** list, search, create, view, edit, delete (permission-gated). API client `lib/api/communication-templates.ts` (`/communication-templates` CRUD + `/meta/contexts` picker). Routes under `app/(app)/(tabs)/communication-templates/`; WhatsApp channel only on mobile v1; placeholder picker, preview, and render/use deferred.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Inventory module (2026-08-26)
 
-- **SaaS-Mobile:** **Inventory** stock level list and search, stock adjust (`POST /inventory/stock/adjust`), transfer list/create/view/edit (draft)/dispatch/complete/cancel/delete (permission-gated). API client `lib/api/inventory.ts`. Routes under `app/(app)/(tabs)/inventory/`; product and warehouse pickers when Products/Warehouses are entitled; single-line transfers on mobile v1; movement history deferred.
+- **EloSync-Mobile:** **Inventory** stock level list and search, stock adjust (`POST /inventory/stock/adjust`), transfer list/create/view/edit (draft)/dispatch/complete/cancel/delete (permission-gated). API client `lib/api/inventory.ts`. Routes under `app/(app)/(tabs)/inventory/`; product and warehouse pickers when Products/Warehouses are entitled; single-line transfers on mobile v1; movement history deferred.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Warehouses module (2026-08-26)
 
-- **SaaS-Mobile:** **Warehouses** list, search, create, view, edit, delete (permission-gated). API client `lib/api/warehouses.ts` (`/warehouses` CRUD). Routes under `app/(app)/(tabs)/warehouses/`; active/default toggles on create/edit; notes and timeline deferred on mobile v1.
+- **EloSync-Mobile:** **Warehouses** list, search, create, view, edit, delete (permission-gated). API client `lib/api/warehouses.ts` (`/warehouses` CRUD). Routes under `app/(app)/(tabs)/warehouses/`; active/default toggles on create/edit; notes and timeline deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Products module (2026-08-26)
 
-- **SaaS-Mobile:** **Products** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/products.ts` (`/products` CRUD + `next-sku`) and `lib/api/product-categories.ts` (`/product-categories` picker). Routes under `app/(app)/(tabs)/products/`; category picker, stock tracking, and pricing fields on create/edit; rich-text description, notes, timeline, and category management deferred on mobile v1.
+- **EloSync-Mobile:** **Products** list, search, create, view, edit, delete (permission-gated). API clients `lib/api/products.ts` (`/products` CRUD + `next-sku`) and `lib/api/product-categories.ts` (`/product-categories` picker). Routes under `app/(app)/(tabs)/products/`; category picker, stock tracking, and pricing fields on create/edit; rich-text description, notes, timeline, and category management deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Expenses module (2026-08-26)
 
-- **SaaS-Mobile:** **Expenses** list, search, create, view, edit (draft only), submit, approve, reject, pay (when Accounting is not installed), cancel, delete (permission-gated). API clients `lib/api/expenses.ts` (`/expenses` CRUD + workflow actions) and `lib/api/expense-categories.ts` (`/expense-categories` picker). Routes under `app/(app)/(tabs)/expenses/`; category picker on create/edit; receipt upload, vendor/PO links, accounting account pickers, notes, and timeline deferred on mobile v1.
+- **EloSync-Mobile:** **Expenses** list, search, create, view, edit (draft only), submit, approve, reject, pay (when Accounting is not installed), cancel, delete (permission-gated). API clients `lib/api/expenses.ts` (`/expenses` CRUD + workflow actions) and `lib/api/expense-categories.ts` (`/expense-categories` picker). Routes under `app/(app)/(tabs)/expenses/`; category picker on create/edit; receipt upload, vendor/PO links, accounting account pickers, notes, and timeline deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Estimates module (2026-08-26)
 
-- **SaaS-Mobile:** **Estimates** list, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated). API client `lib/api/estimates.ts` (`/estimates` CRUD + `send`/`accept`/`status`/`convert`). Routes under `app/(app)/(tabs)/estimates/`; `EstimateLinkPickers` for optional contact, company, quotation, and opportunity links; optional line item on create; email and PDF deferred on mobile v1.
+- **EloSync-Mobile:** **Estimates** list, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated). API client `lib/api/estimates.ts` (`/estimates` CRUD + `send`/`accept`/`status`/`convert`). Routes under `app/(app)/(tabs)/estimates/`; `EstimateLinkPickers` for optional contact, company, quotation, and opportunity links; optional line item on create; email and PDF deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Credit Notes module (2026-08-26)
 
-- **SaaS-Mobile:** **Credit Notes** list, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated). API client `lib/api/credit-notes.ts` (`/credit-notes` CRUD + `issue`/`apply`/`void`). Routes under `app/(app)/(tabs)/credit-notes/`; required unpaid-invoice picker on create; optional line item; email and PDF deferred on mobile v1.
+- **EloSync-Mobile:** **Credit Notes** list, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated). API client `lib/api/credit-notes.ts` (`/credit-notes` CRUD + `issue`/`apply`/`void`). Routes under `app/(app)/(tabs)/credit-notes/`; required unpaid-invoice picker on create; optional line item; email and PDF deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Payments module (2026-08-26)
 
-- **SaaS-Mobile:** **Payments** list, search, create, view, edit (draft only), post, void, delete (permission-gated). API client `lib/api/payments.ts` (`/payments` CRUD + `post`/`void`). Routes under `app/(app)/(tabs)/payments/`; `PaymentLinkPickers` for optional contact and company; optional single-invoice allocation when Invoices is entitled; email receipt, PDF, deposit account, and withholding deferred on mobile v1.
+- **EloSync-Mobile:** **Payments** list, search, create, view, edit (draft only), post, void, delete (permission-gated). API client `lib/api/payments.ts` (`/payments` CRUD + `post`/`void`). Routes under `app/(app)/(tabs)/payments/`; `PaymentLinkPickers` for optional contact and company; optional single-invoice allocation when Invoices is entitled; email receipt, PDF, deposit account, and withholding deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Invoices module (2026-08-26)
 
-- **SaaS-Mobile:** **Invoices** list, search, create, view, edit (draft only), send, void, delete (permission-gated). API client `lib/api/invoices.ts` (`/invoices` CRUD + `send`/`void`). Routes under `app/(app)/(tabs)/invoices/`; `InvoiceLinkPickers` for optional contact, company, and quotation; recurring series, email, and PDF deferred on mobile v1.
+- **EloSync-Mobile:** **Invoices** list, search, create, view, edit (draft only), send, void, delete (permission-gated). API client `lib/api/invoices.ts` (`/invoices` CRUD + `send`/`void`). Routes under `app/(app)/(tabs)/invoices/`; `InvoiceLinkPickers` for optional contact, company, and quotation; recurring series, email, and PDF deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Contracts module (2026-08-26)
 
-- **SaaS-Mobile:** **Contracts** list, search, create, view, edit (draft only), status transitions, delete (permission-gated). API client `lib/api/contracts.ts` (`/contracts` CRUD + `status`). Routes under `app/(app)/(tabs)/contracts/`; `ContractLinkPickers` for opportunity (required) and optional quotation; convert-to-invoice deferred on mobile v1.
+- **EloSync-Mobile:** **Contracts** list, search, create, view, edit (draft only), status transitions, delete (permission-gated). API client `lib/api/contracts.ts` (`/contracts` CRUD + `status`). Routes under `app/(app)/(tabs)/contracts/`; `ContractLinkPickers` for opportunity (required) and optional quotation; convert-to-invoice deferred on mobile v1.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Projects module (2026-08-26)
 
-- **SaaS-Mobile:** **Projects** list, search, create, view, edit, status transitions, delete (permission-gated). API client `lib/api/projects.ts` (`/projects` CRUD + `status`). Routes under `app/(app)/(tabs)/projects/`; `ProjectLinkPickers` for optional CRM links.
+- **EloSync-Mobile:** **Projects** list, search, create, view, edit, status transitions, delete (permission-gated). API client `lib/api/projects.ts` (`/projects` CRUD + `status`). Routes under `app/(app)/(tabs)/projects/`; `ProjectLinkPickers` for optional CRM links.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Meetings module (2026-08-26)
 
-- **SaaS-Mobile:** **Meetings** list (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated). API client `lib/api/meetings.ts` (`/meetings` CRUD + `cancel`/`complete`). Routes under `app/(app)/(tabs)/meetings/`; Meetings tab; manual-link meetings with optional guest + reminder on mobile.
+- **EloSync-Mobile:** **Meetings** list (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated). API client `lib/api/meetings.ts` (`/meetings` CRUD + `cancel`/`complete`). Routes under `app/(app)/(tabs)/meetings/`; Meetings tab; manual-link meetings with optional guest + reminder on mobile.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Calendar module (2026-08-26)
 
-- **SaaS-Mobile:** **Calendar** list (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated). API client `lib/api/calendar.ts` (`/calendar/events` CRUD + `cancel`, `/calendar/upcoming`). Routes under `app/(app)/(tabs)/calendar/`; Calendar tab in `config/modules.ts`.
+- **EloSync-Mobile:** **Calendar** list (60-day range), search, create, view, edit manual events, cancel, delete (permission-gated). API client `lib/api/calendar.ts` (`/calendar/events` CRUD + `cancel`, `/calendar/upcoming`). Routes under `app/(app)/(tabs)/calendar/`; Calendar tab in `config/modules.ts`.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Quotations module (2026-08-26)
 
-- **SaaS-Mobile:** **Quotations** list, search, create, view, edit, delete, send, accept (permission-gated). API client `lib/api/quotations.ts` (`/quotations` CRUD + `send`/`accept`). Routes under `app/(app)/(tabs)/quotations/`; Quotes tab in `config/modules.ts`; opportunity-linked create with optional line item.
+- **EloSync-Mobile:** **Quotations** list, search, create, view, edit, delete, send, accept (permission-gated). API client `lib/api/quotations.ts` (`/quotations` CRUD + `send`/`accept`). Routes under `app/(app)/(tabs)/quotations/`; Quotes tab in `config/modules.ts`; opportunity-linked create with optional line item.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — ToDos module (2026-08-26)
 
-- **SaaS-Mobile:** **ToDos** list, search, create, view, edit, delete, mark complete (permission-gated). API client `lib/api/todos.ts` (`/todos` CRUD; complete via `status: completed`). Routes under `app/(app)/(tabs)/todos/`; ToDos tab in `config/modules.ts`.
+- **EloSync-Mobile:** **ToDos** list, search, create, view, edit, delete, mark complete (permission-gated). API client `lib/api/todos.ts` (`/todos` CRUD; complete via `status: completed`). Routes under `app/(app)/(tabs)/todos/`; ToDos tab in `config/modules.ts`.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Activities module (2026-08-26)
 
-- **SaaS-Mobile:** **Activities** list, search, create, view, edit, delete, complete (permission-gated). API client `lib/api/activities.ts` (`/activities` CRUD + `complete`). Routes under `app/(app)/(tabs)/activities/`; Log tab; `RelatedEntityPickers` for contact/company/lead links.
+- **EloSync-Mobile:** **Activities** list, search, create, view, edit, delete, complete (permission-gated). API client `lib/api/activities.ts` (`/activities` CRUD + `complete`). Routes under `app/(app)/(tabs)/activities/`; Log tab; `RelatedEntityPickers` for contact/company/lead links.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Opportunities module (2026-08-26)
 
-- **SaaS-Mobile:** **Opportunities** list, search, create, view, edit, delete (permission-gated). API client `lib/api/opportunities.ts` with `/opportunities` CRUD + `GET /opportunity-stages`. Routes under `app/(app)/(tabs)/opportunities/`; Pipeline tab in `config/modules.ts`.
+- **EloSync-Mobile:** **Opportunities** list, search, create, view, edit, delete (permission-gated). API client `lib/api/opportunities.ts` with `/opportunities` CRUD + `GET /opportunity-stages`. Routes under `app/(app)/(tabs)/opportunities/`; Pipeline tab in `config/modules.ts`.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Companies module (2026-08-26)
 
-- **SaaS-Mobile:** **Companies** list, search, create, view, edit, delete (permission-gated). API client `lib/api/companies.ts` mirrors Contacts (`/companies` CRUD). Routes under `app/(app)/(tabs)/companies/`; registered in `config/modules.ts`.
+- **EloSync-Mobile:** **Companies** list, search, create, view, edit, delete (permission-gated). API client `lib/api/companies.ts` mirrors Contacts (`/companies` CRUD). Routes under `app/(app)/(tabs)/companies/`; registered in `config/modules.ts`.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Contacts module (2026-08-26)
 
-- **SaaS-Mobile:** **Contacts** list, search, create, view, edit, delete (permission-gated). API client `lib/api/contacts.ts` mirrors Leads (`/contacts` CRUD). Routes under `app/(app)/(tabs)/contacts/`; registered in `config/modules.ts`.
+- **EloSync-Mobile:** **Contacts** list, search, create, view, edit, delete (permission-gated). API client `lib/api/contacts.ts` mirrors Leads (`/contacts` CRUD). Routes under `app/(app)/(tabs)/contacts/`; registered in `config/modules.ts`.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — Tasks module (2026-08-26)
 
-- **SaaS-Mobile:** **Tasks** list, search, create, view, edit, delete, complete/reopen (permission-gated). API client `lib/api/tasks.ts` mirrors Leads (`/tasks` CRUD + `complete`/`reopen`). Routes under `app/(app)/(tabs)/tasks/`; registered in `config/modules.ts`.
+- **EloSync-Mobile:** **Tasks** list, search, create, view, edit, delete, complete/reopen (permission-gated). API client `lib/api/tasks.ts` mirrors Leads (`/tasks` CRUD + `complete`/`reopen`). Routes under `app/(app)/(tabs)/tasks/`; registered in `config/modules.ts`.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — platform shell + Leads module (2026-08-26)
 
-- **SaaS-Mobile:** React Query provider, shared screen/list/form components, dynamic module nav (`config/modules.ts`), notifications tab, **Leads** list/search/create/view/edit/delete (permission-gated). Home dashboard links entitled modules.
+- **EloSync-Mobile:** React Query provider, shared screen/list/form components, dynamic module nav (`config/modules.ts`), notifications tab, **Leads** list/search/create/view/edit/delete (permission-gated). Home dashboard links entitled modules.
 - Docs: [Mobile user guide](/user-guide/elosync-mobile), [product roadmap — Mobile](/getting-started/product-roadmap#elosync-mobile-tenant-app), [developer mobile guide](/developer-guide/mobile-app).
-- **saas-website:** Roadmap entry for EloSync Mobile (in development).
+- **elosync-website:** Roadmap entry for EloSync Mobile (in development).
 
 ## Laravel Horizon queue dashboard (2026-08-26)
 
-- **SaaS-Backend:** Laravel Horizon at `/horizon` on the **central domain**, with the same role-only access as Pulse (**superadmin**, **developer**, **tester**). Central SPA users open Horizon via `GET /api/central/v1/horizon/enter` (signed session bridge). Production worker config in `config/horizon.php`: `supervisor-general` (`automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default`; max **3** processes) and `supervisor-email-sync` (`email-sync`; max **1** process, 300s timeout). Scheduler runs `horizon:snapshot` every five minutes. Pest: `HorizonAccessTest`.
-- **SaaS-Frontend:** Central **Horizon** link (Settings) opens the Horizon dashboard in a **new browser tab** and returns the Central SPA to the dashboard. Playwright: `e2e/tests/horizon/horizon.spec.ts` (`npm run test:e2e:horizon`).
+- **EloSync-Backend:** Laravel Horizon at `/horizon` on the **central domain**, with the same role-only access as Pulse (**superadmin**, **developer**, **tester**). Central SPA users open Horizon via `GET /api/central/v1/horizon/enter` (signed session bridge). Production worker config in `config/horizon.php`: `supervisor-general` (`automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default`; max **3** processes) and `supervisor-email-sync` (`email-sync`; max **1** process, 300s timeout). Scheduler runs `horizon:snapshot` every five minutes. Pest: `HorizonAccessTest`.
+- **EloSync-Frontend:** Central **Horizon** link (Settings) opens the Horizon dashboard in a **new browser tab** and returns the Central SPA to the dashboard. Playwright: `e2e/tests/horizon/horizon.spec.ts` (`npm run test:e2e:horizon`).
 - **Ops:** Replace Forge `queue:work` daemons with a single `php artisan horizon` daemon; deploy script uses `horizon:terminate` after `$ACTIVATE_RELEASE()` instead of `queue:restart`. Keep `pulse:check`, Nightwatch, and Reverb as separate processes.
 - Docs: [Laravel Forge — Horizon](/deployment/laravel-forge#15-daemons-queue--reverb), [Installation — monitoring](/getting-started/installation#monitoring), [Central API](/api/central-v1).
 
 ## EloSync Mobile — EAS development builds (2026-08-26)
 
-- **SaaS-Mobile:** `expo-dev-client`, `eas.json` profiles (`development`, `development-simulator`, `preview`, `production`), bundle ids `com.diligentcreators.elosync`, location/secure-store config plugins, npm scripts for EAS builds and `start:dev-client`. Replaces App Store Expo Go for SDK 57 device testing.
+- **EloSync-Mobile:** `expo-dev-client`, `eas.json` profiles (`development`, `development-simulator`, `preview`, `production`), bundle ids `com.diligentcreators.elosync`, location/secure-store config plugins, npm scripts for EAS builds and `start:dev-client`. Replaces App Store Expo Go for SDK 57 device testing.
 - Docs: [Mobile app developer guide](/developer-guide/mobile-app).
 
 ## EloSync Mobile — tenant auth scaffold (2026-08-25)
 
-- **SaaS-Mobile:** New Expo app (`elosync-mobile`) with tenant-only auth: login (email/password/remember, optional workspace branding), forgot password (workspace + email), email verification gate, SecureStore session, dashboard + profile shell. API client targets `/api/tenant/v1` only.
+- **EloSync-Mobile:** New Expo app (`elosync-mobile`) with tenant-only auth: login (email/password/remember, optional workspace branding), forgot password (workspace + email), email verification gate, SecureStore session, dashboard + profile shell. API client targets `/api/tenant/v1` only.
 - Docs: [Mobile app developer guide](/developer-guide/mobile-app).
 
 ## Ask EloSync — expanded AI provider catalog (2026-08-25)
 
-- **SaaS-Backend:** Central and tenant AI settings support ten text providers (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, Ollama) via `App\Support\AiProviderCatalog`. Provider-aware defaults in `AiConfigResolver`, runtime key/URL injection for all Laravel AI drivers, and read-only catalog APIs `GET /system-settings/ai-providers` and `GET /settings/ai-providers`. OpenRouter and self-hosted providers accept custom model IDs; Ollama can omit an API key when a base URL is set. Catalog: `ai` **1.1.0 → 1.2.0**. Pest: `AiProviderCatalogTest`, extended `AiConfigResolverTest`, `AiTestConnectionTest`, `AiProvidersCatalogTest`.
-- **SaaS-Frontend:** Settings → AI provider form loads the catalog API (fallback constants), shows base URL for self-hosted providers, and custom model inputs for OpenRouter/Ollama/OpenAI-compatible. Playwright: provider dropdown includes Gemini and OpenRouter.
+- **EloSync-Backend:** Central and tenant AI settings support ten text providers (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Mistral, DeepSeek, xAI, OpenAI-compatible, Ollama) via `App\Support\AiProviderCatalog`. Provider-aware defaults in `AiConfigResolver`, runtime key/URL injection for all Laravel AI drivers, and read-only catalog APIs `GET /system-settings/ai-providers` and `GET /settings/ai-providers`. OpenRouter and self-hosted providers accept custom model IDs; Ollama can omit an API key when a base URL is set. Catalog: `ai` **1.1.0 → 1.2.0**. Pest: `AiProviderCatalogTest`, extended `AiConfigResolverTest`, `AiTestConnectionTest`, `AiProvidersCatalogTest`.
+- **EloSync-Frontend:** Settings → AI provider form loads the catalog API (fallback constants), shows base URL for self-hosted providers, and custom model inputs for OpenRouter/Ollama/OpenAI-compatible. Playwright: provider dropdown includes Gemini and OpenRouter.
 - Docs: [Central settings](/user-guide/central-settings), [Tenant settings — AI](/user-guide/tenant-settings#ai-ai-assistant-module), [AI Assistant](/user-guide/ai-assistant), [deployment AI](/deployment/ai).
 
 ## Ask EloSync — workspace scope + clickable references (2026-08-25)
 
-- **SaaS-Backend:** Ask EloSync now refuses obvious off-topic prompts (for example logo design) without calling the provider. Structured responses normalize reference aliases (`numeric_entity_id` / `relative_url` → `entity_id` / `url`), extract prose when models dump JSON into `answer`, and coerce string suggested actions into labeled objects. Workspace **AI instructions**, industry, and preferred language are injected into trusted chat context. System prompt **2026-08-25.1** tightens workspace-only scope and reference field names. Pest: `AiStructuredResponseNormalizerTest`, `AiWorkspaceScopeGuardTest`, `AiWorkspaceScopeTest`.
-- **SaaS-Frontend:** `resolveAiReferenceHref` accepts `numeric_entity_id` and `relative_url` so invoice/lead/task citations render as in-app links.
+- **EloSync-Backend:** Ask EloSync now refuses obvious off-topic prompts (for example logo design) without calling the provider. Structured responses normalize reference aliases (`numeric_entity_id` / `relative_url` → `entity_id` / `url`), extract prose when models dump JSON into `answer`, and coerce string suggested actions into labeled objects. Workspace **AI instructions**, industry, and preferred language are injected into trusted chat context. System prompt **2026-08-25.1** tightens workspace-only scope and reference field names. Pest: `AiStructuredResponseNormalizerTest`, `AiWorkspaceScopeGuardTest`, `AiWorkspaceScopeTest`.
+- **EloSync-Frontend:** `resolveAiReferenceHref` accepts `numeric_entity_id` and `relative_url` so invoice/lead/task citations render as in-app links.
 - Docs: [AI Assistant user guide](/user-guide/ai-assistant).
 
 ## Central Pulse access (2026-08-25)
 
-- **SaaS-Backend:** Laravel Pulse at `/pulse` is limited to central roles **superadmin**, **developer**, and **tester** (role-based, not Spatie permissions). Central SPA users open Pulse via `GET /api/central/v1/pulse/enter`, which returns a signed web URL that stores a short-lived session bridge. Pulse uses a dedicated cache store resolver so Laravel 13's `cache.serializable_classes = false` does not break nested `Collection` query caches. Pulse dashboard cards disable Livewire lazy loading so `wire:poll` live updates stay stable. Pulse is enabled by default in production (`config/pulse.php`). Pest: `PulseAccessTest`, `PulseCacheSerializationTest`.
-- **SaaS-Frontend:** Central **Pulse** link (Settings) opens the full Laravel Pulse dashboard in a **new browser tab** and returns the Central SPA to the dashboard. Playwright: `e2e/tests/pulse/pulse.spec.ts` (`npm run test:e2e:pulse`).
+- **EloSync-Backend:** Laravel Pulse at `/pulse` is limited to central roles **superadmin**, **developer**, and **tester** (role-based, not Spatie permissions). Central SPA users open Pulse via `GET /api/central/v1/pulse/enter`, which returns a signed web URL that stores a short-lived session bridge. Pulse uses a dedicated cache store resolver so Laravel 13's `cache.serializable_classes = false` does not break nested `Collection` query caches. Pulse dashboard cards disable Livewire lazy loading so `wire:poll` live updates stay stable. Pulse is enabled by default in production (`config/pulse.php`). Pest: `PulseAccessTest`, `PulseCacheSerializationTest`.
+- **EloSync-Frontend:** Central **Pulse** link (Settings) opens the full Laravel Pulse dashboard in a **new browser tab** and returns the Central SPA to the dashboard. Playwright: `e2e/tests/pulse/pulse.spec.ts` (`npm run test:e2e:pulse`).
 - Docs: [Installation — monitoring](/getting-started/installation#monitoring), [Central API](/api/central-v1).
 
 ## Fix — manual lead create assigns to creator (2026-08-25)
 
-- **SaaS-Backend:** `LeadService::create` now defaults `assigned_to` to the authenticated creator when omitted, matching Contacts, Opportunities, and Projects. Users without `leads.assign` still cannot assign to someone else on create, but their new lead is assigned to them so assignee-scoped lists include it. Inbound webhook/Meta ingest (no actor) is unchanged. Catalog: `leads` **1.3.0 → 1.3.1**. Pest: `LeadTest` creator-default coverage.
-- **SaaS-Frontend:** Lead create form defaults assignee to the current user when the actor has `leads.assign`, and injects the signed-in user into assignee options when `users.list` is unavailable (same pattern as Projects).
+- **EloSync-Backend:** `LeadService::create` now defaults `assigned_to` to the authenticated creator when omitted, matching Contacts, Opportunities, and Projects. Users without `leads.assign` still cannot assign to someone else on create, but their new lead is assigned to them so assignee-scoped lists include it. Inbound webhook/Meta ingest (no actor) is unchanged. Catalog: `leads` **1.3.0 → 1.3.1**. Pest: `LeadTest` creator-default coverage.
+- **EloSync-Frontend:** Lead create form defaults assignee to the current user when the actor has `leads.assign`, and injects the signed-in user into assignee options when `users.list` is unavailable (same pattern as Projects).
 - Docs: [Leads user guide](/user-guide/leads), [developer guide](/developer-guide/leads), [API](/api/tenant-v1-leads).
 
 ## International tax & withholding (2026-08-24)
 
-- **SaaS-Backend:** Tenant **Tax types** catalog (`sales_tax`, `withholding` with payment in/out directions), starter GL accounts `1150` / `2150`, invoice/credit-note tax split to `2100`, `tax_type_id` on billing lines, withholding on customer payment post and expense pay (3-line journals), contact/vendor default withholding types. Catalog: `accounting` **1.7.0 → 1.7.2** (PATCH **1.7.2** fixes tax types list when `direction=asc|desc`), `invoices` **1.8.1**. Pest: `TaxTypeTest`, `PaymentWithholdingTest`, `ExpenseWithholdingTest`, updated invoice accounting tests.
-- **SaaS-Frontend:** Tax types list/create/view/edit, billing line tax type picker, payment and expense pay withholding UI, contact/vendor default withholding, workspace tax country/registration in Settings → General. Payment and expense **view** pages show posted withholding. Playwright: `e2e/tests/accounting/tax-types.spec.ts`.
+- **EloSync-Backend:** Tenant **Tax types** catalog (`sales_tax`, `withholding` with payment in/out directions), starter GL accounts `1150` / `2150`, invoice/credit-note tax split to `2100`, `tax_type_id` on billing lines, withholding on customer payment post and expense pay (3-line journals), contact/vendor default withholding types. Catalog: `accounting` **1.7.0 → 1.7.2** (PATCH **1.7.2** fixes tax types list when `direction=asc|desc`), `invoices` **1.8.1**. Pest: `TaxTypeTest`, `PaymentWithholdingTest`, `ExpenseWithholdingTest`, updated invoice accounting tests.
+- **EloSync-Frontend:** Tax types list/create/view/edit, billing line tax type picker, payment and expense pay withholding UI, contact/vendor default withholding, workspace tax country/registration in Settings → General. Payment and expense **view** pages show posted withholding. Playwright: `e2e/tests/accounting/tax-types.spec.ts`.
 - Docs: [user guide](/user-guide/tax-types), [developer guide](/developer-guide/tax-types), [API](/api/tenant-v1-tax-types), [accounting overview](/user-guide/accounting-overview), [production readiness](/deployment/international-tax-production-readiness).
 
 ## Fix — workspace retention settings save (2026-08-24)
 
-- **SaaS-Frontend:** Settings → General **Trash retention** and Settings → Team Chat **Message & file retention** now persist reliably — save payload compares against loaded API values (not only RHF `dirtyFields`), Select changes explicitly mark the form dirty, and the settings query cache updates from the PUT response so a stale refetch cannot revert the UI.
-- **SaaS-Backend:** Pest coverage for `team-chat.retention_days` on `PUT /settings` (alongside existing `trash.retention_days` tests).
+- **EloSync-Frontend:** Settings → General **Trash retention** and Settings → Team Chat **Message & file retention** now persist reliably — save payload compares against loaded API values (not only RHF `dirtyFields`), Select changes explicitly mark the form dirty, and the settings query cache updates from the PUT response so a stale refetch cannot revert the UI.
+- **EloSync-Backend:** Pest coverage for `team-chat.retention_days` on `PUT /settings` (alongside existing `trash.retention_days` tests).
 
 ## Short Links UX — branded 404, vanity slugs, copy icons (2026-08-24)
 
-- **SaaS-Backend:** Branded public 404 page (`resources/views/short-links/unavailable.blade.php`) with EloSync marketing CTAs when links are missing, paused, expired, or deleted. Optional custom vanity `code` on create (3–64 chars, reserved-slug validation). `short_links.code` widened to 64 chars. Catalog MINOR: `short-links` **1.1.0 → 1.2.0**. Pest: branded 404, custom slug, soft-delete redirect tests.
-- **SaaS-Frontend:** `CopyableText` component; inline copy icon on list Short URL column and view. Optional **Custom slug** field on create with live preview. Playwright coverage extended.
+- **EloSync-Backend:** Branded public 404 page (`resources/views/short-links/unavailable.blade.php`) with EloSync marketing CTAs when links are missing, paused, expired, or deleted. Optional custom vanity `code` on create (3–64 chars, reserved-slug validation). `short_links.code` widened to 64 chars. Catalog MINOR: `short-links` **1.1.0 → 1.2.0**. Pest: branded 404, custom slug, soft-delete redirect tests.
+- **EloSync-Frontend:** `CopyableText` component; inline copy icon on list Short URL column and view. Optional **Custom slug** field on create with live preview. Playwright coverage extended.
 - Docs: [user guide](/user-guide/short-links), [developer guide](/developer-guide/short-links), [API](/api/tenant-v1-short-links), [production readiness](/deployment/short-links-production-readiness).
 
 ## Platform polish lanes A, B, C (2026-08-23)
 
-- **SaaS-Backend:** Expense / Help Desk / KB attachments; document polymorphic links; credit note & purchase order PDF + email; lead import retry guard; projects calendar projection; dashboard widget data; `local:seed-demo --full`; AI write tools + Opportunity Copilot API. Catalog MINOR/PATCH bumps across billing, expenses, help-desk, documents, knowledge-base, projects. Merged to `main` (PR #148).
-- **SaaS-Frontend:** Workspace checklist card, Ask EloSync dashboard section, marketplace starter paths, attachment UI, billing email dialogs, Opportunity Copilot, dashboard widgets. E2e + TypeScript production fixes on `main` (PR #143 + follow-up).
-- **SaaS-Docs:** API, user/developer guides, changelog; [production readiness audit](/deployment/platform-polish-a-b-c-production-readiness) (**Go** after joint migrate + smoke).
+- **EloSync-Backend:** Expense / Help Desk / KB attachments; document polymorphic links; credit note & purchase order PDF + email; lead import retry guard; projects calendar projection; dashboard widget data; `local:seed-demo --full`; AI write tools + Opportunity Copilot API. Catalog MINOR/PATCH bumps across billing, expenses, help-desk, documents, knowledge-base, projects. Merged to `main` (PR #148).
+- **EloSync-Frontend:** Workspace checklist card, Ask EloSync dashboard section, marketplace starter paths, attachment UI, billing email dialogs, Opportunity Copilot, dashboard widgets. E2e + TypeScript production fixes on `main` (PR #143 + follow-up).
+- **EloSync-Docs:** API, user/developer guides, changelog; [production readiness audit](/deployment/platform-polish-a-b-c-production-readiness) (**Go** after joint migrate + smoke).
 - **Verification:** Pest polish suite green on Backend `main`; Playwright module scripts (documents, expenses, AI, dashboard, help-desk) with cached demo login.
 
 ## Documents soft record links — A7 (2026-08-23)
 
-- **SaaS-Backend:** `document_links` polymorphic pivot, `DocumentLink` model, `DocumentLinkService::sync` on create/update, `LinkableAsset` + `LinkableTask` validation rules, `links` on document API resources. Catalog MINOR: `documents` **1.1.0 → 1.3.0**. Pest: link sync, entitlement gating, forbidden link in `DocumentTest`.
-- **SaaS-Frontend:** Related-record pickers on document create/edit (module + permission gated); **Related records** section on document view. Playwright: `documents.workflow.spec.ts`.
+- **EloSync-Backend:** `document_links` polymorphic pivot, `DocumentLink` model, `DocumentLinkService::sync` on create/update, `LinkableAsset` + `LinkableTask` validation rules, `links` on document API resources. Catalog MINOR: `documents` **1.1.0 → 1.3.0**. Pest: link sync, entitlement gating, forbidden link in `DocumentTest`.
+- **EloSync-Frontend:** Related-record pickers on document create/edit (module + permission gated); **Related records** section on document view. Playwright: `documents.workflow.spec.ts`.
 - Docs: [documents overview](/user-guide/documents-overview), [developer guide](/developer-guide/documents), [API](/api/tenant-v1-documents).
 
 ## Platform polish — rich demo, workspace checklist, marketplace starters (2026-08-23)
 
-- **SaaS-Backend:** `local:seed-demo --full` installs `config/local-demo.php` → `demo_modules`, chains `LocalReportsDemoDataService` + `LocalDemoCrossModuleStoryService` (Companies/Contacts linked to Leads, sales→billing chain, Help Desk ticket linked to KB). `--full` defaults off.
-- **SaaS-Backend:** Workspace onboarding checklist — `onboarding_checklist` tenant setting, `GET/PATCH /settings/onboarding`, auto-detect for timezone/branding/first lead, mail-test + marketplace visit timestamps. Pest: `WorkspaceOnboardingTest`.
-- **SaaS-Frontend:** Dismissible `WorkspaceChecklistCard` on tenant dashboard (owner/admin). Dashboard marketplace upsell widgets when starter modules are missing; Marketplace **Starter paths** section (CRM / Billing / Operations slug bundles).
-- **SaaS-Docs:** [Local demo data](/getting-started/local-demo-data) `--full` section; changelog note.
+- **EloSync-Backend:** `local:seed-demo --full` installs `config/local-demo.php` → `demo_modules`, chains `LocalReportsDemoDataService` + `LocalDemoCrossModuleStoryService` (Companies/Contacts linked to Leads, sales→billing chain, Help Desk ticket linked to KB). `--full` defaults off.
+- **EloSync-Backend:** Workspace onboarding checklist — `onboarding_checklist` tenant setting, `GET/PATCH /settings/onboarding`, auto-detect for timezone/branding/first lead, mail-test + marketplace visit timestamps. Pest: `WorkspaceOnboardingTest`.
+- **EloSync-Frontend:** Dismissible `WorkspaceChecklistCard` on tenant dashboard (owner/admin). Dashboard marketplace upsell widgets when starter modules are missing; Marketplace **Starter paths** section (CRM / Billing / Operations slug bundles).
+- **EloSync-Docs:** [Local demo data](/getting-started/local-demo-data) `--full` section; changelog note.
 
 ## Platform polish — Knowledge Base attachments + AI tools (2026-08-23)
 
-- **SaaS-Backend (A5):** `knowledge_base_article_attachments` table, model/policy/resource, `KnowledgeBaseArticleService::attachFile` on create/update (multipart `attachment` field), `GET /knowledge-base/attachments/{uuid}/download`, workspace storage `usedBytes()` integration. Catalog MINOR: `knowledge-base` **1.0.0 → 1.1.0**. Pest: `KnowledgeBaseAttachmentTest`.
-- **SaaS-Frontend (A5):** Attachment file input on article create/edit; download links on article view.
-- **SaaS-Backend (C2):** New AI tools — write: `update_lead_status`, `log_activity` (pending confirmation); read: `get_help_desk_open_tickets`, `get_expense_pending_approval`. Opportunity Copilot endpoints (`/ai/opportunities/{id}/summarize`, `next-action`, `draft-follow-up`). Extended `AiWriteConfirmationTest` + `AiAuthorizationTest`.
-- **SaaS-Frontend (C2):** `OpportunityAiCopilotSection` on opportunity view; Ask EloSync starter chips on tenant dashboard (module-entitled prompts); shared `ai-starter-prompts` for panel + dashboard.
+- **EloSync-Backend (A5):** `knowledge_base_article_attachments` table, model/policy/resource, `KnowledgeBaseArticleService::attachFile` on create/update (multipart `attachment` field), `GET /knowledge-base/attachments/{uuid}/download`, workspace storage `usedBytes()` integration. Catalog MINOR: `knowledge-base` **1.0.0 → 1.1.0**. Pest: `KnowledgeBaseAttachmentTest`.
+- **EloSync-Frontend (A5):** Attachment file input on article create/edit; download links on article view.
+- **EloSync-Backend (C2):** New AI tools — write: `update_lead_status`, `log_activity` (pending confirmation); read: `get_help_desk_open_tickets`, `get_expense_pending_approval`. Opportunity Copilot endpoints (`/ai/opportunities/{id}/summarize`, `next-action`, `draft-follow-up`). Extended `AiWriteConfirmationTest` + `AiAuthorizationTest`.
+- **EloSync-Frontend (C2):** `OpportunityAiCopilotSection` on opportunity view; Ask EloSync starter chips on tenant dashboard (module-entitled prompts); shared `ai-starter-prompts` for panel + dashboard.
 - Docs: [AI tools developer guide](/developer-guide/ai-tools).
 
 ## Billing docs sync — overview + production readiness (2026-08-23)
 
-- **SaaS-Docs:** User-guide overviews for [Invoices](/user-guide/invoices-overview), [Estimates](/user-guide/estimates-overview), and [Quotations](/user-guide/quotations-overview) now list shipped **Download PDF** + **Email customer** capabilities and catalog versions (**1.8.0** / **1.5.0** / **1.6.0**). Removed stale “e-mail delivery deferred” bullets.
-- **SaaS-Docs:** [Invoices production readiness](/deployment/invoices-production-readiness) — customer email marked **Shipped** (1.8.0); API and user guide cross-links.
+- **EloSync-Docs:** User-guide overviews for [Invoices](/user-guide/invoices-overview), [Estimates](/user-guide/estimates-overview), and [Quotations](/user-guide/quotations-overview) now list shipped **Download PDF** + **Email customer** capabilities and catalog versions (**1.8.0** / **1.5.0** / **1.6.0**). Removed stale “e-mail delivery deferred” bullets.
+- **EloSync-Docs:** [Invoices production readiness](/deployment/invoices-production-readiness) — customer email marked **Shipped** (1.8.0); API and user guide cross-links.
 
 ## Expense receipt attachments (2026-08-23)
 
-- **SaaS-Backend:** `expense_attachments` table, `ExpenseAttachment` model/policy/resource, `ExpenseService::attachReceipt` on create/update (multipart `receipt` field), `GET /expenses/attachments/{uuid}/download`, workspace storage `usedBytes()` integration, POST twin for multipart update. Catalog MINOR: `expenses` **1.2.0 → 1.3.0**.
-- **SaaS-Frontend:** Receipt file input on expense create/edit; download links on expense view. Pest: `ExpenseAttachmentTest`.
-- **SaaS-Backend:** Help Desk ticket attachments — `help_desk_ticket_attachments`, attach on create (`attachment` field), download route, storage usage. Catalog MINOR: `help-desk` **1.1.0 → 1.2.0**.
-- **SaaS-Frontend:** Attachment input on ticket create; download on ticket view. Pest: `HelpDeskAttachmentTest`.
+- **EloSync-Backend:** `expense_attachments` table, `ExpenseAttachment` model/policy/resource, `ExpenseService::attachReceipt` on create/update (multipart `receipt` field), `GET /expenses/attachments/{uuid}/download`, workspace storage `usedBytes()` integration, POST twin for multipart update. Catalog MINOR: `expenses` **1.2.0 → 1.3.0**.
+- **EloSync-Frontend:** Receipt file input on expense create/edit; download links on expense view. Pest: `ExpenseAttachmentTest`.
+- **EloSync-Backend:** Help Desk ticket attachments — `help_desk_ticket_attachments`, attach on create (`attachment` field), download route, storage usage. Catalog MINOR: `help-desk` **1.1.0 → 1.2.0**.
+- **EloSync-Frontend:** Attachment input on ticket create; download on ticket view. Pest: `HelpDeskAttachmentTest`.
 - Docs: developer guides + API snippets for both modules (user guide deferred list updates).
 
 ## Branded custom domain — SSL pending status (2026-08-23)
 
-- **SaaS-Backend:** Custom domains track `ssl_provisioned_at` and `hosting_status` (`dns_pending` / `ssl_pending` / `active`). DNS verify leaves SSL pending until operator marks provisioned (`POST /api/central/v1/tenants/{tenant}/branded-domain/mark-ssl-provisioned` or `php artisan branded:mark-ssl-provisioned {hostname}`). Email/deep links use custom host only when SSL is provisioned. Grandfather migration sets `ssl_provisioned_at` for existing verified custom domains.
-- **SaaS-Frontend:** Settings → Domain shows **Pending SSL certificate** after DNS verify until hosting is active.
+- **EloSync-Backend:** Custom domains track `ssl_provisioned_at` and `hosting_status` (`dns_pending` / `ssl_pending` / `active`). DNS verify leaves SSL pending until operator marks provisioned (`POST /api/central/v1/tenants/{tenant}/branded-domain/mark-ssl-provisioned` or `php artisan branded:mark-ssl-provisioned {hostname}`). Email/deep links use custom host only when SSL is provisioned. Grandfather migration sets `ssl_provisioned_at` for existing verified custom domains.
+- **EloSync-Frontend:** Settings → Domain shows **Pending SSL certificate** after DNS verify until hosting is active.
 - Docs: Branded user/deployment/API/developer guides; Central API route table.
 
 ## Short Links module (2026-08-23)
 
-- **SaaS-Backend:** New free Operations module `short-links` (catalog **1.0.0**, not default-included). CRUD API, click analytics, public redirect `GET /r/{uuid}`, async click recording job, Pest coverage.
-- **SaaS-Frontend:** List/create/view/edit pages, KPI strip, analytics section, nav gated by module + `short-links.view`. Playwright `test:e2e:short-links`.
+- **EloSync-Backend:** New free Operations module `short-links` (catalog **1.0.0**, not default-included). CRUD API, click analytics, public redirect `GET /r/{uuid}`, async click recording job, Pest coverage.
+- **EloSync-Frontend:** List/create/view/edit pages, KPI strip, analytics section, nav gated by module + `short-links.view`. Playwright `test:e2e:short-links`.
 - Docs: [user guide](/user-guide/short-links), [developer guide](/developer-guide/short-links), [API](/api/tenant-v1-short-links).
 - **Short Links 1.1.0:** Public URLs use 7-character codes on `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/abc1234`). Legacy UUID redirects remain supported. Catalog bump **1.0.0 → 1.1.0**.
 
 ## Connected workflow polish — payment receipts + Help Desk ↔ Knowledge Base (2026-08-23)
 
-- **SaaS-Backend:** Posted payments — `GET /payments/{id}/pdf` (receipt PDF) and `POST /payments/{id}/email` (`payments.send`, throttled like invoices). `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `Emailed` timeline event. Catalog PATCH: `payments` **1.1.0 → 1.2.0**.
-- **SaaS-Frontend:** Payment record page — **Download receipt** + **Email receipt** (shared billing email dialog); Playwright coverage in `payments.workflow.spec.ts`.
-- **SaaS-Backend:** Soft Help Desk ↔ Knowledge Base M2M (`help_desk_ticket_knowledge_base_article` pivot, `LinkableKnowledgeBaseArticle`, `knowledge_base_article_ids` on create/update, `PUT /help-desk/{id}/articles`, `articles_synced` timeline). Catalog MINOR: `help-desk` **1.0.0 → 1.1.0**.
-- **SaaS-Frontend:** KB article multi-select on Help Desk create/edit; **Related articles** on ticket view; **Linked tickets** on article view when Help Desk is entitled; Playwright in `help-desk.workflow.spec.ts`.
+- **EloSync-Backend:** Posted payments — `GET /payments/{id}/pdf` (receipt PDF) and `POST /payments/{id}/email` (`payments.send`, throttled like invoices). `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `Emailed` timeline event. Catalog PATCH: `payments` **1.1.0 → 1.2.0**.
+- **EloSync-Frontend:** Payment record page — **Download receipt** + **Email receipt** (shared billing email dialog); Playwright coverage in `payments.workflow.spec.ts`.
+- **EloSync-Backend:** Soft Help Desk ↔ Knowledge Base M2M (`help_desk_ticket_knowledge_base_article` pivot, `LinkableKnowledgeBaseArticle`, `knowledge_base_article_ids` on create/update, `PUT /help-desk/{id}/articles`, `articles_synced` timeline). Catalog MINOR: `help-desk` **1.0.0 → 1.1.0**.
+- **EloSync-Frontend:** KB article multi-select on Help Desk create/edit; **Related articles** on ticket view; **Linked tickets** on article view when Help Desk is entitled; Playwright in `help-desk.workflow.spec.ts`.
 - Docs: payments + Help Desk + Knowledge Base user/dev/API/deployment guides; roadmap deferred lists updated.
 
 ## Connected workflow polish — document prefixes + billing email (2026-08-23)
 
-- **SaaS-Frontend:** Settings → General → **Document number prefixes** for entitled modules (invoices, payments, credit notes, estimates, purchase orders, expenses, assets, Help Desk). Playwright: `tenant-settings.number-prefixes.spec.ts`, `billing/connected-workflow-polish.spec.ts`.
-- **SaaS-Backend:** `POST /invoices|estimates|quotations/{id}/email` — email customers with optional PDF attachment (requires document already sent). Activity timeline `emailed` event; tenant email logs. Queued mailable stores PDF as base64 so the `emails` queue payload serializes correctly.
+- **EloSync-Frontend:** Settings → General → **Document number prefixes** for entitled modules (invoices, payments, credit notes, estimates, purchase orders, expenses, assets, Help Desk). Playwright: `tenant-settings.number-prefixes.spec.ts`, `billing/connected-workflow-polish.spec.ts`.
+- **EloSync-Backend:** `POST /invoices|estimates|quotations/{id}/email` — email customers with optional PDF attachment (requires document already sent). Activity timeline `emailed` event; tenant email logs. Queued mailable stores PDF as base64 so the `emails` queue payload serializes correctly.
 - Catalog MINOR: `invoices` **1.8.0**, `estimates` **1.5.0**, `quotations` **1.6.0**.
 - Docs: user guides, API, developer guides, tenant settings.
 
 ## Marketing site runtime config (2026-08-23)
 
-- **saas-website:** API URL and marketing pixels (`NEXT_PUBLIC_*`) resolve from Forge `/config.js` (`window.env`) at runtime — same model as SaaS-Frontend. Local dev uses `.env.local` with `public/config.js` stub. CI no longer bakes pixel IDs into the static export.
+- **elosync-website:** API URL and marketing pixels (`NEXT_PUBLIC_*`) resolve from Forge `/config.js` (`window.env`) at runtime — same model as EloSync-Frontend. Local dev uses `.env.local` with `public/config.js` stub. CI no longer bakes pixel IDs into the static export.
 - **Deploy:** Marketing Forge deploy script writes `config.js` from site `.env`; redeploy only (no CI rebuild) to change pixels or API URL.
 - Docs: [Marketing pixels](/deployment/marketing-pixels), [Laravel Forge — Marketing](/deployment/laravel-forge#42-deploy-script-marketing).
 
 ## Entity search labels — name + company (2026-08-23)
 
-- **SaaS-Frontend:** Shared `src/lib/entity-display.ts` helpers show **name — company** together in module search dropdowns (contacts, leads, opportunities, resellers), billing list Customer columns, invoice pickers, activity related columns, and record view cards — so duplicate person names are distinguishable by company.
+- **EloSync-Frontend:** Shared `src/lib/entity-display.ts` helpers show **name — company** together in module search dropdowns (contacts, leads, opportunities, resellers), billing list Customer columns, invoice pickers, activity related columns, and record view cards — so duplicate person names are distinguishable by company.
 
 ## Marketing pixels scaffold (2026-08-22)
 
-- **SaaS-Frontend:** `src/lib/marketing-pixels/` — optional env-gated GTM (existing), Meta Pixel, LinkedIn Insight Tag, and X Pixel; `initMarketingPixels()` + `MarketingPageView` for HashRouter SPA page views; Vitest coverage.
-- **saas-website:** `MarketingScripts` / `MarketingPageView` with `NEXT_PUBLIC_*` vars; client navigations push GTM virtual page views + Meta/X PageView.
+- **EloSync-Frontend:** `src/lib/marketing-pixels/` — optional env-gated GTM (existing), Meta Pixel, LinkedIn Insight Tag, and X Pixel; `initMarketingPixels()` + `MarketingPageView` for HashRouter SPA page views; Vitest coverage.
+- **elosync-website:** `MarketingScripts` / `MarketingPageView` with `NEXT_PUBLIC_*` vars; client navigations push GTM virtual page views + Meta/X PageView.
 - **Deploy:** Forge `config.js` keys `VITE_META_PIXEL_ID`, `VITE_LINKEDIN_PARTNER_ID`, `VITE_X_PIXEL_ID` (alongside `VITE_GTM_ID`). No prod IDs required until operators enable each vendor.
 - Docs: [Marketing pixels](/deployment/marketing-pixels).
 
@@ -870,7 +870,7 @@ Catalog version: **whatsapp-cloud 1.0.0** (new billable CRM module, $29 / $290).
 
 ## Reports 1.4.0 production readiness — Go (2026-08-16)
 
-- Closed audit openers: companion PRs Backend [#113](https://github.com/DiligentCreators/SaaS-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/SaaS-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/SaaS-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/SaaS-Website/pull/28); Backend Laravel Tests + Code Quality Gate **success**; local catalog migrated to **1.4.0**.
+- Closed audit openers: companion PRs Backend [#113](https://github.com/DiligentCreators/EloSync-Backend/pull/113) · Frontend [#109](https://github.com/DiligentCreators/EloSync-Frontend/pull/109) · Docs [#134](https://github.com/DiligentCreators/EloSync-Docs/pull/134) · Website [#28](https://github.com/DiligentCreators/EloSync-Website/pull/28); Backend Laravel Tests + Code Quality Gate **success**; local catalog migrated to **1.4.0**.
 - Pest Analytics **23/23**; headed Playwright **14/14**; Frontend / Docs / Website Quality Gates **success**.
 - Staging migrate + human smoke (manager Payroll / staff omit) remain ops pre-flight.
 - Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
@@ -897,7 +897,7 @@ Catalog version: **analytics 1.3.1 → 1.4.0**. Display name remains **Reports**
 
 ## Reports 1.3.1 / People 1.3.0 production readiness — Go (2026-08-16)
 
-- Audit of `feature/analytics-people-reports-e0a6` companions (Backend [#112](https://github.com/DiligentCreators/SaaS-Backend/pull/112) · Frontend [#108](https://github.com/DiligentCreators/SaaS-Frontend/pull/108) · Docs [#133](https://github.com/DiligentCreators/SaaS-Docs/pull/133) · Website [#27](https://github.com/DiligentCreators/SaaS-Website/pull/27)).
+- Audit of `feature/analytics-people-reports-e0a6` companions (Backend [#112](https://github.com/DiligentCreators/EloSync-Backend/pull/112) · Frontend [#108](https://github.com/DiligentCreators/EloSync-Frontend/pull/108) · Docs [#133](https://github.com/DiligentCreators/EloSync-Docs/pull/133) · Website [#27](https://github.com/DiligentCreators/EloSync-Website/pull/27)).
 - **Go:** local Pest Analytics green; headed Playwright **14/14**; Docs / Frontend Quality Gates green; Backend Code Quality Gate + Laravel Tests green (dispatched). Staging migrate **1.3.1** + smoke remain.
 - Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
 
@@ -938,7 +938,7 @@ Docs-only future reference (no catalog bump):
 
 ## Reports 1.2.0 production readiness re-audit (2026-08-15)
 
-- Re-audited companion PRs Backend [#111](https://github.com/DiligentCreators/SaaS-Backend/pull/111) · Frontend [#107](https://github.com/DiligentCreators/SaaS-Frontend/pull/107) · Docs [#132](https://github.com/DiligentCreators/SaaS-Docs/pull/132) · Website [#26](https://github.com/DiligentCreators/SaaS-Website/pull/26).
+- Re-audited companion PRs Backend [#111](https://github.com/DiligentCreators/EloSync-Backend/pull/111) · Frontend [#107](https://github.com/DiligentCreators/EloSync-Frontend/pull/107) · Docs [#132](https://github.com/DiligentCreators/EloSync-Docs/pull/132) · Website [#26](https://github.com/DiligentCreators/EloSync-Website/pull/26).
 - **Conditional Go:** Pest Analytics **17/17** local; Docs CI green; Frontend Quality Gate blocked on module-tour length (**35**); website timeline must show catalog **1.2.0**; Playwright not re-run this audit.
 - Canonical page: [Analytics production readiness](/deployment/analytics-production-readiness).
 
@@ -1502,7 +1502,7 @@ Tenant **Roles** edit and the **Permissions matrix** only show core administrati
 Every tenant module list page includes a short product tour (driver.js) explaining how the module works.
 
 - PageHeader help icon (`tourId`) — always re-runnable; first visit auto-prompts once via `localStorage`
-- Shared helper + per-module step configs under `SaaS-Frontend/src/tours/` (Leads is the blueprint)
+- Shared helper + per-module step configs under `EloSync-Frontend/src/tours/` (Leads is the blueprint)
 - Wired for nav modules: CRM, sales, billing, purchasing, inventory, accounting, financial reports, and HR (employees, departments, leave, attendance, payroll)
 - Docs: [Module Tours](/developer-guide/module-tours); brief note in [Shared Layout](/user-guide/shared-layout)
 
@@ -2116,7 +2116,7 @@ Public `GET /api/central/v1/public/modules` now labels paid prices with each mod
   - `GET /api/central/v1/public/stats` — live Active Workspaces, Modules Installed, Catalog Modules (+ uptime / platform currency)
   - `GET /api/central/v1/public/modules` — marketplace cards with **Available / In Progress / Planned** and **Included / Free / Paid** tags; paid prices always use the central application currency
 - Catalog modules gain `availability` (`available` \| `in_progress` \| `planned`) alongside existing commercial `status` / `is_billable` flags
-- SaaS-Website Trust + Module Marketplace sections consume these APIs (`NEXT_PUBLIC_API_URL`); CORS supports `MARKETING_URL`
+- EloSync-Website Trust + Module Marketplace sections consume these APIs (`NEXT_PUBLIC_API_URL`); CORS supports `MARKETING_URL`
 - Pest: `tests/Feature/Central/Public/PublicPlatformTest.php`
 
 ## Rebrand SaleOS → EloSync (2026-07-31)
@@ -2231,7 +2231,7 @@ Tenant Application pages for Quotations and Contracts (list, form with line item
 
 ## Marketing site Forge CI (2026-07-30)
 
-EloSync marketing repo (`SaaS-Website`) publishes a static Next.js export to `build-artifacts` on each push to `main` (same pattern as SPA/Docs). Forge deploys that branch with activate-only script — no Node on the server. See [Laravel Forge](/deployment/laravel-forge) §4 Marketing.
+EloSync marketing repo (`EloSync-Website`) publishes a static Next.js export to `build-artifacts` on each push to `main` (same pattern as SPA/Docs). Forge deploys that branch with activate-only script — no Node on the server. See [Laravel Forge](/deployment/laravel-forge) §4 Marketing.
 
 ## Marketing catalog pricing sync (2026-07-30)
 

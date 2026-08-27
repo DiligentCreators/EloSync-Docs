@@ -8,7 +8,7 @@
 | **Branch** | `feature/whatsapp-cloud-post-mvp-polish` |
 | **Companion** | [WhatsApp Cloud deployment](./whatsapp-cloud) · [Developer guide](/developer-guide/whatsapp-cloud-integration) · [User guide](/user-guide/whatsapp-cloud) · [API](/api/tenant-v1-whatsapp-cloud) · [Automation](/developer-guide/automation) |
 
-**PRs:** Backend [#141](https://github.com/DiligentCreators/SaaS-Backend/pull/141) · Frontend [#134](https://github.com/DiligentCreators/SaaS-Frontend/pull/134) · Docs [#161](https://github.com/DiligentCreators/SaaS-Docs/pull/161)
+**PRs:** Backend [#141](https://github.com/DiligentCreators/EloSync-Backend/pull/141) · Frontend [#134](https://github.com/DiligentCreators/EloSync-Frontend/pull/134) · Docs [#161](https://github.com/DiligentCreators/EloSync-Docs/pull/161)
 
 ---
 

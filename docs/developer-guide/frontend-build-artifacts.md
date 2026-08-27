@@ -1,12 +1,12 @@
 # Frontend production build artifacts
 
-Production CI/CD for the **SaaS-Frontend** React + Vite SPA.
+Production CI/CD for the **EloSync-Frontend** React + Vite SPA.
 
 - Source of truth: **`main`** (source code only — never commit `dist/`)
 - Deployment branch: **`build-artifacts`** (compiled assets only)
-- Workflow: `SaaS-Frontend/.github/workflows/frontend-build.yml`
-- Frontend-local mirror: `SaaS-Frontend/docs/ci-cd/frontend-build-artifacts.md`
-- Forge site setup: [Laravel Forge Deployment](/deployment/laravel-forge#2-spa-site-saas-frontend)
+- Workflow: `EloSync-Frontend/.github/workflows/frontend-build.yml`
+- Frontend-local mirror: `EloSync-Frontend/docs/ci-cd/frontend-build-artifacts.md`
+- Forge site setup: [Laravel Forge Deployment](/deployment/laravel-forge#2-spa-site-elosync-frontend)
 
 ## Purpose
 
@@ -98,7 +98,7 @@ VITE_REVERB_SCHEME=https
 
 Local Vite uses `.env` / `import.meta.env` when `window.env` is absent.
 
-Forge site settings: repository `SaaS-Frontend`, branch **`build-artifacts`**, web directory `/`, Node **not** required on the server.
+Forge site settings: repository `EloSync-Frontend`, branch **`build-artifacts`**, web directory `/`, Node **not** required on the server.
 
 ## `build-artifacts` branch
 

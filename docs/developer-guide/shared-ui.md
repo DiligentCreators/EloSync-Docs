@@ -11,7 +11,7 @@ Business functionality will differentiate the apps later; the shell must not req
 | Concern | Shared source |
 |---------|----------------|
 | Colors, typography, spacing | Global CSS / Tailwind theme tokens |
-| Primitives | `SaaS-Frontend/src/components/ui` |
+| Primitives | `EloSync-Frontend/src/components/ui` |
 | Page helpers | `components/common` (headers, empty/loading/error states) |
 | App chrome | `layouts/app-layout.tsx` + `components/layout` |
 | Motion / density | Compact admin density: Inter, sidebar `w-60` / collapsed `w-14`, topbar `h-14`, content `px-4`–`px-6`, control `h-9` |

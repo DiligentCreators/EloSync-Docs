@@ -35,7 +35,7 @@ Highlights:
 ## Verification
 
 ```bash
-cd SaaS-Backend && php artisan test --compact
+cd EloSync-Backend && php artisan test --compact
 # Expected: 331+ passed
 ```
 

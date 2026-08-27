@@ -111,7 +111,7 @@ php -m | grep -i imap
 Frontend (optional):
 
 ```bash
-cd SaaS-Frontend
+cd EloSync-Frontend
 npm run test:e2e:email
 ```
 

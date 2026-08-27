@@ -1,6 +1,6 @@
 # Shared Layout — Developer Guide
 
-App: `SaaS-Frontend` (React 19 + Vite).
+App: `EloSync-Frontend` (React 19 + Vite).
 
 ## Shared layout architecture
 

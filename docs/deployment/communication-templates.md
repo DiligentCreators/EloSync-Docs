@@ -66,7 +66,7 @@ php artisan test --compact tests/Feature/Tenant/CommunicationTemplates
 Frontend (optional):
 
 ```bash
-cd SaaS-Frontend
+cd EloSync-Frontend
 npm run test:e2e:communication-templates
 ```
 

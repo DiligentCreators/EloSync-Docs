@@ -2,7 +2,7 @@
 
 EloSync treats documentation as part of the product. A change is **not complete** until **code**, **tests**, and **documentation** are updated together.
 
-Canonical site: [docs.elosync.com](https://docs.elosync.com). Source repository: **SaaS-Docs**.
+Canonical site: [docs.elosync.com](https://docs.elosync.com). Source repository: **EloSync-Docs**.
 
 ---
 
@@ -49,9 +49,9 @@ Always add a dated note under [CHANGELOG](/changelog/) for shippable work.
 
 | Repo | Role |
 |------|------|
-| **SaaS-Backend** | Implementation + Pest; link Docs paths in PR description |
-| **SaaS-Frontend** | UI/E2E; keep user-facing copy aligned with Docs |
-| **SaaS-Docs** | Canonical narrative, runbooks, changelog, release records |
+| **EloSync-Backend** | Implementation + Pest; link Docs paths in PR description |
+| **EloSync-Frontend** | UI/E2E; keep user-facing copy aligned with Docs |
+| **EloSync-Docs** | Canonical narrative, runbooks, changelog, release records |
 
 Platform-scoped releases follow [Release Process](/deployment/release-process) (`vX.Y.Z-platform` on all three).
 

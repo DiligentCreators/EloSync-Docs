@@ -11,20 +11,25 @@ End-to-end plan to install and configure **EloSync** on a developer machine: bac
 
 ## Repositories
 
-Clone the three sibling repos next to each other (recommended layout):
+Clone the sibling repos next to each other (recommended layout):
 
 ```text
-DC-SaaS/
-├── SaaS-Backend/    # Laravel 13 API (Herd: saas-backend.test)
-├── SaaS-Frontend/   # React 19 + Vite SPA (localhost:5173)
-└── SaaS-Docs/       # VitePress docs (docs:dev)
+EloSync/
+├── EloSync-Backend/    # Laravel 13 API (Herd: elosync-backend.test)
+├── EloSync-Frontend/   # React 19 + Vite SPA (localhost:5173)
+├── EloSync-Docs/       # VitePress docs (docs:dev)
+├── EloSync-Website/    # Marketing site (localhost:3000)
+└── EloSync-Mobile/     # Expo mobile app
 ```
 
 | Repo | Role | Default local URL |
 |------|------|-------------------|
-| [SaaS-Backend](https://github.com/DiligentCreators/SaaS-Backend) | Central + Tenant APIs, queues, Reverb, scheduler | `http://saas-backend.test` |
-| [SaaS-Frontend](https://github.com/DiligentCreators/SaaS-Frontend) | Central admin + tenant workspace SPA | `http://localhost:5173` |
-| [SaaS-Docs](https://github.com/DiligentCreators/SaaS-Docs) | Product / developer / ops documentation | `http://localhost:5173` (separate process) |
+| [EloSync-Backend](https://github.com/DiligentCreators/EloSync-Backend) | Central + Tenant APIs, queues, Reverb, scheduler | `http://elosync-backend.test` |
+| [EloSync-Frontend](https://github.com/DiligentCreators/EloSync-Frontend) | Central admin + tenant workspace SPA | `http://localhost:5173` |
+| [EloSync-Docs](https://github.com/DiligentCreators/EloSync-Docs) | Product / developer / ops documentation | `http://localhost:5173` (separate process) |
+| [EloSync-Website](https://github.com/DiligentCreators/EloSync-Website) | Marketing / Join Beta site | `http://localhost:3000` |
+| [EloSync-Mobile](https://github.com/DiligentCreators/EloSync-Mobile) | Expo tenant mobile client | Metro / device |
+
 
 ## Prerequisites
 
@@ -35,19 +40,19 @@ DC-SaaS/
 | MySQL | 8+ (or MariaDB / PostgreSQL / SQLite for experiments) |
 | Node.js | **20+** LTS |
 | npm | 10+ |
-| Laravel Herd | Recommended on Windows/macOS — serves `saas-backend.test` with PHP-FPM |
+| Laravel Herd | Recommended on Windows/macOS — serves `elosync-backend.test` with PHP-FPM |
 | Redis | Optional locally; **required** in production for cache/queue/Reverb scale |
 
 Optional: Stripe CLI (billing webhooks), Mailpit/Mailhog (SMTP catcher), ngrok (provider webhooks).
 
 ---
 
-## 1. Backend (SaaS-Backend)
+## 1. Backend (EloSync-Backend)
 
 ### 1.1 Install dependencies and bootstrap
 
 ```bash
-cd SaaS-Backend
+cd EloSync-Backend
 composer install
 cp .env.example .env
 php artisan key:generate
@@ -67,7 +72,7 @@ php artisan storage:link
 
 ### 1.2 Point Herd at the app
 
-With [Laravel Herd](https://herd.laravel.com/) installed, park or link the project so it resolves as `http://saas-backend.test` (folder name `saas-backend` → Herd site). Confirm:
+With [Laravel Herd](https://herd.laravel.com/) installed, park or link the project so it resolves as `http://elosync-backend.test` (folder name `EloSync-Backend` → Herd site `elosync-backend`). Confirm:
 
 ```bash
 herd sites
@@ -83,7 +88,7 @@ Backend `.env.example` is **production-shaped** (`api.example.com` / `app.exampl
 APP_NAME="EloSync"
 APP_ENV=local
 APP_DEBUG=true
-APP_URL=http://saas-backend.test
+APP_URL=http://elosync-backend.test
 FRONTEND_URL=http://localhost:5173
 CORS_ALLOWED_ORIGINS=http://localhost:5173
 
@@ -165,12 +170,12 @@ When `APP_ENV=local`, `php artisan migrate:fresh --seed` also runs `local:seed-d
 
 ---
 
-## 2. Frontend (SaaS-Frontend)
+## 2. Frontend (EloSync-Frontend)
 
 ### 2.1 Install and env
 
 ```bash
-cd SaaS-Frontend
+cd EloSync-Frontend
 npm install
 cp .env.example .env
 ```
@@ -179,7 +184,7 @@ Local Vite `.env`:
 
 ```env
 VITE_APP_NAME=EloSync
-VITE_API_URL=http://saas-backend.test
+VITE_API_URL=http://elosync-backend.test
 VITE_API_MODE=central
 # VITE_CENTRAL_PATH_PREFIX=dc-s87s
 VITE_REVERB_APP_KEY=elosync-reverb-key
@@ -229,15 +234,15 @@ Tenant Playwright suites sign in to the shared demo workspace (`demo@demo.com` /
 
 ---
 
-## 3. Docs (SaaS-Docs)
+## 3. Docs (EloSync-Docs)
 
 ```bash
-cd SaaS-Docs
+cd EloSync-Docs
 npm ci
 npm run docs:dev
 ```
 
-Open the printed URL. Production docs deploy from the `build-artifacts` branch (CI builds VitePress; Forge only activates the release) — [Laravel Forge Deployment](/deployment/laravel-forge#3-docs-site-saas-docs).
+Open the printed URL. Production docs deploy from the `build-artifacts` branch (CI builds VitePress; Forge only activates the release) — [Laravel Forge Deployment](/deployment/laravel-forge#3-docs-site-elosync-docs).
 
 Local production build check:
 
@@ -287,7 +292,7 @@ Omit `VITE_REVERB_*` only if you intentionally disable Echo.
 In a dedicated terminal:
 
 ```bash
-cd SaaS-Backend
+cd EloSync-Backend
 php artisan reverb:start
 ```
 
@@ -353,7 +358,7 @@ Restart workers after changing mail credentials (`php artisan queue:restart`).
 ### 6.1 Queue worker (required for mail + notifications)
 
 ```bash
-cd SaaS-Backend
+cd EloSync-Backend
 php artisan queue:work --queue=emails,default
 ```
 
@@ -418,18 +423,18 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 | Terminal | Command | Repo |
 |----------|---------|------|
 | 1 | (Herd — no command) | Backend site live |
-| 2 | `php artisan reverb:start` | SaaS-Backend |
-| 3 | `php artisan horizon` (or `queue:work --queue=automations,emails,default` without Horizon) | SaaS-Backend |
-| 4 | `php artisan schedule:work` | SaaS-Backend (optional) |
-| 5 | `php artisan pulse:check` | SaaS-Backend (optional; Servers card) |
-| 6 | `npm run dev` | SaaS-Frontend |
-| 7 | `npm run docs:dev` | SaaS-Docs (when editing docs) |
+| 2 | `php artisan reverb:start` | EloSync-Backend |
+| 3 | `php artisan horizon` (or `queue:work --queue=automations,emails,default` without Horizon) | EloSync-Backend |
+| 4 | `php artisan schedule:work` | EloSync-Backend (optional) |
+| 5 | `php artisan pulse:check` | EloSync-Backend (optional; Servers card) |
+| 6 | `npm run dev` | EloSync-Frontend |
+| 7 | `npm run docs:dev` | EloSync-Docs (when editing docs) |
 
 ---
 
 ## 9. Verify the install
 
-- [ ] `GET http://saas-backend.test/up` returns 200
+- [ ] `GET http://elosync-backend.test/up` returns 200
 - [ ] Central login works with `superadmin@saas.com` / `password`
 - [ ] Tenant login works with `demo@demo.com` / `password` (local demo workspace)
 - [ ] SPA calls API (`VITE_API_URL` matches Herd host; no CORS errors)
@@ -437,7 +442,7 @@ Run these processes while developing (Herd serves PHP; you still need workers an
 - [ ] Queue worker processes a test mail / notification job
 - [ ] Reverb is running; SPA has matching `VITE_REVERB_*` (notification bell updates live when Echo is enabled)
 - [ ] `php artisan local:seed-demo` (optional) creates demo workspace `demo-crm.localhost`
-- [ ] Docs site builds: `npm run docs:build` in SaaS-Docs
+- [ ] Docs site builds: `npm run docs:build` in EloSync-Docs
 - [ ] **Settings → Pulse** opens Laravel Pulse in a new tab (superadmin / developer / tester); live cards update without 500 errors
 
 ---
@@ -448,9 +453,9 @@ Do **not** treat local Herd + `npm run dev` as a production recipe. On Forge you
 
 | Site | Branch | What Forge runs |
 |------|--------|-----------------|
-| API (`SaaS-Backend`) | `main` | Composer, `migrate --force`, `optimize`, queue/Reverb restart |
-| SPA (`SaaS-Frontend`) | `build-artifacts` | Activate release + generate `/config.js` from site `.env` |
-| Docs (`SaaS-Docs`) | `build-artifacts` | Activate release only (no Node) |
+| API (`EloSync-Backend`) | `main` | Composer, `migrate --force`, `optimize`, queue/Reverb restart |
+| SPA (`EloSync-Frontend`) | `build-artifacts` | Activate release + generate `/config.js` from site `.env` |
+| Docs (`EloSync-Docs`) | `build-artifacts` | Activate release only (no Node) |
 
 Required in production (not optional like local): Redis cache/queue, supervised queue + Reverb, TLS, real mail (Central Settings), Stripe webhook secrets for active gateways, migrate-only upgrades (never `db:seed`).
 
