@@ -823,6 +823,25 @@ Settings → General logo upload and full branding panel remain web-only on mobi
 
 Tenant API reference: [Tenant API — Branded](/api/tenant-v1-branded).
 
+### EloSync AI (`module:ai`)
+
+Workspace assistant chat: list conversations, start threads, send prompts, view credit balance, read structured insights and references, and confirm/cancel pending write actions when permitted.
+
+| Piece | Location |
+|-------|----------|
+| API client | `lib/api/ai.ts` — conversations, messages, credits, confirm/cancel actions |
+| Types | `types/ai.ts` (re-exported from `types/api.ts`) |
+| Starters | `lib/ai-starter-prompts.ts` — module/permission-gated quick prompts |
+| Utils | `lib/ai-utils.ts` — labels, reference routes, action previews |
+| Components | `components/ai/AiMessageBubble.tsx` — message rendering + confirmations |
+| Routes | `app/(app)/(tabs)/ai/` — `index`, `[id]/index` |
+| Nav | `config/modules.ts` — `permission: ai.use`, tab `/(app)/(tabs)/ai` (label **AI**) |
+| Permissions | `ai.use`, `ai.confirm` |
+
+Lead/opportunity record copilot sections and Settings → AI provider configuration remain web-only on mobile v1.
+
+Tenant API reference: [Tenant API — AI](/api/tenant-v1-ai).
+
 ## Related
 
 - [Tenant API index](/api/index)

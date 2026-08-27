@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## EloSync Mobile — AI module (2026-08-27)
+
+- **SaaS-Mobile:** **EloSync AI** assistant — conversation list, new thread, chat with starter prompts, credit balance, structured insights/references, confirm/cancel write actions when permitted. API client `lib/api/ai.ts`. Routes under `app/(app)/(tabs)/ai/`. Record copilot panels and Settings → AI configuration remain web-only on mobile v1.
+- **SaaS-Docs:** Mobile user guide, developer mobile guide, product roadmap, and changelog updated for AI delivery.
+
 ## EloSync Mobile — Branded module (2026-08-27)
 
 - **SaaS-Mobile:** **Branded** custom website address screen — status, DNS instructions (TXT, A, CNAME), propose/verify/remove when permitted, share DNS values, pull-to-refresh. API client `lib/api/branded.ts`. Routes under `app/(app)/(tabs)/branded/`. Settings → General branded panel parity on mobile v1; logo upload remains web-only.
