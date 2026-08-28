@@ -15,7 +15,7 @@ You need permission to view/update settings (workspace owners have this by defau
 - Daily Reminder Time (task digest + daily CRM summary emails)
 - Task due dates and lead follow-up due times
 - Meeting and calendar start/end times (and meeting reminders)
-- Attendance “today”, login check-in time, and office start/end + late grace
+- Attendance “today”, office start/end + late grace (on-site and remote), and optional login auto check-in when enabled
 
 There is no separate attendance or meeting timezone. Change **Timezone** once; all of the above move with it. The same rule applies to every current module and any future module that shows dates, due times, schedules, or office hours.
 
@@ -69,7 +69,7 @@ Shown when the **Attendance** module is installed.
 
 | Field | Behavior |
 |-------|----------|
-| **Office start / end time** | Local workspace office hours (**Timezone** above) used for login check-in classification. Separate from Daily Reminder Time. |
+| **Office start / end time** | Local workspace office hours (**Timezone** above) used for attendance late classification (self check-in and manual records). Separate from Daily Reminder Time. |
 | **Grace period (minutes)** | Check-ins after start time plus grace are marked **Late** (default `15`). |
 | **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri), using workspace-local dates. |
 

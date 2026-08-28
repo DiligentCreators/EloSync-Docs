@@ -25,9 +25,9 @@ Phase 7 HR module on the frozen platform. Manages **payroll profiles** (base sal
 
 ## Permissions
 
-`payroll.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `approve` · `pay` · `post`
+`payroll.view` · `view_own` · `create` · `update` · `delete` · `restore` · `force.delete` · `approve` · `pay` · `post`
 
-Catalog: slug `payroll`, category `hr`, `sort_order = 40`, free opt-in.
+Catalog: slug `payroll`, category `hr`, `sort_order = 40`, free opt-in, version **1.2.0**.
 
 ## Explicitly deferred
 

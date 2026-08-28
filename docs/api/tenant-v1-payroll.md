@@ -4,6 +4,18 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:payroll`, plus `can:payroll.*`.
 
+Catalog version: **1.2.0**.
+
+## My pay slips (self-service)
+
+| Method | Path | Permission |
+|--------|------|------------|
+| GET | `/my-pay-slips` | `payroll.view_own` or `payroll.view` |
+| GET | `/my-pay-slips/{payRunLine}/pdf` | `payroll.view_own` or `payroll.view` |
+| GET | `/pay-runs/{payRun}/lines/{payRunLine}/pdf` | `payroll.view` |
+
+`GET /my-pay-slips` returns **paid** lines for the caller’s linked active employee only. PDF endpoints return `application/pdf`.
+
 ## Payroll profiles
 
 | Method | Path | Permission |
