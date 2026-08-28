@@ -1,5 +1,10 @@
 # Changelog
 
+## Shared list pagination — page numbers + page size (2026-08-29)
+
+- **EloSync-Frontend:** Module `DataTable` pagination now shows numbered page buttons (with ellipsis), previous/next chevrons, and a **Rows per page** control (`10` / `25` / `50` / `100`). `useListQueryState` exposes `setPerPage` (resets to page 1). Wired across tenant/central list pages.
+- **EloSync-Docs:** Changelog note for the shared table UX change.
+
 ## Attendance check-in / pay slips (2026-08-28)
 
 - **EloSync-Backend / Frontend / Docs:** Attendance **1.1.0 → 1.2.0** — explicit self check-in/out (login auto check-in off by default), live HH:MM timer from saved check-in, on-site/remote mode, admin-managed late/check-out reasons (Other → free text), settings toggles + remote grace, today/presence APIs. When auto-login is on and late reasons are required, late logins skip auto check-in so staff must submit a reason explicitly.
