@@ -2,7 +2,7 @@
 
 ## Attendance check-in / pay slips (2026-08-28)
 
-- **EloSync-Backend / Frontend / Docs:** Attendance **1.1.0 → 1.2.0** — explicit self check-in/out (login auto check-in off by default), live HH:MM timer from saved check-in, on-site/remote mode, admin-managed late/check-out reasons (Other → free text), settings toggles + remote grace, today/presence APIs.
+- **EloSync-Backend / Frontend / Docs:** Attendance **1.1.0 → 1.2.0** — explicit self check-in/out (login auto check-in off by default), live HH:MM timer from saved check-in, on-site/remote mode, admin-managed late/check-out reasons (Other → free text), settings toggles + remote grace, today/presence APIs. When auto-login is on and late reasons are required, late logins skip auto check-in so staff must submit a reason explicitly.
 - **EloSync-Backend / Frontend / Docs:** Payroll **1.1.0 → 1.2.0** — employees with `payroll.view_own` can list and download their own paid pay-slip PDFs (`/my-pay-slips`).
 
 ## Local Vite — BrowserRouter (2026-08-28)

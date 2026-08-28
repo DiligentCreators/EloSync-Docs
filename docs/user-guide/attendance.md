@@ -11,7 +11,7 @@ When Attendance is installed, open **Settings → Attendance** to set:
 - Remote office start / grace — used when staff check in as **Remote**
 - **Show check-in / check-out** — when off, self-service buttons are hidden
 - **Require late check-in reason** — when late, staff must pick a reason (**Other** needs a written note)
-- **Auto check-in on login** — off by default; when on, first login of the day can create check-in
+- **Auto check-in on login** — off by default; when on, first login of the day can create an on-site check-in. If you are late and **Require late check-in reason** is on, login does **not** check in (use **Check in** and pick a reason).
 - Work week days (used for payroll working-day calendars)
 
 Attendance uses the same workspace **Timezone** as Daily Reminder Time, meetings, and task/follow-up due dates (for example `Asia/Karachi`). There is no separate attendance timezone. See [Tenant Settings — Workspace timezone](/user-guide/tenant-settings#workspace-timezone).

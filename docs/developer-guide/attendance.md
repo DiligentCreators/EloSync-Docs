@@ -15,7 +15,7 @@ Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + op
 
 **Ownership:** Staff may only act on their linked active employee. Prefer `POST .../check-in` and `.../check-out` for self-service (late classification + reasons). Admin/manager via `AttendanceRecordPolicy::canManageOthers`.
 
-Tenant settings (`attendance` group): office hours, `attendance_self_check_enabled`, `attendance_auto_check_in_on_login` (default **false**), `attendance_require_late_reason`, `remote_office_start_time`, `remote_grace_minutes`, `work_week_days`. Workspace timezone drives “today” and late thresholds.
+Tenant settings (`attendance` group): office hours, `attendance_self_check_enabled`, `attendance_auto_check_in_on_login` (default **false**), `attendance_require_late_reason`, `remote_office_start_time`, `remote_grace_minutes`, `work_week_days`. Workspace timezone drives “today” and late thresholds. Auto-login check-in is skipped when the user would be late and late reasons are required.
 
 ## Backend layout
 

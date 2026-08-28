@@ -68,7 +68,7 @@ Kinds: `check_in_late`, `check_out`. Each kind has a protected **Other** row (`i
 
 Body: `employee_id`, `date` (required; unique per employee), optional `check_in` / `check_out` (`HH:MM` or `HH:MM:SS`), `status` (`present`\|`absent`\|`half_day`\|`remote`\|`late`, default `present`), `notes`.
 
-Login side-effect (optional): when `attendance_auto_check_in_on_login` is **true**, successful `POST /auth/login` may upsert today’s check-in for the user’s active linked employee. Default is **false** — staff must use check-in.
+Login side-effect (optional): when `attendance_auto_check_in_on_login` is **true**, successful `POST /auth/login` may upsert today’s on-site check-in for the user’s active linked employee. Default is **false** — staff must use check-in. If the login would be **late** and `attendance_require_late_reason` is **true**, auto check-in is **skipped** (no reason can be collected on login).
 
 ### PUT `/attendance-records/{attendanceRecord}`
 
