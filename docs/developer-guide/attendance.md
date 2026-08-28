@@ -1,38 +1,30 @@
 # Attendance — Developer Guide
 
-Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`.
+Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.2.0**.
 
 ## Domain
 
 | Model | Table | Notes |
 |-------|-------|-------|
-| `AttendanceRecord` | `attendance_records` | Unique `(tenant_id, employee_id, date)`; soft deletes |
+| `AttendanceRecord` | `attendance_records` | Unique `(tenant_id, employee_id, date)`; soft deletes; work_mode + reason FKs |
+| `AttendanceReason` | `attendance_reasons` | Catalog kinds `check_in_late` / `check_out`; protected `is_other` |
 
-Enum: `AttendanceStatusEnum` — `present` \| `absent` \| `half_day` \| `remote` \| `late`.
+Enums: `AttendanceStatusEnum`, `AttendanceWorkModeEnum`, `AttendanceReasonKindEnum`.
 
-Service: `AttendanceRecordService` (CRUD + stats + `markLoginCheckIn` + self-service ownership constraints). Spatie log name `attendance`.
+Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn`). `AttendanceReasonService` ensures Other defaults.
 
-**Ownership:** Staff with `attendance.create` / `attendance.update` may only create/update records for their linked active employee; list/show are scoped to self. Staff creates force `present` and may only update check-out/notes afterward (no status or check-in rewrite). Admin/manager/superadmin (`AttendanceRecordPolicy::canManageOthers`) may mark and edit any employee (including correcting check-in/out times, status, and notes). Login auto check-in is unchanged.
+**Ownership:** Staff may only act on their linked active employee. Prefer `POST .../check-in` and `.../check-out` for self-service (late classification + reasons). Admin/manager via `AttendanceRecordPolicy::canManageOthers`.
 
-Tenant settings (`attendance` group): `office_start_time`, `office_end_time`, `attendance_grace_minutes`, `work_week_days`. Those `H:i` values are workspace-local wall clocks; “today”, check-in time, and late classification use `Settings → General → Timezone` via `Carbon::now($workspaceTimezone)` in `AttendanceRecordService::markLoginCheckIn` (same convention as reminders/meetings — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes)). Login check-in runs from `LoginController` when the module is installed and the user has an active linked employee. Location columns: `check_in_ip`, `check_in_latitude`, `check_in_longitude` (and check-out equivalents).
+Tenant settings (`attendance` group): office hours, `attendance_self_check_enabled`, `attendance_auto_check_in_on_login` (default **false**), `attendance_require_late_reason`, `remote_office_start_time`, `remote_grace_minutes`, `work_week_days`. Workspace timezone drives “today” and late thresholds. Auto-login check-in is skipped when the user would be late and late reasons are required.
 
 ## Backend layout
 
 | Piece | Path |
 |-------|------|
-| Model | `app/Models/AttendanceRecord.php` |
-| Service | `app/Services/Tenant/AttendanceRecordService.php` |
-| Controller | `app/Http/Controllers/Tenant/Api/V1/AttendanceRecordController.php` |
-| Requests | `app/Http/Requests/Tenant/Api/V1/AttendanceRecord/*` |
+| Models | `AttendanceRecord`, `AttendanceReason` |
+| Services | `AttendanceRecordService`, `AttendanceReasonService` |
+| Controllers | `AttendanceRecordController`, `AttendanceReasonController` |
 | Tests | `tests/Feature/Tenant/Attendance/` |
-
-## Permissions
-
-```
-attendance.view | create | update | delete | restore | force.delete
-```
-
-Default **staff** role includes `attendance.view`, `attendance.create`, and `attendance.update` (self-service). Existing workspaces receive the create/update grants via additive `TenantPermissionSynchronizer` migration.
 
 ## API
 
@@ -40,10 +32,9 @@ See [tenant-v1-attendance.md](/api/tenant-v1-attendance).
 
 ## Frontend
 
-- API client: `attendanceRecordService` in `src/api/services.ts`
-- Keys / permissions: `QUERY_KEYS.attendance*`, `PERMISSIONS.attendance`
-- Nav under **HR** (module `attendance`)
-- Dedicated record pages: `attendance-form.tsx` + `attendance-form-page.tsx` + `attendance-view-page.tsx`; self check-in/out stays on the list
+- `attendanceRecordService` / `attendanceReasonService`
+- List: search + check-in/out + HH:MM timer + reasons dialog
+- Settings → Attendance toggles
 
 ## Tests
 

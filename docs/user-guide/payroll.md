@@ -22,6 +22,10 @@ Enable **Employees** first, then install **Payroll** from Marketplace (free). Fo
 4. **Approve** (requires at least one line) → **Pay** to mark paid.
 5. Optionally **Post** to Accounting (approved or paid) to create a draft journal for the net total.
 
+## My salary slips (employees)
+
+Linked employees with `payroll.view_own` (staff by default) can open **My salary slips** and download PDF copies of their **paid** pay-run lines for personal records. Managers with `payroll.view` can also download line PDFs from a paid pay run’s lines table (**Download**).
+
 ## Workflow
 
 ```text

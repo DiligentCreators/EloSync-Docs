@@ -2,47 +2,40 @@
 
 Enable **Employees** first, then install **Attendance** from Marketplace (free). Nav appears under **HR**.
 
-## Office hours
+## Office hours & self check
 
 When Attendance is installed, open **Settings → Attendance** to set:
 
 - Office start / end time (local to **Settings → General → Timezone**)
-- Grace period (minutes) — check-ins after start + grace are marked **Late**
+- Grace period (minutes) — on-site check-ins after start + grace are **Late**
+- Remote office start / grace — used when staff check in as **Remote**
+- **Show check-in / check-out** — when off, self-service buttons are hidden
+- **Require late check-in reason** — when late, staff must pick a reason (**Other** needs a written note)
+- **Auto check-in on login** — off by default; when on, first login of the day can create an on-site check-in. If you are late and **Require late check-in reason** is on, login does **not** check in (use **Check in** and pick a reason).
 - Work week days (used for payroll working-day calendars)
 
 Attendance uses the same workspace **Timezone** as Daily Reminder Time, meetings, and task/follow-up due dates (for example `Asia/Karachi`). There is no separate attendance timezone. See [Tenant Settings — Workspace timezone](/user-guide/tenant-settings#workspace-timezone).
 
-## Login check-in
+## Self-service check-in / check-out
 
-When a workspace user who is linked to an **active** employee signs in, the system creates or updates today’s attendance (workspace-local “today” and check-in clock):
-
-- First successful login of the day sets **check-in** and status (**Present** or **Late**)
-- The check-in **IP address** is stored from the request
-- The browser may also send **GPS coordinates** (if the user allows location access); denied/unavailable location still allows login
-- Later logins the same day do not change check-in
-- Check-out remains manual on the Attendance page (IP/coordinates can be stored when provided)
-- On the attendance record page, stored coordinates open in **Google Maps** via a standard maps URL (no Google API integration)
-
-Users without a linked employee are skipped. If Attendance is not installed, login is unchanged.
-
-## Self-service (staff)
-
-Linked employees with Attendance create/update permission can:
+Linked employees with Attendance create/update permission:
 
 1. Open **Attendance** (you only see **your** records).
-2. Use **Check in** if login did not already create today’s check-in.
-3. Use **Check out** at the end of the day (stores the current time).
-4. Use **Mark attendance** for a fuller form (own employee only). Check-in is set on create (or login auto check-in); staff can only add **check-out** and notes afterward. Managers can correct times later.
+2. Press **Check in** next to search (login alone does **not** start the timer unless auto check-in is enabled).
+3. Choose **On-site** or **Remote**. If you are late for that mode, pick a reason (and type a note if **Other**).
+4. A live **HH:MM** timer starts from your saved check-in time. Closing the tab or logging out does not reset it — when you return, the timer shows the real elapsed time.
+5. Press **Check out** at the end of the day (optional reason; **Other** requires a note).
 
-Staff cannot change attendance **status** (Present / Absent / etc.). Managers and admins set or correct status when needed.
+Admins manage late/check-out reasons from **Attendance → Reasons**.
 
 ## Managers and admins
 
 Managers and admins can:
 
-1. View everyone’s records and KPI stats.
+1. View everyone’s records, KPI stats, and who is checked in now (on-site vs remote).
 2. **Record attendance** for any employee and date (one record per employee per day).
 3. Edit check-in / check-out times, status, and notes for corrections.
+4. Manage attendance reasons (admin/owner).
 
 ## Daily records
 
@@ -52,16 +45,17 @@ Managers and admins can:
 4. Choose status: Present, Absent, Half day, Remote, or Late.
 5. Add notes if needed.
 
-Status badges use fixed colors so presence is easy to scan: **Present** (green), **Late** (red), **Absent** (slate), **Half day** (amber), **Remote** (blue). The same colors appear in the list table and the record page.
+Status badges use fixed colors so presence is easy to scan: **Present** (green), **Late** (red), **Absent** (slate), **Half day** (amber), **Remote** (blue).
 
 ## List & stats
 
-- Filter by employee, date range, and status
-- KPI cards show totals including late
+- Filter by employee, date range, status, and search
+- KPI cards show totals including late; managers also see open check-ins (on-site / remote)
 - Soft-deleted records can be restored or permanently removed when you have permission
 
 ## Tips
 
-- Use **Remote** for WFH days that still count as present for workforce reporting.
+- Use **Remote** check-in for WFH days; remote late rules use the remote office start/grace settings.
 - Half-day is a status flag in this MVP — it does not auto-split leave balances.
-- Link employees to users (or create users with **Create employee record**) so login check-in works.
+- Link employees to users so self check-in works.
+- Paid vs unpaid leave (salary deduction) is configured under Leave types — see Leave Management.

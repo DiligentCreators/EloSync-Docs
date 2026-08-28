@@ -15,7 +15,7 @@ You need permission to view/update settings (workspace owners have this by defau
 - Daily Reminder Time (task digest + daily CRM summary emails)
 - Task due dates and lead follow-up due times
 - Meeting and calendar start/end times (and meeting reminders)
-- Attendance “today”, login check-in time, and office start/end + late grace
+- Attendance “today”, office start/end + late grace (on-site and remote), and optional login auto check-in when enabled
 
 There is no separate attendance or meeting timezone. Change **Timezone** once; all of the above move with it. The same rule applies to every current module and any future module that shows dates, due times, schedules, or office hours.
 
@@ -69,9 +69,15 @@ Shown when the **Attendance** module is installed.
 
 | Field | Behavior |
 |-------|----------|
-| **Office start / end time** | Local workspace office hours (**Timezone** above) used for login check-in classification. Separate from Daily Reminder Time. |
-| **Grace period (minutes)** | Check-ins after start time plus grace are marked **Late** (default `15`). |
+| **Office start / end time** | Local workspace office hours (**Timezone** above) used for on-site late classification (self check-in and manual records). Separate from Daily Reminder Time. |
+| **Grace period (minutes)** | On-site check-ins after start time plus grace are marked **Late** (default `15`). |
+| **Remote office start / grace** | Separate late threshold when staff check in as **Remote**. |
+| **Show check-in / check-out** | When off, self-service Check in / Check out buttons are hidden (default on). |
+| **Require late check-in reason** | When late, staff must pick a catalog reason (**Other** needs a written note). Default on. |
+| **Auto check-in on login** | Off by default. When on, first login of the day may create an on-site check-in if the user is **not** late, or if late reasons are not required. When late **and** late reasons are required, login does **not** check in — staff must use **Check in** on Attendance. |
 | **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri), using workspace-local dates. |
+
+See [Attendance](/user-guide/attendance).
 
 ## Security
 

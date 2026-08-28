@@ -1,5 +1,25 @@
 # Changelog
 
+## Shared list pagination — page numbers + page size (2026-08-29)
+
+- **EloSync-Frontend:** Module `DataTable` pagination now shows numbered page buttons (with ellipsis), previous/next chevrons, and a **Rows per page** control (`10` / `25` / `50` / `100`). `useListQueryState` exposes `setPerPage` (resets to page 1). Wired across tenant/central list pages.
+- **EloSync-Docs:** Changelog note for the shared table UX change.
+
+## Attendance check-in / pay slips (2026-08-28)
+
+- **EloSync-Backend / Frontend / Docs:** Attendance **1.1.0 → 1.2.0** — explicit self check-in/out (login auto check-in off by default), live HH:MM timer from saved check-in, on-site/remote mode, admin-managed late/check-out reasons (Other → free text), settings toggles + remote grace, today/presence APIs. When auto-login is on and late reasons are required, late logins skip auto check-in so staff must submit a reason explicitly.
+- **EloSync-Backend / Frontend / Docs:** Payroll **1.1.0 → 1.2.0** — employees with `payroll.view_own` can list and download their own paid pay-slip PDFs (`/my-pay-slips`).
+
+## Local Vite — BrowserRouter (2026-08-28)
+
+- **EloSync-Frontend:** `npm run dev` uses **BrowserRouter** so post-login navigation to `/dashboard` works without a `#` prefix (Vite SPA fallback). Production builds keep **HashRouter** (`/#/...`) for static hosting. Playwright local routes match path mode; set `E2E_USE_HASH_ROUTER=1` for preview/prod targets. Safe post-login redirects normalize `/#/path` → `/path` to avoid the SPA 404 page.
+
+## Tasks — complete from list (2026-08-28)
+
+- **EloSync-Frontend:** **Tasks** list row menu — **Complete** / **Reopen** (permission-gated with `tasks.complete`), matching the record-page actions so tasks can be finished without opening the view.
+- **EloSync-Docs:** Tasks user guide updated for list complete/reopen; catalog **tasks 1.3.0 → 1.3.1**.
+- **EloSync-Backend:** Catalog PATCH bump **tasks** `1.3.0` → `1.3.1`.
+
 ## Tenant web — auth, invoices, quotations (2026-08-27)
 
 - **EloSync-Frontend:** Tenant bearer tokens always persist in `localStorage` so new tabs and “open in new tab” on records stay signed in without **Keep me signed in for 30 days**. That checkbox now only extends server token lifetime (30 days). Legacy tenant tokens in `sessionStorage` migrate on read. Tenant login label updated accordingly.
