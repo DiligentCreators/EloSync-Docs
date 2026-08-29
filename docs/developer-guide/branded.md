@@ -43,10 +43,12 @@ Central / public registration never accept a client `domain`. `TenantService` al
 
 ## Brand chrome
 
-- `App\Support\BrandedMail::apply()` on tenant mail notifications
-  - **Branded entitled:** tenant `applicationName`, `logoUrl`, `buttonColor`, frontend URL
-  - **Otherwise:** central `SystemSettingService` app name + logo (platform/EloSync chrome) + default button color; if central `logo_path` is empty, falls back to `FRONTEND_URL` + `config('branding.default_icon')` (press-kit `/brand/elosync-app-icon-light.png`)
-- Published `resources/views/vendor/mail/html/message.blade.php` (+ button) for logo / brand name
+- `App\Support\BrandedMail::apply()` on tenant and central mail notifications
+  - **Branded entitled:** tenant `applicationName`, `logoUrl`, `buttonColor`, frontend URL, `brandedShowPoweredBy=true`
+  - **Otherwise / Central:** central `SystemSettingService` app name + logo (platform/EloSync chrome) + default button color; if central `logo_path` is empty, falls back to `FRONTEND_URL` + `config('branding.default_icon')` (press-kit `/brand/elosync-app-icon-light.png`); `brandedShowPoweredBy=false`
+- Professional notification bodies: `App\Support\Mail\NotificationMailView` + Blade under `resources/views/emails/notifications/` (detail rows, plain ~200-char excerpts, action-first CTAs such as **View task**)
+- Digests: `resources/views/emails/crm/` + same BrandedMail chrome/footer flags
+- Published `resources/views/vendor/mail/html/message.blade.php` (+ button) for legacy markdown chrome / Powered by footer
 - `EmailConfigResolver` overrides From name when branded is active
 - `PlatformNotificationPayloadMapper` uses tenant logo/favicon + title prefix **only when Branded is active**; otherwise default web push icon/badge from `config('webpush.*')` (same press-kit path)
 ## Cancel / deactivate
