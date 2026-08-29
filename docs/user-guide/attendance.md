@@ -23,7 +23,7 @@ Linked employees with Attendance create/update permission:
 1. Open **Attendance** (you only see **your** records).
 2. Press **Check in** next to search (login alone does **not** start the timer unless auto check-in is enabled).
 3. Choose **On-site** or **Remote**. If you are late for that mode, pick a reason (and type a note if **Other**).
-4. A live **HH:MM** timer starts from your saved check-in time. Closing the tab or logging out does not reset it — when you return, the timer shows the real elapsed time.
+4. A live **HH:MM** timer starts from your saved check-in time. Closing the tab or logging out does not reset it — when you return, the timer shows the real elapsed time. The same timer (and **Check in** / **Check out**) also appears in the **top header** next to the light/dark theme control whenever you are linked as an employee.
 5. Press **Check out** at the end of the day (optional reason; **Other** requires a note).
 
 Admins manage late/check-out reasons from **Attendance → Reasons**.

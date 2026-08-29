@@ -50,9 +50,12 @@ Platform subdomains (for example `acme.localhost`) stay managed by Central — t
 While Branded is active:
 
 - Tenant emails use your application / company name, logo, and button color in the mail chrome.
+- The email footer shows your brand copyright plus a small **Powered by EloSync** line.
 - Web push notifications use your logo / favicon and prefix titles with your application name.
 
-Without Branded, tenant emails use the **platform (EloSync) logo and app name** from Central branding — not a blank text-only header. Visual SPA branding (Settings → Branding) remains available to all workspaces; custom domains and web-push white-label require Branded.
+Without Branded, tenant emails use the **platform (EloSync) logo and app name** from Central branding — not a blank text-only header (and no “Powered by” line). Visual SPA branding (Settings → Branding) remains available to all workspaces; custom domains and web-push white-label require Branded.
+
+Notification emails (assignments, mentions, verify/reset, digests) use a professional card layout with a primary action button such as **View task** or **Verify Email Address**.
 
 ## Remove or cancel
 

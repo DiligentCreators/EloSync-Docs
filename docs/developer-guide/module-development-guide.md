@@ -137,7 +137,7 @@ Paid modules: catalog `is_billable`, marketplace install, `ModuleSubscriptionSer
 - Pages, forms, tables, filters, dedicated create/view/edit record pages (no overlay tabs)
 - Shared design system (`PageHeader`, `RecordPage`, `RecordSection`, `FormSubmitSplit` — separate Create / Create & View buttons, no dropdown — `DataTable`, `PermissionGate`, empty/error/loading states)
 - Dialogs only for secondary flows (confirm, import, tags/categories)
-- On create/edit mutation `onError`, call `applyServerValidationErrors` from `src/lib/form-validation.ts` so Laravel 422 field errors toast and map onto react-hook-form. For `assigned_to` fields that use `Eligible*Assignee`, filter pickers with `filterLeadAssigneeOptions` and render `errors.assigned_to` (do not auto-fill ineligible opportunity assignees).
+- On create/edit mutation `onError`, call `applyServerValidationErrors` from `src/lib/form-validation.ts` so Laravel 422 field errors toast and map onto react-hook-form. For `assigned_to` fields that use `Eligible*Assignee` / `EligibleTaskAssignee`, filter pickers with `filterTaskAssigneeOptions` (omit suspended only; keep current assignee so they can be cleared) and render `errors.assigned_to`. **Leads only** use `filterLeadAssigneeOptions` / `EligibleLeadAssignee` (also omit workspace owners and users flagged exclude-from-lead). List assignee filters use shared `AssigneeFilterSelect` (searchable). Do not auto-fill opportunity assignees who are not in the picker.
 - Old list deep links (`?entity=`) redirect to `/{slug}/:id`; list **filters** such as `/payments?invoice=` stay on the list
 - Nav + breadcrumbs respect **installed modules** and **user permissions**
 - Auth payload includes active module slugs for SPA gating

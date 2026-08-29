@@ -52,13 +52,13 @@ At the same **Daily Reminder Time**, the workspace also sends a **daily CRM summ
 
 ## Assignment
 
-Users with **assign** can set or clear the assignee. The assignee always receives an in-app notification (and web push when enabled). Email for task assignment is optional and off by default — enable it under **Settings → Notifications**.
+Users with **assign** can set or clear the assignee. The assignee always receives an in-app notification (and web push when enabled). Email for task assignment is optional and off by default — enable it under **Settings → Notifications**. When email is on, the message includes task status, priority, due date, description (plain text), and a **View task** button.
 
 Task assignee pickers list active workspace users (including people flagged **Exclude from lead assignment** — that setting applies to Leads only). Suspended users are omitted. Without **users.list**, the picker cannot load teammates.
 
 ## Complete & reopen
 
-Users with **complete** can mark a task completed (sets `completed_at`) or reopen it from the record page.
+Users with **complete** can mark a task completed (sets `completed_at`) or reopen it from the **record page** or the **list row menu**. On the board, dragging a card into **Completed** also completes it (requires **update**).
 
 ## Comments & history
 

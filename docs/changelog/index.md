@@ -1,5 +1,17 @@
 # Changelog
 
+## Topbar attendance timer, CRM staff pressure, semantic badges (2026-08-29)
+
+- **EloSync-Frontend:** Attendance **HH:MM** timer + Check in/out in the tenant topbar (next to theme toggle). CRM Analytics report shows a **Staff workload** table (open load, cycle times, pressure score with semantic health badges). Status/active/unread badges use fixed semantic colors (`success` / `warning` / `info` / `destructive`) — not tenant primary.
+- **EloSync-Backend:** CRM domain report includes `staff` rows with explainable pressure score (0–100).
+- **EloSync-Docs:** Attendance + Analytics user/dev guides and this note.
+
+## Assignee pickers — search filters + non-lead eligibility (2026-08-29)
+
+- **EloSync-Frontend:** List **Assignee** filters use searchable `AssigneeFilterSelect`. Form/view/filter assignee pickers omit **suspended** users (current assignee kept so they can be cleared). Non-lead modules (quotations, invoices, tasks, etc.) list all active users — including workspace owners and users flagged **Exclude from lead assignment**. **Leads** keep `filterLeadAssigneeOptions` (owners / exclude-from-lead omitted).
+- **EloSync-Backend:** `User::isEligibleAssignee` / `scopeEligibleAssignees` (not suspended). Non-lead `Eligible*Assignee` rules and new `EligibleTaskAssignee` use it. `EligibleLeadAssignee` unchanged.
+- **EloSync-Docs:** Module development, tasks, contracts, assets guides + this note.
+
 ## Shared list pagination — page numbers + page size (2026-08-29)
 
 - **EloSync-Frontend:** Module `DataTable` pagination now shows numbered page buttons (with ellipsis), previous/next chevrons, and a **Rows per page** control (`10` / `25` / `50` / `100`). `useListQueryState` exposes `setPerPage` (resets to page 1). Wired across tenant/central list pages.

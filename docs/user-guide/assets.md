@@ -29,7 +29,7 @@ Edit from the row menu or the asset page. Focus search with `Ctrl/⌘+F`.
 
 Users with **assign** can set or clear the workspace assignee from the asset page or the create/edit form.
 
-Assignees must be **eligible custodians**: active non-owner users who are not flagged **Exclude from lead assignment**. Workspace owners can still hold assets when they create them (default assignee = creator), but you cannot re-assign an asset *to* the owner through the assign picker. Clear assignee with **Unassigned**.
+Assignees may be any **active** (non-suspended) workspace user, including workspace owners and users flagged **Exclude from lead assignment** (that flag is Leads-only). Suspended users are omitted from the picker. Clear assignee with **Unassigned**.
 
 ## Vendor & employee links
 

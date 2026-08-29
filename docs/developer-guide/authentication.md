@@ -16,7 +16,7 @@ Tenant and Central authentication are fully isolated: separate route trees, Sanc
 
 A tenant login never authenticates a Central administrator, and a Central login never authenticates a tenant user.
 
-`/login` is the shared tenant entry point. It includes a **Workspace** field when the browser host does not already resolve a workspace. Central login lives under the configurable HashRouter prefix (default `/central/login`) and never accepts a workspace.
+`/login` is the shared tenant entry point. Central login lives under the configurable SPA path prefix (default `/central/login` locally with Vite BrowserRouter, or `/#/central/login` in production HashRouter builds) and never accepts a workspace.
 
 ### Custom Central path prefix (per install)
 
@@ -24,7 +24,7 @@ Operators who sell/host the platform can obscure the Central UI the same way WHM
 
 | Layer | Env | Example |
 |-------|-----|---------|
-| SPA (`config.js` / Vite) | `VITE_CENTRAL_PATH_PREFIX` | `dc-s87s` → `/#/dc-s87s/login` |
+| SPA (`config.js` / Vite) | `VITE_CENTRAL_PATH_PREFIX` | `dc-s87s` → prod `/#/dc-s87s/login`, local Vite `/dc-s87s/login` |
 | API (password-reset / verify emails) | `CENTRAL_PATH_PREFIX` | must match the SPA value |
 
 Keep both in sync on every install. Invalid or tenant-reserved prefixes fall back to `central`. **API routes stay `/api/central/v1`** — only the SPA path changes. This is obscurity, not a substitute for strong passwords, lockout, or MFA.

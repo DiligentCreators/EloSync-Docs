@@ -26,7 +26,7 @@ Counts:
 
 Team digests still show per-user Leads for full owner visibility.
 
-Mail chrome: Branded module entitled → tenant logo/name; otherwise platform (central EloSync) logo/name via `BrandedMail`. Digests use table-based HTML templates (`resources/views/emails/crm/`) with a navy header label (`DAILY SUMMARY`), tinted metric cards, and per-user CRM cards — shared with the task due digest (`TASK DIGEST`) and department performance digest (`DEPT DIGEST`).
+Mail chrome: Branded module entitled → tenant logo/name + small **Powered by EloSync** footer; otherwise platform (central EloSync) logo/name via `BrandedMail` (no Powered by). Digests use table-based HTML templates (`resources/views/emails/crm/`) with a navy header label (`DAILY SUMMARY`), tinted metric cards, and per-user CRM cards — shared with the task due digest (`TASK DIGEST`) and department performance digest (`DEPT DIGEST`).
 
 Aggregations run **once per tenant** per command tick. Meeting counts use SQL `COUNT(DISTINCT meeting_id)`.
 

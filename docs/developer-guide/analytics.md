@@ -31,6 +31,7 @@ Do **not** merge [Department reports](/developer-guide/departments) or [Financia
 
 - Hub `/analytics` (Overview → Reports) — Recharts per entitled module (pie / donut / bar / area / line by metric)
 - Domain pages `/analytics/crm|sales|billing|purchasing|people` — chart type chosen per source (status mix vs value compare) + table + CSV
+- CRM report includes optional `staff` payload: per-assignee open load, period cycle times (task hours / lead days), and `pressure_score` / `pressure_band` (`healthy` under 40, `watch` 40–69, `overloaded` 70+). Assignee-scoped like other CRM metrics.
 - Playwright: `npm run test:e2e:analytics` / `:modules` / `:authz` (+ `:headed`)
 
 ## Tests
