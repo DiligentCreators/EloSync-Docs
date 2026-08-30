@@ -37,7 +37,7 @@ Each tenant registers that platform callback URL on **their** Google/Zoom OAuth 
 - `crm:send-due-notifications` every 5 minutes must run (`onOneServer`) — delivers meeting reminders (database + web push + mail).
 - `meetings:auto-complete` every 5 minutes must run (`onOneServer`) — marks past `scheduled` meetings as `completed` (migration backfills already-ended rows).
 - Queue workers must process `default` / `emails` (and any dedicated notification queues) for invite mail and `RetryProviderSyncJob`.
-- Web Push requires VAPID keys (`config/webpush.php`) for browser push delivery.
+- FCM requires API `FCM_*` credentials and SPA `VITE_FIREBASE_*` for browser push delivery.
 - Meeting provider webhooks are **not production-complete** (ack stub only); do not configure Zoom/Google marketplace webhooks against EloSync yet.
 
 ## Smoke

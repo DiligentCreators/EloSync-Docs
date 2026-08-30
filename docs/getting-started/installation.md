@@ -374,21 +374,31 @@ php artisan schedule:work
 
 Or a cron entry pointing at `php artisan schedule:run`.
 
-### 6.3 Web Push (optional locally)
+### 6.3 FCM desktop push (optional locally)
 
-Generate VAPID keys once (do not commit real keys):
-
-```bash
-php artisan tinker --execute "print_r(Minishlink\WebPush\VAPID::createVapidKeys());"
-```
+Closed-browser push uses Firebase Cloud Messaging only. Without credentials, database + Reverb delivery still work; FCM is skipped gracefully.
 
 ```env
-VAPID_SUBJECT=mailto:admin@example.com
-VAPID_PUBLIC_KEY=
-VAPID_PRIVATE_KEY=
+FCM_PROJECT_ID=
+FCM_CLIENT_EMAIL=
+FCM_PRIVATE_KEY=
+# Or: FCM_CREDENTIALS=/absolute/path/to/service-account.json
+FCM_ICON=/brand/elosync-app-icon-light.png
+FCM_BADGE=/brand/elosync-app-icon-light.png
 ```
 
-`VAPID_SUBJECT` must be a `mailto:` or `https:` URI. Without keys, database + Reverb delivery still work; Web Push is skipped gracefully.
+SPA (`.env` / Forge `config.js`):
+
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_VAPID_KEY=
+```
+
+`VITE_FIREBASE_VAPID_KEY` is the Firebase Console Web Push certificates key. See [Notification System](/deployment/notifications) for the full ops checklist.
 
 ---
 
