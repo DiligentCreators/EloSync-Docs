@@ -100,8 +100,10 @@ Extend `config/modules.ts` and add `app/(app)/(tabs)/{slug}/` stack screens per 
 
 - API service + types
 - List / create / view / edit (or justified subset)
-- Nav registration in `config/modules.ts` + tab visibility gates
+- Nav registration in `config/modules.ts` with `category` + `icon` + tab visibility gates (More groups by category)
 - User guide slice + changelog line
+
+Shell UX: Dashboard Quick Actions (permission-gated create shortcuts); Tasks list filters (`status`, `my_tasks`, `overdue`); More screen categories (Work, Sales, Billing, Purchasing, Inventory, Finance, HR, Tools).
 
 Current shipped mobile modules: **leads**, **tasks**, **contacts**, **companies**, **opportunities**, **activities**, **todos**, **quotations**, **calendar**, **meetings**, **projects**, **notifications** (shell), **profile**.
 
