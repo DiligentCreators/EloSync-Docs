@@ -16,7 +16,7 @@ Cross-module workflow engine for EloSync. Install from Marketplace (billable add
 
 - Workflow builder: trigger, conditions (AND/OR), ordered actions
 - Manual run + schedule trigger (workspace timezone)
-- Event triggers wired for Leads, Tasks, Opportunities, Meetings, Customer Invoices, **WhatsApp Cloud** inbound messages
+- Event triggers wired for Leads, Tasks, Opportunities, Meetings, Customer Invoices, **WhatsApp Cloud** inbound messages, and **Help Desk** (ticket created, status changed, SLA breached)
 - Actions: create task/note, assign user, add/remove tag, update field, move stage, send notification, outbound webhook, delay
 - Starter templates (new lead follow-up, high-priority task alert, opportunity stage follow-up, invoice created follow-up)
 - Run history + step logs

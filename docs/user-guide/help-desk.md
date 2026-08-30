@@ -10,9 +10,13 @@ Without **assign**, you only see tickets assigned to you.
 
 ## List & table
 
-Open **Help Desk** from the sidebar, under the **Operations** group. Search by subject, number, or description; filter by status, priority, or category; toggle **My Tickets** or **Overdue**; and switch KPI cards (Total, Mine, Open, In Progress, Waiting, Resolved, Closed, Overdue) to quick-filter the table. The table shows category, status, priority, assignee, due date, and the **latest note**.
+Open **Help Desk** from the sidebar, under the **Operations** group. Search by subject, number, or description; filter by status, priority, category, or SLA (breached / at risk); toggle **My Tickets** or **Overdue**; and switch KPI cards (including **SLA breached** / **SLA at risk**) to quick-filter the table. The table shows category, status, priority, SLA badge, source (Email), assignee, due date, and the **latest note**.
 
 Use **Manage categories** (visible with `help-desk.create`, `help-desk.update`, or `help-desk.delete`) to add, rename, activate/deactivate, or delete workspace ticket categories. New workspaces start with General, Technical, Billing, Account, and Other. You cannot delete **Other** (default for new tickets). You also cannot delete a category that still has tickets. Renaming a starter category keeps its slug.
+
+Use **Manage SLAs** to define response and resolve targets (minutes) optionally scoped by category and/or priority. The most specific matching active policy applies when a ticket is created (or when priority/category changes while still open). Breaches notify the assignee and appear in the list/KPIs.
+
+Use **Manage mailboxes** to connect a shared support IMAP inbox (separate from personal Email accounts). New inbound mail creates a ticket (`source=email`); replies that mention the ticket number (e.g. `HD-00042`) append an unauthored note. When Contacts is installed, new tickets soft-link a contact whose email matches the sender.
 
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted ticket from the row menu
 - **Delete permanently** requires `help-desk.force.delete` — granted to the workspace **owner** by default
@@ -67,6 +71,14 @@ Users with **assign** can set or clear the assignee from the ticket page or the 
 
 Set an optional **due date** on create or edit. Overdue filtering and KPIs compare `due_at` against the current instant using the workspace timezone convention (same as Tasks and Leads follow-ups). Tickets in **Resolved** or **Closed** are excluded from the overdue count.
 
+## SLAs
+
+Define policies under **Manage SLAs**. Each policy sets first-response and resolve targets in minutes, optionally limited to a category and/or priority. Open tickets get response/resolve clocks; the first staff note or status leave from **Open** counts as first response. Breached tickets notify the assignee and show on the list/KPIs. Manual `due_at` remains independent of SLA clocks.
+
+## Email intake
+
+**Manage mailboxes** connects a shared support IMAP account for the workspace (not the personal Email module). New messages create tickets marked **Email**; replies that include the ticket number append a note. Sync runs on a schedule and can be triggered manually.
+
 ## What's not here yet
 
-SLAs, email/multi-channel intake, customer portal, attachments, `@mentions`, Automation triggers, Communication Template handoff, and Kanban are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Customer portal, chat/social intake channels, `@mentions`, Communication Template handoff, and Kanban are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

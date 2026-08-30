@@ -58,4 +58,4 @@ Schedule evaluation uses workspace timezone from `TenantSettingService` — see 
 
 ## Explicit non-goals
 
-Marketing Automation, Branch / commercial document generators — deferred. WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**.
+Marketing Automation, Branch / commercial document generators — deferred. WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers `help_desk.ticket_created`, `help_desk.ticket_status_changed`, `help_desk.sla_breached` shipped with Help Desk **1.3.0**.
