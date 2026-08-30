@@ -15,10 +15,14 @@ Forgot password requires your **workspace** slug or domain plus email (the mobil
 
 Mobile modules roll out **PR-by-PR**. The app home screen lists modules your role can access.
 
+**Dashboard** includes greeting, metric tiles (when Analytics or related modules are entitled), **Quick Actions** (permission-gated create shortcuts), open tasks, and recent activities.
+
+**More** lists Account tools, then modules grouped by category (**Work**, **Sales**, **Billing**, **Purchasing**, **Inventory**, **Finance**, **HR**, **Tools**) with an icon on each row. Leads, Tasks, and Opportunities stay on the primary tab bar and are omitted from More.
+
 | Module | Mobile surface |
 |--------|----------------|
 | **Leads** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated) |
-| **Tasks** | List, search, create, view, edit, delete, complete/reopen; notes and activity timeline on view when update permitted |
+| **Tasks** | List, search, status / my-tasks / overdue filters, create, view, edit, delete, complete/reopen; notes and activity timeline on view when update permitted |
 | **Contacts** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted |
 | **Companies** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted |
 | **Opportunities** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated); Pipeline tab |

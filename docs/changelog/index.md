@@ -1,5 +1,10 @@
 # Changelog
 
+## Mobile UX — dashboard, tasks filters, More categories (2026-08-30)
+
+- **EloSync-Mobile:** Dashboard **Quick Actions** (permission-gated shortcuts: new lead/task/deal, log activity, attendance, new to-do). **Tasks** list filters (All, My tasks, Overdue, status chips). **More** screen groups modules into Work / Sales / Billing / Purchasing / Inventory / Finance / HR / Tools with icons per module (`config/modules.ts` category + icon).
+- **EloSync-Docs:** Mobile user guide + this changelog note.
+
 ## FCM-only desktop push + once-per-device enable (2026-08-30)
 
 - **EloSync-Backend:** Closed/background push is **FCM only** (`FcmChannel`). Removed Minishlink / Laravel VAPID (`WebPushChannel`, `push_subscriptions` API, `VAPID_*` / `WEBPUSH_*`). Icon/TTL/urgency live under `FCM_*`. Migration drops `push_subscriptions`.
