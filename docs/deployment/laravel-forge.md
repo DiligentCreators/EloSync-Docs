@@ -134,7 +134,7 @@ Redis is **required** whenever Reverb / production cache / queue are enabled. Do
 | Mail | Prefer Central **Settings → Mail**; env is fallback only |
 | Seeders | **Never** `db:seed` in production |
 
-**Web Push (required for closed-browser alerts):** set `VAPID_SUBJECT` (`mailto:` or `https:`), `VAPID_PUBLIC_KEY`, and `VAPID_PRIVATE_KEY`. Generate once and keep stable (rotation invalidates browser push subscriptions). Queue daemon must consume `emails,default` — Web Push and optional FCM ride the same notification jobs. **Optional native FCM:** set API `FCM_PROJECT_ID` / `FCM_CLIENT_EMAIL` / `FCM_PRIVATE_KEY` (or `FCM_CREDENTIALS`) plus SPA `VITE_FIREBASE_*` in `/config.js`; omit to keep VAPID-only. See [Notification System](./notifications#web-push-ops-checklist-vapid-phase-4a) and [FCM checklist](./notifications#native-fcm-ops-checklist-phase-4b).
+**FCM (required for closed-browser alerts):** set API `FCM_PROJECT_ID` / `FCM_CLIENT_EMAIL` / `FCM_PRIVATE_KEY` (or `FCM_CREDENTIALS`) plus SPA `VITE_FIREBASE_*` in `/config.js` (including the Firebase Web Push certificate key). Queue daemon must consume `emails,default` — FCM rides the same notification jobs. See [Notification System](./notifications#fcm-ops-checklist).
 
 ### 1.3 Deploy script (API)
 
@@ -451,8 +451,8 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 - [ ] Pulse daemon running (`php artisan pulse:check`) when Pulse Servers card is used
 - [ ] Reverb daemon + Nginx WebSocket proxy
 - [ ] Redis up; `CACHE_STORE` / `QUEUE_CONNECTION` = `redis`
-- [ ] `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` set (stable keys; `mailto:`/`https:` subject)
-- [ ] Optional FCM: API `FCM_*` + SPA `VITE_FIREBASE_*` both complete, or both omitted
+- [ ] `FCM_PROJECT_ID` / `FCM_CLIENT_EMAIL` / `FCM_PRIVATE_KEY` (or `FCM_CREDENTIALS`) set on the API
+- [ ] SPA `VITE_FIREBASE_*` complete in `/config.js` (including Web Push certificate key)
 
 ### Deploy paths
 

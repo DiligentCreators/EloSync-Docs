@@ -98,37 +98,9 @@ Meeting lifecycle types: `meeting.invite`, `meeting.updated`, `meeting.cancelled
 
 `POST /broadcasting/auth` — middleware `tenancy`, `auth:tenant-api`, `tenant.user`. Channel class: `App\Broadcasting\TenantUserChannel`.
 
-## Web Push subscriptions
+## FCM device tokens
 
-Standards-based Web Push (VAPID). Subscriptions belong to the authenticated tenant user. Duplicate `endpoint` values upsert (including reclaiming an endpoint from another user in the same tenant). Delivery requires configured `VAPID_*` env vars and a queue worker on `emails,default`. Expired endpoints are pruned on `404`/`410`.
-
-### GET `/push-subscriptions/vapid-public-key`
-
-Returns `{ public_key, subject, configured }`. Never exposes the private key.
-
-### POST `/push-subscriptions`
-
-Body:
-
-| Field | Required | Notes |
-|-------|----------|--------|
-| `endpoint` | yes | Push service URL (max 500) |
-| `public_key` | yes | p256dh |
-| `auth_token` | yes | |
-| `content_encoding` | no | `aes128gcm` (default) or `aesgcm` |
-| `user_agent` | no | |
-
-### PUT `/push-subscriptions`
-
-Refresh/update keys for an endpoint (same body as POST; upsert semantics).
-
-### DELETE `/push-subscriptions`
-
-Body: `{ "endpoint": "..." }`. 404 if the endpoint is not owned by the current user.
-
-## FCM device tokens (Phase 4b)
-
-Native FCM HTTP v1 device tokens for the authenticated tenant user. Duplicate `token` values upsert (including reclaiming a token from another user). Delivery requires configured `FCM_*` API credentials; when unconfigured the channel skips without failing the notification job. The SPA registers a token only when complete `VITE_FIREBASE_*` web config is present.
+Native FCM HTTP v1 device tokens for the authenticated tenant user (sole wake-device path). Duplicate `token` values upsert (including reclaiming a token from another user). Delivery requires configured `FCM_*` API credentials; when unconfigured the channel skips without failing the notification job. The SPA registers a token only when complete `VITE_FIREBASE_*` web config is present. Opt-in is remembered per browser device across logout; logout deletes the token and the next login re-registers silently.
 
 ### GET `/fcm-device-tokens/config`
 

@@ -1,8 +1,8 @@
 # Notification System — Production Deployment
 
-This runbook deploys the frozen Laravel Notifications → Reverb → Echo → React flow, plus standards-based Web Push and optional native FCM for closed/background browsers. The payload and module contracts are defined in the [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
+This runbook deploys the frozen Laravel Notifications → Reverb → Echo → React flow, plus **Firebase Cloud Messaging (FCM)** for closed/background browsers and registered devices. The payload and module contracts are defined in the [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
-**On Laravel Forge:** configure Redis, the queue daemon, Reverb daemon, and SPA `VITE_REVERB_*` using [Laravel Forge Deployment](./laravel-forge). This page remains the deep reference for env vars, Supervisor programs, rollout, and troubleshooting.
+**On Laravel Forge:** configure Redis, the queue daemon, Reverb daemon, and SPA `VITE_REVERB_*` / `VITE_FIREBASE_*` using [Laravel Forge Deployment](./laravel-forge). This page remains the deep reference for env vars, Supervisor programs, rollout, and troubleshooting.
 
 ## Runtime flow
 
@@ -12,9 +12,8 @@ This runbook deploys the frozen Laravel Notifications → Reverb → Echo → Re
 4. The `broadcast` channel publishes `NotificationCreated` to the user's private tenant channel.
 5. Echo updates the TanStack Query caches for the list and unread count.
 6. When the tab is hidden and browser permission is already granted, the Browser Notification Manager projects the live event to an OS notification.
-7. The `webpush` channel sends a platform payload to each stored browser subscription (after the DB row exists). Expired endpoints are removed automatically.
-8. The `fcm` channel (when Firebase credentials are configured) sends the same platform payload to registered device tokens. Unregistered tokens are removed automatically.
-9. If Echo is unavailable, the SPA polls the unread count. Initial fetches and reconnect backfills never create OS notifications.
+7. The `fcm` channel sends the same platform payload to each registered FCM device token (after the DB row exists). Unregistered tokens are removed automatically.
+8. If Echo is unavailable, the SPA polls the unread count. Initial fetches and reconnect backfills never create OS notifications.
 
 Bulk assignment and import use `NotificationBatch`. Per-lead delivery is suppressed while the batch is active, then the orchestrator sends one digest (or one single notification when the count is one) per assignee. Stable `dedupe_key` values and Redis-backed reservations protect retries.
 
@@ -51,30 +50,24 @@ REVERB_SERVER_PORT=8080
 REVERB_ALLOWED_ORIGINS=https://app.example.com
 REVERB_APP_ACCEPT_CLIENT_EVENTS_FROM=none
 
-# Web Push (VAPID) — generate once and reuse across deploys:
-# php artisan tinker --execute "print_r(Minishlink\WebPush\VAPID::createVapidKeys());"
-VAPID_SUBJECT=mailto:ops@example.com
-VAPID_PUBLIC_KEY=<public-key>
-VAPID_PRIVATE_KEY=<private-key>
-# Default push chrome (relative to FRONTEND_URL; press-kit App Store light icon)
-BRAND_DEFAULT_ICON=/brand/elosync-app-icon-light.png
-WEBPUSH_ICON=/brand/elosync-app-icon-light.png
-WEBPUSH_BADGE=/brand/elosync-app-icon-light.png
-
-# Native FCM HTTP v1 (optional — skip locally / when unused)
+# Firebase Cloud Messaging HTTP v1 (required for closed-browser / device push)
 FCM_PROJECT_ID=<firebase-project-id>
 FCM_CLIENT_EMAIL=<service-account@….iam.gserviceaccount.com>
 FCM_PRIVATE_KEY="<pem-from-service-account-json; escape newlines as \\n>"
 # Or: FCM_CREDENTIALS=/absolute/path/to/service-account.json
+FCM_TIMEOUT=15
+FCM_TOKEN_CACHE_TTL=3300
+FCM_TTL=2419200
+FCM_URGENCY=normal
+# Default push chrome (relative to FRONTEND_URL; press-kit App Store light icon)
+BRAND_DEFAULT_ICON=/brand/elosync-app-icon-light.png
+FCM_ICON=/brand/elosync-app-icon-light.png
+FCM_BADGE=/brand/elosync-app-icon-light.png
 ```
 
-`VAPID_SUBJECT` must be a `mailto:` or `https:` URI (RFC 8292). A plain `http://` value (e.g. a local `APP_URL`) is rejected by push services, so set an explicit `mailto:` in every environment. If `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` are absent, Web Push degrades gracefully: the `WebPushChannel` is skipped (logged as `notifications.webpush_skipped_unconfigured`) and database + Reverb delivery continue unaffected.
-
-If `FCM_*` credentials are absent, native FCM degrades the same way (`notifications.fcm_skipped_unconfigured`). Local/dev does **not** require Firebase.
+If `FCM_*` credentials are absent, FCM degrades gracefully (`notifications.fcm_skipped_unconfigured`) and database + Reverb delivery continue. Local/dev can omit Firebase when you do not need closed-browser push.
 
 `REVERB_HOST` is the public hostname used by the broadcaster and browser. `REVERB_SERVER_HOST` / `REVERB_SERVER_PORT` are the internal listener address behind Nginx or Forge. Use a unique app ID, key, secret, and `CACHE_PREFIX` for every environment.
-
-VAPID keys must stay stable; rotating them invalidates existing browser subscriptions. The SPA fetches the public key from `GET /api/tenant/v1/push-subscriptions/vapid-public-key` (optional `VITE_VAPID_PUBLIC_KEY` fallback only).
 
 Redis is required in production for queue durability, worker restart signals, notification dedupe reservations, and Reverb horizontal scaling. If Reverb runs on multiple hosts, also set:
 
@@ -86,7 +79,7 @@ All Reverb nodes must use the same Redis service and app credentials.
 
 ## Required frontend runtime environment
 
-The SPA needs the public Reverb endpoint:
+The SPA needs the public Reverb endpoint and Firebase web config for desktop push:
 
 ```dotenv
 VITE_REVERB_APP_KEY=<same-as-REVERB_APP_KEY>
@@ -94,7 +87,7 @@ VITE_REVERB_HOST=reverb.example.com
 VITE_REVERB_PORT=443
 VITE_REVERB_SCHEME=https
 
-# Optional native FCM (Firebase web). Omit entirely to keep VAPID-only.
+# Firebase web (required for enable / closed-tab push)
 VITE_FIREBASE_API_KEY=<public-web-api-key>
 VITE_FIREBASE_AUTH_DOMAIN=<project>.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=<project-id>
@@ -103,38 +96,35 @@ VITE_FIREBASE_APP_ID=<app-id>
 VITE_FIREBASE_VAPID_KEY=<firebase-web-push-certificate-key>
 ```
 
-On Laravel Forge, place these values in the site environment used to generate `/config.js` / `window.env`. Do not bake production API URLs or secrets into CI artifacts. The Reverb app key is public; the app secret must never be exposed to the SPA. Firebase web config keys are public client values; the FCM **service-account private key** stays on the API only.
+On Laravel Forge, place these values in the site environment used to generate `/config.js` / `window.env`. Do not bake production API URLs or secrets into CI artifacts. The Reverb app key is public; the app secret must never be exposed to the SPA. Firebase web config keys are public client values; the FCM **service-account private key** stays on the API only. `VITE_FIREBASE_VAPID_KEY` is the **Firebase Console → Cloud Messaging → Web Push certificates** key (not a Laravel Minishlink VAPID pair).
 
-## Web Push setup
+## FCM setup
 
-1. **Generate a VAPID key pair once** and store it in the environment (never commit real keys):
+1. **Create a Firebase project** and a Web app. In Cloud Messaging, generate a Web Push certificate keypair and copy the public key into `VITE_FIREBASE_VAPID_KEY`.
 
-   ```bash
-   php artisan tinker --execute "print_r(Minishlink\WebPush\VAPID::createVapidKeys());"
-   ```
+2. **Create a service account** with Firebase Cloud Messaging Admin (or equivalent). Put project id, client email, and private key into API `FCM_*` (or `FCM_CREDENTIALS` JSON path).
 
-   Copy `publicKey` → `VAPID_PUBLIC_KEY`, `privateKey` → `VAPID_PRIVATE_KEY`, and set `VAPID_SUBJECT=mailto:ops@example.com`. Keys are stable — rotating them invalidates every existing browser subscription, so reuse the same pair across deploys.
-
-2. **Run the migration** to create the `push_subscriptions` table:
+3. **Run migrations** so `fcm_device_tokens` exists (and `push_subscriptions` is dropped if upgrading from VAPID):
 
    ```bash
    php artisan migrate --force
    ```
 
-3. **Refresh cached config** after changing any `VAPID_*` value so cached values pick up the new credentials:
+4. **Refresh cached config** after changing any `FCM_*` value:
 
    ```bash
    php artisan config:clear   # or: php artisan config:cache
    ```
 
-   All Web Push settings are read via `config('webpush.*')`, so `config:cache` is fully supported; `env()` is only referenced inside `config/webpush.php`.
+   All FCM settings are read via `config('fcm.*')`, so `config:cache` is fully supported.
 
-   Default `WEBPUSH_ICON` / `WEBPUSH_BADGE` (and `BRAND_DEFAULT_ICON` for mail fallback) point at the SPA press-kit asset `/brand/elosync-app-icon-light.png` served from `FRONTEND_URL`. Workspaces with the **Branded** module entitled override push chrome with their uploaded logo/favicon.
+   Default `FCM_ICON` / `FCM_BADGE` (and `BRAND_DEFAULT_ICON` for mail fallback) point at the SPA press-kit asset `/brand/elosync-app-icon-light.png` served from `FRONTEND_URL`. Workspaces with the **Branded** module entitled override push chrome with their uploaded logo/favicon.
 
-4. **Browser requirements** (client side):
+5. **Browser requirements** (client side):
    - The SPA must be served over **HTTPS** (or `http://localhost` in development) — service workers require a secure context.
    - `public/sw.js` must be reachable at the site root so it can register with scope `/`.
-   - Permission is requested **only after explicit user action** (post-login opt-in dialog, Profile → Desktop notifications, or the Notification Center control). The SPA fetches the public key from `GET /api/tenant/v1/push-subscriptions/vapid-public-key`, subscribes via the Push API, and syncs the subscription to the backend. Denied permission and “Not now” on the post-login dialog are remembered in `localStorage` and never re-prompted automatically in that browser (users can still enable later from Profile / Notification Center). If permission is already **granted** but no service worker is registered, Profile still shows the enable toggle (status must not hang on `serviceWorker.ready`).
+   - Permission is requested **only after explicit user action** (post-login opt-in dialog, Profile → Desktop notifications, or the Notification Center control).
+   - **Once per device:** enabling sets a `localStorage` opt-in flag for that browser. Logout unregisters the FCM token from the API but **keeps** the opt-in flag; the next login silently re-registers without showing the dialog. “Not now” is also remembered forever in that browser (users can still enable later from Profile / Notification Center).
 
 ## Required processes
 
@@ -249,35 +239,23 @@ For multiple Reverb nodes, restart one node at a time behind the load balancer. 
 - [ ] Unread counter remains correct after logout/login and Reverb reconnect.
 - [ ] Failed-job and queue-age alerts are active.
 
-## Web Push ops checklist (VAPID Phase 4a)
+## FCM ops checklist
 
-Browser Web Push is production-ready over standards VAPID. Native FCM is additive (Phase 4b) via the same `PlatformNotificationPayloadMapper`.
-
-| Check | Why |
-|-------|-----|
-| `VAPID_SUBJECT`, `VAPID_PUBLIC_KEY`, and `VAPID_PRIVATE_KEY` are set in the API environment | Without all three, `WebPushChannel` skips sends (`notifications.webpush_skipped_unconfigured`); in-app + Reverb still work |
-| `VAPID_SUBJECT` is `mailto:` or `https:` (not a bare `http://` APP_URL) | Push services reject invalid subjects |
-| Keys are stable across deploys | Rotation invalidates every stored browser subscription |
-| `php artisan config:cache` (or clear) after any `VAPID_*` change | Values are read only via `config('webpush.*')` |
-| Queue worker consumes `emails,default` and is supervised | Notification jobs (database, broadcast, **webpush**, and **fcm**) run on the `emails` queue — idle workers mean no closed-browser push |
-| `push_subscriptions` migration applied | Subscribe/upsert API and channel pruning need the table |
-| SPA is HTTPS (or localhost) and `/sw.js` is reachable at site root | Service workers require a secure context and `/` scope |
-| Smoke: enable desktop notifications → assign a lead/task with the SPA closed → OS notification opens the correct HashRouter deep link | End-to-end proof that VAPID + queue + SW click navigation work |
-
-After a successful send, `last_used_at` is updated. Expired endpoints (`404` / `410`) are deleted automatically so the next opt-in / sync can re-subscribe.
-
-## Native FCM ops checklist (Phase 4b)
-
-Optional. Leave `FCM_*` / `VITE_FIREBASE_*` empty for VAPID-only environments (including local/dev).
+Closed/background push uses **FCM only** via `FcmChannel` and `PlatformNotificationPayloadMapper`.
 
 | Check | Why |
 |-------|-----|
 | API has `FCM_PROJECT_ID` + `FCM_CLIENT_EMAIL` + `FCM_PRIVATE_KEY` (or `FCM_CREDENTIALS` JSON path) | Without credentials, `FcmChannel` skips (`notifications.fcm_skipped_unconfigured`) |
 | Service account has Firebase Cloud Messaging Admin (or equivalent) | HTTP v1 `messages:send` requires messaging scope |
-| `php artisan migrate --force` applied `fcm_device_tokens` | Register/unregister API and channel pruning need the table |
+| `php artisan migrate --force` applied `fcm_device_tokens` (and dropped `push_subscriptions` if upgrading) | Register/unregister API and channel pruning need the table |
 | `php artisan config:cache` (or clear) after any `FCM_*` change | Values are read only via `config('fcm.*')` |
-| SPA Forge `config.js` includes complete `VITE_FIREBASE_*` set when enabling FCM | Partial config is treated as unconfigured; VAPID still works |
-| Smoke: enable desktop notifications with Firebase web config → confirm `fcm_device_tokens` row → closed-tab notification still deep-links | End-to-end proof that FCM + shared SW payload path work |
+| Queue worker consumes `emails,default` and is supervised | Notification jobs (database, broadcast, **fcm**) run on the `emails` queue |
+| SPA Forge `config.js` includes complete `VITE_FIREBASE_*` set (including Web Push certificate key) | Partial config is treated as unconfigured; enable UI stays unsupported |
+| SPA is HTTPS (or localhost) and `/sw.js` is reachable at site root | Service workers require a secure context and `/` scope |
+| Smoke: enable desktop notifications → `fcm_device_tokens` row → assign with SPA closed → OS notification deep-links | End-to-end proof that FCM + SW click navigation work |
+| Smoke: logout → no push while logged out → login → no enable dialog → push works again | Once-per-device opt-in persistence |
+
+After a successful send, `last_used_at` is updated. Unregistered tokens are deleted automatically so the next login can re-register.
 
 Never commit the service-account JSON or paste `FCM_PRIVATE_KEY` into docs/tickets. Rotate by issuing a new key in Google Cloud IAM and updating Forge secrets, then `config:cache`.
 
@@ -332,20 +310,13 @@ Never commit the service-account JSON or paste `FCM_PRIVATE_KEY` into docs/ticke
 - Initial inbox fetches, reconnect backfills, visible tabs, denied permission, and duplicate UUIDs do not show OS notifications.
 - Check browser/OS focus-assist and site notification settings.
 
-### Web Push (closed / background tab) not appearing
-
-- Confirm `VAPID_SUBJECT` / `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` are present and config is refreshed.
-- Confirm the `emails` queue worker is running — Web Push is delivered by the same queued notification job as database/broadcast.
-- Confirm the user has an active row in `push_subscriptions` (Profile → Desktop notifications enabled).
-- Inspect logs for `notifications.webpush_skipped_unconfigured`, `notifications.webpush_subscription_expired`, or `notifications.webpush_failed`.
-- After endpoint expiry (`404`/`410`), the SPA shows a re-subscribe affordance on Profile / Notification Center; login also best-effort re-syncs when local opt-in is remembered.
-
-### Native FCM not appearing
+### FCM (closed / background tab) not appearing
 
 - Confirm API `FCM_*` credentials and SPA `VITE_FIREBASE_*` are both complete (partial SPA config is ignored).
+- Confirm the `emails` queue worker is running — FCM is delivered by the same queued notification job as database/broadcast.
 - Confirm a row exists in `fcm_device_tokens` for the user after enabling desktop notifications.
 - Inspect logs for `notifications.fcm_skipped_unconfigured`, `notifications.fcm_token_expired`, or `notifications.fcm_failed`.
-- VAPID Web Push can still deliver when FCM is skipped — check `push_subscriptions` before assuming push is broken.
+- After logout the API token is removed; the next login should silently re-register when the local opt-in flag remains.
 
 ### Permission denied or blocked
 

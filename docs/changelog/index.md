@@ -1,5 +1,11 @@
 # Changelog
 
+## FCM-only desktop push + once-per-device enable (2026-08-30)
+
+- **EloSync-Backend:** Closed/background push is **FCM only** (`FcmChannel`). Removed Minishlink / Laravel VAPID (`WebPushChannel`, `push_subscriptions` API, `VAPID_*` / `WEBPUSH_*`). Icon/TTL/urgency live under `FCM_*`. Migration drops `push_subscriptions`.
+- **EloSync-Frontend:** Enable flow registers an FCM web token (Firebase Messaging + `/sw.js`). Logout unregisters the token but **keeps** the per-browser opt-in flag; next login silently re-registers without the enable dialog.
+- **EloSync-Docs:** Deployment / architecture / API / install / Forge updated for FCM-only env keys and once-per-device persistence.
+
 ## Help Desk SLAs + shared email intake (2026-08-30)
 
 - **EloSync-Backend:** Help Desk **1.2.0 → 1.3.0 → 1.4.0** — SLA policies with response/resolve clocks (`UtcDateTime` / `UtcInstant`), breach scanner (`help-desk:scan-sla-breaches`), breach notifications, list filters/stats (`sla_breached`, `sla_at_risk`), and Automation triggers `help_desk.ticket_created` / `ticket_status_changed` / `sla_breached`. Shared IMAP mailboxes (`help_desk_mailboxes`) with ingest sync (`help-desk:sync-mailboxes` → queue `help-desk-ingest`): create `source=email` tickets or append notes when `HD-#####` is referenced; soft contact match by sender email.
