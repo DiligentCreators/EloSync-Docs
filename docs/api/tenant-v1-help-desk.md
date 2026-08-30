@@ -24,19 +24,21 @@ Same filters as list (minus pagination/sort). Response:
   "resolved": 0,
   "closed": 0,
   "overdue": 0,
+  "sla_breached": 0,
+  "sla_at_risk": 0,
   "scope": "org | mine"
 }
 ```
 
-`overdue` counts tickets in `open`, `in_progress`, or `waiting` with `due_at` before now (UTC instant comparison).
+`overdue` counts tickets in `open`, `in_progress`, or `waiting` with `due_at` before now (UTC instant comparison). `sla_breached` / `sla_at_risk` use SLA clock columns (`UtcInstant`); at-risk means due within the next hour and not yet breached.
 
 ## Tickets CRUD
 
 ### GET `/help-desk`
 
-Query: `search` (matches `subject`, `number`, or `description`), `status` (`open`\|`in_progress`\|`waiting`\|`resolved`\|`closed`), `priority` (`low`\|`medium`\|`high`\|`urgent`), `category_id`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_tickets`, `overdue`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `subject`, `number`, or `description`), `status` (`open`\|`in_progress`\|`waiting`\|`resolved`\|`closed`), `priority` (`low`\|`medium`\|`high`\|`urgent`), `category_id`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_tickets`, `overdue`, `sla_breached` (`1` / `true` / `response` / `resolve`), `sla_at_risk`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `priority`, `category_id`, embedded `category` (`{ id, name, slug }` when loaded), `due_at`, contact/company refs (when linked), `knowledge_base_articles` summary (`[{ id, uuid, title, slug, status }]` when KB entitled), assignee/creator refs, and `latest_note`.
+List items include `status`, `priority`, `source` (`manual`\|`email`), SLA clock fields (`sla_policy_id`, `first_responded_at`, `sla_response_due_at`, `sla_resolve_due_at`, `sla_response_breached_at`, `sla_resolve_breached_at`), embedded `sla_policy` / `category`, `due_at`, contact/company refs (when linked), `knowledge_base_articles` summary, assignee/creator refs, and `latest_note`.
 
 ### POST `/help-desk`
 
@@ -111,3 +113,26 @@ Categories use the same `module:help-desk` gate and `help-desk.*` permissions (n
 - `DELETE /help-desk-categories/{helpDeskCategory}/force` — permanently delete a soft-deleted category (`help-desk.force.delete`)
 
 Delete and force-delete return 422 if the category slug is `other`, or if any tickets (including trashed, for force) still reference the category.
+
+## SLA policies (1.3.0)
+
+Same `module:help-desk` gate and `help-desk.*` permissions (no separate family).
+
+- `GET /help-desk-sla-policies` — list (`help-desk.view`)
+- `POST /help-desk-sla-policies` — create (`help-desk.create`). Body: `name` (required); `first_response_minutes`, `resolve_minutes` (required integers ≥ 1); optional `category_id`, `priority` (`null` = any), `is_active`
+- `GET|PUT|DELETE /help-desk-sla-policies/{helpDeskSlaPolicy}` — view / update / soft-delete
+- `POST …/restore`, `DELETE …/force` — restore / force-delete
+
+Policy matching on ticket create (and open priority/category change): category+priority > priority-only > category-only > default (both null). Breach scan: `php artisan help-desk:scan-sla-breaches`.
+
+## Shared mailboxes / email intake (1.4.0)
+
+Dedicated IMAP support mailboxes (not personal Email module accounts). Passwords are encrypted at rest and never returned in resources (`has_password` boolean only).
+
+- `GET /help-desk/mailboxes` — list (`help-desk.view`)
+- `POST /help-desk/mailboxes` — create (`help-desk.create`). Body: `name`, `address`, `imap_host`, `imap_port`, `imap_encryption` (`ssl`\|`tls`\|`none`), `imap_username`, `imap_password`, optional `is_active`
+- `GET|PUT|DELETE /help-desk/mailboxes/{helpDeskMailbox}` — view / update / delete (`view` / `update` / `delete`)
+- `POST /help-desk/mailboxes/{helpDeskMailbox}/test` — test IMAP (`help-desk.update`)
+- `POST /help-desk/mailboxes/{helpDeskMailbox}/sync` — dispatch `SyncHelpDeskMailboxJob` on queue `help-desk-ingest` (`help-desk.update`)
+
+Scheduler: `help-desk:sync-mailboxes` every minute. Inbound without a ticket number creates `source=email` tickets; subject/body matching `{prefix}\d{5,}` appends an unauthored note.

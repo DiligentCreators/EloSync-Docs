@@ -31,23 +31,27 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 
 ## Monitoring
 
-- Platform audit events: `help_desk_ticket_created`, `help_desk_ticket_updated`, `help_desk_ticket_deleted`, `help_desk_ticket_assigned`, `help_desk_ticket_status_changed`, `help_desk_ticket_note_added`
-- Spatie activity log name `help-desk-categories` for category CRUD (lazy seed is quiet)
-- Notifications: assignment, close, reopen (database + mail) via `HelpDeskAssignedNotification` / `HelpDeskStatusNotification`
+- Platform audit events: `help_desk_ticket_created`, `help_desk_ticket_updated`, `help_desk_ticket_deleted`, `help_desk_ticket_assigned`, `help_desk_ticket_status_changed`, `help_desk_ticket_note_added`, SLA breach audit via `HelpDeskSlaBreached`
+- Spatie activity log name `help-desk-categories` for category CRUD (lazy seed is quiet); SLA policies log as `help-desk-sla-policies`
+- Notifications: assignment, close, reopen, SLA response/resolve breach (database) via Help Desk notification classes
+- Scheduler: `help-desk:scan-sla-breaches` every five minutes; `help-desk:sync-mailboxes` every minute
+- Queue: `SyncHelpDeskMailboxJob` on **`help-desk-ingest`** (requires `ext-imap`, same as personal Email)
 - Tenant mail settings with Central SMTP fallback
 
 ## Deploy checklist
 
-1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, `help_desk_notes`, `help_desk_activities`, `help_desk_ticket_knowledge_base_article` pivot) and register catalog module **1.1.0**
+1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, SLA policies, mailboxes, notes, activities, attachments, KB pivot) and catalog bumps through **1.4.0**
 2. Register the `help-desk` catalog module (migration, not seeder) as free opt-in under the `operations` category — **no** `module_dependencies` row
 3. Migrate `help-desk.*` permissions and grant to existing `admin` / `manager` / `staff` roles per default maps
 4. Confirm `module:help-desk` + `help-desk.*` permissions on target roles
-5. Deploy frontend (Help Desk nav under **Operations** — list/form/detail + **Manage categories**; dashboard `help_desk_my_open` widget)
-6. Smoke: create a **new** workspace → enable Help Desk (alone, no CRM modules) → Manage categories → create a custom category → create/edit/assign/note a ticket → transition statuses → close → reopen → soft delete/restore
-7. Smoke (soft links): on a workspace with Contacts + Companies + Help Desk → create a ticket with contact/company links → confirm links resolve in detail
-8. Smoke (soft-gate off): on a workspace with Help Desk but **without** Contacts → confirm contact/company pickers are hidden
-9. Smoke (KB links): on a workspace with Help Desk + Knowledge Base → create a ticket linked to a published article → confirm **Related articles** on ticket view and **Linked tickets** on article view
+5. Ensure queue worker processes **`help-desk-ingest`** (and `ext-imap` for mailbox sync)
+6. Deploy frontend (Help Desk nav under **Operations** — list/form/detail + Manage categories / SLAs / mailboxes; dashboard `help_desk_my_open` widget)
+7. Smoke: create a **new** workspace → enable Help Desk (alone, no CRM modules) → Manage categories → Manage SLAs → create/edit/assign/note a ticket → confirm SLA clocks → transition statuses → close → reopen → soft delete/restore
+8. Smoke (soft links): on a workspace with Contacts + Companies + Help Desk → create a ticket with contact/company links → confirm links resolve in detail
+9. Smoke (soft-gate off): on a workspace with Help Desk but **without** Contacts → confirm contact/company pickers are hidden
+10. Smoke (KB links): on a workspace with Help Desk + Knowledge Base → create a ticket linked to a published article → confirm **Related articles** on ticket view and **Linked tickets** on article view
+11. Smoke (email intake): Manage mailboxes → test connection → sync (or wait for scheduler) → confirm inbound creates `source=email` ticket; reply with `HD-#####` appends a note
 
 ## Roadmap context
 
-Help Desk is the first **Operations** Marketplace SKU — internal ticketing MVP. SLAs, multi-channel intake, and customer portal remain future. Soft Knowledge Base article links shipped in **1.1.0**. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Help Desk is the first **Operations** Marketplace SKU. **1.3.0** shipped SLA policies/breach tracking + Automation triggers; **1.4.0** shipped shared IMAP email intake. Customer portal, Kanban, mentions, and chat/social channels remain deferred. Soft Knowledge Base article links shipped in **1.1.0**; attachments in **1.2.0**. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).

@@ -19,21 +19,24 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 
 ## Capabilities
 
-- Header ticket: number (`HD-` prefix, configurable), subject, description, tenant-managed category, priority (`low` / `medium` / `high` / `urgent`), status, optional `due_at`
+- Header ticket: number (`HD-` prefix, configurable), subject, description, tenant-managed category, priority (`low` / `medium` / `high` / `urgent`), status, optional `due_at`, optional `source` (`manual` \| `email`)
 - Optional `contact_id` and `company_id` — soft links, only validated (and only pickable in the UI) when the corresponding module is entitled on the workspace
 - Optional **Knowledge Base** article links (soft M2M) when `knowledge-base` is entitled — pick published articles (or drafts when the actor has `knowledge-base.update`); backlinks on article view when Help Desk is entitled
 - Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
 - Content edits blocked when status is **Closed** — use status actions, assignment, and notes instead
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `help-desk.assign`
 - Notes (comments) + activity timeline; optional **attachments** on ticket create and note replies (counts toward [Storage](/user-guide/storage-overview) quota)
-- Table view with search, status/priority/category filters, assignee filter, overdue filter, and **My Tickets** toggle; **Manage categories** dialog (same `help-desk.*` permissions as ticket CRUD)
-- KPIs via `GET /help-desk/stats` (total, mine, open, in progress, waiting, resolved, closed, overdue)
+- **SLA policies** (1.3.0): response/resolve targets by category and/or priority; ticket clocks; breach scanner + notifications; list filters for breached / at risk
+- **Shared email intake** (1.4.0): workspace IMAP support mailbox (not personal Email accounts); inbound creates tickets or appends notes when the subject/body references `HD-#####`
+- Table view with search, status/priority/category/SLA filters, assignee filter, overdue filter, and **My Tickets** toggle; **Manage categories**, **Manage SLAs**, and **Manage mailboxes** dialogs (same `help-desk.*` permissions as ticket CRUD)
+- KPIs via `GET /help-desk/stats` (total, mine, open, in progress, waiting, resolved, closed, overdue, sla_breached, sla_at_risk)
 - Dashboard widget `help_desk_my_open` (module + `help-desk.view`; assignee-scoped like list)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:help-desk`) + Spatie permissions — **free Marketplace opt-in**, no hard dependencies
-- In-app notifications on assignment, close, and reopen
+- In-app notifications on assignment, close, reopen, and SLA breaches
+- Automation triggers (when Automation entitled): `help_desk.ticket_created`, `help_desk.ticket_status_changed`, `help_desk.sla_breached`
 - Audit + activity logging
-- `due_at` stored in UTC; overdue KPIs and filters use workspace timezone convention (see [Workspace timezone](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes))
+- `due_at` and SLA clocks stored in UTC; overdue/SLA KPIs and filters use workspace timezone convention (see [Workspace timezone](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes))
 
 ## Permissions
 
@@ -45,7 +48,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | **manager** | `view`, `create`, `update`, `assign`, `close`, `reopen` |
 | **staff** | `view`, `create`, `update`, `close`, `reopen` |
 
-Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.2.0**.
+Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.4.0**.
 
 ## Why standalone (soft dependencies)
 
@@ -53,10 +56,8 @@ Most internal tickets (IT requests, billing questions) do not require a CRM cont
 
 ## Explicitly deferred
 
-- SLAs and SLA breach automation
-- Email ingest / multi-channel intake (email, chat, social)
+- Multi-channel intake beyond shared IMAP (chat, social)
 - Customer portal (external submit / track)
 - `@mentions` in notes
-- Automation module triggers for Help Desk events
 - Communication Template context for ticket replies
 - Kanban board view

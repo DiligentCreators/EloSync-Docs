@@ -188,7 +188,7 @@ Forge → Server → **Daemons** (or site Daemons). Use the site path Forge show
 Worker queues and process limits are defined in `config/horizon.php`:
 
 - **`supervisor-general`** — `automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default` (production max **3** processes, 90s timeout)
-- **`supervisor-email-sync`** — `email-sync` only (production max **1** process, 300s timeout)
+- **`supervisor-email-sync`** — `email-sync`, `help-desk-ingest` (production max **1** process, 300s timeout — IMAP sync for personal Email and Help Desk shared mailboxes)
 
 Include `whatsapp-inbound` and `whatsapp-outbound` when the WhatsApp Cloud module is enabled ([WhatsApp Cloud deployment](./whatsapp-cloud)). On small servers (for example 2 GB RAM), keep `maxProcesses` conservative before scaling up.
 

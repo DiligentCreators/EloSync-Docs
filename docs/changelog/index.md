@@ -1,5 +1,11 @@
 # Changelog
 
+## Help Desk SLAs + shared email intake (2026-08-30)
+
+- **EloSync-Backend:** Help Desk **1.2.0 → 1.3.0 → 1.4.0** — SLA policies with response/resolve clocks (`UtcDateTime` / `UtcInstant`), breach scanner (`help-desk:scan-sla-breaches`), breach notifications, list filters/stats (`sla_breached`, `sla_at_risk`), and Automation triggers `help_desk.ticket_created` / `ticket_status_changed` / `sla_breached`. Shared IMAP mailboxes (`help_desk_mailboxes`) with ingest sync (`help-desk:sync-mailboxes` → queue `help-desk-ingest`): create `source=email` tickets or append notes when `HD-#####` is referenced; soft contact match by sender email.
+- **EloSync-Frontend:** **Manage SLAs** and **Manage mailboxes** dialogs; SLA badges/filters/KPIs on the list; SLA section on ticket view; Email source badge; notification routes for SLA breaches. Playwright coverage extended for SLA CRUD and mailbox form smoke.
+- **EloSync-Docs:** User/developer/deployment/API guides + Forge queue note + this changelog; deferred lists no longer claim attachments/SLAs/email/Automation triggers as unshipped.
+
 ## Topbar attendance timer, CRM staff pressure, semantic badges (2026-08-29)
 
 - **EloSync-Frontend:** Attendance **HH:MM** timer + Check in/out in the tenant topbar (next to theme toggle). CRM Analytics report shows a **Staff workload** table (open load, cycle times, pressure score with semantic health badges). Status/active/unread badges use fixed semantic colors (`success` / `warning` / `info` / `destructive`) — not tenant primary.
