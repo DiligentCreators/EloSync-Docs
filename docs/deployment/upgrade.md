@@ -84,6 +84,16 @@ After migrate (`2026_08_21_010000`–`010300`):
 
 Go-live: [AI production readiness](/deployment/ai-production-readiness) · ops notes [AI deployment](/deployment/ai).
 
+## AI workspace search 1.2.0 → 1.3.0
+
+After migrate (`2026_08_31_200000_bump_ai_module_version_to_1_3_0`):
+
+1. Confirm catalog `ai.version` is **1.3.0** (migrate-only; do **not** `db:seed`).
+2. Deploy SPA + Mobile **after** Backend — Search workspace starter + Wave A+B citations.
+3. Smoke: Ask EloSync → **Search workspace** starter; confirm hits respect module entitlement and `*.view`; citations stay same-app.
+
+Go-live: [AI workspace search production readiness](/deployment/ai-workspace-search-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:

@@ -2,7 +2,9 @@
 
 Operational notes for the billable **`ai`** Marketplace module and prepaid credit packs.
 
-Companion readiness audit: [AI production readiness](./ai-production-readiness).
+Companion readiness audits:
+- Platform AI (credits / BYOK / gateway): [AI production readiness](./ai-production-readiness)
+- Workspace search **1.3.0**: [AI workspace search production readiness](./ai-workspace-search-production-readiness)
 
 ## What ships
 
@@ -40,7 +42,7 @@ See [Upgrade Guide — AI Assistant platform](./upgrade#ai-assistant-platform-10
 
 1. Central Test AI connection  
 2. Entitle `ai` → wallet grant  
-3. Ask EloSync + Lead Copilot  
+3. Ask EloSync + **Search workspace** starter + Lead Copilot  
 4. Zero credits → HTTP 402 on platform mode  
 
-Full checklist: [production readiness](./ai-production-readiness).
+Full checklists: [AI production readiness](./ai-production-readiness) · [AI workspace search 1.3.0](./ai-workspace-search-production-readiness).

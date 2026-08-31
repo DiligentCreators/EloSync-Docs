@@ -1,5 +1,9 @@
 # Changelog
 
+## AI workspace search — production readiness (2026-08-31)
+
+- **EloSync-Docs:** [AI workspace search production readiness](/deployment/ai-workspace-search-production-readiness) — **Go** (engineering on `feature/ai-workspace-search`); operator next: merge PRs, migrate catalog **ai → 1.3.0**, deploy SPA/Mobile, staging smoke. Pest 16/16 + Playwright `test:e2e:ai` 8/8 verified 2026-08-31.
+
 ## AI workspace search (2026-08-31)
 
 - **EloSync-Backend:** Ask EloSync tool `search_workspace` fans out across entitled Wave A+B modules (leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products) with per-module view gates. Catalog **ai 1.2.0 → 1.3.0**. Pest coverage for gating, filters, limits, and tenant isolation.
