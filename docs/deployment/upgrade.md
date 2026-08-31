@@ -89,7 +89,7 @@ Go-live: [AI production readiness](/deployment/ai-production-readiness) · ops n
 After migrate (`2026_08_31_200000_bump_ai_module_version_to_1_3_0`):
 
 1. Confirm catalog `ai.version` is **1.3.0** (migrate-only; do **not** `db:seed`).
-2. Deploy SPA + Mobile **after** Backend — Search workspace starter + Wave A+B citations.
+2. Deploy SPA + Mobile **after** Backend — Search workspace starter + Wave A+B+C citations.
 3. Smoke: Ask EloSync → **Search workspace** starter; confirm hits respect module entitlement and `*.view`; citations stay same-app.
 
 Go-live: [AI workspace search production readiness](/deployment/ai-workspace-search-production-readiness) · ops [AI deployment](/deployment/ai).

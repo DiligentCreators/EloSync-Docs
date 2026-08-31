@@ -18,7 +18,7 @@ Ask EloSync about your permitted data — open tasks, stale leads, projects, sal
 
 Off-topic requests (for example logo design, recipes, or external tool recommendations) are declined — EloSync only answers using workspace data and entitled modules.
 
-On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission (**Search workspace** requires the AI module + `ai.use`). Citations link only to same-app record paths for modules you are entitled to (for example **INV-00006** → `/invoices/6`, contacts, help desk tickets, vendors, employees, products, and other entitled modules).
+On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission (**Search workspace** requires the AI module + `ai.use`). Citations link only to same-app record paths for modules you are entitled to (for example invoices, contacts, help desk, vendors, employees, products, documents, knowledge base, activities, meetings, and other entitled modules).
 
 Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
 

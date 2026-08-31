@@ -17,9 +17,9 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 
 ### `search_workspace`
 
-`App\AI\Tools\Search\AiWorkspaceSearchService` fans out to entitled providers under `app/AI/Tools/Search/Providers/` (Wave A+B): leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products.
+`App\AI\Tools\Search\AiWorkspaceSearchService` fans out to entitled providers under `app/AI/Tools/Search/Providers/` (Wave A+B+C): leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products, documents, knowledge-base, activities, meetings.
 
-Arguments: `query` (required), optional `modules` (slug filter), `limit_per_module` (default 5, max 10), `limit_total` (default 25, max 50). Hits include `module`, `id`, `uuid`, `title`, `subtitle`, `path`.
+Arguments: `query` (required), optional `modules` (slug filter), `limit_per_module` (default 5, max 10), `limit_total` (default 25, max 50). Hits include `module`, `id`, `uuid`, `title`, `subtitle`, `path`. Provider exceptions are isolated (`modules_failed`); other modules still return hits.
 
 List/detail tool payloads include both numeric **`id`** (for SPA deep links) and **`uuid`** (for tool lookups).
 

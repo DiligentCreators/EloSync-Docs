@@ -172,7 +172,7 @@ Native iOS/Android tenant app (Expo SDK 57). Broad module coverage shipped PR-by
 
 Depth program **0 → 3c** complete (2026-08-31): webhooks event catalog + Developers edit; Credit Notes applied refund (**1.2.0**); Help Desk `@mentions` **1.5.0**, Kanban **1.6.0**, Communication Template replies **1.7.0**.
 
-AI workspace search shipped (**ai 1.3.0**): `search_workspace` fans out across entitled Wave A+B modules.
+AI workspace search shipped (**ai 1.3.0**): `search_workspace` fans out across entitled Wave A+B+C modules (CRM/sales/billing/purchasing/ops docs & calendar records).
 
 Next when prioritized: further AI tools; WhatsApp interactive messages; demand-driven items below.
 

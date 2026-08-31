@@ -118,7 +118,7 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Expenses** (`expenses.view`): `get_expense_pending_approval`
 
-Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). `search_workspace` hits also include `path` for citations. See [AI tools guide](/developer-guide/ai-tools).
+Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). `search_workspace` hits also include `path` for citations; responses may list `modules_failed` when a provider errors without failing the whole tool. See [AI tools guide](/developer-guide/ai-tools).
 
 ## Related
 
