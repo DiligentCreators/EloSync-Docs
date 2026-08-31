@@ -1,5 +1,10 @@
 # Changelog
 
+## Phased Depth Program — merged to main (2026-08-31)
+
+- **Five repos** (`feature/phased-depth-program` → `main`): Backend [#165](https://github.com/DiligentCreators/EloSync-Backend/pull/165), Frontend [#159](https://github.com/DiligentCreators/EloSync-Frontend/pull/159), Docs [#234](https://github.com/DiligentCreators/EloSync-Docs/pull/234), Mobile [#51](https://github.com/DiligentCreators/EloSync-Mobile/pull/51), Website [#42](https://github.com/DiligentCreators/EloSync-Website/pull/42).
+- **EloSync-Docs:** [Production readiness](/deployment/phased-depth-production-readiness) — **Go**; operator next: `migrate --force`, queue restart, staging smoke.
+
 ## Phased Depth Program — production readiness (2026-08-31)
 
 - **EloSync-Backend / Frontend / Docs / Mobile / Website:** Phases 0–3c complete on `feature/phased-depth-program` — hygiene, webhook depth + Developers Edit UI, credit-note applied refund (**1.2.0**), Help Desk @mentions (**1.5.0**), Kanban board (**1.6.0**), Communication Template replies (**1.7.0**).
