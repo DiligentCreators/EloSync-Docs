@@ -1,5 +1,11 @@
 # Changelog
 
+## Phased Depth Program — production readiness (2026-08-31)
+
+- **EloSync-Backend / Frontend / Docs / Mobile / Website:** Phases 0–3c complete on `feature/phased-depth-program` — hygiene, webhook depth + Developers Edit UI, credit-note applied refund (**1.2.0**), Help Desk @mentions (**1.5.0**), Kanban board (**1.6.0**), Communication Template replies (**1.7.0**).
+- **EloSync-Docs:** [Phased Depth production readiness](/deployment/phased-depth-production-readiness) — **Go** after PR merge + migrate-first deploy. Remediated doc drift, mobile CN refund guide, Playwright `local:seed-demo` prerequisites, Backend `phpunit.xml` memory for Pest.
+- **Verification:** Depth Playwright green (`test:e2e:developers`, `test:e2e:credit-notes`, `test:e2e:help-desk`); Backend Pest depth suite green with `php -d memory_limit=512M`.
+
 ## Help Desk status Kanban (2026-08-31)
 
 - **EloSync-Backend:** `GET /help-desk/board` — fixed `HelpDeskStatusEnum` columns (mirrors Tasks, not Opportunities stages); `HelpDeskTicketService::board()`; Pest board coverage. Catalog **help-desk 1.5.0 → 1.6.0**.

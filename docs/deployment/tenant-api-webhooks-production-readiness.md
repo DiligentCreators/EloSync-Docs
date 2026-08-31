@@ -3,6 +3,7 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-21 |
+| **Re-verified** | 2026-08-31 (Phased Depth Phase 1 — expanded event catalog + Edit UI on `feature/phased-depth-program`) |
 | **Status** | **Go** — migrate-first |
 | **Scope** | Platform Settings → Developers: integration API tokens + outbound event webhooks |
 | **Companion** | [Developer guide](/developer-guide/tenant-api-webhooks) · [API](/api/tenant-v1-developers) · [User guide](/user-guide/tenant-settings#developers) |
@@ -25,6 +26,8 @@ Tenant API & Webhooks ships as a **platform** capability (permission `settings.m
 | Pest Developers + SignedOutboundHttpClient (incl. redirect test) | **Pass** |
 | Playwright Settings → Developers full one-login workflow | **Pass** |
 | Docs + CHANGELOG + roadmap | **Pass** |
+| Expanded event catalog (Phase 1 depth) | **Pass** — `customer_payment.posted`, `customer_credit_note.applied`, Help Desk `ticket_created` / `ticket_status_changed` / `sla_breached` |
+| Developers endpoint **Edit** UI (name, URL, events) | **Pass** — Playwright round-trip on `feature/phased-depth-program` |
 
 ---
 
