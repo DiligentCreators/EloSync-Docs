@@ -155,7 +155,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai) | Shipped (billable; Lead Copilot + confirmed writes; broader tools continue) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + confirmed writes; broader tools continue) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -196,4 +196,4 @@ Next when prioritized: AI additional tools; WhatsApp interactive messages; deman
 - [Module dependencies](/architecture/module-dependencies)
 - [Changelog](/changelog/)
 - [Module development guide](/developer-guide/module-development-guide)
-- [Platform freeze](/architecture/platform-freeze)
+- [Platform freeze](/getting-started/platform-freeze)
