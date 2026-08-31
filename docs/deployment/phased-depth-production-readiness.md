@@ -6,7 +6,8 @@
 | **Re-verified** | 2026-08-31 — depth Playwright re-run green; Pest `phpunit.xml` memory; doc/mobile/e2e fixes pushed |
 | **Status** | **Go** — merge PRs + migrate-first deploy + staging smoke |
 | **Scope** | Hygiene, webhook depth, credit-note applied refund, Help Desk @mentions, Kanban board, Communication Template replies |
-| **Branch** | `feature/phased-depth-program` (Backend, Frontend, Docs, Mobile, Website) |
+| **Branch** | `feature/phased-depth-program` |
+| **PRs** | Backend [#165](https://github.com/DiligentCreators/EloSync-Backend/pull/165) · Frontend [#159](https://github.com/DiligentCreators/EloSync-Frontend/pull/159) · Docs [#234](https://github.com/DiligentCreators/EloSync-Docs/pull/234) · Mobile [#51](https://github.com/DiligentCreators/EloSync-Mobile/pull/51) · Website [#42](https://github.com/DiligentCreators/EloSync-Website/pull/42) |
 | **Companion** | [Credit Notes deploy](./credit-notes) · [Help Desk deploy](./help-desk) · [Webhooks readiness](./tenant-api-webhooks-production-readiness) · [CHANGELOG](/changelog/) |
 
 ---
