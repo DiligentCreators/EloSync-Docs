@@ -1,6 +1,35 @@
 # Changelog
 
-## Mobile UX — dashboard, tasks filters, More categories (2026-08-30)
+## Help Desk status Kanban (2026-08-31)
+
+- **EloSync-Backend:** `GET /help-desk/board` — fixed `HelpDeskStatusEnum` columns (mirrors Tasks, not Opportunities stages); `HelpDeskTicketService::board()`; Pest board coverage. Catalog **help-desk 1.5.0 → 1.6.0**.
+- **EloSync-Frontend:** Help Desk list Board/List toggle (`KanbanBoard`); drag calls `POST …/status` with update/close/reopen gates.
+- **EloSync-Docs:** User/dev/API/deployment guides + roadmap deferred list updated for Kanban.
+
+## Help Desk Communication Template replies (2026-08-31)
+
+- **EloSync-Backend:** `HelpDeskPlaceholderProvider` context `help-desk` registered on `PlaceholderRegistry` (soft entitlement — no `module_dependencies`). Ticket contact API refs include `email` / `phone`. Catalog **help-desk → 1.7.0** (Kanban owns **1.6.0** in parallel). Pest coverage for placeholder resolve/render.
+- **EloSync-Frontend:** Generalized `WhatsAppTemplatePickerDialog` for any context; Help Desk ticket view soft-gates WhatsApp when Communication Templates is installed + `communication-templates.use` and the linked contact has a phone.
+- **EloSync-Docs:** Help Desk + Communication Templates user/developer/deployment guides, roadmap, and this note.
+
+## Help Desk @mentions (2026-08-31)
+
+- **EloSync-Backend:** Help Desk ticket notes support `@mentions` (`help_desk_note_mentions`, `HelpDeskMentionedNotification`); email-ingest notes without `user_id` skip mention sync. Catalog **help-desk 1.4.0 → 1.5.0**.
+- **EloSync-Frontend:** Ticket note composer uses `MentionComposer`; notification registry maps `help_desk.mentioned`.
+- **EloSync-Docs:** Help Desk guides updated; deferred list no longer claims mentions unshipped.
+
+## Tenant API & Webhooks depth (2026-08-31)
+
+- **EloSync-Backend / Frontend / Mobile / Docs:** Credit Notes **1.1.0 → 1.2.0** — applied refund (`POST /credit-notes/{id}/refund`, `credit-notes.refund`). Status `applied → refunded` (void stays draft/issued only). Reverses invoice `amount_credited`, voids linked apply journal when Accounting is entitled, updates invoice cancel guard to require refunds first. SPA + mobile Refund action; Playwright + Pest coverage.
+- **EloSync-Backend:** Expanded outbound webhook catalog with `customer_payment.posted`, `customer_credit_note.applied`, and Help Desk `ticket_created` / `ticket_status_changed` / `sla_breached` (Help Desk Automation now fans out via `IntegrationEventDispatcher`). Pest coverage for catalog, edit, and new event delivery.
+- **EloSync-Frontend:** Settings → Developers webhook endpoints support full **Edit** (name, URL, events) in addition to Enable/Disable. Playwright round-trip for edit.
+- **EloSync-Docs / Website:** Developer/deployment webhook docs + marketing roadmap “Next” updated; event catalog documents the new events.
+- **EloSync-Docs:** Prior hygiene note — rebuilt Product Roadmap + credit-notes/PO PDF copy sync.
+
+## Docs hygiene — roadmap rebuild + billing PDF copy (2026-08-31)
+
+- **EloSync-Docs:** Rebuilt corrupted [Product Roadmap](/getting-started/product-roadmap) as clean UTF-8 from module dependencies, changelog, and user-guide deferred lists. Synced [Credit Notes](/user-guide/credit-notes) and [Purchase Orders](/user-guide/purchase-orders) user guides so PDF/email match overviews (shipped, not deferred). Documented credit-note PDF/email API routes.
+- FCM-only desktop push remains as previously shipped — no product change in this note.
 
 - **EloSync-Mobile:** Dashboard **Quick Actions** (permission-gated shortcuts: new lead/task/deal, log activity, attendance, new to-do). **Tasks** list filters (All, My tasks, Overdue, status chips). **More** screen groups modules into Work / Sales / Billing / Purchasing / Inventory / Finance / HR / Tools with icons per module (`config/modules.ts` category + icon).
 - **EloSync-Docs:** Mobile user guide + this changelog note.

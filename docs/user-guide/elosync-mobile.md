@@ -35,7 +35,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); notes and activity timeline on view when update permitted; Contracts tab |
 | **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); notes and activity timeline on view when update permitted; Invoices tab |
 | **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; notes and activity timeline on view when update permitted; Payments tab |
-| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, void, delete (permission-gated); notes and activity timeline on view when update permitted; Credits tab |
+| **Credit notes** | List, search, create, view, edit (draft only), issue, apply, refund (applied), void (draft/issued), delete (permission-gated); notes and activity timeline on view when update permitted; Credits tab |
 | **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); notes and activity timeline on view when update permitted; Ests tab |
 | **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); notes and activity timeline on view when update permitted; Spend tab |
 | **Products** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; Products tab |

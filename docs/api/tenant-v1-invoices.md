@@ -104,7 +104,7 @@ Permission: `invoices.update`. Only valid on the **series root** while `recurren
 
 ### POST `/invoices/{id}/void`
 
-Transitions `draft|unpaid → cancelled`. **Ledger guard:** rejected with a 422 on `status` (naming the invoice number) if `amount_paid > 0` (void the posted payments first) or `amount_credited > 0` (applied credit notes cannot be reversed, so a credited invoice can never be cancelled). Permission: `invoices.void` (assignee-scoped unless the actor has `invoices.assign` or is superadmin).
+Transitions `draft|unpaid → cancelled`. **Ledger guard:** rejected with a 422 on `status` (naming the invoice number) if `amount_paid > 0` (void the posted payments first) or `amount_credited > 0` (refund applied credit notes first). Permission: `invoices.void` (assignee-scoped unless the actor has `invoices.assign` or is superadmin).
 
 ### POST `/invoices/{id}/status`
 

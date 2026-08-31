@@ -22,16 +22,17 @@ New Credit Notes permissions for **existing** workspaces ship as an additive **d
 
 ## Monitoring
 
-- Platform audit events: `customer_credit_note_created`, `customer_credit_note_updated`, `customer_credit_note_deleted`, `customer_credit_note_assigned`, `customer_credit_note_status_changed`, `customer_credit_note_note_added`
+- Platform audit events: `customer_credit_note_created`, `customer_credit_note_updated`, `customer_credit_note_deleted`, `customer_credit_note_assigned`, `customer_credit_note_status_changed`, `customer_credit_note_note_added`, `customer_credit_note_applied`, `customer_credit_note_refunded`
 - Notifications: assignment via `CustomerCreditNoteAssignedNotification`
-- Issuing/applying/voiding a credit note updates the linked `CustomerInvoice` balance synchronously in the same request — no queued job to monitor
+- Issuing/applying/refunding/voiding a credit note updates the linked `CustomerInvoice` balance synchronously in the same request — no queued job to monitor
 
 ## Deploy checklist
 
 1. Migrate tables (`customer_credit_notes`, `customer_credit_note_lines`, `customer_credit_note_notes`, `customer_credit_note_activities`)
 2. Register the `credit-notes` catalog module via migration (`DefaultModuleRegistrar`) as free Billing opt-in — **not** `db:seed`
 3. Run the `module_dependencies` migration that links `credit-notes` → `invoices` (required)
-4. Run the credit notes permissions migration so default roles receive missing `credit-notes.*` grants
-5. Confirm `module:credit-notes` + `credit-notes.*` permissions on target roles
-6. Deploy Frontend SPA with Credit Notes nav (Billing sidebar group, after Payments) — verify a workspace **without** Invoices installed cannot install Credit Notes from Marketplace
-7. Verify applying a credit note correctly increases the linked invoice's `amount_credited` and reduces `balance_due`, in a staging smoke test before rollout
+4. Run credit notes permissions migrations so default roles receive missing `credit-notes.*` grants (including `credit-notes.refund`)
+5. Confirm catalog version **1.2.0** (`…_bump_credit_notes_module_version_to_1_2_0`)
+6. Confirm `module:credit-notes` + `credit-notes.*` permissions on target roles
+7. Deploy Frontend SPA with Credit Notes nav (Billing sidebar group, after Payments) — verify a workspace **without** Invoices installed cannot install Credit Notes from Marketplace
+8. Verify apply → refund correctly adjusts `amount_credited` / `balance_due` (and voids the apply journal when Accounting is entitled) in a staging smoke test before rollout

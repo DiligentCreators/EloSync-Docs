@@ -74,8 +74,9 @@ Smoke after deploy:
 
 1. Existing workspace sees **Templates** in nav (module installed + permissions granted)
 2. Lead detail shows WhatsApp when phone is present
-3. Marketplace/commercial flags for other modules remain unchanged
-4. A customized staff role that had permissions removed does **not** regain revoked permissions (only the listed new grants are added)
+3. Help Desk ticket view shows WhatsApp when Communication Templates is installed, the actor has `use`, and the linked contact has a phone (soft gate — Help Desk alone still works without Templates)
+4. Marketplace/commercial flags for other modules remain unchanged
+5. A customized staff role that had permissions removed does **not** regain revoked permissions (only the listed new grants are added)
 
 ## Related
 

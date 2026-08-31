@@ -45,7 +45,5 @@ Tenant API & Webhooks ships as a **platform** capability (permission `settings.m
 ## Explicitly deferred
 
 - Ability/scope matrix beyond “acts as user”
-- `customer_payment.posted` event
 - Separate OpenAPI / integration-only route tree
 - OAuth client credentials
-- Full endpoint edit form (name/url/events) — Enable/Disable and rotate/delete are available

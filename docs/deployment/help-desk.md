@@ -40,7 +40,7 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 
 ## Deploy checklist
 
-1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, SLA policies, mailboxes, notes, activities, attachments, KB pivot) and catalog bumps through **1.4.0**
+1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, SLA policies, mailboxes, notes, activities, attachments, KB pivot, note mentions) and catalog bumps through **1.7.0** (Communication Template replies; Kanban agent owns **1.6.0**)
 2. Register the `help-desk` catalog module (migration, not seeder) as free opt-in under the `operations` category — **no** `module_dependencies` row
 3. Migrate `help-desk.*` permissions and grant to existing `admin` / `manager` / `staff` roles per default maps
 4. Confirm `module:help-desk` + `help-desk.*` permissions on target roles

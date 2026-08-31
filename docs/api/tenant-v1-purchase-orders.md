@@ -71,7 +71,15 @@ Permission: `purchase-orders.assign`.
 
 ### POST `/purchase-orders/{id}/send`
 
-Transitions `draft → sent`. Backfills `order_date` to today if unset. Permission: `purchase-orders.send` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). **Status-only** — does not email or generate a PDF.
+Transitions `draft → sent`. Backfills `order_date` to today if unset. Permission: `purchase-orders.send` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). After send, PDF download and email vendor are available (separate endpoints).
+
+### GET `/purchase-orders/{id}/pdf`
+
+Download branded purchase order PDF. Permission: `purchase-orders.view` (assignee-scoped). Available after **Send**.
+
+### POST `/purchase-orders/{id}/email`
+
+Email the purchase order to the vendor with optional PDF attachment. Body matches billing document email (`to`, `cc`, `subject`, `message`, `attach_pdf`). Permission: `purchase-orders.send`. Throttled (`billing-document-email`). Sent (and later non-draft) statuses as implemented by the service.
 
 ### POST `/purchase-orders/{id}/receive`
 

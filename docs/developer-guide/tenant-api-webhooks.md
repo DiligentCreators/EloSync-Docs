@@ -35,8 +35,10 @@ Independent of `module:automation`. Domain events fan out through `IntegrationEv
 - `opportunity.created` / `opportunity.stage_changed` / `opportunity.assigned`
 - `meeting.created` / `meeting.completed`
 - `customer_invoice.created`
-
-`customer_payment.posted` is deferred (no dedicated domain event yet).
+- `customer_payment.posted` (when payment status becomes `posted`)
+- `customer_credit_note.applied`
+- `help_desk.ticket_created` / `help_desk.ticket_status_changed` / `help_desk.sla_breached`
+- `whatsapp.message_received`
 
 ### Envelope
 

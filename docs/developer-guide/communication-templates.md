@@ -1,12 +1,12 @@
 # Communication Templates — Developer Guide
 
-Reusable **platform module** for plain-text communication templates. Templates are licensed via the marketplace catalog (`communication-templates`) and authorized via Spatie permissions. The first consumer is **Leads → WhatsApp Web** (`wa.me`). There is no Meta/Twilio/server-side send in this version.
+Reusable **platform module** for plain-text communication templates. Templates are licensed via the marketplace catalog (`communication-templates`) and authorized via Spatie permissions. Consumers include **Leads → WhatsApp Web** (`wa.me`) and **Help Desk → WhatsApp Web** (soft entitlement). There is no Meta/Twilio/server-side send in this version.
 
 ## Purpose
 
 - Give workspaces a single place to author reusable messages
 - Keep message composition module-agnostic through a **placeholder registry**
-- Let product modules (Leads, Contacts; more later) open a picker, render, and hand off to an external channel UI
+- Let product modules (Leads, Contacts, Help Desk; more later) open a picker, render, and hand off to an external channel UI
 
 Templates store **plain text only** (no HTML/rich text). Channels include `whatsapp`, `sms`, and `email` in the enum; MVP create/update allows **`whatsapp` only**.
 
@@ -43,7 +43,7 @@ Product UI (e.g. Lead detail)
 | Support DTOs | `app/Support/CommunicationTemplates/*` |
 | Service | `app/Services/Tenant/CommunicationTemplates/CommunicationTemplateService.php` |
 | Registry / renderer | `PlaceholderRegistry.php`, `TemplateRenderer.php` |
-| Providers | `Providers/LeadPlaceholderProvider.php`, `Agent*`, `Workspace*`, `System*` |
+| Providers | `Providers/LeadPlaceholderProvider.php`, `Contact*`, `Company*`, `HelpDesk*`, `Agent*`, `Workspace*`, `System*` |
 | Controller | `CommunicationTemplateController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/CommunicationTemplate/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/CommunicationTemplate/*` |
@@ -57,8 +57,9 @@ Product UI (e.g. Lead detail)
 |-------|------|
 | List page | `src/pages/communication-templates/communication-templates-page.tsx` |
 | Form dialog | `template-form-dialog.tsx` (placeholder chip inserter) |
-| WhatsApp picker | `src/components/crm/whatsapp-template-picker-dialog.tsx` |
-| Lead wiring | WhatsApp action in `lead-detail-sheet.tsx` |
+| WhatsApp picker | `src/components/crm/whatsapp-template-picker-dialog.tsx` (context-generic) |
+| Lead wiring | WhatsApp action on `lead-view-page.tsx` |
+| Help Desk wiring | Soft-gated WhatsApp action on `help-desk-view-page.tsx` |
 | API client | `communicationTemplateService` in `src/api/services.ts` |
 | E2E | `e2e/tests/communication-templates/`, `npm run test:e2e:communication-templates` |
 
@@ -108,7 +109,9 @@ Bound as a singleton in `AppServiceProvider`:
 new PlaceholderRegistry(
     contextProviders: [
         $app->make(LeadPlaceholderProvider::class),
-        // future: ContactPlaceholderProvider::class, …
+        $app->make(ContactPlaceholderProvider::class),
+        $app->make(CompanyPlaceholderProvider::class),
+        $app->make(HelpDeskPlaceholderProvider::class),
     ],
     sharedProviders: [
         $app->make(AgentPlaceholderProvider::class),
@@ -121,6 +124,8 @@ new PlaceholderRegistry(
 ### Built-in keys
 
 **Lead context:** `name`, `email`, `phone`, `company`, `job_title`, `source`, `status`, `priority`, `lead_value`, `stage_name`, `assignee_name`
+
+**Help Desk context:** `number`, `subject`, `status`, `priority`, `category_name`, `name`, `email`, `phone` (from linked contact), `company_name`, `assignee_name`
 
 **Shared — agent:** `agent_name`, `agent_email`
 
@@ -137,11 +142,11 @@ new PlaceholderRegistry(
 
 `TemplateRenderer` is generic: it does not know about Leads beyond what the registry returns for `template.context`.
 
-## WhatsApp flow (Leads)
+## WhatsApp flow (Leads / Help Desk)
 
-1. User opens a lead with a phone number
-2. SPA opens the template picker (module installed + `communication-templates.use`)
-3. User selects a template → `POST …/render` with `entity_id`
+1. User opens a lead with a phone number, **or** a Help Desk ticket whose linked contact has a phone
+2. SPA opens the template picker (Communication Templates module installed + `communication-templates.use`) — soft gate only; Help Desk does not hard-depend on the templates module
+3. User selects a template → `POST …/render` with `entity_id` (lead id or ticket id for context `help-desk`)
 4. API returns `wa_me_url` (`https://wa.me/{digits}?text=…`)
 5. Browser opens the URL; the agent sends from WhatsApp Web/app
 
