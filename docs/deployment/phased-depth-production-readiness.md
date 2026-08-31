@@ -3,23 +3,23 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-31 |
-| **Re-verified** | 2026-08-31 — depth Playwright re-run green; Pest `phpunit.xml` memory; doc/mobile/e2e fixes pushed |
-| **Status** | **Go** — merge PRs + migrate-first deploy + staging smoke |
+| **Re-verified** | 2026-08-31 — CI green; five milestone PRs merged to `main` |
+| **Status** | **Go** — migrate-first deploy + staging smoke |
 | **Scope** | Hygiene, webhook depth, credit-note applied refund, Help Desk @mentions, Kanban board, Communication Template replies |
-| **Branch** | `feature/phased-depth-program` |
-| **PRs** | Backend [#165](https://github.com/DiligentCreators/EloSync-Backend/pull/165) · Frontend [#159](https://github.com/DiligentCreators/EloSync-Frontend/pull/159) · Docs [#234](https://github.com/DiligentCreators/EloSync-Docs/pull/234) · Mobile [#51](https://github.com/DiligentCreators/EloSync-Mobile/pull/51) · Website [#42](https://github.com/DiligentCreators/EloSync-Website/pull/42) |
+| **Branch** | Merged to `main` from `feature/phased-depth-program` |
+| **PRs** | Backend [#165](https://github.com/DiligentCreators/EloSync-Backend/pull/165) · Frontend [#159](https://github.com/DiligentCreators/EloSync-Frontend/pull/159) · Docs [#234](https://github.com/DiligentCreators/EloSync-Docs/pull/234) · Mobile [#51](https://github.com/DiligentCreators/EloSync-Mobile/pull/51) · Website [#42](https://github.com/DiligentCreators/EloSync-Website/pull/42) (**merged**) |
 | **Companion** | [Credit Notes deploy](./credit-notes) · [Help Desk deploy](./help-desk) · [Webhooks readiness](./tenant-api-webhooks-production-readiness) · [CHANGELOG](/changelog/) |
 
 ---
 
 ## Executive summary
 
-The Phased Depth Program delivers six incremental milestones across five repos without breaking platform freeze. Engineering gates are **closed** on the feature branch. **Production deploy:** merge all five PRs to `main`, deploy together, `migrate --force`, queue restart, run staging smoke below.
+The Phased Depth Program delivers six incremental milestones across five repos without breaking platform freeze. Engineering gates are **closed** and all five milestone PRs are **merged to `main`**. **Production deploy:** deploy together, `migrate --force`, queue restart, run staging smoke below.
 
 | Gate | Result |
 |------|--------|
 | Code complete (Backend, Frontend, Docs, Mobile, Website) | **Pass** |
-| PRs opened (five repos) | **Pass** — see PR links in header |
+| PRs opened + merged to `main` | **Pass** — five repos merged 2026-08-31 |
 | Migrations idempotent (migrate-only, no `db:seed`) | **Pass** — 6× `2026_08_31_*` migrations |
 | Permissions rollout (`credit-notes.refund`) | **Pass** — `TenantPermissionSynchronizer` migration |
 | Catalog versions (`credit-notes` 1.2.0, `help-desk` 1.7.0) | **Pass** — `CatalogSeeder` + bump migrations |
@@ -34,7 +34,7 @@ The Phased Depth Program delivers six incremental milestones across five repos w
 | Queue / scheduler | **Pass** — `webhooks`, `help-desk-ingest`, SLA scanner unchanged |
 | Frontend / Website CI | **Pass** — Quality Gate green on PRs #159 / #42 |
 
-**Go / No-Go:** **Go** after PR merge and operator checklist.
+**Go / No-Go:** **Go** — run operator deploy checklist.
 
 ---
 
@@ -96,7 +96,7 @@ Use `--workers=1` on Windows if tenant session contention appears.
 
 ## Deploy checklist (operator)
 
-1. Merge Backend + Frontend + Docs + Mobile + Website PRs to `main`.
+1. ~~Merge Backend + Frontend + Docs + Mobile + Website PRs to `main`.~~ **Done** (2026-08-31)
 2. `php artisan migrate --force` (central + tenants).
 3. `php artisan queue:restart` (and `reverb:restart` if applicable).
 4. Confirm workers: `webhooks`, `help-desk-ingest`, `default`.
@@ -139,6 +139,6 @@ Customer Portal · chat/social Help Desk channels · OAuth/scoped integration to
 - [x] Depth Playwright re-verified green (2026-08-31): developers, credit-notes, help-desk
 - [x] Open PRs: Backend, Frontend, Docs, Mobile, Website
 - [x] Code review + CI green on each PR (Backend Pest local — PR CI manual-only by design)
-- [ ] Merge to `main` in one milestone
+- [x] Merge to `main` in one milestone (2026-08-31)
 - [ ] Staging smoke per table above
 - [ ] Production deploy per [release process](./release-process)
