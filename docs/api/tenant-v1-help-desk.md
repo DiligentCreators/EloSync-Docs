@@ -6,9 +6,9 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 No hard `module_dependencies` — Help Desk installs standalone. `contact_id` and `company_id` are optional; supplying either requires the corresponding module (`contacts` / `companies`) to be entitled on the workspace, enforced by `LinkableContact` / `LinkableCompany`.
 
-Assignee scoping: without `help-desk.assign` (and not superadmin), list/stats/view/update/**close**/**reopen** only include tickets where `assigned_to` is the current user.
+Assignee scoping: without `help-desk.assign` (and not superadmin), list/board/stats/view/update/**close**/**reopen** only include tickets where `assigned_to` is the current user.
 
-## Stats
+## Stats & board
 
 ### GET `/help-desk/stats`
 
@@ -32,6 +32,10 @@ Same filters as list (minus pagination/sort). Response:
 
 `overdue` counts tickets in `open`, `in_progress`, or `waiting` with `due_at` before now (UTC instant comparison). `sla_breached` / `sla_at_risk` use SLA clock columns (`UtcInstant`); at-risk means due within the next hour and not yet breached.
 
+### GET `/help-desk/board`
+
+One column per status (`open`, `in_progress`, `waiting`, `resolved`, `closed`): `status`, `label`, `ticket_count`, `tickets[]`. Honors the same filters as list (including assignee scoping). Optional `per_column` (1–100, default 50). Fixed enum columns — same pattern as Tasks, not Opportunities stages.
+
 ## Tickets CRUD
 
 ### GET `/help-desk`
@@ -48,7 +52,7 @@ Status always starts at `open`; `number` is auto-generated (`HD-00001`, configur
 
 ### GET `/help-desk/{id}`
 
-Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes, and timeline activities. Contact refs include `email` / `phone` when present (for soft-gated Communication Template WhatsApp). Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/help-desk/{id}`
 

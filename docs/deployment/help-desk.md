@@ -40,7 +40,7 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 
 ## Deploy checklist
 
-1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, SLA policies, mailboxes, notes, activities, attachments, KB pivot) and catalog bumps through **1.4.0**
+1. Migrate help desk tables (`help_desk_categories`, `help_desk_tickets`, SLA policies, mailboxes, notes, activities, attachments, KB pivot, note mentions) and catalog bumps through **1.7.0** (Communication Template replies; Kanban agent owns **1.6.0**)
 2. Register the `help-desk` catalog module (migration, not seeder) as free opt-in under the `operations` category — **no** `module_dependencies` row
 3. Migrate `help-desk.*` permissions and grant to existing `admin` / `manager` / `staff` roles per default maps
 4. Confirm `module:help-desk` + `help-desk.*` permissions on target roles
@@ -51,7 +51,10 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 9. Smoke (soft-gate off): on a workspace with Help Desk but **without** Contacts → confirm contact/company pickers are hidden
 10. Smoke (KB links): on a workspace with Help Desk + Knowledge Base → create a ticket linked to a published article → confirm **Related articles** on ticket view and **Linked tickets** on article view
 11. Smoke (email intake): Manage mailboxes → test connection → sync (or wait for scheduler) → confirm inbound creates `source=email` ticket; reply with `HD-#####` appends a note
+12. Smoke (Kanban): Board view → drag ticket between status columns → confirm status persists
+13. Smoke (@mentions): Add ticket note with `@agent` → confirm database notification
+14. Smoke (template reply): With Communication Templates + WhatsApp entitled and contact phone → ticket view → WhatsApp template picker
 
 ## Roadmap context
 
-Help Desk is the first **Operations** Marketplace SKU. **1.3.0** shipped SLA policies/breach tracking + Automation triggers; **1.4.0** shipped shared IMAP email intake. Customer portal, Kanban, mentions, and chat/social channels remain deferred. Soft Knowledge Base article links shipped in **1.1.0**; attachments in **1.2.0**. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Help Desk is the first **Operations** Marketplace SKU. **1.3.0** shipped SLA policies/breach tracking + Automation triggers; **1.4.0** shipped shared IMAP email intake; **1.5.0** @mentions on ticket notes; **1.6.0** status Kanban board; **1.7.0** Communication Template reply placeholders (soft-gated WhatsApp picker). Customer portal and chat/social channels remain deferred. Soft Knowledge Base article links shipped in **1.1.0**; attachments in **1.2.0**. See [module-dependencies.md](/architecture/module-dependencies), [product-roadmap.md](/getting-started/product-roadmap), and [Phased Depth production readiness](/deployment/phased-depth-production-readiness).

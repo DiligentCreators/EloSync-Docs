@@ -308,16 +308,16 @@ Tenant API reference: [Tenant API — Payments](/api/tenant-v1-payments).
 
 ### Credit Notes (`module:credit-notes`)
 
-Issue credits against customer invoices with draft-only edit, issue, apply, and void (email and PDF remain web-only on mobile v1). Requires **Invoices** module entitlement.
+Issue credits against customer invoices with draft-only edit, issue, apply, refund (applied only), and void (email and PDF remain web-only on mobile v1). Requires **Invoices** module entitlement.
 
 | Piece | Location |
 |-------|----------|
-| API client | `lib/api/credit-notes.ts` — `GET/POST /credit-notes`, `GET/PUT/DELETE /credit-notes/{id}`, `POST /credit-notes/{id}/issue`, `POST /credit-notes/{id}/apply`, `POST /credit-notes/{id}/void` |
+| API client | `lib/api/credit-notes.ts` — `GET/POST /credit-notes`, `GET/PUT/DELETE /credit-notes/{id}`, `POST /credit-notes/{id}/issue`, `POST /credit-notes/{id}/apply`, `POST /credit-notes/{id}/refund`, `POST /credit-notes/{id}/void` |
 | Types | `types/credit-notes.ts` (re-exported from `types/api.ts`) |
-| Routes | `app/(app)/(tabs)/credit-notes/` — `index` (list + search), `new`, `[id]/index` (view + issue/apply/void), `[id]/edit` (draft only) |
+| Routes | `app/(app)/(tabs)/credit-notes/` — `index` (list + search), `new`, `[id]/index` (view + issue/apply/refund/void), `[id]/edit` (draft only) |
 | Shared UI | unpaid-invoice picker on create; `PaymentLinkPickers` for optional contact/company overrides |
 | Nav | `config/modules.ts` — `permission: credit-notes.view`, tab `/(app)/(tabs)/credit-notes` (label **Credits**) |
-| Permissions | `credit-notes.view`, `credit-notes.create`, `credit-notes.update`, `credit-notes.delete`, `credit-notes.issue`, `credit-notes.apply`, `credit-notes.void` |
+| Permissions | `credit-notes.view`, `credit-notes.create`, `credit-notes.update`, `credit-notes.delete`, `credit-notes.issue`, `credit-notes.apply`, `credit-notes.refund`, `credit-notes.void` |
 
 Tenant API reference: [Tenant API — Credit Notes](/api/tenant-v1-credit-notes).
 

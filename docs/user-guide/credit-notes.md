@@ -2,7 +2,7 @@
 
 ## Who can use Credit Notes
 
-Your workspace must have **Invoices** installed first, then the **Credit Notes** module (both free from Marketplace). Marketplace blocks installing Credit Notes until Invoices is entitled. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `issue`, `apply`, `void` as needed).
+Your workspace must have **Invoices** installed first, then the **Credit Notes** module (both free from Marketplace). Marketplace blocks installing Credit Notes until Invoices is entitled. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `issue`, `apply`, `void`, `refund` as needed).
 
 Without **assign**, you only see credit notes assigned to you.
 
@@ -34,19 +34,26 @@ Edit from the row menu or the record page while the credit note is still **Draft
 A credit note starts in **Draft**. Move it forward with:
 
 - **Issue** (`draft → issued`) — locks the credit note's content and sets the issue date to today if it wasn't set
-- **Apply** (`issued → applied`) — adds the credit note's total to the invoice's **amount credited** and reduces its **balance due**, which can also advance the invoice's status to **Partial** or **Paid** (same as posting a payment); this is a one-way, terminal action. Blocked if the invoice is no longer Sent or Partial (e.g. it was voided or already paid off), or if the credit note's total exceeds the invoice's current balance due. When **Accounting** is installed, **Apply** also posts Dr Sales Revenue / Cr Accounts Receivable for the credit total (applied remains irreversible)
-- **Void** — available from **Draft** or **Issued**; permanently cancels the credit note before it has been applied. Once **Applied**, a credit note can no longer be voided.
+- **Apply** (`issued → applied`) — adds the credit note's total to the invoice's **amount credited** and reduces its **balance due**, which can also advance the invoice to **Paid** when the balance reaches zero. Blocked if the invoice is not currently unpaid/open for credit, or if the credit note's total exceeds the invoice's current balance due. When **Accounting** is installed, **Apply** also posts Dr Sales Revenue / Cr Accounts Receivable for the credit total
+- **Refund** (`applied → refunded`) — reverses the credit on the linked invoice (subtracts from **amount credited**, recalculates balance / status) and voids any linked apply journal when Accounting is installed. Terminal; requires `credit-notes.refund`
+- **Void** — available from **Draft** or **Issued** only; permanently cancels the credit note before it has been applied. Once **Applied**, use **Refund** instead
 
-Invalid transitions (e.g. applying a draft credit note, or voiding an applied one) are rejected with a validation error.
+Invalid transitions (e.g. applying a draft credit note, voiding an applied one, or refunding an issued one) are rejected with a validation error.
 
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
+## PDF & email
+
+After you **Issue** a credit note, use **Download PDF** on the record page for a branded PDF (workspace branding, credit note number, lines, totals, and linked invoice).
+
+Users with **issue** can **Email customer** — same dialog pattern as invoices/payments. The **To** field pre-fills from the linked contact or company email when available; you can add CC recipients and edit the subject/message. Issued and applied credit notes support PDF download and email. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
+
 ## Notes & activity
 
 - **Notes** — free-form notes on the credit note
-- **Activity** — timeline of create, update, assignment, issue, apply, void, note, and delete/restore events
+- **Activity** — timeline of create, update, assignment, issue, apply, refund, void, note, emailed, and delete/restore events
 
 ## Related invoice
 
@@ -54,4 +61,4 @@ Every credit note record page shows the **Invoice** it was issued against, with 
 
 ## What's not here yet
 
-Refunding an applied credit note, credit note PDFs/e-mail delivery, and standalone credit notes not tied to an invoice are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Standalone credit notes not tied to an invoice and multi-currency conversion are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

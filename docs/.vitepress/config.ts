@@ -466,6 +466,7 @@ export default withMermaid(defineConfig({
             { text: 'Short Links', link: '/deployment/short-links' },
             { text: 'Short Links Production Readiness', link: '/deployment/short-links-production-readiness' },
             { text: 'Platform Polish A/B/C Production Readiness', link: '/deployment/platform-polish-a-b-c-production-readiness' },
+            { text: 'Phased Depth Program Production Readiness', link: '/deployment/phased-depth-production-readiness' },
             { text: 'Founding Beta Invite Production Readiness', link: '/deployment/founding-beta-invite-production-readiness' },
             { text: 'Newest-first Notes & Activity Production Readiness', link: '/deployment/newest-first-notes-activity-production-readiness' },
             { text: 'Dedicated Record Pages Production Readiness', link: '/deployment/dedicated-record-pages-production-readiness' },

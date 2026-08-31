@@ -28,7 +28,7 @@ Edit from the row menu or the record page while the purchase order is still **Dr
 
 A purchase order starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the order as sent to the vendor (does not email the vendor or attach a PDF yet)
+- **Send** (`draft → sent`) — marks the order as sent to the vendor and unlocks PDF / email
 - **Mark partially received** (`sent → partially_received`) — acknowledges some of the order has arrived
 - **Mark received** (`sent → received` or `partially_received → received`) — acknowledges the full order has arrived
 - **Cancel** (`draft → cancelled`, `sent → cancelled`, or `partially_received → cancelled`)
@@ -41,10 +41,16 @@ Invalid transitions (e.g. receiving directly from Draft) are rejected with a val
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
+## PDF & email vendor
+
+After you **Send** a purchase order, use **Download PDF** on the record page for a branded PO PDF.
+
+Users with **send** (`purchase-orders.send`) can **Email vendor** — same dialog pattern as other billing documents. The **To** field pre-fills from the vendor email when available. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
+
 ## Notes & activity
 
 - **Notes** — free-form notes on the purchase order
-- **Activity** — timeline of create, update, assignment, status change, note, and delete/restore events
+- **Activity** — timeline of create, update, assignment, status change, note, emailed, and delete/restore events
 
 ## Convert to expense
 
@@ -58,4 +64,4 @@ If Expenses is not installed, the button does not appear; attempting the convers
 
 ## What's not here yet
 
-Purchase order PDFs/e-mail delivery and per-line partial receiving are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Per-line partial-quantity receiving (header-level **Partially received** only) is planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

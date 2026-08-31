@@ -8,9 +8,9 @@ Without **assign**, you only see tickets assigned to you.
 
 > Help Desk is for **internal workspace support**. To report bugs or request platform features, use [Give Feedback](/user-guide/feedback) — that flow is triaged in Central, not in Help Desk.
 
-## List & table
+## List, board & table
 
-Open **Help Desk** from the sidebar, under the **Operations** group. Search by subject, number, or description; filter by status, priority, category, or SLA (breached / at risk); toggle **My Tickets** or **Overdue**; and switch KPI cards (including **SLA breached** / **SLA at risk**) to quick-filter the table. The table shows category, status, priority, SLA badge, source (Email), assignee, due date, and the **latest note**.
+Open **Help Desk** from the sidebar, under the **Operations** group. Switch **Board** / **List** in the page header (defaults to Board, same pattern as Tasks). On the board, columns are the fixed statuses Open → In Progress → Waiting → Resolved → Closed; drag a card to change status (honors update / close / reopen permissions and the status workflow). Search by subject, number, or description; filter by status, priority, category, or SLA (breached / at risk); toggle **My Tickets** or **Overdue**; and switch KPI cards (including **SLA breached** / **SLA at risk**) to quick-filter. The list table shows category, status, priority, SLA badge, source (Email), assignee, due date, and the **latest note**.
 
 Use **Manage categories** (visible with `help-desk.create`, `help-desk.update`, or `help-desk.delete`) to add, rename, activate/deactivate, or delete workspace ticket categories. New workspaces start with General, Technical, Billing, Account, and Other. You cannot delete **Other** (default for new tickets). You also cannot delete a category that still has tickets. Renaming a starter category keeps its slug.
 
@@ -81,4 +81,6 @@ Define policies under **Manage SLAs**. Each policy sets first-response and resol
 
 ## What's not here yet
 
-Customer portal, chat/social intake channels, `@mentions`, Communication Template handoff, and Kanban are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Customer portal and chat/social intake channels are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap). Ticket notes support `@mentions`. Use **Board** / **List** for status Kanban. Soft-gated WhatsApp Communication Templates appear on ticket view when that module is installed and the contact has a phone.
+
+When **Communication Templates** is installed and you have `communication-templates.use`, open a ticket with a linked contact that has a phone number and click **WhatsApp** to pick a Help Desk template (or a blank chat). EloSync opens WhatsApp Web/app with the message pre-filled — it does not send messages for you.

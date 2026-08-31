@@ -47,7 +47,13 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.4.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.7.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+
+## Communication Templates (soft)
+
+`HelpDeskPlaceholderProvider` registers context `help-desk` on `PlaceholderRegistry` (see [Communication Templates](/developer-guide/communication-templates)). Ticket placeholders include `number`, `subject`, `status`, `priority`, `category_name`, `name` / `email` / `phone` (from linked contact), `company_name`, `assignee_name`, plus shared agent/workspace/system tokens. WhatsApp `phone` resolves from the soft-linked contact — tickets without a contact phone cannot render WhatsApp extras.
+
+SPA: ticket view soft-gates the shared `WhatsAppTemplatePickerDialog` when `module:communication-templates` + `communication-templates.use` and the linked contact has a phone. **No** `module_dependencies` row between Help Desk and Communication Templates.
 
 ## API (tenant)
 
@@ -60,7 +66,7 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/help-desk/` (`help-desk-page.tsx`, `help-desk-form.tsx`, `help-desk-form-page.tsx`, `help-desk-view-page.tsx`, `help-desk-categories-dialog.tsx`, `help-desk-sla-policies-dialog.tsx`, `help-desk-mailboxes-dialog.tsx`) |
-| View page | Details (category, priority, status, due date, SLA clocks, source, assignee, related contact/company, related KB articles), notes, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
+| View page | Details (category, priority, status, due date, SLA clocks, source, assignee, related contact/company + soft-gated WhatsApp template picker, related KB articles), notes with `@mentions`, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
 | Form page | Subject, description, category picker, priority, due date, conditional contact/company pickers, and **Knowledge base articles** multi-select when `hasModule('knowledge-base')` + `knowledge-base.view` |
 | Service | `helpDeskService` + `helpDeskCategoryService` + `helpDeskSlaPolicyService` + `helpDeskMailboxService` in `src/api/services.ts` |
 | Types | `HelpDesk*` in `src/types/api.ts` |
@@ -99,4 +105,4 @@ See [Central Feedback System](/developer-guide/central-feedback-system).
 
 ## Deferred
 
-- Customer portal, chat/social intake, `@mentions`, Communication Template reply context, Kanban
+- Customer portal, chat/social intake, Kanban

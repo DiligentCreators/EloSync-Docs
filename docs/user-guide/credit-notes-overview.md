@@ -22,7 +22,7 @@ Tenant customer-billing module on the frozen platform — the third Phase 3 (Bil
 - Credit note fields: title, required invoice link, optional contact/company link (defaults to the invoice's own contact/company), currency (defaults to the invoice's currency), issue date, notes
 - Auto-numbered (`CN-00001`; prefix backed by the `credit_notes_number_prefix` tenant setting, default `CN-` — editable under **Settings → General → Document number prefixes**)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side, same pattern as Invoices
-- Status workflow: `draft → issued → applied`, with `void` available from `draft` or `issued` (`POST /credit-notes/{id}/issue`, `.../apply`, `.../void`) — **applying** a credit note adds its total to the invoice's `amount_credited` and recalculates `balance_due`
+- Status workflow: `draft → issued → applied → refunded`, with `void` available from `draft` or `issued` only (`POST /credit-notes/{id}/issue`, `.../apply`, `.../refund`, `.../void`) — **applying** adds the total to the invoice's `amount_credited`; **refunding** reverses that credit
 - Assignment with assignee scoping via `credit-notes.assign`
 - Notes + domain activity timeline (mirrors Invoices/Payments)
 - Download credit note PDF + **email customer** after Issue (`GET /credit-notes/{id}/pdf`, `POST /credit-notes/{id}/email`, `credit-notes.send`)
@@ -32,16 +32,15 @@ Tenant customer-billing module on the frozen platform — the third Phase 3 (Bil
 
 ## Permissions
 
-`credit-notes.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `issue` · `apply` · `void`
+`credit-notes.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `issue` · `apply` · `void` · `refund`
 
-Enable Credit Notes from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `credit-notes`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`.
+Enable Credit Notes from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `credit-notes`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.2.0**.
 
 ## Related modules
 
-**Required:** [Invoices](/user-guide/invoices-overview) — Credit Notes cannot be installed or created without it. **Optional:** Contacts and Companies (customer pickers only appear/validate when entitled), [Accounting](/user-guide/accounting-overview) (soft: **Apply** posts Dr Revenue / Cr AR). See [Module Dependencies](/architecture/module-dependencies).
+**Required:** [Invoices](/user-guide/invoices-overview) — Credit Notes cannot be installed or created without it. **Optional:** Contacts and Companies (customer pickers only appear/validate when entitled), [Accounting](/user-guide/accounting-overview) (soft: **Apply** posts Dr Revenue / Cr AR; **Refund** voids that journal). See [Module Dependencies](/architecture/module-dependencies).
 
 ## Explicitly deferred
 
-- Refunding an already-applied credit note (once applied, a credit note is terminal — void is only available before applying)
 - Standalone credit notes not tied to an invoice
 - Multi-currency conversion

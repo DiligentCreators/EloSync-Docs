@@ -8,7 +8,7 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 Requires the **Invoices** module (hard `module_dependencies` row) — a credit note always references a `CustomerInvoice` and cannot be created without it.
 
-Assignee scoping: without `credit-notes.assign` (and not superadmin), list/stats/view/update/**issue**/**apply**/**void** only include credit notes where `assigned_to` is the current user.
+Assignee scoping: without `credit-notes.assign` (and not superadmin), list/stats/view/update/**issue**/**apply**/**void**/**refund** only include credit notes where `assigned_to` is the current user.
 
 ## Stats
 
@@ -23,6 +23,7 @@ Same filters as list (minus pagination/sort). Response:
   "draft": 0,
   "issued": 0,
   "applied": 0,
+  "refunded": 0,
   "void": 0,
   "applied_total": 0,
   "scope": "org | mine"
@@ -35,7 +36,7 @@ Same filters as list (minus pagination/sort). Response:
 
 ### GET `/credit-notes`
 
-Query: `search` (matches `title` or `number`), `status` (`draft`\|`issued`\|`applied`\|`void`), `customer_invoice_id`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_credit_notes`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `title` or `number`), `status` (`draft`\|`issued`\|`applied`\|`refunded`\|`void`), `customer_invoice_id`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_credit_notes`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
 List items include `status`, `currency`, `subtotal`/`tax_total`/`total`, `issue_date`, `customer_invoice` ref (`number`/`total`/`balance_due`/`status`), `contact`/`company` refs, assignee/creator refs, and `latest_note`.
 
@@ -79,11 +80,23 @@ Transitions `draft → issued`. Backfills `issue_date` to today if unset. Permis
 
 ### POST `/credit-notes/{id}/apply`
 
-Transitions `issued → applied`. The linked invoice is locked (`SELECT ... FOR UPDATE`) — deliberately **not** `withTrashed()`, so a soft-deleted invoice can never receive a credit — and validated before anything is written: rejected with a 422 on `status` if the invoice can't be found, its status is not `sent`/`partial`, or the credit note's `total` exceeds the invoice's current `balance_due` (0.01 tolerance). Once valid, adds the credit note's `total` to the invoice's `amount_credited` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` **and can advance the invoice `status`** (`sent → partial` or `sent → paid`, same as a Payment post — this is not status-neutral). Records a `credited` activity on the invoice. Permission: `credit-notes.apply`. Rejects with 422 on `status` if the credit note isn't currently `issued`.
+Transitions `issued → applied`. The linked invoice is locked (`SELECT ... FOR UPDATE`) — deliberately **not** `withTrashed()`, so a soft-deleted invoice can never receive a credit — and validated before anything is written: rejected with a 422 on `status` if the invoice can't be found, its status is not `unpaid`, or the credit note's `total` exceeds the invoice's current `balance_due` (0.01 tolerance). Once valid, adds the credit note's `total` to the invoice's `amount_credited` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` **and can advance the invoice `status`** to `paid` (same as a Payment post — this is not status-neutral). Records a `credited` activity on the invoice. When Accounting is entitled, posts the revenue-reverse journal. Permission: `credit-notes.apply`. Rejects with 422 on `status` if the credit note isn't currently `issued`.
+
+### POST `/credit-notes/{id}/refund`
+
+Transitions `applied → refunded`. Mirrors payment void for the accounting reverse: voids the linked apply journal (if any), locks the invoice with `withTrashed()`, subtracts the credit note's `total` from `amount_credited` (floored at 0), recalculates balance/status, and records `credit_refunded` on the invoice. Permission: `credit-notes.refund`. Rejects with 422 on `status` if the credit note isn't currently `applied`. Terminal — cannot re-apply or void a refunded credit note.
 
 ### POST `/credit-notes/{id}/void`
 
-Transitions `draft|issued → void`. Does **not** reverse any invoice balance — void is only valid before a credit note has been applied. Permission: `credit-notes.void`. Rejects with 422 on `status` if the credit note is already `applied` or `void`.
+Transitions `draft|issued → void`. Does **not** reverse any invoice balance — void is only valid before a credit note has been applied. Permission: `credit-notes.void`. Rejects with 422 on `status` if the credit note is already `applied`, `refunded`, or `void`.
+
+### GET `/credit-notes/{id}/pdf`
+
+Download branded credit note PDF. Permission: `credit-notes.view` (assignee-scoped). Available after **Issue** (issued / applied).
+
+### POST `/credit-notes/{id}/email`
+
+Email the credit note to the customer with optional PDF attachment. Body matches billing document email (`to`, `cc`, `subject`, `message`, `attach_pdf`). Permission: `credit-notes.issue` (policy `send`). Throttled (`billing-document-email`). Issued / applied only (not refunded or void).
 
 ### POST `/credit-notes/{id}/notes`
 
@@ -93,4 +106,4 @@ Permission: `credit-notes.update`.
 
 ### GET `/credit-notes/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `issued`, `applied`, `voided`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `issued`, `applied`, `refunded`, `voided`, `note_added`, `emailed`, `deleted`, `restored`).

@@ -28,7 +28,9 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 - Notes (comments) + activity timeline; optional **attachments** on ticket create and note replies (counts toward [Storage](/user-guide/storage-overview) quota)
 - **SLA policies** (1.3.0): response/resolve targets by category and/or priority; ticket clocks; breach scanner + notifications; list filters for breached / at risk
 - **Shared email intake** (1.4.0): workspace IMAP support mailbox (not personal Email accounts); inbound creates tickets or appends notes when the subject/body references `HD-#####`
-- Table view with search, status/priority/category/SLA filters, assignee filter, overdue filter, and **My Tickets** toggle; **Manage categories**, **Manage SLAs**, and **Manage mailboxes** dialogs (same `help-desk.*` permissions as ticket CRUD)
+- **@mentions** (1.5.0): ticket notes support `@user` mentions with in-app notifications
+- **Communication Template replies** (1.7.0): soft-gated WhatsApp template picker on ticket view when Communication Templates is installed (`communication-templates.use`); placeholder context `help-desk` — **no** hard `module_dependencies`
+- Table and **status Kanban** (Board/List toggle; fixed `HelpDeskStatusEnum` columns; drag → `POST …/status`) with search, status/priority/category/SLA filters, assignee filter, overdue filter, and **My Tickets** toggle; **Manage categories**, **Manage SLAs**, and **Manage mailboxes** dialogs (same `help-desk.*` permissions as ticket CRUD)
 - KPIs via `GET /help-desk/stats` (total, mine, open, in progress, waiting, resolved, closed, overdue, sla_breached, sla_at_risk)
 - Dashboard widget `help_desk_my_open` (module + `help-desk.view`; assignee-scoped like list)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -48,7 +50,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | **manager** | `view`, `create`, `update`, `assign`, `close`, `reopen` |
 | **staff** | `view`, `create`, `update`, `close`, `reopen` |
 
-Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.4.0**.
+Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.7.0**.
 
 ## Why standalone (soft dependencies)
 
@@ -58,6 +60,3 @@ Most internal tickets (IT requests, billing questions) do not require a CRM cont
 
 - Multi-channel intake beyond shared IMAP (chat, social)
 - Customer portal (external submit / track)
-- `@mentions` in notes
-- Communication Template context for ticket replies
-- Kanban board view
