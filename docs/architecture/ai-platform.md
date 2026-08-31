@@ -5,7 +5,7 @@ Cross-cutting **AI Assistant** capability for EloSync workspaces. Product surfac
 ## Goals
 
 - Answer business questions using **trusted workspace context** (modules, permissions, timezone).
-- Expose **read-only tools** gated by module entitlement and Spatie permissions.
+- Expose **read-only tools** gated by module entitlement and Spatie permissions (including cross-module `search_workspace`).
 - Require **explicit confirmation** before low-risk writes (for example `create_task`).
 - Support **Platform billing** (Central provider + credit wallet) or **BYOK** (tenant-owned API key).
 

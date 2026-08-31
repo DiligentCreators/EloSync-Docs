@@ -833,7 +833,7 @@ Workspace assistant chat: list conversations, start threads, send prompts, view 
 |-------|----------|
 | API client | `lib/api/ai.ts` — conversations, messages, credits, confirm/cancel actions, lead/opportunity copilot |
 | Types | `types/ai.ts` (re-exported from `types/api.ts`) |
-| Starters | `lib/ai-starter-prompts.ts` — module/permission-gated quick prompts |
+| Starters | `lib/ai-starter-prompts.ts` — module/permission-gated quick prompts (includes Search workspace via `ai` + `ai.use`) |
 | Utils | `lib/ai-utils.ts` — labels, reference routes, action previews |
 | Components | `components/ai/AiMessageBubble.tsx`, `components/ai/AiStructuredResult.tsx`, `components/records/RecordAiCopilotSection.tsx` |
 | Routes | `app/(app)/(tabs)/ai/` — `index`, `[id]/index` |

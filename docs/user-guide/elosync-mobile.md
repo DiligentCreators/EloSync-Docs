@@ -66,7 +66,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Reseller payouts** | List, search, status and party filters, view, approve, pay, void (permission-gated); Payout tab |
 | **Storage** | Workspace usage, allowance, pack label, refresh (permission-gated); Store tab |
 | **Branded** | Custom address status, DNS instructions, propose, verify, remove (permission-gated); Brand tab |
-| **EloSync AI** | Conversations, chat, starter prompts, credits, confirm write actions (permission-gated); AI tab |
+| **EloSync AI** | Conversations, chat, starter prompts (including Search workspace), credits, confirm write actions (permission-gated); AI tab; citations deep-link entitled Wave A+B modules |
 | **Notifications** | In-app notification list, mark read |
 | **Profile** | Account details, sign out |
 

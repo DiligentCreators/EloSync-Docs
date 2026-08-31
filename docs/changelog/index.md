@@ -1,5 +1,11 @@
 # Changelog
 
+## AI workspace search (2026-08-31)
+
+- **EloSync-Backend:** Ask EloSync tool `search_workspace` fans out across entitled Wave A+B modules (leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products) with per-module view gates. Catalog **ai 1.2.0 → 1.3.0**. Pest coverage for gating, filters, limits, and tenant isolation.
+- **EloSync-Frontend / Mobile:** Citation deep links for Wave A+B record paths; **Search workspace** starter chip (`ai` + `ai.use`).
+- **EloSync-Docs:** AI tools / API / user guide / deployment / roadmap updated for workspace search.
+
 ## Phased Depth Program — merged to main (2026-08-31)
 
 - **Five repos** (`feature/phased-depth-program` → `main`): Backend [#165](https://github.com/DiligentCreators/EloSync-Backend/pull/165), Frontend [#159](https://github.com/DiligentCreators/EloSync-Frontend/pull/159), Docs [#234](https://github.com/DiligentCreators/EloSync-Docs/pull/234), Mobile [#51](https://github.com/DiligentCreators/EloSync-Mobile/pull/51), Website [#42](https://github.com/DiligentCreators/EloSync-Website/pull/42).

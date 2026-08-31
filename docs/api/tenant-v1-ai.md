@@ -102,6 +102,8 @@ Responses mirror conversation message structured output + `usage`.
 
 Tools are not direct HTTP endpoints. The registry exposes them to the agent when module + permission gates pass:
 
+**Workspace** (available with `ai.use`; per-module entitlement + view inside providers): `search_workspace`
+
 **Leads** (`leads.view`): `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`
 
 **Tasks** (`tasks.view` / `tasks.create`): `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `create_task` (pending confirmation)
@@ -112,7 +114,11 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Invoices** (`invoices.view`): `get_overdue_invoices`, `get_invoice_balance_summary`
 
-Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). See [AI tools guide](/developer-guide/ai-tools).
+**Help Desk** (`help-desk.view`): `get_help_desk_open_tickets`
+
+**Expenses** (`expenses.view`): `get_expense_pending_approval`
+
+Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). `search_workspace` hits also include `path` for citations. See [AI tools guide](/developer-guide/ai-tools).
 
 ## Related
 
