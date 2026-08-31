@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-08-31 |
-| **Re-verified** | 2026-08-31 (audit remediation — doc drift, mobile guide, Pest memory, Playwright prerequisites) |
+| **Re-verified** | 2026-08-31 — depth Playwright re-run green; Pest `phpunit.xml` memory; doc/mobile/e2e fixes pushed |
 | **Status** | **Go** — merge PRs + migrate-first deploy + staging smoke |
 | **Scope** | Hygiene, webhook depth, credit-note applied refund, Help Desk @mentions, Kanban board, Communication Template replies |
 | **Branch** | `feature/phased-depth-program` (Backend, Frontend, Docs, Mobile, Website) |
@@ -132,7 +132,7 @@ Customer Portal · chat/social Help Desk channels · OAuth/scoped integration to
 - [x] Code complete on `feature/phased-depth-program` (five repos)
 - [x] Doc drift remediated (Help Desk deployment roadmap, webhooks readiness, audit page)
 - [x] Pest memory + Playwright prerequisites documented
-- [x] Mobile CN refund documented
+- [x] Depth Playwright re-verified green (2026-08-31): developers, credit-notes, help-desk
 - [ ] Open PRs: Backend, Frontend, Docs, Mobile, Website
 - [ ] Code review + CI green on each PR
 - [ ] Merge to `main` in one milestone
