@@ -6,6 +6,7 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 
 `App\AI\Tools\AIToolRegistry` maps tool names to `AiToolDefinition` classes. Defaults are registered in `registerDefaults()`:
 
+- Workspace: `search_workspace` (cross-module; `module()` is `null`; each provider enforces its own entitlement + `*.view`)
 - Leads: `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`
 - Tasks: `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`
 - Projects: `search_projects`, `get_project`, `get_overdue_projects`
@@ -14,13 +15,19 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 - Writes: `create_task`, `update_lead_status`, `log_activity` (confirmation required)
 - Reads: `get_help_desk_open_tickets`, `get_expense_pending_approval` (module + permission gated)
 
+### `search_workspace`
+
+`App\AI\Tools\Search\AiWorkspaceSearchService` fans out to entitled providers under `app/AI/Tools/Search/Providers/` (Wave A+B+C): leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products, documents, knowledge-base, activities, meetings.
+
+Arguments: `query` (required), optional `modules` (slug filter), `limit_per_module` (default 5, max 10), `limit_total` (default 25, max 50). Hits include `module`, `id`, `uuid`, `title`, `subtitle`, `path`. Provider exceptions are isolated (`modules_failed`); other modules still return hits.
+
 List/detail tool payloads include both numeric **`id`** (for SPA deep links) and **`uuid`** (for tool lookups).
 
 `availableFor($user, $tenant, $entitlements)` filters tools when:
 
 1. Risk is not `Destructive`.
-2. Declared module slug is entitled (`module:{slug}`).
-3. User has **every** permission listed on the definition.
+2. Declared module slug is entitled (`module:{slug}`) — skipped when `module()` is `null`.
+3. User has **every** permission listed on the definition — skipped when the list is empty.
 
 ## Tool definition contract
 

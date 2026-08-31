@@ -1,5 +1,22 @@
 # Changelog
 
+## AI workspace search — remediations + Eng Ready (2026-08-31)
+
+- **EloSync-Backend:** Wave C providers (documents, knowledge-base, activities, meetings); per-provider try/catch (`modules_failed`); prompt citation paths expanded. Pest **18/18** (Wave C + provider isolation).
+- **EloSync-Frontend:** Lead create no longer defaults `assigned_to` to ineligible owners (`isEligibleLeadAssigneeCandidate`); Wave C citation maps.
+- **EloSync-Mobile / Docs / Website:** Wave C citations; audit **Eng Ready**; marketing roadmap next focus synced (API & Webhooks already shipped).
+- **Operator remaining:** merge `feature/ai-workspace-search`, migrate **ai → 1.3.0**, deploy SPA/Mobile, staging smoke. See [production readiness](/deployment/ai-workspace-search-production-readiness).
+
+## AI workspace search — production readiness (2026-08-31)
+
+- **EloSync-Docs:** [AI workspace search production readiness](/deployment/ai-workspace-search-production-readiness) — **Go** (engineering on `feature/ai-workspace-search`); operator next: merge PRs, migrate catalog **ai → 1.3.0**, deploy SPA/Mobile, staging smoke.
+
+## AI workspace search (2026-08-31)
+
+- **EloSync-Backend:** Ask EloSync tool `search_workspace` fans out across entitled Wave A+B+C modules (leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products, documents, knowledge-base, activities, meetings) with per-module view gates. Catalog **ai 1.2.0 → 1.3.0**. Pest coverage for gating, filters, limits, resilience, and tenant isolation.
+- **EloSync-Frontend / Mobile:** Citation deep links for Wave A+B+C record paths; **Search workspace** starter chip (`ai` + `ai.use`).
+- **EloSync-Docs:** AI tools / API / user guide / deployment / roadmap updated for workspace search.
+
 ## Phased Depth Program — merged to main (2026-08-31)
 
 - **Five repos** (`feature/phased-depth-program` → `main`): Backend [#165](https://github.com/DiligentCreators/EloSync-Backend/pull/165), Frontend [#159](https://github.com/DiligentCreators/EloSync-Frontend/pull/159), Docs [#234](https://github.com/DiligentCreators/EloSync-Docs/pull/234), Mobile [#51](https://github.com/DiligentCreators/EloSync-Mobile/pull/51), Website [#42](https://github.com/DiligentCreators/EloSync-Website/pull/42).

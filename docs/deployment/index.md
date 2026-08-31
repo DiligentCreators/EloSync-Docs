@@ -32,7 +32,8 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Tenant Audit & Impersonation History](./tenant-audit-impersonation-production-readiness) | Central Impersonation history + Audit Logs tabs — Go |
 | [Newest-first notes & activity](./newest-first-notes-activity-production-readiness) | Module show notes/activities DESC — Go |
 | [Dedicated record pages UX](./dedicated-record-pages-production-readiness) | List + create/view/edit pages — **Go** |
-| [AI Assistant Production Readiness](./ai-production-readiness) | AI module + credits BYOK — **Conditional Go** |
+| [AI Assistant Production Readiness](./ai-production-readiness) | AI module + credits BYOK — **Go** (platform) |
+| [AI Workspace Search Production Readiness](./ai-workspace-search-production-readiness) | `search_workspace` / ai **1.3.0** — **Go** (merge + migrate) |
 | [Phase 7 HR Security Audit](./hr-phase7-security-audit) | HR findings, remediations, residual risk |
 | [Go-Live Hardening](./go-live-hardening-2026-07-15) | Hardening delivery notes |
 

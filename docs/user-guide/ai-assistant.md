@@ -14,11 +14,11 @@ Without the module, AI menu items and API routes are hidden.
 
 ### Business chat
 
-Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
+Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Use **Search workspace** (or ask to find a record by name/number) to search across entitled modules in one step. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
 
 Off-topic requests (for example logo design, recipes, or external tool recommendations) are declined — EloSync only answers using workspace data and entitled modules.
 
-On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission. Citations link only to same-app record paths for modules you are entitled to (for example **INV-00006** → `/invoices/6`).
+On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission (**Search workspace** requires the AI module + `ai.use`). Citations link only to same-app record paths for modules you are entitled to (for example invoices, contacts, help desk, vendors, employees, products, documents, knowledge base, activities, meetings, and other entitled modules).
 
 Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
 
@@ -47,7 +47,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 
 ## Tips
 
-- Be specific — mention time ranges (“due today”, “stale 14 days”) for sharper tool use.
+- Be specific — mention time ranges (“due today”, “stale 14 days”) for sharper tool use. For “find X”, ask EloSync to search the workspace.
 - Confirm write suggestions promptly; pending actions expire after 24 hours.
 - Lead Copilot only accesses leads you can already open in the CRM.
 
