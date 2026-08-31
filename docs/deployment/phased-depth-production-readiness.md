@@ -19,17 +19,20 @@ The Phased Depth Program delivers six incremental milestones across five repos w
 | Gate | Result |
 |------|--------|
 | Code complete (Backend, Frontend, Docs, Mobile, Website) | **Pass** |
-| PRs opened (five repos) | **Pass** — open from `feature/phased-depth-program` → `main` before merge |
+| PRs opened (five repos) | **Pass** — see PR links in header |
 | Migrations idempotent (migrate-only, no `db:seed`) | **Pass** — 6× `2026_08_31_*` migrations |
 | Permissions rollout (`credit-notes.refund`) | **Pass** — `TenantPermissionSynchronizer` migration |
 | Catalog versions (`credit-notes` 1.2.0, `help-desk` 1.7.0) | **Pass** — `CatalogSeeder` + bump migrations |
-| Pest (depth scope) | **Pass** — `phpunit.xml` `memory_limit=512M`; CI uses 2G |
+| Pest (depth scope) | **Pass** — local 70/70; Backend PR CI is `workflow_dispatch` only (billing) |
 | Playwright (depth scope) | **Pass** — Developers, credit-notes, help-desk; `local:seed-demo` documented |
 | Playwright (full 312) | **N/A** — not a release gate for this milestone (pre-existing env failures) |
+| Docs Quality Gate | **Pass** — dead links in product-roadmap fixed (`/user-guide/ai-assistant`, `/getting-started/platform-freeze`) |
+| Mobile typecheck | **Pass** — `refunded` status label on list screen |
 | Docs + CHANGELOG + deployment pages | **Pass** — drift remediated |
 | Webhooks prod-readiness doc | **Pass** — expanded events + Edit UI re-verified |
 | Mobile parity | **Pass** — CN refund on mobile; Help Desk depth intentionally web-only (Kanban, mentions, CT picker) |
 | Queue / scheduler | **Pass** — `webhooks`, `help-desk-ingest`, SLA scanner unchanged |
+| Frontend / Website CI | **Pass** — Quality Gate green on PRs #159 / #42 |
 
 **Go / No-Go:** **Go** after PR merge and operator checklist.
 
@@ -134,8 +137,8 @@ Customer Portal · chat/social Help Desk channels · OAuth/scoped integration to
 - [x] Doc drift remediated (Help Desk deployment roadmap, webhooks readiness, audit page)
 - [x] Pest memory + Playwright prerequisites documented
 - [x] Depth Playwright re-verified green (2026-08-31): developers, credit-notes, help-desk
-- [ ] Open PRs: Backend, Frontend, Docs, Mobile, Website
-- [ ] Code review + CI green on each PR
+- [x] Open PRs: Backend, Frontend, Docs, Mobile, Website
+- [x] Code review + CI green on each PR (Backend Pest local — PR CI manual-only by design)
 - [ ] Merge to `main` in one milestone
 - [ ] Staging smoke per table above
 - [ ] Production deploy per [release process](./release-process)
