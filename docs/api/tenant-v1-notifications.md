@@ -100,7 +100,7 @@ Meeting lifecycle types: `meeting.invite`, `meeting.updated`, `meeting.cancelled
 
 ## FCM device tokens
 
-Native FCM HTTP v1 device tokens for the authenticated tenant user (sole wake-device path). Duplicate `token` values upsert (including reclaiming a token from another user). Delivery requires configured `FCM_*` API credentials; when unconfigured the channel skips without failing the notification job. The SPA registers a token only when complete `VITE_FIREBASE_*` web config is present. Opt-in is remembered per browser device across logout; logout deletes the token and the next login re-registers silently.
+Native FCM HTTP v1 device tokens for the authenticated tenant user (sole wake-device path). Duplicate `token` values upsert (including reclaiming a token from another user). Delivery requires configured `FCM_*` API credentials; when unconfigured the channel skips without failing the notification job. The SPA registers a web token only when complete `VITE_FIREBASE_*` config is present. EloSync-Mobile registers `android` / `ios` tokens via `expo-notifications` after Profile opt-in (requires Firebase native apps + EAS rebuild). Opt-in is remembered per device across logout; logout deletes the token and the next login re-registers silently.
 
 ### GET `/fcm-device-tokens/config`
 

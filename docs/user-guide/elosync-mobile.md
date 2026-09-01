@@ -11,6 +11,15 @@ Tenant workspace app for **iOS** and **Android**. Sign in with the same email an
 
 Forgot password requires your **workspace** slug or domain plus email (the mobile app is not tied to a workspace subdomain URL like the browser).
 
+## Push notifications
+
+1. Open **Profile**.
+2. Turn on **Push notifications** and allow the system permission when prompted.
+3. Keep the app closed or in the background — assignment and mention alerts can wake the device via FCM (same backend path as desktop push).
+4. Tap an OS notification (or a row in the in-app Notifications list) to open the related record when the module is available on mobile.
+
+Opt-in is remembered on the device across sign-out; the next sign-in re-registers quietly. Push requires a native build with Firebase Android/iOS configured — until then Profile explains that push is not ready on this build.
+
 ## What's on mobile today
 
 Mobile modules roll out **PR-by-PR**. The app home screen lists modules your role can access.

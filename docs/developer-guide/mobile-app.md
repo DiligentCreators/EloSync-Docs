@@ -50,6 +50,21 @@ Open the **EloSync** dev build and scan the Metro QR code.
 
 Rebuild when changing native modules, `app.json` plugins, or EAS native settings.
 
+### Push notifications (FCM)
+
+Mobile OS push reuses the tenant **`/fcm-device-tokens`** API and `FcmChannel` (same as web). The app uses `expo-notifications` + `getDevicePushTokenAsync()` and registers `platform: android|ios`.
+
+**Required after this feature lands:** a new EAS development/preview/production build (native plugin change). Metro alone is not enough.
+
+**Firebase ops (before production smoke):**
+
+1. Add Android + iOS apps to the same Firebase project used for web FCM.
+2. Upload the APNs auth key to Firebase Cloud Messaging (iOS).
+3. Provide `google-services.json` / `GoogleService-Info.plist` to EAS (do not commit secrets).
+4. Smoke: Profile enable → `fcm_device_tokens` row → kill app → assign → OS toast → tap opens record.
+
+Until Firebase native apps are configured, Profile shows that push is unsupported / soft-fails enable without breaking login. API `FCM_*` credentials already power delivery once tokens exist.
+
 ### EAS profiles
 
 | Profile | Purpose |

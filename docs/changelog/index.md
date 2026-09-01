@@ -1,5 +1,11 @@
 # Changelog
 
+## Mobile OS push via FCM (2026-09-01)
+
+- **EloSync-Backend:** `HttpFcmClient` sends platform-aware FCM HTTP v1 messages — web keeps data + `webpush`; `android` / `ios` tokens get `notification` (+ `android.priority` / `apns`) while still carrying `data.payload` for deep links. Pest covers web/android/ios shapes.
+- **EloSync-Mobile:** Profile **Push notifications** toggle registers native device tokens on `/fcm-device-tokens` (`expo-notifications`); login/bootstrap sync + logout unregister (opt-in retained). Tap-to-open + inbox row navigation via route resolver. Graceful degrade until Firebase Android/iOS apps + EAS rebuild.
+- **EloSync-Docs:** User/developer/deployment notification guides updated for native FCM tokens.
+
 ## AI workspace search — remediations + Eng Ready (2026-08-31)
 
 - **EloSync-Backend:** Wave C providers (documents, knowledge-base, activities, meetings); per-provider try/catch (`modules_failed`); prompt citation paths expanded. Pest **18/18** (Wave C + provider isolation).
