@@ -15,6 +15,7 @@ Open **Tasks** from the sidebar. The default view is the **Board** (columns by s
 - Filter by status, priority, assignee, **tag**, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show **tags** and the **latest note**; hover a truncated preview to read the full note
+- With **update** permission, click tag badges (or **Add tags** when empty) on a list row or board card to add or remove tags inline — changes save immediately (create new tags in the popover when you have **create**)
 - Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted task from the row menu
 - **Delete permanently** (force delete) requires `tasks.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)
 
@@ -38,7 +39,7 @@ Status labels in the UI:
 
 Edit from the row menu or the record page. Dragging a card on the board auto-saves the new status (no drawer).
 
-Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The record page shows tag badges — change assignments from Edit.
+Tags are a **Tasks-only** catalog (separate from Leads / ToDos / Opportunities). In this release you can **create and assign** tags inline from the list, board, create/edit form, or record page. There is no Manage Tags screen to rename or delete them.
 
 The project link is **soft** — it only appears when Projects is enabled, and you can only pick projects you are allowed to see (assignee, member, creator, or with `projects.assign`).
 

@@ -19,6 +19,7 @@ Open **Leads** from the sidebar. The default view is the **Kanban board** (colum
 - Filter by stage, status, priority, tag, assignee, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
 - Table and board both show **lead type**, **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
+- With **update** permission, click tag badges (or **Add tags** when empty) on a table row or board card to open an inline tag picker — no need to open the lead record. Applying **Follow Up Later** still requires a follow-up due date in the popover before **Save tags**
 - **Manage tags** (requires update) opens the workspace tag catalog — create, edit, reorder, delete. Seeded tags include Direct Lead / Company Lead (synced from lead type), Not Contacted (default), Contacted, No Response (auto follow-up after N days), Invalid Number, Not Interested, Not Applied, and Follow Up Later (forces a follow-up when applied)
 - Users with **restore** (workspace **admin** by default, plus owner) can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted lead from the row menu
 - **Delete permanently** (force delete) requires `leads.force.delete` — granted to the workspace **owner** by default (or any role you assign it to)

@@ -1,5 +1,11 @@
 # Changelog
 
+## Inline tag editing — Leads & Tasks (2026-09-01)
+
+- **EloSync-Frontend:** Leads and Tasks list/board views support ClickUp-style inline tag editing — click tag badges (or **Add tags**) to open a popover without opening the record. Tasks auto-save on toggle (including inline tag create when permitted). Leads use **Save tags** in the popover; **Follow Up Later** still requires a follow-up due date. Playwright: `leads.inline-tags`, `tasks.inline-tags`.
+- **EloSync-Backend:** Catalog **leads 1.3.1 → 1.3.2**, **tasks 1.2.0 → 1.2.1** (UI-only; existing `PUT …/tags` endpoints unchanged).
+- **EloSync-Docs:** Leads/Tasks user guides + tenant API notes updated.
+
 ## Mobile OS push via FCM (2026-09-01)
 
 - **EloSync-Backend:** `HttpFcmClient` sends platform-aware FCM HTTP v1 messages — web keeps data + `webpush`; `android` / `ios` tokens get `notification` (+ `android.priority` / `apns`) while still carrying `data.payload` for deep links. Pest covers web/android/ios shapes.
