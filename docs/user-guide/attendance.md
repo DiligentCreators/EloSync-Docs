@@ -18,9 +18,9 @@ Attendance uses the same workspace **Timezone** as Daily Reminder Time, meetings
 
 ## Self-service check-in / check-out
 
-Linked employees with Attendance create/update permission:
+Linked employees with Attendance installed and **Show check-in / check-out** enabled do **not** need Attendance create/update permissions for self-service punch in/out (top header or Attendance list). Manager actions still require the usual `attendance.*` permissions.
 
-1. Open **Attendance** (you only see **your** records).
+1. Open **Attendance** (you only see **your** records when you have view permission; self check-in/out also works from the **top header** when linked as an employee).
 2. Press **Check in** next to search (login alone does **not** start the timer unless auto check-in is enabled).
 3. Choose **On-site** or **Remote**. If you are late for that mode, pick a reason (and type a note if **Other**).
 4. A live **HH:MM** timer starts from your saved check-in time. Closing the tab or logging out does not reset it — when you return, the timer shows the real elapsed time. The same timer (and **Check in** / **Check out**) also appears in the **top header** next to the light/dark theme control whenever you are linked as an employee.

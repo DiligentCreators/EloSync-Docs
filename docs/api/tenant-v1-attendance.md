@@ -18,9 +18,9 @@ Same filters as list (minus pagination/sort). Payload:
 
 | Method | Path | Permission |
 |--------|------|------------|
-| GET | `/attendance-records/today` | `attendance.view` |
-| POST | `/attendance-records/check-in` | `attendance.create` |
-| POST | `/attendance-records/check-out` | `attendance.update` |
+| GET | `/attendance-records/today` | Linked active employee + self-check enabled, **or** `attendance.view` |
+| POST | `/attendance-records/check-in` | Linked active employee + self-check enabled (no `attendance.create`) |
+| POST | `/attendance-records/check-out` | Linked active employee + self-check enabled (no `attendance.update`) |
 
 ### GET `/attendance-records/today`
 

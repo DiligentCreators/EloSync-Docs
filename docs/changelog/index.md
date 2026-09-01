@@ -1,5 +1,11 @@
 # Changelog
 
+## Attendance self check-in/out without RBAC (2026-09-01)
+
+- **EloSync-Backend:** Self check-in, check-out, and today timer no longer require `attendance.create` / `attendance.update` — only a linked active employee, Attendance module entitlement, and **Show check-in / check-out** enabled. Reason list readable for self-service pickers. Catalog **attendance 1.2.0 → 1.2.1**.
+- **EloSync-Frontend:** Top header and Attendance list self-service buttons gate on employee link + self-check setting (not create/update permissions).
+- **EloSync-Docs:** API + user/developer attendance guides updated.
+
 ## Inline tag editing — Leads & Tasks (2026-09-01)
 
 - **EloSync-Frontend:** Leads and Tasks list/board views support ClickUp-style inline tag editing — click tag badges (or **Add tags**) to open a popover without opening the record. Tasks auto-save on toggle (including inline tag create when permitted). Leads use **Save tags** in the popover; **Follow Up Later** still requires a follow-up due date. Playwright: `leads.inline-tags`, `tasks.inline-tags`.
