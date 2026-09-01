@@ -252,7 +252,9 @@ Closed/background push uses **FCM only** via `FcmChannel` and `PlatformNotificat
 | Queue worker consumes `emails,default` and is supervised | Notification jobs (database, broadcast, **fcm**) run on the `emails` queue |
 | SPA Forge `config.js` includes complete `VITE_FIREBASE_*` set (including Web Push certificate key) | Partial config is treated as unconfigured; enable UI stays unsupported |
 | SPA is HTTPS (or localhost) and `/sw.js` is reachable at site root | Service workers require a secure context and `/` scope |
+| Mobile: Firebase Android/iOS apps + APNs key; EAS rebuild after `expo-notifications` | Native tokens need Firebase app config; Profile degrades until then |
 | Smoke: enable desktop notifications → `fcm_device_tokens` row → assign with SPA closed → OS notification deep-links | End-to-end proof that FCM + SW click navigation work |
+| Smoke: mobile Profile enable → `platform` android/ios row → kill app → assign → OS toast → tap | End-to-end proof that native FCM delivery works |
 | Smoke: logout → no push while logged out → login → no enable dialog → push works again | Once-per-device opt-in persistence |
 
 After a successful send, `last_used_at` is updated. Unregistered tokens are deleted automatically so the next login can re-register.

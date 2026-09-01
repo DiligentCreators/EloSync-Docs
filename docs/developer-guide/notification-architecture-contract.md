@@ -281,6 +281,8 @@ FCM HTTP v1 is the closed/background delivery path for existing notification typ
 - Expired / `UNREGISTERED` tokens are deleted automatically.
 - SPA registers only when complete `VITE_FIREBASE_*` config is present (including Firebase Web Push certificate key).
 - Service worker unwraps FCM data envelopes (`payload` JSON) into the shared platform push shape.
+- **Native (EloSync-Mobile):** same `POST/DELETE /fcm-device-tokens` with `platform: android|ios`. `HttpFcmClient` adds FCM `notification` (+ Android HIGH priority / APNs sound) for native tokens; web remains data + `webpush`. Profile toggle + once-per-device opt-in mirror web; tap uses `data.payload` / route descriptor → expo-router.
+- Manual mobile smoke: enable → token row → background/kill → assign → OS toast → deep link.
 
 ## REST API (additive surface)
 
@@ -337,4 +339,4 @@ FCM device tokens (authenticated tenant user; self-scoped):
 
 ## Out of scope (v1 / Phase 4b)
 
-Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), **APNs / OneSignal channel implementation**, custom notifications table, NotificationRepository, AppLayout redesign.
+Per-user channel preferences (workspace-level email toggles ship via Settings → Notifications / `email_notifications`), in-app `delivery: scheduled` digests (task due mail digests ship separately), **separate APNs / OneSignal Laravel channels** (native iOS/Android wake uses FCM HTTP v1 device tokens instead), custom notifications table, NotificationRepository, AppLayout redesign.
