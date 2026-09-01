@@ -13,7 +13,7 @@ Enums: `AttendanceStatusEnum`, `AttendanceWorkModeEnum`, `AttendanceReasonKindEn
 
 Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn`). `AttendanceReasonService` ensures Other defaults.
 
-**Ownership:** Staff may only act on their linked active employee. Prefer `POST .../check-in` and `.../check-out` for self-service (late classification + reasons). Admin/manager via `AttendanceRecordPolicy::canManageOthers`.
+**Ownership:** Staff may only act on their linked active employee. Self check-in/out (`POST .../check-in`, `.../check-out`, `GET .../today`) requires a linked active employee and `attendance_self_check_enabled` — not `attendance.create` / `attendance.update`. Admin/manager CRUD uses `AttendanceRecordPolicy::canManageOthers` plus `attendance.*` permissions.
 
 Tenant settings (`attendance` group): office hours, `attendance_self_check_enabled`, `attendance_auto_check_in_on_login` (default **false**), `attendance_require_late_reason`, `remote_office_start_time`, `remote_grace_minutes`, `work_week_days`. Workspace timezone drives “today” and late thresholds. Auto-login check-in is skipped when the user would be late and late reasons are required.
 
