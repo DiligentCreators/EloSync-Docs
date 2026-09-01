@@ -36,7 +36,7 @@ Body: `{ "ordered_ids": number[] }`. Requires `leads.update`.
 
 ### PUT `/leads/{lead}/tags`
 
-Sync tags on a lead. Body: `{ "tag_ids": number[], "follow_up"?: { title, due_at, notes?, assigned_to? } }`. Requires `leads.update`. Newly added `force_follow_up` tags require `follow_up`. Newly added `auto_follow_up` tags create a pending follow-up due in `auto_follow_up_days` (workspace timezone) unless one already exists for that lead+tag (`lead_follow_ups.lead_tag_id`). Applying tags never changes stage or status.
+Sync tags on a lead. Body: `{ "tag_ids": number[], "follow_up"?: { title, due_at, notes?, assigned_to? } }`. Requires `leads.update`. Newly added `force_follow_up` tags require `follow_up`. Newly added `auto_follow_up` tags create a pending follow-up due in `auto_follow_up_days` (workspace timezone) unless one already exists for that lead+tag (`lead_follow_ups.lead_tag_id`). Applying tags never changes stage or status. The SPA list/board inline tag popover uses this endpoint (explicit **Save tags** when force-follow-up tags are newly applied).
 
 ## Stats & board
 

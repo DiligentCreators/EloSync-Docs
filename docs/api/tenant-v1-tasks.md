@@ -18,7 +18,7 @@ List workspace task tags (`name`, `slug`, `color`, `sort_order`). Permission: `t
 
 Create a tag. Body: `name` (required), optional `slug`, `color`, `sort_order`. Permission: `tasks.create`.
 
-MVP catalogs are **create-only** (no update/delete/reorder tag endpoints). Assign tags on the task via `tag_ids` or `PUT /tasks/{id}/tags`; detail UI shows badges and uses the edit dialog to change assignments.
+MVP catalogs are **create-only** (no update/delete/reorder tag endpoints). Assign tags on the task via `tag_ids`, `PUT /tasks/{id}/tags`, or the SPA list/board inline tag popover (auto-save on toggle).
 
 ## Stats & board
 
