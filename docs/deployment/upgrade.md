@@ -17,6 +17,19 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## User security settings (2FA, passkeys, sessions)
+
+Deploy Backend + Frontend + Docs together. Run migrations **before** serving the SPA build that includes Profile → Security and the login TOTP step.
+
+| Migration | Purpose |
+|-----------|---------|
+| `2026_09_01_230027_add_session_metadata_to_personal_access_tokens_table` | Session list metadata on Sanctum tokens |
+| `2026_09_01_231207_create_passkeys_table` | WebAuthn passkeys |
+| `2026_09_01_231209_add_two_factor_columns_to_users_table` | TOTP columns (tenant users) |
+| `2026_09_01_231400_add_two_factor_columns_to_central_users_table` | TOTP columns (central users) |
+
+Set `PASSKEYS_RELYING_PARTY_ID` and `PASSKEYS_ALLOWED_ORIGINS` before enabling passkeys in production. See [User security settings production readiness](/deployment/user-security-settings-production-readiness).
+
 ## What migrate does for modules & RBAC
 
 | Change type | Mechanism | Safe for existing data? |

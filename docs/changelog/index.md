@@ -4,7 +4,7 @@
 
 - **EloSync-Backend:** Per-user Security APIs on tenant + Central guards — browser session list/revoke (`SessionTokenService`), Fortify TOTP enable/confirm/disable + login challenge, `laravel/passkeys` registration/login with polymorphic `passkeyable`. Password change revokes other sessions by default. Pest: `tests/Feature/Auth/*`.
 - **EloSync-Frontend:** Profile **Security** tab (password, 2FA, passkeys, sessions); login two-step TOTP challenge + **Sign in with passkey** (`@laravel/passkeys` + `@simplewebauthn/browser`). Playwright: profile security tab coverage.
-- **EloSync-Docs:** User + developer authentication guides updated for security settings and passkey deployment notes.
+- **EloSync-Docs:** User + developer authentication guides, API reference, deployment/upgrade notes, and [production readiness checklist](/deployment/user-security-settings-production-readiness).
 
 ## Attendance self check-in/out without RBAC (2026-09-01)
 
