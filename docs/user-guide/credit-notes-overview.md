@@ -19,7 +19,7 @@ Tenant customer-billing module on the frozen platform — the third Phase 3 (Bil
 
 ## Capabilities
 
-- Credit note fields: title, required invoice link, optional contact/company link (defaults to the invoice's own contact/company), currency (defaults to the invoice's currency), issue date, notes
+- Credit note fields: title, required invoice link, optional contact/company link (defaults to the invoice's own contact/company; gated **New** when entitled + create), currency (defaults to the invoice's currency), issue date, notes
 - Auto-numbered (`CN-00001`; prefix backed by the `credit_notes_number_prefix` tenant setting, default `CN-` — editable under **Settings → General → Document number prefixes**)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side, same pattern as Invoices
 - Status workflow: `draft → issued → applied → refunded`, with `void` available from `draft` or `issued` only (`POST /credit-notes/{id}/issue`, `.../apply`, `.../refund`, `.../void`) — **applying** adds the total to the invoice's `amount_credited`; **refunding** reverses that credit

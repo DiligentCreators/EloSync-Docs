@@ -21,7 +21,7 @@ Open **Credit Notes** from the sidebar (**Billing**, after Payments). Search by 
 2. Pick the **invoice** to credit — the invoice's total and balance due are shown for reference; currency follows the selected invoice
 3. Enter a title, issue date, and notes
 4. Add line items (description, quantity, unit price, tax rate) — subtotal, tax, and total are calculated automatically
-5. Optionally link a contact or company (when Contacts/Companies is installed) — defaults to the invoice's own contact/company if left blank
+5. Optionally link a contact or company (when Contacts/Companies is installed — **New** creates and selects inline when you have create permission) — defaults to the invoice's own contact/company if left blank
 6. Optionally set an assignee (requires **assign**)
 7. Save
 

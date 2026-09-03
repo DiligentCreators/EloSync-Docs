@@ -22,7 +22,7 @@ Sales deals module on the frozen platform. Mirrors the [Leads](/user-guide/leads
 - **Colored tags** — per-workspace Opportunities catalog; create/assign inline; filter by `tag_id`
 - **Kanban board (default)** + table view; drag-and-drop auto-saves stage via `POST /opportunities/{id}/stage`
 - KPIs via `GET /opportunities/stats`; board via `GET /opportunities/board`
-- Soft optional links: Contact / Company / Lead (FK rejected when that module is not installed)
+- Soft optional links: Contact / Company / Lead (FK rejected when that module is not installed; gated **New** inline create when entitled + create permission)
 - Lead convert can optionally create an Opportunity (when Opportunities + create permission are present)
 - Assignment with assignee scoping via `opportunities.assign`
 - Notes + domain activity timeline

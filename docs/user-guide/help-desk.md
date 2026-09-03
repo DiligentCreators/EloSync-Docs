@@ -31,7 +31,7 @@ When Help Desk is installed and you have `help-desk.view`, the dashboard may sho
 2. Enter a subject and optional description
 3. Choose category (from your workspace list) and priority
 4. Optionally set a due date (interpreted in your workspace timezone)
-5. If **Contacts** or **Companies** are installed, optionally link a contact and/or company
+5. If **Contacts** or **Companies** are installed, optionally link a contact and/or company — use **New** beside a picker to create and select inline when you have create permission
 6. If **Knowledge Base** is installed, optionally link one or more articles (published articles for view-only users; editors with `knowledge-base.update` can also link drafts)
 7. Optionally set an assignee (requires **assign**); otherwise the ticket defaults to you
 8. Save

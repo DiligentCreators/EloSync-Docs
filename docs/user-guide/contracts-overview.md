@@ -17,7 +17,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 ## Capabilities
 
-- Contract fields: opportunity (required), optional quotation link, title, party name, start date (required), optional end date, value, currency, rich-text description and notes
+- Contract fields: opportunity (required; gated **New** when `opportunities.create`), optional quotation link, title, party name, start date (required), optional end date, value, currency, rich-text description and notes
 - Status workflow: `draft → active → expired | terminated` (`POST /contracts/{id}/status`)
 - **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check). Confirming in the UI acknowledges repeat billing (`acknowledge_repeat_billing`); the API requires that flag for the second and later invoices from the same contract.
 - Assignment with assignee scoping via `contracts.assign`

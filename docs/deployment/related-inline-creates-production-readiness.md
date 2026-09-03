@@ -2,7 +2,7 @@
 
 | Field | Value |
 |-------|--------|
-| **Date** | 2026-09-03 |
+| **Date** | 2026-09-04 |
 | **Status** | **Go for production** after PR merge + migrate-first deploy + staging smoke |
 | **Scope** | Platform-wide gated **New** dialogs on related FK pickers (Contact, Company, Opportunity, Lead, Vendor); URL query prefills preserved; catalog MINOR bumps |
 | **Branch** | `feature/related-inline-creates` (Frontend, Backend, Docs) |
@@ -20,7 +20,7 @@ Create/edit forms that pick records from another module now offer a **New** cont
 
 Platform freeze is intact: no AppLayout, auth, tenancy, RBAC, or billing redesign. Creates use existing tenant `*Service.create` endpoints; backend authz/policies are unchanged.
 
-**Go / No-Go:** **Go** — engineering verified on the feature branch (Playwright related-creates **9/9**, invoices workflow **5/5**). Operator next: merge companion PRs, migrate catalog bumps, deploy Backend → Frontend → Docs, staging smoke.
+**Go / No-Go:** **Go** — audit residuals **B1/B2/M1/I2** remediated; Mobile remains out of scope. Operator next: merge companion PRs, migrate catalog bumps, deploy Backend → Frontend → Docs, staging smoke.
 
 | Gate | Result |
 |------|--------|
@@ -31,7 +31,7 @@ Platform freeze is intact: no AppLayout, auth, tenancy, RBAC, or billing redesig
 | Prefetch missing picker options for deep-link ids | **Pass** |
 | Catalog MINOR bumps via idempotent migration | **Pass** |
 | Platform freeze | **Pass** |
-| Playwright related-creates + invoices workflow | **Pass** (14/14 this session) |
+| Playwright related-creates + invoices workflow + authz | **Pass** (related-creates suite including authz) |
 | Mobile SPA parity | **Out of scope** (tenant web only) |
 | Dedicated Pest | **N/A** (no new backend endpoints) |
 
@@ -52,13 +52,14 @@ Platform freeze is intact: no AppLayout, auth, tenancy, RBAC, or billing redesig
 | ID | Severity | Item | Disposition |
 |----|----------|------|-------------|
 | **B1** | High | URL prefill cleared when currency settings hydrate `reset()` | **Remediated** — reset keeps query params; prefill waits for module gates; merge prefetched contact/company into picker options |
-| **B2** | Medium | Dialog submit raced empty controlled Name (Create stayed disabled) | **Remediated** — e2e helper asserts Name value + enabled submit |
-| **M1** | Medium | User-guide create steps only detailed for invoices / quotations / POs | **Accepted residual** — overviews bumped; detailed create copy can follow without blocking ship |
+| **B2** | Medium | Dialog submit raced empty controlled Name (Create stayed disabled) | **Remediated** — shared Create*Dialogs reset fields on close (not open); e2e helper still asserts Name + enabled submit |
+| **B3** | High | Dialog **Create** also submitted the parent create form (invoice/quotation/etc.) via React portal event bubbling | **Remediated** — all shared Create*Dialog `onSubmit` call `stopPropagation` |
+| **M1** | Medium | User-guide create steps only detailed for invoices / quotations / POs | **Remediated** — create steps updated for estimates, contracts, payments, credit notes, opportunities, projects, activities, help desk, documents, expenses, assets (plus existing invoices / quotations / POs / contacts) |
 | **I1** | Info | Shared-demo “module not installed” negative e2e invalid | **Removed** — modules accumulate on demo tenant; Pest/module middleware remain source of truth |
-| **I2** | Info | `*.create` permission-only negative e2e not covered | **Accepted** — UI gates mirror Contacts pattern; API rejects unauthorized create |
+| **I2** | Info | `*.create` permission-only negative e2e not covered | **Remediated** — Playwright `related-creates.authz` asserts Company/Contact pickers without **New** when `companies.create` / `contacts.create` are denied |
 | **I3** | Info | EloSync-Mobile not updated | **Out of scope** for this web UX |
 
-No High or Medium **open** residuals for ship.
+No High, Medium, or Info **open** residuals for ship (Mobile remains out of scope).
 
 ---
 
@@ -73,7 +74,7 @@ No High or Medium **open** residuals for ship.
 - Shared: `CreateCompanyDialog`, `CreateContactDialog`, `CreateVendorDialog`, `CreateOpportunityDialog`, `CreateLeadDialog`, `RelatedEntityPicker`.
 - Forms: contact, opportunity, quotation, contract, estimate, invoice, payment, credit note, project, activity, help desk, documents, purchase order, expense, asset.
 - Prefill: `withPrefillOption` + create-mode reset preserves `?contact=` / `?company=`.
-- Playwright: `related-creates/related-inline-creates` (shared session), module `*.related-creates`, contacts regression.
+- Playwright: `related-creates/related-inline-creates` (shared session), `related-creates.authz` (create permission gate), module `*.related-creates`, contacts regression.
 
 ### Docs
 
@@ -103,6 +104,7 @@ No `db:seed` in production. Catalog bumps do **not** auto-install modules for wo
 3. Vendors + Purchase Orders: **New PO** → empty submit shows “Vendor is required” → **New** vendor → Create succeeds.
 4. Without Companies entitled (fresh workspace or uninstall if available): invoice form has no Company picker / **New**.
 5. Contact view **New quotation** deep link still prefills Contact combobox after SPA load.
+6. Role with `companies.view` / `contacts.view` but **without** create: invoice form shows Company/Contact pickers and **no** **New** buttons.
 
 ---
 

@@ -20,7 +20,7 @@ Open **Assets** from the sidebar (Operations area).
 ## Create & edit
 
 1. Click **New asset** (shortcut: `n` when the list is focused and you have create permission)
-2. Enter name (required). Optionally set status, category, manufacturer, model, serial number, location, purchase details, warranty end, assignee, and — when those modules are installed — vendor or employee custodian
+2. Enter name (required). Optionally set status, category, manufacturer, model, serial number, location, purchase details, warranty end, assignee, and — when those modules are installed — vendor or employee custodian. When Vendors is installed, use **New** beside the vendor picker to create and select a vendor inline (`vendors.create`)
 3. Save — EloSync assigns the next asset number (`AST-00001`, …)
 
 Edit from the row menu or the asset page. Focus search with `Ctrl/⌘+F`.

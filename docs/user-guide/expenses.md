@@ -20,7 +20,7 @@ Use **Manage categories** (visible with `expenses.create`, `expenses.update`, or
 1. Click **New expense**
 2. Enter a title, category (from your workspace list), amount, and optional tax amount
 3. Optionally set currency and an expense date
-4. If **Vendors** or **Purchase Orders** are installed on your workspace, optionally link a vendor and/or a purchase order
+4. If **Vendors** or **Purchase Orders** are installed on your workspace, optionally link a vendor and/or a purchase order — use **New** beside the vendor picker to create and select a vendor inline when you have `vendors.create`
 5. Optionally attach a **receipt** file (images or PDF, up to 5 MB) — counts toward your workspace [Storage](/user-guide/storage) quota
 6. Optionally set an assignee (requires **assign**)
 7. Save

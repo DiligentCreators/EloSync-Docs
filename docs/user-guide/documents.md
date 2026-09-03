@@ -26,8 +26,9 @@ Open **Documents** from the sidebar (Operations area).
 
 1. Click **New document** (shortcut: `n` when the list is focused and you have create permission)
 2. Enter a title (required). Optionally add a description and category
-3. Choose a file (required on create). Allowed types include common office docs, images, text/CSV, and archives; max **50 MB** per file
-4. Save — the file is stored on the workspace uploads disk under the tenant Documents directory
+3. Optionally link a **Contact**, **Company**, or **Lead** when those modules are installed — use **New** beside a picker to create and select inline when you have create permission
+4. Choose a file (required on create). Allowed types include common office docs, images, text/CSV, and archives; max **50 MB** per file
+5. Save — the file is stored on the workspace uploads disk under the tenant Documents directory
 
 Focus search with `Ctrl/⌘+F`.
 

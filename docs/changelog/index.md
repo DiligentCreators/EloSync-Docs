@@ -2,9 +2,9 @@
 
 ## Platform-wide related inline creates (2026-09-03)
 
-- **EloSync-Frontend:** Cross-module create/edit forms offer a gated **New** beside related pickers (Contact, Company, Opportunity, Lead, Vendor). Dialogs create the record and auto-select it without leaving the page. **New** appears only when the related module is entitled and the user has `*.create`. Shared: `Create*Dialog` + `RelatedEntityPicker`. Playwright: `related-creates` shared session + `invoices` / `quotations` / `purchase-orders` / `contacts.related-creates`. URL `?contact=` / `?company=` prefills preserved across form reset.
+- **EloSync-Frontend:** Cross-module create/edit forms offer a gated **New** beside related pickers (Contact, Company, Opportunity, Lead, Vendor). Dialogs create the record and auto-select it without leaving the page. **New** appears only when the related module is entitled and the user has `*.create`. Shared: `Create*Dialog` + `RelatedEntityPicker` (dialogs reset on close to avoid open/fill races; dialog `onSubmit` uses `stopPropagation` so the parent form is not submitted). Playwright: `related-creates` shared session + authz (no create → no **New**) + `invoices` / `quotations` / `purchase-orders` / `contacts.related-creates`. URL `?contact=` / `?company=` prefills preserved across form reset.
 - **EloSync-Backend:** Catalog MINOR bumps — `invoices` **1.8.1 → 1.9.0**, `quotations` **1.6.0 → 1.7.0**, `estimates` **1.5.0 → 1.6.0**, `contracts` **1.2.1 → 1.3.0**, `payments` **1.2.0 → 1.3.0**, `credit-notes` **1.2.0 → 1.3.0**, `purchase-orders` **1.2.0 → 1.3.0**, `opportunities` **1.1.1 → 1.2.0**, `projects` **1.1.0 → 1.2.0**, `activities` **1.0.0 → 1.1.0**, `help-desk` **1.7.0 → 1.8.0**, `documents` **1.3.0 → 1.4.0**, `expenses` **1.3.0 → 1.4.0**, `assets` **1.0.0 → 1.1.0**.
-- **EloSync-Docs:** Module Development Guide related-create standard; user guides; [production readiness](/deployment/related-inline-creates-production-readiness) (**Go** after merge + migrate-first).
+- **EloSync-Docs:** Module Development Guide related-create standard; user-guide create steps for all wired modules; [production readiness](/deployment/related-inline-creates-production-readiness) (**Go** — audit residuals remediated).
 
 ## Contacts related creates (2026-09-03)
 
