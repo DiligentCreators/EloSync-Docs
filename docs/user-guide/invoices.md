@@ -18,7 +18,7 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 ## Create & edit
 
 1. Click **New invoice** (or open **New invoice** from a [Contact](/user-guide/contacts) record — contact/company are prefilled from the URL)
-2. Enter a title, optional contact/company link (when Contacts/Companies is installed — use **New** beside each picker to create and select without leaving the form), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
+2. Enter a title, optional contact/company link (when Contacts/Companies is installed — use **New** beside each picker to create and select without leaving the form), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline). New invoices prefill Terms & conditions from **Settings → Branding → Default terms & conditions** when that workspace setting is set.
 3. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts. The totals panel also shows **Paid**, **Credits**, and **Balance due** on existing invoices.
 4. Optionally set an assignee (requires **assign**)
 5. Save with **Create** (returns to the list) or **Create & View** (opens the record). Invoices also offer **Create & Send**.
@@ -69,6 +69,6 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 ## Related payments and credit notes
 
-If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice record page shows a **Related payments** link to jump to the Payments module and record or review payments against this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.
+If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice record page lists **posted payments** allocated to this invoice (payment number, date, method, allocated amount) with links to each payment. A **Related payments** card still opens the Payments list filtered to this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.
 
 Converted invoices also show the source **Quotation**, **Estimate**, and/or **Contract** when those links are set.

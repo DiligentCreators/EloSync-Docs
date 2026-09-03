@@ -48,7 +48,7 @@ Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and
 
 ### GET `/invoices/{id}`
 
-Includes contact, company, quotation, estimate, contract, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, quotation, estimate, contract, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, `payment_allocations` (when loaded: allocation `amount` + nested `customer_payment` `{id,uuid,number,status,method,reference,currency,paid_at}`), timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### GET `/invoices/{id}/pdf`
 

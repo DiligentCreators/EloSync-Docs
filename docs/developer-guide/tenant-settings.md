@@ -32,7 +32,7 @@ Attendance group keys (system defaults when unset): `office_start_time` (`09:00`
 
 `session_lifetime_minutes` is an integer under the `security` group (`0`–`43200`). `0` means never expire: public bootstrap exposes it, SPA idle logout is skipped, and `TenantAuthBootstrapService::issueAccessToken()` creates a Sanctum token with `expires_at = null`. When unset, resolution falls back to Central `session_lifetime_minutes`.
 
-Invoice PDF company/payment keys (`invoices` group, workspace-only — no Central fallback): `company_tagline`, `company_address`, `company_phone`, `company_website`, `invoice_payment_terms`, `invoice_bank_name`, `invoice_bank_account_name`, `invoice_bank_account_number`, `invoice_bank_iban`, `invoice_bank_swift`, `invoice_default_notes`. Edited in SPA **Settings → Branding** (with logo / `button_color` / `support_email`). `CustomerInvoicePdfService` embeds the tenant logo as a data URI (Dompdf remote URLs disabled) and includes these keys in the PDF cache fingerprint.
+Invoice PDF company/payment keys (`invoices` group, workspace-only — no Central fallback): `company_tagline`, `company_address`, `company_phone`, `company_website`, `invoice_payment_terms`, `invoice_bank_name`, `invoice_bank_account_name`, `invoice_bank_account_number`, `invoice_bank_iban`, `invoice_bank_swift`, `invoice_default_notes`, `invoice_default_terms_and_conditions`. Edited in SPA **Settings → Branding** (with logo / `button_color` / `support_email`). `CustomerInvoicePdfService` embeds the tenant logo as a data URI (Dompdf remote URLs disabled) and includes these keys in the PDF cache fingerprint. Empty document notes/terms fall back to `invoice_default_notes` / `invoice_default_terms_and_conditions` on invoice, quotation, and estimate PDFs. New invoices prefill terms from `invoice_default_terms_and_conditions`.
 
 `team-chat.retention_days` is an integer under the `team-chat` group (Team Chat module). Allowed product values: **30**, **90**, **365**, or **0** (forever). Default when unset is **0** (keep forever). The scheduled command `team-chat:purge-expired` permanently deletes messages older than the window when `days > 0`; attachments are removed with those messages. Resolve via `TenantSettingService::get('team-chat.retention_days', 0, $tenant)`.
 
@@ -86,7 +86,7 @@ Wall-clock settings (`H:i` strings such as Daily Reminder Time and office start/
 
 `usesCustomMailProvider()` is true when `mail_mode=custom`, or (legacy) when `mail_host` is filled and `mail_mode` is unset. Backfill with `php artisan email:migrate-tenant-mail-modes`.
 
-Queued mail re-applies config via `ApplyEmailRuntimeConfig` on the `emails` queue.
+Queued mail re-applies config via `ApplyEmailRuntimeConfig` on the `emails` queue (notifications via `QueuesOnEmails`; queued mailables such as `BillingDocumentEmail` register the same middleware).
 
 Secrets are encrypted with `Crypt` and masked as `********` in the admin API.
 

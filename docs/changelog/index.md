@@ -1,5 +1,11 @@
 # Changelog
 
+## Invoice payments on view, billing email delivery, default T&Cs (2026-09-04)
+
+- **EloSync-Backend:** `BillingDocumentEmail` registers `ApplyEmailRuntimeConfig` on the `emails` queue (same as notifications); `BillingDocumentMailer` applies provider config before queueing. Invoice show eager-loads `payment_allocations` with nested payment. New workspace setting `invoice_default_terms_and_conditions` — PDF fallback for invoices/quotations/estimates when document terms are empty. Catalog **invoices 1.9.0 → 1.9.1**.
+- **EloSync-Frontend:** Invoice record **Payments** section lists posted allocations; Settings → Branding default terms field; new invoices prefill terms from that setting.
+- **EloSync-Docs:** Multi-provider email (queued mailables), tenant settings, invoices user/developer guides, changelog.
+
 ## Platform-wide related inline creates (2026-09-03)
 
 - **EloSync-Frontend:** Cross-module create/edit forms offer a gated **New** beside related pickers (Contact, Company, Opportunity, Lead, Vendor). Dialogs create the record and auto-select it without leaving the page. **New** appears only when the related module is entitled and the user has `*.create`. Shared: `Create*Dialog` + `RelatedEntityPicker` (dialogs reset on close to avoid open/fill races; dialog `onSubmit` uses `stopPropagation` so the parent form is not submitted). Playwright: `related-creates` shared session + authz (no create → no **New**) + `invoices` / `quotations` / `purchase-orders` / `contacts.related-creates`. URL `?contact=` / `?company=` prefills preserved across form reset.
