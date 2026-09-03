@@ -38,6 +38,7 @@ Enforced by `App\Rules\PasswordRule` on registration, reset, and change-password
 - Tenant workspace resolution is hybrid: host/domain first, then token context, then an explicit Workspace value or `X-Tenant-Domain` header. This supports the shared `/login` today and future custom workspace domains without changing API paths.
 - Do not persist a tenant/workspace selection in `localStorage`; the SPA resolves it from the active host or the current login/request.
 - Login throttling (`auth-login`, 5/minute)
+- Password-gated security mutations (`auth-sensitive`, 10/minute per user): change-password, 2FA management, passkey register/delete
 - Forgot/reset throttling (`6,1`)
 - Soft-deleted and suspended users receive a generic credentials error
 - Email verification is enforced for protected Central and tenant application endpoints; the SPA `VerifyEmailGate` **Sign out** action clears the session and navigates to the context login route
@@ -68,6 +69,24 @@ The public application, invite preview/resend, and workspace registration endpoi
 
 API auth for the React apps is primarily Bearer token based; remember-me stores the token in `localStorage` vs `sessionStorage`.
 
+## Two-factor authentication and passkeys
+
+Fortify powers TOTP and passkey **Actions** only — Fortify **web routes are disabled** (`Fortify::ignoreRoutes()`). All product flows use the SPA + `/api/{central|tenant}/v1/me/*` and `/auth/*` JSON endpoints.
+
+| Variable | Purpose |
+|----------|---------|
+| `PASSKEYS_RELYING_PARTY_ID` | WebAuthn relying party ID (production SPA hostname, e.g. `app.example.com`) |
+| `PASSKEYS_ALLOWED_ORIGINS` | Comma-separated allowed SPA origins for WebAuthn ceremonies (include Branded custom domains) |
+| `PASSKEYS_USER_HANDLE_SECRET` | Optional stable secret for WebAuthn user handles (defaults to `APP_KEY`) |
+
+Requirements:
+
+- SPA served over **HTTPS** in production (WebAuthn secure context)
+- `FRONTEND_URL` and `APP_URL` must match deployed origins
+- When tenants use Branded custom domains, add each HTTPS SPA origin to `PASSKEYS_ALLOWED_ORIGINS`
+
+Production readiness checklist: [User security settings](/deployment/user-security-settings-production-readiness).
+
 ## Checklist
 
 - [ ] `FRONTEND_URL` points at the production SPA
@@ -78,5 +97,7 @@ API auth for the React apps is primarily Bearer token based; remember-me stores 
 - [ ] Password policy matches compliance requirements
 - [ ] Rate limiters confirmed under load
 - [ ] Central (`/central/login`) and tenant (`/login`, including Workspace entry) both verified
+- [ ] `PASSKEYS_RELYING_PARTY_ID` and `PASSKEYS_ALLOWED_ORIGINS` set for production SPA origins (including Branded domains)
+- [ ] TOTP login challenge and passkey register/login smoke-tested on staging HTTPS
 - [ ] Workspace host resolution verified for a platform subdomain and at least one custom-domain candidate
 - [ ] Central and tenant email-verification gates verified

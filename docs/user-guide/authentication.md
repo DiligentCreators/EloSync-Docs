@@ -43,6 +43,19 @@ Your browser does not save a workspace selection in local storage. Open the corr
 
 Use **Sign out** on the tenant dashboard. Your session token is revoked.
 
+### Security settings (Profile → Security)
+
+Open **Profile** (tenant `/profile` or Central `/{prefix}/profile`) and choose the **Security** tab:
+
+| Area | What you can do |
+|------|-----------------|
+| **Password** | Change password; optionally sign out all other devices |
+| **Two-factor authentication** | Enable TOTP with an authenticator app, confirm with a six-digit code, download recovery codes, regenerate codes, or disable |
+| **Passkeys** | Register device passkeys (Face ID, Touch ID, Windows Hello, security keys), list, and remove |
+| **Browser sessions** | See active sign-ins, sign out one device, or sign out all other sessions |
+
+On the login page you can **Sign in with passkey** when your browser supports WebAuthn. If two-factor authentication is enabled, password login asks for your authenticator or recovery code after email and password. Passkey sign-in skips the TOTP step when the passkey ceremony succeeds.
+
 ### Session timeout
 
 If you are idle longer than your workspace **Session timeout** (or the Central default when the workspace has not overridden it), or your access token expires or is revoked, the application signs you out and returns you to `/login` (or `/central/login` for Central). Workspaces can enable **Never timeout** so idle logout is disabled.

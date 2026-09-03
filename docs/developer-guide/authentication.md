@@ -114,6 +114,26 @@ Authenticated users can upload a profile picture on **Profile**. Multipart endpo
 
 Stored via `UserAvatarService` under `central/users/{id}/avatars/` or `tenants/{tenantId}/users/{id}/avatars/` on the **avatar disk** (`FILESYSTEM_AVATAR_DISK`, default `public`). Avatars are never written to S3 when `FILESYSTEM_DISK=s3`. Serve them from `{APP_URL}/storage/...` and keep `storage/app/public` on shared/persistent storage across zero-downtime deploys. Login and `GET /me` return an absolute `avatar_url`; the SPA resolves relative asset URLs against the API origin so the topbar and sidebar show the photo instead of initials.
 
+## User security settings (2FA, passkeys, sessions)
+
+Profile **Security** tab (tenant + Central) exposes password change, TOTP two-factor authentication, passkey management, and browser session revocation. All destructive/setup actions require the current password.
+
+| Area | Tenant | Central |
+|------|--------|---------|
+| Sessions | `GET/DELETE /api/tenant/v1/me/sessions*` | `GET/DELETE /api/central/v1/me/sessions*` |
+| Two-factor | `GET/POST/DELETE /api/tenant/v1/me/two-factor*` | same under `/api/central/v1` |
+| Login challenge | `POST /api/tenant/v1/auth/two-factor/challenge` | `POST /api/central/v1/auth/two-factor/challenge` |
+| Passkeys (manage) | `GET/POST/DELETE /api/tenant/v1/me/passkeys*` | same under `/api/central/v1` |
+| Passkeys (login) | `GET/POST /api/tenant/v1/auth/passkeys/login*` | `GET/POST /api/central/v1/auth/passkeys/login*` |
+
+**Sessions** — Sanctum `personal_access_tokens` with `token_type = session`; metadata columns `ip_address`, `user_agent`, `last_active_at`. Integration and impersonation tokens are excluded from listings. Password change revokes other sessions by default (`revoke_other_sessions`, default `true`). `session.last_active` middleware throttles `last_active_at` updates on `/me/*`.
+
+**Two-factor** — Fortify `TwoFactorAuthenticatable` on `User` and `CentralUser` (headless API only; Fortify web routes are not mounted). Password login returns `{ two_factor_required: true, challenge_token }` when TOTP is confirmed; `POST /auth/two-factor/challenge` issues the normal login payload. On tenant APIs, tenancy may be resolved from the challenge token’s stored `tenant_id` (same as email-based login) so shared SPAs do not need a workspace header on the challenge step.
+
+**Passkeys** — `laravel/passkeys` with polymorphic `passkeyable` on `users` and `central_users`. SPA ceremonies use cache-backed `options_token` (5 minutes). Passkey login issues a normal Sanctum session token and **skips TOTP** when WebAuthn succeeds. Requires HTTPS and `config/passkeys.php` `allowed_origins` aligned with `FRONTEND_URL` / tenant hosts.
+
+**Audit** — `two_factor_enabled`, `two_factor_disabled`, `passkey_registered`, `passkey_deleted`, `session_revoked`, `sessions_revoked_others` via `PlatformAuditService`.
+
 ## Email verification
 
 Tenant `User` and Central users implement `MustVerifyEmail`. Verification is required before protected Central and tenant application APIs can be used. Routes:

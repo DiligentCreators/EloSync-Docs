@@ -18,14 +18,29 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 
 | Method | Path | Notes |
 |--------|------|-------|
-| POST | `/auth/login` | Throttled (`throttle:auth-login`, 5/min by email or IP) |
+| POST | `/auth/login` | Throttled (`throttle:auth-login`, 5/min by email or IP). When TOTP is confirmed for the account, returns `{ two_factor_required: true, challenge_token }` instead of a bearer token. |
+| POST | `/auth/two-factor/challenge` | Complete login after password step. Body: `challenge_token`, `code`, optional `remember`. Throttled (`auth-login`). |
+| GET | `/auth/passkeys/login/options` | WebAuthn discoverable credential options. |
+| POST | `/auth/passkeys/login` | Passkey login. Body: `options_token`, `credential`, optional `remember`. |
 | POST | `/auth/forgot-password` | |
 | POST | `/auth/reset-password` | Body: `email`, `token`, `password`, `password_confirmation` |
 | GET | `/me` | Current user + roles/permissions (+ `avatar_url`) |
 | POST | `/me` | Update profile (`name`, `email`) |
 | POST | `/me/avatar` | Upload profile picture (`multipart/form-data` field `file`; jpg/png/webp, max 2 MB) |
 | DELETE | `/me/avatar` | Remove profile picture |
-| POST | `/me/change-password` | |
+| POST | `/me/change-password` | Body: `old_password`, `password`, `password_confirmation`, optional `revoke_other_sessions` (default `true`). Throttled (`auth-sensitive`). |
+| GET | `/me/sessions` | List active bearer sessions for the current user. |
+| DELETE | `/me/sessions/{token}` | Revoke one session by token id. |
+| POST | `/me/sessions/revoke-others` | Revoke all sessions except the current token. |
+| GET | `/me/two-factor` | `{ enabled, recovery_codes_remaining }` |
+| POST | `/me/two-factor` | Begin TOTP setup (password required). Returns `{ svg, secret }`. |
+| POST | `/me/two-factor/confirm` | Confirm TOTP with `code`. Returns `{ recovery_codes }`. |
+| DELETE | `/me/two-factor` | Disable TOTP. Body: `password`, `code` (authentication or recovery code). |
+| POST | `/me/two-factor/recovery-codes` | Regenerate recovery codes (password required). |
+| GET | `/me/passkeys` | List registered passkeys. |
+| GET | `/me/passkeys/options` | WebAuthn registration options (`options_token` + `options`). |
+| POST | `/me/passkeys` | Register passkey. Body: `password`, `name`, `options_token`, `credential`. |
+| DELETE | `/me/passkeys/{passkey}` | Remove passkey. Body: `password`. |
 | POST | `/me/logout` | Revokes tokens |
 | GET | `/dashboard` | Platform stats — permission `dashboard.view`; see [Dashboard payload](#dashboard-payload) |
 | GET | `/pulse/enter` | **Role-only:** `superadmin`, `developer`, or `tester`. Returns `{ url }` — a signed web URL that opens Laravel Pulse (`/pulse`) on the central domain. Not a Spatie permission. Requires verified email (`verified` middleware). |
