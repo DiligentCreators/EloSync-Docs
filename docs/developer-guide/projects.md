@@ -68,7 +68,7 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-projects.md](/api/tenant-v1
 
 ## Frontend
 
-SPA should mirror **Tasks** (board default + list, create/edit page, record page) under AppLayout — do not invent a parallel shell. Nav: **Workspace** after Tasks.
+SPA should mirror **Tasks** (board default + list, create/edit page, record page) under AppLayout — do not invent a parallel shell. Nav: **Operations**.
 
 | Piece | Path (expected) |
 |-------|-----------------|
@@ -78,7 +78,7 @@ SPA should mirror **Tasks** (board default + list, create/edit page, record page
 | Types | `Project*` in `src/types/api.ts`; Task gains optional `project_id` / `project` |
 | Query keys | `QUERY_KEYS.projects` / `project(id)` / `projectTimeline(id)` / `projectStats` / `projectBoard` |
 | Permissions | `PERMISSIONS.projects.*` |
-| Nav | `permission: projects.view`, `module: 'projects'` — Workspace group after Tasks |
+| Nav | `permission: projects.view`, `module: 'projects'` — **Operations** sidebar group |
 | Route | `tenantRoutes.projects = '/projects'`, `RequireAccess module="projects"` |
 | Notifications | `project.assigned`, `project.member_added` → `/projects?project={id}` |
 | Playwright | `e2e/pages/projects.page.ts`, `e2e/tests/projects/`, `npm run test:e2e:projects` |

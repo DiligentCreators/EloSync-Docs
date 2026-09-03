@@ -39,7 +39,7 @@ New Projects permissions for **existing** workspaces ship as an additive **data 
 3. Migrate `projects.*` permissions and grant missing defaults to existing roles
 4. Migrate `tasks.project_id` (nullable FK, null on project delete) and bump Tasks catalog **1.1.2 → 1.2.0**
 5. Confirm `module:projects` + `projects.*` on target roles
-6. Deploy frontend (Projects nav under **Workspace**, after Tasks — board/list/form/detail; optional project picker on Tasks)
+6. Deploy frontend (Projects nav under **Operations** — board/list/form/detail; optional project picker on Tasks)
 7. Smoke: create a **new** workspace → enable Projects alone → create/edit/assign/members/note → planned → active → on_hold → active → completed → soft delete/restore
 8. Smoke (soft Task link): with Tasks + Projects → create a task with `project_id` → confirm embed; without Projects entitled → `project_id` validation fails
 9. Smoke (overdue): set workspace timezone, open project with `ends_on` before local today → stats/dashboard `overdue_projects` increments; due today does not

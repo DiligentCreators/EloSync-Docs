@@ -4,7 +4,7 @@ App: `EloSync-Frontend` (React 19 + Vite).
 
 Central Application routes are prefixed with a configurable HashRouter segment (default `/central`). Set `VITE_CENTRAL_PATH_PREFIX` on the SPA site and matching `CENTRAL_PATH_PREFIX` on the API so password-reset / verify emails stay correct. Tenant auth uses root paths (`/login`, `/register`, …). See [authentication](/developer-guide/authentication).
 
-## Navigation
+The left sidebar is grouped by category. Expand a section (for example **Platform** or **Billing**) to reach its screens. The section for the page you are on stays open.
 
 | Group | Screens | Route (default prefix) |
 |-------|---------|------------------------|

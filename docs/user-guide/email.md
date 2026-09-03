@@ -25,7 +25,7 @@ You need Marketplace purchase permission to install. After install, your role st
 
 ## Connect IMAP / SMTP
 
-1. Open **Email** in the navigation.
+1. Open **Email** in the **Communication** sidebar section.
 2. If you have no account, use **Connect your mailbox**. To add another, use **Add mailbox**.
 3. Choose a preset or **Custom**:
    - **Gmail** — IMAP/SMTP hosts and ports prefilled; use a Google [App Password](https://support.google.com/accounts/answer/185833) (2-Step Verification required). OAuth sign-in is not available in this version.

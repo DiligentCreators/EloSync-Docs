@@ -18,7 +18,7 @@ On the workspace dashboard, an **Announcements** section appears under the welco
 
 ## Announcements page
 
-Open **Announcements** from the sidebar.
+Open **Announcements** from the sidebar under **Communication**.
 
 - Everyone sees published (non-expired) history.
 - Users with create/update/delete/restore/force-delete permissions can manage drafts, trash, and permanent delete.

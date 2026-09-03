@@ -18,7 +18,7 @@ There is **no calendar assignment**. You cannot assign a calendar to someone els
 
 ## Create an event
 
-1. Open **Calendar** from the workspace nav.
+1. Open **Calendar** from the **CRM** sidebar section.
 2. Click **New event**, click a day cell (Month), or click a time slot (Week/Day).
 3. Enter title, start/end, optional description and all-day.
 4. Save — the event is stored on **your** personal calendar.

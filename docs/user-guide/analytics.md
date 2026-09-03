@@ -3,7 +3,7 @@
 Catalog slug remains **`analytics`**. Marketplace display name is **Reports** (v1.4.0).
 
 1. Enable **Reports** from Marketplace (free Operations module; search `analytics` if needed).
-2. Open **Overview → Reports** for the executive dashboard (one chart per entitled module). Use the chevron beside **Reports** in the sidebar to expand CRM / Sales / Billing / Purchasing / People without leaving the Reports section.
+2. Expand **Overview** if it is collapsed, then open **Reports** for the executive dashboard (one chart per entitled module). Use the chevron beside **Reports** in the sidebar to expand CRM / Sales / Billing / Purchasing / People without leaving the Reports section.
 3. Choose a period → **Apply period**.
 4. Open domain reports from the hub cards or sidebar:
    - **CRM report** — Leads + Tasks, plus a **Staff workload** board (open leads/tasks, overdue, cycle times, pressure score 0–100 with healthy / watch / overloaded bands)

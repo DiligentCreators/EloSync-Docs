@@ -6,7 +6,7 @@ EloSync does not send messages for you. WhatsApp opens in a new tab with the mes
 
 ## Manage templates
 
-1. Open **Templates** in the workspace navigation (requires the Communication Templates module and view permission).
+1. Open **Templates** in the **CRM** sidebar section (requires the Communication Templates module and view permission).
 2. Click **New template**.
 3. Enter a name, choose context (e.g. Leads or Help Desk), channel (WhatsApp), optional category, and message body.
 4. Click placeholder chips to insert tokens at the cursor (or replace selected text).

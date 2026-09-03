@@ -12,7 +12,7 @@ Use the **help** icon in the Leads page header to walk through KPIs, filters, cr
 
 ## Board & table
 
-Open **Leads** from the sidebar. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
+Open **Leads** from the sidebar under **CRM**. The default view is the **Kanban board** (columns = pipeline stages). Switch to **Table** when you prefer a list.
 
 - Search by name, email, phone, or company
 - Each stage column header and its cards use that stage’s color; Stage badges in the table and record page use the same colors

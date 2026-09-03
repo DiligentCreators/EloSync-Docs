@@ -3,7 +3,7 @@
 ## Connect
 
 1. Marketplace → install **WhatsApp Cloud** (billable).
-2. Open **WhatsApp** in the sidebar → **Connect WhatsApp**.
+2. Open **WhatsApp** in the **CRM** sidebar section → **Connect WhatsApp**.
 3. Complete Meta OAuth, then select a WhatsApp Business Account and the phone number to attach.
 4. Optional (Leads installed): enable **Auto-create leads from unknown numbers** on the connection settings card.
 5. Inside the 24-hour window you can send free-form text or attach image/document/audio/video files (Storage quota applies).

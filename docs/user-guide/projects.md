@@ -8,7 +8,7 @@ Without **assign**, you only see projects where you are the **assignee**, a **me
 
 ## Board & list
 
-Open **Projects** from the sidebar under **Workspace** (after Tasks). The default view is the **Board** (columns by status). Switch to **List** for a table.
+Open **Projects** from the sidebar under **Operations**. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by **title**
 - Filter by status, Contact / Company / Opportunity (when those modules are installed), assignee, and **My Projects**

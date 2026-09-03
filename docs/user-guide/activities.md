@@ -8,7 +8,7 @@ Without **assign**, you only see activities assigned to you.
 
 ## List
 
-Open **Activities** from the sidebar (after Meetings).
+Open **Activities** from the sidebar under **CRM** (after Meetings).
 
 - Search by subject or body
 - Filter by type, status (open / completed), assignee, or toggle **My Activities**

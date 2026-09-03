@@ -6,7 +6,7 @@ Workflow Automation lets your workspace react to CRM and operations events witho
 
 1. Open **Marketplace** and install **Automation** (billable add-on).
 2. Ensure your role includes Automation permissions (Admin gets full access by default).
-3. Open **Automation** in the sidebar.
+3. Open **Automation** in the **Operations** sidebar section.
 
 ## Build a workflow
 

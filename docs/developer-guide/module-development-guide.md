@@ -139,7 +139,7 @@ Paid modules: catalog `is_billable`, marketplace install, `ModuleSubscriptionSer
 - Dialogs only for secondary flows (confirm, import, tags/categories)
 - On create/edit mutation `onError`, call `applyServerValidationErrors` from `src/lib/form-validation.ts` so Laravel 422 field errors toast and map onto react-hook-form. For `assigned_to` fields that use `Eligible*Assignee` / `EligibleTaskAssignee`, filter pickers with `filterTaskAssigneeOptions` (omit suspended only; keep current assignee so they can be cleared) and render `errors.assigned_to`. **Leads only** use `filterLeadAssigneeOptions` / `EligibleLeadAssignee` (also omit workspace owners and users flagged exclude-from-lead). List assignee filters use shared `AssigneeFilterSelect` (searchable). Do not auto-fill opportunity assignees who are not in the picker.
 - Old list deep links (`?entity=`) redirect to `/{slug}/:id`; list **filters** such as `/payments?invoice=` stay on the list
-- Nav + breadcrumbs respect **installed modules** and **user permissions**
+- Nav + breadcrumbs respect **installed modules** and **user permissions**. Place the item in the catalog-aligned sidebar group (`CRM`, `Communication`, `Sales`, `Billing`, `Purchasing`, `Inventory`, `Operations`, `Finance`, `HR`). Groups collapse; the section for the current route stays open.
 - Auth payload includes active module slugs for SPA gating
 - Module list shortcuts via `useModuleShortcuts`: bare `n` (create, permission-gated; Chromium blocks `Ctrl/⌘N`) and `mod+f` (focus module `SearchInput` with `ref` + `shortcutHint`). Do **not** bind create/search on the app shell — keep them route-scoped like Leads.
 

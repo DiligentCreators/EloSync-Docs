@@ -8,7 +8,7 @@ Without **assign**, you only see companies assigned to you.
 
 ## List
 
-Open **Companies** from the sidebar (between Leads and Contacts).
+Open **Companies** from the sidebar under **CRM** (between Leads and Contacts).
 
 - Search by name, email, phone, website, or industry
 - Filter by industry and assignee, or toggle **My Companies**
