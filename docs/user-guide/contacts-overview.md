@@ -17,7 +17,8 @@ Third product module on the frozen platform. Mirrors the [Leads](/user-guide/lea
 
 - Name, email, phone, company (legacy string), job title, source
 - **Lifecycle** — `on_boarded` / `off_boarded`, shown as **On Boarded Clients** / **Off Boarded Clients** (not soft-delete)
-- Optional link to a [Company](/user-guide/companies-overview) via `company_id` (form company picker when Companies is installed)
+- Optional link to a [Company](/user-guide/companies-overview) via `company_id` (form company picker when Companies is installed; **New** opens an inline create dialog when `companies.create` is allowed)
+- From the contact record: **New quotation** / **New invoice** / **New payment** deep-links (module + create permission gated) with contact/company query prefill
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `contacts.assign`
 - Notes (comments) + activity timeline
 - Table view with search, company filter, lifecycle filter, and **My Contacts** toggle
@@ -38,7 +39,11 @@ When both **Leads** and **Contacts** are installed, converting a lead creates (o
 
 ## Company link
 
-When **Companies** is installed, Contact create/edit can pick a linked organization (`company_id`). The free-text `company` field remains as a **legacy** display/search string and is synced from the linked Company name when a link is set. List/detail UIs prefer `linked_company.name`, falling back to the legacy string.
+When **Companies** is installed, Contact create/edit can pick a linked organization (`company_id`). Use **New** on the form to create a company in a dialog without leaving Contacts. The free-text `company` field remains as a **legacy** display/search string and is synced from the linked Company name when a link is set. List/detail UIs prefer `linked_company.name`, falling back to the legacy string.
+
+## Sales document shortcuts
+
+Contact view actions open Quotation / Invoice / Payment create pages with `?contact={id}` and optional `?company={id}` when the corresponding module is entitled and the user can create.
 
 ## Explicitly deferred
 

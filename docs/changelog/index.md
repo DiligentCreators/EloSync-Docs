@@ -1,5 +1,11 @@
 # Changelog
 
+## Contacts related creates (2026-09-03)
+
+- **EloSync-Frontend:** Contact create/edit can open a **New company** dialog (Companies entitled + `companies.create`) that creates and auto-selects the company. Contact view adds gated **New quotation** / **New invoice** / **New payment** links that open those modules’ create pages with `?contact=` (and `?company=` when linked). Quotation, invoice, and payment create forms prefill from those query params. Playwright: `contacts.related-creates`.
+- **EloSync-Backend:** Catalog **contacts 1.1.0 → 1.2.0**.
+- **EloSync-Docs:** Contacts user/developer guides and related company/sales notes updated.
+
 ## Collapsible sidebar categories (2026-09-03)
 
 - **EloSync-Frontend:** Tenant sidebar sections now match catalog categories. The former **Workspace** dump is split into **CRM**, **Communication**, and **Operations**. Each section with more than one item is a collapsible accordion; the group for the current page stays open, and extra expanded sections persist per Central/Tenant context. Playwright: `expectSidebarNavLinkVisible` expands sections before asserting links; tenant dashboard covers CRM collapse/expand.
