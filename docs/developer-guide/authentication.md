@@ -128,7 +128,7 @@ Profile **Security** tab (tenant + Central) exposes password change, TOTP two-fa
 
 **Sessions** — Sanctum `personal_access_tokens` with `token_type = session`; metadata columns `ip_address`, `user_agent`, `last_active_at`. Integration and impersonation tokens are excluded from listings. Password change revokes other sessions by default (`revoke_other_sessions`, default `true`). `session.last_active` middleware throttles `last_active_at` updates on `/me/*`.
 
-**Two-factor** — Fortify `TwoFactorAuthenticatable` on `User` and `CentralUser` (headless API only; Fortify web routes are not mounted). Password login returns `{ two_factor_required: true, challenge_token }` when TOTP is confirmed; `POST /auth/two-factor/challenge` issues the normal login payload.
+**Two-factor** — Fortify `TwoFactorAuthenticatable` on `User` and `CentralUser` (headless API only; Fortify web routes are not mounted). Password login returns `{ two_factor_required: true, challenge_token }` when TOTP is confirmed; `POST /auth/two-factor/challenge` issues the normal login payload. On tenant APIs, tenancy may be resolved from the challenge token’s stored `tenant_id` (same as email-based login) so shared SPAs do not need a workspace header on the challenge step.
 
 **Passkeys** — `laravel/passkeys` with polymorphic `passkeyable` on `users` and `central_users`. SPA ceremonies use cache-backed `options_token` (5 minutes). Passkey login issues a normal Sanctum session token and **skips TOTP** when WebAuthn succeeds. Requires HTTPS and `config/passkeys.php` `allowed_origins` aligned with `FRONTEND_URL` / tenant hosts.
 
