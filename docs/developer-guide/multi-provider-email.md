@@ -17,6 +17,8 @@ Application code continues to send through Laravel `Mail` / Notification mail ch
 
 Drivers are registered in `config/email.php`.
 
+**Queued mailables** (for example `BillingDocumentEmail` for invoice / quote / estimate / payment / credit note / purchase order) must register the same `ApplyEmailRuntimeConfig` middleware via `Mailable::middleware()`. Notifications get it through `QueuesOnEmails`. Stancl queue tenancy restores `tenant_id` only — it does **not** re-apply mail credentials.
+
 ## Tenant modes
 
 | `mail_mode` | Behavior |
@@ -84,4 +86,4 @@ Restart workers after changing mail credentials (`queue:restart`).
 1. Implement `EmailDriverInterface` (and `SupportsWebhooks` when applicable)
 2. Register in `config/email.php` → `drivers`
 3. Add settings catalog keys + validation + UI conditional fields
-4. Nothing else — notifications/mailables stay unchanged
+4. New `ShouldQueue` notifications use `QueuesOnEmails`; new queued mailables return `[ApplyEmailRuntimeConfig::class]` from `middleware()`
