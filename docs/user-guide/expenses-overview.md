@@ -34,7 +34,7 @@ Phase 4 Purchasing module (Milestone 3, final) on the frozen platform. A simplif
 
 `expenses.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `submit` · `approve` · `reject` · `pay` · `cancel`
 
-Enable Expenses from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Vendors / Purchase Orders. Catalog: slug `expenses`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.3.0**.
+Enable Expenses from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Vendors / Purchase Orders. Catalog: slug `expenses`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.4.0**.
 
 ## Why standalone (soft dependencies)
 

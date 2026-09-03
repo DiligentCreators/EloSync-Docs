@@ -50,7 +50,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | **manager** | `view`, `create`, `update`, `assign`, `close`, `reopen` |
 | **staff** | `view`, `create`, `update`, `close`, `reopen` |
 
-Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.7.0**.
+Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.8.0**.
 
 ## Why standalone (soft dependencies)
 

@@ -34,7 +34,7 @@ Tenant customer-billing module on the frozen platform — the third Phase 3 (Bil
 
 `credit-notes.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `issue` · `apply` · `void` · `refund`
 
-Enable Credit Notes from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `credit-notes`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.2.0**.
+Enable Credit Notes from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `credit-notes`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.3.0**.
 
 ## Related modules
 

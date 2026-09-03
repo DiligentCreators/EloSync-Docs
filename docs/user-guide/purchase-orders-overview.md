@@ -32,7 +32,7 @@ Phase 4 Purchasing module (Milestone 2) on the frozen platform. Mirrors the [Est
 
 `purchase-orders.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `receive` · `cancel`
 
-Enable Purchase Orders from Marketplace (free) — Marketplace blocks the install until **Vendors** is already entitled. Catalog: slug `purchase-orders`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 20`.
+Enable Purchase Orders from Marketplace (free) — Marketplace blocks the install until **Vendors** is already entitled. Catalog: slug `purchase-orders`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 20`, version **1.3.0**.
 
 ## Receiving and Inventory
 

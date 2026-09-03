@@ -1,5 +1,11 @@
 # Changelog
 
+## Platform-wide related inline creates (2026-09-03)
+
+- **EloSync-Frontend:** Cross-module create/edit forms offer a gated **New** beside related pickers (Contact, Company, Opportunity, Lead, Vendor). Dialogs create the record and auto-select it without leaving the page. **New** appears only when the related module is entitled and the user has `*.create`. Shared: `Create*Dialog` + `RelatedEntityPicker`. Playwright: `invoices.related-creates`, `quotations.related-creates`, `purchase-orders.related-creates` (Contacts company dialog retained).
+- **EloSync-Backend:** Catalog MINOR bumps — `invoices` **1.8.1 → 1.9.0**, `quotations` **1.6.0 → 1.7.0**, `estimates` **1.5.0 → 1.6.0**, `contracts` **1.2.1 → 1.3.0**, `payments` **1.2.0 → 1.3.0**, `credit-notes` **1.2.0 → 1.3.0**, `purchase-orders` **1.2.0 → 1.3.0**, `opportunities` **1.1.1 → 1.2.0**, `projects` **1.1.0 → 1.2.0**, `activities` **1.0.0 → 1.1.0**, `help-desk` **1.7.0 → 1.8.0**, `documents` **1.3.0 → 1.4.0**, `expenses` **1.3.0 → 1.4.0**, `assets` **1.0.0 → 1.1.0**.
+- **EloSync-Docs:** Module Development Guide related-create standard; user guides for invoices, quotations, purchase orders, and overview version notes.
+
 ## Contacts related creates (2026-09-03)
 
 - **EloSync-Frontend:** Contact create/edit can open a **New company** dialog (Companies entitled + `companies.create`) that creates and auto-selects the company. Contact view adds gated **New quotation** / **New invoice** / **New payment** links that open those modules’ create pages with `?contact=` (and `?company=` when linked). Quotation, invoice, and payment create forms prefill from those query params. Playwright: `contacts.related-creates`.

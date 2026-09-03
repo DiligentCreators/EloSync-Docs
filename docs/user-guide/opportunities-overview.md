@@ -34,7 +34,7 @@ Sales deals module on the frozen platform. Mirrors the [Leads](/user-guide/leads
 
 `opportunities.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Opportunities from Marketplace (free). Catalog: slug `opportunities`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`. Only Leads and Tasks install automatically on new workspaces.
+Enable Opportunities from Marketplace (free). Catalog: slug `opportunities`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.2.0**. Only Leads and Tasks install automatically on new workspaces.
 
 ## Related modules (optional)
 

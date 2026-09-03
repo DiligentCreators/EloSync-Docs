@@ -38,7 +38,7 @@ Default roles: **admin** = all except `force.delete`; **manager** = view / creat
 
 ## Catalog
 
-Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.3.0**.
+Enable Documents from Marketplace (free). Catalog: slug `documents`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 85`, version **1.4.0**.
 
 **Hard dependency:** Storage (`storage`) must be entitled first. Install fails without it.
 

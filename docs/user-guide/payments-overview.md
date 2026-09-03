@@ -34,7 +34,7 @@ Tenant customer-billing module on the frozen platform — the second Phase 3 (Bi
 
 `payments.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `post` · `void` · `send`
 
-Enable Payments from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Version **1.2.0**.
+Enable Payments from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Version **1.3.0**.
 
 ## Related modules
 

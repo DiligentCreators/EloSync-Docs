@@ -19,7 +19,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 
 ## Capabilities
 
-- Invoice fields: title, optional contact/company link, optional quotation / estimate / contract links, currency, issue date, due date, notes
+- Invoice fields: title, optional contact/company link (with gated **New** inline create when Contacts/Companies is entitled), optional quotation / estimate / contract links, currency, issue date, due date, notes
 - Recurring series (weekly / monthly / quarterly / semi-annually / yearly). **Next invoice date** auto-fills from the issue date plus frequency and can be overridden; later drafts follow the frequency from that date. **Stop recurring** ends the series without voiding history
 - Download invoice PDF (workspace-branded from Settings → Branding: color, logo, company profile, bank details)
 - **Email customer** after Send (`POST /invoices/{id}/email`, `invoices.send`) — optional PDF attachment; default recipient from linked contact/company; records `emailed` timeline + tenant email log
@@ -37,7 +37,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 
 `invoices.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `void`
 
-Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.8.0**.
+Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.9.0**.
 
 ## Related modules
 

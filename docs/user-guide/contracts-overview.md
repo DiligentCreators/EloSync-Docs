@@ -30,7 +30,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 `contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `convert`
 
-Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`.
+Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.3.0**.
 
 ## Related modules
 

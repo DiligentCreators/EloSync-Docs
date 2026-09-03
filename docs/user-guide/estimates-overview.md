@@ -34,7 +34,7 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 
 `estimates.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Estimates from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.5.0**.
+Enable Estimates from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.6.0**.
 
 ## Related modules
 
