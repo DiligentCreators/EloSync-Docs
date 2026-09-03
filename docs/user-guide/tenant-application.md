@@ -4,15 +4,15 @@ The Tenant Application is your workspace home. It uses the same layout as the Ce
 
 ## Tenant navigation
 
-The left sidebar includes:
+The left sidebar is grouped by **module category** (CRM, Communication, Sales, Billing, Purchasing, Inventory, Operations, Finance, HR). Each section is a collapsible accordion — only the group for the page you are on stays open until you expand others. Use **Search pages** (`⌘K` / `Ctrl+K`) to jump without opening a section.
 
 | Item | Purpose |
 |------|---------|
-| **Dashboard** | Workspace overview with module widgets |
+| **Dashboard** | Workspace overview with module widgets (Overview) |
 | **Leads** | CRM pipeline (Kanban/table, notes, follow-ups) |
 | **Tasks** | Work items (board/list, status, priority, comments) |
 | **Templates** | Communication Templates (plain-text messages, WhatsApp from Leads) |
-| **Settings** | Workspace preferences |
+| **Settings** | Workspace preferences (account menu, not the sidebar) |
 | **Profile** | Your name, email, password, and optional profile photo |
 
 Header actions match Central:

@@ -19,7 +19,7 @@ Invitees use the Meetings list/detail as their source of truth. Calendar shows t
 
 ## Schedule a meeting
 
-1. Open **Meetings** from the workspace nav.
+1. Open **Meetings** from the **CRM** sidebar section.
 2. Click **New meeting**.
 3. Enter title, start/end (times use the **workspace Timezone** from Settings → General — same zone as Daily Reminder Time, task/follow-up dues, and attendance), optional agenda.
 4. Choose a provider:

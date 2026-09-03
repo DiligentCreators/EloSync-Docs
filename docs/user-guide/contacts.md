@@ -8,7 +8,7 @@ Without **assign**, you only see contacts assigned to you.
 
 ## List
 
-Open **Contacts** from the sidebar.
+Open **Contacts** from the sidebar under **CRM**.
 
 - Search by name, email, phone, company (legacy string), or job title
 - Filter by company, assignee, lifecycle (**On Boarded Clients** / **Off Boarded Clients**), or toggle **My Contacts**

@@ -1,5 +1,10 @@
 # Changelog
 
+## Collapsible sidebar categories (2026-09-03)
+
+- **EloSync-Frontend:** Tenant sidebar sections now match catalog categories. The former **Workspace** dump is split into **CRM**, **Communication**, and **Operations**. Each section with more than one item is a collapsible accordion; the group for the current page stays open, and extra expanded sections persist per Central/Tenant context. Playwright: `expectSidebarNavLinkVisible` expands sections before asserting links; tenant dashboard covers CRM collapse/expand.
+- **EloSync-Docs:** Shared layout, tenant application, and Projects guides updated for the new groups.
+
 ## User security settings — 2FA, passkeys, sessions (2026-09-02)
 
 - **EloSync-Backend:** Per-user Security APIs on tenant + Central guards — browser session list/revoke (`SessionTokenService`), Fortify TOTP enable/confirm/disable + login challenge, `laravel/passkeys` registration/login with polymorphic `passkeyable`. Password change revokes other sessions by default. Pest: `tests/Feature/Auth/*`.

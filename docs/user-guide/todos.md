@@ -10,7 +10,7 @@ Your workspace must have the **ToDos** module installed (included by default on 
 
 ## Board & list
 
-Open **ToDos** from the sidebar. The default view is the **Board** (columns by status). Switch to **List** for a table.
+Open **ToDos** from the sidebar under **CRM**. The default view is the **Board** (columns by status). Switch to **List** for a table.
 
 - Search by title or description
 - Filter by status, priority, **tag**, and **Overdue** (open / in-progress items past their due date)

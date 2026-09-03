@@ -90,11 +90,11 @@ Central remains under `/central/*` with the same shell and its own navigation gr
 ## Adding a Tenant module to the sidebar
 
 1. Add the path to `tenantRoutes` in `src/config/routes.ts`.
-2. Add a `NavigationItem` under `tenantNavigationGroups` with `permission` **and** `module` slug.
+2. Add a `NavigationItem` under the catalog-aligned group in `tenantNavigationGroups` (`CRM`, `Communication`, `Sales`, `Billing`, `Purchasing`, `Inventory`, `Operations`, `Finance`, `HR`) with `permission` **and** `module` slug. Do not reintroduce a catch-all Workspace group.
 3. Register list + `/new` + `/:id` + `/:id/edit` under `TenantProtectedRoute` → `AppLayout` in `App.tsx`.
 4. Ship list/create/view/edit UI mirroring Leads (not a long-lived `PlaceholderPage`).
 
-Nav visibility is filtered by installed module subscriptions and Spatie permissions.
+Nav visibility is filtered by installed module subscriptions and Spatie permissions. Sidebar **sections collapse** by default; the group that contains the current route stays open. Users can expand additional sections; that preference is stored per Central/Tenant context in `localStorage`.
 
 ## Auth / API notes
 

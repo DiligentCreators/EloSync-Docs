@@ -63,7 +63,7 @@ flowchart TB
 | Later | Platform-focused metrics stay | More module-driven widgets (Invoices, …) |
 | Shell | Remains shared | Remains shared |
 
-Installed module subscriptions and Spatie permissions drive Tenant sidebar visibility.
+Installed module subscriptions and Spatie permissions drive Tenant sidebar visibility. Sidebar groups follow catalog categories and collapse except for the current-route section.
 
 ## Related docs
 
