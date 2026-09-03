@@ -32,7 +32,7 @@ Status labels:
 1. Click **New project**
 2. Enter a **title** (required) and optional description
 3. Optionally set **starts on** / **ends on** dates
-4. If Contacts, Companies, or Opportunities are installed, optionally link them
+4. If Contacts, Companies, or Opportunities are installed, optionally link them — use **New** beside a picker to create and select inline when you have that module’s create permission
 5. Optionally set an assignee and members (requires **assign**)
 6. Save — new projects start as **Planned**; without assign permission the creator becomes the assignee
 

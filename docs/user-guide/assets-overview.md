@@ -32,7 +32,7 @@ Operations module on the frozen platform. A workspace register of company equipm
 
 `assets.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 80`, version **1.0.0**.
+Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 80`, version **1.1.0**.
 
 ## Soft links (not install dependencies)
 

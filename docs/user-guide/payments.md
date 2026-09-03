@@ -21,7 +21,7 @@ Open **Payments** from the sidebar (**Billing**, under Invoices). Search by paym
 2. Enter the amount, currency, method (Cash, Bank Transfer, Cheque, Card (manual), Other), date paid, reference, and notes
 3. If **Accounting** is installed, choose **Deposit to** — which cash or bank account will hold this money after collection (defaults to Cash when omitted on post). You can add multiple bank accounts under Finance → Accounts (asset + Cash or bank).
 4. Add one or more **allocations** — pick an outstanding invoice and the amount of this payment to apply to it. The invoice picker shows **contact name · company · invoice number — balance due**, and you can search by contact name, company name, or invoice number. Choosing an invoice auto-fills **Contact**, **Company**, and **Assignee** from that invoice when those fields are set on the invoice (you can still change them). You can allocate to several invoices, or leave the payment unallocated and add allocations later while still in Draft. When Accounting is installed, allocations must cover the full payment amount before post.
-5. Optionally adjust the contact, company, or assignee (Contacts/Companies when installed; assignee requires **assign**)
+5. Optionally adjust the contact, company, or assignee (Contacts/Companies when installed — use **New** beside each picker to create and select without leaving the form when you have create permission; assignee requires **assign**)
 6. Save with **Create** (returns to the list), **Create & View**, or **Post** (creates then posts when you have permission)
 
 You can also start recording a payment from an invoice's detail view — the **Related payments** link jumps you to the Payments module.

@@ -18,7 +18,7 @@ Open **Invoices** from the sidebar (**Billing**). Search by title or number, fil
 ## Create & edit
 
 1. Click **New invoice** (or open **New invoice** from a [Contact](/user-guide/contacts) record — contact/company are prefilled from the URL)
-2. Enter a title, optional contact/company link (when Contacts/Companies is installed), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
+2. Enter a title, optional contact/company link (when Contacts/Companies is installed — use **New** beside each picker to create and select without leaving the form), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
 3. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts. The totals panel also shows **Paid**, **Credits**, and **Balance due** on existing invoices.
 4. Optionally set an assignee (requires **assign**)
 5. Save with **Create** (returns to the list) or **Create & View** (opens the record). Invoices also offer **Create & Send**.

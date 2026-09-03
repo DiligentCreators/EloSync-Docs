@@ -16,7 +16,7 @@ Open **Purchase Orders** from the sidebar, under the **Purchasing** group (next 
 ## Create a purchase order
 
 1. Click **New purchase order**
-2. Enter a title and select a **Vendor** (required)
+2. Enter a title and select a **Vendor** (required) — use **New** to create a vendor inline when you have `vendors.create`
 3. Optionally set currency, order date, expected date, and notes
 4. Add line items (description, quantity, unit price, tax rate, and optional Product) — subtotal, tax, and total are calculated automatically
 5. Optionally set an assignee (requires **assign**)

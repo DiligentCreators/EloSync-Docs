@@ -33,7 +33,7 @@ CRM engagements module on the frozen platform. Mirrors the [Contacts](/user-guid
 
 Staff can complete assigned activities with `activities.complete` (without full update).
 
-Enable Activities from Marketplace (free). Catalog: slug `activities`, `is_default_included = false`, `is_billable = false`, `sort_order = 28`. Only Leads and Tasks install automatically on new workspaces.
+Enable Activities from Marketplace (free). Catalog: slug `activities`, `is_default_included = false`, `is_billable = false`, `sort_order = 28`, version **1.1.0**. Only Leads and Tasks install automatically on new workspaces.
 
 ## Related modules (optional)
 

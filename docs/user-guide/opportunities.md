@@ -23,7 +23,7 @@ Open **Opportunities** from the sidebar (Sales). The default view is the **Kanba
 1. Click **New opportunity**
 2. Enter name (required) and optional amount, currency, probability (0–100), and expected close date
 3. Optionally set stage and assignee (assignee requires **assign**)
-4. Optionally link a **Contact**, **Company**, and/or **Lead** (pickers appear when those modules are installed)
+4. Optionally link a **Contact**, **Company**, and/or **Lead** (pickers appear when those modules are installed — use **New** beside a picker to create and select inline when you have that module’s create permission)
 5. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
 6. Save
 

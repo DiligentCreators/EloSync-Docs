@@ -16,10 +16,10 @@ Open **Estimates** from the sidebar (**Billing**, after Credit Notes). Search by
 ## Create an estimate
 
 1. Click **New estimate**
-2. Optionally choose an **Opportunity** first — this auto-fills **Contact**, **Company**, and **Assignee** when those are set on the opportunity
+2. Optionally choose an **Opportunity** first — use **New** beside the picker when Opportunities is installed and you have `opportunities.create`; selecting an opportunity auto-fills **Contact**, **Company**, and **Assignee** when those are set on the opportunity
 3. **Linked quotation:** if the opportunity has exactly one quotation it is selected automatically; if there are multiple, pick one manually (or leave none)
 4. Enter a title, currency (defaults to your workspace currency; full shared currency list), valid-until date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline)
-5. Adjust contact/company/assignee if needed (when those modules/permissions apply)
+5. Adjust contact/company/assignee if needed (when those modules are installed — **New** beside Contact/Company creates and selects inline when you have create permission)
 6. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts.
 7. Save
 

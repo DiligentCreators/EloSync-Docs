@@ -16,7 +16,7 @@ Open **Contracts** from the sidebar (Sales). Search by title, filter by status, 
 ## Create & edit
 
 1. Click **New contract**
-2. Choose the related **Opportunity** (required) — this auto-fills **Title** (when empty), **Party name** (from the opportunity contact or company), **Value**, **Currency**, and **Assignee** when the opportunity assignee is eligible (workspace owners are not listed). You can still change the fields afterward. End date must be on or after start date.
+2. Choose the related **Opportunity** (required) — use **New** to create one inline when you have `opportunities.create`. Selecting an opportunity auto-fills **Title** (when empty), **Party name** (from the opportunity contact or company), **Value**, **Currency**, and **Assignee** when the opportunity assignee is eligible (workspace owners are not listed). You can still change the fields afterward. End date must be on or after start date.
 3. Optionally link a **Quotation** (only shown when the Quotations module is installed). If the opportunity has exactly one quotation, it is selected automatically; with multiple quotations, pick one or leave none
 4. Enter a start date (required), optional end date, and optional rich-text **Description** and **Notes** (headings, lists, bold/italic/underline)
 5. Optionally set an assignee (requires **assign**)

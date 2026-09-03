@@ -17,7 +17,7 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 
 ## Capabilities
 
-- Estimate fields: title, optional contact/company link, optional opportunity/quotation link, currency, valid-until date, notes
+- Estimate fields: title, optional contact/company link (gated **New** when Contacts/Companies entitled + create), optional opportunity/quotation link (Opportunity **New** when entitled + create), currency, valid-until date, notes
 - Auto-numbered (`EST-00001`; prefix backed by the `estimates_number_prefix` tenant setting, default `EST-` — editable under **Settings → General → Document number prefixes**)
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side, same pattern as Invoices/Quotations
 - Status workflow: `draft → sent → accepted | rejected | expired` (`POST /estimates/{id}/send`, `.../accept`, `.../status`)
@@ -34,7 +34,7 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 
 `estimates.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Estimates from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.5.0**.
+Enable Estimates from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `estimates`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 40`, version **1.6.0**.
 
 ## Related modules
 

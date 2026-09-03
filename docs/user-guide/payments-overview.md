@@ -19,7 +19,7 @@ Tenant customer-billing module on the frozen platform — the second Phase 3 (Bi
 
 ## Capabilities
 
-- Payment fields: amount, currency, method (`cash`, `bank_transfer`, `cheque`, `card_manual`, `other`), paid-at date, reference, notes, optional contact/company link, optional `deposit_account_id` (Accounting soft dep)
+- Payment fields: amount, currency, method (`cash`, `bank_transfer`, `cheque`, `card_manual`, `other`), paid-at date, reference, notes, optional contact/company link (gated **New** when entitled + create), optional `deposit_account_id` (Accounting soft dep)
 - Auto-numbered (`PAY-00001`; prefix backed by the `payments_number_prefix` tenant setting, default `PAY-` — editable under **Settings → General → Document number prefixes**)
 - Allocations — split a payment's amount across one or more invoices (`customer_invoice_id` + `amount` per row); stored on draft but only applied to invoice balances once **posted**
 - Status workflow: `draft → posted → void` (`POST /payments/{id}/post`, `.../void`) — posting a payment adds each allocation to its invoice's `amount_paid` and recalculates the invoice balance/status; when Accounting is installed, also posts Dr deposit / Cr AR; voiding reverses allocations and voids the linked journal
@@ -34,7 +34,7 @@ Tenant customer-billing module on the frozen platform — the second Phase 3 (Bi
 
 `payments.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `post` · `void` · `send`
 
-Enable Payments from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Version **1.2.0**.
+Enable Payments from Marketplace (free) — **Invoices must already be installed**; Marketplace blocks the install otherwise. Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Version **1.3.0**.
 
 ## Related modules
 
