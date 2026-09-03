@@ -36,4 +36,4 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 ## Linking Contacts
 
-On a Contact create/edit form, when Companies is installed and you have `companies.view`, pick a **Company** from the picker. The contact’s legacy company text field is kept in sync with the linked Company’s name. The company record page lists linked contacts.
+On a Contact create/edit form, when Companies is installed and you have `companies.view`, pick a **Company** from the picker. Use **New** (requires `companies.create`) to create a company in a dialog without leaving the contact form — the new company is selected automatically. The contact’s legacy company text field is kept in sync with the linked Company’s name. The company record page lists linked contacts.

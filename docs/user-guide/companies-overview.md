@@ -33,7 +33,7 @@ Enable Companies from Marketplace (free). Catalog: slug `companies`, `is_default
 
 ## Contact linkage
 
-When **Companies** is installed, Contact create/edit can pick a linked Company (`contacts.company_id`). The legacy free-text `company` string remains for display and search; when a Company is linked, that string is synced from the Company name. See [Contacts](/user-guide/contacts-overview).
+When **Companies** is installed, Contact create/edit can pick a linked Company (`contacts.company_id`), or create one inline with **New**. The legacy free-text `company` string remains for display and search; when a Company is linked, that string is synced from the Company name. See [Contacts](/user-guide/contacts-overview).
 
 ## Explicitly deferred
 

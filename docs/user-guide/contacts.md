@@ -23,9 +23,20 @@ Open **Contacts** from the sidebar under **CRM**.
 1. Click **New contact**
 2. Enter name (required) and optional email, phone, job title, lifecycle, and assignee
 3. Optionally pick a **Company** (when the Companies module is installed and you can view companies). Selecting a Company links `company_id` and syncs the legacy company text to that organization name. Leaving the picker empty keeps any existing free-text company value on edit; clearing a previously linked Company removes the link
-4. Save
+4. When Companies is installed and you have **companies.create**, use **New** next to the Company picker to create a company in a dialog — after save, that company is selected automatically
+5. Save
 
 Edit from the row menu or the record page.
+
+## Related sales documents
+
+On a contact record page (when the matching module is installed and you have create permission), use:
+
+- **New quotation** → opens Quotation create with this contact preselected (`?contact=`; `?company=` when a company is linked)
+- **New invoice** → same for Invoices
+- **New payment** → same for Payments
+
+You finish the document on that module’s create page (quotations still require an opportunity).
 
 ## Assignment
 
