@@ -110,9 +110,10 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 
 | Piece | Path |
 |-------|------|
-| Page | `src/pages/leads/leads-page.tsx` (board default + table) |
-| Form | `lead-form.tsx` + `lead-form-page.tsx` (`/leads/new`, `/leads/:id/edit`) |
-| Detail | `lead-view-page.tsx` (`/leads/:id`) — stacked cards (Details / Comments / Activity); board DnD auto-saves stage on the list page |
+| Page | `src/pages/leads/leads-page.tsx` (board default + table; wires list sheet) |
+| List sheet | `lead-record-sheet.tsx` + shared `EntityRecordSheet` — New / `n` / row peek; dedicated routes remain for deep links |
+| Form | `lead-form.tsx` + `lead-form-page.tsx` (`/leads/new`, `/leads/:id/edit`; embed mode for sheet) |
+| Detail | `lead-view-page.tsx` (`/leads/:id`) — stacked cards; board DnD auto-saves stage on the list page |
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` |
@@ -120,6 +121,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`, `lead.inactive`, `lead.inactive_escalation`) |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |
+| Catalog | **1.4.0** (hybrid list sheets) |
 
 ## Tests
 

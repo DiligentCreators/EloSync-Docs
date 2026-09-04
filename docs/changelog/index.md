@@ -1,5 +1,16 @@
 # Changelog
 
+## Platform hybrid list sheets (2026-09-04)
+
+- **EloSync-Frontend:** Shared `ModuleRecordSheet` + `EntityFormEmbedProvider` / `useEntitySheetState` roll list-side create/peek/edit sheets across tenant CRUD modules (mirror Leads). Simple modules: **New** / `n` opens the sheet; row/board peek uses tabs-ready sheet with **Open full page**. Heavy billing/line-item modules (invoices, quotations, estimates, credit notes, payments, purchase orders, journals): **view peek only** — create/edit stay on dedicated builder pages. Dedicated routes and deep links remain canonical.
+- **EloSync-Docs:** Module development hybrid-sheet standard updated for all modules; changelog.
+
+## Leads hybrid list sheets (2026-09-04)
+
+- **EloSync-Frontend:** Leads list **New** / shortcut `n` and board/table peek open a professional `EntityRecordSheet` (create, tabbed view, light edit) so agents stay on the list. **Create** closes the sheet; **Create & open** / **Open full page** use dedicated routes. Deep links and notifications still open full record pages. Playwright: `leads.sheet` plus updated shortcuts / page object.
+- **EloSync-Backend:** Catalog **leads 1.3.2 → 1.4.0**.
+- **EloSync-Docs:** Module development hybrid-sheet standard; Leads user guide create/peek flows; changelog.
+
 ## Invoice payments on view, billing email delivery, default T&Cs (2026-09-04)
 
 - **EloSync-Backend:** `BillingDocumentEmail` registers `ApplyEmailRuntimeConfig` on the `emails` queue (same as notifications); `BillingDocumentMailer` applies provider config before queueing. Invoice show eager-loads `payment_allocations` with nested payment. New workspace setting `invoice_default_terms_and_conditions` — PDF fallback for invoices/quotations/estimates when document terms are empty. Catalog **invoices 1.9.0 → 1.9.1**.
