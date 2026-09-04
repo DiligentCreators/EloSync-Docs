@@ -26,12 +26,12 @@ Open **Leads** from the sidebar under **CRM**. The default view is the **Kanban 
 
 ## Create & edit
 
-1. Click **New lead**, or press `N` when not typing in a field (requires **create**; browsers reserve `Ctrl+N` for a new window)
+1. Click **New lead**, or press `N` when not typing in a field (requires **create**; browsers reserve `Ctrl+N` for a new window). This opens a **side sheet** on the list so you can create without leaving the board or table.
 2. Enter name (required), **lead type** (Direct or Company), and optional contact / company / source / **lead value** / priority / status
 3. Optionally set stage and tags. New leads default to **you** as assignee (same as Contacts and Projects). Users with **assign** can pick another teammate or clear assignee before save; applying Follow Up Later requires a follow-up title and due date
-4. Save
+4. **Create** saves and closes the sheet (you stay on the list). **Create & open** saves and opens the full record page. Use **Full page** in the sheet header (or go to `/leads/new`) when you prefer the dedicated create page.
 
-Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Edit from the row menu or the record page.
+Press `⌘F` / `Ctrl+F` to focus the Leads search box (filters this list only). Click a lead name or board card to **peek** in the sheet (Overview, Notes, Follow-ups, Activity tabs). Use **Edit** in the sheet or **Open full page** for convert, AI, assignment history, and other deep work. Row menu **Open full page** also jumps straight to the record page. Notifications and `?lead=` deep links still open the full record page.
 
 ## High Priority (dashboard)
 

@@ -23,6 +23,7 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 - Assignment with **assignment history** table
 - Notes, follow-ups (create / update-reschedule / complete), activity timeline
 - **Kanban board (default)** + table view; drag-and-drop auto-saves the stage change
+- **Hybrid list sheet** — New / `N` and board/table peek open a side sheet for fast create and tabbed peek; dedicated record pages remain for convert, AI, deep links, and notifications
 - KPIs via `GET /leads/stats`; board via `GET /leads/board`
 - Export CSV / XLSX of the current filtered set (`leads.export`)
 - Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping (including optional first **Note**), duplicate modes, preview, queued processing, history + reports
