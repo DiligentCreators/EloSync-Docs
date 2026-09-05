@@ -12,12 +12,23 @@ Same filters as list (minus pagination/sort). Payload:
 
 `total`, `active`, `inactive`, `terminated`.
 
+## Next employee number
+
+### GET `/employees/meta/next-number`
+
+Permission: `employees.create`.
+
+Returns the next suggested `EMP-####` for the current workspace (considers soft-deleted rows). The create form prefills this value; callers may still override it on `POST /employees`.
+
+Payload: `{ "employee_number": "EMP-0001" }`.
+
 ## Employees CRUD
 
 | Method | Path | Permission |
 |--------|------|------------|
 | GET | `/employees` | `employees.view` |
 | GET | `/employees/stats` | `employees.view` |
+| GET | `/employees/meta/next-number` | `employees.create` |
 | POST | `/employees` | `employees.create` |
 | GET | `/employees/{employee}` | `employees.view` |
 | PUT | `/employees/{employee}` | `employees.update` |

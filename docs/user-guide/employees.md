@@ -16,8 +16,10 @@ Open **Employees** from the sidebar, under the **HR** group.
 ## Create & edit
 
 1. Click **New employee**
-2. Enter employee number and name (required); optionally email, phone, job title, department, hire/termination dates, employment type, status, linked user, and notes
+2. Employee number is prefilled with the next `EMP-####` (editable); enter name (required); optionally email, phone, job title, department, hire/termination dates, employment type, status, linked user, on-site/remote work hours, and notes
 3. Save
+
+Optional work hours apply when **Settings → Attendance → Per-employee work hours** is enabled (otherwise workspace office/remote hours are used for late classification).
 
 When the **Departments** module is installed, the free-text Department field is replaced by a multi-select of departments (synced via `department_ids`).
 

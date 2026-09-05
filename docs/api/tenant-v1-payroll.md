@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:payroll`, plus `can:payroll.*`.
 
-Catalog version: **1.2.0**.
+Catalog version: **1.3.0**.
 
 ## My pay slips (self-service)
 
@@ -28,7 +28,9 @@ Catalog version: **1.2.0**.
 | POST | `/payroll-profiles/{payrollProfile}/restore` | `payroll.restore` |
 | DELETE | `/payroll-profiles/{payrollProfile}/force` | `payroll.force.delete` |
 
-Create body: `employee_id` (required, unique per tenant), `base_salary` (required), optional `currency` (3 chars, default `USD`), `pay_frequency` (`monthly`\|`biweekly`\|`weekly`), `effective_from`, `notes`.
+Create body: `employee_id` (required, unique per tenant), `base_salary` (required), optional `currency` (3 chars, defaults to workspace currency from Settings → General), `pay_frequency` (`monthly`\|`biweekly`\|`weekly`), `effective_from`, `notes`.
+
+Pay-run lines include breakdown fields `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`, `late_count`, `late_deduction_days` (late ladder from Settings → Attendance).
 
 ## Pay runs
 
