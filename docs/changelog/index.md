@@ -1,5 +1,10 @@
 # Changelog
 
+## SPA scroll to top on navigation (2026-09-05)
+
+- **EloSync-Frontend:** Client-side route changes reset window scroll to the top of the new page (`ScrollToTop` in the router). Query-string updates on the same path (filters, pagination) do not. Vitest: `scroll-to-top`.
+- **EloSync-Docs:** Shared layout and Tenant Application navigation notes; changelog.
+
 ## List peek overviews (2026-09-05)
 
 - **EloSync-Frontend:** List/board record sheets that used the empty `ModuleRecordSheet` “Quick peek” stub now pass `renderOverview` with key fields (status, dates, assignee, amounts, etc.). Covers Tasks and other tenant CRUD peeks (Contacts, Companies, Opportunities, Activities, Meetings, To-Dos, Projects, Help Desk, and the remaining stub modules). Billing/line-item peeks were already field-complete. **Open full page** remains the escape hatch for notes, activity, and deep work.

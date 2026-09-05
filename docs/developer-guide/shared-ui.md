@@ -26,6 +26,7 @@ Tenant dashboard reuses shell + `WidgetContainer` patterns and renders widgets f
 ```mermaid
 flowchart TB
   subgraph shared [Shared shell]
+    ScrollToTop
     AppLayout
     Sidebar
     Topbar
@@ -49,7 +50,7 @@ flowchart TB
   AppLayout --> TenantPages
 ```
 
-1. **One `AppLayout`** wraps both protected route trees.
+1. **One `AppLayout`** wraps both protected route trees. `ScrollToTop` (inside the router) resets window scroll on pathname changes so the persistent shell does not keep the previous page’s scroll.
 2. **Navigation is data**, not duplicated components — swap groups by `AuthContext`.
 3. **Route helpers** resolve dashboard / profile / settings / login per context.
 4. **Business pages own their content**; they must not fork the shell.
