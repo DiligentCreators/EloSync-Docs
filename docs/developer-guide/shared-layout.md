@@ -65,7 +65,7 @@ Do **not** duplicate Sidebar/Topbar for Tenant. Parameterize via navigation conf
 
 **Page chrome**
 
-- `PageHeader`, `RecordPage`, `RecordSection`, `EntityRecordSheet` / `ModuleRecordSheet` (list-side quick create/peek; billing docs view-peek only), `FormSubmitSplit` (separate Create / Create & View buttons — no dropdown; module extras like Create & Send or Post), `LoadingState`, `ErrorState`, `EmptyState`, `WidgetContainer`
+- `PageHeader`, `RecordPage`, `RecordSection`, `EntityRecordSheet` / `ModuleRecordSheet` (list-side quick create/peek with `renderOverview` field summary; billing docs view-peek only), `FormSubmitSplit` (separate Create / Create & View buttons — no dropdown; module extras like Create & Send or Post), `LoadingState`, `ErrorState`, `EmptyState`, `WidgetContainer`
 
 **Primitives**
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## List peek overviews (2026-09-05)
+
+- **EloSync-Frontend:** List/board record sheets that used the empty `ModuleRecordSheet` “Quick peek” stub now pass `renderOverview` with key fields (status, dates, assignee, amounts, etc.). Covers Tasks and other tenant CRUD peeks (Contacts, Companies, Opportunities, Activities, Meetings, To-Dos, Projects, Help Desk, and the remaining stub modules). Billing/line-item peeks were already field-complete. **Open full page** remains the escape hatch for notes, activity, and deep work.
+- **EloSync-Docs:** Tasks user guide and module-development hybrid-sheet guidance updated; changelog.
+
 ## Platform hybrid list sheets (2026-09-04)
 
 - **EloSync-Frontend:** Shared `ModuleRecordSheet` + `EntityFormEmbedProvider` / `useEntitySheetState` roll list-side create/peek/edit sheets across tenant CRUD modules (mirror Leads). Simple modules: **New** / `n` opens the sheet; row/board peek uses tabs-ready sheet with **Open full page**. Heavy billing/line-item modules (invoices, quotations, estimates, credit notes, payments, purchase orders, journals): **view peek only** — create/edit stay on dedicated builder pages. Dedicated routes and deep links remain canonical.
