@@ -12,6 +12,7 @@ Open **Tasks** from the sidebar under **CRM**. The default view is the **Board**
 
 - Search by title or description
 - Each status column header and its cards use a fixed status color; Status badges in the list and record page match
+- Click a row or board card to open a **quick peek** sheet with status, priority, tags, description, assignee, due date, project, and creator — use **Edit** for light changes or **Open full page** for comments, assignment, and activity
 - Filter by status, priority, assignee, **tag**, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show **tags** and the **latest note**; hover a truncated preview to read the full note
