@@ -491,7 +491,7 @@ Phase 7 HR. Category `hr` (sort `70`). Free Marketplace opt-ins. Leave Managemen
 
 ### `payroll_profiles`
 
-`tenant_id`, `uuid`, `employee_id` (unique per tenant), `base_salary` (decimal 15,2), `currency` (char 3, default `USD`), `pay_frequency` (`monthly`\|`biweekly`\|`weekly`), nullable `effective_from` / `notes`, `created_by`, soft deletes.
+`tenant_id`, `uuid`, `employee_id` (unique per tenant), `base_salary` (decimal 15,2), `currency` (char 3; create defaults to workspace currency when omitted), `pay_frequency` (`monthly`\|`biweekly`\|`weekly`), nullable `effective_from` / `notes`, `created_by`, soft deletes.
 
 ### `pay_runs`
 

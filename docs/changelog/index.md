@@ -1,5 +1,17 @@
 # Changelog
 
+## Per-employee hours + late salary ladder (2026-09-06)
+
+- **EloSync-Backend:** Settings → Attendance adds per-employee schedule toggle, late deduction ladder (`X` lates → `Y` day salary), and toggles for absent / unpaid-leave salary deductions. Employees store optional on-site and remote start/end times. Late remote check-ins are status **Late** (work mode still remote). Pay runs store `late_count` / `late_deduction_days`; payslips list them. One late day never deducts; ladder highest-match applies. Catalog **employees / attendance / payroll → 1.3.0**.
+- **EloSync-Frontend:** Attendance settings UI for the new toggles and ladder editor; employee form work-hours fields; pay-run lines show late count/days.
+- **EloSync-Docs:** Attendance, payroll, employees, tenant settings, API notes; changelog.
+
+## Account decimals, payroll currency, employee number (2026-09-06)
+
+- **EloSync-Frontend:** `formatCurrency` always shows two decimal places (e.g. `0.87`, `$100.00`). Payroll profile create defaults currency to the workspace currency from Settings. Employee create prefills the next `EMP-####` (still editable). Vitest: `utils.currency`.
+- **EloSync-Backend:** Payroll profiles omit-currency create uses workspace currency (`TenantSettingService`). `GET /employees/meta/next-number` for create forms. Catalog **employees 1.1.0 → 1.2.0**, **payroll 1.2.1 → 1.2.2**.
+- **EloSync-Docs:** Employees / payroll user + API guides; changelog.
+
 ## Payroll list/peek approve + ModuleRecordSheet cache fix (2026-09-05)
 
 - **EloSync-Frontend:** Pay runs list row menu and quick peek expose **Approve** / **Mark paid** (permission-gated) so draft runs do not require the full page. Shared `ModuleRecordSheet` now caches `ApiSuccessResponse` (same shape as dedicated view pages) and accepts optional `renderViewActions` — fixes peek → **Open full page** hanging on Loading within `staleTime`. Playwright payroll suite approves from the list.
