@@ -40,6 +40,8 @@ See [tenant-v1-payroll.md](/api/tenant-v1-payroll).
 - API clients: `payrollProfileService`, `payRunService` in `src/api/services.ts`
 - Keys / permissions: `QUERY_KEYS.payroll*`, `QUERY_KEYS.payRuns*`, `PERMISSIONS.payroll`
 - Nav under **HR** (module `payroll`)
+- List / peek: **Approve** and **Mark paid** on the pay runs row menu and quick peek (`renderViewActions`); full page still has Post to journal
+- Catalog version **1.2.1**
 
 ## Tests
 

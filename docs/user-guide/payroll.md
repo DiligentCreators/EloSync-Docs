@@ -19,8 +19,8 @@ Enable **Employees** first, then install **Payroll** from Marketplace (free). Fo
    - Unexcused absences come from Attendance `absent` / uncovered `half_day` records that do not overlap approved leave (when Attendance is installed)
    - Net is never negative; draft lines stay editable
 3. While **draft**, edit period notes and line gross/adjustments (net recalculates). Breakdown columns (work days, unpaid leave, absent) are shown for audit.
-4. **Approve** (requires at least one line) → **Pay** to mark paid.
-5. Optionally **Post** to Accounting (approved or paid) to create a draft journal for the net total.
+4. **Approve** from the pay runs list row menu, the quick peek, or the full record page (requires at least one line) → **Mark paid** the same way.
+5. Optionally **Post** to Accounting from the full record page (approved or paid) to create a draft journal for the net total.
 
 ## My salary slips (employees)
 
