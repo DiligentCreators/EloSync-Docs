@@ -1,5 +1,11 @@
 # Changelog
 
+## Payroll list/peek approve + ModuleRecordSheet cache fix (2026-09-05)
+
+- **EloSync-Frontend:** Pay runs list row menu and quick peek expose **Approve** / **Mark paid** (permission-gated) so draft runs do not require the full page. Shared `ModuleRecordSheet` now caches `ApiSuccessResponse` (same shape as dedicated view pages) and accepts optional `renderViewActions` — fixes peek → **Open full page** hanging on Loading within `staleTime`. Playwright payroll suite approves from the list.
+- **EloSync-Backend:** Catalog **payroll 1.2.0 → 1.2.1**.
+- **EloSync-Docs:** Payroll user guide workflow; module-development hybrid-sheet cache note; changelog.
+
 ## SPA scroll to top on navigation (2026-09-05)
 
 - **EloSync-Frontend:** Client-side route changes reset window scroll to the top of the new page (`ScrollToTop` in the router). Query-string updates on the same path (filters, pagination) do not. Vitest: `scroll-to-top`.
