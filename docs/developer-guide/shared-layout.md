@@ -7,22 +7,25 @@ App: `EloSync-Frontend` (React 19 + Vite).
 Both applications render authenticated pages through the same `AppLayout`:
 
 ```
-HashRouter
-├── ScrollToTop      (window.scrollTo(0, 0) on pathname change)
-└── AppLayout
-    ├── Sidebar          (context-aware nav + brand subtitle; ~w-60 expanded)
-    ├── Topbar           (h-14; collapse tip shows ⌘/Ctrl+B)
-    │   ├── Collapse / mobile menu
-    │   ├── Breadcrumbs
-    │   ├── Command palette trigger (⌘K)
-    │   ├── Theme toggle
-    │   ├── Notifications
-    │   ├── Settings shortcut
-    │   └── User menu
-    ├── <Outlet />       (page content; compact padding)
-    ├── GlobalShortcuts  (mod+b sidebar)
-    └── CommandPalette   (mod+k)
+ErrorBoundary          (root in main.tsx; stale-chunk deploy recovery)
+└── HashRouter
+    ├── ScrollToTop      (window.scrollTo(0, 0) on pathname change)
+    └── AppLayout
+        ├── Sidebar          (context-aware nav + brand subtitle; ~w-60 expanded)
+        ├── Topbar           (h-14; collapse tip shows ⌘/Ctrl+B)
+        │   ├── Collapse / mobile menu
+        │   ├── Breadcrumbs
+        │   ├── Command palette trigger (⌘K)
+        │   ├── Theme toggle
+        │   ├── Notifications
+        │   ├── Settings shortcut
+        │   └── User menu
+        ├── <Outlet />       (page content; compact padding)
+        ├── GlobalShortcuts  (mod+b sidebar)
+        └── CommandPalette   (mod+k)
 ```
+
+Route modules use `lazyWithDeployRecovery` (see `src/lib/spa-deploy-recovery.ts`). After a production deploy, open tabs that hit a missing hashed chunk auto-reload once instead of showing the root “Something went wrong” screen.
 
 Module list pages also register `useModuleShortcuts` (`n` create — not Ctrl+N, browser-reserved; `mod+f` module search).
 
@@ -63,6 +66,7 @@ Do **not** duplicate Sidebar/Topbar for Tenant. Parameterize via navigation conf
 **Shell**
 
 - `AppLayout`, `Sidebar`, `Topbar`, `Breadcrumbs`, `UserMenu`, `CommandPalette`, `GlobalShortcuts`, `ThemeToggle`, `ScrollToTop` (mounted in `App.tsx` inside the router; resets window scroll on pathname change, not query-string filters)
+- Root `ErrorBoundary` + `installSpaDeployRecovery()` / `lazyWithDeployRecovery` — one-shot reload when a post-deploy lazy chunk 404s
 - Hooks: `useHotkeys`, `useModuleShortcuts` — see [Module Development Guide](/developer-guide/module-development-guide#frontend-checklist)
 
 **Page chrome**
