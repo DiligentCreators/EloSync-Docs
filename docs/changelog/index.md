@@ -1,5 +1,15 @@
 # Changelog
 
+## SPA stale-chunk reload after deploy (2026-09-07)
+
+- **EloSync-Frontend:** After a production deploy, open tabs that hit a missing Vite lazy chunk auto-reload once instead of showing the root “Something went wrong” screen (`vite:preloadError`, `lazyWithDeployRecovery`, ErrorBoundary recovery). Vitest: `spa-deploy-recovery`.
+- **EloSync-Docs:** Production runbook, frontend build artifacts, shared layout; changelog.
+
+## Fix migrate:fresh --seed demo tenant ID (2026-09-06)
+
+- **EloSync-Backend:** `DatabaseSeeder` no longer mutes Eloquent events for `local:seed-demo`. `WithoutModelEvents` on the whole seeder blocked Stancl `GeneratesIds`, so creating `demo-crm` failed with `Field 'id' doesn't have a default value`. Central seed still runs inside `Model::withoutEvents()`; `TenantService` / `TenantFactory` also set string IDs explicitly as a safety net.
+- **EloSync-Docs:** Changelog.
+
 ## Per-employee hours + late salary ladder (2026-09-06)
 
 - **EloSync-Backend:** Settings → Attendance adds per-employee schedule toggle, late deduction ladder (`X` lates → `Y` day salary), and toggles for absent / unpaid-leave salary deductions. Employees store optional on-site and remote start/end times. Late remote check-ins are status **Late** (work mode still remote). Pay runs store `late_count` / `late_deduction_days`; payslips list them. One late day never deducts; ladder highest-match applies. Catalog **employees / attendance / payroll → 1.3.0**.

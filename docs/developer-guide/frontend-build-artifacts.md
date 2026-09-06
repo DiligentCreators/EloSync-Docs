@@ -123,6 +123,10 @@ Forge site settings: repository `EloSync-Frontend`, branch **`build-artifacts`**
 - SPA API URL and Reverb app key are public; keep them on Forge `.env` per site
 - Never put `REVERB_APP_SECRET` in SPA env or `config.js`
 
+## Stale open tabs after deploy
+
+Hashed files under `assets/` change on every build. Users who leave a tab open keep the previous shell until navigation loads a new lazy chunk. The SPA listens for Vite preload / dynamic-import failures and reloads once (`spa-deploy-recovery`) so production updates do not strand authenticated users on “Something went wrong”. Operators must still serve `index.html` with short TTL / `no-cache` — see [Production Runbook](/deployment/platform-production-runbook#frontend-spa-deploy).
+
 ## Related
 
 - [Laravel Forge Deployment](/deployment/laravel-forge)

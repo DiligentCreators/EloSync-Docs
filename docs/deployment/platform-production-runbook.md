@@ -49,6 +49,8 @@ Cache guidance:
 - Hashed assets under `assets/` — long-lived immutable cache
 - Use `build-info.json` on the artifact branch to confirm which `main` commit was built
 
+**Stale-tab recovery:** Open SPA sessions keep an in-memory shell. After a deploy, navigating to a lazy route can 404 an old hashed chunk. The SPA auto-reloads once on `vite:preloadError` / dynamic-import failures (`src/lib/spa-deploy-recovery.ts`) so users pick up the new build without a manual refresh. Keep `index.html` uncacheable so that reload fetches the current asset map.
+
 Point `FRONTEND_URL` / `CORS_ALLOWED_ORIGINS` on the API at the SPA origin(s).
 
 ## Required background processes
