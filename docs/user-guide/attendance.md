@@ -37,16 +37,25 @@ Managers and admins can:
 
 1. View everyone’s records, KPI stats, and who is checked in now (on-site vs remote).
 2. **Record attendance** for any employee and date (one record per employee per day).
-3. Edit check-in / check-out times, status, and notes for corrections.
+3. Edit check-in / check-out times, status, and notes for corrections — a **reason for change** is required and appears on the record’s **Edit history**.
 4. Manage attendance reasons (admin/owner).
+
+Manual create/edit also captures the actor’s IP and best-effort browser location (when the browser allows it). Self check-in/out and optional login auto check-in do the same.
+
+## Location & edit history
+
+- **IP** is always stored from the server for check-in, check-out, login auto check-in, and manual create/update when times are set.
+- **Location** (lat/lng) is best-effort from the browser — punches still succeed if permission is denied or times out.
+- The attendance **view** page shows **Edit history**: who changed the record, why (`change_reason` on create/update via `attendance.update` / `attendance.create`), and field diffs. Self check-in/out appear as checked-in / checked-out events without a correction reason.
 
 ## Daily records
 
 1. Open **Attendance**.
 2. Create or complete a record for the day (staff: self only; managers: any employee).
-3. Optionally set check-in and check-out times (managers may edit either).
-4. Choose status: Present, Absent, Half day, Remote, or Late.
-5. Add notes if needed.
+3. Enter a **reason for entry / change** (required for audit).
+4. Optionally set check-in and check-out times (managers may edit either).
+5. Choose status: Present, Absent, Half day, Remote, or Late.
+6. Add notes if needed.
 
 Status badges use fixed colors so presence is easy to scan: **Present** (green), **Late** (red), **Absent** (slate), **Half day** (amber), **Remote** (blue).
 

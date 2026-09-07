@@ -1,5 +1,11 @@
 # Changelog
 
+## Attendance location + edit history (2026-09-07)
+
+- **EloSync-Backend:** Self check-in/out, login/2FA/passkey auto check-in, and manual create/update stamp **IP** from the request and best-effort **lat/lng** from the client. Manual create/update require `change_reason`. New `attendance_record_activities` timeline (`GET …/timeline`) records who/why/field diffs. Catalog **attendance 1.3.0 → 1.4.0**.
+- **EloSync-Frontend:** Check-in/out dialogs, create/edit form, and tenant login/2FA/passkey send best-effort geolocation. Create/edit require a reason. Attendance view shows **Edit history**.
+- **EloSync-Docs:** Attendance user/developer/API/deployment guides; changelog.
+
 ## Consistent 12-hour AM/PM casing (2026-09-07)
 
 - **EloSync-Frontend:** Tenant dashboard widget times and the impersonation expiry banner use `formatAppTime` (workspace `time_format`) instead of browser `toLocaleTimeString`, so 12-hour clocks always show uppercase **AM** / **PM** like the rest of the SPA.
