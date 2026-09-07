@@ -66,6 +66,7 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 | Piece | Path |
 |-------|------|
 | Page | `src/pages/help-desk/` (`help-desk-page.tsx`, `help-desk-form.tsx`, `help-desk-form-page.tsx`, `help-desk-view-page.tsx`, `help-desk-categories-dialog.tsx`, `help-desk-sla-policies-dialog.tsx`, `help-desk-mailboxes-dialog.tsx`) |
+| Shared board | `src/components/crm/kanban-board.tsx` (status Kanban; per-column vertical scroll + contained horizontal scroll; titles stay fixed) |
 | View page | Details (category, priority, status, due date, SLA clocks, source, assignee, related contact/company + soft-gated WhatsApp template picker, related KB articles), notes with `@mentions`, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
 | Form page | Subject, description, category picker, priority, due date, conditional contact/company pickers, and **Knowledge base articles** multi-select when `hasModule('knowledge-base')` + `knowledge-base.view` |
 | Service | `helpDeskService` + `helpDeskCategoryService` + `helpDeskSlaPolicyService` + `helpDeskMailboxService` in `src/api/services.ts` |

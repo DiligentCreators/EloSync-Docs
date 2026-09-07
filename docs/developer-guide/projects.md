@@ -73,6 +73,7 @@ SPA should mirror **Tasks** (board default + list, create/edit page, record page
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/projects/` (board + list) |
+| Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed) |
 | Form / detail | create/edit page + record page (overview, members, notes, timeline) |
 | Service | `projectService` in `src/api/services.ts` |
 | Types | `Project*` in `src/types/api.ts`; Task gains optional `project_id` / `project` |

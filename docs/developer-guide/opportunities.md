@@ -53,6 +53,7 @@ SPA should mirror **Leads** (board default + table, create/edit page, record pag
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/opportunities/` |
+| Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed) |
 | Form / detail | create/edit page + record page (Overview, Notes, Activity); board DnD auto-saves stage on the list page |
 | Service | `opportunityService` in `src/api/services.ts` |
 | Nav | `permission: opportunities.view`, `module: 'opportunities'` (Sales) |
