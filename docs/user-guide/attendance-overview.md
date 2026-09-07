@@ -21,6 +21,8 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 - Status: `present` \| `absent` \| `half_day` \| `remote` \| `late` (SPA badges: Present green, Late red, Absent slate, Half day amber, Remote blue)
 - Office hours settings; login auto check-in **off by default** (opt-in setting)
 - Notes, soft delete / restore / force delete
+- Check-in/out **IP** (always) + best-effort **location**; required **change reason** on manual create/update (`attendance.create` / `attendance.update`)
+- Record **edit history** timeline (`GET …/timeline`)
 - KPIs via `GET /attendance-records/stats` (total + counts per status + open presence)
 - Module licensing (`module:attendance`) + Spatie permissions — **free Marketplace opt-in**
 - Hard dependency on `employees`
@@ -29,7 +31,7 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 
 `attendance.view` · `create` · `update` · `delete` · `restore` · `force.delete`
 
-Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in, version **1.2.0**.
+Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in, version **1.4.0**.
 
 ## Explicitly deferred
 

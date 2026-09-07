@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.2.0** (self check-in/out, reasons, remote grace)
+- Current catalog version: **1.4.0** (location capture, required change reason, edit history timeline)
 
 ## Bootstrap
 
