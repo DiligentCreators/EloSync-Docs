@@ -1,5 +1,10 @@
 # Changelog
 
+## Consistent 12-hour AM/PM casing (2026-09-07)
+
+- **EloSync-Frontend:** Tenant dashboard widget times and the impersonation expiry banner use `formatAppTime` (workspace `time_format`) instead of browser `toLocaleTimeString`, so 12-hour clocks always show uppercase **AM** / **PM** like the rest of the SPA.
+- **EloSync-Docs:** Tenant settings timezone note; changelog.
+
 ## Kanban production scroll hardening (2026-09-07)
 
 - **EloSync-Frontend:** Production follow-up on board scroll: column scrollports no longer use `touch-none` (finger pan works; drag stays on cards), board height uses a fixed `100dvh - 16rem` chrome budget, dnd-kit auto-scroll skips the document and targets board/column scrollers, and `data-tour="module-table"` is only on `ModuleListSurface` (`data-kanban-board` on the board). Vitest + Playwright board visibility anchors updated.
