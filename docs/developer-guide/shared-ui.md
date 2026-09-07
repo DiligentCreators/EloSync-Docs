@@ -16,6 +16,7 @@ Business functionality will differentiate the apps later; the shell must not req
 | App chrome | `layouts/app-layout.tsx` + `components/layout` |
 | Motion / density | Compact admin density: Inter, sidebar `w-60` / collapsed `w-14`, topbar `h-14`, content `px-4`–`px-6`, control `h-9` |
 | Keyboard shortcuts | Global: `GlobalShortcuts` (`mod+b`); pages: `mod+k` command palette; modules: `useModuleShortcuts` (`n` create, `mod+f` search) |
+| Kanban board | `components/crm/kanban-board.tsx` inside `ModuleListSurface` — per-column vertical scroll (titles fixed), contained horizontal scroll (`data-kanban-board`), document auto-scroll disabled during drag |
 
 Central-specific dashboard widgets (tenant analytics, platform health, marketplace shortcuts) stay in `components/dashboard` and are **not** reused on the Tenant dashboard.
 

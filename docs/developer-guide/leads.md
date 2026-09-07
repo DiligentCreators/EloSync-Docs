@@ -116,7 +116,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Detail | `lead-view-page.tsx` (`/leads/:id`) — stacked cards; board DnD auto-saves stage on the list page |
 | Import wizard | `lead-import-dialog.tsx` (5-step) |
 | Import history | `lead-import-history-dialog.tsx` |
-| Shared board | `src/components/crm/kanban-board.tsx` |
+| Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed; touch pan on column lists) |
 | Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`, `lead.inactive`, `lead.inactive_escalation`) |
 | Service | `leadService` in `src/api/services.ts` |

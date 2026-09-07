@@ -39,7 +39,8 @@ Shared constants in `TOUR_SELECTORS`:
 | `[data-tour="page-header"]` | Page title block |
 | `[data-tour="module-actions"]` | Header actions (includes help icon) |
 | `[data-tour="module-filters"]` | FilterBar (or report controls) |
-| `[data-tour="module-table"]` | DataTable or KanbanBoard |
+| `[data-tour="module-table"]` | `ModuleListSurface` / DataTable shell (Kanban lives inside the surface) |
+| `[data-kanban-board]` | Shared `KanbanBoard` horizontal scroll region |
 | `[aria-label="KPI summary"]` | KPI strip |
 | `[aria-label="View mode"]` | Board/table toggle |
 | `[data-tour="user-menu"]` | Avatar button (shared Give Feedback step) |

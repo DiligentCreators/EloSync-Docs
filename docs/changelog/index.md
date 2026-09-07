@@ -1,5 +1,15 @@
 # Changelog
 
+## Kanban production scroll hardening (2026-09-07)
+
+- **EloSync-Frontend:** Production follow-up on board scroll: column scrollports no longer use `touch-none` (finger pan works; drag stays on cards), board height uses a fixed `100dvh - 16rem` chrome budget, dnd-kit auto-scroll skips the document and targets board/column scrollers, and `data-tour="module-table"` is only on `ModuleListSurface` (`data-kanban-board` on the board). Vitest + Playwright board visibility anchors updated.
+- **EloSync-Docs:** Shared UI / module tours + board module developer notes; changelog.
+
+## Kanban column + board scroll containment (2026-09-07)
+
+- **EloSync-Frontend:** Shared `KanbanBoard` gives each column its own vertical scroller (titles stay fixed) and contains horizontal overflow inside the board surface (`min-w-0` + `scrollbar-modern`), matching table-style contained scroll instead of browser page scrollbars. `ModuleListSurface` is width-bounded (`w-full min-w-0`). Applies to Leads, Tasks, Opportunities, Projects, Help Desk, and To-Dos. Vitest: `kanban-board`.
+- **EloSync-Docs:** Tasks developer guide shared-board note; changelog.
+
 ## SPA stale-chunk reload after deploy (2026-09-07)
 
 - **EloSync-Frontend:** After a production deploy, open tabs that hit a missing Vite lazy chunk auto-reload once instead of showing the root “Something went wrong” screen (`vite:preloadError`, `lazyWithDeployRecovery`, ErrorBoundary recovery). Vitest: `spa-deploy-recovery`.

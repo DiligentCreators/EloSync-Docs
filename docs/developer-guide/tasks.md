@@ -74,7 +74,7 @@ Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). 
 | Page | `src/pages/tasks/tasks-page.tsx` (board default + list; list row menu Complete/Reopen via `tasks.complete`) |
 | Form | `task-form-dialog.tsx` |
 | Detail | `task-detail-sheet.tsx` (Comments + History; Comments use `MentionComposer`; board DnD auto-saves status on the list page) |
-| Shared board | `src/components/crm/kanban-board.tsx` |
+| Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed; touch pan on column lists) |
 | Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |
 | Service | `taskService` in `src/api/services.ts` |

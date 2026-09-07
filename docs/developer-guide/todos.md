@@ -61,7 +61,7 @@ Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). 
 | Page | `src/pages/todos/todos-page.tsx` (board default + list) |
 | Form | `todo-form-dialog.tsx` |
 | Detail | `todo-detail-sheet.tsx` (overview; edit/delete gated to creator; board DnD auto-saves status on the list page) |
-| Shared board | `src/components/crm/kanban-board.tsx` |
+| Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed; touch pan on column lists) |
 | Service | `todoService` in `src/api/services.ts` |
 | Nav | `permission: todos.view`, `module: 'todos'` |
 
