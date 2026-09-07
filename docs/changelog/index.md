@@ -1,5 +1,11 @@
 # Changelog
 
+## Automation related-context builder (2026-09-08)
+
+- **EloSync-Backend:** Semantic `trigger_assignee`; tag/stage by id or name/slug; `create_task` note-link + opt-in `create_lead_follow_up`; Catalog **1.1.0 → 1.1.1** (migrate + CatalogSeeder). Pest related suites.
+- **EloSync-Frontend:** Builder pickers, multi-notify, schedule config, Manual Run related-record dialog; Playwright related-context chrome.
+- **EloSync-Docs:** User/developer guides + [related-context production readiness](/deployment/automation-related-context-production-readiness) (**Go**); changelog.
+
 ## Attendance location + edit history (2026-09-07)
 
 - **EloSync-Backend:** Self check-in/out, login/2FA/passkey auto check-in, and manual create/update stamp **IP** from the request and best-effort **lat/lng** from the client. Manual create/update require `change_reason`. New `attendance_record_activities` timeline (`GET …/timeline`) records who/why/field diffs. Catalog **attendance 1.3.0 → 1.4.0**.

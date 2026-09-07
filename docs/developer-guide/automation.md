@@ -1,6 +1,6 @@
 # Automation — Developer Guide
 
-Billable marketplace module (`automation` v1.0.0). Mirrors Tasks packaging; domain logic lives in a cross-module engine that subscribes to existing domain events.
+Billable marketplace module (`automation` **1.1.1**). Mirrors Tasks packaging; domain logic lives in a cross-module engine that subscribes to existing domain events.
 
 ## Backend layout
 
@@ -9,6 +9,7 @@ Billable marketplace module (`automation` v1.0.0). Mirrors Tasks packaging; doma
 | Models | `app/Models/Automation{Workflow,Trigger,Condition,Action,Run,Log}.php` |
 | Enums | `AutomationRunStatusEnum`, `AutomationConditionOperatorEnum`, `AutomationLogLevelEnum` |
 | Services | `app/Services/Tenant/Automation/*` (`WorkflowService`, `AutomationEngine`, `ConditionEvaluator`, `ActionRunner`, registries, handlers) |
+| Related resolver | `Support/AutomationRelatedResolver` — `trigger_assignee`, tag/stage by id or name/slug, related-entity labels |
 | Bridge | `Listeners/AutomationEventBridge` (registered in `AppServiceProvider`) |
 | Job | `ExecuteAutomationRunJob` on queue `automations` |
 | Schedule | `automation:dispatch-schedules` every minute |
@@ -16,6 +17,14 @@ Billable marketplace module (`automation` v1.0.0). Mirrors Tasks packaging; doma
 | Policies | `AutomationWorkflowPolicy`, `AutomationRunPolicy` |
 | Notification | `AutomationWorkflowNotification` (`NotificationSourceEnum::Workflow`) |
 | Tests | `tests/Feature/Tenant/Automation/*`, `tests/Unit/Automation/*` |
+
+## Related context (1.1.1)
+
+- Trigger payloads already include `entity_type` / `entity_id` plus record fields. Entity-bound actions (assign, tag, note, move stage) use that target automatically.
+- Config may use semantic **`trigger_assignee`** (resolves `assigned_to` → `new_assignee_id` → `host_id`) for `create_task.assigned_to`, `assign_user.user_id`, and `send_notification.user_ids` (arrays supported).
+- Tags/stages accept numeric ids or matching **name/slug**.
+- `create_task` appends a related-entity line and posts a note on lead/opportunity/task. Lead **follow-up** requires `create_lead_follow_up: true` (templates enable it).
+- Manual Run accepts `payload` with related entity fields; SPA dialog picks a record for entity-bound triggers.
 
 ## Activation gate
 
@@ -51,7 +60,7 @@ Schedule evaluation uses workspace timezone from `TenantSettingService` — see 
 
 | Piece | Path |
 |-------|------|
-| Pages | `src/pages/automation/*` |
+| Pages | `src/pages/automation/*` (`automation-action-config.tsx` pickers + tokens) |
 | API | `automationService` in `src/api/services.ts` |
 | Nav / routes | `module: 'automation'`, `/automation*` |
 | E2E | `npm run test:e2e:automation` |
