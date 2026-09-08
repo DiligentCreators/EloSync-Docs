@@ -27,12 +27,13 @@ Operations module on the frozen platform. A workspace register of company equipm
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:assets`) + Spatie permissions — **free Marketplace opt-in**, no hard dependencies
 - Audit + activity logging
+- Automation trigger `asset.created` when Automation is entitled
 
 ## Permissions
 
 `assets.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 80`, version **1.1.0**.
+Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 80`, version **1.2.0**.
 
 ## Soft links (not install dependencies)
 
@@ -49,4 +50,3 @@ Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operati
 - Maintenance tickets → Help Desk
 - Attachments / barcodes / QR
 - Dashboard widget
-- Automation triggers

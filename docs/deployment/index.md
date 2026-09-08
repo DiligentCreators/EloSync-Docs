@@ -20,7 +20,9 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Notification System](./notifications) | Redis, workers, Reverb, rollout checklist, troubleshooting |
 | [RC1 Production Readiness](./rc1-production-readiness) | Release candidate hardening notes (absorbed into v1.1.0) |
 | [Phase 7 HR Production Readiness](./hr-phase7-production-readiness) | HR go-live checklist, smoke, rollback, sign-off |
-| [Automation Production Readiness](./automation-production-readiness) | Automation go-live checklist, smoke, rollback, sign-off |
+| [Automation Production Readiness](./automation-production-readiness) | Automation v1.0.0 go-live checklist (superseded for current ship) |
+| [Automation 1.1.1 Related-context Readiness](./automation-related-context-production-readiness) | Pickers / `trigger_assignee` / create_task link — Conditional Go |
+| [Automation 1.3.0 Cross-module Readiness](./automation-1-3-0-production-readiness) | Sole fan-out + cross-module triggers/templates — **Go** |
 | [WhatsApp Cloud Production Readiness](./whatsapp-cloud-production-readiness) | WhatsApp Cloud MVP go-live checklist, smoke, residual risk |
 | [Knowledge Base Production Readiness](./knowledge-base-production-readiness) | Knowledge Base audit, go-live checklist, smoke, rollback, sign-off |
 | [Storage Production Readiness](./storage-production-readiness) | Storage module audit, blockers, smoke, rollback, sign-off |

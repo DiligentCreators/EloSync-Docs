@@ -68,7 +68,6 @@ Default role map: **admin** gets all except `force.delete`; **manager** gets vie
 - Attachments / image upload
 - Nested categories
 - Dashboard widget
-- Automation triggers
 - Publish fan-out notifications
 
 ## Related

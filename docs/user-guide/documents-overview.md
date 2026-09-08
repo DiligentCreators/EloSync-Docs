@@ -23,6 +23,7 @@ Operations module on the frozen platform. A workspace **flat file library** — 
 - Bulk soft delete (active list) and bulk permanent delete (Deleted only)
 - Table view with search, category filter, and trash filters
 - KPIs via `GET /documents/stats` (total, categorized, uncategorized)
+- Automation trigger `document.created` when Automation is entitled
 - File bytes count toward the workspace **Storage** quota (`documents.size_bytes`)
 - Module licensing (`module:documents`) + Spatie permissions — **free Marketplace opt-in**, **requires Storage**
 - Audit logging on create / update / soft delete / restore / force delete
@@ -56,4 +57,3 @@ See [Storage](/user-guide/storage).
 - Versioning / check-in / check-out
 - Preview / in-browser viewers
 - Dashboard widget
-- Automation triggers
