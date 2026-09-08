@@ -65,8 +65,10 @@ Optional env: `AUTOMATION_WEBHOOK_SECRET` (default HMAC when a webhook action om
 3. Templates → Use template → workflow opens **inactive**
 4. Save & activate a **Manual** + Create task (or notification) workflow
 5. **Run** → Runs page shows pending/running then completed or failed with logs
-6. Pick an unwired trigger (Contact created) → **Save & activate** stays disabled / API 422; workflow remains inactive
+6. Pick a **module-gated** trigger (e.g. WhatsApp Message Received without WhatsApp Cloud) → **Save & activate** stays disabled / API 422; workflow remains inactive. See current smoke in [Automation 1.3.0 readiness](./automation-1-3-0-production-readiness).
 7. Optional: schedule daily `H:i` in workspace timezone; wait for dispatcher; confirm a single run (no duplicates)
+
+> **Superseded scope:** This page documents the original **v1.0.0** ship. Current catalog is **1.3.0** — use [Automation 1.3.0 production readiness](./automation-1-3-0-production-readiness) for go-live. Contact created is now wired (not “coming soon”).
 
 ---
 

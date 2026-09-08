@@ -4,7 +4,7 @@
 
 - Catalog slug: `automation`
 - Billable marketplace add-on (`is_default_included: false`, `is_billable: true`)
-- Catalog version: **1.0.0**
+- Catalog version: **1.3.0**
 - Initial price: **$29 / month**, **$290 / year** (same tier as Branded)
 - Workspaces must install from Marketplace; migrate does **not** auto-install
 
@@ -50,4 +50,5 @@ Shared cache driver required for `onOneServer()` locks. Schedule matching uses a
 6. Smoke: Marketplace install → create from template → activate → manual run → Runs page shows completed/failed with logs
 
 Full go-live checklist: [Automation production readiness](./automation-production-readiness).  
-Related-context PATCH (**1.1.1**): [Automation related-context production readiness](./automation-related-context-production-readiness).
+Related-context PATCH (**1.1.1**): [Automation related-context production readiness](./automation-related-context-production-readiness).  
+Cross-module triggers MINOR (**1.3.0**): [Automation 1.3.0 production readiness](./automation-1-3-0-production-readiness) — sole `IntegrationEventDispatcher` fan-out; installed-module catalog gating; expanded trigger/template coverage.

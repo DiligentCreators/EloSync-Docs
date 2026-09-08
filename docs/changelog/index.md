@@ -1,5 +1,11 @@
 # Changelog
 
+## Automation real-world coverage (2026-09-08)
+
+- **EloSync-Backend:** Removed dual `AutomationEventBridge` (sole fan-out = `IntegrationEventDispatcher`). Wired Contacts / Quotations / Expenses / Employees / Payments / Credit Notes / Projects / Estimates / Contracts / Purchase Orders / Leave / Documents / Knowledge Base / Assets triggers; fixed invoice module slug to `invoices`. Templates gain `required_modules` + entitlement filter. Catalog **automation 1.1.1 → 1.2.0 → 1.3.0** (+ companion module MINOR bumps; CatalogSeeder versions aligned). Pest: CrossModule samples, template entitlement negatives, registry↔dispatcher parity.
+- **EloSync-Frontend:** Builder respects catalog `available` (Module not installed); activate disabled until entitled; one-session Playwright human workflow (`test:e2e:automation`).
+- **EloSync-Docs:** User recipes, developer Automation + Module Development Automation hooks checklist; [1.3.0 production readiness](/deployment/automation-1-3-0-production-readiness) (**Go**); changelog; deferred Automation trigger notes cleared for wired modules.
+
 ## Automation related-context builder (2026-09-08)
 
 - **EloSync-Backend:** Semantic `trigger_assignee`; tag/stage by id or name/slug; `create_task` note-link + opt-in `create_lead_follow_up`; Catalog **1.1.0 → 1.1.1** (migrate + CatalogSeeder). Pest related suites.

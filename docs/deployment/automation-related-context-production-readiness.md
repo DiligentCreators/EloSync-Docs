@@ -72,8 +72,10 @@ No new env vars. Queue `automations` + `automation:dispatch-schedules` remain ma
 4. Custom create_task **without** “Also create a lead follow-up” → task + note only
 5. Manual **Run** on that workflow → pick a lead → run completes with related context
 6. Schedule daily `H:i` in workspace timezone → one run in window
-7. Unwired **Contact created** cannot Save & activate
+7. Module-gated trigger (e.g. WhatsApp without WhatsApp Cloud) cannot Save & activate — see [1.3.0 readiness](./automation-1-3-0-production-readiness)
 8. Numeric ID configs on older workflows still run
+
+> **Note:** Contact created is wired as of Automation **1.3.0**. This page remains the related-context **1.1.1** audit; use [1.3.0 readiness](./automation-1-3-0-production-readiness) for current go-live.
 
 ---
 

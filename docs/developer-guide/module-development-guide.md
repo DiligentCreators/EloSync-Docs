@@ -48,6 +48,21 @@ Domain **notes** and **activities** relationships on show payloads default to **
 
 Dispatch domain events from the service layer. Listeners handle audit side-effects and notifications. Do **not** build per-module notification stacks outside Laravel notifications.
 
+## Automation hooks (required when the module emits lifecycle events)
+
+When a module has create / status / assign (or similar) domain events that operators should automate:
+
+1. Register trigger(s) in `AutomationTriggerRegistry` with `module` => `'{slug}'` and `wired` => `true` (or document why not in the module overview deferred list).
+2. Fan out **only** via `IntegrationEventDispatcher` + `IntegrationEventPayloadBuilder` (payloads must include `entity_type` / `entity_id` and assignee fields when applicable). Do **not** add a parallel Automation event bridge.
+3. Gate create-style actions that depend on another module with that module’s slug (for example `create_task` → `tasks`).
+4. Optionally add a starter template in `WorkflowTemplateRegistry` with `required_modules`.
+5. Pest: entitlement gate + happy-path run; Playwright when the builder catalog changes.
+6. Catalog version bump + Docs / CHANGELOG in the same milestone.
+
+Catalog APIs mark triggers/actions `available` from `EntitlementService::hasModule`. The SPA builder disables unavailable items; `WorkflowService::activate` remains the hard gate.
+
+See [Automation developer guide](/developer-guide/automation).
+
 ## Dashboard widgets
 
 When a module contributes dashboard cards:

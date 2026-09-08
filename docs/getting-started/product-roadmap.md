@@ -143,9 +143,10 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 ### Other Operations deferred
 
 - Projects: Gantt, milestones, task dependencies, workload heatmaps, Automation `create_project`
-- Knowledge Base: public URLs, nested categories, Automation triggers
+- Knowledge Base: public URLs, nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
+- Automation: Marketing campaigns / email campaigns (separate SKUs); branching; generate quote/invoice/order actions
 
 ---
 

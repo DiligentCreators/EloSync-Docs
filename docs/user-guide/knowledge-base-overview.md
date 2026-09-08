@@ -1,6 +1,6 @@
 # Knowledge Base Module
 
-Free Operations Marketplace module for **internal** team help articles, categories, and searchable FAQs. Catalog version **1.1.0**. There is no public or customer portal in v1.
+Free Operations Marketplace module for **internal** team help articles, categories, and searchable FAQs. Catalog version **1.2.0**. There is no public or customer portal in v1.
 
 ## Guides
 
@@ -22,6 +22,7 @@ Free Operations Marketplace module for **internal** team help articles, categori
 - Notes + domain timeline; Spatie `LogsActivity` + platform audit events
 - Module licensing (`module:knowledge-base`) for install; Spatie permissions for all access
 - Internal workspace only — no public URLs or customer portal
+- Automation trigger `knowledge_base.article_created` when Automation is entitled
 
 ## Permissions
 
@@ -44,5 +45,4 @@ View-only users see **published** articles only. Users with `knowledge-base.upda
 - Public / customer-facing URLs
 - Nested categories
 - Dashboard widget
-- Automation triggers
 - Publish notification fan-out

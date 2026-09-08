@@ -22,7 +22,7 @@ Same shape for actions (`required` module when applicable).
 
 ### GET `/automation/templates`
 
-Permission: `automation.view`. List starter templates (`key`, `name`, `description`).
+Permission: `automation.view`. List starter templates (`key`, `name`, `description`, `required_modules`) filtered to templates whose required modules are installed in the current workspace.
 
 ### POST `/automation/templates`
 
