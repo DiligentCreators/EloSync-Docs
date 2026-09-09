@@ -6,10 +6,12 @@ Capacity is **module-entitlement metadata**, not a Plans/Features/limits subsyst
 
 | Piece | Role |
 |-------|------|
-| `config/storage.php` | Free bytes + pack slug → bytes map |
+| `config/storage.php` | Free bytes + pack slug → bytes map + upload policy platform caps |
 | `App\Services\Storage\WorkspaceStorageService` | Allowance, used bytes, assertCanStore, pack exclusivity |
+| `App\Services\Storage\WorkspaceUploadPolicy` | Per-file type/size policy from `storage.upload_policy` |
+| `App\Support\StorageUploadPolicy` | Defaults + normalize for the tenant setting |
 | `FileUploadService` | Disk store/delete/url (unchanged) |
-| `GET /api/tenant/v1/storage/usage` | Settings usage summary (`module:storage` + `storage.view`) |
+| `GET /api/tenant/v1/storage/usage` | Settings usage summary + `upload_policy` client hints (`module:storage` + `storage.view`) |
 
 ## Catalog
 
@@ -18,7 +20,7 @@ Capacity is **module-entitlement metadata**, not a Plans/Features/limits subsyst
 | `storage` | No | Free base — 1 GiB |
 | `storage-10` … `storage-1000` | Yes | Mutually exclusive capacity packs (total allowance) |
 
-Hard dependency: every pack → `storage` (`module_dependencies`). Permissions: `storage.view`, `storage.manage`.
+Hard dependency: every pack → `storage` (`module_dependencies`). Permissions: `storage.view`, `storage.manage` (upload policy edits). Catalog version **1.1.0** adds upload policy settings.
 
 ## Allowance resolution
 
@@ -28,12 +30,7 @@ Hard dependency: every pack → `storage` (`module_dependencies`). Permissions: 
 
 ## Enforcement points
 
-Call `WorkspaceStorageService::assertCanStore($tenant, $incomingBytes)` **before** storing:
-
-- `ChatMessageService::attachFile`
-- `FeedbackService::attachFile`
-- `ImportManager::upload`
-- `DocumentService::create` / `update` (when replacing a file)
+Call `WorkspaceUploadPolicy::assertAllowed` (or channel-specific variants) then `WorkspaceStorageService::assertCanStore($tenant, $incomingBytes)` **before** storing on content uploads (Chat, Expenses, Help Desk, Documents, Feedback, Knowledge Base, Lead imports, WhatsApp, Tasks).
 
 Do **not** gate `UserAvatarService` or branding uploads in `TenantSettingService`.
 
@@ -45,8 +42,12 @@ Sum of:
 
 - `chat_message_attachments.size_bytes`
 - `feedback_attachments.size_bytes`
+- `expense_attachments.size_bytes`
+- Help Desk ticket + note attachments
+- Knowledge Base article attachments
 - `documents.size_bytes` (non-trashed Documents module rows)
 - `whatsapp_message_attachments.size_bytes` (WhatsApp Cloud media)
+- `task_attachments.size_bytes` + `task_note_attachments.size_bytes`
 - `lead_imports.file_size`
 - Disk size of import `error_report_path` / `failed_records_path` when present
 
@@ -89,4 +90,5 @@ See [object-storage.md](/developer-guide/object-storage). Production: content on
 - [User guide](/user-guide/storage)
 - [Storage overview](/user-guide/storage-overview)
 - [Deployment](/deployment/storage)
-- [Production readiness](/deployment/storage-production-readiness)
+- [Production readiness (packs)](/deployment/storage-production-readiness)
+- [Upload policy + Task media readiness](/deployment/workspace-upload-policy-task-media-production-readiness)

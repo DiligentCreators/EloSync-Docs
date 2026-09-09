@@ -121,7 +121,7 @@ When Marketplace is enabled for the platform, **Settings → Marketplace** links
 
 ## Storage
 
-When **Storage** is installed, **Settings → Storage** shows used / allowance bytes, the current pack (or Free 1 GB), and a link to upgrade in Marketplace. See [Storage](/user-guide/storage).
+When **Storage** is installed, **Settings → Storage** shows used / allowance bytes, the current pack (or Free 1 GB), and a link to upgrade in Marketplace. Workspace admins with **`storage.manage`** can also set **Upload limits** (allowed file types and separate max sizes for images, videos, and other files). See [Storage](/user-guide/storage).
 
 ## Domain (Branded module)
 

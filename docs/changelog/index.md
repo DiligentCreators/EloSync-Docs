@@ -1,5 +1,11 @@
 # Changelog
 
+## Workspace upload policy + Task media (2026-09-09)
+
+- **EloSync-Backend:** Workspace setting `storage.upload_policy` (allowed image/video/document types + separate max sizes, platform-capped). Shared `WorkspaceUploadPolicy` enforces limits on Chat, Expenses, Help Desk, Documents, Feedback, Knowledge Base, Lead imports, WhatsApp, and Tasks. Task + task-note multi-file attachments on S3/uploads disk with quota accounting (batch byte sum before store; mid-batch failure rolls back objects/rows). Catalog **storage → 1.1.0**, **tasks → 1.4.0** (+ CatalogSeeder aligned). Settings `updateMany` resolves admin catalog outside the write transaction. Pest: upload policy + task attachments (batch quota, `storage.manage` 403, cross-tenant download/delete, mid-batch rollback).
+- **EloSync-Frontend:** Settings → Storage upload limits UI (`storage.manage`); Tasks create/view/note attachments; `useUploadPolicy` client hints from storage usage wired into Documents, Help Desk, Expenses, Knowledge Base, Feedback, Team Chat, WhatsApp, and Lead import (`accept` + client-side type/size checks). Playwright one-session human flow: `npm run test:e2e:upload-policy`.
+- **EloSync-Docs:** Storage / tenant settings / Tasks / Documents / Expenses / object-storage / API notes; [production readiness](/deployment/workspace-upload-policy-task-media-production-readiness) (**Go**); changelog.
+
 ## Automation real-world coverage (2026-09-08)
 
 - **EloSync-Backend:** Removed dual `AutomationEventBridge` (sole fan-out = `IntegrationEventDispatcher`). Wired Contacts / Quotations / Expenses / Employees / Payments / Credit Notes / Projects / Estimates / Contracts / Purchase Orders / Leave / Documents / Knowledge Base / Assets triggers; fixed invoice module slug to `invoices`. Templates gain `required_modules` + entitlement filter. Catalog **automation 1.1.1 → 1.2.0 → 1.3.0** (+ companion module MINOR bumps; CatalogSeeder versions aligned). Pest: CrossModule samples, template entitlement negatives, registry↔dispatcher parity.

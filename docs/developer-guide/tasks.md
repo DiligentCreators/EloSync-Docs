@@ -29,7 +29,8 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue / due-today / due-this-week SQL uses `App\Support\UtcInstant` so non-UTC workspace timezones do not mark upcoming tasks overdue. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone), not raw `datetime-local` / ISO slice.
 - Board columns are one per `TaskStatusEnum` case.
-- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. List/show embed `project` (`id`, `uuid`, `title`, `status`) when loaded. Catalog version **1.2.0**. See [Projects developer guide](/developer-guide/projects).
+- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. List/show embed `project` (`id`, `uuid`, `title`, `status`) when loaded. Catalog version **1.4.0** (attachments + upload-policy enforcement). See [Projects developer guide](/developer-guide/projects).
+- **Attachments:** `task_attachments` and `task_note_attachments` on the workspace uploads disk (`tenants/{uuid}/tasks/`). Types/sizes from workspace `storage.upload_policy` via `WorkspaceUploadPolicy`. Multi-file batches assert total bytes against remaining Storage quota before any object is written. Auth’d download/delete; bytes count toward Storage used. Production checklist: [upload policy + task media readiness](/deployment/workspace-upload-policy-task-media-production-readiness).
 
 ## Permissions
 

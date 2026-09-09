@@ -26,6 +26,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [WhatsApp Cloud Production Readiness](./whatsapp-cloud-production-readiness) | WhatsApp Cloud MVP go-live checklist, smoke, residual risk |
 | [Knowledge Base Production Readiness](./knowledge-base-production-readiness) | Knowledge Base audit, go-live checklist, smoke, rollback, sign-off |
 | [Storage Production Readiness](./storage-production-readiness) | Storage module audit, blockers, smoke, rollback, sign-off |
+| [Workspace upload policy + Task media](./workspace-upload-policy-task-media-production-readiness) | Upload limits + task attachments — **Go** |
 | [Invoices Production Readiness](./invoices-production-readiness) | Invoices 1.1.0 recurring + PDF audit, smoke, rollback, sign-off |
 | [Contracts Production Readiness](./contracts-production-readiness) | Contracts 1.1.0 auto-fill + HTML memos — **Go** |
 | [Billing product line picker](./billing-product-line-picker-production-readiness) | Quotes/estimates/invoices optional `product_id` + Products HTML — **Go** |

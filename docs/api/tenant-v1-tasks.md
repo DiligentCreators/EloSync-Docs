@@ -49,19 +49,27 @@ List and board task cards include `latest_note` — most recent note (`id`, `bod
 
 ### POST `/tasks`
 
-Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`).
+JSON or multipart. Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`). Optional multipart `attachments[]` (max 10) — validated by workspace `storage.upload_policy`.
 
 Initial `due_at` on create does not require `tasks.change_due_date`.
 
 ### GET `/tasks/{id}`
 
-Includes assignee, creator, notes, activities, `tags`, and optional `project`. Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes assignee, creator, notes (with note `attachments`), task `attachments`, activities, `tags`, and optional `project`. Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/tasks/{id}`
 
-Partial update of task fields (including `status` / `priority` / `assigned_to` / `due_at` / `tag_ids[]` / `project_id`).
+Partial update of task fields (including `status` / `priority` / `assigned_to` / `due_at` / `tag_ids[]` / `project_id`). Optional multipart `attachments[]` via **POST** twin `/tasks/{id}` (PHP does not populate files on true PUT).
 
 Changing `due_at` after create requires `tasks.change_due_date` (403 otherwise).
+
+### POST `/tasks/{id}/attachments`
+
+Upload additional task files (`attachments[]`, max 10). Permission: `tasks.update`.
+
+### GET `/tasks/attachments/{uuid}/download` · `DELETE /tasks/attachments/{uuid}`
+
+Download / delete a task attachment (authz via parent task view / update).
 
 ### PUT `/tasks/{id}/tags`
 
@@ -95,7 +103,7 @@ Clears completion and returns the task to a non-completed status (typically open
 
 ### POST `/tasks/{id}/notes`
 
-`{ "body": string }` — comments in the UI.
+JSON or multipart: `{ "body": string }` required, optional `attachments[]` (max 5). Note attachment download/delete: `GET|DELETE /tasks/note-attachments/{uuid}`.
 
 ### GET `/tasks/{id}/timeline`
 
