@@ -8,7 +8,7 @@ Without **assign**, you only see invoices assigned to you.
 
 ## List & table
 
-Open **Invoices** from the sidebar (**Billing**). Search by title or number, filter by status or assignee, toggle **My invoices** or **Overdue only**, and switch KPI cards (Total, My Invoices, Draft, Sent, Overdue) to quick-filter the table. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
+Open **Invoices** from the sidebar (**Billing**). Search by title, number, contact name, company name, or phone, filter by status or assignee, toggle **My invoices** or **Overdue only**, and switch KPI cards (Total, My Invoices, Draft, Sent, Overdue) to quick-filter the table. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
 
 - A **Partial** badge appears when an invoice is **Unpaid** but has payments posted (`amount_paid > 0`) and a remaining balance (`balance_due > 0`). This is display-only — the stored status stays **Unpaid** until the balance clears.
 - An **Overdue** badge appears next to the status badge for unpaid invoices past their due date

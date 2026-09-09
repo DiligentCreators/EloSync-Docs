@@ -1,5 +1,11 @@
 # Changelog
 
+## Invoice list search by customer (2026-09-09)
+
+- **EloSync-Backend:** Invoice list `search` also matches related contact name/phone/company text and company name/phone (still matches title/number). Catalog **invoices 1.9.1 → 1.9.2**. Pest: customer field search.
+- **EloSync-Frontend / Mobile:** Invoice list and payment/credit-note invoice pickers hint that name, company, and phone are searchable; allocation keywords include phone.
+- **EloSync-Docs:** Invoices user/API/developer guides + payments allocation search note; changelog.
+
 ## Workspace upload policy + Task media (2026-09-09)
 
 - **EloSync-Backend:** Workspace setting `storage.upload_policy` (allowed image/video/document types + separate max sizes, platform-capped). Shared `WorkspaceUploadPolicy` enforces limits on Chat, Expenses, Help Desk, Documents, Feedback, Knowledge Base, Lead imports, WhatsApp, and Tasks. Task + task-note multi-file attachments on S3/uploads disk with quota accounting (batch byte sum before store; mid-batch failure rolls back objects/rows). Catalog **storage → 1.1.0**, **tasks → 1.4.0** (+ CatalogSeeder aligned). Settings `updateMany` resolves admin catalog outside the write transaction. Pest: upload policy + task attachments (batch quota, `storage.manage` 403, cross-tenant download/delete, mid-batch rollback).
