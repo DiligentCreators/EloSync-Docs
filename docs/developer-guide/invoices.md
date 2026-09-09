@@ -21,7 +21,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 | Subscriber | `app/Listeners/CustomerInvoiceEventSubscriber.php` (audit + assignment notification) |
 | Notifications | `app/Notifications/Tenant/CustomerInvoice/CustomerInvoiceAssignedNotification.php` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `LinkableReseller`, `EligibleInvoiceAssignee` — `quotation_id` is a plain tenant-scoped `Rule::exists()`, **not** gated by a `LinkableQuotation`-style entitlement rule; `reseller_id` requires Resellers entitlement + assignee scope via `LinkableReseller` |
-| Tests | `tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php`, `CustomerInvoiceRecurrenceTest.php` |
+| Tests | `tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php`, `CustomerInvoiceRecurrenceTest.php`, `CustomerInvoiceSearchTest.php` |
 
 ## Domain notes
 
@@ -45,6 +45,7 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - `estimate_id` and `contract_id` are set by convert actions (`nullOnDelete`); `estimate_id` is **unique** when not null (one-shot estimate convert); `quotation_id` is **not** unique so contracts can bill more than once.
 - Auto-numbering: `CustomerInvoiceService::nextNumber()` reads the `invoices_number_prefix` tenant setting (default `INV-`), then zero-pads a running count (`CustomerInvoice::withTrashed()->count() + 1`) to 5 digits. `customer_invoices` has a `unique(tenant_id, number)` DB index; `create()` wraps the insert with the shared `RetriesOnDuplicateNumber` trait (`app/Services/Tenant/Concerns/RetriesOnDuplicateNumber.php`), retrying up to 3 times with a freshly generated number if two concurrent requests race to the same count-derived sequence. The same trait/index pattern is used by Payments, Credit Notes, and Estimates.
 - Overdue definition (shared by list `overdue=true` filter and `stats.overdue`): `due_date < today`, `status` = `unpaid`, `balance_due > 0`.
+- List `search` matches invoice `title` / `number`, related contact `name` / `phone` / free-text `company`, and related company `name` / `phone`.
 
 ## Permissions
 
@@ -54,7 +55,7 @@ invoices.view | create | update | delete | restore | force.delete | assign | sen
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.8.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer; 1.6.0 adds `contract_id` for contract-created invoices; 1.6.1 adds unique nullable `estimate_id` for one-shot estimate convert; 1.7.0 dedicated record pages; 1.7.1 PDF long-notes pagination; 1.7.2 PDF long line-body pagination; 1.8.0 customer email delivery (`POST …/email`).
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.9.2**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer; 1.6.0 adds `contract_id` for contract-created invoices; 1.6.1 adds unique nullable `estimate_id` for one-shot estimate convert; 1.7.0 dedicated record pages; 1.7.1 PDF long-notes pagination; 1.7.2 PDF long line-body pagination; 1.8.0 customer email delivery (`POST …/email`); 1.9.2 list search includes contact/company name and phone.
 
 ## API (tenant)
 

@@ -58,7 +58,7 @@ SPA mirrors **Invoices** (table + create/edit page, record page) under the exist
 |-------|------|
 | Page | `src/pages/payments/` (`payments-page.tsx`, `payment-form-dialog.tsx`, `payment-detail-sheet.tsx`) |
 | Detail sheet tabs | Overview, Allocations, Notes, Timeline — actions: assign, add note, post, void, edit (draft only), delete |
-| Form dialog | Amount, currency, method, paid-at, reference, notes, contact/company/assignee pickers, and an allocations editor (`useFieldArray`). Allocation options show contact · company · invoice number — balance due; search matches name/company/number; selecting an invoice copies contact, company, and assignee onto the payment when present on the invoice. |
+| Form dialog | Amount, currency, method, paid-at, reference, notes, contact/company/assignee pickers, and an allocations editor (`useFieldArray`). Allocation options show contact · company · invoice number — balance due; search matches name/company/phone/number; selecting an invoice copies contact, company, and assignee onto the payment when present on the invoice. |
 | Service | `customerPaymentService` in `src/api/services.ts` |
 | Types | `CustomerPayment*` in `src/types/api.ts` (kept distinct from the pre-existing Central `Payment*` types) |
 | Query keys | `QUERY_KEYS.customerPayments` / `customerPayment(id)` / `customerPaymentTimeline(id)` / `customerPaymentStats` |
