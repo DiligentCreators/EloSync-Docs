@@ -12,7 +12,7 @@ Open **Tasks** from the sidebar under **CRM**. The default view is the **Board**
 
 - Search by title or description
 - Each status column header and its cards use a fixed status color; Status badges in the list and record page match
-- Click a row or board card to open a **quick peek** sheet with status, priority, tags, description, assignee, due date, project, and creator — use **Edit** for light changes or **Open full page** for comments, assignment, and activity
+- Click a row or board card to open a **quick peek** sheet with status, priority, tags, description, assignee, due date, project, creator, and attachment count — use **Edit** for light changes or **Open full page** for comments, attachments, assignment, and activity
 - Filter by status, priority, assignee, **tag**, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show **tags** and the **latest note**; hover a truncated preview to read the full note
@@ -34,9 +34,10 @@ Status labels in the UI:
 
 1. Click **New task**
 2. Enter title (required) and optional description, status, priority, due date, and assignee
-3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
-4. If **Projects** is installed, optionally link a **project**
-5. Save
+3. Optionally attach **images or videos** (and other allowed file types) — limits come from **Settings → Storage → Upload limits**
+4. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
+5. If **Projects** is installed, optionally link a **project**
+6. Save
 
 Edit from the row menu or the record page. Dragging a card on the board auto-saves the new status (no drawer).
 
@@ -62,7 +63,8 @@ Task assignee pickers list active workspace users (including people flagged **Ex
 
 Users with **complete** can mark a task completed (sets `completed_at`) or reopen it from the **record page** or the **list row menu**. On the board, dragging a card into **Completed** also completes it (requires **update**).
 
-## Comments & history
+## Comments, attachments & history
 
-- **Comments** — free-form notes (stored as task notes). Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
+- **Attachments** — on the full record page, upload multiple files to explain the task; download or delete with **update** permission. Allowed types and max sizes follow workspace Storage upload policy
+- **Comments** — free-text notes; optional attachments on each comment (up to 5). Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
 - **History** — activity timeline (create, update, assignment, complete, reopen, note, etc.)

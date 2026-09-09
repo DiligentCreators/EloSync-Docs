@@ -1,6 +1,6 @@
 # Storage
 
-Workspace content storage for chat attachments, feedback screenshots, lead imports, and **Documents** library files. Logos, favicons, and profile avatars stay on the app server and do **not** count toward this quota.
+Workspace content storage for chat attachments, feedback screenshots, lead imports, **Documents** library files, and **Tasks** media. Logos, favicons, and profile avatars stay on the app server and do **not** count toward this quota.
 
 ## Enable Storage
 
@@ -41,6 +41,8 @@ Cancelling a pack returns the workspace to the free 1 GB (while `storage` remain
 - Feedback screenshots / attachments
 - Lead import source files (and generated error reports when present)
 - Documents module files (`documents.size_bytes` for non-deleted documents)
+- Task and task-note attachments
+- Help Desk / Expenses / Knowledge Base / WhatsApp media attachments (where installed)
 
 **Not included**
 
@@ -51,6 +53,13 @@ Cancelling a pack returns the workspace to the free 1 GB (while `storage` remain
 ## Settings
 
 **Settings → Storage** shows used bytes, allowance, percent used, and the current pack (or Free 1 GB). Use **Upgrade storage** to open Marketplace.
+
+With **`storage.manage`**, the same tab includes **Upload limits**:
+
+- Max size for **images**, **videos**, and **other files** (MB), within platform caps
+- Checkboxes for allowed extensions per category
+
+These limits apply workspace-wide to content uploads (Tasks, Chat, Documents, Expenses, Help Desk, Feedback, Knowledge Base, Lead imports, WhatsApp). Larger per-file limits consume Storage capacity faster.
 
 ## When uploads fail
 
@@ -64,3 +73,5 @@ Cancelling a pack returns the workspace to the free 1 GB (while `storage` remain
 
 - [Storage overview](/user-guide/storage-overview)
 - [Documents](/user-guide/documents) (bytes count toward this quota; requires Storage)
+- [Tasks](/user-guide/tasks) (task media uses Upload limits)
+- [Production readiness](/deployment/workspace-upload-policy-task-media-production-readiness)

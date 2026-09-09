@@ -27,6 +27,7 @@ tenants/{tenant_uuid}/branding/logos/
 tenants/{tenant_uuid}/branding/favicons/
 tenants/{tenant_uuid}/feedback/       # feedback screenshots (quota-counted)
 tenants/{tenant_uuid}/documents/      # Documents module (quota-counted)
+tenants/{tenant_uuid}/tasks/          # Task + task-note attachments (quota-counted)
 tenants/{tenant_uuid}/whatsapp/{conversation_id}/  # WhatsApp Cloud media (quota-counted)
 tenants/{tenant_uuid}/users/{user_id}/avatars/
 central/logos/
