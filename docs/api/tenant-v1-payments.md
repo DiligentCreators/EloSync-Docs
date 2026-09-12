@@ -32,7 +32,7 @@ Same filters as list (minus pagination/sort). Response:
 
 ### GET `/payments`
 
-Query: `search` (matches `number` or `reference`), `status` (`draft`\|`posted`\|`void`), `method`, `assigned_to` (`unassigned` or user id), `my_payments`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `number` or `reference`), `status` (`draft`\|`posted`\|`void`), `method`, `assigned_to` (`unassigned` or user id), `my_payments`, `contact_id`, `company_id`, `customer_invoice_id`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
 List items include `status`, `amount`, `currency`, `method`, `paid_at`, `reference`, `notes`, `contact`/`company` refs, assignee/creator refs, and `latest_note`.
 

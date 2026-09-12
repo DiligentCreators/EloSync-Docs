@@ -62,6 +62,22 @@ Permanently delete a soft-deleted contact (must already be trashed). Permission:
 
 Contact activity timeline entries.
 
+## Billing summary & statement
+
+Requires Contacts **view**. Invoice/payment/credit-note lines appear only when those modules are entitled.
+
+### GET `/contacts/{id}/billing-summary`
+
+Returns `{ currencies: [{ currency, invoice_count, total_invoiced, total_paid, balance_due }] }` for non-draft, non-cancelled invoices. Empty `currencies` when Invoices is not entitled or there is no data.
+
+### GET `/contacts/{id}/statement`
+
+Query: `from`, `to` (optional `YYYY-MM-DD`; defaults cover a sensible workspace range). Chronological lines (`invoice` | `payment` | `credit_note`) with `date`, `number`, `description`, `amount`, `currency`, plus period `totals` and open `balance_due` per currency as of `to`.
+
+### GET `/contacts/{id}/statement.pdf`
+
+Same query as statement; returns a branded PDF download.
+
 ## Lead conversion
 
 `POST /leads/{lead}/convert` (see [tenant-v1-leads.md](/api/tenant-v1-leads)) creates a Contact and sets `contact_id` / `contact` on the returned lead when the `contacts` module is entitled for the workspace. `conversion_meta.stub` is `false` in that case; it is `true` when Contacts is not installed (status-only conversion).

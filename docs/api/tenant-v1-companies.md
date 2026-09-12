@@ -60,6 +60,14 @@ Permanently delete a soft-deleted company (must already be trashed). Permission:
 
 Company activity timeline entries.
 
+## Billing summary & statement
+
+Same shape as [Contacts billing summary & statement](/api/tenant-v1-contacts#billing-summary--statement), scoped by `company_id`:
+
+- `GET /companies/{id}/billing-summary`
+- `GET /companies/{id}/statement?from=&to=`
+- `GET /companies/{id}/statement.pdf?from=&to=`
+
 ## Contact linkage
 
 Contact create/update (see [tenant-v1-contacts.md](/api/tenant-v1-contacts)) accept optional `company_id`. When set, the contact’s legacy `company` string is synced to the linked Company name. List/detail contact payloads may include `company_id` and `linked_company` (`id`, `uuid`, `name`).

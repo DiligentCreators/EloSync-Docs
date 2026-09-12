@@ -25,6 +25,10 @@ Open **Vendors** from the sidebar, under the **Purchasing** group.
 
 Edit from the row menu or the vendor record page.
 
+## Purchasing hub & statement
+
+When **Purchase Orders** and/or **Expenses** are installed, the vendor record shows PO/expense counts and totals, recent documents, **New purchase order** / **New expense** shortcuts (`?vendor=`), list deep links (`/purchase-orders?vendor=` / `/expenses?vendor=`), and a **Statement** for the selected period.
+
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the vendor record page or the create/edit form.

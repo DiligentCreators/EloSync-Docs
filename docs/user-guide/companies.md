@@ -25,6 +25,14 @@ Open **Companies** from the sidebar under **CRM** (between Leads and Contacts).
 
 Edit from the row menu or the record page.
 
+## Related sales documents
+
+On a company record page (when the matching module is installed and you have create permission), use **New quotation**, **New invoice**, or **New payment** — create opens with `?company=` preselected.
+
+## Billing hub & statement
+
+When **Invoices** and/or **Payments** are installed, the company record shows invoiced / paid / remaining totals, recent documents, deep links to `/invoices?company=` and `/payments?company=`, and a **Statement** page for the selected date range (PDF when available).
+
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form.

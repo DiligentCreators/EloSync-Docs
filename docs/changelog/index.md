@@ -1,5 +1,11 @@
 # Changelog
 
+## Party-first billing hubs & statements (2026-09-12)
+
+- **EloSync-Backend:** Contact/company **billing-summary** and **statement** (+ PDF); vendor **purchasing-summary** and **statement**. Aged receivables rows include contact/company identity. Catalog **contacts 1.4.0 → 1.5.0**, **companies 1.1.0 → 1.2.0**, **vendors 1.1.0 → 1.2.0**. Pest: party billing summary/statement suite.
+- **EloSync-Frontend:** List deep links `?contact=` / `?company=` / `?vendor=` with clearable chips; party hubs on contact/company/vendor views (balances + related docs); statement pages; aged receivables customer column + drill-downs.
+- **EloSync-Docs:** Contacts/companies/vendors user guides; payments list API query params; financial reports aged receivables note; changelog.
+
 ## Invoice PDF tax registration ID (2026-09-12)
 
 - **EloSync-Backend:** Invoice PDF seller header prints workspace `tax_registration_id` (Settings → General) when set; omits the line when blank. Included in `BrandedDocumentPdfContext` company profile + PDF cache fingerprint. Catalog **invoices 1.9.2 → 1.9.3**. Pest: PDF HTML show/hide.

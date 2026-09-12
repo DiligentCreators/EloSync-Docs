@@ -38,6 +38,15 @@ On a contact record page (when the matching module is installed and you have cre
 
 You finish the document on that module’s create page (quotations still require an opportunity).
 
+## Billing hub & statement
+
+When **Invoices** and/or **Payments** are installed and you can view them, the contact record shows a **billing summary**: invoice count, total invoiced, amount paid, and remaining balance (per currency when needed). Recent invoices and payments appear under related documents.
+
+- **View all** opens the Invoices or Payments list filtered to this contact (`/invoices?contact=` / `/payments?contact=`)
+- **Statement** opens a period account statement (default: start of workspace year → today) with line history, totals, and PDF download when available
+
+List pages also accept `?contact=` and `?company=` deep links so you can share a filtered view without searching by name.
+
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form.
