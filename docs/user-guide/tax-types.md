@@ -62,7 +62,7 @@ These pre-fill payment and expense pay forms when the contact or vendor is selec
 Settings → General (optional, for PDFs and reports):
 
 - **Tax country** — ISO 3166-1 alpha-2
-- **Tax registration ID** — your workspace tax identifier
+- **Tax registration ID** — your workspace tax identifier (printed on the invoice PDF seller header when filled; omitted when blank)
 
 ## Related guides
 

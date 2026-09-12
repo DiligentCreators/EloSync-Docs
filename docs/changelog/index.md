@@ -1,5 +1,10 @@
 # Changelog
 
+## Invoice PDF tax registration ID (2026-09-12)
+
+- **EloSync-Backend:** Invoice PDF seller header prints workspace `tax_registration_id` (Settings → General) when set; omits the line when blank. Included in `BrandedDocumentPdfContext` company profile + PDF cache fingerprint. Catalog **invoices 1.9.2 → 1.9.3**. Pest: PDF HTML show/hide.
+- **EloSync-Docs:** Invoices user/developer guides + tenant settings PDF note; tax types already referenced the field; changelog.
+
 ## Invoice list search by customer (2026-09-09)
 
 - **EloSync-Backend:** Invoice list `search` also matches related contact name/phone/company text and company name/phone (still matches title/number). Catalog **invoices 1.9.1 → 1.9.2**. Pest: customer field search.
