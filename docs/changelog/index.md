@@ -1,5 +1,10 @@
 # Changelog
 
+## Hybrid list e2e + calendar date display (2026-09-14)
+
+- **EloSync-Frontend:** Playwright page objects/specs align with hybrid list sheets (`Open full page`, sheet Cancel as button|link, create peeks). Stock adjust dialog closes before query invalidation (no stuck pending button). Project form resets only when `id` / `updated_at` change so cache rewrites do not wipe in-progress edits. `formatAppDate` treats `YYYY-MM-DD` calendar dates as wall days (no timezone day-shift for pay periods and similar). Payroll e2e targets the created Draft pay run via create-response periods. Vitest: calendar date-only formatting.
+- **EloSync-Docs:** Tenant settings timezone note for calendar date-only formatting; changelog.
+
 ## Party-first billing hubs & statements (2026-09-12)
 
 - **EloSync-Backend:** Contact/company **billing-summary** and **statement** (+ PDF); vendor **purchasing-summary** and **statement**. Aged receivables rows include contact/company identity. Statement credits count **applied** notes only; vendor totals exclude drafts. Statements expose **`opening_balance`** + closing `balance_due`. Catalog **contacts 1.4.0 → 1.5.0**, **companies 1.1.0 → 1.2.0**, **vendors 1.1.0 → 1.2.0**. Pest: party billing summary/statement suite.
