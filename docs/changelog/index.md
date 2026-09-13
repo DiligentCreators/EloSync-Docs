@@ -1,5 +1,11 @@
 # Changelog
 
+## Workspace File a complaint (Help Desk) (2026-09-14)
+
+- **EloSync-Frontend:** Tenant shell **File a complaint** entry (user menu + command palette) opens a quick dialog that creates a Help Desk ticket (subject, description, category, priority). Gated by Help Desk entitlement + `help-desk.create`. Toast includes ticket number and Open ticket link. Distinct from Give Feedback (Central). One-session Playwright human workflow (`complaint-dialog.spec.ts`).
+- **EloSync-Backend:** Catalog **help-desk 1.9.0 → 1.10.0** (MINOR; shell quick-create surface). CatalogSeeder aligned.
+- **EloSync-Docs:** Help Desk + Give Feedback user guides; Help Desk developer guide; [production readiness](/deployment/workspace-complaint-dialog-production-readiness) (**Go**); changelog.
+
 ## Hybrid list e2e + calendar date display (2026-09-14)
 
 - **EloSync-Frontend:** Playwright page objects/specs align with hybrid list sheets (`Open full page`, sheet Cancel as button|link, create peeks). Stock adjust dialog closes before query invalidation (no stuck pending button). Project form resets only when `id` / `updated_at` change so cache rewrites do not wipe in-progress edits. `formatAppDate` treats `YYYY-MM-DD` calendar dates as wall days (no timezone day-shift for pay periods and similar). Payroll e2e targets the created Draft pay run via create-response periods. Vitest: calendar date-only formatting.
