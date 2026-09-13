@@ -65,7 +65,7 @@ Company activity timeline entries.
 Same shape as [Contacts billing summary & statement](/api/tenant-v1-contacts#billing-summary--statement), scoped by `company_id`:
 
 - `GET /companies/{id}/billing-summary`
-- `GET /companies/{id}/statement?from=&to=`
+- `GET /companies/{id}/statement?from=&to=` (includes `opening_balance` + `balance_due`)
 - `GET /companies/{id}/statement.pdf?from=&to=`
 
 ## Contact linkage

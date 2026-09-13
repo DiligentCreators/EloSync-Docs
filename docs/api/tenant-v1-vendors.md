@@ -70,4 +70,4 @@ Returns `{ currencies: [{ currency, purchase_order_count, po_total, expense_coun
 
 ### GET `/vendors/{id}/statement`
 
-Query: `from`, `to` (optional). Chronological PO and expense lines with period totals.
+Query: `from`, `to` (optional). Chronological PO and expense lines (draft + cancelled excluded) with period `totals`, `opening_balance` (activity before `from`), and `balance_due` (cumulative purchasing **activity** as of `to` — not an AP payable balance). PDF deferred for vendors.

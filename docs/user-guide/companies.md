@@ -31,7 +31,7 @@ On a company record page (when the matching module is installed and you have cre
 
 ## Billing hub & statement
 
-When **Invoices** and/or **Payments** are installed, the company record shows invoiced / paid / remaining totals, recent documents, deep links to `/invoices?company=` and `/payments?company=`, and a **Statement** page for the selected date range (PDF when available).
+When **Invoices** and/or **Payments** are installed, the company record shows invoiced / paid / remaining totals, recent documents (including credit notes when installed), deep links to `/invoices?company=` and `/payments?company=`, and a **Statement** page with opening/closing balance for the selected date range (PDF when available).
 
 ## Assignment
 

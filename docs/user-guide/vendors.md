@@ -27,7 +27,7 @@ Edit from the row menu or the vendor record page.
 
 ## Purchasing hub & statement
 
-When **Purchase Orders** and/or **Expenses** are installed, the vendor record shows PO/expense counts and totals, recent documents, **New purchase order** / **New expense** shortcuts (`?vendor=`), list deep links (`/purchase-orders?vendor=` / `/expenses?vendor=`), and a **Statement** for the selected period.
+When **Purchase Orders** and/or **Expenses** are installed, the vendor record shows PO/expense counts and **spend / activity** totals (not an accounts-payable balance), recent documents, **New purchase order** / **New expense** shortcuts (`?vendor=`), list deep links (`/purchase-orders?vendor=` / `/expenses?vendor=`), and a **Statement** for the selected period (opening activity + cumulative activity; PDF not available yet for vendors).
 
 ## Assignment
 

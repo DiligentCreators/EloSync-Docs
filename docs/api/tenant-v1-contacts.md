@@ -72,7 +72,7 @@ Returns `{ currencies: [{ currency, invoice_count, total_invoiced, total_paid, b
 
 ### GET `/contacts/{id}/statement`
 
-Query: `from`, `to` (optional `YYYY-MM-DD`; defaults cover a sensible workspace range). Chronological lines (`invoice` | `payment` | `credit_note`) with `date`, `number`, `description`, `amount`, `currency`, plus period `totals` and open `balance_due` per currency as of `to`.
+Query: `from`, `to` (optional `YYYY-MM-DD`; defaults cover a sensible workspace range). Chronological lines (`invoice` | `payment` | `credit_note`) with `date`, `number`, `description`, `amount`, `currency`, plus period `totals`, `opening_balance` (outstanding before `from`), and `balance_due` (closing as of `to`) per currency. Credit notes appear only when **applied** (draft/issued/refunded/void excluded), matching aged receivables treatment.
 
 ### GET `/contacts/{id}/statement.pdf`
 

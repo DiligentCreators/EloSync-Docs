@@ -27,6 +27,7 @@ Mirror of the [Companies developer guide](/developer-guide/companies). Prefer co
 - `status` enum (`active` | `inactive`, default `active`) replaces the workflow fields used by other modules.
 - Assignee eligibility mirrors Companies (`EligibleVendorAssignee` / `User::isEligibleLeadAssignee`).
 - Soft delete only — no stage/status workflow beyond the `active`/`inactive` flag.
+- **Purchasing hub (v1):** `VendorPartyPurchasingPanel` — PO/expense spend activity (not AP payable). Backend: `VendorPartyPurchasingSummaryService`, `VendorAccountStatementService`. Draft + cancelled POs/expenses excluded. Statement includes `opening_balance` (pre-period activity) and `balance_due` (cumulative activity as of `to`). Vendor PDF deferred. List deep links `?vendor=` on purchase orders and expenses.
 
 ## Permissions
 
@@ -55,6 +56,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-vendors.md](/api/tenant-v1-
 | DELETE | `/vendors/{vendor}/force` | force.delete |
 | POST | `/vendors/{vendor}/assign` | assign |
 | POST | `/vendors/{vendor}/notes` | update |
+| GET | `/vendors/{vendor}/purchasing-summary` | view |
+| GET | `/vendors/{vendor}/statement` | view |
 
 Auth login/`me` include `modules: string[]` for SPA gating.
 
@@ -64,15 +67,18 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/vendors/vendors-page.tsx` (table + filters + KPIs) |
 | Form | `vendor-form.tsx` + `vendor-form-page.tsx` |
-| Detail | `vendor-view-page.tsx` (Details, Notes, Timeline sections) |
-| Service | `vendorService` in `src/api/services.ts` |
+| Detail | `vendor-view-page.tsx` (Details, Notes, Timeline; purchasing hub) |
+| Statement | `src/pages/crm/party-statement-page.tsx` (`VendorStatementPage`) |
+| Service | `vendorService` in `src/api/services.ts` (`purchasingSummary`, `statement`) |
 | Nav | `permission: vendors.view`, `module: 'vendors'` — new **Purchasing** group after Billing |
+| Party purchasing | Hub + deep links + in-app statement; Pest PartyBilling suite |
 
 ## Tests
 
 ```bash
 # Backend
 php artisan test --compact tests/Feature/Tenant/Vendor/VendorTest.php
+php artisan test --compact tests/Feature/Tenant/PartyBilling/PartyBillingSummaryAndStatementTest.php
 
 # Frontend
 npm run typecheck && npm run lint && npm run build
@@ -81,7 +87,7 @@ npm run test:e2e:vendors
 
 | Suite | Location |
 |-------|----------|
-| Pest | `tests/Feature/Tenant/Vendor/VendorTest.php` |
+| Pest | `tests/Feature/Tenant/Vendor/VendorTest.php`; PartyBilling suite |
 | E2E | `e2e/tests/vendors/`, `npm run test:e2e:vendors` |
 
 ## Logging
