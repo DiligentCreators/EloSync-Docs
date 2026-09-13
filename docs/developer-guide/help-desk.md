@@ -47,7 +47,7 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.7.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.10.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## Communication Templates (soft)
 
@@ -101,6 +101,9 @@ npm run test:e2e:help-desk
 | Tenant submit → Central triage | Tenant-scoped internal queue |
 | `feedback.*` permissions (Central) | `help-desk.*` permissions (Tenant) |
 | Product bug/feature intake | Workspace support / ops tickets |
+| Give Feedback shell dialog | File a complaint shell dialog (`ComplaintDialog`) → `POST /help-desk` |
+
+Tenant SPA mounts both dialogs from the app shell. **File a complaint** is gated by `module:help-desk` + `help-desk.create` and reuses existing ticket create APIs — no parallel complaint tables.
 
 See [Central Feedback System](/developer-guide/central-feedback-system).
 

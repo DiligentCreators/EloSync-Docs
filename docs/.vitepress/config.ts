@@ -472,6 +472,7 @@ export default withMermaid(defineConfig({
             { text: 'Newest-first Notes & Activity Production Readiness', link: '/deployment/newest-first-notes-activity-production-readiness' },
             { text: 'Dedicated Record Pages Production Readiness', link: '/deployment/dedicated-record-pages-production-readiness' },
             { text: 'Related Inline Creates Production Readiness', link: '/deployment/related-inline-creates-production-readiness' },
+            { text: 'Workspace File a complaint Production Readiness', link: '/deployment/workspace-complaint-dialog-production-readiness' },
             { text: 'Go-Live Hardening', link: '/deployment/go-live-hardening-2026-07-15' },
             { text: 'Authentication', link: '/deployment/authentication' },
             { text: 'Tenant RBAC', link: '/deployment/tenant-rbac' },

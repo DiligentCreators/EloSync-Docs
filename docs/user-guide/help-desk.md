@@ -8,6 +8,17 @@ Without **assign**, you only see tickets assigned to you.
 
 > Help Desk is for **internal workspace support**. To report bugs or request platform features, use [Give Feedback](/user-guide/feedback) — that flow is triaged in Central, not in Help Desk.
 
+## File a complaint (quick create)
+
+When Help Desk is installed and your role includes **create**, you can open a short complaint dialog from the shared shell (same places as Give Feedback):
+
+- **User menu** (avatar, top right) → **File a complaint**
+- **Command palette** (`Ctrl`/`⌘` + `K`) → **File a complaint** under **Actions**
+
+Enter a subject, optional description, category, and priority. Submitting creates a normal Help Desk ticket (for example `HD-00042`) and shows a toast with an **Open ticket** link. This is for workspace support only — use Give Feedback for EloSync product bugs and feature requests.
+
+The menu entry is hidden when Help Desk is not installed or you lack `help-desk.create`.
+
 ## List, board & table
 
 Open **Help Desk** from the sidebar, under the **Operations** group. Switch **Board** / **List** in the page header (defaults to Board, same pattern as Tasks). On the board, columns are the fixed statuses Open → In Progress → Waiting → Resolved → Closed; drag a card to change status (honors update / close / reopen permissions and the status workflow). Search by subject, number, or description; filter by status, priority, category, or SLA (breached / at risk); toggle **My Tickets** or **Overdue**; and switch KPI cards (including **SLA breached** / **SLA at risk**) to quick-filter. The list table shows category, status, priority, SLA badge, source (Email), assignee, due date, and the **latest note**.

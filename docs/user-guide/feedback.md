@@ -4,6 +4,8 @@ Feedback is a **platform** capability, not a Marketplace module. Every signed-in
 
 Architecture and API contracts live in [Central Feedback System](/developer-guide/central-feedback-system).
 
+For **workspace-internal** support issues (not EloSync product bugs), use **File a complaint** when Help Desk is installed — see [Help Desk](/user-guide/help-desk#file-a-complaint-quick-create). That creates a Help Desk ticket for your workspace team; it is not triaged in Central.
+
 ## Sending feedback (workspace users)
 
 Open the dialog from either place:

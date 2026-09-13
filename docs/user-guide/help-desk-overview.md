@@ -13,6 +13,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | Operators / workspace users | [help-desk.md](/user-guide/help-desk) |
 | Engineers | [help-desk-developer.md](/developer-guide/help-desk) |
 | Production / ops | [help-desk-production.md](/deployment/help-desk) |
+| File a complaint readiness | [workspace-complaint-dialog-production-readiness.md](/deployment/workspace-complaint-dialog-production-readiness) |
 | Module Development Standard | [module-development.md](/developer-guide/module-development) |
 | Reference blueprint | [expenses-overview.md](/user-guide/expenses-overview) |
 | Tenant API | [../api/tenant-v1-help-desk.md](/api/tenant-v1-help-desk) |
