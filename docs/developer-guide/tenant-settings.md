@@ -81,6 +81,7 @@ Wall-clock settings (`H:i` strings such as Daily Reminder Time and office start/
 - Reminder gates in `crm:send-due-notifications` must compare against `now($workspaceTimezone)`, not bare `now()`, so scheduler workers stuck on UTC still honor the workspace clock.
 - Attendance login check-in must resolve “today” / check-in / late threshold with an explicit workspace timezone (`Carbon::now($timezone)`), not the server default.
 - SPA display/edit helpers live in `EloSync-Frontend/src/lib/datetime.ts` (`formatAppDate`, `formatAppTime`, `formatAppDateTime`, `appLocalInputToIso`, `isoToAppLocalInput`, …) and use the workspace timezone + `date_format` / `time_format` from `useSettingsStore`. With 12-hour format (`g:i A`), meridiems are always uppercase **AM** / **PM**. Do **not** use browser `toLocaleTimeString` / `toLocaleDateString` for scheduled times, and do **not** send raw `datetime-local` strings or `.slice(0, 16)` of a UTC ISO value — that ignores Settings → General and shows UTC hours in the picker.
+- **Calendar date-only values** (`YYYY-MM-DD` from Laravel `date` casts / `toDateString()`, e.g. pay-run periods, attendance day, invoice issue dates) are formatted by `formatAppDate` as wall calendar days — they are **not** projected through the workspace timezone (that would shift the day near UTC midnight). Absolute instants still use the workspace timezone.
 
 ## Mail provider
 
