@@ -45,6 +45,10 @@ When **Companies** is installed, Contact create/edit can pick a linked organizat
 
 Contact view actions open Quotation / Invoice / Payment create pages with `?contact={id}` and optional `?company={id}` when the corresponding module is entitled and the user can create.
 
+## Billing hub & statement
+
+When Invoices/Payments are entitled, the contact record shows invoiced / paid / balance due, recent documents, list deep links (`?contact=`), and a period **Statement** (PDF for contacts/companies).
+
 ## Explicitly deferred
 
 - Deals / opportunities linked to contacts

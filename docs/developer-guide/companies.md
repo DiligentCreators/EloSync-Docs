@@ -26,6 +26,7 @@ Mirror of the [Contacts developer guide](/developer-guide/contacts) / [Leads dev
 - Contact → Company linkage: `contacts.company_id` (nullable FK). `ContactService` resolves writes so that when `company_id` is set, the legacy `company` string is synced to the linked Company name. List/detail resources expose `linked_company` (`id`, `uuid`, `name`) when loaded.
 - Assignee eligibility mirrors Leads/Contacts (`EligibleCompanyAssignee` / `User::isEligibleLeadAssignee`).
 - Soft delete only — no stage/status workflow.
+- **Party billing hub:** same pattern as Contacts (`CustomerPartyBillingPanel` with `partyKind: 'company'`). Backend reuses customer statement services scoped by `company_id`. List deep links `?company=` on invoices, payments, quotations, credit notes. Statement includes `opening_balance` + `balance_due`; PDF available.
 
 ## Permissions
 
@@ -54,6 +55,9 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-companies.md](/api/tenant-v
 | DELETE | `/companies/{company}/force` | force.delete |
 | POST | `/companies/{company}/assign` | assign |
 | POST | `/companies/{company}/notes` | update |
+| GET | `/companies/{company}/billing-summary` | view |
+| GET | `/companies/{company}/statement` | view |
+| GET | `/companies/{company}/statement.pdf` | view |
 
 Auth login/`me` include `modules: string[]` for SPA gating.
 
@@ -63,17 +67,20 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/companies/companies-page.tsx` (table + filters + KPIs) |
 | Form | `company-form-dialog.tsx` |
-| Detail | `company-detail-sheet.tsx` (Overview, Notes, Activity tabs; linked contacts) |
-| Service | `companyService` in `src/api/services.ts` |
+| Detail | `company-view-page.tsx` (details, notes, activity; billing hub) |
+| Statement | `src/pages/crm/party-statement-page.tsx` (`CompanyStatementPage`) |
+| Service | `companyService` in `src/api/services.ts` (`billingSummary`, `statement`, `downloadStatementPdf`) |
 | Nav | `permission: companies.view`, `module: 'companies'` (between Leads and Contacts) |
 | Dashboard | `RecentCompaniesWidget` (`recent_companies` widget) + `create_company` quick action in `tenant-dashboard-widgets.tsx` / `tenant-dashboard-page.tsx` |
 | Contact link | `contact-form-dialog.tsx` company picker when `module:companies` + `companies.view`; list/detail show `linked_company?.name \|\| company` |
+| Party billing | Hub + deep links + statement; shared Pest PartyBilling suite; Playwright company case in `contacts.party-billing.spec.ts` |
 
 ## Tests
 
 ```bash
 # Backend
 php artisan test --compact tests/Feature/Tenant/Company/CompanyTest.php
+php artisan test --compact tests/Feature/Tenant/PartyBilling/PartyBillingSummaryAndStatementTest.php
 
 # Frontend
 npm run typecheck && npm run lint && npm run build
@@ -82,8 +89,8 @@ npm run test:e2e:companies
 
 | Suite | Location |
 |-------|----------|
-| Pest | `tests/Feature/Tenant/Company/CompanyTest.php` |
-| E2E | `e2e/tests/companies/`, `npm run test:e2e:companies` |
+| Pest | `tests/Feature/Tenant/Company/CompanyTest.php`; PartyBilling suite |
+| E2E | `e2e/tests/companies/`; company hub smoke in `contacts.party-billing.spec.ts` |
 
 ## Logging
 

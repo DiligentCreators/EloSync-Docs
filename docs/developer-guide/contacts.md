@@ -27,7 +27,9 @@ Mirror of the [Leads developer guide](/developer-guide/leads) / [Tasks developer
 - Lead → Contact linkage: `leads.contact_id` (nullable FK). `LeadService::convert()` creates (or reuses) a Contact when the `contacts` module is entitled (requires `contacts.create`, preserves lead assignee, sets lifecycle `on_boarded`, transactional). When Companies is entitled and the lead has a company name, also creates/links a Company onto the Contact. Optional Opportunity creation uses the same convert endpoint (`create_opportunity`). Stub converts without `contact_id` can be completed after Contacts is installed. Otherwise conversion remains the earlier status-only placeholder for contacts (`conversion_meta.stub = true`).
 - Contact → Company linkage: `contacts.company_id` (nullable FK) when [Companies](/developer-guide/companies) is entitled. Writes sync the legacy `company` string from the linked Company name. Resources expose `linked_company` when loaded.
 - SPA: Contact create/edit can open `create-company-dialog.tsx` (`companies.create`) and auto-select the new `company_id` without navigating to Companies.
-- SPA: Contact view deep-links to `/quotations/new`, `/invoices/new`, and `/payments/new` with `?contact=` and optional `?company=`. Those create forms prefill `contact_id` / `company_id` from the query on create only (`src/lib/related-record-query.ts`).
+- Sales prefill: Quotation / invoice / payment create forms accept `?contact=` / `?company=` on create only (`src/lib/related-record-query.ts`).
+- **Party billing hub:** `CustomerPartyBillingPanel` on contact view — summary strip + recent invoices/payments/credit notes + statement route. Backend: `CustomerPartyBillingSummaryService`, `CustomerAccountStatementService` (+ PDF). List deep links `?contact=` / `?company=` on invoices, payments, quotations, credit notes.
+- Statement JSON includes `opening_balance` (pre-`from`) and `balance_due` (as of `to`). Credits on statements are **applied** only.
 - Assignee eligibility mirrors Leads (`EligibleContactAssignee` / `User::isEligibleLeadAssignee`).
 
 ## Permissions
@@ -57,6 +59,9 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-contacts.md](/api/tenant-v1
 | DELETE | `/contacts/{contact}/force` | force.delete |
 | POST | `/contacts/{contact}/assign` | assign |
 | POST | `/contacts/{contact}/notes` | update |
+| GET | `/contacts/{contact}/billing-summary` | view |
+| GET | `/contacts/{contact}/statement` | view |
+| GET | `/contacts/{contact}/statement.pdf` | view |
 
 Auth login/`me` include `modules: string[]` for SPA gating.
 
@@ -66,19 +71,22 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/contacts/contacts-page.tsx` (table + filters + KPIs) |
 | Form | `contact-form.tsx` (+ `create-company-dialog.tsx` for inline company create) |
-| Detail | `contact-view-page.tsx` (details, notes, activity; related sales create actions) |
-| Service | `contactService` in `src/api/services.ts` |
+| Detail | `contact-view-page.tsx` (details, notes, activity; billing hub; related sales create actions) |
+| Statement | `src/pages/crm/party-statement-page.tsx` (`ContactStatementPage`) |
+| Service | `contactService` in `src/api/services.ts` (`billingSummary`, `statement`, `downloadStatementPdf`) |
 | Nav | `permission: contacts.view`, `module: 'contacts'` (between Leads and Tasks) |
 | Dashboard | `RecentContactsWidget` (`recent_contacts` widget) + `create_contact` quick action in `tenant-dashboard-widgets.tsx` / `tenant-dashboard-page.tsx` |
 | Lead link | Lead record shows a **View contact** link when a converted lead has `contact_id` |
 | Company link | Contact form company picker when `module:companies` + `companies.view`; **New** when `companies.create`; list/detail prefer `linked_company?.name` over legacy `company` |
 | Sales prefill | Quotation / invoice / payment create forms accept `?contact=` / `?company=` |
+| Party billing | Hub + deep links + statement; Pest `tests/Feature/Tenant/PartyBilling/`; Playwright `e2e/tests/contacts/contacts.party-billing.spec.ts` |
 
 ## Tests
 
 ```bash
 # Backend
 php artisan test --compact tests/Feature/Tenant/Contact/ContactTest.php
+php artisan test --compact tests/Feature/Tenant/PartyBilling/PartyBillingSummaryAndStatementTest.php
 
 # Frontend
 npm run typecheck && npm run lint && npm run build
@@ -87,8 +95,8 @@ npm run test:e2e:contacts
 
 | Suite | Location |
 |-------|----------|
-| Pest | `tests/Feature/Tenant/Contact/ContactTest.php` (+ Lead convert cases) |
-| E2E | `e2e/tests/contacts/`, `npm run test:e2e:contacts` |
+| Pest | `tests/Feature/Tenant/Contact/ContactTest.php` (+ Lead convert cases); PartyBilling suite |
+| E2E | `e2e/tests/contacts/`, including `contacts.party-billing.spec.ts` |
 
 ## Logging
 

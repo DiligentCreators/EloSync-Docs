@@ -16,6 +16,6 @@ Requires the Accounting module to be entitled (hard Marketplace dependency).
 | GET | `/financial-reports/balance-sheet/export` | `as_of` |
 | GET | `/financial-reports/aged-receivables` | `as_of` |
 
-All reports aggregate **posted** journal lines only (status `void` excluded). Balance sheet includes a synthetic **Net Income** equity line for fiscal YTD through `as_of` (zero after a proper year-end close). Aged receivables uses historical open balances (invoice total less payments and applied credits dated on or before `as_of`).
+All reports aggregate **posted** journal lines only (status `void` excluded). Balance sheet includes a synthetic **Net Income** equity line for fiscal YTD through `as_of` (zero after a proper year-end close). Aged receivables uses historical open balances (invoice total less payments and applied credits dated on or before `as_of`). Each aged receivables row includes `contact_id` / `contact_name` / `company_id` / `company_name` when linked so clients can deep-link to the party or filtered invoice list.
 
 `*/export` routes stream CSV with the same filters as the JSON report.

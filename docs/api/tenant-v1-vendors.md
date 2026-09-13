@@ -59,3 +59,15 @@ Permanently delete a soft-deleted vendor (must already be trashed). Permission: 
 ### GET `/vendors/{id}/timeline`
 
 Vendor activity timeline entries.
+
+## Purchasing summary & statement
+
+Requires Vendors **view**. Purchase order / expense data appears only when those modules are entitled.
+
+### GET `/vendors/{id}/purchasing-summary`
+
+Returns `{ currencies: [{ currency, purchase_order_count, po_total, expense_count, expense_total }] }`.
+
+### GET `/vendors/{id}/statement`
+
+Query: `from`, `to` (optional). Chronological PO and expense lines (draft + cancelled excluded) with period `totals`, `opening_balance` (activity before `from`), and `balance_due` (cumulative purchasing **activity** as of `to` — not an AP payable balance). PDF deferred for vendors.
