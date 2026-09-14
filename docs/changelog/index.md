@@ -1,5 +1,10 @@
 # Changelog
 
+## Task edit status/priority validation (2026-09-14)
+
+- **EloSync-Frontend:** Task create/edit form keeps status and priority in react-hook-form via `Controller` + required enums (no `|| 'open'` / `|| 'medium'` display fallbacks that masked empty values). Empty strings no longer reach the API as invalid status/priority on edit. Vitest: `task-form-values`.
+- **EloSync-Docs:** Changelog.
+
 ## Workspace File a complaint (Help Desk) (2026-09-14)
 
 - **EloSync-Frontend:** Tenant shell **File a complaint** entry (user menu + command palette) opens a quick dialog that creates a Help Desk ticket (subject, description, category, priority). Gated by Help Desk entitlement + `help-desk.create`. Toast includes ticket number and Open ticket link. Distinct from Give Feedback (Central). One-session Playwright human workflow (`complaint-dialog.spec.ts`).
