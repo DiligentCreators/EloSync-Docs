@@ -1,6 +1,6 @@
 # Branded — User Guide
 
-The **Branded** marketplace module lets a workspace map a **custom domain** and use its brand name / logo in emails and web push notifications.
+The **Branded** marketplace module lets a workspace map a **custom domain** and use its own visual identity (logo, favicon, button color, auth page images) plus brand name / logo in emails and web push notifications.
 
 ## Pricing
 
@@ -45,15 +45,20 @@ Platform subdomains (for example `acme.localhost`) stay managed by Central — t
 | DNS verified + Pending SSL certificate | Records are correct; secure hosting is being set up |
 | Connected + Active | Custom `https://` address is ready |
 
-## Brand in notifications
+## Brand in the SPA and notifications
 
 While Branded is active:
 
+- **Settings → Branding** can override logo, favicon, button color, and per-page auth panel images (login, register, forgot password, reset password, email verify). Leave blank to inherit Central.
 - Tenant emails use your application / company name, logo, and button color in the mail chrome.
 - The email footer shows your brand copyright plus a small **Powered by EloSync** line.
 - Web push notifications use your logo / favicon and prefix titles with your application name.
 
-Without Branded, tenant emails use the **platform (EloSync) logo and app name** from Central branding — not a blank text-only header (and no “Powered by” line). Visual SPA branding (Settings → Branding) remains available to all workspaces; custom domains and web-push white-label require Branded.
+Without Branded:
+
+- The SPA and guest auth pages always use **Central** platform logo, favicon, button color, and auth images (even if older tenant overrides exist in storage).
+- Settings → Branding still shows **support email** and invoice company profile; visual uploads are hidden with a Marketplace upsell.
+- Tenant emails use the **platform (EloSync) logo and app name** from Central branding — not a blank text-only header (and no “Powered by” line). Custom domains remain Branded-only.
 
 Notification emails (assignments, mentions, verify/reset, digests) use a professional card layout with a primary action button such as **View task** or **Verify Email Address**.
 

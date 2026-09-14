@@ -17,7 +17,7 @@
 | Concern | Practice |
 |---------|----------|
 | SMTP password | Encrypted at rest; never returned in clear text from admin API |
-| Branding uploads | Image validation (no SVG); stored via `FileUploadService` under `branding/logos` / `branding/favicons` on the branding disk (`FILESYSTEM_BRANDING_DISK`) |
+| Branding uploads | Image validation (no SVG); stored via `FileUploadService` under `branding/logos`, `branding/favicons`, and `branding/auth-images/{asset}` on the branding disk (`FILESYSTEM_BRANDING_DISK`) |
 | Session lifetime | Applied to `config('session.lifetime')` at boot / after update |
 | Maintenance | Only Tenant routes use `tenant.available` — never attach to Central |
 

@@ -33,7 +33,7 @@ $settings->configurePasswordDefaults();
 | GET | `/api/central/v1/system-settings` | Masked secrets |
 | PUT | `/api/central/v1/system-settings` | `{ "settings": { "key": value } }` |
 | POST | `/api/central/v1/system-settings/test-mail` | `{ "email": "…", "settings"?: {…} }` — structured result; optional unsaved draft |
-| POST | `/api/central/v1/system-settings/branding/{logo\|favicon}` | Multipart `file` → `FileUploadService` |
+| POST | `/api/central/v1/system-settings/branding/{asset}` | Multipart `file` → `FileUploadService`. Assets: `logo`, `favicon`, `auth-image-login`, `auth-image-register`, `auth-image-forgot-password`, `auth-image-reset-password`, `auth-image-email-verify` |
 | GET | `/api/central/v1/email-logs` | Filter by status/provider/date/search |
 | GET | `/api/central/v1/email-logs/{uuid}` | Show one log |
 
@@ -43,7 +43,9 @@ Empty / `********` secrets (`mail_password`, Postmark token, Mailgun secret) on 
 
 Mail keys include `mail_provider` (canonical; `mail_driver` mirrored), SMTP fields, `mail_reply_to`, `mail_timeout`, and provider credentials. Runtime apply lives in `App\Services\Email\EmailManager`.
 
-Branding assets use the configured uploads disk (`FILESYSTEM_DISK=public` locally / `s3` in production). See [object-storage.md](/developer-guide/object-storage).
+Branding assets use the configured branding disk (`FILESYSTEM_BRANDING_DISK`, defaults to uploads). Logo/favicon under `branding/logos` / `branding/favicons`; auth panel images under `branding/auth-images/{asset}`. See [object-storage.md](/developer-guide/object-storage).
+
+Public bootstrap includes `logo_url`, `favicon_url`, `button_color`, and `auth_image_*_url` for guest auth pages.
 
 ## Public API
 

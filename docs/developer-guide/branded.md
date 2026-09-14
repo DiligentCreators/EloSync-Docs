@@ -43,6 +43,8 @@ Central / public registration never accept a client `domain`. `TenantService` al
 
 ## Brand chrome
 
+- SPA visual overrides (`logo_path`, `favicon_path`, `button_color`, `auth_image_*_path`) resolve tenant overrides **only when** `BrandedDomainService::tenantHasBranded()`; otherwise Central wins (writes/uploads return 403 without Branded). Shared helper: `App\Support\BrandingAssets`.
+- Guest auth layout uses public bootstrap `auth_image_*_url` (per page; falls back to login image, then decorative panel).
 - `App\Support\BrandedMail::apply()` on tenant and central mail notifications
   - **Branded entitled:** tenant `applicationName`, `logoUrl`, `buttonColor`, frontend URL, `brandedShowPoweredBy=true`
   - **Otherwise / Central:** central `SystemSettingService` app name + logo (platform/EloSync chrome) + default button color; if central `logo_path` is empty, falls back to `FRONTEND_URL` + `config('branding.default_icon')` (press-kit `/brand/elosync-app-icon-light.png`); `brandedShowPoweredBy=false`
@@ -51,6 +53,7 @@ Central / public registration never accept a client `domain`. `TenantService` al
 - Published `resources/views/vendor/mail/html/message.blade.php` (+ button) for legacy markdown chrome / Powered by footer
 - `EmailConfigResolver` overrides From name when branded is active
 - `PlatformNotificationPayloadMapper` uses tenant logo/favicon + title prefix **only when Branded is active**; otherwise default web push icon/badge from `config('webpush.*')` (same press-kit path)
+
 ## Cancel / deactivate
 
 `ModuleSubscriptionService::cancel` / `deactivate` clears custom-domain verification when the module slug is `branded`.

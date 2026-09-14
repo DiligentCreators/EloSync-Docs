@@ -21,7 +21,7 @@ Payment gateway credentials live under **Billing → Payment Gateways** — not 
 | **General** | Application Name, Company Name, timezone/locale/currency, registration |
 | **Localization** | Date + time formats (Central SPA) |
 | **Mail** | SMTP + From identity + test email |
-| **Branding** | Button color, support email, logo/favicon |
+| **Branding** | Button color, support email, logo/favicon, auth page images (platform defaults for all workspaces) |
 | **Security** | Session timeout, password policy |
 | **Maintenance** | Tenant Application only |
 | **Billing** | Invoice prefix, proration, trial/Stripe flags, default gateway code |
