@@ -209,7 +209,7 @@ Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) inclu
 | GET | `/system-settings` | All admin settings (secrets masked). Response `meta.mail_webhook` includes webhook URL + event catalog when the active provider supports webhooks. |
 | PUT | `/system-settings` | `{ "settings": { "key": value } }` — per-key validation; may include `mail_webhook_events` / `mail_webhook_secret` |
 | POST | `/system-settings/test-mail` | `{ "email": "…" }` — sends test mail using runtime SMTP config |
-| POST | `/system-settings/branding/{logo\|favicon}` | Multipart `file` upload → stores via `FileUploadService` on the configured uploads disk |
+| POST | `/system-settings/branding/{asset}` | Multipart `file` upload. Assets: `logo`, `favicon`, `auth-image-login`, `auth-image-register`, `auth-image-forgot-password`, `auth-image-reset-password`, `auth-image-email-verify` |
 | GET | `/email-logs` | Paginated delivery logs (`has_body`; bodies omitted) |
 | GET | `/email-logs/{uuid}` | Log detail including `body_html` / `body_text` |
 | POST | `/email-logs/{uuid}/resend` | Resend from stored body (`email-logs.resend`, throttle 6/min) |
@@ -223,7 +223,7 @@ Settings groups: `general`, `localization`, `mail`, `branding`, `security`, `mai
 | general | `app_name`, `company_name`, `timezone`, `locale`, `currency`, `registration_enabled`, `founding_beta_enabled`, `founding_beta_apply_url`, `founding_beta_invite_ttl_days` | App title/config, tenant defaults, self-service registration, registration-closed beta CTA, invite lifetime |
 | localization | `date_format`, `time_format` | Central SPA formatters |
 | mail | `mail_provider`, SMTP / Postmark / Mailgun credentials, `mail_webhook_secret`, `mail_webhook_events`, From identity | Laravel mail + delivery webhooks |
-| branding | `button_color`, `support_email`, `logo_path`, `favicon_path` | SPA CSS/`document.title`/sidebar; support footer on tenant-facing emails |
+| branding | `button_color`, `support_email`, `logo_path`, `favicon_path`, `auth_image_*_path` | SPA CSS/`document.title`/sidebar/auth panels; support footer on tenant-facing emails |
 | security | `session_lifetime_minutes`, `password_min_length`, `password_require_special` | Session lifetime; centralized `PasswordRule` / `Password::defaults()` |
 | maintenance | `maintenance_mode`, `maintenance_message`, `maintenance_eta` | **Tenant Application only** (`tenant.available` middleware). Central stays up. |
 | billing | `invoice_prefix`, `proration_mode`, `default_payment_gateway`, `trial_enabled`, `stripe_enabled`, `stripe_webhook_configured` | Billing engine / invoices |

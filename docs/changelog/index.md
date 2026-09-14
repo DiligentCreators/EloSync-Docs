@@ -1,5 +1,11 @@
 # Changelog
 
+## Auth branding split layout + Branded visual chrome (2026-09-14)
+
+- **EloSync-Backend:** Per-page auth panel image settings (`auth_image_*_path`) on Central and tenant catalogs; public bootstrap exposes `auth_image_*_url`. Branding upload assets expand beyond logo/favicon (auth images max **8 MB**; logo/favicon max **2 MB**). Tenant **logo / favicon / button_color / auth images** resolve and write only when **Branded** is entitled; otherwise Central defaults apply (stored overrides ignored until Branded returns). Pest: Central + tenant settings branding suites.
+- **EloSync-Frontend:** Guest `AuthLayout` is form-left / image-right with **centered** logo and copyright. Central and Tenant Settings → Branding show recommended dimensions and larger previews. Tenant Branding gates visual chrome behind Branded (Marketplace upsell); support email + invoice company profile stay available.
+- **EloSync-Docs:** Branded / central / tenant settings + auth notes; changelog.
+
 ## Task edit status/priority validation (2026-09-14)
 
 - **EloSync-Frontend:** Task create/edit form keeps status and priority in react-hook-form via `Controller` + required enums (no `|| 'open'` / `|| 'medium'` display fallbacks that masked empty values). Empty strings no longer reach the API as invalid status/priority on edit. Vitest: `task-form-values`.

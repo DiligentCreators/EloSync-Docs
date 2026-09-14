@@ -112,7 +112,7 @@ Tabs: General, Localization, Mail, Branding, Security, Maintenance, Billing.
 | **General** | Application Name (title/sidebar), Company Name (copyright/emails), searchable timezone/locale/currency, registration toggle |
 | **Localization** | Predefined date formats + 12/24h time — drives `formatAppDate` / `formatAppDateTime` app-wide |
 | **Mail** | Full SMTP + From identity; send test email |
-| **Branding** | Button color (CSS `--primary`), support email, logo/favicon file uploads with preview |
+| **Branding** | Button color (CSS `--primary`), support email, logo/favicon file uploads, auth page panel images with preview |
 | **Security** | Session timeout minutes; min password length; require special character |
 | **Maintenance** | Tenant-only. Central remains operational. Optional ETA. |
 | **Billing** | Invoice prefix, proration mode, default gateway, trial/Stripe flags |
