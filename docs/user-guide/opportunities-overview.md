@@ -26,6 +26,7 @@ Sales deals module on the frozen platform. Mirrors the [Leads](/user-guide/leads
 - Lead convert can optionally create an Opportunity (when Opportunities + create permission are present)
 - Assignment with assignee scoping via `opportunities.assign`
 - Notes + domain activity timeline
+- **Ask EloSync** (with AI Assistant entitled): fetch a deal and confirm stage, assignment, or note suggestions — see [Opportunities user guide](/user-guide/opportunities#ask-elosync)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:opportunities`) + Spatie permissions — **free Marketplace opt-in** (Sales category)
 - Audit + activity logging; assignment notification

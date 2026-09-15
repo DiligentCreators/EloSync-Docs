@@ -23,6 +23,8 @@ On **new workspace** create:
 
 New Opportunities permissions for **existing** workspaces ship as an additive **data migration** using `TenantPermissionSynchronizer::grantMissingDefaultRolePermissions([...])`. Do **not** re-seed roles.
 
+Ask EloSync Opportunity triage ships on catalog **`ai` 1.6.0** (not an Opportunities bump). See [AI Opportunity triage production readiness](./ai-opportunity-triage-production-readiness).
+
 ## Monitoring
 
 - Platform audit events: `opportunity_created`, `opportunity_updated`, `opportunity_deleted`, `opportunity_assigned`, `opportunity_stage_changed`, `opportunity_note_added`, `opportunity_tag_created`, `opportunity_tags_synced`

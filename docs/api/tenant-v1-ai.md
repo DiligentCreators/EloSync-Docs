@@ -110,7 +110,7 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Projects** (`projects.view`): `search_projects`, `get_project`, `get_overdue_projects`
 
-**Opportunities** (`opportunities.view`): `search_opportunities`, `get_pipeline_summary`
+**Opportunities** (`opportunities.view` / `opportunities.update` / `opportunities.assign`): `search_opportunities`, `get_pipeline_summary`, `get_opportunity_stages`, `get_opportunity`, `update_opportunity_stage` (pending confirmation; `stage_id` integer), `assign_opportunity` (pending confirmation), `add_opportunity_note` (pending confirmation; text only)
 
 **Invoices** (`invoices.view`): `get_overdue_invoices`, `get_invoice_balance_summary`
 

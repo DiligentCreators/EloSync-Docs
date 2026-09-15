@@ -127,6 +127,16 @@ After migrate (`2026_09_15_050000_bump_ai_module_version_to_1_5_0`):
 
 Go-live: [AI Task triage production readiness](/deployment/ai-task-triage-production-readiness) · ops [AI deployment](/deployment/ai).
 
+## AI Opportunity triage tools 1.5.0 → 1.6.0
+
+After migrate (`2026_09_15_060000_bump_ai_module_version_to_1_6_0`):
+
+1. Confirm catalog `ai.version` is **1.6.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `opportunities` → Ask EloSync list stages / fetch opportunity → propose stage/assign/note → Confirm; deny stage without `opportunities.update`.
+
+Go-live: [AI Opportunity triage production readiness](/deployment/ai-opportunity-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:
