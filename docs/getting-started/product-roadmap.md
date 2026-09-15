@@ -32,13 +32,13 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 | Capability | Status |
 |------------|--------|
 | [Opportunities](/user-guide/opportunities-overview) (pipeline + Kanban) | Shipped |
-| [Quotations](/user-guide/quotations-overview) | Shipped (requires Opportunities) |
+| [Quotations](/user-guide/quotations-overview) | Shipped (requires Opportunities; customer e-signature accept links **1.9.0**) |
 | [Contracts](/user-guide/contracts-overview) | Shipped (requires Opportunities) |
 | [Resellers](/user-guide/resellers-overview) / [Reseller Payouts](/user-guide/reseller-payouts-overview) | Shipped (free Sales opt-ins; Payments → Resellers → Payouts chain) |
 
 ### Deferred
 
-- Quotation e-signature; multi-currency; approval workflows beyond status enums
+- Quotation multi-signer / third-party e-sign providers; multi-currency; approval workflows beyond status enums
 - Contract PDF / e-signature; renewal reminders
 - Reseller cross-workspace identity; reseller portal; automated bank disbursement
 
@@ -201,7 +201,7 @@ Credit Note AI triage shipped (**ai 1.15.0**): `get_credit_note` plus confirmed 
 
 Leave AI triage shipped (**ai 1.16.0**): `get_leave_request` + `get_pending_leave_requests` plus confirmed `approve_leave_request` / `reject_leave_request` (mirrors Leave HTTP approve/reject; no assign/notes; self-approve blocked for non-admin).
 
-Next when prioritized: WhatsApp interactive messages; demand-driven items below (broader AI tools continue lightly).
+Next when prioritized: WhatsApp interactive messages; Contract PDF + e-signature (reuse Quotation accept pattern); demand-driven items below (broader AI tools continue lightly).
 
 ---
 

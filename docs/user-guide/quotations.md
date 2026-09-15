@@ -28,10 +28,19 @@ Edit from the row menu or the record page while the quotation is still **Draft**
 
 A quotation starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the quote as sent in the CRM (does not email the customer by itself)
-- **Accept** (`sent → accepted`) or **Reject** / **Expire** via the status action
+- **Send** (`draft → sent`) — marks the quote as sent in the CRM (does not email the customer by itself). Also issues a customer **accept link** (regenerated when you copy the link or email the customer).
+- **Accept** (`sent → accepted`) from the CRM, or let the customer accept via the public link
+- **Reject** / **Expire** via the status action (invalidates any outstanding accept link)
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.
+
+## Customer acceptance (e-signature v1)
+
+When a quotation is **Sent**, staff with `quotations.send` can **Copy accept link**. Emailing a Sent quotation also appends the link to the message.
+
+Customers open `/#/accept/quotations/{token}` (no login), review totals and lines, enter their name and email, and confirm. That marks the quotation **Accepted**, records signer name/email/IP on the record, and invalidates the link. Regenerating or re-emailing creates a new link and invalidates the previous one. Links expire at the earlier of **valid until** (end of day) or 30 days.
+
+This is a lightweight accept page — not a full customer portal. Multi-signer and third-party e-sign providers remain deferred.
 
 ## Convert to invoice
 
@@ -49,7 +58,7 @@ Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use 
 
 ## Email customer
 
-After you **Send** the quotation (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email customer** on the record page (`quotations.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
+After you **Send** the quotation (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email customer** on the record page (`quotations.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. When the quotation is still **Sent**, the message also includes a customer accept link. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
 
 ## Assignment
 
@@ -59,7 +68,7 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 - **Overview** — shows the quotation memo from the create/edit **Notes** field (also printed on the PDF)
 - **Notes** tab — internal activity notes the team adds after the quotation exists (not the same as the memo)
-- **Activity** — timeline of create, update, assignment, status change, conversion, note, and delete/restore events
+- **Activity** — timeline of create, update, assignment, status change, conversion, note, email, signature request, signed, and delete/restore events
 
 ## Ask EloSync
 

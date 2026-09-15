@@ -35,3 +35,4 @@ New Quotations permissions for **existing** workspaces ship as an additive **dat
 5. Confirm `module:quotations` + `quotations.*` permissions on target roles
 6. Deploy Frontend SPA with Quotations nav/pages (mirror Opportunities table + form) when the SPA ships
 7. After catalog **1.4.0**: confirm `quotations.convert` grants and that convert stays hidden until Invoices is entitled
+8. After catalog **1.9.0**: migrate acceptance columns; deploy SPA guest route `/#/accept/quotations/:token`; smoke Send → Copy accept link / Email → public accept → signer metadata on the record
