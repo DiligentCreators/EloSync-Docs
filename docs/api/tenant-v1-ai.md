@@ -112,7 +112,7 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Opportunities** (`opportunities.view` / `opportunities.update` / `opportunities.assign`): `search_opportunities`, `get_pipeline_summary`, `get_opportunity_stages`, `get_opportunity`, `update_opportunity_stage` (pending confirmation; `stage_id` integer), `assign_opportunity` (pending confirmation), `add_opportunity_note` (pending confirmation; text only)
 
-**Invoices** (`invoices.view`): `get_overdue_invoices`, `get_invoice_balance_summary`
+**Invoices** (`invoices.view` / `invoices.update` / `invoices.assign` / `invoices.send` / `invoices.void`): `get_overdue_invoices`, `get_invoice_balance_summary`, `get_invoice`, `update_invoice_status` (pending confirmation; visible with `invoices.update` **or** `invoices.send` **or** `invoices.void`; Unpaid needs `send`, Cancelled needs `void`, other targets need `update` at propose+confirm — same as HTTP `POST …/status`), `assign_invoice` (pending confirmation), `add_invoice_note` (pending confirmation; text only)
 
 **Help Desk** (`help-desk.view` / `help-desk.update` / `help-desk.assign`): `get_help_desk_open_tickets`, `get_help_desk_ticket`, `update_help_desk_ticket_status` (pending confirmation; resolve/close also need `help-desk.close` at confirm), `assign_help_desk_ticket` (pending confirmation), `add_help_desk_ticket_note` (pending confirmation; text only)
 

@@ -30,6 +30,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 - Status workflow: `draft → unpaid → paid | cancelled` (`POST /invoices/{id}/send`, `.../void` cancels, `.../status`) — `paid` is set automatically as Payments clear the balance; partial payments stay `unpaid`
 - Assignment with assignee scoping via `invoices.assign`
 - Notes + domain activity timeline (mirrors Quotations)
+- Ask EloSync triage (with AI Assistant entitled): fetch invoice, overdue list, confirmed status / assign / note writes — see [AI Assistant](/user-guide/ai-assistant)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:invoices`) + Spatie permissions — **free Marketplace opt-in** (Billing category)
 - Audit + activity logging; assignment notification

@@ -1,5 +1,11 @@
 # Changelog
 
+## AI Invoice triage tools (ai 1.7.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_invoice` plus confirmed writes `update_invoice_status`, `assign_invoice`, and `add_invoice_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`invoices.update` **or** `invoices.send` **or** `invoices.void`) and mirrors HTTP `POST …/status` auth (Unpaid→send, Cancelled→void, else update) via `CustomerInvoiceService::changeStatus`. Confirm-time assign re-validates `EligibleInvoiceAssignee`; note confirm re-checks `max:5000`. `get_overdue_invoices` returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.6.0 → 1.7.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (send-only Draft→Unpaid, void deny, ledger cancel guard, invalid transition, soft-delete, unassign, suspended assignee, view-only confirm deny).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Invoices cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-invoice-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
 ## AI Opportunity triage tools (ai 1.6.0) (2026-09-15)
 
 - **EloSync-Backend:** Ask EloSync adds `get_opportunity`, `get_opportunity_stages`, plus confirmed writes `update_opportunity_stage`, `assign_opportunity`, and `add_opportunity_note` (text only). Stage tool uses integer `stage_id`. `search_opportunities` returns `stage_id`, assignee id, and `assignee_name`. HTTP `POST …/stage` tenant-scopes `stage_id`. Confirm-time assign re-validates `EligibleOpportunityAssignee`; note confirm re-checks `max:5000`. Catalog **ai 1.5.0 → 1.6.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, invalid stage, confirm-without-update, soft-delete, unassign, suspended assignee, view-only / no-assign exclusions, cross-tenant stage HTTP).

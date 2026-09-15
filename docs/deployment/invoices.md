@@ -60,3 +60,7 @@ Defaults are production-safe. Override only if Nightwatch shows slow generate or
 5. Deploy Frontend SPA with Invoices nav (new **Billing** sidebar group)/pages (mirror Quotations table + form) when the SPA ships
 6. Confirm scheduler includes `invoices:generate-recurring`
 7. Payments (shipped) declares a `module_dependencies` row on `invoices` — confirm it blocks install on workspaces without Invoices entitled (see [deployment/payments.md](/deployment/payments))
+
+## Ask EloSync
+
+Ask EloSync Invoice triage ships on catalog **`ai` 1.7.0** (not an Invoices bump). See [AI Invoice triage production readiness](./ai-invoice-triage-production-readiness).

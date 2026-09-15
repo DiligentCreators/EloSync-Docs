@@ -533,6 +533,7 @@ export default withMermaid(defineConfig({
             { text: 'AI Help Desk Triage Production Readiness', link: '/deployment/ai-help-desk-triage-production-readiness' },
             { text: 'AI Task Triage Production Readiness', link: '/deployment/ai-task-triage-production-readiness' },
             { text: 'AI Opportunity Triage Production Readiness', link: '/deployment/ai-opportunity-triage-production-readiness' },
+            { text: 'AI Invoice Triage Production Readiness', link: '/deployment/ai-invoice-triage-production-readiness' },
             { text: 'Communication Templates', link: '/deployment/communication-templates' },
             { text: 'Email', link: '/deployment/email' },
             { text: 'Branded', link: '/deployment/branded' },
