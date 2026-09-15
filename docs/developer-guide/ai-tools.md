@@ -12,8 +12,8 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 - Projects: `search_projects`, `get_project`, `get_overdue_projects`
 - Opportunities: `search_opportunities`, `get_pipeline_summary`
 - Invoices: `get_overdue_invoices`, `get_invoice_balance_summary`
-- Writes: `create_task`, `update_lead_status`, `log_activity` (confirmation required)
-- Reads: `get_help_desk_open_tickets`, `get_expense_pending_approval` (module + permission gated)
+- Writes: `create_task`, `update_lead_status`, `log_activity`, `update_help_desk_ticket_status`, `assign_help_desk_ticket`, `add_help_desk_ticket_note` (confirmation required)
+- Reads: `get_help_desk_open_tickets`, `get_help_desk_ticket`, `get_expense_pending_approval` (module + permission gated)
 
 ### `search_workspace`
 
@@ -60,7 +60,7 @@ Implement `App\AI\Tools\Contracts\AiToolDefinition`:
 4. **Write actions** that mutate data:
    - Set `requiresConfirmation(): true` and return `pending_confirmation` via `PendingAiActionService`, **or**
    - Keep read-only and return DTO arrays only.
-5. **Confirm path** — add a `match` arm in `PendingAiActionService::confirm()` when introducing a new write tool (`create_task`, `update_lead_status`, `log_activity`).
+5. **Confirm path** — add a `match` arm in `PendingAiActionService::confirm()` when introducing a new write tool (`create_task`, `update_lead_status`, `log_activity`, Help Desk status/assign/note).
 6. **Tests** — extend `tests/Feature/Tenant/Ai/AiAuthorizationTest.php` (permissions) and write confirmation tests when applicable.
 7. **Docs** — update [Tenant AI API](/api/tenant-v1-ai) tool list and user guide if user-visible.
 

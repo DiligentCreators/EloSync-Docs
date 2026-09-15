@@ -526,6 +526,7 @@ export default withMermaid(defineConfig({
             { text: 'AI Assistant', link: '/deployment/ai' },
             { text: 'AI Assistant Production Readiness', link: '/deployment/ai-production-readiness' },
             { text: 'AI Workspace Search Production Readiness', link: '/deployment/ai-workspace-search-production-readiness' },
+            { text: 'AI Help Desk Triage Production Readiness', link: '/deployment/ai-help-desk-triage-production-readiness' },
             { text: 'Communication Templates', link: '/deployment/communication-templates' },
             { text: 'Email', link: '/deployment/email' },
             { text: 'Branded', link: '/deployment/branded' },

@@ -107,6 +107,16 @@ After migrate (`2026_08_31_200000_bump_ai_module_version_to_1_3_0`):
 
 Go-live: [AI workspace search production readiness](/deployment/ai-workspace-search-production-readiness) · ops [AI deployment](/deployment/ai).
 
+## AI Help Desk triage tools 1.3.0 → 1.4.0
+
+After migrate (`2026_09_15_040000_bump_ai_module_version_to_1_4_0`):
+
+1. Confirm catalog `ai.version` is **1.4.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `help-desk` → Ask EloSync open tickets → propose status/assign/note → Confirm; deny resolve without `help-desk.close`.
+
+Go-live: [AI Help Desk triage production readiness](/deployment/ai-help-desk-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:
