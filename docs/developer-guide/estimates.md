@@ -94,3 +94,7 @@ npm run test:e2e:estimates
 - Spatie `LogsActivity` on `Estimate` (log name `estimates`)
 - Domain `estimate_activities` timeline
 - `PlatformAuditService` via `EstimateEventSubscriber`
+
+## Ask EloSync
+
+Ask EloSync Estimate tools (`get_estimate`, confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Sent→`send`, Accepted→`accept`, else `update`) via `EstimateAiSupport::authorizeStatusChange` and `EstimateService::changeStatus`. See [AI tools](/developer-guide/ai-tools) and [AI Estimate triage production readiness](/deployment/ai-estimate-triage-production-readiness).

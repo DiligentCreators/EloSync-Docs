@@ -59,6 +59,10 @@ Users with **issue** can **Email customer** — same dialog pattern as invoices/
 
 Every credit note record page shows the **Invoice** it was issued against, with a link to jump straight to that invoice's detail view.
 
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can fetch a credit note and propose status changes, assignments, or timeline notes. Nothing is saved until you **confirm** the suggestion. Issuing needs **issue**; applying needs **apply**; voiding needs **void**; refunding needs **refund** (Ask EloSync cannot move a credit note back to draft). See [AI Assistant](/user-guide/ai-assistant).
+
 ## What's not here yet
 
 Standalone credit notes not tied to an invoice and multi-currency conversion are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

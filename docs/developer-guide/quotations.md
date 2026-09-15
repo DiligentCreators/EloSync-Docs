@@ -79,3 +79,7 @@ npm run test:e2e:quotations
 - Spatie `LogsActivity` on `Quotation` (log name `quotations`)
 - Domain `quotation_activities` timeline
 - `PlatformAuditService` via `QuotationEventSubscriber`
+
+## Ask EloSync
+
+Ask EloSync Quotation tools (`get_quotation`, confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Sent→`send`, Accepted→`accept`, else `update`) via `QuotationAiSupport::authorizeStatusChange` and `QuotationService::changeStatus`. Assign uses `EligibleOpportunityAssignee`. See [AI tools](/developer-guide/ai-tools) and [AI Quotation triage production readiness](/deployment/ai-quotation-triage-production-readiness).

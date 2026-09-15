@@ -60,3 +60,7 @@ Users with **assign** can set or clear the assignee from the record page or the 
 - **Overview** — shows the quotation memo from the create/edit **Notes** field (also printed on the PDF)
 - **Notes** tab — internal activity notes the team adds after the quotation exists (not the same as the memo)
 - **Activity** — timeline of create, update, assignment, status change, conversion, note, and delete/restore events
+
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can fetch a quotation and propose status changes, assignments, or timeline notes. Nothing is saved until you **confirm** the suggestion. Moving to **Sent** still needs **send**; accepting needs **accept**. See [AI Assistant](/user-guide/ai-assistant).

@@ -197,6 +197,46 @@ After migrate (`2026_09_15_120000_bump_ai_module_version_to_1_12_0`):
 
 Go-live: [AI Lead assign + note production readiness](/deployment/ai-lead-assign-note-production-readiness) · ops [AI deployment](/deployment/ai).
 
+## AI Estimate triage tools 1.12.0 → 1.13.0
+
+After migrate (`2026_09_16_010000_bump_ai_module_version_to_1_13_0`):
+
+1. Confirm catalog `ai.version` is **1.13.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `estimates` → Ask EloSync fetch estimate → propose status/assign/note → Confirm; Sent needs `estimates.send`; Accepted needs `estimates.accept`.
+
+Go-live: [AI Estimate triage production readiness](/deployment/ai-estimate-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Quotation triage tools 1.13.0 → 1.14.0
+
+After migrate (`2026_09_16_020000_bump_ai_module_version_to_1_14_0`):
+
+1. Confirm catalog `ai.version` is **1.14.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `quotations` → Ask EloSync fetch quotation → propose status/assign/note → Confirm; Sent needs `quotations.send`; Accepted needs `quotations.accept`.
+
+Go-live: [AI Quotation triage production readiness](/deployment/ai-quotation-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Credit Note triage tools 1.14.0 → 1.15.0
+
+After migrate (`2026_09_16_030000_bump_ai_module_version_to_1_15_0`):
+
+1. Confirm catalog `ai.version` is **1.15.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `credit-notes` (Invoices required) → Ask EloSync fetch credit note → propose status/assign/note → Confirm; Issued needs `credit-notes.issue`; Draft target rejected.
+
+Go-live: [AI Credit Note triage production readiness](/deployment/ai-credit-note-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Leave triage tools 1.15.0 → 1.16.0
+
+After migrate (`2026_09_16_040000_bump_ai_module_version_to_1_16_0`):
+
+1. Confirm catalog `ai.version` is **1.16.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `employees` + `leave-management` → Ask EloSync list pending / fetch leave → propose approve or reject → Confirm; both writes need `leave-management.approve`; reject requires review notes.
+
+Go-live: [AI Leave triage production readiness](/deployment/ai-leave-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:

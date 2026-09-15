@@ -50,3 +50,7 @@ Approved, rejected, and cancelled are terminal.
 ## Payroll note
 
 When Payroll is installed, approved leave with **Deduct salary** reduces that employee’s pay-run net (legacy approved rows without the flag treat unpaid types as deductible).
+
+## Ask EloSync
+
+With **AI Assistant** and Leave Management installed, Approvers can ask about a leave request or pending queue, then confirm suggested **approve** / **reject** actions. Reject requires review notes; approve may require notes when overriding salary deduction. See [AI Assistant](/user-guide/ai-assistant).

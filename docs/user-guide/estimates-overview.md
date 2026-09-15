@@ -26,6 +26,7 @@ Tenant customer-billing module on the frozen platform — the fourth Phase 3 (Bi
 - **Convert to invoice** (`POST /estimates/{id}/convert`) — creates a draft `CustomerInvoice` with the estimate's lines, links it back via `estimate_id`, and marks the estimate **Accepted** if it wasn't already. One-way and one-time per estimate. Blocked if the linked quotation is already invoiced.
 - Assignment with assignee scoping via `estimates.assign`
 - Notes + domain activity timeline (mirrors Invoices/Quotations)
+- Ask EloSync triage (with AI Assistant entitled): fetch estimate, confirmed status / assign / note writes — see [AI Assistant](/user-guide/ai-assistant)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:estimates`) + Spatie permissions — **free Marketplace opt-in** (Billing category), **requires Invoices**
 - Audit + activity logging; assignment notification

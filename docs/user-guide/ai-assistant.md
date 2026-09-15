@@ -54,10 +54,14 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - With Help Desk installed, ask about open tickets, then confirm suggested status changes, assignments, or notes before they apply.
 - With Opportunities installed, ask about a deal or pipeline summary, list pipeline stages, then confirm suggested stage moves, assignments, or notes before they apply.
 - With Invoices installed, ask about overdue invoices or a specific invoice, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Unpaid** still needs **send**; cancelling needs **void**. Status suggestions follow the same path as changing status in the app (not the dedicated Send button’s accrual/PDF side effects).
+- With Estimates installed, ask about a specific estimate, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Sent** still needs **send**; accepting needs **accept**.
+- With Quotations installed, ask about a specific quotation, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Sent** still needs **send**; accepting needs **accept**.
 - With Expenses installed, ask about expenses awaiting approval or a specific expense, then confirm suggested status changes, assignments, or notes before they apply. Approving needs **approve**; rejecting needs **reject**; marking paid needs **pay** (and when Accounting is installed, a paid-from account should already be set on the expense — same as changing status in the app without the dedicated Mark as paid dialog).
 - With Projects installed, ask about a project or overdue projects, then confirm suggested status changes, assignments, or notes before they apply.
 - With Purchase Orders installed, ask about a PO, then confirm suggested status changes, assignments, or notes before they apply. Sending needs **send**; receiving needs **receive**; cancelling needs **cancel**.
 - With Payments installed, ask about a payment, then confirm suggested post/void, assignments, or notes before they apply. Posting needs **post**; voiding needs **void** (Ask EloSync cannot move a payment back to draft).
+- With Credit Notes installed, ask about a credit note, then confirm suggested issue/apply/void/refund, assignments, or notes before they apply. Issuing needs **issue**; applying needs **apply**; voiding needs **void**; refunding needs **refund** (Ask EloSync cannot move a credit note back to draft).
+- With Leave Management installed, ask about a leave request or pending approvals, then confirm suggested **approve** or **reject** before they apply. Both need **approve** permission. Reject always needs review notes; approve may need notes when overriding the default salary deduction. Managers cannot approve their own leave via Ask EloSync (same as the app).
 - For leads, confirm suggested assignments or notes before they apply (status changes and Lead Copilot remain available as before). Assigning needs **assign**.
 
 ## Related
@@ -69,6 +73,10 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - [Help Desk](/user-guide/help-desk-overview)
 - [Opportunities](/user-guide/opportunities-overview)
 - [Invoices](/user-guide/invoices-overview)
+- [Estimates](/user-guide/estimates-overview)
+- [Quotations](/user-guide/quotations-overview)
 - [Payments](/user-guide/payments-overview)
+- [Credit Notes](/user-guide/credit-notes-overview)
+- [Leave Management](/user-guide/leave-management-overview)
 - [Purchase Orders](/user-guide/purchase-orders-overview)
 - [Expenses](/user-guide/expenses-overview)
