@@ -114,7 +114,7 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Invoices** (`invoices.view`): `get_overdue_invoices`, `get_invoice_balance_summary`
 
-**Help Desk** (`help-desk.view`): `get_help_desk_open_tickets`
+**Help Desk** (`help-desk.view` / `help-desk.update` / `help-desk.assign`): `get_help_desk_open_tickets`, `get_help_desk_ticket`, `update_help_desk_ticket_status` (pending confirmation; resolve/close also need `help-desk.close` at confirm), `assign_help_desk_ticket` (pending confirmation), `add_help_desk_ticket_note` (pending confirmation; text only)
 
 **Expenses** (`expenses.view`): `get_expense_pending_approval`
 

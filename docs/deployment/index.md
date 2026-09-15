@@ -37,6 +37,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Dedicated record pages UX](./dedicated-record-pages-production-readiness) | List + create/view/edit pages — **Go** |
 | [AI Assistant Production Readiness](./ai-production-readiness) | AI module + credits BYOK — **Go** (platform) |
 | [AI Workspace Search Production Readiness](./ai-workspace-search-production-readiness) | `search_workspace` / ai **1.3.0** — **Go** (merge + migrate) |
+| [AI Help Desk Triage Production Readiness](./ai-help-desk-triage-production-readiness) | Help Desk AI tools / ai **1.4.0** — **Go** (migrate + smoke) |
 | [Phase 7 HR Security Audit](./hr-phase7-security-audit) | HR findings, remediations, residual risk |
 | [Go-Live Hardening](./go-live-hardening-2026-07-15) | Hardening delivery notes |
 

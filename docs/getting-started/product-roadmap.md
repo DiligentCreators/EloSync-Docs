@@ -156,7 +156,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + confirmed writes; broader tools continue) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage tools **1.4.0** + confirmed writes; broader tools continue) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -174,6 +174,8 @@ Native iOS/Android tenant app (Expo SDK 57). Broad module coverage shipped PR-by
 Depth program **0 → 3c** complete (2026-08-31): webhooks event catalog + Developers edit; Credit Notes applied refund (**1.2.0**); Help Desk `@mentions` **1.5.0**, Kanban **1.6.0**, Communication Template replies **1.7.0**.
 
 AI workspace search shipped (**ai 1.3.0**): `search_workspace` fans out across entitled Wave A+B+C modules (CRM/sales/billing/purchasing/ops docs & calendar records).
+
+Help Desk AI triage shipped (**ai 1.4.0**): `get_help_desk_ticket` plus confirmed writes for status, assign, and notes (mirrors Help Desk API authz including close/reopen).
 
 Next when prioritized: further AI tools; WhatsApp interactive messages; demand-driven items below.
 

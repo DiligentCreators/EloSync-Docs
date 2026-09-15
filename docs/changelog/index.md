@@ -1,5 +1,11 @@
 # Changelog
 
+## AI Help Desk triage tools (ai 1.4.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_help_desk_ticket` plus confirmed writes `update_help_desk_ticket_status`, `assign_help_desk_ticket`, and `add_help_desk_ticket_note` (text only). Status confirm mirrors Help Desk close/reopen/update gates. Confirm-time assign re-validates `EligibleHelpDeskAssignee`. Catalog **ai 1.3.0 → 1.4.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz coverage.
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant user guide; roadmap near-term; [production readiness](/deployment/ai-help-desk-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
 ## Auth branding split layout + Branded visual chrome (2026-09-14)
 
 - **EloSync-Backend:** Per-page auth panel image settings (`auth_image_*_path`) on Central and tenant catalogs; public bootstrap exposes `auth_image_*_url`. Branding upload assets expand beyond logo/favicon (auth images max **8 MB**; logo/favicon max **2 MB**). Tenant **logo / favicon / button_color / auth images** resolve and write only when **Branded** is entitled; otherwise Central defaults apply (stored overrides ignored until Branded returns). Pest: Central + tenant settings branding suites.
