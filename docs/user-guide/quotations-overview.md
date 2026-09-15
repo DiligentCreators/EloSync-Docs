@@ -25,6 +25,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 - **Convert to invoice** (`POST /quotations/{id}/convert`) — one-shot draft CustomerInvoice when Invoices is entitled (soft check; not a Marketplace hard dependency)
 - Assignment with assignee scoping via `quotations.assign`
 - Notes + domain activity timeline (mirrors Opportunities)
+- Ask EloSync triage (with AI Assistant entitled): fetch quotation, confirmed status / assign / note writes — see [AI Assistant](/user-guide/ai-assistant)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:quotations`) + Spatie permissions — **free Marketplace opt-in** (Sales category)
 - Audit + activity logging; assignment notification

@@ -65,3 +65,7 @@ Users with **assign** can set or clear the assignee from the record page or the 
 ## Related records
 
 Every estimate record page shows its linked **Contact**, **Company**, **Opportunity**, **Quotation**, and — once converted — the resulting **Invoice**, each with a link to jump straight to that record's detail view.
+
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can fetch an estimate and propose status changes, assignments, or timeline notes. Nothing is saved until you **confirm** the suggestion. Moving to **Sent** still needs **send**; accepting needs **accept**. See [AI Assistant](/user-guide/ai-assistant).

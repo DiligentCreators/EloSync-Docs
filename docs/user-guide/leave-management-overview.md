@@ -30,6 +30,10 @@ Default **staff** role: `view` + `create` + `update` (self-service). Managers ke
 
 Catalog: slug `leave-management`, category `hr`, `sort_order = 20`, free opt-in.
 
+## Ask EloSync
+
+Leave triage tools (`get_leave_request`, `get_pending_leave_requests`, confirmed `approve_leave_request` / `reject_leave_request`) ship with **ai 1.16.0**. See [AI Assistant](/user-guide/ai-assistant) and [AI Leave triage production readiness](/deployment/ai-leave-triage-production-readiness).
+
 ## Explicitly deferred
 
 - Accrual engines / carry-over policies

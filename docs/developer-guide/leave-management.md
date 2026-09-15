@@ -56,6 +56,10 @@ See [tenant-v1-leave-management.md](/api/tenant-v1-leave-management).
 
 `PayPeriodCalculator` counts unpaid leave days from approved requests using `deduct_salary`, falling back to `!leaveType.is_paid` when `deduct_salary` is null (legacy rows).
 
+## Ask EloSync
+
+Leave AI tools (`get_leave_request`, `get_pending_leave_requests`, confirmed `approve_leave_request` / `reject_leave_request`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Auth mirrors HTTP approve/reject via `LeaveAiSupport` + `LeaveRequestService` (policy blocks self-approve for non-admin). See [AI tools](/developer-guide/ai-tools) and [AI Leave triage production readiness](/deployment/ai-leave-triage-production-readiness).
+
 ## Tests
 
 ```bash

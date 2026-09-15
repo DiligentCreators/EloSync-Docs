@@ -1,5 +1,29 @@
 # Changelog
 
+## AI Leave triage tools (ai 1.16.0) (2026-09-16)
+
+- **EloSync-Backend:** Ask EloSync adds `get_leave_request`, `get_pending_leave_requests`, plus confirmed writes `approve_leave_request` and `reject_leave_request`. No assign/timeline-note tools. Approve/reject require `leave-management.approve`, mirror HTTP via `LeaveAiSupport` + `LeaveRequestService` (self-approve blocked for non-admin). Reject requires `review_notes`; approve supports optional `review_notes` / `deduct_salary` with the same override-notes rule as the HTTP review request. Catalog **ai 1.15.0 → 1.16.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Leave cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-leave-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Credit Note triage tools (ai 1.15.0) (2026-09-16)
+
+- **EloSync-Backend:** Ask EloSync adds `get_credit_note` plus confirmed writes `update_credit_note_status`, `assign_credit_note`, and `add_credit_note_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`credit-notes.update` **or** `issue` **or** `apply` **or** `void` **or** `refund`) and mirrors Payment-style dedicated actions via `CreditNoteAiSupport::authorizeStatusChange` + `issue()` / `apply()` / `void()` / `refund()` (Draft target rejected). Confirm-time assign re-validates `EligibleCreditNoteAssignee`; note confirm re-checks `max:5000`. Get payload returns number, title, amounts, linked invoice, `assigned_to` (user id), and `assignee_name`. Catalog **ai 1.14.0 → 1.15.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Credit Notes cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-credit-note-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Quotation triage tools (ai 1.14.0) (2026-09-16)
+
+- **EloSync-Backend:** Ask EloSync adds `get_quotation` plus confirmed writes `update_quotation_status`, `assign_quotation`, and `add_quotation_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`quotations.update` **or** `send` **or** `accept`) and mirrors HTTP `POST …/status` auth via `QuotationAiSupport::authorizeStatusChange` + `changeStatus`. Confirm-time assign re-validates `EligibleOpportunityAssignee`; note confirm re-checks `max:5000`. Get payload returns `title` (no `number`), `assigned_to` (user id), and `assignee_name`. Catalog **ai 1.13.0 → 1.14.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Quotations cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-quotation-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Estimate triage tools (ai 1.13.0) (2026-09-16)
+
+- **EloSync-Backend:** Ask EloSync adds `get_estimate` plus confirmed writes `update_estimate_status`, `assign_estimate`, and `add_estimate_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`estimates.update` **or** `send` **or** `accept`) and mirrors HTTP `POST …/status` auth via `EstimateAiSupport::authorizeStatusChange` + `changeStatus`. Confirm-time assign re-validates `EligibleEstimateAssignee`; note confirm re-checks `max:5000`. Get payload returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.12.0 → 1.13.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Estimates cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-estimate-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
 ## AI Lead assign + note tools (ai 1.12.0) (2026-09-15)
 
 - **EloSync-Backend:** Ask EloSync adds confirmed writes `assign_lead` and `add_lead_note` (text only) alongside existing Lead reads and `update_lead_status`. Assign uses `leads.assign` + `EligibleLeadAssignee` at propose **and** confirm (optional reason); note confirm re-checks `max:5000`. `get_lead` / `search_leads` expose `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.11.0 → 1.12.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, unassign, suspended assignee, view-only / no-assign exclusions).

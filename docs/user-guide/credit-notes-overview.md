@@ -25,6 +25,7 @@ Tenant customer-billing module on the frozen platform — the third Phase 3 (Bil
 - Status workflow: `draft → issued → applied → refunded`, with `void` available from `draft` or `issued` only (`POST /credit-notes/{id}/issue`, `.../apply`, `.../refund`, `.../void`) — **applying** adds the total to the invoice's `amount_credited`; **refunding** reverses that credit
 - Assignment with assignee scoping via `credit-notes.assign`
 - Notes + domain activity timeline (mirrors Invoices/Payments)
+- Ask EloSync triage (with AI Assistant entitled): fetch credit note, confirmed issue/apply/void/refund / assign / note writes — see [AI Assistant](/user-guide/ai-assistant)
 - Download credit note PDF + **email customer** after Issue (`GET /credit-notes/{id}/pdf`, `POST /credit-notes/{id}/email`, `credit-notes.send`)
 - Trash filtering plus **Restore** and **Delete permanently**
 - Module licensing (`module:credit-notes`) + Spatie permissions — **free Marketplace opt-in** (Billing category), **requires Invoices**

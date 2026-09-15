@@ -156,7 +156,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + confirmed writes) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + confirmed writes) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -192,6 +192,14 @@ Purchase Order AI triage shipped (**ai 1.10.0**): `get_purchase_order` plus conf
 Payment AI triage shipped (**ai 1.11.0**): `get_payment` plus confirmed writes for status, assign, and notes (Posted→`post()`, Void→`void()`; Draft target rejected).
 
 Lead assign + note shipped (**ai 1.12.0**): confirmed `assign_lead` / `add_lead_note` alongside existing Lead reads and status write.
+
+Estimate AI triage shipped (**ai 1.13.0**): `get_estimate` plus confirmed writes for status, assign, and notes (mirrors Estimate HTTP `/status` authz including send/accept gates).
+
+Quotation AI triage shipped (**ai 1.14.0**): `get_quotation` plus confirmed writes for status, assign, and notes (mirrors Quotation HTTP `/status` authz including send/accept gates; title only — no number field; assign uses `EligibleOpportunityAssignee`).
+
+Credit Note AI triage shipped (**ai 1.15.0**): `get_credit_note` plus confirmed writes for status, assign, and notes (Issued→`issue()`, Applied→`apply()`, Void→`void()`, Refunded→`refund()`; Draft target rejected; assign uses `EligibleCreditNoteAssignee`).
+
+Leave AI triage shipped (**ai 1.16.0**): `get_leave_request` + `get_pending_leave_requests` plus confirmed `approve_leave_request` / `reject_leave_request` (mirrors Leave HTTP approve/reject; no assign/notes; self-approve blocked for non-admin).
 
 Next when prioritized: WhatsApp interactive messages; demand-driven items below (broader AI tools continue lightly).
 

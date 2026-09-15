@@ -85,3 +85,7 @@ npm run test:e2e:credit-notes
 - Spatie `LogsActivity` on `CustomerCreditNote` (log name `customer_credit_notes`)
 - Domain `customer_credit_note_activities` timeline
 - `PlatformAuditService` via `CustomerCreditNoteEventSubscriber`
+
+## Ask EloSync
+
+Ask EloSync Credit Note tools (`get_credit_note`, confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors dedicated HTTP actions (Issued→`issue`, Applied→`apply`, Void→`void`, Refunded→`refund`; Draft target rejected) via `CreditNoteAiSupport::authorizeStatusChange` and `CustomerCreditNoteService` methods. Assign uses `EligibleCreditNoteAssignee`. See [AI tools](/developer-guide/ai-tools) and [AI Credit Note triage production readiness](/deployment/ai-credit-note-triage-production-readiness).
