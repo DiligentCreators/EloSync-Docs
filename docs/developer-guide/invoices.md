@@ -96,3 +96,7 @@ npm run test:e2e:invoices
 - `PlatformAuditService` via `CustomerInvoiceEventSubscriber`
 - Recurring generate: `invoices.generate-recurring.series_failed`, `tenant_failed`, `time_budget_reached`
 - PDF: `invoices.pdf.rendered`, `invoices.pdf.warm_failed`
+
+## Ask EloSync
+
+Ask EloSync Invoice tools (`get_invoice`, confirmed status/assign/note writes, plus existing `get_overdue_invoices` / `get_invoice_balance_summary`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Unpaid→`send`, Cancelled→`void`, else `update`) via `InvoiceAiSupport::authorizeStatusChange` and `CustomerInvoiceService::changeStatus`. Overdue rows include assignee id. See [AI tools](/developer-guide/ai-tools) and [AI Invoice triage production readiness](/deployment/ai-invoice-triage-production-readiness).

@@ -137,6 +137,16 @@ After migrate (`2026_09_15_060000_bump_ai_module_version_to_1_6_0`):
 
 Go-live: [AI Opportunity triage production readiness](/deployment/ai-opportunity-triage-production-readiness) · ops [AI deployment](/deployment/ai).
 
+## AI Invoice triage tools 1.6.0 → 1.7.0
+
+After migrate (`2026_09_15_070000_bump_ai_module_version_to_1_7_0`):
+
+1. Confirm catalog `ai.version` is **1.7.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `invoices` → Ask EloSync fetch invoice / overdue → propose status/assign/note → Confirm; Draft→Unpaid needs `invoices.send`; cancel needs `invoices.void`.
+
+Go-live: [AI Invoice triage production readiness](/deployment/ai-invoice-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:

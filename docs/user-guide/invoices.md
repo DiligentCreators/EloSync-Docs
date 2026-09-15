@@ -67,6 +67,10 @@ Users with **assign** can set or clear the assignee from the record page or the 
 - **Notes** tab — internal activity notes the team adds after the invoice exists (not the same as the memo)
 - **Timeline** — create, update, assignment, status change, note, void, delete/restore, recurring start/stop/generate, and **emailed** events
 
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can fetch an invoice, list overdue invoices, and propose status changes, assignments, or timeline notes. Nothing is saved until you **confirm** the suggestion. Moving a draft to **Unpaid** still needs **send**; cancelling needs **void**. See [AI Assistant](/user-guide/ai-assistant).
+
 ## Related payments and credit notes
 
 If the [Payments](/user-guide/payments) module is installed and you have `payments.view`, the invoice record page lists **posted payments** allocated to this invoice (payment number, date, method, allocated amount) with links to each payment. A **Related payments** card still opens the Payments list filtered to this invoice. If [Credit Notes](/user-guide/credit-notes) is installed and you have `credit-notes.view`, a **Credit notes** link does the same for credit notes issued against this invoice.

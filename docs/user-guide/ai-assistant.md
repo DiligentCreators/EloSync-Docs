@@ -53,6 +53,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - Ask about overdue or due-today tasks, then confirm suggested status changes, assignments, or notes before they apply. Completing or reopening a task still needs the **complete** permission (you do not need **update** just to complete via Ask EloSync).
 - With Help Desk installed, ask about open tickets, then confirm suggested status changes, assignments, or notes before they apply.
 - With Opportunities installed, ask about a deal or pipeline summary, list pipeline stages, then confirm suggested stage moves, assignments, or notes before they apply.
+- With Invoices installed, ask about overdue invoices or a specific invoice, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Unpaid** still needs **send**; cancelling needs **void**. Status suggestions follow the same path as changing status in the app (not the dedicated Send button’s accrual/PDF side effects).
 
 ## Related
 
@@ -61,3 +62,4 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - [Tasks](/user-guide/tasks-overview)
 - [Help Desk](/user-guide/help-desk-overview)
 - [Opportunities](/user-guide/opportunities-overview)
+- [Invoices](/user-guide/invoices-overview)
