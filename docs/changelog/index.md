@@ -1,5 +1,11 @@
 # Changelog
 
+## Quotation e-signature accept links (quotations 1.9.0) (2026-09-16)
+
+- **EloSync-Backend:** Sent quotations issue a hashed acceptance token. Staff can `POST /quotations/{id}/acceptance-link` (`quotations.send`) or email a Sent quote (link appended to the message). Public `GET/POST /api/tenant/v1/public/quotations/accept/{token}` (throttle `quotation-acceptance`) shows a summary and accepts with signer name/email/IP — transitions `sent → accepted`, records `signature_requested` / `signed` timeline events, and invalidates the token. Reject/expire/internal accept clear outstanding links. Catalog **quotations 1.8.0 → 1.9.0** (migrate-only + CatalogSeeder). Pest: `QuotationAcceptanceTest`.
+- **EloSync-Frontend:** Guest page `/#/accept/quotations/:token`; quotation view shows **Copy accept link**, active-link hint, and customer acceptance metadata.
+- **EloSync-Docs:** Quotations user/developer/API + roadmap; changelog.
+
 ## AI Leave triage tools (ai 1.16.0) (2026-09-16)
 
 - **EloSync-Backend:** Ask EloSync adds `get_leave_request`, `get_pending_leave_requests`, plus confirmed writes `approve_leave_request` and `reject_leave_request`. No assign/timeline-note tools. Approve/reject require `leave-management.approve`, mirror HTTP via `LeaveAiSupport` + `LeaveRequestService` (self-approve blocked for non-admin). Reject requires `review_notes`; approve supports optional `review_notes` / `deduct_salary` with the same override-notes rule as the HTTP review request. Catalog **ai 1.15.0 → 1.16.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.

@@ -60,7 +60,7 @@ Permission: `quotations.assign`.
 
 ### POST `/quotations/{id}/send`
 
-Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). **Status-only** — does not email or generate a PDF.
+Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). **Status-only** — does not email or generate a PDF. Issues a hashed customer acceptance token (plaintext returned only from `POST …/acceptance-link` or embedded in email).
 
 ### POST `/quotations/{id}/email`
 
@@ -72,11 +72,22 @@ Requires the quotation to already be sent — allowed statuses: `sent`, `accepte
 
 When `to` is omitted, resolves the recipient from the linked contact email, then company email. If no address is found, returns 422 on `to`.
 
-Queues a branded email via the tenant mailer (optional PDF attachment from `QuotationPdfService`). Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `quotation.emailed`).
+Queues a branded email via the tenant mailer (optional PDF attachment from `QuotationPdfService`). For **Sent** quotations, rotates the acceptance token and appends the accept URL to the message body. Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `quotation.emailed`).
+
+### POST `/quotations/{id}/acceptance-link`
+
+Permission: `quotations.send` (assignee-scoped). Requires status `sent`. Rotates the acceptance token and returns `{ url, expires_at, has_acceptance_link, acceptance_link_expires_at }`.
 
 ### POST `/quotations/{id}/accept`
 
-Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scoped unless the actor has `quotations.assign` or is superadmin).
+Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). Clears any outstanding acceptance token.
+
+### Public customer accept (unauthenticated)
+
+Requires tenancy (domain / `X-Tenant-Domain`) and Quotations entitlement. Throttle: `quotation-acceptance` (20/min per IP).
+
+- `GET /public/quotations/accept/{token}` — summary (title, totals, lines, workspace name, expiry). Invalid/expired/used → 404.
+- `POST /public/quotations/accept/{token}` — body `{ accepted_by_name, accepted_by_email }`; marks accepted, stores signer + IP, invalidates token, records `signed` activity.
 
 ### POST `/quotations/{id}/convert`
 
@@ -109,4 +120,4 @@ Permission: `quotations.update`.
 
 ### GET `/quotations/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`, `emailed`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`, `emailed`, `signature_requested`, `signed`).
