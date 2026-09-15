@@ -108,3 +108,7 @@ npm run test:e2e:tasks
 | Assignment history table | Timeline only |
 | `export` / `convert` | `complete` / `change_due_date` |
 | Board by stage | Board by status |
+
+## AI tools
+
+Ask EloSync Task tools (`get_task`, confirmed status/assign/note writes, plus existing list reads and `create_task`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. See [AI tools](/developer-guide/ai-tools) and [AI Task triage production readiness](/deployment/ai-task-triage-production-readiness).

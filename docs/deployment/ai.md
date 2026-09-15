@@ -6,13 +6,14 @@ Companion readiness audits:
 - Platform AI (credits / BYOK / gateway): [AI production readiness](./ai-production-readiness)
 - Workspace search **1.3.0**: [AI workspace search production readiness](./ai-workspace-search-production-readiness)
 - Help Desk triage tools **1.4.0**: [AI Help Desk triage production readiness](./ai-help-desk-triage-production-readiness)
+- Task triage tools **1.5.0**: [AI Task triage production readiness](./ai-task-triage-production-readiness)
 
 ## What ships
 
 | Piece | Notes |
 |-------|--------|
-| Catalog | `ai` ($29/$290) **1.4.0**, packs `ai-credits-1k` / `5k` / `20k` (require `ai`) |
-| Migrations | `2026_08_21_010000` register · `010100` permissions · `010200` tables · `010300` version bump **1.0.1** · `150423` version bump **1.1.0** · `2026_08_25_120000` version bump **1.2.0** · `2026_08_31_200000` version bump **1.3.0** (`search_workspace`) · `2026_09_15_040000` version bump **1.4.0** (Help Desk triage tools) |
+| Catalog | `ai` ($29/$290) **1.5.0**, packs `ai-credits-1k` / `5k` / `20k` (require `ai`) |
+| Migrations | `2026_08_21_010000` register · `010100` permissions · `010200` tables · `010300` version bump **1.0.1** · `150423` version bump **1.1.0** · `2026_08_25_120000` version bump **1.2.0** · `2026_08_31_200000` version bump **1.3.0** (`search_workspace`) · `2026_09_15_040000` version bump **1.4.0** (Help Desk triage tools) · `2026_09_15_050000` version bump **1.5.0** (Task triage tools) |
 | Scheduler | `ai:rollover-monthly-credits` (daily UTC period rollover) |
 | Rate limits | `throttle:ai` (30/min) on message send + Lead Copilot |
 | Queues | None AI-specific — chat/copilot run **synchronously** on the web request |
@@ -44,7 +45,8 @@ See [Upgrade Guide — AI Assistant platform](./upgrade#ai-assistant-platform-10
 1. Central Test AI connection  
 2. Entitle `ai` → wallet grant  
 3. Ask EloSync + **Search workspace** starter + Lead Copilot  
-4. With Help Desk entitled: open tickets → propose status/assign/note → Confirm  
-5. Zero credits → HTTP 402 on platform mode  
+4. Tasks: overdue / due today → propose status/assign/note → Confirm (also smoke complete-only staff → complete)  
+5. With Help Desk entitled: open tickets → propose status/assign/note → Confirm  
+6. Zero credits → HTTP 402 on platform mode  
 
-Full checklists: [AI production readiness](./ai-production-readiness) · [AI workspace search 1.3.0](./ai-workspace-search-production-readiness) · [AI Help Desk triage 1.4.0](./ai-help-desk-triage-production-readiness).
+Full checklists: [AI production readiness](./ai-production-readiness) · [AI workspace search 1.3.0](./ai-workspace-search-production-readiness) · [AI Help Desk triage 1.4.0](./ai-help-desk-triage-production-readiness) · [AI Task triage 1.5.0](./ai-task-triage-production-readiness).

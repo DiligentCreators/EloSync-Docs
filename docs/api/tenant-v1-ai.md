@@ -106,7 +106,7 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Leads** (`leads.view`): `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`
 
-**Tasks** (`tasks.view` / `tasks.create`): `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `create_task` (pending confirmation)
+**Tasks** (`tasks.view` / `tasks.create` / `tasks.update` / `tasks.assign` / `tasks.complete`): `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `get_task`, `create_task` (pending confirmation), `update_task_status` (pending confirmation; visible with `tasks.update` **or** `tasks.complete`; complete/reopen need `tasks.complete` at propose+confirm; other statuses need `tasks.update`), `assign_task` (pending confirmation), `add_task_note` (pending confirmation; text only)
 
 **Projects** (`projects.view`): `search_projects`, `get_project`, `get_overdue_projects`
 

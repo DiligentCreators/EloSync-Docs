@@ -1,9 +1,15 @@
 # Changelog
 
+## AI Task triage tools (ai 1.5.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_task` plus confirmed writes `update_task_status`, `assign_task`, and `add_task_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`tasks.update` **or** `tasks.complete`) so complete-only staff match HTTP complete/reopen. Confirm-time assign re-validates `EligibleTaskAssignee`; note confirm re-checks `max:5000`. Catalog **ai 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (complete-only happy path, non-complete deny, reopen deny, unassign, soft-delete, suspended assignee).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Tasks cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-task-triage-production-readiness) (**Go** — A1/R1 remediations closed); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
 ## AI Help Desk triage tools (ai 1.4.0) (2026-09-15)
 
-- **EloSync-Backend:** Ask EloSync adds `get_help_desk_ticket` plus confirmed writes `update_help_desk_ticket_status`, `assign_help_desk_ticket`, and `add_help_desk_ticket_note` (text only). Status confirm mirrors Help Desk close/reopen/update gates. Confirm-time assign re-validates `EligibleHelpDeskAssignee`. Catalog **ai 1.3.0 → 1.4.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz coverage.
-- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant user guide; roadmap near-term; [production readiness](/deployment/ai-help-desk-triage-production-readiness) (**Go**); changelog.
+- **EloSync-Backend:** Ask EloSync adds `get_help_desk_ticket` plus confirmed writes `update_help_desk_ticket_status`, `assign_help_desk_ticket`, and `add_help_desk_ticket_note` (text only). Status confirm mirrors Help Desk close/reopen/update gates. Confirm-time assign re-validates `EligibleHelpDeskAssignee`; note confirm re-checks `max:5000`. Catalog **ai 1.3.0 → 1.4.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz + residual negatives (propose-close, unassign, illegal transition, soft-delete).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Help Desk cross-links; VitePress sidebar entries; roadmap; [production readiness](/deployment/ai-help-desk-triage-production-readiness) (**Go**); changelog.
 - **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
 
 ## Auth branding split layout + Branded visual chrome (2026-09-14)

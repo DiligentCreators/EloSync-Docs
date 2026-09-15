@@ -107,6 +107,10 @@ Tenant SPA mounts both dialogs from the app shell. **File a complaint** is gated
 
 See [Central Feedback System](/developer-guide/central-feedback-system).
 
+## AI tools
+
+Ask EloSync Help Desk tools (`get_help_desk_ticket`, confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. See [AI tools](/developer-guide/ai-tools) and [AI Help Desk triage production readiness](/deployment/ai-help-desk-triage-production-readiness).
+
 ## Deferred
 
 - Customer portal, chat/social intake, Kanban

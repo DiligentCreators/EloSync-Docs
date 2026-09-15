@@ -63,6 +63,8 @@ Task assignee pickers list active workspace users (including people flagged **Ex
 
 Users with **complete** can mark a task completed (sets `completed_at`) or reopen it from the **record page** or the **list row menu**. On the board, dragging a card into **Completed** also completes it (requires **update**).
 
+With the **AI Assistant** module installed, Ask EloSync can load a task and suggest status changes, assignments, or notes — nothing is saved until you **Confirm**. Completing or reopening a completed task still needs the **complete** permission.
+
 ## Comments, attachments & history
 
 - **Attachments** — on the full record page, upload multiple files to explain the task; download or delete with **update** permission. Allowed types and max sizes follow workspace Storage upload policy

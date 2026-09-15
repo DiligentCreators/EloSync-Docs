@@ -95,3 +95,7 @@ Define policies under **Manage SLAs**. Each policy sets first-response and resol
 Customer portal and chat/social intake channels are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap). Ticket notes support `@mentions`. Use **Board** / **List** for status Kanban. Soft-gated WhatsApp Communication Templates appear on ticket view when that module is installed and the contact has a phone.
 
 When **Communication Templates** is installed and you have `communication-templates.use`, open a ticket with a linked contact that has a phone number and click **WhatsApp** to pick a Help Desk template (or a blank chat). EloSync opens WhatsApp Web/app with the message pre-filled — it does not send messages for you.
+
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can list open tickets, fetch a ticket by UUID, and propose status changes, assignments, or notes. Nothing is saved until you **confirm** the suggestion. See [AI Assistant](/user-guide/ai-assistant).
