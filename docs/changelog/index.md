@@ -1,5 +1,11 @@
 # Changelog
 
+## AI Opportunity triage tools (ai 1.6.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_opportunity`, `get_opportunity_stages`, plus confirmed writes `update_opportunity_stage`, `assign_opportunity`, and `add_opportunity_note` (text only). Stage tool uses integer `stage_id`. `search_opportunities` returns `stage_id`, assignee id, and `assignee_name`. HTTP `POST …/stage` tenant-scopes `stage_id`. Confirm-time assign re-validates `EligibleOpportunityAssignee`; note confirm re-checks `max:5000`. Catalog **ai 1.5.0 → 1.6.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, invalid stage, confirm-without-update, soft-delete, unassign, suspended assignee, view-only / no-assign exclusions, cross-tenant stage HTTP).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Opportunities cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-opportunity-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
 ## AI Task triage tools (ai 1.5.0) (2026-09-15)
 
 - **EloSync-Backend:** Ask EloSync adds `get_task` plus confirmed writes `update_task_status`, `assign_task`, and `add_task_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`tasks.update` **or** `tasks.complete`) so complete-only staff match HTTP complete/reopen. Confirm-time assign re-validates `EligibleTaskAssignee`; note confirm re-checks `max:5000`. Catalog **ai 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (complete-only happy path, non-complete deny, reopen deny, unassign, soft-delete, suspended assignee).

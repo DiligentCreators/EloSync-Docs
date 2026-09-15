@@ -52,6 +52,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - Lead Copilot only accesses leads you can already open in the CRM.
 - Ask about overdue or due-today tasks, then confirm suggested status changes, assignments, or notes before they apply. Completing or reopening a task still needs the **complete** permission (you do not need **update** just to complete via Ask EloSync).
 - With Help Desk installed, ask about open tickets, then confirm suggested status changes, assignments, or notes before they apply.
+- With Opportunities installed, ask about a deal or pipeline summary, list pipeline stages, then confirm suggested stage moves, assignments, or notes before they apply.
 
 ## Related
 
@@ -59,3 +60,4 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - [Leads](/user-guide/leads-overview)
 - [Tasks](/user-guide/tasks-overview)
 - [Help Desk](/user-guide/help-desk-overview)
+- [Opportunities](/user-guide/opportunities-overview)

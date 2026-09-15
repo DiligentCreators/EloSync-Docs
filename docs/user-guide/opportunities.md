@@ -48,3 +48,7 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 - **Notes** — free-form notes on the deal
 - **Activity** — timeline of create, update, assignment, stage change, note, and delete/restore events
+
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can list pipeline stages, fetch an opportunity by UUID, and propose stage changes, assignments, or notes. Nothing is saved until you **confirm** the suggestion. See [AI Assistant](/user-guide/ai-assistant).

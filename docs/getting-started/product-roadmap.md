@@ -156,7 +156,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + confirmed writes; broader tools continue) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + confirmed writes; broader tools continue) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -178,6 +178,8 @@ AI workspace search shipped (**ai 1.3.0**): `search_workspace` fans out across e
 Help Desk AI triage shipped (**ai 1.4.0**): `get_help_desk_ticket` plus confirmed writes for status, assign, and notes (mirrors Help Desk API authz including close/reopen).
 
 Task AI triage shipped (**ai 1.5.0**): `get_task` plus confirmed writes for status, assign, and notes (mirrors Task API authz including complete/reopen).
+
+Opportunity AI triage shipped (**ai 1.6.0**): `get_opportunity` and `get_opportunity_stages` plus confirmed writes for stage, assign, and notes (mirrors Opportunity API authz; stage via `stage_id`).
 
 Next when prioritized: further AI tools; WhatsApp interactive messages; demand-driven items below.
 

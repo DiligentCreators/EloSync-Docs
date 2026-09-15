@@ -73,3 +73,7 @@ npm run test:e2e:opportunities
 - Spatie `LogsActivity` on `Opportunity` (log name `opportunities`)
 - Domain `opportunity_activities` timeline
 - `PlatformAuditService` via `OpportunityEventSubscriber` (includes `opportunity_tag_created`, `opportunity_tags_synced`)
+
+## Ask EloSync
+
+Ask EloSync Opportunity tools (`get_opportunity`, `get_opportunity_stages`, confirmed stage/assign/note writes, plus existing `search_opportunities` / `get_pipeline_summary`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Search rows include `stage_id` and assignee id. HTTP `POST …/stage` validates `stage_id` in the current tenant. See [AI tools](/developer-guide/ai-tools) and [AI Opportunity triage production readiness](/deployment/ai-opportunity-triage-production-readiness).
