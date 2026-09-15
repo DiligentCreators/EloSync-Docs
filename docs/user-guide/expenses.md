@@ -56,6 +56,10 @@ Users with **assign** can set or clear the assignee from the record page or the 
 - **Notes** — free-form notes on the expense
 - **Timeline** — history of create, update, assignment, status change, note, and delete/restore events
 
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can list expenses awaiting approval, fetch an expense by UUID, and propose status changes, assignments, or notes. Nothing is saved until you **confirm** the suggestion. Approving needs **approve**; rejecting needs **reject**; marking paid needs **pay**. When Accounting is installed, set a paid-from account on the expense before confirming a paid status suggestion (same as changing status without the dedicated Mark as paid dialog). See [AI Assistant](/user-guide/ai-assistant).
+
 ## What's not here yet
 
 Reimbursement/payout tracking beyond the **paid** status, and multi-line (itemized) expenses are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).

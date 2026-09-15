@@ -104,21 +104,25 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Workspace** (available with `ai.use`; per-module entitlement + view inside providers): `search_workspace`
 
-**Leads** (`leads.view`): `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`
+**Leads** (`leads.view` / `leads.update` / `leads.assign`): `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`, `update_lead_status` (pending confirmation), `assign_lead` (pending confirmation; `assigned_to` is user id or null to unassign), `add_lead_note` (pending confirmation; text only)
 
 **Tasks** (`tasks.view` / `tasks.create` / `tasks.update` / `tasks.assign` / `tasks.complete`): `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `get_task`, `create_task` (pending confirmation), `update_task_status` (pending confirmation; visible with `tasks.update` **or** `tasks.complete`; complete/reopen need `tasks.complete` at propose+confirm; other statuses need `tasks.update`), `assign_task` (pending confirmation), `add_task_note` (pending confirmation; text only)
 
-**Projects** (`projects.view`): `search_projects`, `get_project`, `get_overdue_projects`
+**Projects** (`projects.view` / `projects.update` / `projects.assign`): `search_projects`, `get_project`, `get_overdue_projects`, `update_project_status` (pending confirmation; requires `projects.update`; same as HTTP `POST …/status`), `assign_project` (pending confirmation), `add_project_note` (pending confirmation; text only)
 
 **Opportunities** (`opportunities.view` / `opportunities.update` / `opportunities.assign`): `search_opportunities`, `get_pipeline_summary`, `get_opportunity_stages`, `get_opportunity`, `update_opportunity_stage` (pending confirmation; `stage_id` integer), `assign_opportunity` (pending confirmation), `add_opportunity_note` (pending confirmation; text only)
 
 **Invoices** (`invoices.view` / `invoices.update` / `invoices.assign` / `invoices.send` / `invoices.void`): `get_overdue_invoices`, `get_invoice_balance_summary`, `get_invoice`, `update_invoice_status` (pending confirmation; visible with `invoices.update` **or** `invoices.send` **or** `invoices.void`; Unpaid needs `send`, Cancelled needs `void`, other targets need `update` at propose+confirm — same as HTTP `POST …/status`), `assign_invoice` (pending confirmation), `add_invoice_note` (pending confirmation; text only)
 
+**Payments** (`payments.view` / `payments.update` / `payments.assign` / `payments.post` / `payments.void`): `get_payment`, `update_payment_status` (pending confirmation; visible with `payments.update` **or** `post` **or** `void`; Posted confirm calls `post()`, Void confirm calls `void()`; Draft target rejected), `assign_payment` (pending confirmation), `add_payment_note` (pending confirmation; text only)
+
+**Purchase Orders** (`purchase-orders.view` / `purchase-orders.update` / `purchase-orders.assign` / `purchase-orders.send` / `purchase-orders.receive` / `purchase-orders.cancel`): `get_purchase_order`, `update_purchase_order_status` (pending confirmation; visible with `purchase-orders.update` **or** `send` **or** `receive` **or** `cancel`; target-dependent auth at propose+confirm — same as HTTP `POST …/status`), `assign_purchase_order` (pending confirmation), `add_purchase_order_note` (pending confirmation; text only)
+
 **Help Desk** (`help-desk.view` / `help-desk.update` / `help-desk.assign`): `get_help_desk_open_tickets`, `get_help_desk_ticket`, `update_help_desk_ticket_status` (pending confirmation; resolve/close also need `help-desk.close` at confirm), `assign_help_desk_ticket` (pending confirmation), `add_help_desk_ticket_note` (pending confirmation; text only)
 
-**Expenses** (`expenses.view`): `get_expense_pending_approval`
+**Expenses** (`expenses.view` / `expenses.update` / `expenses.assign` / `expenses.submit` / `expenses.approve` / `expenses.reject` / `expenses.pay` / `expenses.cancel`): `get_expense_pending_approval`, `get_expense`, `update_expense_status` (pending confirmation; visible with `expenses.update` **or** `submit` **or** `approve` **or** `reject` **or** `pay` **or** `cancel`; target-dependent auth at propose+confirm — same as HTTP `POST …/status`; Paid uses `pay([])` so Accounting workspaces need `paid_from_account_id` already on the expense), `assign_expense` (pending confirmation), `add_expense_note` (pending confirmation; text only)
 
-Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). `search_workspace` hits also include `path` for citations; responses may list `modules_failed` when a provider errors without failing the whole tool. See [AI tools guide](/developer-guide/ai-tools).
+Tool list/detail rows expose numeric `id` (SPA paths) and `uuid` (lookups). Assignee fields use numeric `assigned_to` (user id) plus `assignee_name` when present. `search_workspace` hits also include `path` for citations; responses may list `modules_failed` when a provider errors without failing the whole tool. See [AI tools guide](/developer-guide/ai-tools).
 
 ## Related
 

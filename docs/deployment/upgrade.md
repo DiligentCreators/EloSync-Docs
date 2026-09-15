@@ -147,6 +147,56 @@ After migrate (`2026_09_15_070000_bump_ai_module_version_to_1_7_0`):
 
 Go-live: [AI Invoice triage production readiness](/deployment/ai-invoice-triage-production-readiness) · ops [AI deployment](/deployment/ai).
 
+## AI Expense triage tools 1.7.0 → 1.8.0
+
+After migrate (`2026_09_15_080000_bump_ai_module_version_to_1_8_0`):
+
+1. Confirm catalog `ai.version` is **1.8.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `expenses` → Ask EloSync fetch expense / pending approval → propose status/assign/note → Confirm; approve needs `expenses.approve`; reject needs `expenses.reject`; paid via status needs `expenses.pay` (and `paid_from_account_id` on the expense when Accounting is entitled).
+
+Go-live: [AI Expense triage production readiness](/deployment/ai-expense-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Project triage tools 1.8.0 → 1.9.0
+
+After migrate (`2026_09_15_090000_bump_ai_module_version_to_1_9_0`):
+
+1. Confirm catalog `ai.version` is **1.9.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `projects` → Ask EloSync fetch project → propose status/assign/note → Confirm; status/note need `projects.update`; assign needs `projects.assign`.
+
+Go-live: [AI Project triage production readiness](/deployment/ai-project-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Purchase Order triage tools 1.9.0 → 1.10.0
+
+After migrate (`2026_09_15_100000_bump_ai_module_version_to_1_10_0`):
+
+1. Confirm catalog `ai.version` is **1.10.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `purchase-orders` → Ask EloSync fetch PO → propose status/assign/note → Confirm; Draft→Sent needs `purchase-orders.send`; receive needs `purchase-orders.receive`; cancel needs `purchase-orders.cancel`.
+
+Go-live: [AI Purchase Order triage production readiness](/deployment/ai-purchase-order-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Payment triage tools 1.10.0 → 1.11.0
+
+After migrate (`2026_09_15_110000_bump_ai_module_version_to_1_11_0`):
+
+1. Confirm catalog `ai.version` is **1.11.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `payments` → Ask EloSync fetch payment → propose post/void/assign/note → Confirm; Posted confirm calls `post()` (`payments.post`); Void confirm calls `void()` (`payments.void`); Draft target rejected.
+
+Go-live: [AI Payment triage production readiness](/deployment/ai-payment-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
+## AI Lead assign + note tools 1.11.0 → 1.12.0
+
+After migrate (`2026_09_15_120000_bump_ai_module_version_to_1_12_0`):
+
+1. Confirm catalog `ai.version` is **1.12.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `leads` → Ask EloSync fetch lead → propose assign/note → Confirm; assign needs `leads.assign`; note needs `leads.update`.
+
+Go-live: [AI Lead assign + note production readiness](/deployment/ai-lead-assign-note-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:

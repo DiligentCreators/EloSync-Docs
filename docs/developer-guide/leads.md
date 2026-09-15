@@ -144,3 +144,7 @@ npm run test:e2e:leads
 - `lead_assignment_histories` for assignee changes
 - `users.lead_commission_rate`, `leads.commission_rate` — snapshot on assign via `LeadService::assign`
 - `PlatformAuditService` via `LeadEventSubscriber` (+ `lead_import_completed` / `lead_import_failed`)
+
+## Ask EloSync
+
+Ask EloSync Lead tools (existing reads + `update_lead_status`, plus confirmed `assign_lead` / `add_lead_note`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Assign uses `EligibleLeadAssignee` at propose **and** confirm. Get/search payloads include `assigned_to` (user id) and `assignee_name`. See [AI tools](/developer-guide/ai-tools) and [AI Lead assign + note production readiness](/deployment/ai-lead-assign-note-production-readiness).

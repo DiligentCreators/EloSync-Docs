@@ -96,6 +96,10 @@ npm run test:e2e:purchase-orders
 | Statuses: `draft → sent → accepted\|rejected\|expired` | Statuses: `draft → sent → partially_received\|received\|cancelled` |
 | `accept` / `send` / `convert` actions | `send` / `receive` / `cancel` / `convert` actions |
 
+## Ask EloSync
+
+Ask EloSync Purchase Order tools (`get_purchase_order`, confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Sent→`send`, PartiallyReceived/Received→`receive`, Cancelled→`cancel`, else `update`) via `PurchaseOrderAiSupport::authorizeStatusChange` and `changeStatus`. Get payload includes `assigned_to` (user id) and `assignee_name`. See [AI tools](/developer-guide/ai-tools) and [AI Purchase Order triage production readiness](/deployment/ai-purchase-order-triage-production-readiness).
+
 ## Deferred
 
 - Per-line partial receiving

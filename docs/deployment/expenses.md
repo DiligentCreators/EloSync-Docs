@@ -49,6 +49,8 @@ New Expenses permissions (and `purchase-orders.convert`) for **existing** worksp
 8. Smoke (soft-gate off): on a workspace with Purchase Orders but **without** Expenses enabled → confirm the Convert button does not appear and the API returns a clear error if called directly
 9. Smoke (receipts): create a draft expense with an optional **receipt** file → confirm **Receipts** on the record view and download succeeds; bytes count toward [Storage](/user-guide/storage-overview) quota
 
+Ask EloSync Expense triage ships on catalog **`ai` 1.8.0** (not an Expenses bump). See [AI Expense triage production readiness](./ai-expense-triage-production-readiness).
+
 ## Phase 4 roadmap context
 
 Expenses is Milestone 3 (final) of **Phase 4 Purchasing**. Unlike Vendors → Purchase Orders (hard dependency chain), Expenses has no hard dependencies — Vendors and Purchase Orders links are soft/optional, and the Purchase-Order-to-Expense convert action is a soft cross-module integration (entitlement check at call time, not a `module_dependencies` row). This completes Phase 4. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).

@@ -156,7 +156,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + confirmed writes; broader tools continue) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + confirmed writes) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -183,7 +183,17 @@ Opportunity AI triage shipped (**ai 1.6.0**): `get_opportunity` and `get_opportu
 
 Invoice AI triage shipped (**ai 1.7.0**): `get_invoice` plus confirmed writes for status, assign, and notes (mirrors Invoice HTTP `/status` authz including send/void gates; overdue list returns assignee id).
 
-Next when prioritized: further AI tools; WhatsApp interactive messages; demand-driven items below.
+Expense AI triage shipped (**ai 1.8.0**): `get_expense` plus confirmed writes for status, assign, and notes (mirrors Expense HTTP `/status` authz including submit/approve/reject/pay/cancel gates; pending-approval list returns assignee id).
+
+Project AI triage shipped (**ai 1.9.0**): confirmed writes for status, assign, and notes on existing project reads (mirrors Project HTTP `/status`; get returns assignee id).
+
+Purchase Order AI triage shipped (**ai 1.10.0**): `get_purchase_order` plus confirmed writes for status, assign, and notes (mirrors PO HTTP `/status` authz including send/receive/cancel gates).
+
+Payment AI triage shipped (**ai 1.11.0**): `get_payment` plus confirmed writes for status, assign, and notes (Posted→`post()`, Void→`void()`; Draft target rejected).
+
+Lead assign + note shipped (**ai 1.12.0**): confirmed `assign_lead` / `add_lead_note` alongside existing Lead reads and status write.
+
+Next when prioritized: WhatsApp interactive messages; demand-driven items below (broader AI tools continue lightly).
 
 ---
 
