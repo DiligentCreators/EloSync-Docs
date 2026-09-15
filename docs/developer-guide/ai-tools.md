@@ -7,13 +7,19 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 `App\AI\Tools\AIToolRegistry` maps tool names to `AiToolDefinition` classes. Defaults are registered in `registerDefaults()`:
 
 - Workspace: `search_workspace` (cross-module; `module()` is `null`; each provider enforces its own entitlement + `*.view`)
-- Leads: `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`
+- Leads: `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`, `update_lead_status`, `assign_lead`, `add_lead_note`
 - Tasks: `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `get_task`
-- Projects: `search_projects`, `get_project`, `get_overdue_projects`
+- Projects: `search_projects`, `get_project`, `get_overdue_projects`, `update_project_status`, `assign_project`, `add_project_note`
 - Opportunities: `search_opportunities`, `get_pipeline_summary`, `get_opportunity_stages`, `get_opportunity`
 - Invoices: `get_overdue_invoices`, `get_invoice_balance_summary`, `get_invoice`
-- Writes: `create_task`, `update_task_status` (visible with `tasks.update` **or** `tasks.complete`), `assign_task`, `add_task_note`, `update_lead_status`, `log_activity`, `update_help_desk_ticket_status`, `assign_help_desk_ticket`, `add_help_desk_ticket_note`, `update_opportunity_stage`, `assign_opportunity`, `add_opportunity_note`, `update_invoice_status` (visible with `invoices.update` **or** `invoices.send` **or** `invoices.void`), `assign_invoice`, `add_invoice_note` (confirmation required)
-- Reads: `get_help_desk_open_tickets`, `get_help_desk_ticket`, `get_expense_pending_approval` (module + permission gated)
+- Payments: `get_payment`, `update_payment_status` (visible with `payments.update` **or** `post` **or** `void`; confirm uses `post()` / `void()`), `assign_payment`, `add_payment_note`
+- Purchase orders: `get_purchase_order`, `update_purchase_order_status` (visible with `purchase-orders.update` **or** `send` **or** `receive` **or** `cancel`), `assign_purchase_order`, `add_purchase_order_note`
+- Expenses: `get_expense_pending_approval`, `get_expense`
+- Writes: `create_task`, `update_task_status` (visible with `tasks.update` **or** `tasks.complete`), `assign_task`, `add_task_note`, `update_lead_status`, `assign_lead`, `add_lead_note`, `log_activity`, `update_help_desk_ticket_status`, `assign_help_desk_ticket`, `add_help_desk_ticket_note`, `update_opportunity_stage`, `assign_opportunity`, `add_opportunity_note`, `update_invoice_status` (visible with `invoices.update` **or** `invoices.send` **or** `invoices.void`), `assign_invoice`, `add_invoice_note`, `update_payment_status`, `assign_payment`, `add_payment_note`, `update_purchase_order_status`, `assign_purchase_order`, `add_purchase_order_note`, `update_project_status`, `assign_project`, `add_project_note`, `update_expense_status` (visible with `expenses.update` **or** `submit` **or** `approve` **or** `reject` **or** `pay` **or** `cancel`), `assign_expense`, `add_expense_note` (confirmation required)
+- Reads: `get_help_desk_open_tickets`, `get_help_desk_ticket` (module + permission gated)
+
+List/detail tool payloads that include an assignee expose numeric **`assigned_to`** (user id) and **`assignee_name`** (display name).
+
 ### `search_workspace`
 
 `App\AI\Tools\Search\AiWorkspaceSearchService` fans out to entitled providers under `app/AI/Tools/Search/Providers/` (Wave A+B+C): leads, tasks, projects, opportunities, contacts, companies, invoices, help-desk, estimates, payments, credit-notes, vendors, purchase-orders, expenses, employees, products, documents, knowledge-base, activities, meetings.
@@ -61,7 +67,7 @@ Implement `App\AI\Tools\Contracts\AiToolDefinition`:
 4. **Write actions** that mutate data:
    - Set `requiresConfirmation(): true` and return `pending_confirmation` via `PendingAiActionService`, **or**
    - Keep read-only and return DTO arrays only.
-5. **Confirm path** — add a `match` arm in `PendingAiActionService::confirm()` when introducing a new write tool (`create_task`, Task status/assign/note, `update_lead_status`, `log_activity`, Help Desk status/assign/note, Opportunity stage/assign/note, Invoice status/assign/note).
+5. **Confirm path** — add a `match` arm in `PendingAiActionService::confirm()` when introducing a new write tool (`create_task`, Task status/assign/note, `update_lead_status`, Lead assign/note, `log_activity`, Help Desk status/assign/note, Opportunity stage/assign/note, Invoice status/assign/note, Payment status/assign/note, Purchase Order status/assign/note, Project status/assign/note, Expense status/assign/note).
 6. **Tests** — extend `tests/Feature/Tenant/Ai/AiAuthorizationTest.php` (permissions) and write confirmation tests when applicable.
 7. **Docs** — update [Tenant AI API](/api/tenant-v1-ai) tool list and user guide if user-visible.
 

@@ -99,6 +99,8 @@ npm run test:e2e:expenses
 - Domain `expense_activities` timeline
 - `PlatformAuditService` via `ExpenseEventSubscriber`
 
+Ask EloSync Expense tools (`get_expense`, confirmed status/assign/note writes, plus existing `get_expense_pending_approval`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Submitted→`submit`, Approved→`approve`, Rejected→`reject`, Paid→`pay`, Cancelled→`cancel`, else `update`) via `ExpenseAiSupport::authorizeStatusChange` and `ExpenseService::changeStatus`. Pending-approval rows include assignee id. See [AI tools](/developer-guide/ai-tools) and [AI Expense triage production readiness](/deployment/ai-expense-triage-production-readiness).
+
 ## Intentional differences from Purchase Orders
 
 | Purchase Orders | Expenses |

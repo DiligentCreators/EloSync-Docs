@@ -54,12 +54,21 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - With Help Desk installed, ask about open tickets, then confirm suggested status changes, assignments, or notes before they apply.
 - With Opportunities installed, ask about a deal or pipeline summary, list pipeline stages, then confirm suggested stage moves, assignments, or notes before they apply.
 - With Invoices installed, ask about overdue invoices or a specific invoice, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Unpaid** still needs **send**; cancelling needs **void**. Status suggestions follow the same path as changing status in the app (not the dedicated Send button’s accrual/PDF side effects).
+- With Expenses installed, ask about expenses awaiting approval or a specific expense, then confirm suggested status changes, assignments, or notes before they apply. Approving needs **approve**; rejecting needs **reject**; marking paid needs **pay** (and when Accounting is installed, a paid-from account should already be set on the expense — same as changing status in the app without the dedicated Mark as paid dialog).
+- With Projects installed, ask about a project or overdue projects, then confirm suggested status changes, assignments, or notes before they apply.
+- With Purchase Orders installed, ask about a PO, then confirm suggested status changes, assignments, or notes before they apply. Sending needs **send**; receiving needs **receive**; cancelling needs **cancel**.
+- With Payments installed, ask about a payment, then confirm suggested post/void, assignments, or notes before they apply. Posting needs **post**; voiding needs **void** (Ask EloSync cannot move a payment back to draft).
+- For leads, confirm suggested assignments or notes before they apply (status changes and Lead Copilot remain available as before). Assigning needs **assign**.
 
 ## Related
 
 - [Tenant settings — AI](/user-guide/tenant-settings)
 - [Leads](/user-guide/leads-overview)
 - [Tasks](/user-guide/tasks-overview)
+- [Projects](/user-guide/projects-overview)
 - [Help Desk](/user-guide/help-desk-overview)
 - [Opportunities](/user-guide/opportunities-overview)
 - [Invoices](/user-guide/invoices-overview)
+- [Payments](/user-guide/payments-overview)
+- [Purchase Orders](/user-guide/purchase-orders-overview)
+- [Expenses](/user-guide/expenses-overview)

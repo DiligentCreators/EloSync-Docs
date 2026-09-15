@@ -26,6 +26,7 @@ Phase 4 Purchasing module (Milestone 3, final) on the frozen platform. A simplif
 - Dashboard widget `pending_expenses` (module + `expenses.view`; submitted awaiting approval)
 - Trash filtering plus **Restore** and **Delete permanently**
 - **Receipt attachments** (optional `receipt` file on create/draft edit; types/sizes from [Storage upload limits](/user-guide/storage); counts toward [Storage](/user-guide/storage-overview) quota; download from expense record)
+- Ask EloSync triage (with AI Assistant entitled): fetch expense, pending-approval list, confirmed status / assign / note writes — see [AI Assistant](/user-guide/ai-assistant)
 - Module licensing (`module:expenses`) + Spatie permissions — **free Marketplace opt-in**, no hard dependencies
 - **Soft convert**: a `purchase-orders.convert` action creates a draft Expense from a sent/partially received/received Purchase Order (one-way, one-time) — see [Purchase Orders — User Guide](/user-guide/purchase-orders#convert-to-expense)
 - Audit + activity logging

@@ -83,3 +83,7 @@ npm run test:e2e:payments
 - Spatie `LogsActivity` on `CustomerPayment` (log name `customer_payments`)
 - Domain `customer_payment_activities` timeline
 - `PlatformAuditService` via `CustomerPaymentEventSubscriber`
+
+## Ask EloSync
+
+Ask EloSync Payment tools (`get_payment`, confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status confirm calls `CustomerPaymentService::post()` / `void()` (Draft target rejected). Get payload includes `assigned_to` (user id) and `assignee_name`. See [AI tools](/developer-guide/ai-tools) and [AI Payment triage production readiness](/deployment/ai-payment-triage-production-readiness).

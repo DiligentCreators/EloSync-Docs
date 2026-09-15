@@ -98,6 +98,10 @@ npm run test:e2e:projects
 - Domain `project_activities` timeline (`created`, `updated`, `assigned`, `members_synced`, `status_changed`, `note_added`, `deleted`, `restored`)
 - `PlatformAuditService` via `ProjectEventSubscriber`
 
+## Ask EloSync
+
+Ask EloSync Project tools (existing `get_project` / search / overdue plus confirmed status/assign/note writes) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status uses `ProjectService::changeStatus` (same as HTTP `POST …/status`). Get payload includes `assigned_to` (user id) and `assignee_name`. See [AI tools](/developer-guide/ai-tools) and [AI Project triage production readiness](/deployment/ai-project-triage-production-readiness).
+
 ## Deferred
 
 - Gantt, milestones, task dependencies, workload heatmaps

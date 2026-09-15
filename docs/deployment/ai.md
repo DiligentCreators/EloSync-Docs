@@ -9,13 +9,18 @@ Companion readiness audits:
 - Task triage tools **1.5.0**: [AI Task triage production readiness](./ai-task-triage-production-readiness)
 - Opportunity triage tools **1.6.0**: [AI Opportunity triage production readiness](./ai-opportunity-triage-production-readiness)
 - Invoice triage tools **1.7.0**: [AI Invoice triage production readiness](./ai-invoice-triage-production-readiness)
+- Expense triage tools **1.8.0**: [AI Expense triage production readiness](./ai-expense-triage-production-readiness)
+- Project triage tools **1.9.0**: [AI Project triage production readiness](./ai-project-triage-production-readiness)
+- Purchase Order triage tools **1.10.0**: [AI Purchase Order triage production readiness](./ai-purchase-order-triage-production-readiness)
+- Payment triage tools **1.11.0**: [AI Payment triage production readiness](./ai-payment-triage-production-readiness)
+- Lead assign + note tools **1.12.0**: [AI Lead assign + note production readiness](./ai-lead-assign-note-production-readiness)
 
 ## What ships
 
 | Piece | Notes |
 |-------|--------|
-| Catalog | `ai` ($29/$290) **1.7.0**, packs `ai-credits-1k` / `5k` / `20k` (require `ai`) |
-| Migrations | `2026_08_21_010000` register · `010100` permissions · `010200` tables · `010300` version bump **1.0.1** · `150423` version bump **1.1.0** · `2026_08_25_120000` version bump **1.2.0** · `2026_08_31_200000` version bump **1.3.0** (`search_workspace`) · `2026_09_15_040000` version bump **1.4.0** (Help Desk triage tools) · `2026_09_15_050000` version bump **1.5.0** (Task triage tools) · `2026_09_15_060000` version bump **1.6.0** (Opportunity triage tools) · `2026_09_15_070000` version bump **1.7.0** (Invoice triage tools) |
+| Catalog | `ai` ($29/$290) **1.12.0**, packs `ai-credits-1k` / `5k` / `20k` (require `ai`) |
+| Migrations | `2026_08_21_010000` register · `010100` permissions · `010200` tables · `010300` version bump **1.0.1** · `150423` version bump **1.1.0** · `2026_08_25_120000` version bump **1.2.0** · `2026_08_31_200000` version bump **1.3.0** (`search_workspace`) · `2026_09_15_040000` version bump **1.4.0** (Help Desk triage tools) · `2026_09_15_050000` version bump **1.5.0** (Task triage tools) · `2026_09_15_060000` version bump **1.6.0** (Opportunity triage tools) · `2026_09_15_070000` version bump **1.7.0** (Invoice triage tools) · `2026_09_15_080000` version bump **1.8.0** (Expense triage tools) · `2026_09_15_090000` version bump **1.9.0** (Project triage tools) · `2026_09_15_100000` version bump **1.10.0** (Purchase Order triage tools) · `2026_09_15_110000` version bump **1.11.0** (Payment triage tools) · `2026_09_15_120000` version bump **1.12.0** (Lead assign + note tools) |
 | Scheduler | `ai:rollover-monthly-credits` (daily UTC period rollover) |
 | Rate limits | `throttle:ai` (30/min) on message send + Lead Copilot |
 | Queues | None AI-specific — chat/copilot run **synchronously** on the web request |
@@ -52,4 +57,4 @@ See [Upgrade Guide — AI Assistant platform](./upgrade#ai-assistant-platform-10
 6. With Opportunities entitled: list stages / fetch deal → propose stage/assign/note → Confirm  
 7. Zero credits → HTTP 402 on platform mode  
 
-Full checklists: [AI production readiness](./ai-production-readiness) · [AI workspace search 1.3.0](./ai-workspace-search-production-readiness) · [AI Help Desk triage 1.4.0](./ai-help-desk-triage-production-readiness) · [AI Task triage 1.5.0](./ai-task-triage-production-readiness) · [AI Opportunity triage 1.6.0](./ai-opportunity-triage-production-readiness) · [AI Invoice triage 1.7.0](./ai-invoice-triage-production-readiness).
+Full checklists: [AI production readiness](./ai-production-readiness) · [AI workspace search 1.3.0](./ai-workspace-search-production-readiness) · [AI Help Desk triage 1.4.0](./ai-help-desk-triage-production-readiness) · [AI Task triage 1.5.0](./ai-task-triage-production-readiness) · [AI Opportunity triage 1.6.0](./ai-opportunity-triage-production-readiness) · [AI Invoice triage 1.7.0](./ai-invoice-triage-production-readiness) · [AI Expense triage 1.8.0](./ai-expense-triage-production-readiness) · [AI Project triage 1.9.0](./ai-project-triage-production-readiness) · [AI Purchase Order triage 1.10.0](./ai-purchase-order-triage-production-readiness) · [AI Payment triage 1.11.0](./ai-payment-triage-production-readiness) · [AI Lead assign + note 1.12.0](./ai-lead-assign-note-production-readiness).

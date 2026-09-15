@@ -1,5 +1,35 @@
 # Changelog
 
+## AI Lead assign + note tools (ai 1.12.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds confirmed writes `assign_lead` and `add_lead_note` (text only) alongside existing Lead reads and `update_lead_status`. Assign uses `leads.assign` + `EligibleLeadAssignee` at propose **and** confirm (optional reason); note confirm re-checks `max:5000`. `get_lead` / `search_leads` expose `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.11.0 → 1.12.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, unassign, suspended assignee, view-only / no-assign exclusions).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Leads cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-lead-assign-note-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Payment triage tools (ai 1.11.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_payment` plus confirmed writes `update_payment_status`, `assign_payment`, and `add_payment_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`payments.update` **or** `payments.post` **or** `payments.void`); confirm calls **`post()`** for Posted and **`void()`** for Void (Draft target rejected). Confirm-time assign re-validates `EligiblePaymentAssignee`; note confirm re-checks `max:5000`. Get payload returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.10.0 → 1.11.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, post/void gates, soft-delete, unassign, suspended assignee, view-only confirm deny).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Payments cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-payment-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Purchase Order triage tools (ai 1.10.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_purchase_order` plus confirmed writes `update_purchase_order_status`, `assign_purchase_order`, and `add_purchase_order_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`purchase-orders.update` **or** `send` **or** `receive` **or** `cancel`) and mirrors HTTP `POST …/status` auth via `PurchaseOrderAiSupport::authorizeStatusChange` + `changeStatus`. Confirm-time assign re-validates eligible assignee; note confirm re-checks `max:5000`. Get payload returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.9.0 → 1.10.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, send/receive/cancel gates, soft-delete, unassign, suspended assignee, view-only confirm deny).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Purchase Orders cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-purchase-order-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Project triage tools (ai 1.9.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds confirmed writes `update_project_status`, `assign_project`, and `add_project_note` (text only) on top of existing `get_project` / search / overdue. Status requires `projects.update` and uses `ProjectService::changeStatus` (same as HTTP `POST …/status`). Confirm-time assign re-validates `EligibleProjectAssignee`; note confirm re-checks `max:5000`. Get payload returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.8.0 → 1.9.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (propose≠mutate, illegal transition, soft-delete, unassign, suspended assignee, view-only / no-assign exclusions).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Projects cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-project-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
+## AI Expense triage tools (ai 1.8.0) (2026-09-15)
+
+- **EloSync-Backend:** Ask EloSync adds `get_expense` plus confirmed writes `update_expense_status`, `assign_expense`, and `add_expense_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`expenses.update` **or** `submit` **or** `approve` **or** `reject` **or** `pay` **or** `cancel`) and mirrors HTTP `POST …/status` auth via `ExpenseAiSupport::authorizeStatusChange` + `ExpenseService::changeStatus` (Paid → `pay([])`). Confirm-time assign re-validates `EligibleExpenseAssignee`; note confirm re-checks `max:5000`. `get_expense_pending_approval` returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.7.0 → 1.8.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (approve-only visibility, approve deny without perm, draft→approved transition fail, pay with paid-from account, unassign, suspended assignee, view-only confirm deny).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Expenses cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-expense-triage-production-readiness) (**Go**); changelog.
+- **SPA / Mobile:** No code changes — existing pending-action Confirm/Cancel UI is tool-agnostic.
+
 ## AI Invoice triage tools (ai 1.7.0) (2026-09-15)
 
 - **EloSync-Backend:** Ask EloSync adds `get_invoice` plus confirmed writes `update_invoice_status`, `assign_invoice`, and `add_invoice_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`invoices.update` **or** `invoices.send` **or** `invoices.void`) and mirrors HTTP `POST …/status` auth (Unpaid→send, Cancelled→void, else update) via `CustomerInvoiceService::changeStatus`. Confirm-time assign re-validates `EligibleInvoiceAssignee`; note confirm re-checks `max:5000`. `get_overdue_invoices` returns `assigned_to` (user id) and `assignee_name`. Catalog **ai 1.6.0 → 1.7.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz (send-only Draft→Unpaid, void deny, ledger cancel guard, invalid transition, soft-delete, unassign, suspended assignee, view-only confirm deny).
