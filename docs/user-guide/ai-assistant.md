@@ -50,6 +50,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - Be specific — mention time ranges (“due today”, “stale 14 days”) for sharper tool use. For “find X”, ask EloSync to search the workspace.
 - Confirm write suggestions promptly; pending actions expire after 24 hours.
 - Lead Copilot only accesses leads you can already open in the CRM.
+- Ask about overdue or due-today tasks, then confirm suggested status changes, assignments, or notes before they apply. Completing or reopening a task still needs the **complete** permission (you do not need **update** just to complete via Ask EloSync).
 - With Help Desk installed, ask about open tickets, then confirm suggested status changes, assignments, or notes before they apply.
 
 ## Related
@@ -57,3 +58,4 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - [Tenant settings — AI](/user-guide/tenant-settings)
 - [Leads](/user-guide/leads-overview)
 - [Tasks](/user-guide/tasks-overview)
+- [Help Desk](/user-guide/help-desk-overview)
