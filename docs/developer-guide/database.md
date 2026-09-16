@@ -286,6 +286,24 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 
 `tenant_id`, `message_id`, `disk`, `path`, `original_name`, `mime`, `size_bytes`. Files live on the uploads disk under the tenant prefix. Soft-deleting a message removes storage objects immediately; `team-chat:purge-expired` also deletes aged messages and files when retention days > 0.
 
+## Live Chat module tables
+
+### `live_chat_widgets`
+
+`tenant_id`, `uuid`, `name`, unique `public_key`, `is_active`, nullable `greeting`, `require_prechat`, timestamps. One default widget per workspace (lazy-created on first settings fetch).
+
+### `live_chat_visitors`
+
+`tenant_id`, `widget_id`, `uuid`, `session_token_hash` (SHA-256 of opaque Bearer token), nullable `name`/`email`/`page_url`/`user_agent`/`ip`. Unique `(tenant_id, session_token_hash)`.
+
+### `live_chat_conversations`
+
+`tenant_id`, `uuid`, `widget_id`, `visitor_id`, `status` (`open`|`closed`), nullable `assigned_to`, nullable `lead_id` (soft FK → `leads`), `unread_count`, `last_message_at`, `last_message_preview`, soft deletes.
+
+### `live_chat_messages`
+
+`tenant_id`, `uuid`, `conversation_id`, `direction` (`visitor`|`agent`), `body`, nullable `sender_user_id` (agents). Index `(conversation_id, id)` for short-poll.
+
 ## Tasks module tables
 
 ### `tasks`

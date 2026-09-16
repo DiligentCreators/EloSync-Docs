@@ -28,6 +28,7 @@ These postures can change over product releases without redesigning the moduleâ€
 | CRM | WhatsApp Cloud (`whatsapp-cloud`) | Billable Marketplace (`$29` / `$290`, catalog **1.0.0**; Cloud API inbox MVP) |
 | Sales | Opportunities, Resellers, Reseller Payouts | Free Marketplace opt-in under category `sales`; Sales Pipeline is **not** a separate SKU |
 | Collaboration | Team Chat | Free Marketplace opt-in under category `collaboration` (`team-chat`, catalog **1.3.2**; not billable yet) |
+| Communication | Live Chat | Free Marketplace opt-in under category `communication` (`live-chat`, catalog **1.0.1**; website widget + agent inbox) |
 | Operations | Help Desk | Free Marketplace opt-in under category `operations` (`help-desk`, catalog **1.0.0**; internal ticketing MVP) |
 | Operations | Knowledge Base, Projects | Free Marketplace opt-in under category `operations` (`knowledge-base`, `projects`; catalog **1.0.0**; KB internal-only; not billable) |
 | Operations | Assets | Free Marketplace opt-in under category `operations` (`assets`, catalog **1.0.0**; equipment/fixed-asset register; not billable; no hard deps) |
