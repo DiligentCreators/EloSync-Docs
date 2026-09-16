@@ -4,13 +4,13 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:contracts`, plus permission middleware / policies.
 
-Assignee scoping: without `contracts.assign` (and not superadmin), list/stats/view/update/**convert** only include contracts where `assigned_to` is the current user.
+Assignee scoping: without `contracts.assign` (and not superadmin), list/stats/view/update/**send**/**accept**/**convert** only include contracts where `assigned_to` is the current user.
 
 ## Stats
 
 ### GET `/contracts/stats`
 
-Same filters as list (minus pagination/sort).
+Same filters as list (minus pagination/sort). Counts include `sent` alongside `draft`, `active`, `expired`, and `terminated`.
 
 ## Contracts CRUD
 
@@ -18,7 +18,7 @@ Same filters as list (minus pagination/sort).
 
 Query: `search`, `status`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_contracts`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `opportunity`, `quotation` (when linked), `invoice_count`, assignee/creator refs, and `latest_note`.
+List items include `status`, `opportunity`, `quotation` (when linked), `invoice_count`, assignee/creator refs, `latest_note`, plus acceptance fields when present: `has_acceptance_link`, `acceptance_link_expires_at`, `accepted_at`, `accepted_by_name`, `accepted_by_email`.
 
 ### POST `/contracts`
 
@@ -26,11 +26,15 @@ Body: `opportunity_id` (required), `quotation_id` (optional — only valid when 
 
 ### GET `/contracts/{id}`
 
-Includes opportunity, quotation (when linked), related `invoices` (`id`/`number`/`status`), `quotation_already_invoiced` (true when the linked quotation already has any invoice), assignee, creator, `description` / `notes` HTML memos, comments (`contract_notes`), and timeline activities. Embedded `contract_notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes opportunity, quotation (when linked), related `invoices` (`id`/`number`/`status`), `quotation_already_invoiced` (true when the linked quotation already has any invoice), assignee, creator, `description` / `notes` HTML memos, comments (`contract_notes`), timeline activities, and acceptance metadata (`has_acceptance_link`, `acceptance_link_expires_at`, `accepted_at`, `accepted_by_name`, `accepted_by_email`). Embedded `contract_notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+
+### GET `/contracts/{id}/pdf`
+
+Permission: `contracts.view` (assignee-scoped). Extra limiter `throttle:contracts-pdf`. Returns `application/pdf` attachment. Branded layout matches other sales documents (logo, button color, company profile). Includes party, dates, value, and sanitized description/notes HTML.
 
 ### PUT `/contracts/{id}`
 
-Partial update of **draft** contracts only. Non-draft contracts return 422 on `status` (`Only draft contracts can be edited.`). Assignment after activate uses `POST /contracts/{id}/assign`. Status changes use `POST /contracts/{id}/status`.
+Partial update of **draft** contracts only. Non-draft contracts return 422 on `status` (`Only draft contracts can be edited.`). Assignment after send/activate uses `POST /contracts/{id}/assign`. Status changes use `POST /contracts/{id}/status` (or dedicated send/accept actions).
 
 ### DELETE `/contracts/{id}`
 
@@ -52,11 +56,48 @@ Permanently delete a soft-deleted contract. Permission: `contracts.force.delete`
 
 Permission: `contracts.assign`.
 
+### POST `/contracts/{id}/send`
+
+Transitions `draft → sent`. Permission: `contracts.send` (assignee-scoped unless the actor has `contracts.assign` or is superadmin). **Status-only** — does not email or generate a PDF. Issues a hashed customer acceptance token (plaintext returned only from `POST …/acceptance-link` or embedded in email). Records `signature_requested`.
+
+### POST `/contracts/{id}/email`
+
+`{ "to"?: string[], "cc"?: string[], "bcc"?: string[], "subject": string, "message": string, "attach_pdf"?: boolean }`
+
+Permission: `contracts.send` (assignee-scoped unless the actor has `contracts.assign` or is superadmin). Throttle: `billing-document-email` (10/min per user).
+
+Requires the contract to already be sent — draft returns 422 on `status`. Allowed for `sent`, `active`, `expired`, and `terminated`.
+
+When `to` is omitted, resolves the recipient from the linked opportunity’s contact email, then company email. If no address is found, returns 422 on `to`.
+
+Queues a branded email via the tenant mailer (optional PDF attachment from `ContractPdfService`). For **Sent** contracts, rotates the acceptance token and appends the accept URL to the message body. Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `contract.emailed`).
+
+### POST `/contracts/{id}/acceptance-link`
+
+Permission: `contracts.send` (assignee-scoped). Requires status `sent`. Rotates the acceptance token and returns `{ url, expires_at, has_acceptance_link, acceptance_link_expires_at }`.
+
+### POST `/contracts/{id}/accept`
+
+Transitions `sent → active`. Permission: `contracts.accept` (assignee-scoped unless the actor has `contracts.assign` or is superadmin). Clears any outstanding acceptance token.
+
+### Public customer accept (unauthenticated)
+
+Requires tenancy (domain / `X-Tenant-Domain`) and Contracts entitlement. Throttle: `contract-acceptance` (20/min per IP).
+
+- `GET /public/contracts/accept/{token}` — summary (title, party, dates, value, workspace name, description, expiry). Invalid/expired/used → 404.
+- `POST /public/contracts/accept/{token}` — body `{ accepted_by_name, accepted_by_email }`; marks **active**, stores signer + IP, invalidates token, records `signed` activity.
+
 ### POST `/contracts/{id}/status`
 
-`{ "status": "draft"|"active"|"expired"|"terminated" }`
+`{ "status": "draft"|"sent"|"active"|"expired"|"terminated" }`
 
-Permission: `contracts.update`. Rejects disallowed transitions (including re-entering the same status) with a 422 validation error on `status`. Records a `status_changed` timeline entry.
+Permission: `contracts.update`. Rejects disallowed transitions (including re-entering the same status) with a 422 validation error on `status`. Records a `status_changed` timeline entry. Prefer dedicated `POST …/send` and `POST …/accept` for send/activate-from-sent (correct permission gates). Draft → `active` supports **Activate without signature**. Expire/terminate clear outstanding acceptance links.
+
+Allowed transitions:
+
+- `draft` → `sent` | `active` | `terminated`
+- `sent` → `active` | `expired` | `terminated`
+- `active` → `expired` | `terminated`
 
 ### POST `/contracts/{id}/convert`
 
@@ -79,4 +120,4 @@ Permission: `contracts.update`.
 
 ### GET `/contracts/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `status_changed`, `converted`, `note_added`, `deleted`, `restored`, `emailed`, `signature_requested`, `signed`).

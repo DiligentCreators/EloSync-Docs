@@ -1,5 +1,17 @@
 # Changelog
 
+## Pulse / Horizon latency + mail config fail-fast (2026-09-16)
+
+- **EloSync-Backend:** Queued mail middleware (`ApplyEmailRuntimeConfig`) fails jobs immediately on configuration errors (invalid/missing Postmark token, etc.) instead of retrying. Task digests and CRM daily summaries mark those failures as **permanent** (`retry_after = null`) and stop reclaiming them; digests also gain a max-attempt cap. Horizon `supervisor-general` switches from `auto` balancing to ordered (`balance => false`) with **max 2** processes so eight queues no longer spawn ~8 workers on small VPS RAM. `.env.example` documents production `PULSE_INGEST_DRIVER=redis` + `pulse:work`. Pest: `MailTransportFailureTest`, `TaskDigestDeliveryServiceTest`, `EmailQueueRuntimeConfigTest`.
+- **EloSync-Docs:** Laravel Forge daemons — document Horizon process-cap behavior, add `pulse:work` + `pulse:restart` for Redis Pulse ingest; changelog.
+- **Ops:** Fix Postmark server token in Central/Tenant mail settings; set `PULSE_INGEST_DRIVER=redis`, add Forge `pulse:work` daemon, redeploy so `horizon:terminate` picks up the new worker limits.
+
+## Contract PDF + e-signature accept links (contracts 1.5.0) (2026-09-16)
+
+- **EloSync-Backend:** Contracts gain `sent` in the status machine (`draft → sent|active|terminated`; `sent → active|expired|terminated`; `active → expired|terminated`). `POST /contracts/{id}/send` issues a hashed acceptance token + `signature_requested` activity; `POST …/acceptance-link` / email (when **Sent**) rotate the link; public `GET/POST /api/tenant/v1/public/contracts/accept/{token}` (throttle `contract-acceptance`) accepts with signer name/email/IP → `active`, records `signed`, invalidates the token. Staff `POST …/accept` activates from **Sent**; draft may still activate without signature via status. PDF `GET …/pdf` (`contracts.view`, throttle `contracts-pdf`); email `POST …/email` (`contracts.send`). Permissions `contracts.send` / `contracts.accept`. Catalog **contracts 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: `ContractAcceptanceTest`.
+- **EloSync-Frontend:** Guest page `/#/accept/contracts/:token`; contract view shows **Send for signature**, **Copy accept link**, **Activate without signature**, **Download PDF**, **Email customer**, and signer metadata.
+- **EloSync-Docs:** Contracts user/developer/API/deployment + roadmap; changelog.
+
 ## Quotation e-signature accept links (quotations 1.9.0) (2026-09-16)
 
 - **EloSync-Backend:** Sent quotations issue a hashed acceptance token. Staff can `POST /quotations/{id}/acceptance-link` (`quotations.send`) or email a Sent quote (link appended to the message). Public `GET/POST /api/tenant/v1/public/quotations/accept/{token}` (throttle `quotation-acceptance`) shows a summary and accepts with signer name/email/IP — transitions `sent → accepted`, records `signature_requested` / `signed` timeline events, and invalidates the token. Reject/expire/internal accept clear outstanding links. Catalog **quotations 1.8.0 → 1.9.0** (migrate-only + CatalogSeeder). Pest: `QuotationAcceptanceTest`.
