@@ -1,6 +1,6 @@
 # Live Chat Module
 
-Free Communication Marketplace module for an embeddable website widget and a shared agent inbox. Soft-link Leads when that module is installed.
+Free Communication Marketplace module for an embeddable website widget and a shared agent inbox. Soft-link Leads when that module is installed; escalate to Help Desk when that module is installed.
 
 ## Guides
 
@@ -11,14 +11,21 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 | Production / ops | [live-chat.md](/deployment/live-chat) |
 | Tenant API | [tenant-v1-live-chat.md](/api/tenant-v1-live-chat) |
 
-## Capabilities (1.0.1)
+## Capabilities (1.3.0)
 
 - One website widget per workspace (public key + embed snippet)
-- Visitor text chat via public API (session token; short-poll for new messages)
-- Shared agent inbox at `/live-chat` (list + thread + visitor panel)
-- Assign / claim, close / reopen
+- Widget branding (color, launcher text, position, header, logo)
+- Business hours + offline leave-a-message
+- Visitor text chat via public API (session token; short-poll with optional Reverb public channel)
+- Shared agent inbox at `/live-chat` (filters, assign/transfer, visitor panel)
+- Canned replies for agents
+- Departments + default routing
+- Media attachments on messages
 - Soft Lead create/link when Leads is entitled
-- Inbound DB notification (`live-chat.inbound`) deep-links to the conversation
+- Help Desk escalate when Help Desk is entitled
+- Ban visitor (manage)
+- Inbound DB notification (`live-chat.inbound`) + optional agent email when enabled
+- Agent Echo realtime (inbox + conversation channels); Automation triggers for open / inbound / closed
 
 ## Permissions
 
@@ -28,15 +35,14 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 
 - Slug: `live-chat`
 - Category: Communication
-- `is_default_included=false`, `is_billable=false`, prices `$0`, version **1.0.1**
+- `is_default_included=false`, `is_billable=false`, prices `$0`, version **1.3.0**
 - Install from Marketplace (not auto-installed)
 
 ## Explicitly deferred
 
-- Media / file attachments
 - Sharing invoices or other module records in chat
-- Help Desk escalate
 - Auto-create lead on first message
-- Visitor Echo / websockets (agents use React Query refresh + notifications)
 - Analytics dashboards, bots, multi-widget brands
+- Live visitor site monitoring (Tawk-style "who is on site")
+- Captcha / Turnstile beyond throttle + TTL
 - EloSync Mobile screen

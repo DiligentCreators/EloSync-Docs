@@ -42,8 +42,8 @@ Live Chat ships catalog, tenant inbox, public widget script (CORS-open for crede
 | Free Communication opt-in (not default-included) | Pass | Pass | Pass |
 | Soft Lead link (no hard module dep) | Pass | Pass | Pass |
 | Agent inbox (WhatsApp-style), not Team Chat | Pass | Pass | Pass |
-| Media / invoice share / bots / Help Desk escalate | Deferred | Deferred | Deferred |
-| Visitor Echo (realtime) | Deferred | Deferred | Deferred |
+| Media + Help Desk escalate | Pass | Pass | Pass (invoice share / bots still deferred) |
+| Visitor Echo (realtime) | Pass | Pass | Pass |
 | Captcha / Turnstile (beyond throttle + TTL) | Deferred | Deferred | Deferred |
 | Mobile shell | Out of scope | Out of scope | Out of scope |
 
@@ -57,8 +57,9 @@ Live Chat ships catalog, tenant inbox, public widget script (CORS-open for crede
 | `2026_09_17_003610` | Register `live-chat` **1.0.0** (free, not default-included) |
 | `2026_09_17_003620` | Permissions + default role grants |
 | `2026_09_17_003630` | Catalog **1.0.0 → 1.0.1** (production-readiness remediations) |
+| `2026_09_17_003700` | Expand schema + catalog **1.0.1 → 1.3.0** |
 
-Production: **migrate only**. `CatalogSeeder` seeds `live-chat` **1.0.1** for local fresh seeds.
+Production: **migrate only**. `CatalogSeeder` seeds `live-chat` **1.3.0** for local fresh seeds.
 
 ---
 
