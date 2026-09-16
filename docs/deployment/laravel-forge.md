@@ -152,6 +152,7 @@ $FORGE_PHP artisan storage:link --force || true
 $FORGE_PHP artisan migrate --force
 $FORGE_PHP artisan optimize
 $FORGE_PHP artisan reverb:restart || true
+$FORGE_PHP artisan pulse:restart || true
 
 $ACTIVATE_RELEASE()
 
@@ -187,10 +188,10 @@ Forge → Server → **Daemons** (or site Daemons). Use the site path Forge show
 
 Worker queues and process limits are defined in `config/horizon.php`:
 
-- **`supervisor-general`** — `automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default` (production max **3** processes, 90s timeout)
+- **`supervisor-general`** — `automations`, `whatsapp-inbound`, `whatsapp-outbound`, `webhooks`, `emails`, `lead-ingest`, `imports`, `default` with **`balance => false`** so `maxProcesses` is a real cap (production **2** processes, 90s timeout). Do **not** use Horizon `auto` balancing with `minProcesses: 1` on this many queues — that spawns ≥1 worker **per queue** (~8+) and thrashs small VPS RAM.
 - **`supervisor-email-sync`** — `email-sync`, `help-desk-ingest` (production max **1** process, 300s timeout — IMAP sync for personal Email and Help Desk shared mailboxes)
 
-Include `whatsapp-inbound` and `whatsapp-outbound` when the WhatsApp Cloud module is enabled ([WhatsApp Cloud deployment](./whatsapp-cloud)). On small servers (for example 2 GB RAM), keep `maxProcesses` conservative before scaling up.
+Include `whatsapp-inbound` and `whatsapp-outbound` when the WhatsApp Cloud module is enabled ([WhatsApp Cloud deployment](./whatsapp-cloud)). On small servers (≈4 GB RAM), keep total Horizon children at **≤3** (2 general + 1 email-sync) before scaling up.
 
 **Delete** legacy Forge daemons that run `php artisan queue:work redis --queue=...` once Horizon is live.
 
@@ -204,6 +205,17 @@ Include `whatsapp-inbound` and `whatsapp-outbound` when the WhatsApp Cloud modul
 | Processes | `1` |
 
 Required for the Pulse **Servers** card. Does not replace Horizon.
+
+**Laravel Pulse ingest (`pulse:work`) — required when `PULSE_INGEST_DRIVER=redis`**
+
+| Field | Value |
+|-------|--------|
+| Command | `php artisan pulse:work` |
+| User | `forge` |
+| Directory | Same as API release root |
+| Processes | `1` |
+
+Production should set `PULSE_INGEST_DRIVER=redis` (and ideally `PULSE_REDIS_CONNECTION` on a Redis DB separate from Horizon queues) so HTTP/queue workers do not write Pulse rows on the request path. Without `pulse:work`, the dashboard stays empty under Redis ingest. Deploy scripts should call `pulse:restart` alongside `horizon:terminate`.
 
 **Nightwatch** — keep your existing `nightwatch:agent` (or `nightwatch:run`) daemon if enabled.
 
@@ -449,6 +461,7 @@ See [Multi-Provider Email](/developer-guide/multi-provider-email) and [Authentic
 - [ ] API scheduler enabled (includes `horizon:snapshot` every five minutes when Horizon is installed)
 - [ ] Horizon daemon running (`php artisan horizon`) — replaces all `queue:work` daemons
 - [ ] Pulse daemon running (`php artisan pulse:check`) when Pulse Servers card is used
+- [ ] When `PULSE_INGEST_DRIVER=redis`: `php artisan pulse:work` daemon running (and deploy calls `pulse:restart`)
 - [ ] Reverb daemon + Nginx WebSocket proxy
 - [ ] Redis up; `CACHE_STORE` / `QUEUE_CONNECTION` = `redis`
 - [ ] `FCM_PROJECT_ID` / `FCM_CLIENT_EMAIL` / `FCM_PRIVATE_KEY` (or `FCM_CREDENTIALS`) set on the API
