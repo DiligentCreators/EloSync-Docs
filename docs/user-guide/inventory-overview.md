@@ -16,7 +16,7 @@ Phase 5 Inventory module for stock visibility, controlled adjustments, purchase 
 - Per-product, per-warehouse stock levels, low-stock filtering, and movement history
 - Controlled stock changes: **in**, **out**, and set-to-value **adjust**
 - Transfers: `draft → in_transit → completed|cancelled`
-- Purchase Order receipt bridge: received orders post stock-in for stock-tracked product lines when Products and Inventory are entitled
+- Purchase Order receipt bridge: receive posts stock-in for stock-tracked product lines (full remaining or per-line quantity deltas) when Products and Inventory are entitled
 - Transactional posting and protection against negative stock
 
 ## Permissions

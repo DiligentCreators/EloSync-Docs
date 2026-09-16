@@ -29,13 +29,12 @@ Edit from the row menu or the record page while the purchase order is still **Dr
 A purchase order starts in **Draft**. Move it forward with:
 
 - **Send** (`draft → sent`) — marks the order as sent to the vendor and unlocks PDF / email
-- **Mark partially received** (`sent → partially_received`) — acknowledges some of the order has arrived
-- **Mark received** (`sent → received` or `partially_received → received`) — acknowledges the full order has arrived
+- **Mark partially received** / **Mark received** — with optional per-line quantities so you can receive part of a line; line `quantity_received` updates and header status follows remaining qty. Without line quantities, **partially received** is acknowledgement-only and **received** completes all remaining line quantities
 - **Cancel** (`draft → cancelled`, `sent → cancelled`, or `partially_received → cancelled`)
 
 Invalid transitions (e.g. receiving directly from Draft) are rejected with a validation error. `Received` and `Cancelled` are terminal — no further transitions.
 
-**Partially received** is acknowledgement-only. If both **Products** and **Inventory** are installed, marking an order **Received** posts stock-in for each line with a selected Product that has **Track stock** enabled. You may choose a warehouse when receiving; otherwise the default warehouse is used. Lines without a Product, and products that do not track stock, do not post stock.
+If both **Products** and **Inventory** are installed, receiving posts stock-in for the **quantity deltas** on this receive for each line with a selected Product that has **Track stock** enabled. You may choose a warehouse when receiving; otherwise the default warehouse is used. Lines without a Product, and products that do not track stock, do not post stock.
 
 ## Assignment
 
@@ -62,6 +61,4 @@ If the **Expenses** module is installed on your workspace and you have the `purc
 
 If Expenses is not installed, the button does not appear; attempting the conversion via the API returns an error explaining that the Expenses module is required.
 
-## What's not here yet
-
-Per-line partial-quantity receiving (header-level **Partially received** only) is planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Vendor portal / scorecards remain deferred — see the [Product Roadmap](/getting-started/product-roadmap).

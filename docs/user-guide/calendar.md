@@ -16,6 +16,8 @@ Use Calendar to manage **your** personal events. Default view is **Week** (Googl
 
 There is **no calendar assignment**. You cannot assign a calendar to someone else. Booking meetings, hosts, Zoom/Google Meet, and invitees belong to the **[Meetings](/user-guide/meetings)** module (projected onto your Calendar when you are the host).
 
+Open Tasks with a due date, Leads with a next follow-up, and Projects with start/end dates also appear as sourced events when those modules (and Calendar) are installed. Sourced events are managed from their parent records — edit/cancel them there, not as manual Calendar events.
+
 ## Create an event
 
 1. Open **Calendar** from the **CRM** sidebar section.

@@ -40,7 +40,7 @@ Workflows are always persisted **inactive**. Create/update with `is_active=true`
 Modules publish metadata via `AutomationTriggerRegistry` and `AutomationActionRegistry` (singletons with `registerDefaults()`).  
 Templates declare `required_modules`; `AutomationTemplateController` filters by entitlement. `WorkflowService::createFromTemplate` rejects missing modules.
 
-Wired trigger families (v1.3.0): manual/schedule; Leads; Tasks; Opportunities; Meetings; Invoices; Payments (`customer_payment.posted`); Credit Notes (`customer_credit_note.applied`); WhatsApp inbound; Help Desk; Contacts; Quotations; Expenses; Employees; Projects (created / status / assigned); Estimates; Contracts; Purchase Orders; Leave requests; Documents; Knowledge Base articles; Assets.
+Wired trigger families (v1.3.0+): manual/schedule; Leads (including **`lead.converted`**); Tasks; Opportunities; Meetings; Invoices; Payments (`customer_payment.posted`); Credit Notes (`customer_credit_note.applied`); WhatsApp inbound; Help Desk; Contacts; Quotations; Expenses; Employees; Projects (created / status / assigned); Estimates; Contracts; Purchase Orders; Leave requests; Documents; Knowledge Base articles; Assets.
 
 Creating a project with an assignee can emit both `project.created` and `project.assigned` (two intentional domain events). Operators who subscribe both triggers may get two runs for one create — configure one or both deliberately.
 

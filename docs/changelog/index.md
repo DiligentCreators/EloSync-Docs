@@ -1,5 +1,10 @@
 # Changelog
 
+## Phased depth Steps 1–4 + Lead convert polish (2026-09-16)
+
+- **EloSync-Backend:** (1) Projects milestones + Tasks `milestone_id` / same-project `task_dependencies` — catalog **projects 1.3→1.4**, **tasks 1.4→1.5**. (2) Contract renewal reminders via `crm:send-due-notifications` + setting `contract_renewal_notice_days` — **contracts 1.5→1.6** (in-app `contract.renewal_due`). (3) PO per-line partial quantity receive (`lines` on receive, `quantity_received`, `purchase_order_receipts`) — **purchase-orders 1.4→1.5**. (4) Calendar Task/Lead overlays (`source` task/lead) — **calendar → 1.1.0**. (5) Lead convert polish — `LeadConverted`, Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names — **leads 1.4→1.5**. Pest coverage for each slice.
+- **EloSync-Docs:** Roadmap + module user/developer/API/database/settings/automation/notifications + changelog; hard exclusions remain deferred (Gantt/heatmaps, Google/Outlook sync, team Calendar ACL, WhatsApp interactive, Customer Portal, multi-currency, PO/Vendor portals, contract auto-renew boolean).
+
 ## Pulse / Horizon latency + mail config fail-fast (2026-09-16)
 
 - **EloSync-Backend:** Queued mail middleware (`ApplyEmailRuntimeConfig`) fails jobs immediately on configuration errors (invalid/missing Postmark token, etc.) instead of retrying. Task digests and CRM daily summaries mark those failures as **permanent** (`retry_after = null`) and stop reclaiming them; digests also gain a max-attempt cap. Horizon `supervisor-general` switches from `auto` balancing to ordered (`balance => false`) with **max 2** processes so eight queues no longer spawn ~8 workers on small VPS RAM. `.env.example` documents production `PULSE_INGEST_DRIVER=redis` + `pulse:work`. Pest: `MailTransportFailureTest`, `TaskDigestDeliveryServiceTest`, `EmailQueueRuntimeConfigTest`.

@@ -6,7 +6,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Task.php`, `TaskTag`, `TaskNote`, `TaskNoteMention`, `TaskActivity` |
+| Models | `app/Models/Task.php`, `TaskTag`, `TaskNote`, `TaskNoteMention`, `TaskActivity`, `TaskDependency` |
 | Enums | `app/Enums/Tenant/TaskStatusEnum` (includes `waiting`; `Open` label `To Do`), `TaskPriorityEnum`, `TaskActivityTypeEnum` |
 | Service | `app/Services/Tenant/TaskService.php` (+ `ScopesToAssignee`), `TaskTagService.php` |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/TaskController.php`, `TaskTagController.php` |
@@ -19,7 +19,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 | Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `TaskNoteAdded` in `TaskEventSubscriber` |
 | Digest delivery | `task_digest_deliveries` + `TaskDigestDeliveryService`; `TrackTaskDueDigestDelivery` on `NotificationSent` / `NotificationFailed` |
 | Scheduled due | `crm:send-due-notifications` every 5 minutes (`onOneServer`); tenant setting `task_reminder_time` (**Daily Reminder Time**) gated in workspace timezone — see [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes) |
-| Tests | `tests/Feature/Tenant/Task/TaskTest.php`, `TaskTagTest.php`, `tests/Feature/Tenant/Notification/TaskDueDigestNotificationTest.php`, `NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
+| Tests | `tests/Feature/Tenant/Task/TaskTest.php`, `TaskTagTest.php`, `TaskDependencyTest.php`, `tests/Feature/Tenant/Notification/TaskDueDigestNotificationTest.php`, `NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
@@ -29,7 +29,8 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue / due-today / due-this-week SQL uses `App\Support\UtcInstant` so non-UTC workspace timezones do not mark upcoming tasks overdue. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone), not raw `datetime-local` / ISO slice.
 - Board columns are one per `TaskStatusEnum` case.
-- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. List/show embed `project` (`id`, `uuid`, `title`, `status`) when loaded. Catalog version **1.4.0** (attachments + upload-policy enforcement). See [Projects developer guide](/developer-guide/projects).
+- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. Optional `milestone_id` (FK → `project_milestones`, `nullOnDelete`) via `LinkableProjectMilestone` (requires `project_id` and same project). Optional `depends_on_task_ids[]` syncs `task_dependencies` (same project; self/cycle rejected). Clearing `project_id` clears milestone and dependencies. List/show embed `project`, `milestone`, and `depends_on_task_ids` when loaded. Catalog version **1.5.0**. See [Projects developer guide](/developer-guide/projects).
+- **Calendar overlay:** open tasks with `due_at` project onto Calendar (source `task`, organizer = assignee or creator) when Calendar is entitled; completed/cancelled/cleared due date removes the projection.
 - **Attachments:** `task_attachments` and `task_note_attachments` on the workspace uploads disk (`tenants/{uuid}/tasks/`). Types/sizes from workspace `storage.upload_policy` via `WorkspaceUploadPolicy`. Multi-file batches assert total bytes against remaining Storage quota before any object is written. Auth’d download/delete; bytes count toward Storage used. Production checklist: [upload policy + task media readiness](/deployment/workspace-upload-policy-task-media-production-readiness).
 
 ## Permissions

@@ -24,6 +24,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 - **Customer e-signature (v1)** — public accept page (`/#/accept/contracts/{token}`); staff can **Copy accept link**; signer name/email/IP recorded on accept → status **Active**
 - Staff may still **Activate without signature** from Draft (`contracts.update`) without issuing a customer link
 - **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check). Confirming in the UI acknowledges repeat billing (`acknowledge_repeat_billing`); the API requires that flag for the second and later invoices from the same contract.
+- **Renewal reminders** — for **Active** contracts with an `end_date`, `crm:send-due-notifications` sends in-app `contract.renewal_due` to the assignee (or creator) within the workspace notice window (`contract_renewal_notice_days`, default **30**, Settings → General)
 - Assignment with assignee scoping via `contracts.assign`
 - Notes + domain activity timeline (mirrors Opportunities / Quotations)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -34,7 +35,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 `contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.5.0**.
+Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.6.0**.
 
 ## Related modules
 
@@ -44,5 +45,5 @@ Enable Contracts from Marketplace (free) once Opportunities is installed. Catalo
 
 - Multi-signer / countersign / third-party e-sign providers (DocuSign, Adobe Sign)
 - Drawn signature image capture on the PDF
-- Renewal reminders
+- Auto-renew boolean on contracts
 - Multi-currency conversion

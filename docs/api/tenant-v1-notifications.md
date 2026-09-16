@@ -86,6 +86,7 @@ Bulk assign and import equal-distribution wrap `NotificationBatch`: per-lead ass
 - Task digest idempotency is durable via `task_digest_deliveries` (`queued` → `sent`, or `failed` with `retry_after`). Mail success/failure listeners update the row; queue retries can reclaim after failure.
 - CRM summary idempotency is durable via `daily_summary_deliveries` (unique `tenant_id, user_id, digest_date, kind` where `kind` is `personal`|`team`). Stale `queued` older than 45 minutes may be reclaimed (max 5 attempts). Missed sends after local midnight are not catch-up’d — keep scheduler + `emails` workers healthy through the reminder window.
 - **Lead follow-ups:** unchanged due/overdue mail + database notifications.
+- **Contracts:** Active contracts with `end_date` inside `contract_renewal_notice_days` (default 30) get in-app `contract.renewal_due` once per day (assignee or creator).
 - **Meetings:** due `MeetingReminder` rows send `meeting.reminder` (database + broadcast + web push + mail) to creator, host, and invitees; external guests get mail only. Idempotent via reminder `dedupe_key`.
 
 Meeting lifecycle types: `meeting.invite`, `meeting.updated`, `meeting.cancelled`, `meeting.reminder`.

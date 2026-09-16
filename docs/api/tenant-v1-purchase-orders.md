@@ -83,9 +83,15 @@ Email the purchase order to the vendor with optional PDF attachment. Body matche
 
 ### POST `/purchase-orders/{id}/receive`
 
-`{ "status": "partially_received"|"received", "warehouse_id": 2 }`
+```json
+{
+  "status": "partially_received"|"received",
+  "warehouse_id": 2,
+  "lines": [{ "id": 10, "quantity": 2.5 }]
+}
+```
 
-Transitions `sent → partially_received|received` or `partially_received → received`. Any other `status` value is rejected with a 422 before the state machine is even evaluated. `warehouse_id` is optional for receipt posting. Permission: `purchase-orders.receive` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). `partially_received` is acknowledgement-only. When Products and Inventory are entitled, `received` posts stock-in once for each linked `track_stock` product line, to `warehouse_id` or the default warehouse.
+Transitions `sent → partially_received|received` or `partially_received → received`. Any other `status` value is rejected with a 422 before the state machine is even evaluated. `warehouse_id` is optional for receipt posting. Optional `lines` maps line id → quantity received **this call** (must be &gt; 0 and not exceed remaining). When `lines` is present, header status is derived from remaining quantities after updating `quantity_received`. When `lines` is omitted: `partially_received` is acknowledgement-only; `received` completes remaining quantities on all lines. Permission: `purchase-orders.receive` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). When Products and Inventory are entitled, stock-in posts for the receive deltas on linked `track_stock` product lines, to `warehouse_id` or the default warehouse. Line resources expose `quantity_received` and `quantity_remaining`.
 
 ### POST `/purchase-orders/{id}/cancel`
 

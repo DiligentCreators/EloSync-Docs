@@ -4,7 +4,7 @@
 
 | Piece | Role |
 |-------|------|
-| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`) |
+| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `contract_renewal_notice_days`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`) |
 | `App\Services\Tenant\TenantSettingService` | Hierarchy resolver, cache, branding uploads, runtime mail/config, public bootstrap |
 | `App\Services\Storage\FileUploadService` | Disk-agnostic store/replace/delete/url (shared with Central) |
 | `TenantSettingController` | Authenticated list/update, test-mail, branding upload |
@@ -23,6 +23,8 @@
 Business code must call the service (`applicationName()`, `logoUrl()`, `supportEmail()`, `buttonColor()`, `usesCustomMailProvider()`, …) instead of branching on raw settings.
 
 `task_reminder_time` is a string `H:i` value (default `09:00`) under the `general` group (UI label: **Daily Reminder Time**). `crm:send-due-notifications` compares `now($workspaceTimezone)->format('H:i')` against that value so digests and daily CRM summaries gate on the workspace timezone even if the scheduler process default remains UTC. `applyRuntimeConfig()` still sets PHP `app.timezone` / `date_default_timezone_set` for `today()` / due-date queries and Sanctum; mail overlay failures must not undo that timezone.
+
+`contract_renewal_notice_days` is an integer under the `general` group (default **30**, validated `1`–`365`). When Contracts is entitled, `crm:send-due-notifications` sends in-app `ContractRenewalDueNotification` (`contract.renewal_due`) for **Active** contracts whose `end_date` falls between workspace-local today and today + notice days (assignee, else creator; daily dedupe).
 
 `storage.upload_policy` is a JSON object under the `storage` group (Settings → Storage when Storage is installed). Shape: `max_image_kb`, `max_video_kb`, `max_document_kb`, plus boolean maps `images` / `videos` / `documents` for allowed extensions. Platform ceilings live in `config/storage.php` (`upload_policy.platform_max_*_kb`). Resolve via `WorkspaceUploadPolicy` / `TenantSettingService::get('storage.upload_policy')`. Writing the key requires `storage.manage` in addition to `settings.update`. Client hints are exposed on `GET /storage/usage` as `upload_policy` (not public bootstrap).
 

@@ -32,11 +32,13 @@ Phase 4 Purchasing module (Milestone 2) on the frozen platform. Mirrors the [Est
 
 `purchase-orders.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `receive` · `cancel`
 
-Enable Purchase Orders from Marketplace (free) — Marketplace blocks the install until **Vendors** is already entitled. Catalog: slug `purchase-orders`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 20`, version **1.3.0**.
+Enable Purchase Orders from Marketplace (free) — Marketplace blocks the install until **Vendors** is already entitled. Catalog: slug `purchase-orders`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 20`, version **1.5.0**.
 
 ## Receiving and Inventory
 
-**Partially received** remains a status-only acknowledgement. When Products and Inventory are entitled, marking an order **received** posts stock-in for each product-linked line whose Product tracks stock. Receiving may select an optional warehouse; the default warehouse is used otherwise. Lines without `product_id` do not post stock.
+Receiving accepts an optional **`lines`** payload (`id` + `quantity` this receive). Line `quantity_received` advances; header status becomes **partially_received** or **received** from remaining quantities. Omitting `lines` keeps the legacy path: **partially_received** is acknowledgement-only (no line/stock updates); **received** completes remaining quantities on all lines.
+
+When Products and Inventory are entitled, stock-in posts for the received deltas on product-linked lines whose Product tracks stock (receipt batch per receive). Receiving may select an optional warehouse; the default warehouse is used otherwise. Lines without `product_id` do not post stock.
 
 ## Convert to expense (soft, Phase 4 Milestone 3)
 
@@ -44,4 +46,4 @@ Sent, partially received, or received purchase orders can be converted to a draf
 
 ## Explicitly deferred
 
-- Partial-quantity receiving per line item (status is currently header-level only)
+- Vendor portal / scorecards

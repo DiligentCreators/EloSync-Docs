@@ -109,6 +109,5 @@ npm run test:e2e:companies
 
 ## Deferred
 
-- Lead convert-to-Company
 - Legacy contact `company` string → Company backfill job
 - Meta invent Companies

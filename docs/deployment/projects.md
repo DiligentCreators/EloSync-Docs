@@ -46,4 +46,4 @@ New Projects permissions for **existing** workspaces ship as an additive **data 
 
 ## Roadmap context
 
-Projects ships as lean **v1.0.0** under Future Expansion / Operations. Gantt, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, tags, and `PRJ-` numbers remain deferred. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Projects catalog **1.4.0** includes milestones and Calendar projection; Tasks **1.5.0** adds `milestone_id` and same-project dependencies. Still deferred: Gantt, workload heatmaps, Automation `create_project`, tags, and `PRJ-` numbers. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
