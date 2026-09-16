@@ -65,6 +65,10 @@ After you **Send for signature** (status is no longer **Draft**), use **Email cu
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
+## Renewal reminders
+
+For **Active** contracts with an end date, EloSync sends an in-app **Contract renewal due** notification to the assignee (or creator) once per day while the end date falls within the workspace **Contract renewal notice (days)** window (Settings → General, default 30 days). There is no auto-renew toggle — renewals stay manual.
+
 ## Notes & activity
 
 - **Description** and **Notes** — rich-text memos on the contract (shown on the overview; also printed on the PDF)

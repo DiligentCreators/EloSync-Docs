@@ -48,13 +48,13 @@ reseller_commission_entries
   (tenant-scoped reseller partners + commission ledger — Resellers / Reseller Payouts; Resellers hard-depends on Payments; Reseller Payouts hard-depends on Resellers)
 customer_invoices.reseller_id (nullable FK → resellers)
 
-tasks / task_tags / task_task_tag / task_notes / task_note_mentions / task_activities
+tasks / task_tags / task_task_tag / task_notes / task_note_mentions / task_activities / task_dependencies
 task_digest_deliveries
 daily_summary_deliveries
-  (tenant-scoped work items — Tasks module + CRM daily digests; optional soft `project_id`)
+  (tenant-scoped work items — Tasks module + CRM daily digests; optional soft `project_id` / `milestone_id`)
 
-projects / project_members / project_notes / project_activities
-  (tenant-scoped Operations projects — Projects module; standalone free opt-in)
+projects / project_members / project_notes / project_activities / project_milestones
+  (tenant-scoped Operations projects — Projects module; standalone free opt-in; catalog **1.4.0**)
 
 automation_workflows / automation_triggers / automation_conditions / automation_actions
 automation_runs / automation_logs
@@ -290,11 +290,19 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 
 ### `tasks`
 
-`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, nullable `project_id` (FK → `projects`, null on delete; soft entitlement via `LinkableProject` — Projects must be entitled and the project visible to the actor), `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**. Catalog version **1.2.0** (added `project_id`).
+`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, nullable `project_id` (FK → `projects`, null on delete; soft entitlement via `LinkableProject`), nullable `milestone_id` (FK → `project_milestones`, null on delete; same project via `LinkableProjectMilestone`), `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**. Catalog version **1.5.0** (milestone link + dependencies).
+
+### `task_dependencies`
+
+`tenant_id`, `task_id` (cascade), `depends_on_task_id` (cascade). Unique `(task_id, depends_on_task_id)`. Same-project blockers only; cycles rejected in `TaskService`.
 
 ### `projects`
 
-`tenant_id`, `uuid`, `title` (not `name`), `status` (`planned`|`active`|`on_hold`|`completed`|`cancelled`, default `planned`), nullable `description`, nullable soft FKs `contact_id` / `company_id` / `opportunity_id` (null on delete), nullable date `starts_on` / `ends_on`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `projects`. Indexes on tenant+status/assignee/contact/company/opportunity/ends_on/title.
+`tenant_id`, `uuid`, `title` (not `name`), `status` (`planned`|`active`|`on_hold`|`completed`|`cancelled`, default `planned`), nullable `description`, nullable soft FKs `contact_id` / `company_id` / `opportunity_id` (null on delete), nullable date `starts_on` / `ends_on`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `projects`. Indexes on tenant+status/assignee/contact/company/opportunity/ends_on/title. Catalog **1.4.0**.
+
+### `project_milestones`
+
+`tenant_id`, `uuid`, `project_id` (cascade), `title`, nullable `description`, nullable date `due_on`, `status` (`open`|`completed`), `sort_order`, nullable `completed_at`, soft deletes.
 
 ### `project_members`
 
@@ -302,7 +310,7 @@ Pivot: `tenant_id`, `project_id` (cascade), `user_id`, timestamps. Unique `(proj
 
 ### `project_notes` / `project_activities`
 
-Notes (author + body) and project timeline (`type`, `description`, `properties` JSON; includes `members_synced`, `status_changed`).
+Notes (author + body) and project timeline (`type`, `description`, `properties` JSON; includes `members_synced`, `status_changed`, `milestone_*`).
 
 ### `task_tags` / `task_task_tag`
 
@@ -357,11 +365,15 @@ Notes (author + body) and supplier timeline (`type`, `description`, `properties`
 
 ### `purchase_orders`
 
-`tenant_id`, `uuid`, `number` (unique per tenant), required `vendor_id` (FK → `vendors`, restrict on delete), `title`, `notes`, `status` (`draft`|`sent`|`partially_received`|`received`|`cancelled`), `currency`, `subtotal` / `tax_total` / `total`, `order_date`, `expected_date`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `purchase-orders`. Content edits are **draft-only**; send/receive/cancel/assign remain available per status machine. Receiving is acknowledgement-only (no inventory posting).
+`tenant_id`, `uuid`, `number` (unique per tenant), required `vendor_id` (FK → `vendors`, restrict on delete), `title`, `notes`, `status` (`draft`|`sent`|`partially_received`|`received`|`cancelled`), `currency`, `subtotal` / `tax_total` / `total`, `order_date`, `expected_date`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `purchase-orders`. Content edits are **draft-only**; send/receive/cancel/assign remain available per status machine. Catalog **1.5.0** (per-line receive).
 
 ### `purchase_order_lines`
 
-`tenant_id`, `purchase_order_id` (cascade), nullable `product_id` (FK → `products`, null on product delete), `description`, `quantity`, `unit_price`, `tax_rate`, `line_total`, `sort_order`. Synced replace-all on create/update via `PurchaseOrderService::syncLines()`. Product link is optional and supports stock receipt when Products and Inventory are entitled.
+`tenant_id`, `purchase_order_id` (cascade), nullable `product_id` (FK → `products`, null on product delete), `description`, `quantity`, `quantity_received` (default 0), `unit_price`, `tax_rate`, `line_total`, `sort_order`. Synced replace-all on create/update via `PurchaseOrderService::syncLines()`. Product link is optional and supports stock receipt deltas when Products and Inventory are entitled.
+
+### `purchase_order_receipts`
+
+`tenant_id`, `uuid`, `purchase_order_id` (cascade), nullable `warehouse_id`, nullable `created_by`, timestamps. One row per receive batch used for inventory delta posting.
 
 ### `purchase_order_notes` / `purchase_order_activities`
 

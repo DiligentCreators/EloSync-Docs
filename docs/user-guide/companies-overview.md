@@ -35,11 +35,13 @@ Enable Companies from Marketplace (free). Catalog: slug `companies`, `is_default
 
 When **Companies** is installed, Contact create/edit can pick a linked Company (`contacts.company_id`), or create one inline with **New**. The legacy free-text `company` string remains for display and search; when a Company is linked, that string is synced from the Company name. See [Contacts](/user-guide/contacts-overview).
 
+## Lead conversion
+
+When **Leads** and **Companies** are entitled, converting a lead can create or reuse a Company (optional explicit `company_id` / `company_name`) and records a company activity `ConvertedFromLead`. See [Leads](/user-guide/leads-overview).
+
 ## Explicitly deferred
 
-- Lead convert-to-Company
 - Backfill job for legacy contact `company` strings → Company records
 - Meta invent Companies (inbound lead ads creating organizations)
-- Deals / opportunities linked to companies
 - Company import/export
 - Follow-ups (see [Leads](/user-guide/leads-overview) for that pattern)

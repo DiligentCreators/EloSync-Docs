@@ -38,7 +38,7 @@ One column per status (`open`, `in_progress`, `waiting`, `completed`, `cancelled
 
 Query: `search`, `status`, `priority`, `tag_id`, `assigned_to` (`unassigned` or user id), `my_tasks`, `overdue`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List/board items include `tags[]` when loaded, plus `project_id` and embedded `project` (`id`, `uuid`, `title`, `status`) when the soft Projects link is set and loaded.
+List/board items include `tags[]` when loaded, plus `project_id` / embedded `project`, optional `milestone_id` / `milestone`, and `depends_on_task_ids` when loaded.
 
 Status values: `open`, `in_progress`, `waiting`, `completed`, `cancelled`.  
 Priority values: `low`, `medium`, `high`, `urgent`.
@@ -49,17 +49,17 @@ List and board task cards include `latest_note` — most recent note (`id`, `bod
 
 ### POST `/tasks`
 
-JSON or multipart. Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`). Optional multipart `attachments[]` (max 10) — validated by workspace `storage.upload_policy`.
+JSON or multipart. Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`), optional `milestone_id` (same project), optional `depends_on_task_ids[]` (same-project blockers). Optional multipart `attachments[]` (max 10) — validated by workspace `storage.upload_policy`.
 
 Initial `due_at` on create does not require `tasks.change_due_date`.
 
 ### GET `/tasks/{id}`
 
-Includes assignee, creator, notes (with note `attachments`), task `attachments`, activities, `tags`, and optional `project`. Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes assignee, creator, notes (with note `attachments`), task `attachments`, activities, `tags`, optional `project` / `milestone`, and `depends_on_task_ids`. Embedded `notes` and `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/tasks/{id}`
 
-Partial update of task fields (including `status` / `priority` / `assigned_to` / `due_at` / `tag_ids[]` / `project_id`). Optional multipart `attachments[]` via **POST** twin `/tasks/{id}` (PHP does not populate files on true PUT).
+Partial update of task fields (including `status` / `priority` / `assigned_to` / `due_at` / `tag_ids[]` / `project_id` / `milestone_id` / `depends_on_task_ids[]`). Optional multipart `attachments[]` via **POST** twin `/tasks/{id}` (PHP does not populate files on true PUT).
 
 Changing `due_at` after create requires `tasks.change_due_date` (403 otherwise).
 

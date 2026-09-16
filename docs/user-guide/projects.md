@@ -78,6 +78,10 @@ When Projects is enabled, Tasks can optionally set a **project** (`project_id`).
 
 When Projects is entitled and you have `projects.view`, the dashboard can show **Active projects** and **Overdue projects** widgets (same visibility rules as the list).
 
+## Milestones
+
+On the project record, manage **milestones** (title, optional description / due date, sort order). Mark a milestone **Complete** when done. Tasks on the same project can optionally link to a milestone and declare **dependencies** on other tasks in that project (cycle-safe).
+
 ## What's not here yet
 
-Gantt charts, milestones, task dependencies, workload heatmaps, Calendar projection, Automation `create_project`, project tags, and `PRJ-` numbers are deferred — see the [Product Roadmap](/getting-started/product-roadmap).
+Gantt charts, workload heatmaps, Automation `create_project`, project tags, and `PRJ-` numbers are deferred — see the [Product Roadmap](/getting-started/product-roadmap). Calendar projection for project start/end dates is shipped.

@@ -23,7 +23,8 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 - Workspace timezone-aware display and editing
 - `calendar.view_all` for workspace Owner / Admin / Manager oversight
 - Upcoming events dashboard widget
-- Module licensing (`module:calendar`) + Spatie permissions
+- **Overlays** — [Meetings](/user-guide/meetings-overview) (host), [Projects](/user-guide/projects-overview) (start/end all-day), [Tasks](/user-guide/tasks-overview) (due datetime), and [Leads](/user-guide/leads-overview) (next follow-up) project read-only sourced events (`source` = `meeting`|`project`|`task`|`lead`)
+- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.1.0**
 - Activity logging (`LogsActivity`)
 
 ## Permissions
@@ -36,6 +37,5 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 - Team calendars / shared ACL
 - Invitee visibility of projected meeting events on Calendar grids
 - Google / Outlook calendar sync
-- Overlaying Tasks or Leads
 
 Meetings, Zoom, and Google Meet are documented under [Meetings](/user-guide/meetings-overview).

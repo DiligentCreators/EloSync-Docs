@@ -185,6 +185,8 @@ Optional body:
 ```json
 {
   "notes": "string|null",
+  "company_id": null,
+  "company_name": null,
   "create_opportunity": false,
   "opportunity": {
     "name": "required when create_opportunity is true",
@@ -197,7 +199,7 @@ Optional body:
 }
 ```
 
-Sets `converted_at`, `conversion_meta`, status `closed`, and a converted activity. When the workspace has the **Contacts** module installed, this also creates (or reuses) a real `Contact`, links it via `contact_id`/`contact`, preserves the lead assignee, and sets `conversion_meta.stub = false`. When **Companies** is installed and the lead has a company name, creates or reuses a Company (case-insensitive name) and stores `conversion_meta.company_id` (and Contact `company_id`). When **Opportunities** is installed and `create_opportunity` is true, creates an Opportunity linked to the lead/contact/company and stores `conversion_meta.opportunity_id`. Stub converts without a `contact_id` may call convert again after Contacts is installed to backfill the contact. Without Contacts installed, conversion remains status-only for contacts (`conversion_meta.stub = true`) but may still create company/opportunity. See [tenant-v1-contacts.md](/api/tenant-v1-contacts), [tenant-v1-companies.md](/api/tenant-v1-companies), [tenant-v1-opportunities.md](/api/tenant-v1-opportunities).
+Sets `converted_at`, `conversion_meta` (ids + display names for linked company/contact/opportunity when created), status `closed`, and a converted activity. Fires `LeadConverted` (Automation `lead.converted`). When the workspace has the **Contacts** module installed, this also creates (or reuses) a real `Contact`, links it via `contact_id`/`contact`, preserves the lead assignee, and sets `conversion_meta.stub = false`. When **Companies** is installed, optional `company_id` / `company_name` (or the lead’s company string) creates or reuses a Company (case-insensitive name) and stores `conversion_meta.company_id` / `company_name` (and Contact `company_id`); company activity `ConvertedFromLead`. When **Opportunities** is installed and `create_opportunity` is true, creates an Opportunity linked to the lead/contact/company and stores `conversion_meta.opportunity_id`. Stub converts without a `contact_id` may call convert again after Contacts is installed to backfill the contact. Without Contacts installed, conversion remains status-only for contacts (`conversion_meta.stub = true`) but may still create company/opportunity. See [tenant-v1-contacts.md](/api/tenant-v1-contacts), [tenant-v1-companies.md](/api/tenant-v1-companies), [tenant-v1-opportunities.md](/api/tenant-v1-opportunities).
 
 ### POST `/leads/{id}/notes`
 

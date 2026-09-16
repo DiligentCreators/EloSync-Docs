@@ -56,7 +56,7 @@ Status always starts at `planned`. Without `projects.assign`, `assigned_to` / `m
 
 ### GET `/projects/{id}`
 
-Includes contact, company, opportunity, assignee, creator, members, notes, and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, opportunity, assignee, creator, members, notes, milestones (when loaded), and timeline activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/projects/{id}`
 
@@ -73,6 +73,28 @@ Permission: `projects.restore`.
 ### DELETE `/projects/{id}/force`
 
 Permanently delete a soft-deleted project. Permission: `projects.force.delete` (owner/superadmin only by default).
+
+## Milestones
+
+Nested under a project. Permission: `projects.view` for list; `projects.update` for write/complete/delete (same visibility as the parent project).
+
+### GET `/projects/{id}/milestones`
+
+### POST `/projects/{id}/milestones`
+
+Body: `title` (required), `description`, `due_on` (date), `sort_order`.
+
+### PUT `/projects/{id}/milestones/{milestone}`
+
+Partial update of milestone fields (not status — use complete).
+
+### POST `/projects/{id}/milestones/{milestone}/complete`
+
+Sets status `completed` and `completed_at`.
+
+### DELETE `/projects/{id}/milestones/{milestone}`
+
+Soft delete.
 
 ## Actions
 
@@ -111,13 +133,13 @@ Permission: `projects.update`.
 
 ### GET `/projects/{id}/timeline`
 
-Domain timeline entries (`created`, `updated`, `assigned`, `members_synced`, `status_changed`, `note_added`, `deleted`, `restored`).
+Domain timeline entries (`created`, `updated`, `assigned`, `members_synced`, `status_changed`, `note_added`, `milestone_created`, `milestone_updated`, `milestone_completed`, `milestone_deleted`, `deleted`, `restored`).
 
-## Related: Tasks `project_id`
+## Related: Tasks `project_id` / `milestone_id` / dependencies
 
 ### Soft link on Tasks
 
-When creating or updating a task, optional `project_id` is validated by `LinkableProject` (Projects module entitled + project visible to the actor). Response embeds `project` (`id`, `uuid`, `title`, `status`) when loaded. Documented under [Tenant Tasks](/api/tenant-v1-tasks).
+When creating or updating a task, optional `project_id` is validated by `LinkableProject` (Projects module entitled + project visible to the actor). Optional `milestone_id` must belong to that project (`LinkableProjectMilestone`). Optional `depends_on_task_ids[]` must be other tasks on the same project (cycle rejected). Response embeds `project`, `milestone`, and `depends_on_task_ids` when loaded. Documented under [Tenant Tasks](/api/tenant-v1-tasks).
 
 ## Dashboard widgets
 

@@ -10,9 +10,9 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 | Capability | Status |
 |------------|--------|
-| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included) |
+| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.5.0** convert polish; Tasks **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped |
-| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar) |
+| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** Task/Lead overlays) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
@@ -20,10 +20,12 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 ### Planned / deferred after Phase 1 MVP
 
-- Calendar: team calendars / shared ACL, Google/Outlook sync, Task/Lead overlays
+- Calendar: team calendars / shared ACL, Google/Outlook sync
 - Meetings: invitee Calendar ACL for projected events
-- Leads: conversion to Companies; real-time board sync
+- Leads: real-time board sync
 - WhatsApp: interactive buttons/lists, alternate BSPs, AI WhatsApp features
+
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish — Companies link + `LeadConverted` / Automation `lead.converted` (**leads 1.5.0**).
 
 ---
 
@@ -33,13 +35,13 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Opportunities](/user-guide/opportunities-overview) (pipeline + Kanban) | Shipped |
 | [Quotations](/user-guide/quotations-overview) | Shipped (requires Opportunities; customer e-signature accept links **1.9.0**) |
-| [Contracts](/user-guide/contracts-overview) | Shipped (requires Opportunities; PDF + customer e-signature accept links **1.5.0**) |
+| [Contracts](/user-guide/contracts-overview) | Shipped (requires Opportunities; PDF + e-signature **1.5.0**; renewal reminders **1.6.0**) |
 | [Resellers](/user-guide/resellers-overview) / [Reseller Payouts](/user-guide/reseller-payouts-overview) | Shipped (free Sales opt-ins; Payments → Resellers → Payouts chain) |
 
 ### Deferred
 
 - Quotation multi-signer / third-party e-sign providers; multi-currency; approval workflows beyond status enums
-- Contract multi-signer / third-party e-sign providers; renewal reminders
+- Contract multi-signer / third-party e-sign providers; auto-renew boolean
 - Reseller cross-workspace identity; reseller portal; automated bank disbursement
 
 ---
@@ -68,12 +70,11 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Vendors](/user-guide/vendors-overview) | Shipped |
-| [Purchase Orders](/user-guide/purchase-orders-overview) | Shipped (requires Vendors; PDF + email vendor shipped) |
+| [Purchase Orders](/user-guide/purchase-orders-overview) | Shipped (requires Vendors; PDF + email; per-line partial receive **1.5.0**) |
 | [Expenses](/user-guide/expenses-overview) | Shipped (soft Vendor / PO links; convert-from-PO) |
 
 ### Deferred
 
-- PO partial-quantity receiving per line
 - Vendor portal / scorecards
 - Expense reimbursement workflows beyond `paid`; multi-line expenses
 
@@ -128,7 +129,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Help Desk](/user-guide/help-desk-overview) | Shipped **1.10.0** (SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Projects](/user-guide/projects-overview) | Shipped (lean v1; soft Task `project_id`) |
+| [Projects](/user-guide/projects-overview) | Shipped (milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
 | [Documents](/user-guide/documents-overview) | Shipped (requires Storage) |
@@ -142,7 +143,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 ### Other Operations deferred
 
-- Projects: Gantt, milestones, task dependencies, workload heatmaps, Automation `create_project`
+- Projects: Gantt, workload heatmaps, Automation `create_project`
 - Knowledge Base: public URLs, nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
@@ -202,6 +203,10 @@ Credit Note AI triage shipped (**ai 1.15.0**): `get_credit_note` plus confirmed 
 Leave AI triage shipped (**ai 1.16.0**): `get_leave_request` + `get_pending_leave_requests` plus confirmed `approve_leave_request` / `reject_leave_request` (mirrors Leave HTTP approve/reject; no assign/notes; self-approve blocked for non-admin).
 
 Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, send-for-signature, customer accept links (reuse Quotation accept pattern), staff activate from sent, email with optional PDF + sign link.
+
+**Phased depth Steps 1–4 + convert polish (2026-09-16):** Projects milestones (**projects 1.4.0**) + task dependencies / `milestone_id` (**tasks 1.5.0**); contract renewal reminders via `crm:send-due-notifications` + `contract_renewal_notice_days` (**contracts 1.6.0**); PO per-line partial quantity receive (**purchase-orders 1.5.0**); Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish — `LeadConverted` / Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names (**leads 1.5.0**).
+
+Still deferred: Gantt/heatmaps; Google/Outlook sync; team Calendar ACL; WhatsApp interactive; Customer Portal; multi-currency; PO/Vendor portals; contract auto-renew boolean.
 
 Next when prioritized: WhatsApp interactive messages; demand-driven items below (broader AI tools continue lightly).
 

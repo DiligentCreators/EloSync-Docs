@@ -14,7 +14,7 @@
 
 `App\Models\CalendarEvent` — `BelongsToTenant`, `LogsActivity`, `SoftDeletes`.
 
-Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `status` (`scheduled`|`cancelled`), `source` (`manual`|`meeting`), nullable `source_type`/`source_id` (Meetings uses morph alias `meeting`).
+Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `status` (`scheduled`|`cancelled`), `source` (`manual`|`meeting`|`project`|`task`|`lead`), nullable `source_type`/`source_id` (Meetings uses morph alias `meeting`; Projects/Tasks/Leads use `project` / `task` / `lead`).
 
 **Excluded:** `assignee_id`, calendar ACL, participants.
 
@@ -30,7 +30,20 @@ Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `stat
 
 - `createForOrganizer`, `update`, `cancel`, `delete`
 - `listInRange`, `upcoming`
-- `upsertFromSource` — used by Meetings; unused by Calendar UI in v1
+- `upsertFromSource` — used by Meetings, Projects, Tasks, and Leads; unused by Calendar UI for create
+
+## Overlays (1.1.0)
+
+When Calendar is entitled:
+
+| Source | Projector | Projection |
+|--------|-----------|------------|
+| `meeting` | Meetings | Host event |
+| `project` | Projects | All-day on `starts_on` / `ends_on` |
+| `task` | Tasks | Timed window from `due_at` (+1h); cleared when completed/cancelled/no due |
+| `lead` | Leads | Timed window from `next_follow_up_at` (+1h); cleared when converted/closed/archived/no follow-up |
+
+Catalog version **1.1.0**. Pest: `tests/Feature/Tenant/Calendar/TaskLeadCalendarOverlayTest.php`.
 
 ## Frontend
 
@@ -81,4 +94,4 @@ Also listed in `CatalogSeeder` for fresh/local/CI.
 
 ## Explicit non-goals (v1)
 
-Assignment, team calendars, invitee Calendar ACL, Google/Outlook sync, Task/Lead overlays. Meetings/Zoom/Meet live in the Meetings module.
+Assignment, team calendars, invitee Calendar ACL, Google/Outlook sync. Meetings/Zoom/Meet live in the Meetings module.

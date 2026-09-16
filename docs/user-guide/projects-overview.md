@@ -21,7 +21,8 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 - Status workflow: `planned → active|cancelled`; `active → on_hold|completed|cancelled`; `on_hold → active|cancelled` (`completed` / `cancelled` terminal)
 - Members + assignee; visibility without `projects.assign` = assignee **OR** member **OR** creator
 - Soft optional Contact / Company / Opportunity links (validated only when that module is entitled)
-- Soft Task `project_id` (Tasks → Projects optional; Tasks catalog **1.1.2 → 1.2.0**)
+- Soft Task `project_id` (Tasks → Projects optional) plus optional task `milestone_id` and same-project task dependencies (Tasks catalog **1.5.0**)
+- **Milestones** — open/completed milestones on a project (`due_on`, sort order); complete action; timeline events (`milestone_*`)
 - Board + stats + notes/timeline
 - **Calendar projection** — all-day events on `starts_on` / `ends_on` (assignee as organizer); cancelled projects cancel/remove projection
 - Dashboard widgets: `active_projects`, `overdue_projects`
@@ -34,7 +35,7 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 
 `projects.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.2.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
+Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.4.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
 
 ## Why standalone (soft dependencies)
 
@@ -43,8 +44,6 @@ Contact, Company, and Opportunity links are optional cross-references — a proj
 ## Explicitly deferred
 
 - Gantt charts
-- Milestones
-- Task dependencies
 - Workload heatmaps
 - Automation `create_project` action
 - Project tags

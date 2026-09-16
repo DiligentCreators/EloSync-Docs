@@ -28,9 +28,9 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 - Export CSV / XLSX of the current filtered set (`leads.export`)
 - Import CSV / XLSX via multi-step wizard (`leads.import`) — column mapping (including optional first **Note**), duplicate modes, preview, queued processing, history + reports
 - **Inbound integrations** (`leads.manage_integrations`) — Custom webhooks (Zapier-ready) + Meta Lead Ads OAuth / Page subscribe
-- Convert (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; creates/links a real [Contact](/user-guide/contacts-overview) when that module is installed (plus [Company](/user-guide/companies-overview) when the lead has a company name); optionally creates an [Opportunity](/user-guide/opportunities-overview) when the agent opts in; otherwise stays status-only for Contacts
+- Convert (`leads.convert`) — sets `converted_at`, records a converted activity, sets status `closed`; creates/links a real [Contact](/user-guide/contacts-overview) when that module is installed; creates/links a [Company](/user-guide/companies-overview) from the lead company name or optional `company_id` / `company_name` (company timeline `ConvertedFromLead`); optionally creates an [Opportunity](/user-guide/opportunities-overview) when the agent opts in; stores `conversion_meta` with company/contact/opportunity ids and names; fires `LeadConverted` (Automation trigger `lead.converted`). Without Contacts, convert stays status-only for contacts
 - Assignee scoping — without `leads.assign`, users only see their own leads
-- Module licensing (`module:leads`) + Spatie permissions
+- Module licensing (`module:leads`) + Spatie permissions — catalog **1.5.0**
 - Audit + activity logging; assignment / follow-up notifications (mail + database)
 
 ## Permissions
@@ -39,6 +39,4 @@ Reference business module for the EloSync platform. Every future module (Tasks, 
 
 ## Explicitly deferred
 
-- Conversion to Companies (organizations)
-- Workflow automations (installable Marketplace module — see [Automation](/user-guide/automation-overview); not a hard-coded Lead feature)
 - Real-time board sync (Reverb / Echo)

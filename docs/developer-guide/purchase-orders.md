@@ -37,7 +37,7 @@ Mirror of the [Estimates developer guide](/developer-guide/estimates) (assignee 
 - `purchase-orders.force.delete` is not granted to any default role — owner/superadmin only.
 - `vendor_id` is **required** (unlike Estimates' optional contact/company) and validated via `LinkableVendor` — must exist, belong to the tenant, and the Vendors module must be entitled.
 - Auto-numbering: `PurchaseOrderService::nextNumber()` reads the `purchase_orders_number_prefix` tenant setting (default `PO-`), then zero-pads a running count to 5 digits — same pattern as Estimates/Invoices/Payments. Editable under **Settings → General → Document number prefixes** (`PUT /settings`). `purchase_orders` has a `unique(tenant_id, number)` DB index; `create()` retries up to 3 times via the shared `RetriesOnDuplicateNumber` trait on a duplicate-key collision.
-- **Receiving bridge** — `partially_received` remains acknowledgement-only. On `received`, when Products and Inventory are entitled, `StockService::postPurchaseOrderReceipt()` posts stock-in once for linked `track_stock` product lines, using the optional receive `warehouse_id` or the default warehouse. `receive()` runs status transition + stock post in one DB transaction with `lockForUpdate()` on the purchase order (and again inside receipt posting) so concurrent receives cannot double-post and a failed stock post rolls the status back.
+- **Receiving bridge** — optional `lines` on `POST …/receive` (`id` + `quantity` this receive) advances `purchase_order_lines.quantity_received` and derives header `partially_received` / `received` from remaining qty. Omitting `lines` keeps the legacy path: `partially_received` acknowledgement-only; `received` completes remaining quantities. When Products and Inventory are entitled, `StockService::postPurchaseOrderReceiptDeltas()` posts stock-in for the receive deltas (receipt batch in `purchase_order_receipts`), using optional `warehouse_id` or the default warehouse. `receive()` runs status transition + stock post in one DB transaction with `lockForUpdate()` on the purchase order so concurrent receives cannot double-post and a failed stock post rolls the status back.
 - **Convert to expense is soft, one-way, one-time**: `PurchaseOrderService::convertToExpense()` checks `EntitlementService::hasModule($tenant, 'expenses')` at call time (not a hard `module_dependencies` row), rejects if an `Expense` already references this `purchase_order_id` (`withTrashed()` check), and only allows `sent`/`partially_received`/`received` source statuses via `PurchaseOrder::isConvertible()`. `PurchaseOrder::convertedExpense()` (`hasOne`) and `ListPurchaseOrderResource.converted_expense_id` let the frontend hide the action once used.
 
 ## Permissions
@@ -48,7 +48,7 @@ purchase-orders.view | create | update | delete | restore | force.delete | assig
 
 Routes use `module:purchase-orders` then `can:purchase-orders.*` / policies.
 
-Catalog: slug `purchase-orders`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `vendors`.
+Catalog: slug `purchase-orders`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`, version **1.5.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `vendors`. **1.5.0** adds per-line `quantity_received` + `purchase_order_receipts`.
 
 ## API (tenant)
 
@@ -102,6 +102,6 @@ Ask EloSync Purchase Order tools (`get_purchase_order`, confirmed status/assign/
 
 ## Deferred
 
-- Per-line partial receiving
+- Vendor portal / scorecards
 - Dashboard widgets for Purchase Orders
 - Communication template placeholders for Purchase Orders

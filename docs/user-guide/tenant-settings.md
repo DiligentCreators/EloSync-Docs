@@ -13,6 +13,7 @@ You need permission to view/update settings (workspace owners have this by defau
 **Timezone** under General is the single clock for the whole workspace. When it is set to e.g. `Asia/Karachi`, every date and time in the Tenant Application follows that zone — not the server’s UTC clock and not the browser’s local zone alone:
 
 - Daily Reminder Time (task digest + daily CRM summary emails)
+- Contract renewal notice window (in-app alerts for Active contracts nearing end date)
 - Task due dates and lead follow-up due times
 - Meeting and calendar start/end times (and meeting reminders)
 - Attendance “today”, office start/end + late grace (on-site and remote), and optional login auto check-in when enabled
@@ -29,6 +30,7 @@ There is no separate attendance or meeting timezone. Change **Timezone** once; a
 | **Timezone** | Workspace wall-clock zone for reminders, due dates, meetings, calendar, and attendance. Inherit from Central when not customized. |
 | **Locale / Currency** | Workspace defaults. Inherit from Central when not customized. |
 | **Daily Reminder Time** | Local workspace time (default `09:00`) in **Timezone** — not server UTC — for the daily CRM summary email and the consolidated task due digest. Assignees still get in-app alerts per due/overdue task. |
+| **Contract renewal notice (days)** | How many days before an **Active** contract’s end date to show an in-app renewal reminder (`contract_renewal_notice_days`, default **30**, range 1–365). Requires the Contracts module. |
 | **Default meeting provider** | Preselects None / Google Meet / Zoom on the Meetings schedule form (`meetings_default_provider`). Connecting providers is done under Meetings → Integrations. |
 | **Trash retention** | How long soft-deleted items stay in Trash before automatic permanent purge (`trash.retention_days`). Choose **30**, **90**, or **365** days, or **Forever**. Applies to leads, tasks, contacts, companies, invoices, and other SoftDeletes modules (not Team Chat messages — see Team Chat retention; not Email mailboxes — disconnect those separately; not IMAP Email Trash folders). Purge is irreversible. |
 | **Document number prefixes** | When entitled modules are installed, customize auto-number prefixes (for example `INV-`, `PAY-`, `PO-`, `HD-`) for invoices, payments, credit notes, estimates, purchase orders, expenses, assets, and Help Desk tickets. |

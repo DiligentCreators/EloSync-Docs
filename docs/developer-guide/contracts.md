@@ -21,7 +21,7 @@ Mirror of the [Opportunities developer guide](/developer-guide/opportunities) an
 | Notifications | `app/Notifications/Tenant/Contract/ContractAssignedNotification.php` |
 | Link rules | `LinkableQuotation` (checks Quotations entitlement + assignee scope + same `opportunity_id`), `EligibleOpportunityAssignee` |
 | Dependency migration | `database/migrations/2026_07_30_230005_add_contracts_opportunities_dependency.php` (mirrors the Quotations → Opportunities dependency) |
-| Tests | `tests/Feature/Tenant/Contract/ContractTest.php`, `ContractAcceptanceTest.php`, `tests/Feature/Central/Module/ContractsModuleDependencyTest.php` |
+| Tests | `tests/Feature/Tenant/Contract/ContractTest.php`, `ContractAcceptanceTest.php`, `ContractRenewalNotificationTest.php`, `tests/Feature/Central/Module/ContractsModuleDependencyTest.php` |
 
 ## Domain notes
 
@@ -51,7 +51,7 @@ contracts.view | create | update | delete | restore | force.delete | assign | se
 
 Routes use `module:contracts` then `can:contracts.*` / policies.
 
-Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.5.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only). 1.1.0 added opportunity auto-fill + HTML memos; 1.2.0 adds create-invoice (soft Invoices entitlement); 1.2.1 requires `acknowledge_repeat_billing` for second+ bills; 1.3.0 related inline creates; **1.5.0 PDF + customer e-signature accept links** (+ `contracts.send` / `contracts.accept`). Production readiness: [Sales document convert](/deployment/sales-document-convert-production-readiness).
+Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.6.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only). 1.1.0 added opportunity auto-fill + HTML memos; 1.2.0 adds create-invoice (soft Invoices entitlement); 1.2.1 requires `acknowledge_repeat_billing` for second+ bills; 1.3.0 related inline creates; **1.5.0 PDF + customer e-signature accept links** (+ `contracts.send` / `contracts.accept`); **1.6.0 renewal reminders** via `crm:send-due-notifications` + setting `contract_renewal_notice_days` (in-app `ContractRenewalDueNotification` for Active contracts with `end_date` in the notice window). Production readiness: [Sales document convert](/deployment/sales-document-convert-production-readiness).
 
 ## API (tenant)
 
@@ -73,7 +73,7 @@ SPA should mirror **Opportunities** / **Quotations** (table + create/edit page, 
 ## Tests
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/Contract/ContractTest.php tests/Feature/Tenant/Contract/ContractAcceptanceTest.php tests/Feature/Central/Module/ContractsModuleDependencyTest.php
+php artisan test --compact tests/Feature/Tenant/Contract/ContractTest.php tests/Feature/Tenant/Contract/ContractAcceptanceTest.php tests/Feature/Tenant/Contract/ContractRenewalNotificationTest.php tests/Feature/Central/Module/ContractsModuleDependencyTest.php
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:contracts
 ```

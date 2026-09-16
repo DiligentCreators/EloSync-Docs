@@ -84,10 +84,10 @@ WhatsApp opens with the message pre-filled. EloSync does not send the message fo
 Users with **convert** can convert a lead from the record page. Behavior depends on which Marketplace modules are installed:
 
 - **Contacts** — creates a linked Contact from lead fields (name, email, phone, job title) with lifecycle **On Boarded Clients**. Requires `contacts.create`. No separate contact form.
-- **Companies** — when the lead has a company name, creates a Company or reuses an existing one (case-insensitive name match) and links it to the Contact. Requires `companies.create` when a new company must be created.
+- **Companies** — creates a Company or reuses an existing one (case-insensitive name match), or links an explicit company on convert, and links it to the Contact. Requires `companies.create` when a new company must be created. The company timeline records **Converted from lead**.
 - **Opportunities** (optional) — check **Also create an opportunity**, enter a name (defaults to the lead name), and optionally an amount (defaults from lead value). Requires `opportunities.create`. The opportunity is linked to the lead, contact, and company when those exist.
 
-The lead is stamped with `converted_at`, status becomes Closed, and activity is recorded. After convert, the drawer shows **View contact** / **View company** / **View opportunity** links when those records were created and you can view them.
+The lead is stamped with `converted_at`, status becomes Closed, `conversion_meta` stores linked ids/names, activity is recorded, and Automation can run on `lead.converted` when Automation is entitled. After convert, the drawer shows **View contact** / **View company** / **View opportunity** links when those records were created and you can view them.
 
 If Contacts is not installed, convert still closes the lead (`converted_at` / Closed) without creating a contact. Company and opportunity can still be created when those modules are installed.
 

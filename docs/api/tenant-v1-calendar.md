@@ -18,6 +18,8 @@ Query: `limit` (1–25, default 8). Scheduled events with `starts_at >= now()`, 
 
 Query: `search`, `status`, `from`, `to`, `trashed`, `sort` (default `starts_at`), `direction` (default `asc`), `page`, `per_page`, `paginate` (`0`/`false` returns a non-paginated range collection when `from`+`to` are set).
 
+Events may have `source` `manual` | `meeting` | `project` | `task` | `lead` (sourced overlays are read on the grid; mutate via the parent module).
+
 ### POST `/calendar/events`
 
 Body: `title` (required), `description`, `starts_at`, `ends_at` (`after_or_equal:starts_at`), `all_day`, `timezone`, `color`.
