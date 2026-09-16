@@ -18,7 +18,11 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 ## Capabilities
 
 - Contract fields: opportunity (required; gated **New** when `opportunities.create`), optional quotation link, title, party name, start date (required), optional end date, value, currency, rich-text description and notes
-- Status workflow: `draft → active → expired | terminated` (`POST /contracts/{id}/status`)
+- Status workflow: `draft → sent | active | terminated`; `sent → active | expired | terminated`; `active → expired | terminated` (`POST /contracts/{id}/send`, `.../accept`, `.../status`)
+- Download contract PDF (workspace-branded; description, notes, party, value, dates)
+- **Email customer** after Send (`POST /contracts/{id}/email`, `contracts.send`) — optional PDF attachment; for **Sent** contracts, appends a one-time customer sign link; default recipient from the opportunity’s contact/company; records `emailed` timeline + tenant email log
+- **Customer e-signature (v1)** — public accept page (`/#/accept/contracts/{token}`); staff can **Copy accept link**; signer name/email/IP recorded on accept → status **Active**
+- Staff may still **Activate without signature** from Draft (`contracts.update`) without issuing a customer link
 - **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check). Confirming in the UI acknowledges repeat billing (`acknowledge_repeat_billing`); the API requires that flag for the second and later invoices from the same contract.
 - Assignment with assignee scoping via `contracts.assign`
 - Notes + domain activity timeline (mirrors Opportunities / Quotations)
@@ -28,9 +32,9 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 ## Permissions
 
-`contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `convert`
+`contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.3.0**.
+Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.5.0**.
 
 ## Related modules
 
@@ -38,6 +42,7 @@ Enable Contracts from Marketplace (free) once Opportunities is installed. Catalo
 
 ## Explicitly deferred
 
-- Contract PDF export / e-signature
+- Multi-signer / countersign / third-party e-sign providers (DocuSign, Adobe Sign)
+- Drawn signature image capture on the PDF
 - Renewal reminders
 - Multi-currency conversion
