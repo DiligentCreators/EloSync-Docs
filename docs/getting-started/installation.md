@@ -420,7 +420,7 @@ Configure only what you are actively developing.
 
 ### Monitoring {#monitoring}
 
-- **Pulse** — In-app performance dashboard (slow requests, queries, jobs, server metrics). Operators with the roles above open **Settings → Pulse** in the Central SPA; Pulse opens in a **new tab** on the backend domain while Central stays on the dashboard. Use **Back to Central** in the Pulse header to return to the SPA. Run `php artisan pulse:check` as a persistent process so the **Servers** card receives metrics (add to Supervisor in production).
+- **Pulse** — In-app performance dashboard (slow requests, queries, jobs, server metrics). Operators with the roles above open **Settings → Pulse** in the Central SPA; Pulse opens in a **new tab** on the backend domain while Central stays on the dashboard. Use **Back to Central** in the Pulse header to return to the SPA. Run `php artisan pulse:check` as a persistent process so the **Servers** card receives metrics. In production prefer `PULSE_INGEST_DRIVER=redis` plus a `php artisan pulse:work` daemon so request/queue workers do not write Pulse rows inline (see [Laravel Forge](/deployment/laravel-forge)).
 - **Horizon** — Redis queue dashboard (throughput, wait times, failed jobs, worker status). Same roles open **Settings → Horizon** in a new tab. Locally run `php artisan horizon` instead of `queue:work` when Horizon is installed. Production: one Forge daemon (`php artisan horizon`); remove separate `queue:work` processes after cutover.
 - **Nightwatch / Telescope** — Optional; enable per environment policy.
 
