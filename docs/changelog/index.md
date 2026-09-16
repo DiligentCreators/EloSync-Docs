@@ -1,5 +1,21 @@
 # Changelog
 
+## Live Chat production readiness remediations 1.0.1 (2026-09-17)
+
+- **EloSync-Backend:** Catalog **1.0.0 → 1.0.1** — `LiveChatPublicCors` for third-party embeds; public DTOs (no agent/Lead/IP leak); key regen + module cancel revoke sessions / deactivate widgets; 7-day session TTL; `live-chat:purge-visitors`; PlatformAudit + LogsActivity; `UtcDateTime`; Pest security matrix.
+- **EloSync-Frontend:** Query `ErrorState` + retry on widget / conversations / messages.
+- **EloSync-Docs:** [Production readiness](/deployment/live-chat-production-readiness) flipped to **Go**; deploy note + changelog.
+
+## Live Chat production readiness audit (2026-09-17)
+
+- **EloSync-Docs:** [Live Chat production readiness](/deployment/live-chat-production-readiness) — initially **No-Go**; remediations above closed the ship bar.
+
+## Live Chat MVP 1.0.0 (2026-09-17)
+
+- **EloSync-Backend:** Free Communication Marketplace module `live-chat` (**1.0.0**, not default-included). Tables for widgets/visitors/conversations/messages; public widget API (`/api/public/live-chat/{publicKey}/…` + `public/widgets/live-chat.js`); tenant inbox API; soft Lead link; inbound `live-chat.inbound` notifications. Permissions `view`/`reply`/`assign`/`manage`. Pest: `LiveChatModuleTest`.
+- **EloSync-Frontend:** `/live-chat` shared inbox (WhatsApp-style) + widget settings; Communication nav; notification deep-link. Playwright: `test:e2e:live-chat`.
+- **EloSync-Docs:** User/developer/API/deployment + entitlements, licensing, database, roadmap, changelog.
+
 ## Phased depth Steps 1–4 + Lead convert polish (2026-09-16)
 
 - **EloSync-Backend:** (1) Projects milestones + Tasks `milestone_id` / same-project `task_dependencies` — catalog **projects 1.3→1.4**, **tasks 1.4→1.5**. (2) Contract renewal reminders via `crm:send-due-notifications` + setting `contract_renewal_notice_days` — **contracts 1.5→1.6** (in-app `contract.renewal_due`). (3) PO per-line partial quantity receive (`lines` on receive, `quantity_received`, `purchase_order_receipts`) — **purchase-orders 1.4→1.5**. (4) Calendar Task/Lead overlays (`source` task/lead) — **calendar → 1.1.0**. (5) Lead convert polish — `LeadConverted`, Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names — **leads 1.4→1.5**. Pest coverage for each slice.
