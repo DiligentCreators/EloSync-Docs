@@ -1,3 +1,10 @@
+## Live Chat 1.3.0 (2026-09-17)
+
+Catalog **1.0.1 → 1.1.0 → 1.2.0 → 1.3.0** (shipped together):
+
+- **1.1.0:** Widget branding, business hours, offline leave-a-message, canned replies, inbox filters / assign / visitor panel, optional agent email notify.
+- **1.2.0:** Agent Echo realtime (inbox + conversation channels) + visitor public channel; typing whispers; poll fallback.
+- **1.3.0:** Departments + routing, media attachments, Help Desk escalate, visitor ban, Automation triggers (live_chat.conversation_opened / message_inbound / conversation_closed).
 # Changelog
 
 ## Live Chat production readiness remediations 1.0.1 (2026-09-17)

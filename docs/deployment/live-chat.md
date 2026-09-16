@@ -12,8 +12,9 @@ Idempotent migrations:
 - `2026_09_17_003610_register_live_chat_module`
 - `2026_09_17_003620_add_live_chat_permissions`
 - `2026_09_17_003630_bump_live_chat_module_version_to_1_0_1`
+- `2026_09_17_003700_expand_live_chat_module_to_1_3_0` (schema + catalog bumps **1.0.1 → 1.1.0 → 1.2.0 → 1.3.0**)
 
-Catalog row: free Communication opt-in `live-chat` **1.0.1** (not default-included). Workspaces install from Marketplace.
+Catalog row: free Communication opt-in `live-chat` **1.3.0** (not default-included). Workspaces install from Marketplace.
 
 ## Runtime
 
@@ -22,7 +23,8 @@ Catalog row: free Communication opt-in `live-chat` **1.0.1** (not default-includ
 - **CORS:** `LiveChatPublicCors` reflects `Origin` for credential-less `api/public/live-chat/*` (does not open the rest of the API).
 - Rate limits: `live-chat-widget` (60/min) and `live-chat-widget-session` (10/min for session create).
 - Visitor sessions expire after **7 days**; schedule `live-chat:purge-visitors --days=90` (registered in `routes/console.php`).
-- No new queue workers required (notifications use existing database channel; queue `sync` or existing supervisors).
+- Agent realtime uses existing Reverb/Echo (`private-tenant.*.live-chat.*`); embed keeps short-poll with optional public channel.
+- Optional agent email notify is controlled per widget (`email_notify_agents`).
 
 ## Production readiness
 
@@ -31,7 +33,7 @@ Audit status: **Go** — [Live Chat production readiness](./live-chat-production
 ## Verify
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/LiveChat/LiveChatModuleTest.php
+php artisan test --compact tests/Feature/Tenant/LiveChat
 # Frontend
 npm run test:e2e:live-chat
 ```
