@@ -1,10 +1,10 @@
 # Live Chat
 
-Install **Live Chat** from Marketplace (free). Open **Communication → Live Chat**.
+Install **Live Chat** from Marketplace (free). Open **Communication → Live Chat** for the agent inbox. Configure the widget under **Settings → Live Chat**.
 
 ## Widget setup
 
-1. Open Live Chat and expand **Widget settings** (requires `live-chat.manage`).
+1. Open **Settings → Live Chat** (requires `live-chat.manage`), or use **Settings** from the Live Chat inbox.
 2. Set greeting, branding (color, launcher text, position, header, logo), and optionally require name/email before chat starts.
 3. Configure **business hours** (workspace timezone). Outside hours, visitors see the offline greeting and can leave a message when offline mode is enabled.
 4. Optionally enable **email notify agents** for inbound/offline messages.
@@ -15,22 +15,23 @@ Regenerating the public key invalidates existing embeds until you update the sni
 
 ## Agent inbox
 
-- Conversation list on the left with filters: All, Unread, Mine, Unassigned, Open, Closed, Offline.
-- Thread, visitor details, and actions on the right.
-- Reply with `live-chat.reply`. Claim or assign with `live-chat.assign`. Close/reopen from the thread header.
-- Insert **canned replies** from the composer (manage canned replies in settings).
+- Fullscreen inbox (same shell pattern as Team Chat): conversation list, thread, and visitor panel — no page-level scroller.
+- Conversation list filters: All, Unread, Mine, Unassigned, Open, Closed, Offline.
+- Thread header: Claim, Close/Reopen, Escalate. Assign, lead link, and ban live in the visitor panel.
+- Reply with `live-chat.reply`. Claim or assign with `live-chat.assign`.
+- Insert **canned replies** from the composer (manage canned replies in Settings → Live Chat).
 - Search filters by visitor name, email, page URL, or message preview.
 - New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback). Desktop/sound alerts play while the inbox is open.
 
 ## Departments
 
-Create departments under widget settings (`live-chat.manage`), assign agents, and set a default department on the widget for new conversations.
+Create departments under **Settings → Live Chat** (`live-chat.manage`), assign agents, and set a default department on the widget for new conversations.
 
 ## Leads
 
 When **Leads** is installed:
 
-- Search and link an existing lead, or create a new lead from the thread and auto-link it.
+- Search and link an existing lead, or create a new lead from the visitor panel and auto-link it.
 - Unlink anytime. Linking requires `live-chat.reply` or `live-chat.manage` plus Leads access.
 
 ## Help Desk
@@ -39,7 +40,7 @@ When **Help Desk** is installed, escalate a conversation to a ticket from the th
 
 ## Moderation
 
-With `live-chat.manage`, ban a visitor from the thread. Banned visitors cannot start new sessions.
+With `live-chat.manage`, ban a visitor from the visitor panel. Banned visitors cannot start new sessions.
 
 ## Notifications
 

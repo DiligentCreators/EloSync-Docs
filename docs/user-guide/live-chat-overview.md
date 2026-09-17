@@ -17,7 +17,8 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 - Widget branding (color, launcher text, position, header, logo)
 - Business hours + offline leave-a-message
 - Visitor text chat via public API (session token; short-poll with optional Reverb public channel)
-- Shared agent inbox at `/live-chat` (filters, assign/transfer, visitor panel)
+- Shared agent inbox at `/live-chat` (fullscreen Team Chat–style shell: filters, assign/transfer, visitor panel)
+- Widget / departments / canned replies under **Settings → Live Chat** (`/settings?tab=live-chat`)
 - Canned replies for agents
 - Departments + default routing
 - Media attachments on messages

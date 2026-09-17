@@ -9,6 +9,8 @@ Free Communication module (`live-chat` **1.3.0**). Public widget traffic resolve
 | `GET/POST /api/public/live-chat/{publicKey}/…` | Widget key + visitor Bearer session token (SHA-256 hashed at rest) |
 | `/api/tenant/v1/live-chat/…` | `auth:tenant-api` + `module:live-chat` + Spatie `can:` |
 | `public/widgets/live-chat.js` | Static embed script (`data-key`, `data-api-base`) |
+| SPA `/live-chat` | Agent inbox (Team Chat–style fullscreen shell) |
+| SPA `/settings?tab=live-chat` | Widget / departments / canned replies (`live-chat.manage`) |
 
 Throttle: `live-chat-widget` (60/min by IP + key) and `live-chat-widget-session` (10/min for session create); disabled in testing. CSRF excepted for `api/public/live-chat/*`.
 
