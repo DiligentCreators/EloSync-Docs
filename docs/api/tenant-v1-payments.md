@@ -32,7 +32,7 @@ Same filters as list (minus pagination/sort). Response:
 
 ### GET `/payments`
 
-Query: `search` (matches `number` or `reference`), `status` (`draft`\|`posted`\|`void`), `method`, `assigned_to` (`unassigned` or user id), `my_payments`, `contact_id`, `company_id`, `customer_invoice_id`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `number` or `reference`), `status` (`draft`\|`posted`\|`void`), `method`, `assigned_to` (`unassigned` or user id), `my_payments`, `contact_id`, `company_id`, `customer_invoice_id`, `paid_from` / `paid_to` (filter on `paid_at` date), `created_from` / `created_to` (filter on `created_at` date), `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
 List items include `status`, `amount`, `currency`, `method`, `paid_at`, `reference`, `notes`, `contact`/`company` refs, assignee/creator refs, and `latest_note`.
 
@@ -75,11 +75,11 @@ Permission: `payments.assign`.
 Transitions `draft → posted`. Every allocation's invoice is locked (`SELECT ... FOR UPDATE`) and validated **before** any amount is applied — a payment either posts in full or rejects with no partial effect. An allocation is rejected with a 422 on `allocations` (naming the invoice number) when:
 
 - the invoice cannot be found — deliberately **not** `withTrashed()`, so a soft-deleted invoice can never receive a payment;
-- the invoice's status is not `sent` or `partial`;
+- the invoice's status is not `draft` or `unpaid` (paid and cancelled invoices are rejected);
 - the allocation amount exceeds the invoice's current `balance_due` (0.01 tolerance for float rounding); or
 - the payment and invoice both have a `currency` set and they don't match.
 
-Once every allocation passes, each adds `amount` to its invoice's `amount_paid` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` and advances the invoice status. Permission: `payments.post`. Rejects with 422 on `status` if the payment isn't currently `draft`.
+Once every allocation passes, each adds `amount` to its invoice's `amount_paid` and calls `CustomerInvoice::recalculateBalanceFromAmounts()`, which recomputes `balance_due` and sets the invoice to **`paid`** when the balance is cleared or **`unpaid`** otherwise — including when the invoice was still **`draft`** (posting a payment opens the draft automatically; you do not need to Send the invoice first). Permission: `payments.post`. Rejects with 422 on `status` if the payment isn't currently `draft`.
 
 When **Accounting** is entitled: allocations must sum to the payment amount (0.01 tolerance); a posted journal is created (**Dr** `deposit_account_id` or system Cash `1000` / **Cr** AR `1100`) and linked via `journal_entry_id`.
 

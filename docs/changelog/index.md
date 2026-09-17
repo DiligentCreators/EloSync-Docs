@@ -1,3 +1,9 @@
+## Tasks / ToDos tags, assignee pickers, draft invoice payments (2026-09-18)
+
+- **EloSync-Backend:** Tasks **1.5.0 → 1.6.0**, ToDos **1.2.0 → 1.3.0** — catalog tag rename/delete (`PUT`/`DELETE` …/task-tags|todo-tags) and record unassign restricted to workspace **superadmin**; assign still allowed with update/create. User list `verified=1` filter; eligible assignees require verified email (not just non-suspended). Posting a payment against a **draft** invoice opens it to **unpaid**/**paid** from balance. Payment list filters: `paid_from`/`paid_to`, `created_from`/`created_to`.
+- **EloSync-Frontend:** Manage tags dialogs on Tasks/ToDos; unassign UI owner-only; assignee pickers request active + verified users; Payments list date filters.
+- **EloSync-Docs:** Tasks/ToDos/Payments user + API guides; changelog.
+
 ## Live Chat 1.4.1 embed resume + form isolation (2026-09-17)
 
 - **EloSync-Backend:** Catalog **1.4.0 → 1.4.1** — public embed persists visitor session in `localStorage` and resumes open conversations after refresh; Shadow DOM + dark Name/Email labels so host CSS cannot hide the pre-chat form; `POST …/heartbeat` returns `open_conversation_uuid` for resume; Pest coverage for heartbeat resume.

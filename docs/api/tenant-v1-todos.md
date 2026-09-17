@@ -18,7 +18,15 @@ List workspace to-do tags. Permission: `todos.view`.
 
 Create a tag. Body: `name` (required), optional `slug`, `color`, `sort_order`. Permission: `todos.create`.
 
-MVP catalogs are **create-only** (no update/delete/reorder tag endpoints). Assign via `tag_ids` or `PUT /todos/{id}/tags`; detail UI shows badges and uses the edit dialog to change assignments.
+### PUT `/todo-tags/{todoTag}`
+
+Rename / update a tag. **Workspace owner (`superadmin`) only.**
+
+### DELETE `/todo-tags/{todoTag}`
+
+Delete a tag and detach it from all to-dos. **Workspace owner (`superadmin`) only.**
+
+Assign via `tag_ids` or `PUT /todos/{id}/tags`. Non-owners may **add** tags; **removing** tags from a record requires the workspace owner. Manage Tags in the SPA supports create for permitted users; rename/delete is owner-only.
 
 ## Board
 

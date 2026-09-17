@@ -14,6 +14,7 @@ Open **ToDos** from the sidebar under **CRM**. The default view is the **Board**
 
 - Search by title or description
 - Filter by status, priority, **tag**, and **Overdue** (open / in-progress items past their due date)
+- **Manage tags** opens the workspace to-do tag catalog (Owner can rename/delete)
 - Board cards show colored **tag** chips
 - Drag a card to another column to auto-save the status change (only your own to-dos; no drawer opens)
 
@@ -30,12 +31,12 @@ Status labels in the UI:
 
 1. Click **New to-do**
 2. Enter title (required) and optional description, status, priority, and due date (workspace timezone from Settings → General). **Overdue** means that due instant has already passed — a to-do due later today is not overdue.
-3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
+3. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it. Only the workspace **Owner** can untick (remove) tags already on a to-do
 4. Save
 
 Edit from the row menu or the record page — only when you are the creator. Owners viewing someone else’s to-do see a read-only detail panel.
 
-Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities). In this release you can **create and assign** tags inline; there is no Manage Tags screen to rename or delete them. The record page shows tag badges — change assignments from Edit.
+Tags are a **ToDos-only** catalog (separate from Tasks / Leads / Opportunities). Use **Manage tags** on the list page; the workspace **Owner** can rename or delete catalog tags. The record page shows tag badges — change assignments from Edit (add for any updater; remove for Owner only).
 
 ## Delete
 

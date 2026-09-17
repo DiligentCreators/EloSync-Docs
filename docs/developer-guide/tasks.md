@@ -63,6 +63,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-tasks.md](/api/tenant-v1-ta
 | GET | `/tasks/{task}/timeline` | view |
 | GET | `/task-tags` | view |
 | POST | `/task-tags` | create |
+| PUT | `/task-tags/{taskTag}` | owner (superadmin) |
+| DELETE | `/task-tags/{taskTag}` | owner (superadmin) |
 | PUT | `/tasks/{task}/tags` | update |
 
 Auth login/`me` include `modules: string[]` for SPA gating.

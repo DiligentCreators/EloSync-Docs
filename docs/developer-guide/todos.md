@@ -50,6 +50,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-todos.md](/api/tenant-v1-to
 | DELETE | `/todos/{todo}` | delete **and** creator |
 | GET | `/todo-tags` | view |
 | POST | `/todo-tags` | create |
+| PUT | `/todo-tags/{todoTag}` | owner (superadmin) |
+| DELETE | `/todo-tags/{todoTag}` | owner (superadmin) |
 | PUT | `/todos/{todo}/tags` | update **and** creator |
 
 Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). Assign via `tag_ids[]` or `PUT …/tags`; filter with `tag_id`.
