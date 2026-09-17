@@ -10,7 +10,7 @@ Without **assign**, you only see payments assigned to you.
 
 ## List & table
 
-Open **Payments** from the sidebar (**Billing**, under Invoices). Search by payment number or reference, filter by status or method, **payment date** (`paid_at`) from/to, **created** from/to, toggle **My payments**, and switch KPI cards (My Payments, Draft, Posted, Void, Posted total) to quick-filter the table.
+Open **Payments** from the sidebar (**Billing**, under Invoices). Search by payment number or reference, filter by status or method, **Paid from/to** (`paid_at`) and **Created from/to** (with visible labels on each field), toggle **My payments**, and switch KPI cards (My Payments, Draft, Posted, Void, Posted total) to quick-filter the table.
 
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted payment from the row menu
 - **Delete permanently** requires `payments.force.delete` — granted to the workspace **owner** by default
