@@ -1,6 +1,6 @@
 # Live Chat (developer)
 
-Free Communication module (`live-chat` **1.4.0**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
+Free Communication module (`live-chat` **1.4.1**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
 
 ## Surfaces
 
@@ -8,7 +8,7 @@ Free Communication module (`live-chat` **1.4.0**). Public widget traffic resolve
 |---------|------|
 | `GET/POST /api/public/live-chat/{publicKey}/…` | Widget key + visitor Bearer session token (SHA-256 hashed at rest) |
 | `/api/tenant/v1/live-chat/…` | `auth:tenant-api` + `module:live-chat` + Spatie `can:` |
-| `public/widgets/live-chat.js` | Static embed script (`data-key`, `data-api-base`) — Tawk-style FAB/panel |
+| `public/widgets/live-chat.js` | Static embed script (`data-key`, `data-api-base`) — Tawk-style FAB/panel in a **Shadow DOM** host |
 | SPA `/live-chat` | Agent desk tabs: Overview / Inbox / Live visitors |
 | SPA `/settings?tab=live-chat` | Widget / departments / canned replies (`live-chat.manage`) |
 
@@ -19,6 +19,8 @@ Throttle: `live-chat-widget` (60/min by IP + key) and `live-chat-widget-session`
 **Public DTOs:** Visitor responses use `LiveChatPublicConversationResource` / `LiveChatPublicMessageResource` — uuid/status/body/direction/attachment meta/timestamps only (no assignee, Lead, visitor IP, sender email, or `direction=note`).
 
 **Sessions:** Expire after 7 days from creation. Regenerating the public key (or deactivating the widget / cancelling the module) revokes all visitor session hashes. Retention: `live-chat:purge-visitors --days=90` (daily). Banned visitors (`is_banned`) cannot create sessions or send messages.
+
+**Embed resume (1.4.1):** The widget persists `session_token` / conversation hints in `localStorage` keyed by public key. On load it validates via `POST …/heartbeat` (which returns `open_conversation_uuid` when an open thread exists), then hydrates both visitor and agent messages. Host-page CSS cannot restyle the pre-chat form because UI lives in Shadow DOM with explicit dark labels/input colors.
 
 ## Branding, hours, offline, presence
 

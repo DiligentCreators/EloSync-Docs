@@ -1,3 +1,8 @@
+## Live Chat 1.4.1 embed resume + form isolation (2026-09-17)
+
+- **EloSync-Backend:** Catalog **1.4.0 → 1.4.1** — public embed persists visitor session in `localStorage` and resumes open conversations after refresh; Shadow DOM + dark Name/Email labels so host CSS cannot hide the pre-chat form; `POST …/heartbeat` returns `open_conversation_uuid` for resume; Pest coverage for heartbeat resume.
+- **EloSync-Docs:** Live Chat developer / API / user guides + changelog.
+
 ## Live Chat 1.4.0 Tawk-style desk + live visitors (2026-09-17)
 
 - **EloSync-Backend:** Catalog **1.3.0 → 1.4.0** — visitor heartbeat / presence (`last_seen_at`, browser/OS/country, pages viewed); public `POST …/heartbeat`; suggested replies + agent display name + powered-by branding; agent internal notes (`direction=note`, hidden from public poll); tenant `GET …/visitors/live`, `GET …/stats`, `POST …/visitors/{id}/open-chat`; Tawk-like embed UI in `public/widgets/live-chat.js`.

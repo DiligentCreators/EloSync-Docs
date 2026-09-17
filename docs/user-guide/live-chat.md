@@ -13,6 +13,8 @@ Install **Live Chat** from Marketplace (free). Open **Communication → Live Cha
 7. Copy the embed snippet onto your website (script loads from your EloSync API host).
 8. Keep the widget **Active** so visitors can start conversations.
 
+Visitors keep their chat across page refreshes on the same browser (session stored locally until it expires or you regenerate the public key). The pre-chat Name / Email fields use dark labels so they stay readable on any host site theme.
+
 Regenerating the public key invalidates existing embeds until you update the snippet.
 
 ## Agent desk

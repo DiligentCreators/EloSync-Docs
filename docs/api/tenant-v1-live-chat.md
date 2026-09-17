@@ -1,6 +1,6 @@
 # Tenant Live Chat API
 
-Module: `live-chat` **1.4.0** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
+Module: `live-chat` **1.4.1** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
 
 ## Public widget
 
@@ -8,12 +8,14 @@ Module: `live-chat` **1.4.0** · Base: `/api/tenant/v1/live-chat` (authenticated
 |--------|------|-------|
 | GET | `/api/public/live-chat/{publicKey}/bootstrap` | Greeting, branding, suggested_replies, agent_display_name, show_powered_by, offline, within_hours, accepting_live, optional realtime |
 | POST | `/api/public/live-chat/{publicKey}/sessions` | Returns `session_token` once (max body 64KB; throttle `live-chat-widget-session`); banned visitors 403; seeds presence |
-| POST | `/api/public/live-chat/{publicKey}/heartbeat` | Bearer session; updates last_seen_at / page / referrer / UA fields |
+| POST | `/api/public/live-chat/{publicKey}/heartbeat` | Bearer session; updates last_seen_at / page / referrer / UA fields; returns `open_conversation_uuid` when an open thread exists (embed resume) |
 | POST | `/api/public/live-chat/{publicKey}/conversations` | Bearer session; open/create — may be offline thread |
 | GET | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Poll with `since_id` (excludes `direction=note`) |
 | POST | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Visitor text or multipart attachment; offline leave-a-message when outside hours |
 
 Inactive widget → 404. Missing entitlement → 403. Bad/expired/revoked token → 401. CORS: Origin reflected for credential-less embeds.
+
+The public embed (`public/widgets/live-chat.js`) stores the session token in `localStorage` and resumes via heartbeat + message hydrate after page refresh.
 
 ## Tenant agent
 

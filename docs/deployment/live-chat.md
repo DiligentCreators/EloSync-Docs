@@ -14,8 +14,9 @@ Idempotent migrations:
 - `2026_09_17_003630_bump_live_chat_module_version_to_1_0_1`
 - `2026_09_17_003700_expand_live_chat_module_to_1_3_0` (schema + catalog bumps **1.0.1 → 1.1.0 → 1.2.0 → 1.3.0**)
 - `2026_09_17_134951_expand_live_chat_module_to_1_4_0` (presence fields, suggested replies, notes; catalog **1.3.0 → 1.4.0**)
+- `2026_09_17_172843_bump_live_chat_module_version_to_1_4_1` (embed session resume + Shadow DOM form isolation; catalog **1.4.0 → 1.4.1**)
 
-Catalog row: free Communication opt-in `live-chat` **1.4.0** (not default-included). Workspaces install from Marketplace.
+Catalog row: free Communication opt-in `live-chat` **1.4.1** (not default-included). Workspaces install from Marketplace.
 
 ## Runtime
 
