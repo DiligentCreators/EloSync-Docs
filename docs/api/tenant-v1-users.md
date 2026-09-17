@@ -2,6 +2,18 @@
 
 Workspace user administration under `/api/tenant/v1/users` (Sanctum `tenant-api`, tenancy middleware, permission gates).
 
+## List filters
+
+`GET /users` supports:
+
+| Query | Effect |
+|-------|--------|
+| `status=active` | `is_suspended = false` |
+| `status=suspended` | `is_suspended = true` |
+| `verified=1` (truthy) | `email_verified_at` is not null |
+
+Assignee / host pickers should pass `status=active&verified=1`. Eligible assignee validation (`User::isEligibleAssignee`) also requires a verified, non-suspended user.
+
 ## Employee link field
 
 Returned on list/show:

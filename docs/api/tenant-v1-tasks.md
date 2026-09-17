@@ -6,7 +6,7 @@ Middleware: `auth:tenant-api`, `tenant.user`, `verified`, `module:tasks`, plus p
 
 Assignee scoping: without `tasks.assign` (and not superadmin), list/board/stats only include tasks where `assigned_to` is the current user.
 
-`assigned_to` on create/update/assign must be a tenant user id (or `null` to unassign). Unlike leads, Tasks do **not** enforce lead-assignee eligibility (`exclude_from_lead_auto_assign` / owner exclusion).
+`assigned_to` on create/update/assign must be a tenant user id (or `null` to unassign). Unlike leads, Tasks do **not** enforce lead-assignee eligibility (`exclude_from_lead_auto_assign` / owner exclusion), but the assignee must be **active** (not suspended) and **email-verified**.
 
 ## Tags
 
@@ -18,7 +18,15 @@ List workspace task tags (`name`, `slug`, `color`, `sort_order`). Permission: `t
 
 Create a tag. Body: `name` (required), optional `slug`, `color`, `sort_order`. Permission: `tasks.create`.
 
-MVP catalogs are **create-only** (no update/delete/reorder tag endpoints). Assign tags on the task via `tag_ids`, `PUT /tasks/{id}/tags`, or the SPA list/board inline tag popover (auto-save on toggle).
+### PUT `/task-tags/{taskTag}`
+
+Rename / update a tag (`name`, `slug`, `color`, `sort_order`). **Workspace owner (`superadmin`) only.**
+
+### DELETE `/task-tags/{taskTag}`
+
+Delete a tag and detach it from all tasks. **Workspace owner (`superadmin`) only.**
+
+Assign tags on the task via `tag_ids`, `PUT /tasks/{id}/tags`, or the SPA list/board inline tag popover. Non-owners may **add** tags; **removing** tags from a record requires the workspace owner (422 on `tag_ids` otherwise). Manage Tags in the SPA is available to anyone with `tasks.view`; rename/delete controls appear only for the owner.
 
 ## Stats & board
 
