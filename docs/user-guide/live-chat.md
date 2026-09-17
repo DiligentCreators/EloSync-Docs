@@ -1,27 +1,37 @@
 # Live Chat
 
-Install **Live Chat** from Marketplace (free). Open **Communication → Live Chat** for the agent inbox. Configure the widget under **Settings → Live Chat**.
+Install **Live Chat** from Marketplace (free). Open **Communication → Live Chat** for the agent desk. Configure the widget under **Settings → Live Chat**.
 
 ## Widget setup
 
-1. Open **Settings → Live Chat** (requires `live-chat.manage`), or use **Settings** from the Live Chat inbox.
-2. Set greeting, branding (color, launcher text, position, header, logo), and optionally require name/email before chat starts.
-3. Configure **business hours** (workspace timezone). Outside hours, visitors see the offline greeting and can leave a message when offline mode is enabled.
-4. Optionally enable **email notify agents** for inbound/offline messages.
-5. Copy the embed snippet onto your website (script loads from your EloSync API host).
-6. Keep the widget **Active** so visitors can start conversations.
+1. Open **Settings → Live Chat** (requires `live-chat.manage`), or use **Settings** from the Live Chat desk.
+2. Set greeting, branding (color, launcher text, position, header, logo, agent display name), and optionally require name/email before chat starts.
+3. Add **suggested replies** (quick-reply chips in the visitor widget).
+4. Optionally show **Powered by EloSync** on the widget footer.
+5. Configure **business hours** (workspace timezone). Outside hours, visitors see the offline greeting and can leave a message when offline mode is enabled.
+6. Optionally enable **email notify agents** for inbound/offline messages.
+7. Copy the embed snippet onto your website (script loads from your EloSync API host).
+8. Keep the widget **Active** so visitors can start conversations.
 
 Regenerating the public key invalidates existing embeds until you update the snippet.
 
-## Agent inbox
+## Agent desk
 
-- Fullscreen inbox (same shell pattern as Team Chat): conversation list, thread, and visitor panel — no page-level scroller.
+Tabs under **Live Chat**:
+
+- **Overview** — visitors today, chats answered/missed, page views (7d), recent history.
+- **Inbox** — fullscreen 3-pane shell (list, thread, visitor panel).
+- **Live visitors** — who is on site (heartbeat window); open or start a chat.
+
+### Inbox
+
 - Conversation list filters: All, Unread, Mine, Unassigned, Open, Closed, Offline.
 - Thread header: Claim, Close/Reopen, Escalate. Assign, lead link, and ban live in the visitor panel.
-- Reply with `live-chat.reply`. Claim or assign with `live-chat.assign`.
-- Insert **canned replies** from the composer (manage canned replies in Settings → Live Chat).
+- Composer: **Reply** (visitor-visible) or **Note** (internal only). Attach files from the composer.
+- Insert **canned replies** from Reply mode (manage canned replies in Settings → Live Chat).
+- Visitor panel shows IP, country, browser/OS, page, referrer, pages viewed, last seen.
 - Search filters by visitor name, email, page URL, or message preview.
-- New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback). Desktop/sound alerts play while the inbox is open.
+- New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback).
 
 ## Departments
 

@@ -1,3 +1,9 @@
+## Live Chat 1.4.0 Tawk-style desk + live visitors (2026-09-17)
+
+- **EloSync-Backend:** Catalog **1.3.0 → 1.4.0** — visitor heartbeat / presence (`last_seen_at`, browser/OS/country, pages viewed); public `POST …/heartbeat`; suggested replies + agent display name + powered-by branding; agent internal notes (`direction=note`, hidden from public poll); tenant `GET …/visitors/live`, `GET …/stats`, `POST …/visitors/{id}/open-chat`; Tawk-like embed UI in `public/widgets/live-chat.js`.
+- **EloSync-Frontend:** `/live-chat` tabs — Overview / Inbox / Live visitors; Reply|Note composer; richer visitor panel; Settings suggested replies + display name + powered-by.
+- **EloSync-Docs:** Live Chat guides + API + changelog.
+
 ## Live Chat 1.3.1 UI split (2026-09-17)
 
 - **EloSync-Frontend:** Agent inbox at `/live-chat` is a Team Chat–style fullscreen shell (no page scroller). Widget, departments, and canned replies move to **Settings → Live Chat** (`/settings?tab=live-chat`); inbox links there via Settings. Playwright + user guide updated.
