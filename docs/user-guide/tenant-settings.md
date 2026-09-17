@@ -65,6 +65,16 @@ Shown when the **Team Chat** module is installed.
 
 See [Team Chat](/user-guide/team-chat).
 
+## Live Chat
+
+Shown when the **Live Chat** module is installed and you have `live-chat.manage`.
+
+Configure the website widget (greeting, branding, embed snippet, business hours, offline mode), departments, and canned replies. These settings save on the Live Chat APIs (not the workspace **Save settings** button). Open the agent inbox from **Communication → Live Chat**.
+
+Deep link: `/settings?tab=live-chat`.
+
+See [Live Chat](/user-guide/live-chat).
+
 ## Attendance
 
 Shown when the **Attendance** module is installed.

@@ -1,3 +1,8 @@
+## Live Chat 1.3.1 UI split (2026-09-17)
+
+- **EloSync-Frontend:** Agent inbox at `/live-chat` is a Team Chat–style fullscreen shell (no page scroller). Widget, departments, and canned replies move to **Settings → Live Chat** (`/settings?tab=live-chat`); inbox links there via Settings. Playwright + user guide updated.
+- **EloSync-Docs:** Live Chat + tenant settings user guides; changelog.
+
 ## Live Chat 1.3.0 (2026-09-17)
 
 Catalog **1.0.1 → 1.1.0 → 1.2.0 → 1.3.0** (shipped together):
