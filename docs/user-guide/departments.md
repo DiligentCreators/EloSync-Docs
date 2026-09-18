@@ -25,8 +25,10 @@ The **manager** must be a user with a login. Workspace admins assign managers (y
 
 ## Members
 
-- **Users** — workspace logins tagged to the department
-- **Employees** — HR directory records tagged to the department (requires the Employees module)
+- **Users** — active workspace logins tagged to the department. Suspended users are not listed and cannot be newly assigned.
+- **Employees** — active HR directory records tagged to the department (requires the Employees module). Inactive and terminated employees are not listed and cannot be newly assigned.
+
+The Users and Employees directories still show every status so you can unsuspend or reactivate someone. A person who was already tagged stays linked in the background and shows up again after they are active.
 
 Employees without a linked login still appear on the roster for HR, but are excluded from Lead/Task performance until linked.
 

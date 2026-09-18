@@ -20,9 +20,9 @@ Service: `DepartmentService` (CRUD, membership sync, manager assign, performance
 - Department manager (`manager_id`) — managed departments + performance
 - Others with `departments.view` — memberships only
 
-**Performance eligibility:** union of attached user IDs, linked employee `user_id`s, and `manager_id`. Unlinked employees appear on the roster with `performance_eligible: false`.
+**Performance eligibility:** union of attached active (not suspended) user IDs, linked active employee `user_id`s, and a non-suspended `manager_id`. Unlinked active employees appear on the roster with `performance_eligible: false`. Suspended users and inactive or terminated employees stay on the pivot but are omitted from list counts, the record payload, and performance.
 
-**Manager/member pickers:** `GET /users` excludes the authenticated user (Users admin list). The Departments form merges the signed-in user into picker options so a solo owner can assign themselves.
+**Manager/member pickers:** `GET /users?status=active` excludes suspended users. The Departments form merges the signed-in user into picker options so a solo owner can assign themselves. Creating or attaching a suspended user, or an inactive/terminated employee, returns 422. Editing a department does not drop people who were tagged before they were suspended or marked inactive.
 
 **Authz hardening:** `manager_id` on create/update and `PUT …/manager` require org-wide `assign_manager` (admin/superadmin). Membership arrays on create/update require `manage_members`. Exists rules for managers/members/`department_ids` are tenant-scoped (`tenant_id` + not soft-deleted).
 
