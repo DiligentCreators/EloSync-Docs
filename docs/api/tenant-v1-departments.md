@@ -35,6 +35,8 @@ List visibility is scoped: admins see all; managers see managed departments; oth
 
 Body: `name` (required), optional `slug`, `description`, `status`, `manager_id` (user id), `user_ids[]`, `employee_ids[]`.
 
+`manager_id` and `user_ids` must be workspace users who are not suspended. `employee_ids` must be active employees. Suspended users and inactive or terminated employees already on the pivot are omitted from `users`, `employees`, `users_count`, and `employees_count`, and are kept when membership is synced without them.
+
 Defaults: `status=active`. Slug is auto-generated from name when omitted.
 
 ### PUT `/departments/{department}`
