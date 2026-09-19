@@ -1,3 +1,8 @@
+## Mobile dashboard shell and Live Chat (2026-09-20)
+
+- **EloSync-Mobile:** Dashboard adds a self check-in card, Today's focus, and a create sheet for Lead, Task, Meeting, and Invoice. List rows and More use grouped rows. Live Chat inbox, thread (reply, note, canned replies, assign, close/reopen), and live visitors are available from More. Notification taps open the conversation by uuid. Widget settings stay on the web app.
+- **EloSync-Docs:** Mobile user guide.
+
 ## Hide suspended users and inactive employees (2026-09-19)
 
 - **EloSync-Backend:** Departments **1.1.0 → 1.1.1**, Live Chat **1.4.1 → 1.4.2**. Department member lists, counts, and performance omit suspended users and inactive or terminated employees. New manager, member, and Live Chat agent assignments reject those people. Existing links stay on the pivot and reappear when the person is active again. Live Chat conversation assign rejects suspended users.
