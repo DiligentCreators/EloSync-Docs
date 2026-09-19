@@ -24,7 +24,7 @@ Opt-in is remembered on the device across sign-out; the next sign-in re-register
 
 Mobile modules roll out **PR-by-PR**. The app home screen lists modules your role can access.
 
-**Dashboard** includes greeting, metric tiles (when Analytics or related modules are entitled), **Quick Actions** (permission-gated create shortcuts), open tasks, and recent activities.
+**Dashboard** includes greeting, an attendance check-in card when self check-in is available, **Today's focus** (active leads, overdue tasks, next meeting), metric tiles (when Analytics or related modules are entitled), **Quick Actions** (permission-gated create shortcuts), a header create sheet for Lead, Task, Meeting, and Invoice, open tasks, and recent activities.
 
 **More** lists Account tools, then modules grouped by category (**Work**, **Sales**, **Billing**, **Purchasing**, **Inventory**, **Finance**, **HR**, **Tools**) with an icon on each row. Leads, Tasks, and Opportunities stay on the primary tab bar and are omitted from More.
 
@@ -59,6 +59,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Help desk** | List, search, create, view, edit, delete, close, reopen, add notes (permission-gated); activity timeline on view; Tickets tab |
 | **Knowledge base** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; KB tab |
 | **Team chat** | Conversation list, search, join channels, start DM/group, read thread, send text (permission-gated); Chat tab |
+| **Live Chat** | Inbox with search and status filter, conversation thread, reply or internal note, canned replies, assign to me, close/reopen, live visitors (permission-gated). Polls while open. Widget settings, departments, and visitor bans stay on the web app |
 | **WhatsApp Cloud** | Inbox, search, read thread, open chat, send text or approved templates (permission-gated); WA tab |
 | **Automation** | Workflow list, search, view, activate/deactivate, run now, delete, run history and logs (permission-gated); Auto tab |
 | **Analytics** | KPI overview, preset periods, CRM/Sales/Billing/Purchasing/People reports with metrics and rows (permission-gated); Stats tab |
@@ -118,6 +119,7 @@ Everything else remains on the web app until a mobile module PR ships. See the [
 - [Help desk user guide](/user-guide/help-desk)
 - [Knowledge base user guide](/user-guide/knowledge-base)
 - [Team chat user guide](/user-guide/team-chat)
+- [Live Chat user guide](/user-guide/live-chat)
 - [WhatsApp Cloud user guide](/user-guide/whatsapp-cloud)
 - [Automation user guide](/user-guide/automation-overview)
 - [Analytics user guide](/user-guide/analytics-overview)
