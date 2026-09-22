@@ -69,7 +69,7 @@ Until Firebase native apps are configured, Profile shows that push is unsupporte
 
 | Profile | Purpose |
 |---------|---------|
-| `development` | Dev client, internal, physical devices |
+| `development` | Dev client, internal, physical devices. API is `https://api.elosync.com` (same live host as `preview` and `production`) |
 | `development-simulator` | Dev client for iOS Simulator |
 | `preview` | Internal release-like build |
 | `production` | Store binaries (`npm run build:production`) |
@@ -118,7 +118,7 @@ Extend `config/modules.ts` and add `app/(app)/(tabs)/{slug}/` stack screens per 
 - Nav registration in `config/modules.ts` with `category` + `icon` + tab visibility gates (More groups by category)
 - User guide slice + changelog line
 
-Shell UX: Dashboard Quick Actions (permission-gated create shortcuts); Tasks list filters (`status`, `my_tasks`, `overdue`); More screen categories (Work, Sales, Billing, Purchasing, Inventory, Finance, HR, Tools).
+Shell UX: iOS Business OS canvas (#F2F2F7 / white inset groups, brand purple #7C3AED); large module titles + circular create; FilterChips on Leads/Tasks; Dashboard greeting, attendance, Today's focus, metrics, quick actions grid, Create sheet; More grouped rows by category.
 
 Current shipped mobile modules: **leads**, **tasks**, **contacts**, **companies**, **opportunities**, **activities**, **todos**, **quotations**, **calendar**, **meetings**, **projects**, **notifications** (shell), **profile**.
 
