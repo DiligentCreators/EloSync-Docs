@@ -1,6 +1,11 @@
+## Mobile iOS Business OS UI pass (2026-09-21)
+
+- **EloSync-Mobile:** Shared shell restyled to the approved wireframes — gray canvas, white inset groups, brand purple `#7C3AED`, large titles with circular create, `FilterChips` on Leads/Tasks, borderless RecordCards / More groups, Dashboard greeting + focus + quick-action grid + Create sheet, login fields on the same tokens.
+- **EloSync-Docs:** Mobile developer guide Shell UX note + changelog.
+
 ## Mobile dashboard shell and Live Chat (2026-09-20)
 
-- **EloSync-Mobile:** Dashboard adds a self check-in card, Today's focus, and a create sheet for Lead, Task, Meeting, and Invoice. List rows and More use grouped rows. Live Chat inbox, thread (reply, note, canned replies, assign, close/reopen), and live visitors are available from More. Notification taps open the conversation by uuid. Widget settings stay on the web app.
+- **EloSync-Mobile:** Dashboard adds a self check-in card, Today's focus, and a create sheet for Lead, Task, Meeting, and Invoice. List rows and More use grouped rows. Live Chat inbox, thread (reply, note, canned replies, assign, close/reopen), and live visitors are available from More. Notification taps open the conversation by uuid. Widget settings stay on the web app. Cloud test builds use the `preview` profile so the installed app opens the tenant sign-in screen against `https://api.elosync.com`, not the Expo dev-client launcher.
 - **EloSync-Docs:** Mobile user guide.
 
 ## Hide suspended users and inactive employees (2026-09-19)
