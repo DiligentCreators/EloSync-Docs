@@ -58,7 +58,7 @@ On the API server (or shared box):
 
 | Service | Forge action |
 |---------|----------------|
-| PHP **8.3+** (8.4 preferred) | Site → PHP version |
+| PHP **8.5+** | Site → PHP version |
 | MySQL 8+ | Database → create DB + user |
 | Redis | Server → Redis (install / enable) |
 | Nginx + TLS | Site → SSL (Let's Encrypt) |
@@ -80,7 +80,7 @@ Enable **Redis** before setting `CACHE_STORE=redis` / `QUEUE_CONNECTION=redis`. 
 | Branch | `main` (or your release branch) |
 | Project type | Laravel / PHP |
 | Web directory | `public` |
-| PHP version | 8.3+ / 8.4 |
+| PHP version | 8.5+ |
 | Composer | Install during deploy (`--no-dev`) |
 
 ### 1.2 Production `.env` (Forge → Environment)

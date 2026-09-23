@@ -1,3 +1,8 @@
+## Platform PHP 8.5 runtime (2026-09-23)
+
+- **EloSync-Backend:** Requires **PHP 8.5+** (`composer.json` `"php": "^8.5"`). CI Quality Gate / Pest matrices run on **8.5**. Unblocked via **maatwebsite/excel** **3.1 → 4.0** (PhpSpreadsheet **1.x → 5.x**; PhpSpreadsheet 1.x hard-blocked PHP 8.5). Equal-mode lead import now keeps created leads unassigned until auto-distribution runs (Excel 4 `Import` marker + explicit null assignee). Set Laravel Cloud / Forge site PHP to **8.5** and redeploy.
+- **EloSync-Docs:** Installation, Forge, release-process, and Email IMAP (Herd `php85`) notes updated for 8.5.
+
 ## Hide suspended users and inactive employees (2026-09-19)
 
 - **EloSync-Backend:** Departments **1.1.0 → 1.1.1**, Live Chat **1.4.1 → 1.4.2**. Department member lists, counts, and performance omit suspended users and inactive or terminated employees. New manager, member, and Live Chat agent assignments reject those people. Existing links stay on the pivot and reappear when the person is active again. Live Chat conversation assign rejects suspended users.
