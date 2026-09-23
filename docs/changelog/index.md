@@ -1,3 +1,9 @@
+## Contract accept evidence (contracts 1.7.0) (2026-09-24)
+
+- **EloSync-Backend:** Catalog **1.6.0 → 1.7.0**. Optional tenant settings `contracts.acceptance_require_phone`, `contracts.acceptance_require_signature_image`, `contracts.acceptance_require_id_document` (default off). Public accept summary returns `acceptance_requirements`; multipart accept stores phone, drawn/uploaded signature, and ID document (private disk) with IP + user agent. Staff `GET …/acceptance-signature` and `…/acceptance-id-document`. Storage entitlement required to enable signature/ID settings; orphan upload cleanup on failed accept; force-delete purges evidence files; download timeline events; PDF embeds signature image. Pest: `ContractAcceptanceTest` evidence path.
+- **EloSync-Frontend:** Settings → General toggles (signature/ID disabled without Storage); guest accept page draws/uploads signature and ID when required; contract record shows phone/IP and download buttons.
+- **EloSync-Docs:** Contracts user/developer/API/deployment + tenant settings + changelog. Go-live: [Contracts 1.7.0 accept evidence production readiness](/deployment/contracts-1-7-0-production-readiness) — **Go**.
+
 ## Platform PHP 8.5 runtime (2026-09-23)
 
 - **EloSync-Backend:** Requires **PHP 8.5+** (`composer.json` `"php": "^8.5"`). CI Quality Gate / Pest matrices run on **8.5**. Unblocked via **maatwebsite/excel** **3.1 → 4.0** (PhpSpreadsheet **1.x → 5.x**; PhpSpreadsheet 1.x hard-blocked PHP 8.5). Equal-mode lead import now keeps created leads unassigned until auto-distribution runs (Excel 4 `Import` marker + explicit null assignee). Set Laravel Cloud / Forge site PHP to **8.5** and redeploy.

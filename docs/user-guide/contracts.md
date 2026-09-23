@@ -35,11 +35,21 @@ A contract starts in **Draft**. Move it forward with:
 
 Invalid transitions are rejected with a validation error. Expiring or terminating clears any outstanding accept link.
 
-## Customer acceptance (e-signature v1)
+## Customer acceptance (e-signature)
 
 When a contract is **Sent**, staff with `contracts.send` can **Copy accept link**. Emailing a Sent contract also appends the link to the message.
 
 Customers open `/#/accept/contracts/{token}` (no login), review the contract summary, enter their name and email, and confirm. That marks the contract **Active**, records signer name/email/IP on the record, and invalidates the link. Regenerating or re-emailing creates a new link and invalidates the previous one. Links expire at the earlier of **end date** (end of day) or 30 days.
+
+Optional workspace toggles under **Settings → General** (Contracts installed) can require extra proof on the same accept page:
+
+| Setting | Customer must provide |
+|---------|------------------------|
+| **Require phone on contract accept** | Mobile number |
+| **Require signature image on contract accept** | Drawn signature or uploaded image |
+| **Require ID document on contract accept** | National ID / passport / other upload |
+
+Staff see phone, IP, signature method, and download buttons for the signature image and ID file on the contract record. Signature and ID uploads require the free **Storage** module — Settings disables those two toggles (and the API rejects enabling them) until Storage is installed. Phone-only does not need Storage. Soft-deleting a contract keeps evidence files; **Delete permanently** removes the signature and ID files from storage. Staff downloads are recorded on the contract timeline.
 
 This is a lightweight accept page — not a full customer portal. Multi-signer and third-party e-sign providers remain deferred.
 
@@ -55,7 +65,7 @@ Once a contract is **Active** and **Invoices** is installed, use **Create invoic
 
 ## Download PDF
 
-**Download PDF** is on the contract record page. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus party, dates, value, description, and notes.
+**Download PDF** is on the contract record page. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus party, dates, value, description, and notes. After a customer accepts via the public link, the PDF includes signer details and the signature image when one was captured (ID documents stay on the record download only, not embedded in the PDF).
 
 ## Email customer
 
@@ -73,4 +83,4 @@ For **Active** contracts with an end date, EloSync sends an in-app **Contract re
 
 - **Description** and **Notes** — rich-text memos on the contract (shown on the overview; also printed on the PDF)
 - **Notes tab** — free-form comments on the contract
-- **Activity** — timeline of create, update, assignment, status change, invoice creation, note, email, signature request, signed, and delete/restore events
+- **Activity** — timeline of create, update, assignment, status change, invoice creation, note, email, signature request, signed, acceptance evidence download, and delete/restore events

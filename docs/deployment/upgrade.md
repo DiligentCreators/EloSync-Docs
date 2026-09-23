@@ -261,6 +261,20 @@ Superseded by **1.4.1 / 1.2.1 / 1.6.1 / 1.3.3** integrity hardening above. Histo
 
 Do **not** unique-index `customer_invoices.quotation_id`. Contract billing is repeatable; the quotation/estimate one-shot guard is application-level (`QuotationInvoiceGuard`).
 
+## Contracts 1.6.0 → 1.7.0 — accept evidence
+
+After migrate (`2026_09_24_020619_add_contract_acceptance_evidence_fields_to_contracts_table`):
+
+1. Confirm catalog `contracts` version is `1.7.0`
+2. Confirm nullable columns: `accepted_by_phone`, `acceptance_user_agent`, `acceptance_signature_path`, `acceptance_signature_method`, `acceptance_id_document_path`, `acceptance_id_document_type`, `acceptance_id_document_original_name`
+3. Deploy the SPA **after** migrate — Settings toggles and guest accept multipart fields
+4. Signature/ID Settings keys require Storage entitlement (phone does not); SPA switches stay disabled without Storage
+5. Smoke public accept + staff signature/ID downloads + PDF signature embed + force-delete purge on staging
+
+Do **not** ship the empty stub `2026_09_23_210611_add_contract_acceptance_evidence_fields_to_contracts_table` if it appears in a branch — only the `2026_09_24_020619_…` migration is valid.
+
+Go-live: [Contracts 1.7.0 accept evidence production readiness](/deployment/contracts-1-7-0-production-readiness).
+
 ## Contracts 1.1.0 — auto-fill and HTML memos
 
 After migrate:
