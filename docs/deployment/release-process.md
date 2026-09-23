@@ -37,7 +37,7 @@ Do not automate branch protection from CI. After Quality Gates exist on `main`, 
 
 | Repository | Required status checks |
 |------------|------------------------|
-| **EloSync-Backend** | `Quality Gate (PHP 8.4)`, `Pest (PHP 8.4)` |
+| **EloSync-Backend** | `Quality Gate (PHP 8.5)`, `Pest (PHP 8.5)` |
 | **EloSync-Frontend** | `Quality Gate (Node LTS)` |
 | **EloSync-Docs** | `Quality Gate (VitePress)` |
 

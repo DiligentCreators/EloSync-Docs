@@ -28,8 +28,8 @@ Without the extension, account test/sync fails with a clear runtime error. Do no
 
 On **PHP 8.4+**, IMAP is unbundled (PECL). Windows / Laravel Herd:
 
-1. Download the matching NTS build from [PECL imap Windows releases](https://downloads.php.net/~windows/pecl/releases/imap/) (e.g. `php_imap-1.0.3-8.4-nts-vs17-x64.zip` for Herd PHP 8.4 NTS x64).
-2. Copy `php_imap.dll` into the PHP `ext` directory (Herd: `%USERPROFILE%\.config\herd\bin\php84\ext\`).
+1. Download the matching NTS build from [PECL imap Windows releases](https://downloads.php.net/~windows/pecl/releases/imap/) (e.g. `php_imap-1.0.3-8.5-nts-vs17-x64.zip` for Herd PHP 8.5 NTS x64).
+2. Copy `php_imap.dll` into the PHP `ext` directory (Herd: `%USERPROFILE%\.config\herd\bin\php85\ext\`).
 3. Add `extension=imap` to that version’s `php.ini`, then `herd restart`.
 4. Confirm with `php -m` (must list `imap`).
 

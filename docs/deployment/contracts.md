@@ -1,15 +1,18 @@
 # Contracts — Production Guide
 
-Full go-live audit / checklist: [Contracts 1.1.0 production readiness](./contracts-production-readiness).
+Full go-live audits:
+- [Contracts 1.7.0 accept evidence](./contracts-1-7-0-production-readiness) — **Go**
+- [Contracts 1.1.0 auto-fill + HTML](./contracts-production-readiness) — **Go**
 
 ## Licensing
 
 - Catalog slug: `contracts`
 - Category: **Sales** (`sales`)
 - **Free Marketplace opt-in** (not auto-installed)
-- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 60`, version **1.6.0**
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 60`, version **1.7.0**
 - **Hard dependency**: requires the **Opportunities** module — install is blocked at the Marketplace/API level until Opportunities is entitled
 - **Soft optional dependency**: linking a `quotation_id` requires the **Quotations** module to also be entitled; the link is otherwise rejected by validation (`LinkableQuotation`)
+- **Soft optional dependency (1.7.0)**: enabling signature image / ID document acceptance settings requires the free **Storage** module (API + Settings UI gate). Phone-only does not.
 - Existing workspaces that already have Contracts keep their subscription (policy change does not uninstall)
 
 ## Bootstrap
@@ -32,7 +35,7 @@ New Contracts permissions for **existing** workspaces ship as an additive **data
 
 ## Deploy checklist
 
-1. Migrate tables (`contracts`, `contract_notes`, `contract_activities`) plus `description` (1.1.0), `customer_invoices.contract_id` (1.2.0), convert permission, acceptance columns, `contracts.send` / `contracts.accept` grants, and catalog bump through **1.6.0**
+1. Migrate tables (`contracts`, `contract_notes`, `contract_activities`) plus `description` (1.1.0), `customer_invoices.contract_id` (1.2.0), convert permission, acceptance columns, `contracts.send` / `contracts.accept` grants, and catalog bump through **1.7.0**
 2. Register the `contracts` catalog module via migration (`DefaultModuleRegistrar`) as free Sales opt-in — **not** `db:seed`
 3. Register the hard dependency row (`contracts` → `opportunities`) via migration
 4. Run contracts permissions migration so default roles receive missing `contracts.*` grants (including `send` / `accept` for 1.5.0)
@@ -41,3 +44,4 @@ New Contracts permissions for **existing** workspaces ship as an additive **data
 7. After catalog **1.2.0**: confirm `contracts.convert` grants and that create-invoice stays hidden until Invoices is entitled
 8. After catalog **1.5.0**: migrate acceptance columns; confirm PDF throttle `contracts-pdf` and public throttle `contract-acceptance`; deploy SPA guest route `/#/accept/contracts/:token`; smoke **Download PDF**, **Send for signature** → **Copy accept link** / **Email customer** → public accept → signer metadata on the record; verify **Activate without signature** still works from draft
 9. After catalog **1.6.0**: confirm Settings → General exposes `contract_renewal_notice_days`; with an Active contract ending inside the window, run `php artisan crm:send-due-notifications` and expect one in-app `contract.renewal_due` per day per assignee/creator
+10. After catalog **1.7.0**: migrate evidence columns; confirm Settings toggles `contracts.acceptance_require_phone` / `_signature_image` / `_id_document`; with Storage entitled, smoke public accept with phone + drawn/uploaded signature + ID upload; staff download signature and ID from the record

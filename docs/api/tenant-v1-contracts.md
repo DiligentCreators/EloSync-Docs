@@ -18,7 +18,7 @@ Same filters as list (minus pagination/sort). Counts include `sent` alongside `d
 
 Query: `search`, `status`, `opportunity_id`, `assigned_to` (`unassigned` or user id), `my_contracts`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `opportunity`, `quotation` (when linked), `invoice_count`, assignee/creator refs, `latest_note`, plus acceptance fields when present: `has_acceptance_link`, `acceptance_link_expires_at`, `accepted_at`, `accepted_by_name`, `accepted_by_email`.
+List items include `status`, `opportunity`, `quotation` (when linked), `invoice_count`, assignee/creator refs, `latest_note`, plus acceptance fields when present: `has_acceptance_link`, `acceptance_link_expires_at`, `accepted_at`, `accepted_by_name`, `accepted_by_email`, `accepted_by_phone`, `acceptance_ip`, `acceptance_signature_method`, `has_acceptance_signature`, `has_acceptance_id_document`, `acceptance_id_document_type`, `acceptance_id_document_original_name` (file paths are never exposed).
 
 ### POST `/contracts`
 
@@ -26,11 +26,19 @@ Body: `opportunity_id` (required), `quotation_id` (optional — only valid when 
 
 ### GET `/contracts/{id}`
 
-Includes opportunity, quotation (when linked), related `invoices` (`id`/`number`/`status`), `quotation_already_invoiced` (true when the linked quotation already has any invoice), assignee, creator, `description` / `notes` HTML memos, comments (`contract_notes`), timeline activities, and acceptance metadata (`has_acceptance_link`, `acceptance_link_expires_at`, `accepted_at`, `accepted_by_name`, `accepted_by_email`). Embedded `contract_notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes opportunity, quotation (when linked), related `invoices` (`id`/`number`/`status`), `quotation_already_invoiced` (true when the linked quotation already has any invoice), assignee, creator, `description` / `notes` HTML memos, comments (`contract_notes`), timeline activities, and acceptance metadata (same fields as list, including evidence flags). Embedded `contract_notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+
+### GET `/contracts/{id}/acceptance-signature`
+
+Permission: `contracts.view` (assignee-scoped). Streams the stored signature image when `has_acceptance_signature` is true; otherwise 404. Records `acceptance_evidence_downloaded` on the timeline.
+
+### GET `/contracts/{id}/acceptance-id-document`
+
+Permission: `contracts.view` (assignee-scoped). Streams the uploaded ID/passport file when `has_acceptance_id_document` is true; otherwise 404. Records `acceptance_evidence_downloaded` on the timeline.
 
 ### GET `/contracts/{id}/pdf`
 
-Permission: `contracts.view` (assignee-scoped). Extra limiter `throttle:contracts-pdf`. Returns `application/pdf` attachment. Branded layout matches other sales documents (logo, button color, company profile). Includes party, dates, value, and sanitized description/notes HTML.
+Permission: `contracts.view` (assignee-scoped). Extra limiter `throttle:contracts-pdf`. Returns `application/pdf` attachment. Branded layout matches other sales documents (logo, button color, company profile). Includes party, dates, value, sanitized description/notes HTML, and — when accepted — signer metadata plus the signature image (ID files are not embedded).
 
 ### PUT `/contracts/{id}`
 
@@ -38,7 +46,7 @@ Partial update of **draft** contracts only. Non-draft contracts return 422 on `s
 
 ### DELETE `/contracts/{id}`
 
-Soft delete. Permission: `contracts.delete`.
+Soft delete. Permission: `contracts.delete`. Keeps acceptance evidence files so restore can recover them.
 
 ### POST `/contracts/{id}/restore`
 
@@ -46,8 +54,7 @@ Permission: `contracts.restore`.
 
 ### DELETE `/contracts/{id}/force`
 
-Permanently delete a soft-deleted contract. Permission: `contracts.force.delete`.
-
+Permanently delete a soft-deleted contract. Permission: `contracts.force.delete`. Purges signature and ID evidence objects from storage.
 ## Actions
 
 ### POST `/contracts/{id}/assign`
@@ -84,8 +91,8 @@ Transitions `sent → active`. Permission: `contracts.accept` (assignee-scoped u
 
 Requires tenancy (domain / `X-Tenant-Domain`) and Contracts entitlement. Throttle: `contract-acceptance` (20/min per IP).
 
-- `GET /public/contracts/accept/{token}` — summary (title, party, dates, value, workspace name, description, expiry). Invalid/expired/used → 404.
-- `POST /public/contracts/accept/{token}` — body `{ accepted_by_name, accepted_by_email }`; marks **active**, stores signer + IP, invalidates token, records `signed` activity.
+- `GET /public/contracts/accept/{token}` — summary (title, party, dates, value, workspace name, description, expiry, `acceptance_requirements: { phone, signature_image, id_document }`). Invalid/expired/used → 404.
+- `POST /public/contracts/accept/{token}` — multipart or JSON. Always: `accepted_by_name`, `accepted_by_email`. When requirements demand: `accepted_by_phone`; `signature` file + `signature_method` (`drawn`|`uploaded`); `id_document` file + `id_document_type` (`national_id`|`passport`|`other`). Marks **active**, stores signer + IP (+ user agent / evidence files), invalidates token, records `signed` activity. Uploads honor workspace Storage quota and upload policy. Enabling signature/ID Settings requires Storage entitlement.
 
 ### POST `/contracts/{id}/status`
 

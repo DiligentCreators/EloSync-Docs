@@ -35,7 +35,7 @@ EloSync/
 
 | Tool | Version / notes |
 |------|-----------------|
-| PHP | **8.3+** (project targets 8.4 via Herd) |
+| PHP | **8.5+** (project targets 8.5 via Herd) |
 | Composer | 2.x |
 | MySQL | 8+ (or MariaDB / PostgreSQL / SQLite for experiments) |
 | Node.js | **20+** LTS |

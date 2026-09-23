@@ -21,7 +21,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 - Status workflow: `draft → sent | active | terminated`; `sent → active | expired | terminated`; `active → expired | terminated` (`POST /contracts/{id}/send`, `.../accept`, `.../status`)
 - Download contract PDF (workspace-branded; description, notes, party, value, dates)
 - **Email customer** after Send (`POST /contracts/{id}/email`, `contracts.send`) — optional PDF attachment; for **Sent** contracts, appends a one-time customer sign link; default recipient from the opportunity’s contact/company; records `emailed` timeline + tenant email log
-- **Customer e-signature (v1)** — public accept page (`/#/accept/contracts/{token}`); staff can **Copy accept link**; signer name/email/IP recorded on accept → status **Active**
+- **Customer e-signature** — public accept page (`/#/accept/contracts/{token}`); staff can **Copy accept link**; signer name/email/IP recorded on accept → status **Active**. Optional Settings toggles require phone, signature image (draw/upload), and/or ID document proof
 - Staff may still **Activate without signature** from Draft (`contracts.update`) without issuing a customer link
 - **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check). Confirming in the UI acknowledges repeat billing (`acknowledge_repeat_billing`); the API requires that flag for the second and later invoices from the same contract.
 - **Renewal reminders** — for **Active** contracts with an `end_date`, `crm:send-due-notifications` sends in-app `contract.renewal_due` to the assignee (or creator) within the workspace notice window (`contract_renewal_notice_days`, default **30**, Settings → General)
@@ -35,15 +35,15 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 `contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.6.0**.
+Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.7.0**.
 
 ## Related modules
 
-**Hard dependency:** Opportunities (see [Module Dependencies](/architecture/module-dependencies)). **Optional:** Quotations — the quotation picker on a contract only appears (and validates) when Quotations is entitled. **Optional:** Invoices — create-invoice is hidden until Invoices is entitled.
+**Hard dependency:** Opportunities (see [Module Dependencies](/architecture/module-dependencies)). **Optional:** Quotations — the quotation picker on a contract only appears (and validates) when Quotations is entitled. **Optional:** Invoices — create-invoice is hidden until Invoices is entitled. **Optional:** Storage — required for signature/ID uploads when those accept toggles are on.
 
 ## Explicitly deferred
 
 - Multi-signer / countersign / third-party e-sign providers (DocuSign, Adobe Sign)
-- Drawn signature image capture on the PDF
+- Embedding the drawn signature image onto the contract PDF
 - Auto-renew boolean on contracts
 - Multi-currency conversion
