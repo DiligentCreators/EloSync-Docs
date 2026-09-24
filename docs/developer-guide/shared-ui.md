@@ -67,6 +67,16 @@ flowchart TB
 
 Installed module subscriptions and Spatie permissions drive Tenant sidebar visibility. Sidebar groups follow catalog categories and collapse except for the current-route section.
 
+## Form validation UX (tenant modules)
+
+Tenant create/edit forms must never fail silently:
+
+1. **Client (Zod):** `handleSubmit(onValid, handleFormInvalid)` from `src/lib/form-validation.ts` so the first field message always toasts.
+2. **Server (422):** keep `applyServerValidationErrors` on mutation `onError` (toast + `setError`).
+3. **Inline UI:** every schema field needs visible error text (`FloatingInput`/`FloatingSelect` `error=`, or `p.text-destructive` under Select/SearchableSelect).
+4. **Edit hydration:** remount enum Selects with `key={\`${field}-${record.id}-${value}\`}` (Assets pattern) and/or `Controller` so async `reset()` does not leave a blank control (billing `line_discount_type`, employee employment/status, leads, etc.).
+5. **Local demo entitlements:** `php artisan local:entitle-demo-modules --all` activates published modules for QA (skips storage/AI credit packs). Playwright: `npm run test:e2e:validation:headed`.
+
 ## Related docs
 
 - [ui/shared-layout.md](/user-guide/shared-layout)

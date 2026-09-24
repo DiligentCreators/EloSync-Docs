@@ -4,6 +4,12 @@
 - **EloSync-Frontend:** Settings → General toggles (signature/ID disabled without Storage); guest accept page draws/uploads signature and ID when required; contract record shows phone/IP and download buttons.
 - **EloSync-Docs:** Contracts user/developer/API/deployment + tenant settings + changelog. Go-live: [Contracts 1.7.0 accept evidence production readiness](/deployment/contracts-1-7-0-production-readiness) — **Go**.
 
+## Tenant form validation UX + edit select hydration (2026-09-25)
+
+- **EloSync-Frontend:** Client Zod failures always toast via `handleFormInvalid` / `firstFormErrorMessage` (never silent empty submit). Tenant create/edit forms wire field errors on enum Selects; remount keys / `Controller` for edit hydration (billing `line_discount_type`, employee employment/status, leads, todos, and other status/method selects). Billing line editor shows per-line quantity/price/discount/tax errors and seeds linked products on edit. Playwright: `npm run test:e2e:validation:headed` (`e2e/tests/validation/`).
+- **EloSync-Backend:** `php artisan local:entitle-demo-modules --all` installs published catalog modules for local demo QA and activates pending billable rows (skips storage/AI credit packs). Expanded `config/local-demo.php` `demo_modules`. Pest: `LocalEntitleDemoModulesCommandTest`.
+- **EloSync-Docs:** Shared UI form validation note; Playwright validation audit script; changelog.
+
 ## Platform PHP 8.5 runtime (2026-09-23)
 
 - **EloSync-Backend:** Requires **PHP 8.5+** (`composer.json` `"php": "^8.5"`). CI Quality Gate / Pest matrices run on **8.5**. Unblocked via **maatwebsite/excel** **3.1 → 4.0** (PhpSpreadsheet **1.x → 5.x**; PhpSpreadsheet 1.x hard-blocked PHP 8.5). Equal-mode lead import now keeps created leads unassigned until auto-distribution runs (Excel 4 `Import` marker + explicit null assignee). Set Laravel Cloud / Forge site PHP to **8.5** and redeploy.

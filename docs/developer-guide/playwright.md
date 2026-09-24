@@ -28,6 +28,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Billing | `e2e/tests/billing/` | `npm run test:e2e:billing` |
 | Impersonation | `e2e/tests/impersonation/` | `npm run test:e2e:impersonation` |
 | Settings | `e2e/tests/settings/` | `npm run test:e2e:settings` — Central identity/flags + tenant branding/mail (`npm run test:e2e:tenant-settings`); Developers full workflow (`npm run test:e2e:developers`); Storage usage (`npm run test:e2e:storage`) |
+| Form validation audit | `e2e/tests/validation/` | `npm run test:e2e:validation` / `test:e2e:validation:headed` — empty-submit create forms after `local:entitle-demo-modules --all` |
 | Beta Applications (Founding Beta invite) | `e2e/tests/beta-applications/` | `npm run test:e2e:beta-applications` — one Central admin session: settings validation, registration-closed CTA, Accept & send invite, invite register validation + activation, expired resend |
 | Leads | `e2e/tests/leads/` | `npm run test:e2e:leads` |
 | Tasks | `e2e/tests/tasks/` | `npm run test:e2e:tasks` |
