@@ -17,6 +17,14 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Live Chat 1.5.1 → 1.5.2 — inbound notification broadcast
+
+After migrate (`2026_09_25_210000_bump_live_chat_module_version_to_1_5_2`):
+
+1. Confirm catalog `live-chat` version is `1.5.2`
+2. Confirm `emails` queue workers (or sync) process `LiveChatInboundMessageNotification`
+3. Staging smoke: visitor send → agent open tab receives bell / `NotificationCreated` while Echo is connected
+
 ## Live Chat 1.5.0 → 1.5.1 — production-readiness remediations
 
 After migrate (`2026_09_25_200000_bump_live_chat_module_version_to_1_5_1`):

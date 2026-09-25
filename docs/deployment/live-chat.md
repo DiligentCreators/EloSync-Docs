@@ -18,8 +18,9 @@ Idempotent migrations:
 - `2026_09_18_213545_bump_departments_and_live_chat_for_hidden_inactive_members` (catalog **1.4.1 → 1.4.2**)
 - `2026_09_25_142200_bump_live_chat_module_version_to_1_5_0` (send soft-fail + typing; catalog **1.4.2 → 1.5.0**)
 - `2026_09_25_200000_bump_live_chat_module_version_to_1_5_1` (open/close soft-fail, embed lock/retry, snippet `?v=`; catalog **1.5.0 → 1.5.1**)
+- `2026_09_25_210000_bump_live_chat_module_version_to_1_5_2` (inbound notification Reverb broadcast; catalog **1.5.1 → 1.5.2**)
 
-Catalog row: free Communication opt-in `live-chat` **1.5.1** (not default-included). Workspaces install from Marketplace.
+Catalog row: free Communication opt-in `live-chat` **1.5.2** (not default-included). Workspaces install from Marketplace.
 
 ## Runtime
 
@@ -35,7 +36,7 @@ Catalog row: free Communication opt-in `live-chat` **1.5.1** (not default-includ
 ## Production readiness
 
 - Baseline (CORS / sessions / PII): **Go** — [Live Chat production readiness](./live-chat-production-readiness) (**1.0.1**).
-- Current ship (**1.5.1** remediations on 1.5.0 soft-fail + typing): **Go** — [Live Chat 1.5.0 / 1.5.1 production readiness](./live-chat-1-5-0-production-readiness).
+- Current ship (**1.5.2** inbound bell broadcast on 1.5.x soft-fail + typing): **Go** — [Live Chat 1.5.0 / 1.5.1 production readiness](./live-chat-1-5-0-production-readiness) (apply **1.5.2** migrate for notification broadcast).
 
 ## Verify
 
