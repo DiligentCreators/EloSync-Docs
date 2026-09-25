@@ -10,6 +10,17 @@
 - **EloSync-Backend:** `php artisan local:entitle-demo-modules --all` installs published catalog modules for local demo QA and activates pending billable rows (skips storage/AI credit packs). Expanded `config/local-demo.php` `demo_modules`. Pest: `LocalEntitleDemoModulesCommandTest`.
 - **EloSync-Docs:** Shared UI form validation note; Playwright validation audit script; changelog.
 
+## Live Chat 1.5.1 production-readiness remediations (2026-09-25)
+
+- **EloSync-Backend:** Catalog **1.5.0 → 1.5.1**. Soft-fail conversation open/close automation after persist; structured `live-chat.side-effect-failed` / `integrations.forward-failed` logs; embed send lock + hydrate-before-retry (LC15-06); Settings embed snippet `widgets/live-chat.js?v=1.5.1`. Pest: open/close soft-fail + embed snippet cache-bust.
+- **EloSync-Docs:** Readiness audit remediations closed; upgrade + changelog + hubs **1.5.1**. Go-live: [Live Chat 1.5.0 / 1.5.1 production readiness](/deployment/live-chat-1-5-0-production-readiness) — **Go**.
+
+## Live Chat 1.5.0 send resilience + Tawk-like typing (2026-09-25)
+
+- **EloSync-Backend:** Catalog **1.4.2 → 1.5.0**. Visitor and agent message sends soft-fail notify / Reverb broadcast / automation fan-out after persist so a realtime outage no longer returns HTTP 500. Public `POST …/conversations/{uuid}/typing` and tenant `POST …/conversations/{uuid}/typing` fan out `LiveChatTyping` (private inbox/conversation + public visitor channel). Embed (`public/widgets/live-chat.js`): in-panel error + Retry (no `alert`), visitor typing pulses, “agent is typing…” via realtime. Pest: broadcast-outage send + typing endpoints.
+- **EloSync-Frontend:** Agent desk posts typing for visitors; listens for visitor `LiveChatTyping`; composer `/` filters canned replies. E2E helper prefers Herd PHP **8.5** for Artisan tinker.
+- **EloSync-Docs:** Live Chat user / developer / API / deployment + changelog + roadmap **1.5.0**. Go-live: [Live Chat 1.5.0 / 1.5.1 production readiness](/deployment/live-chat-1-5-0-production-readiness) — **Go**.
+
 ## Platform PHP 8.5 runtime (2026-09-23)
 
 - **EloSync-Backend:** Requires **PHP 8.5+** (`composer.json` `"php": "^8.5"`). CI Quality Gate / Pest matrices run on **8.5**. Unblocked via **maatwebsite/excel** **3.1 → 4.0** (PhpSpreadsheet **1.x → 5.x**; PhpSpreadsheet 1.x hard-blocked PHP 8.5). Equal-mode lead import now keeps created leads unassigned until auto-distribution runs (Excel 4 `Import` marker + explicit null assignee). Set Laravel Cloud / Forge site PHP to **8.5** and redeploy.

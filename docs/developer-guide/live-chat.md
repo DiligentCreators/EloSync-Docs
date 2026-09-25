@@ -1,6 +1,6 @@
 # Live Chat (developer)
 
-Free Communication module (`live-chat` **1.4.1**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
+Free Communication module (`live-chat` **1.5.1**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
 
 ## Surfaces
 
@@ -39,7 +39,7 @@ Agent channels (distinct from Team Chat):
 - `private-tenant.{tenantId}.live-chat.inbox`
 - `private-tenant.{tenantId}.live-chat.conversation.{uuid}`
 
-Visitor public channel: `live-chat.visitor.{uuid}` (UUID secrecy). Events: `LiveChatMessageSent`, `LiveChatConversationUpdated`, `LiveChatVisitorPresence` (`ShouldBroadcastNow`). Embed keeps short-poll fallback.
+Visitor public channel: `live-chat.visitor.{uuid}` (UUID secrecy). Events: `LiveChatMessageSent`, `LiveChatConversationUpdated`, `LiveChatVisitorPresence`, `LiveChatTyping` (`ShouldBroadcastNow`, soft-failed on send/open/close paths). Embed keeps short-poll fallback; send lock + hydrate-before-retry on Retry. Typing also has HTTP endpoints: public + tenant `POST …/typing`. Settings embed snippet includes `?v=` cache-bust (`LiveChatWidgetService::WidgetScriptVersion`).
 
 ## Soft Leads / Help Desk
 
@@ -63,4 +63,4 @@ Wired triggers: `live_chat.conversation_opened`, `live_chat.message_inbound`, `l
 
 Pest: `tests/Feature/Tenant/LiveChat/`. Playwright: `npm run test:e2e:live-chat`.
 
-Production readiness: [Live Chat production readiness](/deployment/live-chat-production-readiness).
+Production readiness: [1.0.1 baseline](/deployment/live-chat-production-readiness) · [1.5.0 / 1.5.1 send resilience + typing](/deployment/live-chat-1-5-0-production-readiness).

@@ -1,6 +1,6 @@
 # Tenant Live Chat API
 
-Module: `live-chat` **1.4.1** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
+Module: `live-chat` **1.5.1** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
 
 ## Public widget
 
@@ -11,11 +11,12 @@ Module: `live-chat` **1.4.1** · Base: `/api/tenant/v1/live-chat` (authenticated
 | POST | `/api/public/live-chat/{publicKey}/heartbeat` | Bearer session; updates last_seen_at / page / referrer / UA fields; returns `open_conversation_uuid` when an open thread exists (embed resume) |
 | POST | `/api/public/live-chat/{publicKey}/conversations` | Bearer session; open/create — may be offline thread |
 | GET | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Poll with `since_id` (excludes `direction=note`) |
-| POST | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Visitor text or multipart attachment; offline leave-a-message when outside hours |
+| POST | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Visitor text or multipart attachment; offline leave-a-message when outside hours. Persist succeeds even if Reverb/notify fail (soft-fail). |
+| POST | `/api/public/live-chat/{publicKey}/conversations/{uuid}/typing` | Bearer session; fans out `LiveChatTyping` (`direction=visitor`) |
 
 Inactive widget → 404. Missing entitlement → 403. Bad/expired/revoked token → 401. CORS: Origin reflected for credential-less embeds.
 
-The public embed (`public/widgets/live-chat.js`) stores the session token in `localStorage` and resumes via heartbeat + message hydrate after page refresh.
+The public embed (`public/widgets/live-chat.js`) stores the session token in `localStorage` and resumes via heartbeat + message hydrate after page refresh. Send failures show an in-panel error with **Retry** (no browser `alert`).
 
 ## Tenant agent
 
@@ -34,7 +35,8 @@ The public embed (`public/widgets/live-chat.js`) stores the session token in `lo
 | GET | `/live-chat/conversations/{id}` | `view` |
 | GET | `/live-chat/conversations/{id}/messages` | `view` (includes notes) |
 | POST | `/live-chat/conversations/{id}/read` | `view` |
-| POST | `/live-chat/conversations/{id}/messages` | `reply` (optional attachment; `as_note` boolean) |
+| POST | `/live-chat/conversations/{id}/messages` | `reply` (optional attachment; `as_note` boolean; soft-fail realtime) |
+| POST | `/live-chat/conversations/{id}/typing` | `reply` (`LiveChatTyping` `direction=agent` for embed) |
 | POST | `/live-chat/conversations/{id}/escalate` | `reply` (+ Help Desk entitled) |
 | PATCH | `/live-chat/conversations/{id}` | Policy: `assigned_to`, `status`, `lead_id`, `department_id` |
 
@@ -46,4 +48,4 @@ The public embed (`public/widgets/live-chat.js`) stores the session token in `lo
 - `private-tenant.{tenantId}.live-chat.conversation.{uuid}`
 - Public `live-chat.visitor.{uuid}` for embed
 
-Events: `LiveChatMessageSent`, `LiveChatConversationUpdated`, `LiveChatVisitorPresence`.
+Events: `LiveChatMessageSent`, `LiveChatConversationUpdated`, `LiveChatVisitorPresence`, `LiveChatTyping`.
