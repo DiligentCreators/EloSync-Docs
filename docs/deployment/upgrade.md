@@ -17,6 +17,28 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Live Chat 1.5.0 → 1.5.1 — production-readiness remediations
+
+After migrate (`2026_09_25_200000_bump_live_chat_module_version_to_1_5_1`):
+
+1. Confirm catalog `live-chat` version is `1.5.1`
+2. Confirm API serves updated `public/widgets/live-chat.js`; Settings embed snippet includes `?v=1.5.1` (purge CDN for unversioned URLs)
+3. Staging smoke: visitor send + open/close without HTTP 500 when automation/Reverb misbehaves; Retry does not duplicate a already-persisted visitor message
+
+Go-live: [Live Chat 1.5.0 / 1.5.1 production readiness](/deployment/live-chat-1-5-0-production-readiness).
+
+## Live Chat 1.4.2 → 1.5.0 — send soft-fail + typing
+
+After migrate (`2026_09_25_142200_bump_live_chat_module_version_to_1_5_0`):
+
+1. Confirm catalog `live-chat` version is at least `1.5.0` (prefer **1.5.1** if that migration is present)
+2. Confirm API serves the updated static `public/widgets/live-chat.js` (purge CDN if used)
+3. Deploy the SPA **after** Backend — desk typing API + `/` canned filter
+4. `php artisan reverb:restart` when Reverb is used (typing/live desk); send works even if Reverb is down
+5. Staging smoke: third-party Origin visitor send + agent reply without HTTP 500
+
+Go-live: [Live Chat 1.5.0 / 1.5.1 production readiness](/deployment/live-chat-1-5-0-production-readiness). Baseline CORS/session audit: [Live Chat production readiness](/deployment/live-chat-production-readiness).
+
 ## User security settings (2FA, passkeys, sessions)
 
 Deploy Backend + Frontend + Docs together. Run migrations **before** serving the SPA build that includes Profile → Security and the login TOTP step.

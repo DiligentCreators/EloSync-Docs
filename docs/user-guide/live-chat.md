@@ -30,10 +30,10 @@ Tabs under **Live Chat**:
 - Conversation list filters: All, Unread, Mine, Unassigned, Open, Closed, Offline.
 - Thread header: Claim, Close/Reopen, Escalate. Assign, lead link, and ban live in the visitor panel.
 - Composer: **Reply** (visitor-visible) or **Note** (internal only). Attach files from the composer.
-- Insert **canned replies** from Reply mode (manage canned replies in Settings → Live Chat).
+- Insert **canned replies** from Reply mode (type `/` in the composer to filter by shortcut/title; manage canned replies in Settings → Live Chat).
 - Visitor panel shows IP, country, browser/OS, page, referrer, pages viewed, last seen.
 - Search filters by visitor name, email, page URL, or message preview.
-- New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback).
+- New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback). Typing indicators work both ways when realtime is available; message send still succeeds if Reverb is down.
 
 ## Departments
 

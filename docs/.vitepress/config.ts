@@ -503,6 +503,7 @@ export default withMermaid(defineConfig({
             { text: 'Announcements', link: '/deployment/announcements' },
             { text: 'Live Chat', link: '/deployment/live-chat' },
             { text: 'Live Chat Production Readiness', link: '/deployment/live-chat-production-readiness' },
+            { text: 'Live Chat 1.5.0 Production Readiness', link: '/deployment/live-chat-1-5-0-production-readiness' },
             { text: 'Daily CRM Summary', link: '/deployment/daily-crm-summary' },
             { text: 'Calendar', link: '/deployment/calendar' },
             { text: 'Meetings', link: '/deployment/meetings' },

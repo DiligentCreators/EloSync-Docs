@@ -135,7 +135,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Documents](/user-guide/documents-overview) | Shipped (requires Storage) |
 | [Reports / Analytics](/user-guide/analytics-overview) | Shipped |
 | [Announcements](/user-guide/announcements-overview) | Shipped |
-| [Live Chat](/user-guide/live-chat-overview) | Shipped **1.3.0** (branding, offline hours, canned replies, Echo realtime, departments, media, Help Desk escalate, ban, Automation triggers) |
+| [Live Chat](/user-guide/live-chat-overview) | Shipped **1.5.1** (send soft-fail on Reverb outage; cross-surface typing; embed error Retry + send lock; snippet `?v=` cache-bust; `/` canned filter) |
 
 ### Help Desk deferred
 

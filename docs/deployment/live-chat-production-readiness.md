@@ -160,4 +160,4 @@ Suggested merge order: **Backend → Frontend → Docs**.
 | QA | | | ☐ Ready |
 | Ops | | | ☐ Ready |
 
-**Release decision:** **Go** — merge companions after CI green; complete staging smoke and migrate to **1.0.1** before production opt-in embeds.
+**Go / No-Go:** **Go** for the **1.0.1** remediations. For current catalog (**1.5.1** send soft-fail + typing remediations), use [Live Chat 1.5.0 / 1.5.1 production readiness](./live-chat-1-5-0-production-readiness).
