@@ -1,6 +1,6 @@
 # Live Chat (developer)
 
-Free Communication module (`live-chat` **1.5.1**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
+Free Communication module (`live-chat` **1.5.2**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
 
 ## Surfaces
 
@@ -57,7 +57,7 @@ Wired triggers: `live_chat.conversation_opened`, `live_chat.message_inbound`, `l
 
 ## Notifications
 
-`LiveChatInboundMessageNotification` (`live-chat.inbound`) → recipients with `live-chat.view` (assignee-scoped when assigned). Optional email when `email_notify_agents` is true.
+`LiveChatInboundMessageNotification` (`live-chat.inbound`) → recipients with `live-chat.view` (assignee-scoped when assigned). Channels: `database` + `broadcast` (open-tab bell via Reverb `NotificationCreated`); optional email when `email_notify_agents` is true.
 
 ## Tests
 

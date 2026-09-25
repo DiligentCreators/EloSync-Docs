@@ -1,3 +1,8 @@
+## Live Chat 1.5.2 inbound notification broadcast (2026-09-25)
+
+- **EloSync-Backend:** Catalog **1.5.1 → 1.5.2**. `LiveChatInboundMessageNotification` fans out on `database` + `broadcast` (`BroadcastsCrmNotification`) so the open-tab notification center receives `NotificationCreated` while Echo is connected (SPA disables poll fallback when Echo is up). Pest covers channel list on visitor send.
+- **EloSync-Docs:** Changelog + hubs **1.5.2**.
+
 ## Contract accept evidence (contracts 1.7.0) (2026-09-24)
 
 - **EloSync-Backend:** Catalog **1.6.0 → 1.7.0**. Optional tenant settings `contracts.acceptance_require_phone`, `contracts.acceptance_require_signature_image`, `contracts.acceptance_require_id_document` (default off). Public accept summary returns `acceptance_requirements`; multipart accept stores phone, drawn/uploaded signature, and ID document (private disk) with IP + user agent. Staff `GET …/acceptance-signature` and `…/acceptance-id-document`. Storage entitlement required to enable signature/ID settings; orphan upload cleanup on failed accept; force-delete purges evidence files; download timeline events; PDF embeds signature image. Pest: `ContractAcceptanceTest` evidence path.

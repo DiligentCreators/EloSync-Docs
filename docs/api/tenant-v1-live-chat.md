@@ -1,6 +1,6 @@
 # Tenant Live Chat API
 
-Module: `live-chat` **1.5.1** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
+Module: `live-chat` **1.5.2** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
 
 ## Public widget
 
