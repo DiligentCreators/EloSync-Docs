@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:payroll`, plus `can:payroll.*`.
 
-Catalog version: **1.3.0**.
+Catalog version: **1.4.0**.
 
 ## My pay slips (self-service)
 
@@ -65,8 +65,18 @@ Requires at least one line. `draft → approved`.
 
 `approved → paid`. Sets `paid_at`.
 
+Body optional unless Accounting is entitled:
+
+| Field | Notes |
+|-------|--------|
+| `paid_from_account_id` | Required when Accounting is installed; active cash/bank asset |
+| `expense_account_id` | Optional expense override for auto-created accrual |
+| `liability_account_id` | Optional liability override for accrual + payment debit |
+
+With Accounting: ensures a **posted** accrual (`Dr` Salary Expense / `Cr` Salaries Payable; posts an existing draft or creates+posts), then creates+posts a **payment** journal (`Dr` liability / `Cr` paid-from) and stores `payment_journal_entry_id` + account FKs. Without Accounting: status-only (empty body).
+
 ### POST `/pay-runs/{payRun}/post`
 
 Soft Accounting integration. Body optional: `debit_account_id`, `credit_account_id`.
 
-Requires Accounting entitled; pay run status `approved` or `paid`; net total &gt; 0; not already posted. Creates a **draft** journal (expense debit / liability credit) and stores `journal_entry_id`. Defaults to the first active expense and liability accounts when ids are omitted.
+Requires Accounting entitled; pay run status `approved` or `paid`; net total &gt; 0; not already posted. Creates a **draft** accrual journal (expense debit / liability credit) and stores `journal_entry_id`. Defaults to system **Salary Expense `6400`** and **Salaries Payable `2200`** when ids are omitted. Persist `expense_account_id` / `liability_account_id` on the pay run.

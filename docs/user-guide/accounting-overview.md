@@ -1,6 +1,6 @@
 # Accounting Module
 
-Phase 6 Finance module on the frozen platform. Provides the financial backbone: **chart of accounts**, **manual journal entries** (draft → post → void), **account transfers**, **fiscal periods / year-end close**, **bank reconciliation**, and **general ledger inquiry**. Single-currency. Soft auto-post from **Invoices** (send), **Credit Notes** (apply), **Payments** (deposit), and **Expenses** (paid from) when those modules are entitled alongside Accounting. Aged receivables lives under [Financial Reports](/user-guide/financial-reports-overview).
+Phase 6 Finance module on the frozen platform. Provides the financial backbone: **chart of accounts**, **manual journal entries** (draft → post → void), **account transfers**, **fiscal periods / year-end close**, **bank reconciliation**, and **general ledger inquiry**. Single-currency. Soft auto-post from **Invoices** (send), **Credit Notes** (apply), **Payments** (deposit), **Expenses** (paid from), and **Payroll** (paid from) when those modules are entitled alongside Accounting. Aged receivables lives under [Financial Reports](/user-guide/financial-reports-overview).
 
 ## Guides
 
@@ -20,13 +20,13 @@ Phase 6 Finance module on the frozen platform. Provides the financial backbone: 
 - **Current balance** on account list/show (from posted journal lines)
 - **Opening trial balance**: balanced multi-line journal via `/accounts/opening-balances` (`POST /accounts/opening-balances`)
 - **Set balance** on cash/bank accounts: target amount posts a delta journal (`ADJ-`); default offset Owner Equity `3000`; voidable history on the account
-- Starter system accounts seeded on first Accounts list (Cash, AR, AP, Tax Payable `2100`, **Withholding Tax Receivable `1150`**, **Withholding Tax Payable `2150`**, Equity, Retained Earnings `3100`, Revenue, common expenses); existing workspaces backfilled via `ensureMissingSystemAccounts`
+- Starter system accounts seeded on first Accounts list (Cash, AR, AP, Tax Payable `2100`, **Withholding Tax Receivable `1150`**, **Withholding Tax Payable `2150`**, **Salaries Payable `2200`**, Equity, Retained Earnings `3100`, Revenue, common expenses including **Salary Expense `6400`**); existing workspaces backfilled via `ensureMissingSystemAccounts`
 - **Tax types** catalog ([tax-types](/user-guide/tax-types)): sales tax on billing lines; withholding on customer payments and expense pay
 - Journal entries with balanced debit/credit lines (`JE-` numbers)
 - Lifecycle: **draft → post → void** (voided entries excluded from GL and reports)
 - **Account transfers** (`TRF-` numbers): move money between cash/bank accounts (auto-posted journal; void reverses)
 - Soft accrual journals from [Invoices](/user-guide/invoices-overview) (**Send**: Dr AR / Cr Revenue / Cr Tax Payable when tax &gt; 0) and [Credit Notes](/user-guide/credit-notes-overview) (**Apply**: reverse split) when Accounting is installed
-- Soft cash movements from [Payments](/user-guide/payments-overview) (Deposit to; optional **withholding** splits deposit vs WHT receivable) and [Expenses](/user-guide/expenses-overview) (Paid from; optional **withholding** splits cash vs WHT payable) when Accounting is installed
+- Soft cash movements from [Payments](/user-guide/payments-overview) (Deposit to; optional **withholding** splits deposit vs WHT receivable), [Expenses](/user-guide/expenses-overview) (Paid from; optional **withholding** splits cash vs WHT payable), and [Payroll](/user-guide/payroll) (Paid from on Mark paid; payment JE after accrual) when Accounting is installed
 - **Fiscal periods**: `fiscal_year_start_month` (Settings → General); period CRUD + lock/unlock (`accounting.void` to unlock); journal post/void blocked in locked periods; year-end close zeros P&L into Retained Earnings `3100` and locks the FY
 - **Bank reconciliation**: clear posted cash/bank lines against a statement; complete only when cleared balance matches the statement
 - **Bank reconciliation**: start against cash/bank, clear lines, complete

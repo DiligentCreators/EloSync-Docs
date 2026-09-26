@@ -1,6 +1,6 @@
 # Payroll Module
 
-Phase 7 HR module on the frozen platform. Manages **payroll profiles** (base salary / frequency) and **pay runs** with draft → approve → pay lifecycle. Hard-depends on **Employees**. Soft-depends on **Accounting** for optional journal posting.
+Phase 7 HR module on the frozen platform. Manages **payroll profiles** (base salary / frequency) and **pay runs** with draft → approve → pay lifecycle. Hard-depends on **Employees**. Soft-depends on **Accounting** for optional journal posting and Mark paid Paid-from cash/bank deduction.
 
 ## Guides
 
@@ -8,7 +8,7 @@ Phase 7 HR module on the frozen platform. Manages **payroll profiles** (base sal
 |----------|----------|
 | Operators / workspace users | [payroll.md](/user-guide/payroll) |
 | Engineers | [payroll.md](/developer-guide/payroll) |
-| Production / ops | [payroll.md](/deployment/payroll) |
+| Production / ops | [payroll.md](/deployment/payroll) · [1.4.0 paid-from readiness](/deployment/payroll-1-4-0-paid-from-production-readiness) |
 | Tenant API | [../api/tenant-v1-payroll.md](/api/tenant-v1-payroll) |
 
 ## Capabilities
@@ -27,7 +27,7 @@ Phase 7 HR module on the frozen platform. Manages **payroll profiles** (base sal
 
 `payroll.view` · `view_own` · `create` · `update` · `delete` · `restore` · `force.delete` · `approve` · `pay` · `post`
 
-Catalog: slug `payroll`, category `hr`, `sort_order = 40`, free opt-in, version **1.2.1**.
+Catalog: slug `payroll`, category `hr`, `sort_order = 40`, free opt-in, version **1.4.0**.
 
 ## Explicitly deferred
 

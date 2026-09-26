@@ -1,20 +1,24 @@
 # Payroll — Developer Guide
 
-Slug `payroll`, middleware `module:payroll`, permissions `payroll.*`. Hard-depends on `employees`. Optional soft dependency on `accounting` for journal post.
+Slug `payroll`, middleware `module:payroll`, permissions `payroll.*`. Hard-depends on `employees`. Optional soft dependency on `accounting` for journal post and Mark paid cash movement.
 
 ## Domain
 
 | Model | Table | Notes |
 |-------|-------|-------|
 | `PayrollProfile` | `payroll_profiles` | One per employee; soft deletes |
-| `PayRun` | `pay_runs` | Period + status; nullable `journal_entry_id` |
+| `PayRun` | `pay_runs` | Period + status; `journal_entry_id` (accrual), `payment_journal_entry_id`, `paid_from_account_id`, `expense_account_id`, `liability_account_id`; journal columns FK → `journal_entries` `nullOnDelete` |
 | `PayRunLine` | `pay_run_lines` | Unique per pay run + employee; no soft deletes |
 
 Enums: `PayFrequencyEnum` (`monthly` \| `biweekly` \| `weekly`), `PayRunStatusEnum` (`draft` → `approved` → `paid`).
 
 Services: `PayrollProfileService`, `PayRunService`, `PayPeriodCalculator`.
 
-`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator` (gross from base salary; adjustments for unpaid leave + unexcused absences when sibling modules are installed). Unpaid leave days use each approved request’s `deduct_salary` flag (defaulted on approve from `!leaveType.is_paid`; null legacy rows fall back to `!is_paid`). Line columns include `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`. `postToJournal` requires Accounting entitlement and creates a draft journal via `JournalEntryService` (expense debit / liability credit).
+`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator` (gross from base salary; adjustments for unpaid leave + unexcused absences when sibling modules are installed). Unpaid leave days use each approved request’s `deduct_salary` flag (defaulted on approve from `!leaveType.is_paid`; null legacy rows fall back to `!is_paid`). Line columns include `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`, late breakdown.
+
+`postToJournal` requires Accounting entitlement and creates a **draft** accrual via `JournalEntryService` (`Dr` expense / `Cr` liability; defaults Salary Expense `6400` / Salaries Payable `2200`).
+
+`markPaid` without Accounting is status-only. With Accounting: requires `paid_from_account_id` (active cash/bank), ensures accrual is posted (create+post if missing; post if draft), then `CashMovementJournalService::createAndPost` payment (`Dr` liability / `Cr` paid-from).
 
 ## Backend layout
 
@@ -22,7 +26,7 @@ Services: `PayrollProfileService`, `PayRunService`, `PayPeriodCalculator`.
 |-------|------|
 | Models | `PayrollProfile`, `PayRun`, `PayRunLine` |
 | Controllers | `PayrollProfileController`, `PayRunController` |
-| Requests | `app/Http/Requests/Tenant/Api/V1/PayrollProfile/*`, `PayRun/*` |
+| Requests | `app/Http/Requests/Tenant/Api/V1/PayrollProfile/*`, `PayRun/*` (incl. `PayPayRunRequest`) |
 | Tests | `tests/Feature/Tenant/Payroll/` |
 
 ## Permissions
@@ -40,8 +44,9 @@ See [tenant-v1-payroll.md](/api/tenant-v1-payroll).
 - API clients: `payrollProfileService`, `payRunService` in `src/api/services.ts`
 - Keys / permissions: `QUERY_KEYS.payroll*`, `QUERY_KEYS.payRuns*`, `PERMISSIONS.payroll`
 - Nav under **HR** (module `payroll`)
-- List / peek: **Approve** and **Mark paid** on the pay runs row menu and quick peek (`renderViewActions`); full page still has Post to journal
-- Catalog version **1.2.1**
+- List / peek / view: **Approve** and **Mark paid**; Accounting entitled → Paid-from dialog (`PayRunMarkPaidDialog`)
+- Full page: **Post to journal** for optional early accrual
+- Catalog version **1.4.0**
 
 ## Tests
 

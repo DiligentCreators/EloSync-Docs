@@ -18,11 +18,11 @@ Services: `AccountService`, `JournalEntryService`, `GeneralLedgerService`, `Char
 
 Periods: setting `fiscal_year_start_month` (1–12); journal post/void blocked in locked periods; year-end close zeros P&L into Retained Earnings `3100` (multi-line JE) and locks the FY period atomically / idempotently. Balance Sheet Net Income uses fiscal YTD (zero after a proper close). Bank rec: start / clear lines / complete against cash/bank accounts — book balance as of statement date, exclude prior cleared lines, require cleared = statement to complete. Invoice send/void and credit-note apply are transactional with period-lock checks.
 
-`ChartOfAccountsSeederService` seeds starter CoA (incl. Tax Payable `2100`, Retained Earnings `3100`) and `ensureMissingSystemAccounts` backfills missing system codes for existing workspaces.
+`ChartOfAccountsSeederService` seeds starter CoA (incl. Tax Payable `2100`, Salaries Payable `2200`, Salary Expense `6400`, Retained Earnings `3100`) and `ensureMissingSystemAccounts` backfills missing system codes for existing workspaces.
 
 `OpeningBalanceService` posts a balanced multi-line opening journal (`POST /accounts/opening-balances`). Header accounts are rejected on journal lines.
 
-`CashMovementJournalService` creates+posts two-line journals and voids linked entries. Used by Payments post/void, Expenses pay, Account Transfers, balance adjustments, and invoice/credit accrual hooks.
+`CashMovementJournalService` creates+posts two-line journals and voids linked entries. Used by Payments post/void, Expenses pay, Payroll pay (payment JE), Account Transfers, balance adjustments, and invoice/credit accrual hooks.
 
 `AccountBalanceAdjustmentService::create` reads current balance via `FinancialReportService::currentBalancesFor`, posts the delta, and stores an `ADJ-` row (default offset Equity `3000`).
 
@@ -30,7 +30,7 @@ Events → `AccountingEventSubscriber` → `PlatformAuditService` + Spatie `Logs
 
 ## Soft dependents
 
-Optional catalog deps (`is_optional=true`): **invoices → accounting**, **credit-notes → accounting**, **payments → accounting**, **expenses → accounting** (same pattern as payroll → accounting).
+Optional catalog deps (`is_optional=true`): **invoices → accounting**, **credit-notes → accounting**, **payments → accounting**, **expenses → accounting**, **payroll → accounting**.
 
 When Accounting is entitled:
 
@@ -38,6 +38,7 @@ When Accounting is entitled:
 - Credit note **apply** (`CustomerCreditNoteService::apply`): Dr Revenue `4000` / Cr AR `1100` for credit total; stores `journal_entry_id` (applied remains irreversible — no JE void path).
 - Payment **post**: allocations must sum to amount; Dr `deposit_account_id` (or Cash `1000`) / Cr AR `1100` (settles receivable booked on send); void voids the JE.
 - Expense **pay**: require `paid_from_account_id`; default expense account `6000`; Dr expense / Cr paid-from for amount+tax.
+- Payroll **pay**: require `paid_from_account_id`; ensure posted accrual (`6400`/`2200` defaults); then Dr Salaries Payable / Cr paid-from. Optional **post** creates draft accrual only.
 - No historical backfill for invoices/credits issued before entitlement.
 
 ## API
@@ -52,7 +53,7 @@ See [tenant-v1-accounting.md](/api/tenant-v1-accounting). Payments/expenses acco
 - Account view: **Set balance** dialog + **Balance adjustments** list/void for cash/bank; opening TB via `/accounts/opening-balances`
 - General Ledger: currency columns, journal deep links, **Export CSV** (`GET /general-ledger/export`)
 - Nav group **Finance**, dual-gated `module: accounting` + `PERMISSIONS.accounting.view`
-- Production notes: `JournalEntryService::post` / `void` use `DB::transaction` + `lockForUpdate()`; system account `code`/`type` immutable; GL inquiry paginated (100/500); cash movements auto-post (not draft-only like Payroll).
+- Production notes: `JournalEntryService::post` / `void` use `DB::transaction` + `lockForUpdate()`; system account `code`/`type` immutable; GL inquiry paginated (100/500); cash movements auto-post (Payroll Mark paid payment JE auto-posts; optional Payroll Post to journal may leave accrual as draft until pay).
 - Playwright (tenant project, one login session per suite):
   - Full module: `npm run test:e2e:accounting:modules` / `:headed` — validation, CoA CRUD, journal unbalanced/post/void, transfers smoke, GL
   - Authz: `npm run test:e2e:accounting:authz` / `:headed` — `/403`, API 401/403, unbalanced 422

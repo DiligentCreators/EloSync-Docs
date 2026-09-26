@@ -464,6 +464,7 @@ export default withMermaid(defineConfig({
             { text: 'RC1 Production Readiness', link: '/deployment/rc1-production-readiness' },
             { text: 'Phase 7 HR Production Readiness', link: '/deployment/hr-phase7-production-readiness' },
             { text: 'Phase 7 HR Security Audit', link: '/deployment/hr-phase7-security-audit' },
+            { text: 'Payroll 1.4.0 Paid-from Readiness', link: '/deployment/payroll-1-4-0-paid-from-production-readiness' },
             { text: 'Knowledge Base Production Readiness', link: '/deployment/knowledge-base-production-readiness' },
             { text: 'Reports Production Readiness', link: '/deployment/analytics-production-readiness' },
             { text: 'Storage Production Readiness', link: '/deployment/storage-production-readiness' },

@@ -53,10 +53,11 @@ When Accounting is entitled:
 - **Credit Notes — Apply**: posts Dr Sales Revenue / Cr Accounts Receivable for the credit total; links the journal (applied credits stay irreversible).
 - No backfill for invoices or credits issued before Accounting was installed.
 
-## Payments & expenses (when those modules are installed)
+## Payments, expenses & payroll (when those modules are installed)
 
 - **Payments**: choose **Deposit to** (cash/bank). On **Post**, Accounting creates Dr deposit / Cr Accounts Receivable (settles the receivable booked on invoice send).
 - **Expenses**: on **Mark as paid**, choose **Paid from** (cash/bank) and optionally an expense P&amp;L account (defaults to Operating Expenses). Accounting creates Dr expense / Cr paid-from.
+- **Payroll**: on **Mark paid**, choose **Paid from** (cash/bank). Accounting posts (or creates) the accrual (`Dr` Salary Expense `6400` / `Cr` Salaries Payable `2200`), then posts the payment (`Dr` Salaries Payable / `Cr` paid-from) so cash/bank decreases. Optional **Post to journal** before pay creates a draft accrual only.
 
 ## General ledger
 
