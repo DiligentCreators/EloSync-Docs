@@ -28,6 +28,8 @@ Enable **Employees** first, then install **Payroll** from Marketplace (free). Fo
 
 Linked employees with `payroll.view_own` (staff by default) can open **My salary slips** and download PDF copies of their **paid** pay-run lines for personal records. Managers with `payroll.view` can also download line PDFs from a paid pay run’s lines table (**Download**).
 
+Pay slip PDFs use the same company branding as invoices and quotations: logo and button color (when **Branded** is entitled), company name/tagline/address/phone/website from **Settings → Branding**, and tax registration ID from **Settings → General** when set. Each slip shows employee details, period attendance breakdown, gross/adjustments, and net pay.
+
 ## Workflow
 
 ```text

@@ -1,3 +1,8 @@
+## Branded pay slip PDF Layout A (payroll 1.4.1) (2026-09-27)
+
+- **EloSync-Backend:** Catalog **payroll 1.4.0 → 1.4.1**. `MyPaySlipService` uses `BrandedDocumentPdfContext` (logo, primary color, company profile address/contact/tax ID, workspace currency). `resources/views/payroll/payslip.blade.php` Layout A: branded header + **PAY SLIP** meta, Employee | Period details parties strip, Gross/Adjustments table, NET PAY bar, notes, footer. CatalogSeeder payroll `version` **1.4.1**. Pest: `MyPaySlipTest` branded HTML assertions.
+- **EloSync-Docs:** Payroll user/developer/API + tenant-settings PDF note + changelog **1.4.1**.
+
 ## Payroll Mark paid → Paid from bank (1.4.0) (2026-09-26)
 
 - **EloSync-Backend:** Catalog **payroll 1.3.0 → 1.4.0**. When Accounting is entitled, `POST /pay-runs/{id}/pay` requires `paid_from_account_id` (cash/bank), ensures a posted accrual (`Dr` Salary Expense `6400` / `Cr` Salaries Payable `2200`; posts an existing draft or creates+posts), then auto-posts the payment journal (`Dr` payable / `Cr` paid-from). New pay run columns: `paid_from_account_id`, `expense_account_id`, `liability_account_id`, `payment_journal_entry_id`. Starter CoA adds `2200` / `6400`. CatalogSeeder payroll `version` aligned to **1.4.0**. FKs on accrual + payment journal columns (`2026_09_26_190924_…`). Without Accounting, Mark paid stays status-only. Pest: `PayrollTest` (19) — accounting pay / missing paid-from / no-accounting / draft-then-pay / net ≤ 0 / locked period.
