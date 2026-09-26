@@ -4,7 +4,7 @@
 
 | Piece | Role |
 |-------|------|
-| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `contract_renewal_notice_days`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`) |
+| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `contract_renewal_notice_days`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`, `leads.inactivity_working_days`, `leads.convert_require_opportunity`, `leads.convert_min_opportunity_amount`) |
 | `App\Services\Tenant\TenantSettingService` | Hierarchy resolver, cache, branding uploads, runtime mail/config, public bootstrap |
 | `App\Services\Storage\FileUploadService` | Disk-agnostic store/replace/delete/url (shared with Central) |
 | `TenantSettingController` | Authenticated list/update, test-mail, branding upload |
@@ -37,6 +37,16 @@ Attendance group keys (system defaults when unset): `office_start_time` (`09:00`
 `meetings_default_provider` is `none` \| `google_meet` \| `zoom` (default `none`) under the `general` group. It preselects the Meetings schedule form; OAuth connections remain on Meetings → Integrations.
 
 `session_lifetime_minutes` is an integer under the `security` group (`0`–`43200`). `0` means never expire: public bootstrap exposes it, SPA idle logout is skipped, and `TenantAuthBootstrapService::issueAccessToken()` creates a Sanctum token with `expires_at = null`. When unset, resolution falls back to Central `session_lifetime_minutes`.
+
+Leads group keys (Settings → Leads when Leads is installed; system defaults when unset):
+
+| Key | Type | Default | Notes |
+|-----|------|---------|-------|
+| `leads.inactivity_working_days` | integer | `3` | `0` disables inactivity alerts |
+| `leads.convert_require_opportunity` | boolean | `false` | Requires Opportunities entitlement to enable; enforced on `POST /leads/{id}/convert` |
+| `leads.convert_min_opportunity_amount` | numeric | `0` | Floor for effective opportunity amount on convert |
+
+Resolve convert gates via `TenantSettingService::leadsConvertRequireOpportunity()` / `leadsConvertMinOpportunityAmount()`.
 
 Invoice PDF company/payment keys (`invoices` group, workspace-only — no Central fallback): `company_tagline`, `company_address`, `company_phone`, `company_website`, `invoice_payment_terms`, `invoice_bank_name`, `invoice_bank_account_name`, `invoice_bank_account_number`, `invoice_bank_iban`, `invoice_bank_swift`, `invoice_default_notes`, `invoice_default_terms_and_conditions`. Edited in SPA **Settings → Branding** (with logo / `button_color` / `support_email` when Branded is entitled). Visual overrides (`logo_path`, `favicon_path`, `button_color`, `auth_image_*_path`) require the **Branded** module — see [branded.md](/developer-guide/branded). General-group `tax_registration_id` is also included in the PDF company profile and cache fingerprint: when filled, the invoice PDF seller header prints it; when blank, the line is omitted. `CustomerInvoicePdfService` embeds the tenant logo as a data URI (Dompdf remote URLs disabled) and includes these keys in the PDF cache fingerprint. Empty document notes/terms fall back to `invoice_default_notes` / `invoice_default_terms_and_conditions` on invoice, quotation, and estimate PDFs. New invoices prefill terms from `invoice_default_terms_and_conditions`.
 
