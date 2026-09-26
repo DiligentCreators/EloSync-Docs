@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:payroll`, plus `can:payroll.*`.
 
-Catalog version: **1.4.0**.
+Catalog version: **1.4.1**.
 
 ## My pay slips (self-service)
 
@@ -14,7 +14,7 @@ Catalog version: **1.4.0**.
 | GET | `/my-pay-slips/{payRunLine}/pdf` | `payroll.view_own` or `payroll.view` |
 | GET | `/pay-runs/{payRun}/lines/{payRunLine}/pdf` | `payroll.view` |
 
-`GET /my-pay-slips` returns **paid** lines for the caller’s linked active employee only. PDF endpoints return `application/pdf`.
+`GET /my-pay-slips` returns **paid** lines for the caller’s linked active employee only. PDF endpoints return `application/pdf` rendered via `MyPaySlipService` with the same branded document chrome as invoices/quotations (logo, primary color, company address/contact from Settings → Branding / General). Layout A: employer header + **PAY SLIP** meta, Employee | Period details parties strip, Gross/Adjustments table, NET PAY bar.
 
 ## Payroll profiles
 

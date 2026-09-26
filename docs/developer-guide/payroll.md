@@ -12,7 +12,7 @@ Slug `payroll`, middleware `module:payroll`, permissions `payroll.*`. Hard-depen
 
 Enums: `PayFrequencyEnum` (`monthly` \| `biweekly` \| `weekly`), `PayRunStatusEnum` (`draft` → `approved` → `paid`).
 
-Services: `PayrollProfileService`, `PayRunService`, `PayPeriodCalculator`.
+Services: `PayrollProfileService`, `PayRunService`, `PayPeriodCalculator`, `MyPaySlipService` (branded Dompdf via `BrandedDocumentPdfContext` + `resources/views/payroll/payslip.blade.php`).
 
 `PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator` (gross from base salary; adjustments for unpaid leave + unexcused absences when sibling modules are installed). Unpaid leave days use each approved request’s `deduct_salary` flag (defaulted on approve from `!leaveType.is_paid`; null legacy rows fall back to `!is_paid`). Line columns include `working_days`, `unpaid_leave_days`, `absent_days`, `days_present`, late breakdown.
 
@@ -46,7 +46,17 @@ See [tenant-v1-payroll.md](/api/tenant-v1-payroll).
 - Nav under **HR** (module `payroll`)
 - List / peek / view: **Approve** and **Mark paid**; Accounting entitled → Paid-from dialog (`PayRunMarkPaidDialog`)
 - Full page: **Post to journal** for optional early accrual
-- Catalog version **1.4.0**
+- Catalog version **1.4.1**
+
+## Pay slip PDF
+
+`MyPaySlipService::render` builds Layout A (matching invoice/receipt chrome):
+
+- Seller header from `BrandedDocumentPdfContext::companyProfile` + `logoDataUri` / `primaryColor`
+- Right meta: **PAY SLIP**, status, period dates, slip id
+- Parties: **Employee** (name, number, job title, department, email, phone) | **Period details** (working/present/leave/absent/late fields)
+- Amounts table: Gross + Adjustments; totals + **NET PAY** bar; optional notes; footer contact bar
+- Money uses workspace `currency` from Settings → General
 
 ## Tests
 
