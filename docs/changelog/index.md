@@ -1,3 +1,9 @@
+## Lead convert opportunity settings (1.7.0) (2026-09-26)
+
+- **EloSync-Backend:** Catalog **1.6.0 → 1.7.0**. Tenant settings `leads.convert_require_opportunity` (boolean, default off) and `leads.convert_min_opportunity_amount` (numeric, default `0`). Enforced in `LeadService::convert` (require opportunity when Opportunities entitled; min amount on effective `opportunity.amount` / `lead_value`). Enabling require without Opportunities returns settings 422. Pest: `LeadConvertOpportunitySettingsTest` (5).
+- **EloSync-Frontend:** Settings → Leads toggles + minimum amount; lead record convert UI respects require (forced opportunity fields) and min amount validation via `useTenantSettingsQuery`.
+- **EloSync-Docs:** Leads user/developer/API/deployment + tenant settings + changelog + hubs **1.7.0**.
+
 ## Leads created_by / updated_by (1.6.0) (2026-09-26)
 
 - **EloSync-Backend:** Catalog **1.5.0 → 1.6.0**. Denormalized `leads.created_by` / `updated_by` (nullable FKs → users), batched backfill from `lead_activities` on migrate (created-type + earliest-actor fallback). `LeadService` sets both on create and `updated_by` on update/convert/restore/delete **and** notes / tag sync / follow-ups. List/board/stats/export filter via `created_by` / `updated_by` (`system` = null). API embeds `creator` / `updater`. Pest: `LeadCreatedByUpdatedByTest` (4).

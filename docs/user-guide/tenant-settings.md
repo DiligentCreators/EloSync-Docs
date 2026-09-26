@@ -134,6 +134,18 @@ With the **Branded** marketplace module, logo and application name are also used
 
 When Marketplace is enabled for the platform, **Settings → Marketplace** links to the catalog. From there you can **Install** free modules, **Subscribe** to paid ones, and **Remove** / **Cancel subscription** for opt-in modules you no longer need. Core modules (Leads, Tasks) cannot be removed. See [Tenant Application](/user-guide/tenant-application#marketplace-add--remove-modules).
 
+## Leads
+
+Shown when the **Leads** module is installed (**Settings → Leads**).
+
+| Field | Behavior |
+|-------|----------|
+| **Inactivity alert (working days)** | Notify assignees (and managers/owners) when an open assigned lead has no meaningful activity for this many Mon–Sat days (`leads.inactivity_working_days`, default **3**). Set **0** to disable. |
+| **Require opportunity when converting** | When on, converting a lead must create an opportunity (`leads.convert_require_opportunity`, default **off**). Requires the Opportunities module (switch disabled / API 422 without it). |
+| **Minimum opportunity amount** | When creating an opportunity on convert, the amount (or lead value fallback) must be at least this value (`leads.convert_min_opportunity_amount`, default **0**). |
+
+See [Leads](/user-guide/leads#convert).
+
 ## Storage
 
 When **Storage** is installed, **Settings → Storage** shows used / allowance bytes, the current pack (or Free 1 GB), and a link to upgrade in Marketplace. Workspace admins with **`storage.manage`** can also set **Upload limits** (allowed file types and separate max sizes for images, videos, and other files). See [Storage](/user-guide/storage).

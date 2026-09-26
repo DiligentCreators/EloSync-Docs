@@ -112,7 +112,7 @@ Many-to-many: `lead_id`, `lead_tag_id` (unique pair).
 
 ### `leads`
 
-`tenant_id`, `uuid`, `name`, contact fields, `stage_id`, `status` (`active`|`waiting`|`on_hold`|`closed`|`archived`), `priority` (`low`|`medium`|`high`|`urgent`), `assigned_to`, `commission_rate`, `created_by` / `updated_by` (nullable FKs → `users`, null on delete; batched backfill from `lead_activities` on 1.6.0 migrate — prefers `type=created`, else earliest actor; latest actor for updated_by), `lead_value` (renamed from `estimated_value`), `last_contacted_at`, `next_follow_up_at`, `converted_at`, `conversion_meta` (JSON), `contact_id` (nullable FK to `contacts`, set on convert when Contacts is installed), soft deletes. Status is **independent** of stage. Spatie activity log name `leads`. Catalog version **1.6.0**.
+`tenant_id`, `uuid`, `name`, contact fields, `stage_id`, `status` (`active`|`waiting`|`on_hold`|`closed`|`archived`), `priority` (`low`|`medium`|`high`|`urgent`), `assigned_to`, `commission_rate`, `created_by` / `updated_by` (nullable FKs → `users`, null on delete; batched backfill from `lead_activities` on 1.6.0 migrate — prefers `type=created`, else earliest actor; latest actor for updated_by), `lead_value` (renamed from `estimated_value`), `last_contacted_at`, `next_follow_up_at`, `converted_at`, `conversion_meta` (JSON), `contact_id` (nullable FK to `contacts`, set on convert when Contacts is installed), soft deletes. Status is **independent** of stage. Spatie activity log name `leads`. Catalog version **1.7.0**.
 
 ### `lead_notes` / `lead_note_mentions` / `lead_follow_ups` / `lead_activities`
 

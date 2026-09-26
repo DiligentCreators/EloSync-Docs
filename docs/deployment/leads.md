@@ -86,7 +86,7 @@ Ensure the Laravel scheduler is running in production.
 
 1. Migrate lead tables + Sprint 2 enhance migration + `lead_assignment_histories` + `lead_imports` + `lead_tags` / `lead_lead_tag` + `lead_follow_ups.lead_tag_id` + **`created_by` / `updated_by` (1.6.0)**
 2. Deploy frontend (Kanban/table, KPIs, Manage tags, export, import wizard/history, convert → contact when Contacts installed, notifications, **Created by / Updated by** columns + filters)
-3. Confirm `module:leads` + expanded permissions (including `leads.import`); catalog version **1.6.0**
+3. Confirm `module:leads` + expanded permissions (including `leads.import`); catalog version **1.7.0**
 4. Confirm queue worker includes `imports`
 5. Smoke: register/login → Leads board → Manage tags → create lead (default tag) → apply Follow Up Later with due date → DnD stage → export/import → convert (On Boarded contact when Contacts installed) → **Created by / Updated by** filter + System
 

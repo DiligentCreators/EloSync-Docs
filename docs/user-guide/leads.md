@@ -86,7 +86,9 @@ Users with **convert** can convert a lead from the record page. Behavior depends
 
 - **Contacts** — creates a linked Contact from lead fields (name, email, phone, job title) with lifecycle **On Boarded Clients**. Requires `contacts.create`. No separate contact form.
 - **Companies** — creates a Company or reuses an existing one (case-insensitive name match), or links an explicit company on convert, and links it to the Contact. Requires `companies.create` when a new company must be created. The company timeline records **Converted from lead**.
-- **Opportunities** (optional) — check **Also create an opportunity**, enter a name (defaults to the lead name), and optionally an amount (defaults from lead value). Requires `opportunities.create`. The opportunity is linked to the lead, contact, and company when those exist.
+- **Opportunities** — by default optional: check **Also create an opportunity**, enter a name (defaults to the lead name), and optionally an amount (defaults from lead value). Requires `opportunities.create`. Workspace admins can change this under **Settings → Leads**:
+  - **Require opportunity when converting** (`leads.convert_require_opportunity`, default off) — convert must create an opportunity when Opportunities is installed
+  - **Minimum opportunity amount** (`leads.convert_min_opportunity_amount`, default `0`) — when creating an opportunity on convert, amount (or lead value fallback) must meet this floor
 
 The lead is stamped with `converted_at`, status becomes Closed, `conversion_meta` stores linked ids/names, activity is recorded, and Automation can run on `lead.converted` when Automation is entitled. After convert, the drawer shows **View contact** / **View company** / **View opportunity** links when those records were created and you can view them.
 
