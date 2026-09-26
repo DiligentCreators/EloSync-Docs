@@ -1,6 +1,6 @@
 # Payroll — User Guide
 
-Enable **Employees** first, then install **Payroll** from Marketplace (free). For journal posting, also install **Accounting**. Nav appears under **HR**.
+Enable **Employees** first, then install **Payroll** from Marketplace (free). For journal posting and bank deduction on Mark paid, also install **Accounting**. Nav appears under **HR**.
 
 ## Payroll profiles
 
@@ -20,8 +20,9 @@ Enable **Employees** first, then install **Payroll** from Marketplace (free). Fo
    - Late check-ins stay present for attendance; when the late-deduction toggle is on, a ladder (e.g. 3 lates → 1 day, 6 → 2 days) adds day-salary penalties. One late day never deducts. Payslips show late count and late deduction days.
    - Net is never negative; draft lines stay editable
 3. While **draft**, edit period notes and line gross/adjustments (net recalculates). Breakdown columns (work days, unpaid leave, absent, lates, late days) are shown for audit.
-4. **Approve** from the pay runs list row menu, the quick peek, or the full record page (requires at least one line) → **Mark paid** the same way.
-5. Optionally **Post** to Accounting from the full record page (approved or paid) to create a draft journal for the net total.
+4. **Approve** from the pay runs list row menu, the quick peek, or the full record page (requires at least one line).
+5. **Mark paid** the same way. When **Accounting** is installed, choose **Paid from** (cash/bank). EloSync posts (or creates and posts) the salary accrual journal, then posts a **payment** journal that credits the paid-from account so that bank’s balance decreases. Without Accounting, Mark paid is status-only.
+6. Optionally **Post to journal** from the full record page (approved, before payment) to create a **draft** accrual early (`Dr` Salary Expense `6400` / `Cr` Salaries Payable `2200`). Mark paid posts that draft if it still exists, then posts the payment.
 
 ## My salary slips (employees)
 
@@ -33,4 +34,4 @@ Linked employees with `payroll.view_own` (staff by default) can open **My salary
 draft → approved → paid
 ```
 
-Only drafts are editable or soft-deletable. Posting requires the Accounting module and active expense + liability accounts (or explicit account ids).
+Only drafts are editable or soft-deletable. Accounting integration requires active cash/bank (for Mark paid) and Salary Expense / Salaries Payable accounts (starter codes `6400` / `2200`, or overrides on Post).

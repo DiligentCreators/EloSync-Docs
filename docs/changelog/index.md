@@ -1,3 +1,11 @@
+## Payroll Mark paid → Paid from bank (1.4.0) (2026-09-26)
+
+- **EloSync-Backend:** Catalog **payroll 1.3.0 → 1.4.0**. When Accounting is entitled, `POST /pay-runs/{id}/pay` requires `paid_from_account_id` (cash/bank), ensures a posted accrual (`Dr` Salary Expense `6400` / `Cr` Salaries Payable `2200`; posts an existing draft or creates+posts), then auto-posts the payment journal (`Dr` payable / `Cr` paid-from). New pay run columns: `paid_from_account_id`, `expense_account_id`, `liability_account_id`, `payment_journal_entry_id`. Starter CoA adds `2200` / `6400`. CatalogSeeder payroll `version` aligned to **1.4.0**. FKs on accrual + payment journal columns (`2026_09_26_190924_…`). Without Accounting, Mark paid stays status-only. Pest: `PayrollTest` (19) — accounting pay / missing paid-from / no-accounting / draft-then-pay / net ≤ 0 / locked period.
+- **EloSync-Frontend:** Mark paid opens Paid-from dialog (list, peek, view) when Accounting is entitled; record shows paid-from and accrual/payment journals. Playwright helper handles the dialog.
+- **EloSync-Mobile:** Pay run detail Mark paid opens cash/bank picker when Accounting is entitled.
+- **EloSync-Website:** Payroll marketing copy notes Accounting Paid-from on Mark paid.
+- **EloSync-Docs:** Payroll user/developer/API/overview, Accounting soft cash movement notes, mobile guide, changelog. Go-live: [Payroll 1.4.0 paid-from production readiness](/deployment/payroll-1-4-0-paid-from-production-readiness) — **Go** (all audit findings closed).
+
 ## Lead convert opportunity settings (1.7.0) (2026-09-26)
 
 - **EloSync-Backend:** Catalog **1.6.0 → 1.7.0**. Tenant settings `leads.convert_require_opportunity` (boolean, default off) and `leads.convert_min_opportunity_amount` (numeric, default `0`). Enforced in `LeadService::convert` (require opportunity when Opportunities entitled; min amount on effective `opportunity.amount` / `lead_value`). Enabling require without Opportunities returns settings 422. Pest: `LeadConvertOpportunitySettingsTest` (5).

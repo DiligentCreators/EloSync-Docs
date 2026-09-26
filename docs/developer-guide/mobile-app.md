@@ -714,7 +714,7 @@ Payroll profiles per employee and pay run workflow: generate periods from profil
 | Nav | `config/modules.ts` — `permission: payroll.view`, tab `/(app)/(tabs)/payroll` (label **Pay**) |
 | Permissions | `payroll.view`, `create`, `update`, `delete`, `approve`, `pay`, `post` |
 
-Pay run line editing, journal debit/credit account picker, trash/restore, and employee self pay stubs remain web-only on mobile v1. Requires **Employees** module entitlement for profile employee picker and deep links.
+Pay run Mark paid with Accounting entitled prompts for a cash/bank **Paid from** account and posts the payment journal. Line editing, optional accrual debit/credit account picker on Post, trash/restore, and employee self pay stubs remain web-only on mobile v1. Requires **Employees** module entitlement for profile employee picker and deep links.
 
 Tenant API reference: [Tenant API — Payroll](/api/tenant-v1-payroll).
 

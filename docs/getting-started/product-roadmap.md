@@ -116,7 +116,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Employees](/user-guide/employees-overview) | Shipped |
 | [Leave Management](/user-guide/leave-management-overview) | Shipped (requires Employees) |
 | [Attendance](/user-guide/attendance-overview) | Shipped (requires Employees; check-in/out timer) |
-| [Payroll](/user-guide/payroll-overview) | Shipped (requires Employees; optional Accounting post; own pay slips) |
+| [Payroll](/user-guide/payroll-overview) | Shipped (requires Employees; Accounting Mark paid Paid-from + optional draft accrual; own pay slips) |
 
 ### Deferred
 

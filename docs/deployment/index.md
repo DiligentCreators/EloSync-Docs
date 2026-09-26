@@ -77,7 +77,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Employees](./employees) | Employees module ops |
 | [Leave Management](./leave-management) | Leave Management module ops |
 | [Attendance](./attendance) | Attendance module ops |
-| [Payroll](./payroll) | Payroll module ops |
+| [Payroll](./payroll) | Payroll module ops ([1.4.0 paid-from readiness](./payroll-1-4-0-paid-from-production-readiness) — **Go**) |
 | [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
 | [Assets](./assets) | Assets Marketplace opt-in ops |
 | [Documents](./documents) | Documents Marketplace opt-in ops ([1.0.1 readiness](./documents-production-readiness); hard Storage dependency) |
