@@ -17,6 +17,17 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Leads 1.5.0 → 1.6.0 — created_by / updated_by
+
+After migrate (`2026_09_26_112037_add_created_by_and_updated_by_to_leads_table`, `2026_09_26_112040_bump_leads_module_to_1_6_0`, `2026_09_26_133208_remediates_leads_created_by_updated_by_backfill`):
+
+1. Confirm catalog `leads` version is `1.6.0` (migrate-only; do **not** `db:seed`)
+2. Confirm tenant `leads` has `created_by` / `updated_by` (nullable FKs); backfill is batched (chunk 500)
+3. Deploy the SPA **after** migrate — Created by / Updated by columns and filters
+4. Staging smoke: create → filter by creator → edit as second user → Updated by changes; add a note → Updated by changes; System filter for null actors
+
+Go-live: [Leads 1.6.0 created/updated by production readiness](/deployment/leads-created-by-updated-by-1-6-0-production-readiness).
+
 ## Live Chat 1.5.1 → 1.5.2 — inbound notification broadcast
 
 After migrate (`2026_09_25_210000_bump_live_chat_module_version_to_1_5_2`):
