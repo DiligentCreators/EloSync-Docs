@@ -1,3 +1,9 @@
+## Leads created_by / updated_by (1.6.0) (2026-09-26)
+
+- **EloSync-Backend:** Catalog **1.5.0 → 1.6.0**. Denormalized `leads.created_by` / `updated_by` (nullable FKs → users), batched backfill from `lead_activities` on migrate (created-type + earliest-actor fallback). `LeadService` sets both on create and `updated_by` on update/convert/restore/delete **and** notes / tag sync / follow-ups. List/board/stats/export filter via `created_by` / `updated_by` (`system` = null). API embeds `creator` / `updater`. Pest: `LeadCreatedByUpdatedByTest` (4).
+- **EloSync-Frontend:** Leads table columns + filters (Created by / Updated by); board card badge; peek and record overview fields; import e2e queue-worker hint on `test:e2e:leads`.
+- **EloSync-Docs:** Leads user/developer/API/database + changelog + hubs **1.6.0**. Go-live: [Leads 1.6.0 created/updated by production readiness](/deployment/leads-created-by-updated-by-1-6-0-production-readiness) — **Go** (I1/L1/L2/I2 remediated).
+
 ## Live Chat 1.5.2 inbound notification broadcast (2026-09-25)
 
 - **EloSync-Backend:** Catalog **1.5.1 → 1.5.2**. `LiveChatInboundMessageNotification` fans out on `database` + `broadcast` (`BroadcastsCrmNotification`) so the open-tab notification center receives `NotificationCreated` while Echo is connected (SPA disables poll fallback when Echo is up). Pest covers channel list on visitor send.

@@ -16,8 +16,9 @@ Open **Leads** from the sidebar under **CRM**. The default view is the **Kanban 
 
 - Search by name, email, phone, or company
 - Each stage column header and its cards use that stage’s color; Stage badges in the table and record page use the same colors
-- Filter by stage, status, priority, tag, assignee, and lead value range
+- Filter by stage, status, priority, tag, assignee, **created by**, **updated by**, and lead value range
 - KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
+- Table columns include **Created by** and **Updated by** (shows **System** for imports/webhooks with no actor); board cards may show a short “By …” badge. **Updated by** changes when someone edits the lead, adds a note, changes tags, or manages follow-ups.
 - Table and board both show **lead type**, **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
 - With **update** permission, click tag badges (or **Add tags** when empty) on a table row or board card to open an inline tag picker — no need to open the lead record. Applying **Follow Up Later** still requires a follow-up due date in the popover before **Save tags**
 - **Manage tags** (requires update) opens the workspace tag catalog — create, edit, reorder, delete. Seeded tags include Direct Lead / Company Lead (synced from lead type), Not Contacted (default), Contacted, No Response (auto follow-up after N days), Invalid Number, Not Interested, Not Applied, and Follow Up Later (forces a follow-up when applied)
@@ -95,7 +96,7 @@ Lifecycle on contacts is independent of soft-delete (trash). See [Contacts](/use
 
 ## Export
 
-Users with **export** can download the current filtered set as **CSV** or **XLSX** (includes **Commission Rate %** when the lead is assigned).
+Users with **export** can download the current filtered set as **CSV** or **XLSX** (includes **Commission Rate %** when the lead is assigned, plus **Created By** / **Updated By**).
 
 ## Import
 

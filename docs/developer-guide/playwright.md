@@ -30,7 +30,7 @@ Does **not** cover Stripe Checkout or future ERP modules beyond what is listed b
 | Settings | `e2e/tests/settings/` | `npm run test:e2e:settings` — Central identity/flags + tenant branding/mail (`npm run test:e2e:tenant-settings`); Developers full workflow (`npm run test:e2e:developers`); Storage usage (`npm run test:e2e:storage`) |
 | Form validation audit | `e2e/tests/validation/` | `npm run test:e2e:validation` / `test:e2e:validation:headed` — empty-submit create forms after `local:entitle-demo-modules --all` |
 | Beta Applications (Founding Beta invite) | `e2e/tests/beta-applications/` | `npm run test:e2e:beta-applications` — one Central admin session: settings validation, registration-closed CTA, Accept & send invite, invite register validation + activation, expired resend |
-| Leads | `e2e/tests/leads/` | `npm run test:e2e:leads` |
+| Leads | `e2e/tests/leads/` | `npm run test:e2e:leads` (import specs need `herd php artisan queue:work --queue=imports,default` from EloSync-Backend) |
 | Tasks | `e2e/tests/tasks/` | `npm run test:e2e:tasks` |
 | Projects | `e2e/tests/projects/` | `npm run test:e2e:projects` / `test:e2e:projects:headed` |
 | Contacts | `e2e/tests/contacts/` | `npm run test:e2e:contacts` |

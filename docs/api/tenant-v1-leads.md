@@ -56,7 +56,7 @@ Columns per stage: `stage`, `lead_count`, `total_lead_value`, `leads[]`. Honors 
 
 ### GET `/leads`
 
-Query: `search`, `status`, `stage_id`, `tag_id`, `tag_ids` (comma-separated), `priority`, `assigned_to` (`unassigned` or user id), `lead_value_min`, `lead_value_max`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search`, `status`, `stage_id`, `tag_id`, `tag_ids` (comma-separated), `priority`, `assigned_to` (`unassigned` or user id), `created_by` / `updated_by` (user id or `system` for null), `source`, `date_from` / `date_to` (created_at date), `lead_value_min`, `lead_value_max`, `my_leads`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
 Status values: `active`, `waiting`, `on_hold`, `closed`, `archived`.
 
