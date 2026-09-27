@@ -278,6 +278,16 @@ After migrate (`2026_09_16_040000_bump_ai_module_version_to_1_16_0`):
 
 Go-live: [AI Leave triage production readiness](/deployment/ai-leave-triage-production-readiness) · ops [AI deployment](/deployment/ai).
 
+## AI Contract triage tools 1.16.0 → 1.17.0
+
+After migrate (`2026_09_27_180000_bump_ai_module_version_to_1_17_0`):
+
+1. Confirm catalog `ai.version` is **1.17.0** (migrate-only; do **not** `db:seed`).
+2. No SPA/Mobile deploy required for this bump (confirm UI is tool-agnostic).
+3. Smoke: entitle `ai` + `opportunities` + `contracts` → Ask EloSync fetch contract → propose status/assign/note → Confirm; Sent needs `contracts.send` (issues acceptance token); Active from Sent needs `contracts.accept`.
+
+Go-live: [AI Contract triage production readiness](/deployment/ai-contract-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Sales document invoice conversion (quotations 1.4.1 / contracts 1.2.1 / invoices 1.6.1 / estimates 1.3.3)
 
 After migrate:

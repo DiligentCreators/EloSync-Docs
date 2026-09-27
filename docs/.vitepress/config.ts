@@ -553,6 +553,7 @@ export default withMermaid(defineConfig({
             { text: 'AI Quotation Triage Production Readiness', link: '/deployment/ai-quotation-triage-production-readiness' },
             { text: 'AI Credit Note Triage Production Readiness', link: '/deployment/ai-credit-note-triage-production-readiness' },
             { text: 'AI Leave Triage Production Readiness', link: '/deployment/ai-leave-triage-production-readiness' },
+            { text: 'AI Contract Triage Production Readiness', link: '/deployment/ai-contract-triage-production-readiness' },
             { text: 'Communication Templates', link: '/deployment/communication-templates' },
             { text: 'Email', link: '/deployment/email' },
             { text: 'Branded', link: '/deployment/branded' },

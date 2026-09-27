@@ -25,6 +25,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 - Staff may still **Activate without signature** from Draft (`contracts.update`) without issuing a customer link
 - **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check). Confirming in the UI acknowledges repeat billing (`acknowledge_repeat_billing`); the API requires that flag for the second and later invoices from the same contract.
 - **Renewal reminders** — for **Active** contracts with an `end_date`, `crm:send-due-notifications` sends in-app `contract.renewal_due` to the assignee (or creator) within the workspace notice window (`contract_renewal_notice_days`, default **30**, Settings → General)
+- **Ask EloSync** — with AI Assistant installed, fetch a contract and confirm suggested status / assign / note actions (**ai 1.17.0**)
 - Assignment with assignee scoping via `contracts.assign`
 - Notes + domain activity timeline (mirrors Opportunities / Quotations)
 - Trash filtering plus **Restore** and **Delete permanently**

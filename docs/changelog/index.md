@@ -1,3 +1,9 @@
+## AI Contract triage tools (ai 1.17.0) (2026-09-27)
+
+- **EloSync-Backend:** Ask EloSync adds `get_contract` plus confirmed writes `update_contract_status`, `assign_contract`, and `add_contract_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`contracts.update` **or** `send` **or** `accept`) and routes Sent→`send()` (acceptance token), Active-from-Sent→`accept()`, else `changeStatus` via `ContractAiSupport`. Confirm-time assign re-validates `EligibleOpportunityAssignee`; note confirm re-checks `max:5000`. Get payload returns `title` (no `number`), party, value, dates, `assigned_to`, and `assignee_name`. Catalog **ai 1.16.0 → 1.17.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Frontend:** Playwright AI suite (same login session) covers contract propose→confirm status/assign and note body validation — no product UI change (confirm UI is tool-agnostic).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Contracts cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-contract-triage-production-readiness) (**Go**); changelog.
+
 ## Branded pay slip PDF Layout A (payroll 1.4.1) (2026-09-27)
 
 - **EloSync-Backend:** Catalog **payroll 1.4.0 → 1.4.1**. `MyPaySlipService` uses `BrandedDocumentPdfContext` (logo, primary color, company profile address/contact/tax ID, workspace currency). `resources/views/payroll/payslip.blade.php` Layout A: branded header + **PAY SLIP** meta, Employee | Period details parties strip, Gross/Adjustments table, NET PAY bar, notes, footer. CatalogSeeder payroll `version` **1.4.1**. Pest: `MyPaySlipTest` branded HTML assertions.

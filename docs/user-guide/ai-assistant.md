@@ -56,6 +56,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - With Invoices installed, ask about overdue invoices or a specific invoice, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Unpaid** still needs **send**; cancelling needs **void**. Status suggestions follow the same path as changing status in the app (not the dedicated Send button’s accrual/PDF side effects).
 - With Estimates installed, ask about a specific estimate, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Sent** still needs **send**; accepting needs **accept**.
 - With Quotations installed, ask about a specific quotation, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Sent** still needs **send**; accepting needs **accept**.
+- With Contracts installed, ask about a specific contract, then confirm suggested status changes, assignments, or timeline notes before they apply. Moving to **Sent** still needs **send** (issues the acceptance link); activating a **Sent** contract needs **accept**; Draft→Active without signature needs **update**.
 - With Expenses installed, ask about expenses awaiting approval or a specific expense, then confirm suggested status changes, assignments, or notes before they apply. Approving needs **approve**; rejecting needs **reject**; marking paid needs **pay** (and when Accounting is installed, a paid-from account should already be set on the expense — same as changing status in the app without the dedicated Mark as paid dialog).
 - With Projects installed, ask about a project or overdue projects, then confirm suggested status changes, assignments, or notes before they apply.
 - With Purchase Orders installed, ask about a PO, then confirm suggested status changes, assignments, or notes before they apply. Sending needs **send**; receiving needs **receive**; cancelling needs **cancel**.
@@ -75,6 +76,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - [Invoices](/user-guide/invoices-overview)
 - [Estimates](/user-guide/estimates-overview)
 - [Quotations](/user-guide/quotations-overview)
+- [Contracts](/user-guide/contracts-overview)
 - [Payments](/user-guide/payments-overview)
 - [Credit Notes](/user-guide/credit-notes-overview)
 - [Leave Management](/user-guide/leave-management-overview)
