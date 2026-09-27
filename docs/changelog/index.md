@@ -1,3 +1,9 @@
+## AI Contract triage tools (ai 1.17.0) (2026-09-27)
+
+- **EloSync-Backend:** Ask EloSync adds `get_contract` plus confirmed writes `update_contract_status`, `assign_contract`, and `add_contract_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`contracts.update` **or** `send` **or** `accept`) and routes Sent→`send()` (acceptance token), Active-from-Sent→`accept()`, else `changeStatus` via `ContractAiSupport`. Confirm-time assign re-validates `EligibleOpportunityAssignee`; note confirm re-checks `max:5000`. Get payload returns `title` (no `number`), party, value, dates, `assigned_to`, and `assignee_name`. Catalog **ai 1.16.0 → 1.17.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Frontend:** Playwright AI suite (same login session) covers contract propose→confirm status/assign and note body validation — no product UI change (confirm UI is tool-agnostic).
+- **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Contracts cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-contract-triage-production-readiness) (**Go**); changelog.
+
 ## Contracts auto-renew (1.8.0) (2026-09-27)
 
 - **EloSync-Backend:** Catalog **contracts 1.7.0 → 1.8.0**. `contracts.auto_renew` boolean (default off; requires `end_date`). Daily `contracts:process-auto-renewals` extends Active auto-renew terms by the prior start→end length and records `auto_renewed` activity. Active/Sent may toggle auto-renew via update without full draft edit. Pest: `ContractAutoRenewalTest` (7).
