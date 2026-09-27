@@ -326,6 +326,17 @@ Do **not** ship the empty stub `2026_09_23_210611_add_contract_acceptance_eviden
 
 Go-live: [Contracts 1.7.0 accept evidence production readiness](/deployment/contracts-1-7-0-production-readiness).
 
+## Contracts auto-renew 1.7.0 → 1.8.0
+
+After migrate (`2026_09_27_142116_add_auto_renew_to_contracts_table` + `2026_09_27_142147_bump_contracts_module_version_to_1_8_0`):
+
+1. Confirm catalog `contracts.version` is **1.8.0** (migrate-only; do **not** `db:seed`).
+2. Confirm `contracts.auto_renew` exists (boolean, default false).
+3. Confirm scheduler runs `contracts:process-auto-renewals` daily (Forge/Cloud).
+4. Deploy SPA after migrate — Auto-renew checkbox/Switch and validation.
+
+Go-live: [Contracts auto-renew 1.8.0 production readiness](/deployment/contracts-auto-renew-1-8-0-production-readiness).
+
 ## Contracts 1.1.0 — auto-fill and HTML memos
 
 After migrate:
