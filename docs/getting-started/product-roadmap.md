@@ -12,7 +12,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped |
-| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** Task/Lead overlays) |
+| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
@@ -21,11 +21,10 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 ### Planned / deferred after Phase 1 MVP
 
 - Calendar: team calendars / shared ACL, Google/Outlook sync
-- Meetings: invitee Calendar ACL for projected events
 - Leads: real-time board sync
 - WhatsApp: interactive buttons/lists, alternate BSPs, AI WhatsApp features
 
-**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**).
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**).
 
 ---
 

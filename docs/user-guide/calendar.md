@@ -11,10 +11,10 @@ Use Calendar to manage **your** personal events. Default view is **Week** (Googl
 
 | Role | What you see |
 |------|----------------|
-| Staff (no `view_all`) | Only events you created |
+| Staff (no `view_all`) | Events you organized, plus **meeting projections you are invited to** (view-only) |
 | Owner / Admin / Manager (`calendar.view_all`) | All workspace events |
 
-There is **no calendar assignment**. You cannot assign a calendar to someone else. Booking meetings, hosts, Zoom/Google Meet, and invitees belong to the **[Meetings](/user-guide/meetings)** module (projected onto your Calendar when you are the host).
+There is **no calendar assignment**. You cannot assign a calendar to someone else. Booking meetings, hosts, Zoom/Google Meet, and invitees belong to the **[Meetings](/user-guide/meetings)** module. Meeting projections appear for the **host** and for **internal invitees** (invitees see a **View only** badge; changes stay in Meetings).
 
 Open Tasks with a due date, Leads with a next follow-up, and Projects with start/end dates also appear as sourced events when those modules (and Calendar) are installed. Sourced events are managed from their parent records — edit/cancel them there, not as manual Calendar events.
 

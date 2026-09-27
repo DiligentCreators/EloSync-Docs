@@ -312,6 +312,16 @@ Superseded by **1.4.1 / 1.2.1 / 1.6.1 / 1.3.3** integrity hardening above. Histo
 
 Do **not** unique-index `customer_invoices.quotation_id`. Contract billing is repeatable; the quotation/estimate one-shot guard is application-level (`QuotationInvoiceGuard`).
 
+## Calendar invitee ACL 1.1.0 → 1.2.0
+
+After migrate (`2026_09_27_190000_bump_calendar_module_version_to_1_2_0`):
+
+1. Confirm catalog `calendar.version` is **1.2.0** (migrate-only; do **not** `db:seed`).
+2. Deploy Backend before SPA — invitees need list/view ACL + `read_only` on the resource.
+3. Smoke: create a meeting with an internal invitee → invitee `GET /calendar/events` includes the projection with `read_only: true`; `PUT` returns 403.
+
+Go-live: [Calendar invitee ACL 1.2.0 production readiness](/deployment/calendar-invitee-acl-1-2-0-production-readiness).
+
 ## Contracts 1.6.0 → 1.7.0 — accept evidence
 
 After migrate (`2026_09_24_020619_add_contract_acceptance_evidence_fields_to_contracts_table`):

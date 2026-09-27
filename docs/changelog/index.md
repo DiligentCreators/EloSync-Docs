@@ -1,3 +1,9 @@
+## Calendar invitee ACL (1.2.0) (2026-09-27)
+
+- **EloSync-Backend:** Catalog **calendar 1.1.0 → 1.2.0**. Staff without `calendar.view_all` can list/view meeting-projected calendar events when they are on `meeting_attendees` for that meeting; update/cancel/delete stay organizer/`view_all` only. Resource adds `read_only`. Migrate-only bump + CatalogSeeder. Pest: `MeetingInviteeCalendarAclTest`.
+- **EloSync-Frontend:** Agenda/detail show **View only** for invitee meeting projections; Week/Day drag disabled for `read_only` / non-manual sources. Playwright invitee flow in `calendar.workflow.spec.ts`.
+- **EloSync-Docs:** User/developer/API/deployment/roadmap/changelog + [production readiness](/deployment/calendar-invitee-acl-1-2-0-production-readiness) (**Go**).
+
 ## AI Contract triage tools (ai 1.17.0) (2026-09-27)
 
 - **EloSync-Backend:** Ask EloSync adds `get_contract` plus confirmed writes `update_contract_status`, `assign_contract`, and `add_contract_note` (text only). Status tool uses `AiToolAnyOfPermissions` (`contracts.update` **or** `send` **or** `accept`) and routes Sent→`send()` (acceptance token), Active-from-Sent→`accept()`, else `changeStatus` via `ContractAiSupport`. Confirm-time assign re-validates `EligibleOpportunityAssignee`; note confirm re-checks `max:5000`. Get payload returns `title` (no `number`), party, value, dates, `assigned_to`, and `assignee_name`. Catalog **ai 1.16.0 → 1.17.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.

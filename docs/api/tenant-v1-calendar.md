@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `verified`, `module:calendar`, plus `can:calendar.*` / policies.
 
-Visibility: without `calendar.view_all`, only events where `organizer_id` is the current user. No calendar assignment — `organizer_id` and `assignee_id` are prohibited on write payloads.
+Visibility: without `calendar.view_all`, events where `organizer_id` is the current user **or** meeting projections (`source_type=meeting`) where the actor appears on `meeting_attendees.user_id`. Invitees receive `read_only: true` and cannot update/cancel/delete. No calendar assignment — `organizer_id` and `assignee_id` are prohibited on write payloads.
 
 ## Upcoming
 
@@ -18,7 +18,7 @@ Query: `limit` (1–25, default 8). Scheduled events with `starts_at >= now()`, 
 
 Query: `search`, `status`, `from`, `to`, `trashed`, `sort` (default `starts_at`), `direction` (default `asc`), `page`, `per_page`, `paginate` (`0`/`false` returns a non-paginated range collection when `from`+`to` are set).
 
-Events may have `source` `manual` | `meeting` | `project` | `task` | `lead` (sourced overlays are read on the grid; mutate via the parent module).
+Events may have `source` `manual` | `meeting` | `project` | `task` | `lead` (sourced overlays are read on the grid; mutate via the parent module). Responses include `read_only` (boolean) for SPA gating.
 
 ### POST `/calendar/events`
 
