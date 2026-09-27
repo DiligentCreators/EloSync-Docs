@@ -61,6 +61,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-contracts.md](/api/tenant-v
 
 SPA should mirror **Opportunities** / **Quotations** (table + create/edit page, record page) under the existing AppLayout — do not invent a parallel shell. Create form: selecting an opportunity auto-fills party, value, currency, and title (when empty); assignee is copied only when that user appears in the picker (`filterTaskAssigneeOptions` — suspended users omitted; owners and lead-excluded users remain assignable). Quotation auto-links only when that opportunity has exactly one quotation. Description and notes use the shared TipTap `RichTextEditor`. Store allows the creating actor to pass `assigned_to` as themselves; otherwise `EligibleOpportunityAssignee` (active non-suspended users) applies. Service still defaults `assigned_to` to the actor when the field is null. Guest accept route: `/#/accept/contracts/:token` (mirrors quotations).
 
+Ask EloSync Contract tools (`get_contract`, confirmed status/assign/note writes) ship with **ai 1.17.0**. Status auth: Sent→`send()`, Active from Sent→`accept()`, else `changeStatus` with `update` via `ContractAiSupport`. Assign uses `EligibleOpportunityAssignee`. See [AI tools](/developer-guide/ai-tools) and [AI Contract triage production readiness](/deployment/ai-contract-triage-production-readiness).
+
 | Piece | Path (expected) |
 |-------|-----------------|
 | Page | `src/pages/contracts/` |
