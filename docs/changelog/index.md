@@ -4,6 +4,12 @@
 - **EloSync-Frontend:** Playwright AI suite (same login session) covers contract propose→confirm status/assign and note body validation — no product UI change (confirm UI is tool-agnostic).
 - **EloSync-Docs:** AI tools / Tenant AI API / AI Assistant + Contracts cross-links; VitePress sidebar; roadmap; [production readiness](/deployment/ai-contract-triage-production-readiness) (**Go**); changelog.
 
+## Contracts auto-renew (1.8.0) (2026-09-27)
+
+- **EloSync-Backend:** Catalog **contracts 1.7.0 → 1.8.0**. `contracts.auto_renew` boolean (default off; requires `end_date`). Daily `contracts:process-auto-renewals` extends Active auto-renew terms by the prior start→end length and records `auto_renewed` activity. Active/Sent may toggle auto-renew via update without full draft edit. Pest: `ContractAutoRenewalTest` (7).
+- **EloSync-Frontend:** Create/edit Auto-renew checkbox; Active/Sent record Switch; Playwright validation + toggle in contracts workflow.
+- **EloSync-Docs:** User/developer/roadmap/changelog + [production readiness](/deployment/contracts-auto-renew-1-8-0-production-readiness) (**Go**).
+
 ## Branded pay slip PDF Layout A (payroll 1.4.1) (2026-09-27)
 
 - **EloSync-Backend:** Catalog **payroll 1.4.0 → 1.4.1**. `MyPaySlipService` uses `BrandedDocumentPdfContext` (logo, primary color, company profile address/contact/tax ID, workspace currency). `resources/views/payroll/payslip.blade.php` Layout A: branded header + **PAY SLIP** meta, Employee | Period details parties strip, Gross/Adjustments table, NET PAY bar, notes, footer. CatalogSeeder payroll `version` **1.4.1**. Pest: `MyPaySlipTest` branded HTML assertions.

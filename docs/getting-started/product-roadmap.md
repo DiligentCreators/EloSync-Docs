@@ -35,13 +35,13 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Opportunities](/user-guide/opportunities-overview) (pipeline + Kanban) | Shipped |
 | [Quotations](/user-guide/quotations-overview) | Shipped (requires Opportunities; customer e-signature accept links **1.9.0**) |
-| [Contracts](/user-guide/contracts-overview) | Shipped (requires Opportunities; PDF + e-signature **1.5.0**; renewal reminders **1.6.0**; accept evidence toggles **1.7.0**) |
+| [Contracts](/user-guide/contracts-overview) | Shipped (requires Opportunities; PDF + e-signature **1.5.0**; renewal reminders **1.6.0**; accept evidence toggles **1.7.0**; auto-renew **1.8.0**) |
 | [Resellers](/user-guide/resellers-overview) / [Reseller Payouts](/user-guide/reseller-payouts-overview) | Shipped (free Sales opt-ins; Payments → Resellers → Payouts chain) |
 
 ### Deferred
 
 - Quotation multi-signer / third-party e-sign providers; multi-currency; approval workflows beyond status enums
-- Contract multi-signer / third-party e-sign providers; auto-renew boolean
+- Contract multi-signer / third-party e-sign providers
 - Reseller cross-workspace identity; reseller portal; automated bank disbursement
 
 ---
@@ -209,7 +209,7 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Phased depth Steps 1–4 + convert polish (2026-09-16):** Projects milestones (**projects 1.4.0**) + task dependencies / `milestone_id` (**tasks 1.5.0**); contract renewal reminders via `crm:send-due-notifications` + `contract_renewal_notice_days` (**contracts 1.6.0**); PO per-line partial quantity receive (**purchase-orders 1.5.0**); Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish — `LeadConverted` / Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names (**leads 1.5.0**).
 
-Still deferred: Gantt/heatmaps; Google/Outlook sync; team Calendar ACL; WhatsApp interactive; Customer Portal; multi-currency; PO/Vendor portals; contract auto-renew boolean.
+Still deferred: Gantt/heatmaps; Google/Outlook sync; team Calendar ACL; WhatsApp interactive; Customer Portal; multi-currency; PO/Vendor portals.
 
 Next when prioritized: WhatsApp interactive messages; demand-driven items below (broader AI tools continue lightly).
 
