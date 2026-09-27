@@ -15,7 +15,7 @@ Use **Meetings** to schedule workspace meetings, invite teammates (and external 
 | Staff (no `view_all`) | Meetings you created, host, or are invited to |
 | Owner / Admin / Manager (`meetings.view_all`) | All workspace meetings |
 
-Invitees use the Meetings list/detail as their source of truth. Calendar shows the **host’s** projected event (Calendar ACLs remain organizer-scoped).
+Invitees use the Meetings list/detail as their source of truth for edits. Calendar also shows the projected event for the **host** and for **internal invitees** (invitees see it as **View only** on Calendar).
 
 ## Schedule a meeting
 

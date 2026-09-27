@@ -1,6 +1,6 @@
 # Calendar Module
 
-Personal calendar events for tenant workspaces. Week/Day time grids, Month, and Agenda views with org-wide visibility for owners/admins. [Meetings](/user-guide/meetings-overview) (book + assign host + Zoom/Meet) project onto Calendar for the host.
+Personal calendar events for tenant workspaces. Week/Day time grids, Month, and Agenda views with org-wide visibility for owners/admins. [Meetings](/user-guide/meetings-overview) (book + assign host + Zoom/Meet) project onto Calendar for the host and for internal invitees (view-only).
 
 ## Guides
 
@@ -23,9 +23,10 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 - Workspace timezone-aware display and editing
 - `calendar.view_all` for workspace Owner / Admin / Manager oversight
 - Upcoming events dashboard widget
-- **Overlays** — [Meetings](/user-guide/meetings-overview) (host), [Projects](/user-guide/projects-overview) (start/end all-day), [Tasks](/user-guide/tasks-overview) (due datetime), and [Leads](/user-guide/leads-overview) (next follow-up) project read-only sourced events (`source` = `meeting`|`project`|`task`|`lead`)
-- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.1.0**
+- **Overlays** — [Meetings](/user-guide/meetings-overview) (host + internal invitees, view-only for invitees), [Projects](/user-guide/projects-overview) (start/end all-day), [Tasks](/user-guide/tasks-overview) (due datetime), and [Leads](/user-guide/leads-overview) (next follow-up) project sourced events (`source` = `meeting`|`project`|`task`|`lead`)
+- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.2.0**
 - Activity logging (`LogsActivity`)
+- API `read_only` flag for invitee / non-organizer viewers
 
 ## Permissions
 
@@ -34,8 +35,7 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 ## Explicitly deferred
 
 - Calendar assignment / assignee / create-on-behalf
-- Team calendars / shared ACL
-- Invitee visibility of projected meeting events on Calendar grids
+- Team calendars / shared ACL beyond meeting invitee visibility
 - Google / Outlook calendar sync
 
 Meetings, Zoom, and Google Meet are documented under [Meetings](/user-guide/meetings-overview).

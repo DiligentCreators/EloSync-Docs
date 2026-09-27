@@ -1,6 +1,6 @@
 # Meetings Module
 
-Schedule workspace meetings with hosts, invitees, optional Zoom/Google Meet links, and a single reminder. Meetings project onto Calendar for the host.
+Schedule workspace meetings with hosts, invitees, optional Zoom/Google Meet links, and a single reminder. Meetings project onto Calendar for the host and for internal invitees (view-only).
 
 ## Guides
 
@@ -31,5 +31,5 @@ Schedule workspace meetings with hosts, invitees, optional Zoom/Google Meet link
 
 ## Related
 
-- [Calendar](/user-guide/calendar-overview) — projection surface for host events
+- [Calendar](/user-guide/calendar-overview) — projection surface for host + invitee view-only events
 - [Module Dependencies](/architecture/module-dependencies) — Meetings → Calendar (required)

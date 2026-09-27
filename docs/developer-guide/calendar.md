@@ -16,12 +16,14 @@
 
 Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `status` (`scheduled`|`cancelled`), `source` (`manual`|`meeting`|`project`|`task`|`lead`), nullable `source_type`/`source_id` (Meetings uses morph alias `meeting`; Projects/Tasks/Leads use `project` / `task` / `lead`).
 
-**Excluded:** `assignee_id`, calendar ACL, participants.
+**Excluded:** `assignee_id`, team calendars, Google/Outlook sync.
 
 ## Visibility
 
-- Without `calendar.view_all`: `organizer_id = actor`
+- Without `calendar.view_all`: `organizer_id = actor` **or** meeting projection where the actor is a `meeting_attendees.user_id` row for `source_type=meeting` / `source_id`
 - With `calendar.view_all` or Owner superadmin: all tenant events
+- Update / cancel / delete remain organizer-only (or `view_all` / superadmin) — invitees are read-only
+- Resource includes `read_only: true` when the viewer is not the organizer and lacks `view_all`
 - `POST` always sets `organizer_id` to the authenticated user; `organizer_id` / `assignee_id` are **prohibited** on requests
 
 ## Service contract (Meetings-ready)
@@ -43,7 +45,7 @@ When Calendar is entitled:
 | `task` | Tasks | Timed window from `due_at` (+1h); cleared when completed/cancelled/no due |
 | `lead` | Leads | Timed window from `next_follow_up_at` (+1h); cleared when converted/closed/archived/no follow-up |
 
-Catalog version **1.1.0**. Pest: `tests/Feature/Tenant/Calendar/TaskLeadCalendarOverlayTest.php`.
+Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`.
 
 ## Frontend
 
@@ -89,9 +91,9 @@ Also listed in `CatalogSeeder` for fresh/local/CI.
 
 ## Tests
 
-- Pest: `tests/Feature/Tenant/Calendar/CalendarEventTest.php`
-- Playwright: `npm run test:e2e:calendar`
+- Pest: `tests/Feature/Tenant/Calendar/CalendarEventTest.php`, `MeetingInviteeCalendarAclTest.php`
+- Playwright: `npm run test:e2e:calendar` (includes invitee view-only)
 
 ## Explicit non-goals (v1)
 
-Assignment, team calendars, invitee Calendar ACL, Google/Outlook sync. Meetings/Zoom/Meet live in the Meetings module.
+Assignment, team calendars / shared ACL beyond meeting invitees, Google/Outlook sync. Meetings/Zoom/Meet live in the Meetings module.
