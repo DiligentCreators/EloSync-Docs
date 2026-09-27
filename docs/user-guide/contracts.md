@@ -77,7 +77,11 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 ## Renewal reminders
 
-For **Active** contracts with an end date, EloSync sends an in-app **Contract renewal due** notification to the assignee (or creator) once per day while the end date falls within the workspace **Contract renewal notice (days)** window (Settings → General, default 30 days). There is no auto-renew toggle — renewals stay manual.
+For **Active** contracts with an end date, EloSync sends an in-app **Contract renewal due** notification to the assignee (or creator) once per day while the end date falls within the workspace **Contract renewal notice (days)** window (Settings → General, default 30 days).
+
+## Auto-renew
+
+On create/edit (draft) or from an Active/Sent contract record, turn on **Auto-renew**. An end date is required. When the contract is **Active** and the end date is reached (workspace timezone), EloSync extends the term by the same length overnight (`contracts:process-auto-renewals`), keeps status **Active**, and adds an **auto-renewed** timeline entry. Manual renewals remain available by editing dates on a new draft when auto-renew is off.
 
 ## Notes & activity
 

@@ -26,6 +26,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 - **Create invoice** (`POST /contracts/{id}/convert`) — repeatable draft CustomerInvoice from an active contract when Invoices is entitled (soft check). Confirming in the UI acknowledges repeat billing (`acknowledge_repeat_billing`); the API requires that flag for the second and later invoices from the same contract.
 - **Renewal reminders** — for **Active** contracts with an `end_date`, `crm:send-due-notifications` sends in-app `contract.renewal_due` to the assignee (or creator) within the workspace notice window (`contract_renewal_notice_days`, default **30**, Settings → General)
 - **Ask EloSync** — with AI Assistant installed, fetch a contract and confirm suggested status / assign / note actions (**ai 1.17.0**)
+- **Auto-renew** (**1.8.0**) — optional per-contract toggle; when **Active** and the end date is reached, `contracts:process-auto-renewals` extends the term by the same length and records an `auto_renewed` timeline event
 - Assignment with assignee scoping via `contracts.assign`
 - Notes + domain activity timeline (mirrors Opportunities / Quotations)
 - Trash filtering plus **Restore** and **Delete permanently**
@@ -36,7 +37,7 @@ Sales contract-tracking module on the frozen platform. Mirrors the [Opportunitie
 
 `contracts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.7.0**.
+Enable Contracts from Marketplace (free) once Opportunities is installed. Catalog: slug `contracts`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 60`, version **1.8.0**.
 
 ## Related modules
 

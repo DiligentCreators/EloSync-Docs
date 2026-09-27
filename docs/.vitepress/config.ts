@@ -473,6 +473,7 @@ export default withMermaid(defineConfig({
             { text: 'International Tax Production Readiness', link: '/deployment/international-tax-production-readiness' },
             { text: 'Contracts Production Readiness', link: '/deployment/contracts-production-readiness' },
             { text: 'Contracts 1.7.0 Accept Evidence Readiness', link: '/deployment/contracts-1-7-0-production-readiness' },
+            { text: 'Contracts Auto-Renew 1.8.0 Readiness', link: '/deployment/contracts-auto-renew-1-8-0-production-readiness' },
             { text: 'Leads 1.6.0 Created/Updated By Readiness', link: '/deployment/leads-created-by-updated-by-1-6-0-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
             { text: 'Short Links', link: '/deployment/short-links' },
