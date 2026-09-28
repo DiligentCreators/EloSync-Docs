@@ -6,7 +6,7 @@
 | **Re-verified** | 2026-09-29 — Backend Pest automation **11/11** + Company AI **6/6**; remediations pushed |
 | **Status** | **Go for production** — engineering ship-ready; **Ops deploy remaining** |
 | **Scope** | Two catalog MINOR bumps in one ship |
-| **Code** | `feature/automation-create-project-ai-company-triage` — Backend · Frontend · Docs |
+| **Code** | `feature/automation-create-project-ai-company-triage` — Backend [#219](https://github.com/DiligentCreators/EloSync-Backend/pull/219) · Frontend [#217](https://github.com/DiligentCreators/EloSync-Frontend/pull/217) · Docs [#299](https://github.com/DiligentCreators/EloSync-Docs/pull/299) |
 | **Companions** | [Automation create_project 1.4.0](./automation-create-project-1-4-0-production-readiness) · [AI Company triage 1.19.0](./ai-company-triage-production-readiness) · [CHANGELOG](/changelog/) |
 
 ---
@@ -56,7 +56,7 @@ Engineering gates (code, migrate-only catalog, Pest, SPA builder + Playwright e2
 
 | # | Action | Owner | Status |
 |---|--------|-------|--------|
-| 1 | CI green on Backend / Frontend / Docs PRs; merge | Eng | **Todo** |
+| 1 | CI green on Backend [#219](https://github.com/DiligentCreators/EloSync-Backend/pull/219) / Frontend [#217](https://github.com/DiligentCreators/EloSync-Frontend/pull/217) / Docs [#299](https://github.com/DiligentCreators/EloSync-Docs/pull/299); merge | Eng | **Todo** |
 | 2 | Deploy Backend; `php artisan migrate --force` (central) — **no** `db:seed` | Ops | **Todo** |
 | 3 | Restart automation / default queues | Ops | **Todo** |
 | 4 | Deploy Frontend SPA (same window as Backend) | Ops | **Todo** |
