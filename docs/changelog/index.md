@@ -1,3 +1,9 @@
+## Projects workload heatmap (1.6.0) (2026-09-29)
+
+- **EloSync-Backend:** `GET /projects/heatmap` — assignee × week cells (open project schedule overlap + soft project Tasks due that week when entitled). Pressure score/band; same filters/visibility as list. Catalog **projects 1.5.0 → 1.6.0** (migrate-only + CatalogSeeder). Pest: `ProjectHeatmapTest` (4) + catalog bump.
+- **EloSync-Frontend:** Projects view toggle **Heatmap**; weekly heat cells + open/overdue/pressure columns. Playwright heatmap coverage in projects workflow.
+- **EloSync-Docs:** User / developer / API / deployment / roadmap / changelog + [Projects Heatmap 1.6.0 production readiness](/deployment/projects-heatmap-1-6-0-production-readiness).
+
 ## Projects portfolio Gantt (1.5.0) (2026-09-29)
 
 - **EloSync-Backend:** `GET /projects/gantt` — portfolio rows (project dates, milestones, soft Tasks when entitled + Task policy). Same filters/visibility as list. Lean eager loads; `depends_on_task_ids` filtered to visible tasks. Catalog **projects 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: `ProjectGanttTest` (4) + catalog bump.

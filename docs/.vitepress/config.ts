@@ -499,6 +499,7 @@ export default withMermaid(defineConfig({
             { text: 'Tasks', link: '/deployment/tasks' },
             { text: 'Projects', link: '/deployment/projects' },
             { text: 'Projects Gantt 1.5.0 Readiness', link: '/deployment/projects-gantt-1-5-0-production-readiness' },
+            { text: 'Projects Heatmap 1.6.0 Readiness', link: '/deployment/projects-heatmap-1-6-0-production-readiness' },
             { text: 'Automation', link: '/deployment/automation' },
             { text: 'Knowledge Base', link: '/deployment/knowledge-base' },
             { text: 'Reports (Analytics)', link: '/deployment/analytics' },

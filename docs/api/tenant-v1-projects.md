@@ -6,7 +6,7 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 No hard `module_dependencies` — Projects installs standalone. `contact_id`, `company_id`, and `opportunity_id` are optional; supplying any requires the corresponding module to be entitled (soft link rules).
 
-Visibility without `projects.assign` (and not superadmin): list/board/stats/gantt/view/update only include projects where the actor is **assignee**, **member**, or **creator**. With `projects.assign`, org-wide (`scope: org` on stats).
+Visibility without `projects.assign` (and not superadmin): list/board/stats/gantt/heatmap/view/update only include projects where the actor is **assignee**, **member**, or **creator**. With `projects.assign`, org-wide (`scope: org` on stats).
 
 Field name is **`title`** (not `name`).
 
@@ -84,6 +84,45 @@ Response shape:
 - Embedded tasks are further filtered by Task policy visibility.
 - `depends_on_task_ids` only includes dependency task ids that are also visible to the actor (no leakage of hidden blockers).
 - `range.from` / `range.to` are the min/max of project `starts_on`/`ends_on`, milestone `due_on`, and included task due dates (date portion of `due_at`). Null when no dated rows exist.
+
+## Heatmap
+
+### GET `/projects/heatmap`
+
+Assignee × week workload matrix for the SPA Heatmap view. Honors the same filters and visibility as list. Optional `weeks` (1–16, default 8) starting at the workspace-local start of the current week.
+
+Response shape:
+
+```json
+{
+  "includes_tasks": true,
+  "range": { "from": "2026-09-29", "to": "2026-11-22" },
+  "buckets": [
+    { "key": "2026-W40", "from": "2026-09-28", "to": "2026-10-04", "label": "Sep 28" }
+  ],
+  "rows": [
+    {
+      "user_id": 1,
+      "user_name": "Ada",
+      "user_email": "ada@example.com",
+      "open_projects": 2,
+      "overdue_projects": 1,
+      "open_tasks": 3,
+      "overdue_tasks": 0,
+      "pressure_score": 48,
+      "pressure_band": "watch",
+      "cells": [
+        { "bucket_key": "2026-W40", "projects": 1, "tasks": 2, "load": 3 }
+      ]
+    }
+  ]
+}
+```
+
+- Rows are assignees of visible **open** projects (`planned`|`active`|`on_hold`). Soft Tasks (when entitled + `tasks.view`) add project-linked open task counts; without `tasks.assign`, only the actor’s own tasks are included, and each task must pass Task policy `view`.
+- Cell `projects` = open projects whose schedule overlaps the week; `tasks` = open project tasks due that week; `load` = sum.
+- `pressure_score` 0–100 with bands `healthy` (&lt;40), `watch` (40–69), `overloaded` (70+), weighted from open/overdue projects and (when included) tasks — same idea as CRM Analytics staff pressure.
+- Unassigned open projects are omitted (no person row).
 
 ## Projects CRUD
 

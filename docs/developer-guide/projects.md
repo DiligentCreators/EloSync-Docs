@@ -19,8 +19,8 @@ Lean Operations module mirroring Tasks / Opportunities patterns (board, stats, a
 | Link rules | `LinkableContact`, `LinkableCompanyForOpportunity`, `LinkableOpportunityForProject`, `EligibleProjectAssignee`, `LinkableProjectMilestone`; Tasks uses `LinkableProject` |
 | Dashboard | `DashboardWidgetService` — `active_projects`, `overdue_projects` |
 | Factories | `ProjectFactory`, `ProjectNoteFactory`, `ProjectActivityFactory`, `ProjectMilestoneFactory` |
-| Tests | `tests/Feature/Tenant/Project/ProjectTest.php`, `ProjectMilestoneTest.php`, `ProjectGanttTest.php` |
-| Migrations | `2026_08_14_100000`… — projects tables; `2026_09_16_122010` project_milestones; catalog bumps through **1.5.0** (portfolio Gantt); Tasks `milestone_id` + `task_dependencies` with Tasks **1.5.0** |
+| Tests | `tests/Feature/Tenant/Project/ProjectTest.php`, `ProjectMilestoneTest.php`, `ProjectGanttTest.php`, `ProjectHeatmapTest.php` |
+| Migrations | `2026_08_14_100000`… — projects tables; `2026_09_16_122010` project_milestones; catalog bumps through **1.6.0** (workload heatmap); Tasks `milestone_id` + `task_dependencies` with Tasks **1.5.0** |
 
 ## Domain notes
 
@@ -35,6 +35,7 @@ Lean Operations module mirroring Tasks / Opportunities patterns (board, stats, a
 - Soft Task link: nullable `tasks.project_id` FK → `projects` (`nullOnDelete`). Validated by `LinkableProject` (Projects entitled + project visible to actor). Optional `tasks.milestone_id` → `project_milestones` (`nullOnDelete`) via `LinkableProjectMilestone` (same project). Same-project task dependencies in `task_dependencies` (cycle rejected). Catalog bump Tasks **1.5.0**.
 - **Milestones:** nested under projects (`project_milestones`: title, description, `due_on`, status `open`|`completed`, `sort_order`, `completed_at`). CRUD + `POST …/complete`. Timeline types `milestone_created` / `updated` / `completed` / `deleted`. Show resource embeds `milestones` when loaded.
 - **Portfolio Gantt:** `GET /projects/gantt` — same filters/visibility as list; rows include project dates, milestones, and soft Tasks when Tasks is entitled + actor can `tasks.view` and `view` each task. `depends_on_task_ids` intersected with visible task ids. Date `range` is min/max of project/milestone/task dates. Limit default 100 (max 200). Clears list default eager loads. Catalog **projects 1.5.0**.
+- **Workload heatmap:** `GET /projects/heatmap` — assignee × week cells from open projects (schedule overlap) + soft project Tasks (due week) when entitled; pressure score/band mirrors CRM Analytics staff pressure idea. Optional `weeks` 1–16 (default 8) from workspace start-of-week. Catalog **projects 1.6.0**.
 - **Calendar projection:** `ProjectService` upserts all-day Calendar events on `starts_on`/`ends_on` when Calendar is entitled (source `project`).
 - `projects.force.delete` is not granted to any default role — owner/superadmin only.
 
@@ -46,7 +47,7 @@ projects.view | create | update | delete | restore | force.delete | assign
 
 Routes use `module:projects` then `can:projects.*` / policies.
 
-Catalog: slug `projects`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.5.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `projects`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.6.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## API (tenant)
 
@@ -77,17 +78,18 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-projects.md](/api/tenant-v1
 
 ## Frontend
 
-SPA should mirror **Tasks** (board default + list + Gantt, create/edit page, record page) under AppLayout — do not invent a parallel shell. Nav: **Operations**.
+SPA should mirror **Tasks** (board default + list + Gantt + Heatmap, create/edit page, record page) under AppLayout — do not invent a parallel shell. Nav: **Operations**.
 
 | Piece | Path (expected) |
 |-------|-----------------|
-| Page | `src/pages/projects/` (board + list + Gantt) |
+| Page | `src/pages/projects/` (board + list + Gantt + Heatmap) |
 | Gantt | `src/pages/projects/projects-gantt.tsx` |
+| Heatmap | `src/pages/projects/projects-heatmap.tsx` |
 | Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed) |
 | Form / detail | create/edit page + record page (overview, members, notes, timeline) |
-| Service | `projectService` in `src/api/services.ts` (`gantt`) |
-| Types | `Project*` / `ProjectGantt*` in `src/types/api.ts`; Task gains optional `project_id` / `project` |
-| Query keys | `QUERY_KEYS.projects` / `project(id)` / `projectTimeline(id)` / `projectStats` / `projectBoard` / `projectGantt` |
+| Service | `projectService` in `src/api/services.ts` (`gantt`, `heatmap`) |
+| Types | `Project*` / `ProjectGantt*` / `ProjectHeatmap*` in `src/types/api.ts`; Task gains optional `project_id` / `project` |
+| Query keys | `QUERY_KEYS.projects` / `project(id)` / `projectTimeline(id)` / `projectStats` / `projectBoard` / `projectGantt` / `projectHeatmap` |
 | Permissions | `PERMISSIONS.projects.*` |
 | Nav | `permission: projects.view`, `module: 'projects'` — **Operations** sidebar group |
 | Route | `tenantRoutes.projects = '/projects'`, `RequireAccess module="projects"` |
@@ -97,7 +99,7 @@ SPA should mirror **Tasks** (board default + list + Gantt, create/edit page, rec
 ## Tests
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/Project/ProjectTest.php tests/Feature/Tenant/Project/ProjectMilestoneTest.php tests/Feature/Tenant/Project/ProjectGanttTest.php
+php artisan test --compact tests/Feature/Tenant/Project/ProjectTest.php tests/Feature/Tenant/Project/ProjectMilestoneTest.php tests/Feature/Tenant/Project/ProjectGanttTest.php tests/Feature/Tenant/Project/ProjectHeatmapTest.php
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:projects
 ```
@@ -114,6 +116,5 @@ Ask EloSync Project tools (existing `get_project` / search / overdue plus confir
 
 ## Deferred
 
-- Workload heatmaps
 - Automation `create_project`
 - Project tags, `PRJ-` numbers

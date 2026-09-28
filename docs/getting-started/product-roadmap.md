@@ -128,7 +128,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Help Desk](/user-guide/help-desk-overview) | Shipped **1.10.0** (SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Projects](/user-guide/projects-overview) | Shipped (portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**) |
+| [Projects](/user-guide/projects-overview) | Shipped (workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
 | [Documents](/user-guide/documents-overview) | Shipped (requires Storage) |
@@ -143,7 +143,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 ### Other Operations deferred
 
-- Projects: workload heatmaps, Automation `create_project`
+- Projects: Automation `create_project`
 - Knowledge Base: public URLs, nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
@@ -212,7 +212,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Projects portfolio Gantt (2026-09-29):** `GET /projects/gantt` + SPA Gantt view — catalog **projects 1.5.0**.
 
-Still deferred: workload heatmaps; Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals.
+**Projects workload heatmap (2026-09-29):** `GET /projects/heatmap` + SPA Heatmap view — catalog **projects 1.6.0**.
+
+Still deferred: Automation `create_project`; Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
