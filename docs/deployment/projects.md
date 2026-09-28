@@ -5,9 +5,9 @@
 - Catalog slug: `projects`
 - Category: `operations` (**Operations**), `category_sort_order = 40`, `sort_order = 10`
 - **Free Marketplace opt-in** module (not auto-installed)
-- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, version **1.0.0**
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, version **1.5.0**
 - **No hard module dependency** — Projects installs standalone; Contact / Company / Opportunity are optional soft links
-- Soft reverse link: Tasks may set `project_id` when Projects is entitled (Tasks catalog **1.2.0**)
+- Soft reverse link: Tasks may set `project_id` when Projects is entitled (Tasks catalog **1.2.0**+)
 - New workspaces receive only **Leads** + **Tasks** (+ ToDos) by default; enable Projects from Marketplace at any time
 - Deactivate via Central module subscription tools to revoke access without dropping data
 
@@ -39,11 +39,12 @@ New Projects permissions for **existing** workspaces ship as an additive **data 
 3. Migrate `projects.*` permissions and grant missing defaults to existing roles
 4. Migrate `tasks.project_id` (nullable FK, null on project delete) and bump Tasks catalog **1.1.2 → 1.2.0**
 5. Confirm `module:projects` + `projects.*` on target roles
-6. Deploy frontend (Projects nav under **Operations** — board/list/form/detail; optional project picker on Tasks)
+6. Deploy frontend (Projects nav under **Operations** — board/list/Gantt/form/detail; optional project picker on Tasks)
 7. Smoke: create a **new** workspace → enable Projects alone → create/edit/assign/members/note → planned → active → on_hold → active → completed → soft delete/restore
 8. Smoke (soft Task link): with Tasks + Projects → create a task with `project_id` → confirm embed; without Projects entitled → `project_id` validation fails
 9. Smoke (overdue): set workspace timezone, open project with `ends_on` before local today → stats/dashboard `overdue_projects` increments; due today does not
+10. Smoke (Gantt **1.5.0**): dated project → Gantt view shows bar; expand shows milestones; with Tasks entitled, linked task markers appear; drag bar shifts dates when actor can update
 
 ## Roadmap context
 
-Projects catalog **1.4.0** includes milestones and Calendar projection; Tasks **1.5.0** adds `milestone_id` and same-project dependencies. Still deferred: Gantt, workload heatmaps, Automation `create_project`, tags, and `PRJ-` numbers. See [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Projects catalog **1.5.0** adds portfolio Gantt (`GET /projects/gantt`). **1.4.0** includes milestones and Calendar projection; Tasks **1.5.0** adds `milestone_id` and same-project dependencies. Still deferred: workload heatmaps, Automation `create_project`, tags, and `PRJ-` numbers. See [module-dependencies.md](/architecture/module-dependencies), [product-roadmap.md](/getting-started/product-roadmap), and [Projects Gantt 1.5.0 production readiness](/deployment/projects-gantt-1-5-0-production-readiness).
