@@ -39,6 +39,10 @@ When **Companies** is installed, Contact create/edit can pick a linked Company (
 
 When **Leads** and **Companies** are entitled, converting a lead can create or reuse a Company (optional explicit `company_id` / `company_name`) and records a company activity `ConvertedFromLead`. See [Leads](/user-guide/leads-overview).
 
+## Ask EloSync
+
+With AI Assistant entitled, Ask EloSync can read a company and propose confirmed assign / timeline note writes (ai **1.19.0**). Companies have no lifecycle status tool.
+
 ## Explicitly deferred
 
 - Backfill job for legacy contact `company` strings → Company records

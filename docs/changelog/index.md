@@ -1,3 +1,9 @@
+## Automation create_project + AI Company triage (2026-09-29)
+
+- **EloSync-Backend:** Automation action `create_project` (module `projects`) — soft-links opportunity/company/contact from the trigger, notes the related record, optional `starts_in_days` / `ends_in_days`. Starter template `opportunity_stage_create_project`. Catalog **automation 1.3.0 → 1.4.0**. Ask EloSync Company triage: `get_company` plus confirmed writes `assign_company` / `add_company_note` (`EligibleCompanyAssignee`; no lifecycle status on companies). Catalog **ai 1.18.0 → 1.19.0**. Opportunity automation payloads include `company_id` / `contact_id`. Pest: related-context create project, registry/templates, write confirm + authz. Readiness remediations: missing-opportunity soft-link null + CatalogSeeder companion expectations.
+- **EloSync-Frontend:** Automation builder config for Create Project; Playwright AI suite Company triage propose→confirm note/assign.
+- **EloSync-Docs:** Automation / Projects / AI tools / API / roadmap / changelog + [depth rollup](/deployment/automation-create-project-ai-company-2026-09-29-production-readiness) (**Go**) · [Automation create_project 1.4.0](/deployment/automation-create-project-1-4-0-production-readiness) · [AI Company triage](/deployment/ai-company-triage-production-readiness).
+
 ## Projects workload heatmap (1.6.0) (2026-09-29)
 
 - **EloSync-Backend:** `GET /projects/heatmap` — assignee × week cells (open project schedule overlap + soft project Tasks due that week when entitled). Pressure score/band; same filters/visibility as list. Catalog **projects 1.5.0 → 1.6.0** (migrate-only + CatalogSeeder). Pest: `ProjectHeatmapTest` (4) + catalog bump.

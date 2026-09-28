@@ -122,6 +122,8 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Contacts** (`contacts.view` / `contacts.update` / `contacts.assign`): `get_contact`, `update_contact_status` (pending confirmation; lifecycle `on_boarded` / `off_boarded`), `assign_contact` (pending confirmation; `EligibleContactAssignee`), `add_contact_note` (pending confirmation; text only).
 
+**Companies** (`companies.view` / `companies.update` / `companies.assign`): `get_company`, `assign_company` (pending confirmation; `EligibleCompanyAssignee`), `add_company_note` (pending confirmation; text only). Companies have no lifecycle status field.
+
 **Payments** (`payments.view` / `payments.update` / `payments.assign` / `payments.post` / `payments.void`): `get_payment`, `update_payment_status` (pending confirmation; visible with `payments.update` **or** `post` **or** `void`; Posted confirm calls `post()`, Void confirm calls `void()`; Draft target rejected), `assign_payment` (pending confirmation), `add_payment_note` (pending confirmation; text only)
 
 **Credit Notes** (`credit-notes.view` / `credit-notes.update` / `credit-notes.assign` / `credit-notes.issue` / `credit-notes.apply` / `credit-notes.void` / `credit-notes.refund`): `get_credit_note`, `update_credit_note_status` (pending confirmation; visible with `credit-notes.update` **or** `issue` **or** `apply` **or** `void` **or** `refund`; Issued confirm calls `issue()`, Applied calls `apply()`, Void calls `void()`, Refunded calls `refund()`; Draft target rejected), `assign_credit_note` (pending confirmation; `EligibleCreditNoteAssignee`), `add_credit_note_note` (pending confirmation; text only)

@@ -116,5 +116,5 @@ Ask EloSync Project tools (existing `get_project` / search / overdue plus confir
 
 ## Deferred
 
-- Automation `create_project`
+- Project tags and `PRJ-` numbers
 - Project tags, `PRJ-` numbers

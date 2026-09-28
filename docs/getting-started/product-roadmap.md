@@ -128,7 +128,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Help Desk](/user-guide/help-desk-overview) | Shipped **1.10.0** (SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Projects](/user-guide/projects-overview) | Shipped (workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**) |
+| [Projects](/user-guide/projects-overview) | Shipped (workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
 | [Documents](/user-guide/documents-overview) | Shipped (requires Storage) |
@@ -143,11 +143,10 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 ### Other Operations deferred
 
-- Projects: Automation `create_project`
 - Knowledge Base: public URLs, nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
-- Automation: Marketing campaigns / email campaigns (separate SKUs); branching; generate quote/invoice/order actions
+- Automation: Marketing campaigns / email campaigns (separate SKUs); branching; generate quote/invoice/order actions; WhatsApp interactive send
 
 ---
 
@@ -156,8 +155,8 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
-| [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + Contact triage **1.18.0** + confirmed writes) |
+| [Automation](/user-guide/automation-overview) | Shipped (billable; **1.4.0** `create_project` action) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + Contact triage **1.18.0** + Company triage **1.19.0** + confirmed writes) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -206,6 +205,10 @@ Contract AI triage shipped (**ai 1.17.0**): `get_contract` plus confirmed writes
 
 Contact AI triage shipped (**ai 1.18.0**): `get_contact` plus confirmed writes for lifecycle status (`on_boarded`/`off_boarded`), assign, and notes (`EligibleContactAssignee`).
 
+Company AI triage shipped (**ai 1.19.0**): `get_company` plus confirmed writes for assign and notes (`EligibleCompanyAssignee`; companies have no lifecycle status).
+
+Automation `create_project` shipped (**automation 1.4.0**): creates a Planned project with soft opportunity/company/contact links from the trigger and a note on the related record; template `opportunity_stage_create_project`.
+
 Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, send-for-signature, customer accept links (reuse Quotation accept pattern), staff activate from sent, email with optional PDF + sign link.
 
 **Phased depth Steps 1–4 + convert polish (2026-09-16):** Projects milestones (**projects 1.4.0**) + task dependencies / `milestone_id` (**tasks 1.5.0**); contract renewal reminders via `crm:send-due-notifications` + `contract_renewal_notice_days` (**contracts 1.6.0**); PO per-line partial quantity receive (**purchase-orders 1.5.0**); Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish — `LeadConverted` / Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names (**leads 1.5.0**).
@@ -214,7 +217,7 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Projects workload heatmap (2026-09-29):** `GET /projects/heatmap` + SPA Heatmap view — catalog **projects 1.6.0**.
 
-Still deferred: Automation `create_project`; Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals.
+Still deferred: Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
