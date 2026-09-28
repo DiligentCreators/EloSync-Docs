@@ -4,7 +4,7 @@
 
 - Catalog slug: `automation`
 - Billable marketplace add-on (`is_default_included: false`, `is_billable: true`)
-- Catalog version: **1.3.0**
+- Catalog version: **1.4.0** (`create_project` action; requires Projects entitlement)
 - Initial price: **$29 / month**, **$290 / year** (same tier as Branded)
 - Workspaces must install from Marketplace; migrate does **not** auto-install
 

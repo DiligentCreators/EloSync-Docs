@@ -21,9 +21,10 @@ Billable marketplace module (`automation` **1.3.0**). Mirrors Tasks packaging; d
 ## Related context (1.1.1+)
 
 - Trigger payloads already include `entity_type` / `entity_id` plus record fields. Entity-bound actions (assign, tag, note, move stage) use that target automatically.
-- Config may use semantic **`trigger_assignee`** (resolves `assigned_to` → `new_assignee_id` → `host_id`) for `create_task.assigned_to`, `assign_user.user_id`, and `send_notification.user_ids` (arrays supported).
+- Config may use semantic **`trigger_assignee`** (resolves `assigned_to` → `new_assignee_id` → `host_id`) for `create_task.assigned_to`, `create_project.assigned_to`, `assign_user.user_id`, and `send_notification.user_ids` (arrays supported).
 - Tags/stages accept numeric ids or matching **name/slug**.
 - `create_task` appends a related-entity line and posts a note on lead/opportunity/task. Lead **follow-up** requires `create_lead_follow_up: true` (templates enable it).
+- `create_project` (**1.4.0**, module `projects`) soft-links `opportunity_id` / `company_id` / `contact_id` from the trigger, optional `starts_in_days` / `ends_in_days`, and notes opportunity/company/contact/lead. Template: `opportunity_stage_create_project`.
 - Manual Run accepts `payload` with related entity fields; SPA dialog picks a record for entity-bound triggers.
 
 ## Activation gate
@@ -73,4 +74,4 @@ Builder disables items where `wired=false` (“Coming soon”) or `available=fal
 
 ## Explicit non-goals
 
-Marketing Automation, Branch / commercial document generators, `create_project` action — deferred. WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers shipped with Help Desk **1.3.0**; SLA escalate template with Help Desk **1.9.0**.
+Marketing Automation, Branch / commercial document generators, WhatsApp interactive send action — deferred. `create_project` shipped in Automation **1.4.0** (requires Projects). WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers shipped with Help Desk **1.3.0**; SLA escalate template with Help Desk **1.9.0**.

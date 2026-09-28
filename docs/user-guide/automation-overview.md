@@ -32,5 +32,5 @@ Cross-module workflow engine for EloSync. Install from Marketplace (billable add
 ## Explicitly deferred
 
 - Marketing Automation / Email Campaigns (separate SKUs)
-- Branching, generate quote/invoice/order actions, `create_project` action
+- Branching, generate quote/invoice/order actions, WhatsApp interactive send action
 - Migrating hard-coded Lead tag auto follow-ups or inactivity digests into this engine

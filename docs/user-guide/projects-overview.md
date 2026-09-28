@@ -45,6 +45,6 @@ Contact, Company, and Opportunity links are optional cross-references — a proj
 
 ## Explicitly deferred
 
-- Automation `create_project` action
+- Project tags and `PRJ-` numbers
 - Project tags
 - Human-readable `PRJ-` numbers

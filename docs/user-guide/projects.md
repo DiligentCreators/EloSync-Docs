@@ -86,4 +86,4 @@ On the project record, manage **milestones** (title, optional description / due 
 
 ## What's not here yet
 
-Automation `create_project`, project tags, and `PRJ-` numbers are deferred — see the [Product Roadmap](/getting-started/product-roadmap). Portfolio Gantt, workload heatmap, and Calendar projection for project start/end dates are shipped.
+Automation **Create Project** (`create_project`, Automation **1.4.0**) is shipped — soft-links opportunity/company/contact from the trigger. Project tags and `PRJ-` numbers remain deferred — see the [Product Roadmap](/getting-started/product-roadmap). Portfolio Gantt, workload heatmap, and Calendar projection for project start/end dates are shipped.
