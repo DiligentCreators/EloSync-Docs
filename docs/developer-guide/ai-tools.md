@@ -15,6 +15,7 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 - Estimates: `get_estimate`, `update_estimate_status` (visible with `estimates.update` **or** `send` **or** `accept`), `assign_estimate`, `add_estimate_note`
 - Quotations: `get_quotation`, `update_quotation_status` (visible with `quotations.update` **or** `send` **or** `accept`), `assign_quotation`, `add_quotation_note`
 - Contracts: `get_contract`, `update_contract_status` (visible with `contracts.update` **or** `send` **or** `accept`), `assign_contract`, `add_contract_note`
+- Contacts: `get_contact`, `update_contact_status` (lifecycle `on_boarded` / `off_boarded`), `assign_contact`, `add_contact_note`
 - Payments: `get_payment`, `update_payment_status` (visible with `payments.update` **or** `post` **or** `void`; confirm uses `post()` / `void()`), `assign_payment`, `add_payment_note`
 - Credit notes: `get_credit_note`, `update_credit_note_status` (visible with `credit-notes.update` **or** `issue` **or** `apply` **or** `void` **or** `refund`; confirm uses `issue()` / `apply()` / `void()` / `refund()`), `assign_credit_note`, `add_credit_note_note`
 - Purchase orders: `get_purchase_order`, `update_purchase_order_status` (visible with `purchase-orders.update` **or** `send` **or** `receive` **or** `cancel`), `assign_purchase_order`, `add_purchase_order_note`

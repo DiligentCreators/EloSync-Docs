@@ -24,9 +24,11 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 - `calendar.view_all` for workspace Owner / Admin / Manager oversight
 - Upcoming events dashboard widget
 - **Overlays** — [Meetings](/user-guide/meetings-overview) (host + internal invitees, view-only for invitees), [Projects](/user-guide/projects-overview) (start/end all-day), [Tasks](/user-guide/tasks-overview) (due datetime), and [Leads](/user-guide/leads-overview) (next follow-up) project sourced events (`source` = `meeting`|`project`|`task`|`lead`)
-- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.2.0**
+- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.3.0**
+- **Event shares (1.3.0)** — share a manual event with workspace users as **viewer** (read-only) or **editor** (can edit/delete with Spatie permissions)
+- Meeting invitee list/view ACL for projected meetings (**1.2.0**)
 - Activity logging (`LogsActivity`)
-- API `read_only` flag for invitee / non-organizer viewers
+- API `read_only` flag for invitee / sharee / non-organizer viewers
 
 ## Permissions
 
@@ -35,7 +37,7 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 ## Explicitly deferred
 
 - Calendar assignment / assignee / create-on-behalf
-- Team calendars / shared ACL beyond meeting invitee visibility
+- Named team calendars / department auto-share
 - Google / Outlook calendar sync
 
 Meetings, Zoom, and Google Meet are documented under [Meetings](/user-guide/meetings-overview).
