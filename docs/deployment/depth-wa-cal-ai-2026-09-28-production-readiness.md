@@ -6,6 +6,7 @@
 | **Re-verified** | 2026-09-28 (local Pest + Playwright e2e); Eng cutover steps closed same day |
 | **Status** | **Go for production** — engineering ship-ready; **Ops deploy remaining** |
 | **Scope** | Three catalog MINOR bumps in one depth tranche |
+| **Code** | `feature/depth-wa-cal-ai-2026-09-28` — Backend [#216](https://github.com/DiligentCreators/EloSync-Backend/pull/216) · Frontend [#214](https://github.com/DiligentCreators/EloSync-Frontend/pull/214) · Docs [#296](https://github.com/DiligentCreators/EloSync-Docs/pull/296) (draft) |
 | **Companions** | [WhatsApp interactive 1.4.0](./whatsapp-cloud-interactive-1-4-0-production-readiness) · [Calendar shares 1.3.0](./calendar-event-shares-1-3-0-production-readiness) · [AI Contact triage](./ai-contact-triage-production-readiness) · [CHANGELOG](/changelog/) |
 
 ---
@@ -18,7 +19,7 @@
 | **Calendar** manual event shares (viewer/editor) | **1.2.0 → 1.3.0** | **Go** |
 | **AI** Contact triage tools (confirmed writes) | **1.17.0 → 1.18.0** | **Go** |
 
-Engineering gates (code, migrate-only catalog, Pest, Playwright, Docs, Meta fake hard-fail in production) **Pass**. Depth work ships on **`feature/depth-wa-cal-ai-2026-09-28`** draft PRs (not committed to `main`). Production must keep **`META_HTTP_FAKE` unset** — boot **refuses** if it is truthy when `APP_ENV=production`.
+Engineering gates (code, migrate-only catalog, Pest, Playwright, Docs, Meta fake hard-fail in production) **Pass**. Depth work ships on **`feature/depth-wa-cal-ai-2026-09-28`** draft PRs (Backend [#216](https://github.com/DiligentCreators/EloSync-Backend/pull/216), Frontend [#214](https://github.com/DiligentCreators/EloSync-Frontend/pull/214), Docs [#296](https://github.com/DiligentCreators/EloSync-Docs/pull/296)). Production must keep **`META_HTTP_FAKE` unset** — boot **refuses** if it is truthy when `APP_ENV=production`.
 
 **Go / No-Go:** **Go** after PR CI green + merge. Ops then migrate-only deploy and staging smoke.
 
