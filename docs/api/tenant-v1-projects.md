@@ -82,6 +82,7 @@ Response shape:
 
 - `includes_tasks` is `true` only when Tasks is entitled and the actor has `tasks.view`. Otherwise `tasks` arrays are empty.
 - Embedded tasks are further filtered by Task policy visibility.
+- `depends_on_task_ids` only includes dependency task ids that are also visible to the actor (no leakage of hidden blockers).
 - `range.from` / `range.to` are the min/max of project `starts_on`/`ends_on`, milestone `due_on`, and included task due dates (date portion of `due_at`). Null when no dated rows exist.
 
 ## Projects CRUD

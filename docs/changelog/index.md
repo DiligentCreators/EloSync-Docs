@@ -1,8 +1,8 @@
 ## Projects portfolio Gantt (1.5.0) (2026-09-29)
 
-- **EloSync-Backend:** `GET /projects/gantt` — portfolio rows (project dates, milestones, soft Tasks when entitled + Task policy). Same filters/visibility as list. Catalog **projects 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: `ProjectGanttTest` (3) + catalog bump.
-- **EloSync-Frontend:** Projects view toggle **Gantt**; day-scale timeline with expand for milestones/tasks; drag bars to shift dates when `projects.update`. Playwright Gantt bar coverage in projects workflow.
-- **EloSync-Docs:** User/developer/API/deployment/roadmap/changelog + [production readiness](/deployment/projects-gantt-1-5-0-production-readiness) (**Go**).
+- **EloSync-Backend:** `GET /projects/gantt` — portfolio rows (project dates, milestones, soft Tasks when entitled + Task policy). Same filters/visibility as list. Lean eager loads; `depends_on_task_ids` filtered to visible tasks. Catalog **projects 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: `ProjectGanttTest` (4) + catalog bump.
+- **EloSync-Frontend:** Projects view toggle **Gantt**; day-scale timeline with expand for milestones/tasks; drag bars to shift dates when `projects.update` (preserves null `ends_on`; no post-drag open). Playwright Gantt bar coverage in projects workflow.
+- **EloSync-Docs:** User/developer/API/deployment/upgrade/roadmap/changelog + [production readiness](/deployment/projects-gantt-1-5-0-production-readiness) (**Go**; M1/M2/L1/L2 closed).
 
 ## Depth program WA + Calendar + AI Contact (2026-09-28)
 

@@ -17,6 +17,16 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Projects 1.4.0 → 1.5.0 — portfolio Gantt
+
+After migrate (`2026_09_28_220000_bump_projects_module_version_to_1_5_0`):
+
+1. Confirm catalog `projects` version is `1.5.0` (migrate-only; do **not** `db:seed`)
+2. Deploy the SPA **after** migrate — Projects **Gantt** view mode
+3. Staging smoke: dated project → Gantt bar → expand milestones/tasks → drag dates (update permission); without Tasks entitled, task markers omitted
+
+Go-live: [Projects Gantt 1.5.0 production readiness](/deployment/projects-gantt-1-5-0-production-readiness).
+
 ## Leads 1.5.0 → 1.6.0 — created_by / updated_by
 
 After migrate (`2026_09_26_112037_add_created_by_and_updated_by_to_leads_table`, `2026_09_26_112040_bump_leads_module_to_1_6_0`, `2026_09_26_133208_remediates_leads_created_by_updated_by_backfill`):
