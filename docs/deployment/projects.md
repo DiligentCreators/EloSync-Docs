@@ -5,7 +5,7 @@
 - Catalog slug: `projects`
 - Category: `operations` (**Operations**), `category_sort_order = 40`, `sort_order = 10`
 - **Free Marketplace opt-in** module (not auto-installed)
-- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, version **1.5.0**
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, version **1.6.0**
 - **No hard module dependency** — Projects installs standalone; Contact / Company / Opportunity are optional soft links
 - Soft reverse link: Tasks may set `project_id` when Projects is entitled (Tasks catalog **1.2.0**+)
 - New workspaces receive only **Leads** + **Tasks** (+ ToDos) by default; enable Projects from Marketplace at any time
@@ -39,12 +39,13 @@ New Projects permissions for **existing** workspaces ship as an additive **data 
 3. Migrate `projects.*` permissions and grant missing defaults to existing roles
 4. Migrate `tasks.project_id` (nullable FK, null on project delete) and bump Tasks catalog **1.1.2 → 1.2.0**
 5. Confirm `module:projects` + `projects.*` on target roles
-6. Deploy frontend (Projects nav under **Operations** — board/list/Gantt/form/detail; optional project picker on Tasks)
+6. Deploy frontend (Projects nav under **Operations** — board/list/Gantt/Heatmap/form/detail; optional project picker on Tasks)
 7. Smoke: create a **new** workspace → enable Projects alone → create/edit/assign/members/note → planned → active → on_hold → active → completed → soft delete/restore
 8. Smoke (soft Task link): with Tasks + Projects → create a task with `project_id` → confirm embed; without Projects entitled → `project_id` validation fails
 9. Smoke (overdue): set workspace timezone, open project with `ends_on` before local today → stats/dashboard `overdue_projects` increments; due today does not
 10. Smoke (Gantt **1.5.0**): dated project → Gantt view shows bar; expand shows milestones; with Tasks entitled, linked task markers appear; drag bar shifts dates when actor can update
+11. Smoke (Heatmap **1.6.0**): assignee on open dated project → Heatmap row + week cell load; pressure band visible; without Tasks entitled, task counts stay 0
 
 ## Roadmap context
 
-Projects catalog **1.5.0** adds portfolio Gantt (`GET /projects/gantt`). **1.4.0** includes milestones and Calendar projection; Tasks **1.5.0** adds `milestone_id` and same-project dependencies. Still deferred: workload heatmaps, Automation `create_project`, tags, and `PRJ-` numbers. See [module-dependencies.md](/architecture/module-dependencies), [product-roadmap.md](/getting-started/product-roadmap), and [Projects Gantt 1.5.0 production readiness](/deployment/projects-gantt-1-5-0-production-readiness).
+Projects catalog **1.6.0** adds workload heatmap (`GET /projects/heatmap`). **1.5.0** adds portfolio Gantt (`GET /projects/gantt`). **1.4.0** includes milestones and Calendar projection; Tasks **1.5.0** adds `milestone_id` and same-project dependencies. Still deferred: Automation `create_project`, tags, and `PRJ-` numbers. See [module-dependencies.md](/architecture/module-dependencies), [product-roadmap.md](/getting-started/product-roadmap), [Projects Gantt 1.5.0 production readiness](/deployment/projects-gantt-1-5-0-production-readiness), and [Projects Heatmap 1.6.0 production readiness](/deployment/projects-heatmap-1-6-0-production-readiness).

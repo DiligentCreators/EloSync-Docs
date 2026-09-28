@@ -17,6 +17,14 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Projects 1.5.0 → 1.6.0 — workload heatmap
+
+1. Deploy Backend and run `php artisan migrate --force` (catalog bump only — **do not** `db:seed`)
+2. Deploy the SPA **after** migrate — Projects **Heatmap** view mode
+3. Staging smoke: open project with assignee → Heatmap row → week cells reflect schedule overlap; with Tasks entitled, due-this-week project tasks add to cell load; pressure band shows
+
+Go-live: [Projects Heatmap 1.6.0 production readiness](/deployment/projects-heatmap-1-6-0-production-readiness).
+
 ## Projects 1.4.0 → 1.5.0 — portfolio Gantt
 
 After migrate (`2026_09_28_220000_bump_projects_module_version_to_1_5_0`):

@@ -23,8 +23,9 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 - Soft optional Contact / Company / Opportunity links (validated only when that module is entitled)
 - Soft Task `project_id` (Tasks → Projects optional) plus optional task `milestone_id` and same-project task dependencies (Tasks catalog **1.5.0**)
 - **Milestones** — open/completed milestones on a project (`due_on`, sort order); complete action; timeline events (`milestone_*`)
-- Board + list + **Gantt** (portfolio timeline) + stats + notes/timeline
+- Board + list + **Gantt** (portfolio timeline) + **Heatmap** (assignee × week load) + stats + notes/timeline
 - **Gantt** — project bars from `starts_on`/`ends_on`; expand for milestone diamonds and soft Task due markers (when Tasks is entitled); drag bars to shift dates when you can update
+- **Heatmap** — per-assignee weekly load cells + open/overdue counts and pressure band (soft Tasks when entitled)
 - **Calendar projection** — all-day events on `starts_on` / `ends_on` (assignee as organizer); cancelled projects cancel/remove projection
 - Dashboard widgets: `active_projects`, `overdue_projects`
 - Overdue uses workspace **Timezone** calendar “today” vs `ends_on` (open statuses only)
@@ -36,7 +37,7 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 
 `projects.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.5.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
+Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.6.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
 
 ## Why standalone (soft dependencies)
 
@@ -44,7 +45,6 @@ Contact, Company, and Opportunity links are optional cross-references — a proj
 
 ## Explicitly deferred
 
-- Workload heatmaps
 - Automation `create_project` action
 - Project tags
 - Human-readable `PRJ-` numbers
