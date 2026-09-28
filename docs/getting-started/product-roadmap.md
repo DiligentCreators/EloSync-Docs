@@ -128,7 +128,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Help Desk](/user-guide/help-desk-overview) | Shipped **1.10.0** (SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Projects](/user-guide/projects-overview) | Shipped (milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**) |
+| [Projects](/user-guide/projects-overview) | Shipped (portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
 | [Documents](/user-guide/documents-overview) | Shipped (requires Storage) |
@@ -143,7 +143,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 ### Other Operations deferred
 
-- Projects: Gantt, workload heatmaps, Automation `create_project`
+- Projects: workload heatmaps, Automation `create_project`
 - Knowledge Base: public URLs, nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
@@ -210,7 +210,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Phased depth Steps 1–4 + convert polish (2026-09-16):** Projects milestones (**projects 1.4.0**) + task dependencies / `milestone_id` (**tasks 1.5.0**); contract renewal reminders via `crm:send-due-notifications` + `contract_renewal_notice_days` (**contracts 1.6.0**); PO per-line partial quantity receive (**purchase-orders 1.5.0**); Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish — `LeadConverted` / Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names (**leads 1.5.0**).
 
-Still deferred: Gantt/heatmaps; Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals.
+**Projects portfolio Gantt (2026-09-29):** `GET /projects/gantt` + SPA Gantt view — catalog **projects 1.5.0**.
+
+Still deferred: workload heatmaps; Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 

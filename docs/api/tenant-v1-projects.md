@@ -6,7 +6,7 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 No hard `module_dependencies` — Projects installs standalone. `contact_id`, `company_id`, and `opportunity_id` are optional; supplying any requires the corresponding module to be entitled (soft link rules).
 
-Visibility without `projects.assign` (and not superadmin): list/board/stats/view/update only include projects where the actor is **assignee**, **member**, or **creator**. With `projects.assign`, org-wide (`scope: org` on stats).
+Visibility without `projects.assign` (and not superadmin): list/board/stats/gantt/view/update only include projects where the actor is **assignee**, **member**, or **creator**. With `projects.assign`, org-wide (`scope: org` on stats).
 
 Field name is **`title`** (not `name`).
 
@@ -39,6 +39,50 @@ Same filters as list (minus pagination/sort). Response:
 ### GET `/projects/board`
 
 One column per status (`planned`, `active`, `on_hold`, `completed`, `cancelled`): `status`, `project_count`, `projects[]`. Honors the same filters as list. Optional `per_column` (1–100, default 50).
+
+## Gantt
+
+### GET `/projects/gantt`
+
+Portfolio timeline rows for the SPA Gantt view. Honors the same filters and visibility as list. Optional `limit` (1–200, default 100).
+
+Response shape:
+
+```json
+{
+  "includes_tasks": true,
+  "range": { "from": "2026-09-01", "to": "2026-09-30" },
+  "rows": [
+    {
+      "id": 1,
+      "uuid": "…",
+      "title": "Launch",
+      "status": "active",
+      "starts_on": "2026-09-01",
+      "ends_on": "2026-09-30",
+      "assigned_to": 1,
+      "assignee": { "id": 1, "name": "…", "email": "…" },
+      "milestones": [
+        { "id": 1, "title": "Beta", "due_on": "2026-09-15", "status": "open", "sort_order": 0 }
+      ],
+      "tasks": [
+        {
+          "id": 10,
+          "title": "Ship",
+          "status": "open",
+          "due_on": "2026-09-20",
+          "milestone_id": 1,
+          "depends_on_task_ids": [9]
+        }
+      ]
+    }
+  ]
+}
+```
+
+- `includes_tasks` is `true` only when Tasks is entitled and the actor has `tasks.view`. Otherwise `tasks` arrays are empty.
+- Embedded tasks are further filtered by Task policy visibility.
+- `range.from` / `range.to` are the min/max of project `starts_on`/`ends_on`, milestone `due_on`, and included task due dates (date portion of `due_at`). Null when no dated rows exist.
 
 ## Projects CRUD
 

@@ -6,14 +6,15 @@ Enable the **Projects** module from Marketplace (free) — no other modules are 
 
 Without **assign**, you only see projects where you are the **assignee**, a **member**, or the **creator**.
 
-## Board & list
+## Board, list & Gantt
 
-Open **Projects** from the sidebar under **Operations**. The default view is the **Board** (columns by status). Switch to **List** for a table.
+Open **Projects** from the sidebar under **Operations**. The default view is the **Board** (columns by status). Switch to **List** for a table, or **Gantt** for a portfolio timeline.
 
 - Search by **title**
 - Filter by status, Contact / Company / Opportunity (when those modules are installed), assignee, and **My Projects**
 - KPI cards summarize totals, mine, by status, and **Overdue** for your scope
 - Table and board show assignee, members, dates, optional CRM links, and the **latest note**
+- **Gantt** shows one bar per project from **starts on** → **ends on**. Expand a row to see milestone diamonds and linked Task due markers (Tasks must be installed). With **update** permission, drag a bar left/right to shift both dates together
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted project from the row menu
 - **Delete permanently** requires `projects.force.delete` — granted to the workspace **owner** by default
 
@@ -84,4 +85,4 @@ On the project record, manage **milestones** (title, optional description / due 
 
 ## What's not here yet
 
-Gantt charts, workload heatmaps, Automation `create_project`, project tags, and `PRJ-` numbers are deferred — see the [Product Roadmap](/getting-started/product-roadmap). Calendar projection for project start/end dates is shipped.
+Workload heatmaps, Automation `create_project`, project tags, and `PRJ-` numbers are deferred — see the [Product Roadmap](/getting-started/product-roadmap). Portfolio Gantt and Calendar projection for project start/end dates are shipped.
