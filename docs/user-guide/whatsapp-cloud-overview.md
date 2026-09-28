@@ -1,19 +1,19 @@
 # WhatsApp Cloud — Overview
 
-Billable CRM Marketplace module (`whatsapp-cloud` **1.0.0**) that connects a WhatsApp Business Account via the official **WhatsApp Cloud API**.
+Billable CRM Marketplace module (`whatsapp-cloud` **1.4.0**) that connects a WhatsApp Business Account via the official **WhatsApp Cloud API**.
 
 ## What it does
 
 - Connect Meta / WABA / phone number (encrypted tokens)
-- Shared inbox: send and receive **text** messages
+- Shared inbox: send and receive **text**, **media**, and **interactive** (reply buttons / lists) messages
 - Meta-approved **Cloud templates** for sends outside the 24-hour customer service window
 - Soft optional Lead link (timeline mirrors when Leads is entitled)
 - Keep Communication Templates `wa.me` handoff as fallback until Cloud is connected
 
-## What is deferred (not in MVP)
+## What is deferred
 
-- Interactive buttons/lists
 - Alternate BSPs (Twilio, etc.)
+- AI WhatsApp features; Automation actions for interactive sends
 
 ## Lead Source (v1.1.0)
 
@@ -26,12 +26,17 @@ Trigger `whatsapp.message_received` and action `send_whatsapp_template` when Aut
 ## Media (v1.3.0)
 
 Send/receive image, document, audio, and video in the shared inbox (Storage quota applies; soft Storage entitlement).
+
+## Interactive (v1.4.0)
+
+Inside the 24-hour customer service window, agents can send **reply buttons** (up to 3) or a **list** message from the inbox. Customer `button_reply` / `list_reply` inbound messages are stored with reply id/title for the thread UI.
+
 ## Permissions
 
 | Permission | Use |
 |------------|-----|
 | `whatsapp-cloud.view` | Inbox + thread + list templates |
-| `whatsapp-cloud.send` | Send text/template, open/update conversation |
+| `whatsapp-cloud.send` | Send text/template/media/interactive, open/update conversation |
 | `whatsapp-cloud.manage_integrations` | Connect / disconnect / select phone |
 | `whatsapp-cloud.manage_templates` | Sync Meta templates |
 

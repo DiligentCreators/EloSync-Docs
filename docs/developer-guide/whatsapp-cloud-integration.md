@@ -1,6 +1,6 @@
 # WhatsApp Cloud Integration
 
-> **Status: Shipped 1.3.0** — billable Marketplace module `whatsapp-cloud`.
+> **Status: Shipped 1.4.0** — billable Marketplace module `whatsapp-cloud`.
 >
 > Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template`. Deferred: interactive buttons/lists, alternate BSPs.
 >
@@ -12,7 +12,7 @@
 
 Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **WhatsApp communication platform** built on the official **WhatsApp Cloud API**, while keeping business logic inside EloSync and provider specifics inside replaceable drivers.
 
-**Shipped through 1.3.0:**
+**Shipped through 1.4.0:**
 
 - Connect tenant WhatsApp Business Accounts and phone numbers via Meta
 - Send and receive **text and media** through EloSync (not the user’s personal WhatsApp client)
@@ -24,7 +24,7 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 
 **Still deferred:**
 
-- Interactive buttons / lists, alternate BSPs, AI WhatsApp features
+- Alternate BSPs, AI WhatsApp features, Automation interactive send action
 - Replacing Communication Templates’ `wa.me` (kept as fallback when Cloud is not ready)
 - Making WhatsApp the only messaging channel forever (drivers must stay replaceable)
 
@@ -32,7 +32,7 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 
 ## Current state
 
-### WhatsApp Cloud (`whatsapp-cloud`) — shipped 1.3.0
+### WhatsApp Cloud (`whatsapp-cloud`) — shipped 1.4.0
 
 | Shipped | Behavior |
 |---------|----------|
@@ -61,7 +61,7 @@ EloSync **also** supports a lightweight WhatsApp handoff via [Communication Temp
 
 | Capability | Status |
 |------------|--------|
-| Interactive buttons / lists | ⬜ Deferred |
+| Interactive buttons / lists | ✅ Shipped (1.4.0) |
 | Alternate BSPs (Twilio / 360dialog) | ⬜ Deferred |
 | AI Features | ⬜ Deferred |
 
@@ -589,7 +589,7 @@ Both respect driver boundaries: no Meta parsing inside `LeadService`; no convers
 
 | Capability | Status |
 |------------|--------|
-| Interactive buttons / lists | ⬜ Deferred |
+| Interactive buttons / lists | ✅ Shipped (1.4.0) |
 | AI Features | ⬜ Deferred |
 | Alternate BSPs | ⬜ Deferred |
 

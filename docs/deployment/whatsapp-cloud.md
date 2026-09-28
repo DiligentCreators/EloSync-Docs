@@ -2,7 +2,7 @@
 
 ## Catalog
 
-Billable module `whatsapp-cloud` **1.3.0** (CRM). Register and bump via **migrate-only** data migrations:
+Billable module `whatsapp-cloud` **1.4.0** (CRM). Register and bump via **migrate-only** data migrations:
 
 | Migration | Effect |
 |-----------|--------|
@@ -13,6 +13,8 @@ Billable module `whatsapp-cloud` **1.3.0** (CRM). Register and bump via **migrat
 | `2026_08_21_235205_bump_automation_and_whatsapp_cloud_for_wa_triggers` | Automation **1.1.0**, WA **1.2.0** |
 | `2026_08_21_235553_create_whatsapp_message_attachments_table` | Media attachments |
 | `2026_08_21_235556_bump_whatsapp_cloud_module_version_to_1_3_0` | **1.2.0 → 1.3.0** |
+| `2026_09_27_213615_add_interactive_payload_to_whatsapp_messages_table` | `interactive_payload` JSON |
+| `2026_09_27_214240_bump_whatsapp_cloud_module_version_to_1_4_0` | **1.3.0 → 1.4.0** |
 
 Do **not** rely on `db:seed` in production.
 
@@ -28,13 +30,16 @@ META_LEAD_ADS_WEBHOOK_VERIFY_TOKEN=
 META_WHATSAPP_APP_ID=
 META_WHATSAPP_APP_SECRET=
 META_WHATSAPP_WEBHOOK_VERIFY_TOKEN=
-# Local / Playwright only — never set in production:
+# Local / Playwright only — never set in production.
+# When APP_ENV=production, a truthy META_HTTP_FAKE refuses boot (hard fail).
 # META_HTTP_FAKE=true
 ```
 
 Central settings keys (encrypted secrets): `meta_whatsapp_app_id`, `meta_whatsapp_app_secret`, `meta_whatsapp_webhook_verify_token` (fall back to Lead Ads keys).
 
 Align `FRONTEND_URL` with the SPA origin tenants use (OAuth callback redirects here).
+
+**Production cutover:** confirm `META_HTTP_FAKE` is unset (or `false`) in Forge/Cloud env before deploy.
 
 ## Meta App
 

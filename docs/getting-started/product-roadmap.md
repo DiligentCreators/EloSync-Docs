@@ -12,17 +12,17 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped |
-| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL) |
+| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
-| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | Shipped (billable; media + Automation triggers shipped; interactive buttons/lists deferred) |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | Shipped (billable; media + Automation triggers + interactive buttons/lists **1.4.0**) |
 
 ### Planned / deferred after Phase 1 MVP
 
-- Calendar: team calendars / shared ACL, Google/Outlook sync
+- Calendar: Google/Outlook sync; named team calendars / department auto-share
 - Leads: real-time board sync
-- WhatsApp: interactive buttons/lists, alternate BSPs, AI WhatsApp features
+- WhatsApp: alternate BSPs, AI WhatsApp features, Automation interactive send
 
 **Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**).
 
@@ -157,7 +157,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + confirmed writes) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + Contact triage **1.18.0** + confirmed writes) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -204,13 +204,15 @@ Leave AI triage shipped (**ai 1.16.0**): `get_leave_request` + `get_pending_leav
 
 Contract AI triage shipped (**ai 1.17.0**): `get_contract` plus confirmed writes for status, assign, and notes (Sent→`send()` with acceptance token; Active from Sent→`accept()`; other targets→`changeStatus` with `update`; assign uses `EligibleOpportunityAssignee`).
 
+Contact AI triage shipped (**ai 1.18.0**): `get_contact` plus confirmed writes for lifecycle status (`on_boarded`/`off_boarded`), assign, and notes (`EligibleContactAssignee`).
+
 Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, send-for-signature, customer accept links (reuse Quotation accept pattern), staff activate from sent, email with optional PDF + sign link.
 
 **Phased depth Steps 1–4 + convert polish (2026-09-16):** Projects milestones (**projects 1.4.0**) + task dependencies / `milestone_id` (**tasks 1.5.0**); contract renewal reminders via `crm:send-due-notifications` + `contract_renewal_notice_days` (**contracts 1.6.0**); PO per-line partial quantity receive (**purchase-orders 1.5.0**); Calendar Task/Lead overlays (**calendar 1.1.0**); Lead convert polish — `LeadConverted` / Automation `lead.converted`, company activity `ConvertedFromLead`, optional `company_id`/`company_name`, `conversion_meta` names (**leads 1.5.0**).
 
-Still deferred: Gantt/heatmaps; Google/Outlook sync; team Calendar ACL; WhatsApp interactive; Customer Portal; multi-currency; PO/Vendor portals.
+Still deferred: Gantt/heatmaps; Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals.
 
-Next when prioritized: WhatsApp interactive messages; demand-driven items below (broader AI tools continue lightly).
+Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
 ---
 

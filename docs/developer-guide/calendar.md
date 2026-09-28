@@ -16,7 +16,7 @@
 
 Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `status` (`scheduled`|`cancelled`), `source` (`manual`|`meeting`|`project`|`task`|`lead`), nullable `source_type`/`source_id` (Meetings uses morph alias `meeting`; Projects/Tasks/Leads use `project` / `task` / `lead`).
 
-**Excluded:** `assignee_id`, team calendars, Google/Outlook sync.
+**Excluded:** `assignee_id`, named team calendars, Google/Outlook sync.
 
 ## Visibility
 
@@ -45,8 +45,9 @@ When Calendar is entitled:
 | `task` | Tasks | Timed window from `due_at` (+1h); cleared when completed/cancelled/no due |
 | `lead` | Leads | Timed window from `next_follow_up_at` (+1h); cleared when converted/closed/archived/no follow-up |
 
-Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`.
+Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. **1.3.0** adds event-level shares (`viewer`/`editor`) for manual events. Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarEventShareTest.php`.
 
+**Excluded:** `assignee_id`, named team calendars, Google/Outlook sync.
 ## Frontend
 
 | Piece | Location |
@@ -96,4 +97,4 @@ Also listed in `CatalogSeeder` for fresh/local/CI.
 
 ## Explicit non-goals (v1)
 
-Assignment, team calendars / shared ACL beyond meeting invitees, Google/Outlook sync. Meetings/Zoom/Meet live in the Meetings module.
+Assignment, named team calendars / department auto-share, Google/Outlook sync. Meetings/Zoom/Meet live in the Meetings module.

@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `verified`, `module:calendar`, plus `can:calendar.*` / policies.
 
-Visibility: without `calendar.view_all`, events where `organizer_id` is the current user **or** meeting projections (`source_type=meeting`) where the actor appears on `meeting_attendees.user_id`. Invitees receive `read_only: true` and cannot update/cancel/delete. No calendar assignment — `organizer_id` and `assignee_id` are prohibited on write payloads.
+Visibility: without `calendar.view_all`, events where `organizer_id` is the current user, **or** meeting projections where the actor is on `meeting_attendees.user_id`, **or** manual events shared via `calendar_event_shares`. Invitees and **viewer** shares receive `read_only: true` and cannot update/cancel/delete. **Editor** shares may mutate manual events when they also have Spatie `calendar.update` / `delete`. No calendar assignment — `organizer_id` and `assignee_id` are prohibited on write payloads.
 
 ## Upcoming
 
@@ -41,6 +41,17 @@ Sets `status=cancelled` and `cancelled_at`.
 ### DELETE `/calendar/events/{id}`
 
 Soft delete.
+
+## Shares (manual events)
+
+Organizer or `calendar.view_all` may manage shares.
+
+| Method | Path | Notes |
+|--------|------|--------|
+| GET | `/calendar/events/{id}/shares` | List shares |
+| POST | `/calendar/events/{id}/shares` | Body: `user_id`, `access` (`viewer`\|`editor`) |
+| PUT | `/calendar/events/{id}/shares/{share}` | Body: `access` |
+| DELETE | `/calendar/events/{id}/shares/{share}` | Remove share |
 
 ## Permissions
 

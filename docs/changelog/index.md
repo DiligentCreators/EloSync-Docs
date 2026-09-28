@@ -1,3 +1,25 @@
+## Depth program WA + Calendar + AI Contact (2026-09-28)
+
+- **EloSync-Docs:** Rollup production readiness for WhatsApp interactive **1.4.0**, Calendar shares **1.3.0**, and AI Contact triage **1.18.0** — [depth-wa-cal-ai-2026-09-28-production-readiness](/deployment/depth-wa-cal-ai-2026-09-28-production-readiness). Re-verified local Pest + Playwright (**Go** engineering; merge/deploy + live WABA smoke remaining).
+
+## AI Contact triage tools (ai 1.18.0) (2026-09-28)
+
+- **EloSync-Backend:** Ask EloSync adds `get_contact` plus confirmed writes `update_contact_status`, `assign_contact`, and `add_contact_note`. Lifecycle via `ContactService::update`; assign uses `EligibleContactAssignee`. Catalog **ai 1.17.0 → 1.18.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz.
+- **EloSync-Frontend:** Playwright AI suite covers contact propose→confirm status/assign/note.
+- **EloSync-Docs:** AI tools / deployment / roadmap / changelog + [production readiness](/deployment/ai-contact-triage-production-readiness) (**Go**).
+
+## Calendar event shares (1.3.0) (2026-09-28)
+
+- **EloSync-Backend:** Catalog **calendar 1.2.0 → 1.3.0**. `calendar_event_shares` (viewer/editor); visibility + policy; nested share CRUD. Pest: `CalendarEventShareTest`. Migrate-only bump + CatalogSeeder.
+- **EloSync-Frontend:** Share manager on manual event detail; Playwright share viewer flow in `calendar.workflow.spec.ts`.
+- **EloSync-Docs:** User/developer/API/deployment/roadmap/changelog + [production readiness](/deployment/calendar-event-shares-1-3-0-production-readiness) (**Go**).
+
+## WhatsApp Cloud interactive (1.4.0) (2026-09-28)
+
+- **EloSync-Backend:** Catalog **whatsapp-cloud 1.3.0 → 1.4.0**. `interactive_payload` on messages; Graph `sendInteractive`; webhook parses `button_reply` / `list_reply`; `POST …/conversations/{id}/interactive` (24h window). Pest: `WhatsAppInteractiveTest`. Migrate-only bump + CatalogSeeder.
+- **EloSync-Frontend:** Inbox interactive composer (reply buttons / list) + thread render; Playwright coverage in WhatsApp Cloud suite.
+- **EloSync-Docs:** User/developer/API/deployment/roadmap/changelog + [production readiness](/deployment/whatsapp-cloud-interactive-1-4-0-production-readiness) (**Go**; live WABA smoke deferred).
+
 ## Mobile iOS Business OS UI pass (2026-09-21)
 
 - **EloSync-Mobile:** Shared shell restyled to the approved wireframes — gray canvas, white inset groups, brand purple `#7C3AED`, large titles with circular create, `FilterChips` on Leads/Tasks, borderless RecordCards / More groups, Dashboard greeting + focus + quick-action grid + Create sheet, login fields on the same tokens.
