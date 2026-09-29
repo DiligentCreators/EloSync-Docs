@@ -43,6 +43,10 @@ When **Leads** and **Companies** are entitled, converting a lead can create or r
 
 With AI Assistant entitled, Ask EloSync can read a company and propose confirmed assign / timeline note writes (ai **1.19.0**). Companies have no lifecycle status tool.
 
+## Related records hub (**1.3.0**)
+
+When the matching modules are entitled, the company record shows the billing hub plus recent **opportunities**, **help desk tickets**, **projects**, and **documents** linked to that company (with **View all** deep links using `?company=`).
+
 ## Explicitly deferred
 
 - Backfill job for legacy contact `company` strings → Company records

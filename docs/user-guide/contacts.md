@@ -47,6 +47,10 @@ When **Invoices** and/or **Payments** are installed and you can view them, the c
 
 List pages also accept `?contact=` and `?company=` deep links so you can share a filtered view without searching by name.
 
+## Related opportunities, tickets, projects & documents
+
+When those modules are installed and you can view them, the contact record also lists recent **opportunities**, **help desk tickets**, **projects**, and **documents** linked to this contact. **View all** opens the module list filtered with `?contact=`.
+
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form.

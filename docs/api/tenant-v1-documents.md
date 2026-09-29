@@ -22,7 +22,7 @@ Same filters as list (minus pagination/sort). Payload:
 
 Permission: `documents.view`
 
-Query: `search` (title, description, original_name), `category_id`, `trashed` (`only` | `true` | `with`), `sort` (`title` | `original_name` | `size_bytes` | `created_at` | `updated_at`, default `created_at`), `direction`, `page`, `per_page`.
+Query: `search` (title, description, original_name), `category_id`, `linkable_type` + `linkable_id` (filter documents soft-linked to a record; `linkable_type` accepts `lead` | `contact` | `company` | `project` | `employee` | `asset` | `task`, case-insensitive), `contact_id` / `company_id` (AND when both set — same party-chip pattern as invoices), `trashed` (`only` | `true` | `with`), `sort` (`title` | `original_name` | `size_bytes` | `created_at` | `updated_at`, default `created_at`), `direction`, `page`, `per_page`.
 
 List items include nested `category` / `creator` when loaded, plus `original_name`, `mime`, `size_bytes`.
 

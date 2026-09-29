@@ -49,9 +49,12 @@ Contact view actions open Quotation / Invoice / Payment create pages with `?cont
 
 When Invoices/Payments are entitled, the contact record shows invoiced / paid / balance due, recent documents, list deep links (`?contact=`), and a period **Statement** (PDF for contacts/companies).
 
+## Related records hub (**1.6.0**)
+
+When the matching modules are entitled, the contact record also shows recent **opportunities**, **help desk tickets**, **projects**, and **documents** linked to that contact (with **View all** deep links using `?contact=`). Document links use the Documents soft-link pivot (`linkable_type` / `linkable_id`).
+
 ## Explicitly deferred
 
-- Deals / opportunities linked to contacts
 - Contact import/export
 - Follow-ups (see [Leads](/user-guide/leads-overview) for that pattern)
 - Legacy company-string → Company backfill job (see [Companies](/user-guide/companies-overview))

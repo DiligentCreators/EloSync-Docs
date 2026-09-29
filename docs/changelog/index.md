@@ -1,3 +1,10 @@
+## Workspace record cohesion (2026-09-29)
+
+- **EloSync-Backend:** Documents list filter `linkable_type` + `linkable_id` plus party `contact_id`/`company_id` (AND). Email message `links` via `EmailMessageLinkResource`. Catalog bumps: **contacts 1.5.0 → 1.6.0**, **companies 1.2.0 → 1.3.0**, **documents 1.5.0 → 1.6.0**, **email 1.3.0 → 1.4.0**. Pest: linkable / dual-party / invalid type; email link/unlink; CatalogSeeder companion.
+- **EloSync-Frontend:** Contact/Company related hubs; Email CRM link/unlink UI; party chips; Playwright related-hub + email CRM links.
+- **EloSync-Mobile:** Contact/Company `PartyRelatedHub` (opportunities, help desk, projects, documents).
+- **EloSync-Docs:** Guides + [production readiness](/deployment/workspace-record-cohesion-production-readiness) (**Go**; I1/I2/I3 closed).
+
 ## Automation create_project + AI Company triage (2026-09-29)
 
 - **EloSync-Backend:** Automation action `create_project` (module `projects`) — soft-links opportunity/company/contact from the trigger, notes the related record, optional `starts_in_days` / `ends_in_days`. Starter template `opportunity_stage_create_project`. Catalog **automation 1.3.0 → 1.4.0**. Ask EloSync Company triage: `get_company` plus confirmed writes `assign_company` / `add_company_note` (`EligibleCompanyAssignee`; no lifecycle status on companies). Catalog **ai 1.18.0 → 1.19.0**. Opportunity automation payloads include `company_id` / `contact_id`. Pest: related-context create project, registry/templates, write confirm + authz. Readiness remediations: missing-opportunity soft-link null + CatalogSeeder companion expectations.

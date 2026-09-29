@@ -33,6 +33,10 @@ On a company record page (when the matching module is installed and you have cre
 
 When **Invoices** and/or **Payments** are installed, the company record shows invoiced / paid / remaining totals, recent documents (including credit notes when installed), deep links to `/invoices?company=` and `/payments?company=`, and a **Statement** page with opening/closing balance for the selected date range (PDF when available).
 
+## Related opportunities, tickets, projects & documents
+
+When those modules are installed and you can view them, the company record also lists recent **opportunities**, **help desk tickets**, **projects**, and **documents** linked to this company. **View all** opens the module list filtered with `?company=`.
+
 ## Assignment
 
 Users with **assign** can set or clear the assignee from the record page or the create/edit form.

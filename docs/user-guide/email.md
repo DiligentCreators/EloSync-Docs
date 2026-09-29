@@ -100,11 +100,12 @@ In compose, the template picker shows **name · creator · Shared/Private** so s
 
 Signatures remain **personal** (per user) — they are never shared with the workspace.
 
+## CRM links (**1.4.0**)
+
+On the reading pane, link a message to a **Lead**, **Contact**, **Company**, or **Opportunity** you can view (requires `email.update`). Linked chips open the record; unlink removes the association. The API stores links on `email_message_links`.
+
 ## Not yet in the SPA
 
-These capabilities exist partially on the API/schema but are **not exposed in the Email UI** in this version:
-
-- **CRM links** (API can attach a message to a Lead/Contact/Company/Opportunity when you can view that record) — no link control in the reading pane yet
 - **Attachment download / compose attach** — sync may flag `has_attachments`; files are not fetched into EloSync storage yet
 
 ## Permissions

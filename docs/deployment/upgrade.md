@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Workspace record cohesion — contacts 1.6.0 / companies 1.3.0 / documents 1.6.0 / email 1.4.0
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_09_29_211500_bump_contacts_companies_documents_email_for_workspace_cohesion` — catalog only; **do not** `db:seed`)
+2. Confirm catalog versions: contacts **1.6.0**, companies **1.3.0**, documents **1.6.0**, email **1.4.0**
+3. Deploy the SPA **after** migrate — Contact/Company related hubs, Email CRM links UI, party list chips, Documents `?contact=` / `?company=`
+4. Staging smoke: contact with linked opportunity/ticket/project/document → related sections + View all chips; Email link/unlink Contact; `/documents?contact=` filtered list
+
+Go-live: [Workspace record cohesion production readiness](/deployment/workspace-record-cohesion-production-readiness).
+
 ## Projects 1.5.0 → 1.6.0 — workload heatmap
 
 1. Deploy Backend and run `php artisan migrate --force` (catalog bump only — **do not** `db:seed`)

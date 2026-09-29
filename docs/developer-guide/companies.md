@@ -27,6 +27,7 @@ Mirror of the [Contacts developer guide](/developer-guide/contacts) / [Leads dev
 - Assignee eligibility mirrors Leads/Contacts (`EligibleCompanyAssignee` / `User::isEligibleLeadAssignee`).
 - Soft delete only — no stage/status workflow.
 - **Party billing hub:** same pattern as Contacts (`CustomerPartyBillingPanel` with `partyKind: 'company'`). Backend reuses customer statement services scoped by `company_id`. List deep links `?company=` on invoices, payments, quotations, credit notes. Statement includes `opening_balance` + `balance_due`; PDF available.
+- **Related records hub (1.3.0):** `CustomerPartyRelatedHub` with `partyKind: 'company'` — opportunities / help-desk / projects / documents + `?company=` list deep links.
 
 ## Permissions
 
@@ -67,7 +68,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/companies/companies-page.tsx` (table + filters + KPIs) |
 | Form | `company-form-dialog.tsx` |
-| Detail | `company-view-page.tsx` (details, notes, activity; billing hub) |
+| Detail | `company-view-page.tsx` (details, notes, activity; billing hub; related hub) |
 | Statement | `src/pages/crm/party-statement-page.tsx` (`CompanyStatementPage`) |
 | Service | `companyService` in `src/api/services.ts` (`billingSummary`, `statement`, `downloadStatementPdf`) |
 | Nav | `permission: companies.view`, `module: 'companies'` (between Leads and Contacts) |
