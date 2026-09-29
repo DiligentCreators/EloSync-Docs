@@ -32,8 +32,8 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 |--------|----------------|
 | **Leads** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated) |
 | **Tasks** | List, search, status / my-tasks / overdue filters, create, view, edit, delete, complete/reopen; notes and activity timeline on view when update permitted |
-| **Contacts** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted |
-| **Companies** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted |
+| **Contacts** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted; Related hub for entitled Opportunities, Help Desk, Projects, and Documents |
+| **Companies** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted; Related hub for entitled Opportunities, Help Desk, Projects, and Documents |
 | **Opportunities** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated); Pipeline tab |
 | **Activities** | List, search, create, view, edit, delete, complete (permission-gated); notes and activity timeline on view when update permitted; Log tab |
 | **ToDos** | List, search, create, view, edit, delete, mark complete (permission-gated); ToDos tab |
