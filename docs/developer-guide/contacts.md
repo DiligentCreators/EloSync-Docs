@@ -29,6 +29,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads) / [Tasks developer
 - SPA: Contact create/edit can open `create-company-dialog.tsx` (`companies.create`) and auto-select the new `company_id` without navigating to Companies.
 - Sales prefill: Quotation / invoice / payment create forms accept `?contact=` / `?company=` on create only (`src/lib/related-record-query.ts`).
 - **Party billing hub:** `CustomerPartyBillingPanel` on contact view — summary strip + recent invoices/payments/credit notes + statement route. Backend: `CustomerPartyBillingSummaryService`, `CustomerAccountStatementService` (+ PDF). List deep links `?contact=` / `?company=` on invoices, payments, quotations, credit notes.
+- **Related records hub (1.6.0):** `CustomerPartyRelatedHub` — recent opportunities / help-desk tickets / projects / documents (module + permission gated). Documents filtered via `GET /documents?linkable_type=contact&linkable_id=`. Opportunity / Help Desk / Project / Documents lists accept `?contact=` / `?company=` party chips (`usePartyListFilter`).
 - Statement JSON includes `opening_balance` (pre-`from`) and `balance_due` (as of `to`). Credits on statements are **applied** only.
 - Assignee eligibility mirrors Leads (`EligibleContactAssignee` / `User::isEligibleLeadAssignee`).
 
@@ -71,7 +72,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 |-------|------|
 | Page | `src/pages/contacts/contacts-page.tsx` (table + filters + KPIs) |
 | Form | `contact-form.tsx` (+ `create-company-dialog.tsx` for inline company create) |
-| Detail | `contact-view-page.tsx` (details, notes, activity; billing hub; related sales create actions) |
+| Detail | `contact-view-page.tsx` (details, notes, activity; billing hub; related hub; related sales create actions) |
 | Statement | `src/pages/crm/party-statement-page.tsx` (`ContactStatementPage`) |
 | Service | `contactService` in `src/api/services.ts` (`billingSummary`, `statement`, `downloadStatementPdf`) |
 | Nav | `permission: contacts.view`, `module: 'contacts'` (between Leads and Tasks) |
@@ -80,6 +81,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Company link | Contact form company picker when `module:companies` + `companies.view`; **New** when `companies.create`; list/detail prefer `linked_company?.name` over legacy `company` |
 | Sales prefill | Quotation / invoice / payment create forms accept `?contact=` / `?company=` |
 | Party billing | Hub + deep links + statement; Pest `tests/Feature/Tenant/PartyBilling/`; Playwright `e2e/tests/contacts/contacts.party-billing.spec.ts` |
+| Related hub | Opportunities / Help Desk / Projects / Documents panels; Playwright `e2e/tests/contacts/contacts.related-hub.spec.ts` |
 
 ## Tests
 

@@ -217,6 +217,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Projects workload heatmap (2026-09-29):** `GET /projects/heatmap` + SPA Heatmap view — catalog **projects 1.6.0**.
 
+**Workspace record cohesion (2026-09-29):** Contact/Company related hubs (opportunities, help desk, projects, documents); Email CRM links UI (**email 1.4.0**); Documents reverse list filter (**documents 1.6.0**); catalog **contacts 1.6.0** / **companies 1.3.0**.
+
 Still deferred: Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
@@ -229,7 +231,7 @@ Next when prioritized: demand-driven items below (broader AI tools continue ligh
 |------|--------|
 | Customer Portal | External Help Desk submit/track — when beta demand is clear |
 | Recruitment | HR expansion — on demand |
-| Documents soft record links | On demand |
+| Documents nested folders / versioning | Soft record links shipped (create + reverse list); folders/versioning on demand |
 | Marketing campaigns / email campaigns | Separate SKUs; Automation deferred |
 | Vendor Portal | Parked |
 | Multi-currency / multi-branch | Parked |

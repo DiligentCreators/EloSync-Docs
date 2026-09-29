@@ -1,6 +1,6 @@
 # Email — Developer Guide
 
-Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.3.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, labels, and signatures are scoped to the account owner (`user_id` via `EmailAccount`). Templates support `is_shared` for workspace-wide apply.
+Personal **IMAP/SMTP** mailbox module (`email`, catalog **v1.4.0**). Tenants install it from Marketplace (`is_default_included=false`, `is_billable=false`, prices `$0`). Authorization uses Spatie `email.*` permissions. Mailboxes, folders, messages, labels, and signatures are scoped to the account owner (`user_id` via `EmailAccount`). Templates support `is_shared` for workspace-wide apply.
 
 v1.x uses **app passwords / IMAP+SMTP credentials** only. There is **no OAuth** for Gmail or Microsoft in this version.
 
@@ -120,7 +120,7 @@ Signatures: personal CRUD only; `body_html`, `is_default` per user — never sha
 
 ### `email_message_links`
 
-Polymorphic link (`linkable_type` / `linkable_id`) to CRM entities. API requires `email.update` **and** `Gate::authorize('view', $linkable)`. No Email SPA linking UI in v1.
+Polymorphic link (`linkable_type` / `linkable_id`) to Lead / Contact / Company / Opportunity. API requires `email.update` **and** `Gate::authorize('view', $linkable)`. Message show/link responses serialize links via `EmailMessageLinkResource` (`linkable_type` basename + optional `label`). SPA reading pane (**1.4.0**) exposes link/unlink controls.
 
 ## Sync & send
 
@@ -154,7 +154,7 @@ Routes: `module:email` then `can:email.*` / policies. Account/signature/message 
 
 | Migration | Responsibility |
 |-----------|----------------|
-| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog **1.1.0**; labels tables + catalog **1.2.0**; bulk/layout SPA + catalog **1.3.0** |
+| Schema | `2026_08_06_180010`–`180016` email_* tables; `2026_08_07_*` `is_shared` + catalog **1.1.0**; labels tables + catalog **1.2.0**; bulk/layout SPA + catalog **1.3.0**; CRM links resource + SPA reading pane + catalog **1.4.0** |
 | Catalog | `register_email_module` via `DefaultModuleRegistrar`; version bumps via `bumpVersion` |
 | Permissions | `add_email_permissions` via `TenantPermissionSynchronizer` |
 
