@@ -21,7 +21,7 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 
 - Flat library only — optional `category_id` FK (`nullOnDelete`); no folder tree.
 - **Soft record links** via `document_links` polymorphic pivot (`DocumentLink` / `DocumentLinkService::sync` on create + update). Optional arrays: `lead_ids`, `contact_ids`, `company_ids`, `project_ids`, `employee_ids`, `asset_ids`, `task_ids`. Each id validated with the matching `Linkable*` rule (module entitlement + assignee / visibility scope). Omitted keys leave that link type unchanged; an empty array clears links for that type.
-- **Reverse list filter (1.6.0):** `GET /documents?linkable_type=contact&linkable_id=` (and peer types) returns documents linked to that record. Contact/Company hubs and Documents list `?contact=` / `?company=` chips use this.
+- **Reverse list filter (1.6.0):** `GET /documents?linkable_type=contact&linkable_id=` (and peer types) returns documents linked to that record. Prefer party chips `contact_id` / `company_id` (AND when both set) for Contact/Company hubs and Documents list deep links.
 - Categories: `name`, auto `slug` (`Str::slug` when omitted), `sort_order`, `is_active`. Soft/force delete blocked while documents still reference the category.
 - Create requires multipart `file` (max 51200 KB / 50 MB). `DocumentService::create` calls `WorkspaceStorageService::assertCanStore` then `FileUploadService::store` under `FileUploadService::tenantDirectory($tenantId, 'documents')` (`public: false`).
 - Update may replace the file via `FileUploadService::replace`; quota check uses the positive size delta only.

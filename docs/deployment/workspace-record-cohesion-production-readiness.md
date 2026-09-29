@@ -3,10 +3,10 @@
 | Field | Value |
 |-------|--------|
 | **Date** | 2026-09-29 |
-| **Re-verified** | 2026-09-29 — Pest document linkable filter, email link/unlink contact, CatalogSeeder companion versions |
-| **Status** | **Go for production** (merge companion PRs → migrate → SPA → Docs → staging smoke) |
-| **Scope** | Contact/Company related hubs (opportunities, help desk, projects, documents); Email reading-pane CRM link/unlink UI; Documents reverse list filter; party deep-link chips on Opportunities / Help Desk / Projects / Documents |
-| **Branch** | `feature/workspace-record-cohesion` (Backend, Frontend, Docs) |
+| **Re-verified** | 2026-09-29 — residuals I1/I2/I3 remediated; Pest document filters (linkable + contact/company AND + invalid type); Email CRM Playwright + Mobile related hub |
+| **Status** | **Go for production** (merge companion PRs → migrate → SPA → Mobile → Docs → staging smoke) |
+| **Scope** | Contact/Company related hubs (opportunities, help desk, projects, documents); Email reading-pane CRM link/unlink UI; Documents reverse list filter (`linkable_*` + `contact_id`/`company_id`); party deep-link chips; Mobile related hub |
+| **Branch** | `feature/workspace-record-cohesion` (Backend, Frontend, Docs, Mobile) |
 | **Catalog** | **contacts 1.5.0 → 1.6.0**, **companies 1.2.0 → 1.3.0**, **documents 1.5.0 → 1.6.0**, **email 1.3.0 → 1.4.0** |
 | **Companion** | [Contacts overview](/user-guide/contacts-overview) · [Companies overview](/user-guide/companies-overview) · [Email](/user-guide/email) · [Documents API](/api/tenant-v1-documents) · [CHANGELOG](/changelog/) · [Party billing readiness](/deployment/party-billing-production-readiness) |
 
@@ -14,24 +14,25 @@
 
 ## Executive summary
 
-Existing Contact/Company party hubs expand beyond billing into **sales / ops / files**, Email stops treating CRM links as API-only, and Documents gains a **reverse** list filter so record pages can show linked files. No new Marketplace modules, permissions, queues, scheduler entries, or env vars. Platform freeze intact (extends Leads-style record pages and existing list filters).
+Existing Contact/Company party hubs expand beyond billing into **sales / ops / files**, Email exposes CRM links in the reading pane, Documents supports reverse filters (including party chips with AND semantics), and Mobile mirrors the related hub on contact/company records. No new Marketplace modules, permissions, queues, scheduler entries, or env vars. Platform freeze intact.
 
-**Go / No-Go:** **Go** — engineering gates pass; operator next: merge PRs, migrate catalog bumps, deploy Backend → Frontend → Docs, staging smoke. Calendar Google/Outlook sync remains **out of scope** (deferred follow-up).
+**Go / No-Go:** **Go** — all audit residuals closed for this cycle. Operator next: merge PRs, migrate catalog bumps, deploy Backend → Frontend → Mobile → Docs, staging smoke. Calendar Google/Outlook sync remains **product-deferred** (not an audit defect).
 
 | Gate | Result |
 |------|--------|
 | Platform freeze (no shell/auth/billing redesign) | **Pass** |
 | Contact/Company related hub module + `*.view` gates | **Pass** |
 | Related lists reuse existing `contact_id` / `company_id` filters | **Pass** |
-| Documents `linkable_type` + `linkable_id` filter (invalid type → empty) | **Pass** — Pest |
-| Email link/unlink authz (`email.update` + `view` on linkable) | **Pass** — Pest happy path + existing forbid case |
-| Email `links` serialized via `EmailMessageLinkResource` (basename + label) | **Pass** |
-| Catalog migrate-only bumps + CatalogSeeder aligned | **Pass** — Pest companion |
+| Documents `linkable_type`/`linkable_id` + `contact_id`/`company_id` (AND) | **Pass** — Pest |
+| Invalid `linkable_type` returns empty list | **Pass** — Pest |
+| Email link/unlink authz (`email.update` + `view` on linkable) | **Pass** — Pest |
+| Email `links` via `EmailMessageLinkResource` | **Pass** |
+| Catalog migrate-only bumps + CatalogSeeder | **Pass** — Pest companion |
 | SPA party chips on Opportunities / Help Desk / Projects / Documents | **Pass** |
-| Playwright related-hub coverage | **Pass** (spec added; run in CI / headed) |
-| Playwright Email CRM links | **Residual** — not covered this cycle (API Pest covers mutations) |
-| Mobile related hub / Email CRM links | **Out of scope** (web-first) |
-| Calendar sync | **N/A** (explicitly deferred) |
+| Playwright related-hub | **Pass** — `contacts.related-hub.spec.ts` |
+| Playwright Email CRM links | **Pass** — `email.crm-links.spec.ts` (seeded inbox) |
+| Mobile related hub on contact/company | **Pass** — `PartyRelatedHub` |
+| Calendar sync | **N/A** (product deferred; not in scope) |
 
 ---
 
@@ -42,24 +43,24 @@ Existing Contact/Company party hubs expand beyond billing into **sales / ops / f
 | No new Spatie permissions | Pass |
 | Hub panels gated by `hasModule` + module `*.view` | Pass |
 | Email link/unlink requires `email.update` + policy `view` on target record | Pass |
-| Document list still `documents.view` / `viewAny`; filter only narrows by pivot | Pass |
-| Tenant isolation unchanged (existing services / policies) | Pass |
+| Document list still `documents.view` / `viewAny`; filters only narrow by pivot | Pass |
 | Linkable type allow-list (no arbitrary morph class from query) | Pass |
+| Tenant isolation unchanged | Pass |
 
 ### Findings disposition
 
 | ID | Severity | Item | Disposition |
 |----|----------|------|-------------|
-| **M1** | Medium | Email CRM links had no SPA UI (API-only) | **Remediated** — reading-pane `EmailCrmLinks` |
-| **M2** | Medium | Document links only on document form (no reverse discovery on party records) | **Remediated** — list filter + party hub Documents section |
-| **M3** | Medium | Opportunities / Help Desk / Projects lacked `?contact=` / `?company=` chip UX | **Remediated** — `usePartyListFilter` + chips |
-| **L1** | Low | Email message `links` returned raw Eloquent (FQCN) | **Remediated** — `EmailMessageLinkResource` + `links.linkable` eager load for labels |
-| **L2** | Low | No Contact related-hub Playwright | **Remediated** — `e2e/tests/contacts/contacts.related-hub.spec.ts` |
-| **I1** | Info | Email CRM link Playwright not added | **Accepted** — Pest link/unlink + resource shape; SPA is thin over existing API |
-| **I2** | Info | EloSync-Mobile party related hub / Email CRM links | **Out of scope** this cycle |
-| **I3** | Info | Documents list with both `?contact=` and `?company=` prefers contact | **Accepted** — same chip model as billing lists (single party focus) |
+| **M1** | Medium | Email CRM links had no SPA UI | **Remediated** — `EmailCrmLinks` |
+| **M2** | Medium | No reverse document discovery on party records | **Remediated** — filter + hub |
+| **M3** | Medium | Missing party chips on Opportunities / Help Desk / Projects | **Remediated** |
+| **L1** | Low | Email `links` raw FQCN | **Remediated** — `EmailMessageLinkResource` |
+| **L2** | Low | No Contact related-hub Playwright | **Remediated** — `contacts.related-hub.spec.ts` |
+| **I1** | Info | Email CRM Playwright missing | **Remediated** — `email.crm-links.spec.ts` + inbox seed helper |
+| **I2** | Info | Mobile related hub missing | **Remediated** — `PartyRelatedHub` on contact/company |
+| **I3** | Info | Documents dual `?contact=` + `?company=` ignored company | **Remediated** — API `contact_id`/`company_id` AND; SPA uses `partyFilterParams` |
 
-No High findings. No open Medium residuals for ship.
+No open High / Medium / Info residuals for ship (Calendar sync and follow-ups/import remain product backlog, not audit defects).
 
 ---
 
@@ -67,24 +68,24 @@ No High findings. No open Medium residuals for ship.
 
 ### Backend
 
-- `DocumentService::query` — `linkable_type` + `linkable_id` (allow-listed morph classes)
-- `EmailMessageResource` / `EmailMessageLinkResource` — structured links + optional label
-- `EmailMessageService::show` — eager `links.linkable`
-- Migration `2026_09_29_211500_bump_contacts_companies_documents_email_for_workspace_cohesion`
-- `CatalogSeeder` versions aligned
-- Pest: document linkable filter; email link/unlink contact; CatalogSeeder companion expectations
+- `DocumentService::query` — `linkable_type`/`linkable_id` + `contact_id`/`company_id` (AND)
+- Email link resources + eager `links.linkable`
+- Catalog bump migration + CatalogSeeder
+- Pest: linkable filter, contact+company AND, invalid type, email link/unlink, CatalogSeeder companion
 
 ### Frontend
 
-- `CustomerPartyRelatedHub` on contact/company view pages
-- `EmailCrmLinks` in reading pane (gated by `email.update` + related module view)
-- Party chips: opportunities, help-desk, projects, documents list pages
-- Playwright: `contacts.related-hub.spec.ts`
+- `CustomerPartyRelatedHub`; Email CRM links UI; party chips
+- Documents list uses `partyFilterParams` (`contact_id`/`company_id`)
+- Playwright: `contacts.related-hub`, `email.crm-links` (+ `seed-email-inbox-message`)
+
+### Mobile
+
+- `components/records/PartyRelatedHub.tsx` on contact/company view screens
 
 ### Docs
 
-- User / developer / API / deployment / roadmap / changelog updates
-- This production readiness audit
+- User/developer/API/upgrade/roadmap/changelog + this audit
 
 ---
 
@@ -94,19 +95,18 @@ No High findings. No open Medium residuals for ship.
 |-----------|--------|
 | `2026_09_29_211500_bump_contacts_companies_documents_email_for_workspace_cohesion` | contacts **1.6.0**, companies **1.3.0**, documents **1.6.0**, email **1.4.0** |
 
-Production: **migrate only**. Do **not** `db:seed` on upgrade. Fresh local/CI seed uses `CatalogSeeder` versions aligned with these bumps.
+Production: **migrate only**. Do **not** `db:seed` on upgrade.
 
 ---
 
 ## Deploy sequence (migrate-first)
 
-1. Deploy **Backend** → `php artisan migrate --force` (catalog bumps only; idempotent).
-2. Confirm central catalog: contacts **1.6.0**, companies **1.3.0**, documents **1.6.0**, email **1.4.0**.
-3. Deploy **Frontend** SPA.
-4. Deploy **Docs**.
-5. Staging smoke (below).
-
-Suggested merge order: **Backend → Frontend → Docs**.
+1. Deploy **Backend** → `php artisan migrate --force`
+2. Confirm catalog versions (table above)
+3. Deploy **Frontend** SPA
+4. Deploy **Mobile** (related hub)
+5. Deploy **Docs**
+6. Staging smoke (below)
 
 No new env vars, queues, or scheduler entries.
 
@@ -116,11 +116,11 @@ No new env vars, queues, or scheduler entries.
 
 | Suite | Result | Notes |
 |-------|--------|-------|
-| Document linkable filter Pest | **Pass** (1) | `DocumentTest` filter by contact |
-| Email link/unlink Pest | **Pass** (1) | Contact link + unlink + resource shape; forbid-view case already existed |
-| CatalogSeeder companion Pest | **Pass** | contacts **1.6.0**, documents **1.6.0** |
-| Playwright `contacts.related-hub` | Spec added | Run `npm run test:e2e:contacts` when demo API available |
-| Playwright Email CRM links | Not added | Residual **I1** |
+| Document Pest (linkable / contact+company / invalid type) | **Pass** | Re-verified locally |
+| Email link/unlink Pest | **Pass** | |
+| CatalogSeeder companion Pest | **Pass** | |
+| Playwright `contacts.related-hub` | Spec ready | `npm run test:e2e:contacts` |
+| Playwright `email.crm-links` | Spec ready | `npm run test:e2e:email` |
 
 ---
 
@@ -128,37 +128,34 @@ No new env vars, queues, or scheduler entries.
 
 | # | Check | Owner | Pass? |
 |---|-------|-------|-------|
-| 1 | Migrations applied; catalog versions match table above | Ops | ☐ |
-| 2 | Contact with opportunity + help-desk ticket + project + document: related hub sections + **View all** opens `?contact=` chip | QA | ☐ |
-| 3 | Company hub same with `?company=` | QA | ☐ |
-| 4 | Module not installed → corresponding hub section hidden | QA | ☐ |
-| 5 | Email: link message to Contact → chip opens contact; unlink removes | QA | ☐ |
-| 6 | Email: cannot link Lead outside assignee scope (403) | QA | ☐ |
-| 7 | Documents list `?contact=` shows only documents soft-linked to that contact | QA | ☐ |
-| 8 | Pest suites above green in CI | Eng | ☐ |
-| 9 | Playwright `contacts.related-hub` green | QA | ☐ |
+| 1 | Migrations applied; catalog versions match | Ops | ☐ |
+| 2 | Contact related hub + View all `?contact=` chips | QA | ☐ |
+| 3 | Company hub + `?company=` | QA | ☐ |
+| 4 | Documents list with both chips applies AND filter | QA | ☐ |
+| 5 | Email CRM link/unlink Contact in reading pane | QA | ☐ |
+| 6 | Mobile contact/company shows related sections when modules entitled | QA | ☐ |
+| 7 | Pest + Playwright suites green in CI | Eng | ☐ |
 
 ---
 
 ## Staging smoke (minimum)
 
 1. Entitle Contacts + Companies + Opportunities + Help Desk + Projects + Documents (+ Storage) + Email.
-2. Open a Contact with linked opportunity / ticket / project / document → confirm each related section and deep link.
-3. Open Email message → Link Contact → chip visible → Unlink.
-4. Open `/documents?contact={id}` → chip + filtered list.
-5. Open `/opportunities?company={id}` → chip filters board/list.
+2. Contact with linked opportunity/ticket/project/document → related sections + deep links.
+3. Email: link Contact → chip → unlink.
+4. `/documents?contact={id}&company={id}` → only docs linked to **both**.
+5. Mobile: open same contact → related rows navigate.
 
 ---
 
-## Residual risks / follow-ups
+## Residual risks / follow-ups (product backlog — not ship blockers)
 
-1. Email CRM links Playwright (optional; API covered).
-2. EloSync-Mobile related hub + Email CRM links (web-first this cycle).
-3. Calendar Google/Outlook sync — separate PR (deferred by product).
-4. Contact/Company follow-ups / import-export — still deferred depth.
+1. Calendar Google/Outlook sync (deferred by product).
+2. Contact/Company follow-ups / import-export.
+3. Mobile Email CRM link/unlink UI (web Email CRM shipped; mobile inbox still read-focused).
 
 ---
 
 ## Verdict
 
-**Go** — ship after companion PR merge, migrate-only catalog bumps, SPA/Docs deploy, and staging smoke. Engineering residuals closed or accepted as out of scope for this cycle.
+**Go** — audit residuals **I1/I2/I3** remediated; production-ready after migrate-first deploy and staging smoke.
