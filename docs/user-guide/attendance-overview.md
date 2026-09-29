@@ -24,6 +24,7 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 - Check-in/out **IP** (always) + best-effort **location**; required **change reason** on manual create/update (`attendance.create` / `attendance.update`)
 - Record **edit history** timeline (`GET …/timeline`)
 - KPIs via `GET /attendance-records/stats` (total + counts per status + open presence)
+- Optional daily email digests (late today + yesterday late/missing check-out) for owners/managers
 - Module licensing (`module:attendance`) + Spatie permissions — **free Marketplace opt-in**
 - Hard dependency on `employees`
 
@@ -31,7 +32,7 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 
 `attendance.view` · `create` · `update` · `delete` · `restore` · `force.delete`
 
-Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in, version **1.4.0**.
+Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in, version **1.5.0**.
 
 ## Explicitly deferred
 

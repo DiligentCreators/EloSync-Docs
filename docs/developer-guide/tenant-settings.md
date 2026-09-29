@@ -32,7 +32,7 @@ Contract public-accept requirement booleans (general group, default **false**): 
 
 `email_notifications` is a JSON object under the `notifications` group. Keys (`task_assigned`, `task_status`, `task_mentioned`, `lead_follow_up_created`, `lead_follow_up_due`, `lead_mentioned`, `meeting_events`, `module_assigned`) default to `false`. Event notifications call `ResolvesOptionalMailChannel::withOptionalMail()` so only the `mail` channel is gated; `database` / `broadcast` / `webpush` stay on. Digests and auth mail never consult this map. Resolve via `EmailNotificationPreferenceService` / `TenantSettingService::resolve('email_notifications')`.
 
-Attendance group keys (system defaults when unset): `office_start_time` (`09:00`), `office_end_time` (`18:00`), `attendance_grace_minutes` (`15`), `work_week_days` (`[1,2,3,4,5]` ISO weekdays). Used by login check-in and `PayPeriodCalculator`.
+Attendance group keys (system defaults when unset): `office_start_time` (`09:00`), `office_end_time` (`18:00`), `attendance_grace_minutes` (`15`), `work_week_days` (`[1,2,3,4,5]` ISO weekdays), `attendance_late_report_enabled` (**false**) + `attendance_late_report_time` (`09:30`), `attendance_daily_report_enabled` (**false**) + `attendance_daily_report_time` (`08:00`). Used by login check-in, `PayPeriodCalculator`, and `attendance:send-daily-reports` (workspace-local send clocks).
 
 `meetings_default_provider` is `none` \| `google_meet` \| `zoom` (default `none`) under the `general` group. It preselects the Meetings schedule form; OAuth connections remain on Meetings → Integrations.
 
@@ -69,6 +69,7 @@ This is part of the [Module Development Standard](/developer-guide/module-develo
 | Lead follow-ups | `lead_follow_ups.due_at` | Same as tasks — display/edit in workspace TZ; due/overdue alerts use workspace “today” |
 | Meetings / calendar | `starts_at` / `ends_at` / `remind_at` | Form locked to workspace TZ; list/detail format in that TZ |
 | Attendance login check-in | “today” + `check_in` | `Carbon::now($workspaceTimezone)` for date and clock; late vs present uses office hours in that TZ |
+| Attendance digests | `attendance_late_report_time` / `attendance_daily_report_time` | Late-today and yesterday digests gate on workspace-local `H:i` via `attendance:send-daily-reports` |
 | Office hours | `office_start_time` / `office_end_time` / grace | Separate clocks from Daily Reminder Time, but same workspace timezone |
 | Work week / payroll calendar | `work_week_days` | Working days interpreted with workspace-local dates |
 

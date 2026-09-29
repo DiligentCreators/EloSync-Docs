@@ -1,3 +1,9 @@
+## Attendance daily digests (1.5.0) (2026-09-30)
+
+- **EloSync-Backend:** Settings → Attendance adds `attendance_late_report_enabled` / `attendance_late_report_time` (default off / `09:30`) and `attendance_daily_report_enabled` / `attendance_daily_report_time` (default off / `08:00`). Scheduled `attendance:send-daily-reports` emails owners/admins/managers: late-today (checked-in late + not arrived past grace) and yesterday’s summary (late + missing check-out). Idempotent via `daily_summary_deliveries`. Catalog **attendance 1.4.0 → 1.5.0**.
+- **EloSync-Frontend:** Attendance settings toggles + send-time inputs (workspace timezone).
+- **EloSync-Docs:** Attendance / tenant-settings / notifications API + changelog.
+
 ## Workspace record cohesion (2026-09-29)
 
 - **EloSync-Backend:** Documents list filter `linkable_type` + `linkable_id` plus party `contact_id`/`company_id` (AND). Email message `links` via `EmailMessageLinkResource`. Catalog bumps: **contacts 1.5.0 → 1.6.0**, **companies 1.2.0 → 1.3.0**, **documents 1.5.0 → 1.6.0**, **email 1.3.0 → 1.4.0**. Pest: linkable / dual-party / invalid type; email link/unlink; CatalogSeeder companion.
