@@ -217,7 +217,7 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Projects workload heatmap (2026-09-29):** `GET /projects/heatmap` + SPA Heatmap view — catalog **projects 1.6.0**.
 
-**Workspace record cohesion (2026-09-29):** Contact/Company related hubs (opportunities, help desk, projects, documents); Email CRM links UI (**email 1.4.0**); Documents reverse list filter (**documents 1.6.0**); catalog **contacts 1.6.0** / **companies 1.3.0**.
+**Workspace record cohesion (2026-09-29):** Contact/Company related hubs (opportunities, help desk, projects, documents); Email CRM links UI (**email 1.4.0**); Documents reverse list filter (**documents 1.6.0**); catalog **contacts 1.6.0** / **companies 1.3.0**. Go-live: [production readiness](/deployment/workspace-record-cohesion-production-readiness) (**Go**).
 
 Still deferred: Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
 

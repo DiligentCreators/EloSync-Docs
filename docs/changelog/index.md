@@ -2,7 +2,7 @@
 
 - **EloSync-Backend:** Documents list filter `linkable_type` + `linkable_id` (reverse soft links). Email message `links` serialized via `EmailMessageLinkResource` (basename type + label). Catalog bumps: **contacts 1.5.0 → 1.6.0**, **companies 1.2.0 → 1.3.0**, **documents 1.5.0 → 1.6.0**, **email 1.3.0 → 1.4.0** (migrate-only + CatalogSeeder). Pest: document linkable filter; email link/unlink contact + link resource shape; CatalogSeeder companion versions.
 - **EloSync-Frontend:** Contact/Company **related hubs** (opportunities, help desk, projects, documents) beside billing. Email reading-pane CRM link/unlink UI. Party list chips (`?contact=` / `?company=`) on Opportunities, Help Desk, Projects, and Documents.
-- **EloSync-Docs:** User/developer/API/roadmap/changelog for Contacts, Companies, Documents, Email cohesion.
+- **EloSync-Docs:** User/developer/API/roadmap/changelog for Contacts, Companies, Documents, Email cohesion + [production readiness](/deployment/workspace-record-cohesion-production-readiness) (**Go**).
 
 ## Automation create_project + AI Company triage (2026-09-29)
 

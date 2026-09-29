@@ -470,6 +470,7 @@ export default withMermaid(defineConfig({
             { text: 'Storage Production Readiness', link: '/deployment/storage-production-readiness' },
             { text: 'Invoices Production Readiness', link: '/deployment/invoices-production-readiness' },
             { text: 'Party Billing Production Readiness', link: '/deployment/party-billing-production-readiness' },
+            { text: 'Workspace Record Cohesion Readiness', link: '/deployment/workspace-record-cohesion-production-readiness' },
             { text: 'International Tax Production Readiness', link: '/deployment/international-tax-production-readiness' },
             { text: 'Contracts Production Readiness', link: '/deployment/contracts-production-readiness' },
             { text: 'Contracts 1.7.0 Accept Evidence Readiness', link: '/deployment/contracts-1-7-0-production-readiness' },
