@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.4.0** (location capture, required change reason, edit history timeline)
+- Current catalog version: **1.5.0** (daily late / yesterday email digests + prior location/timeline features)
 
 ## Bootstrap
 
@@ -17,7 +17,15 @@
 
 ## Timezone
 
-Self check-in “today”, the HH:MM timer, and late classification use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end and remote start are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+Self check-in “today”, the HH:MM timer, late classification, and **daily digest send times** use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end, remote start, late report time, and yesterday report time are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+
+## Deploy checklist (1.5.0)
+
+1. Migrate through `2026_09_30_013600` (catalog **attendance → 1.5.0**)
+2. Confirm scheduler runs `attendance:send-daily-reports` every 5 minutes (`withoutOverlapping`, `onOneServer`) and `emails` queue workers are healthy
+3. Settings → Attendance: optionally enable **Daily late report email** / **Yesterday’s attendance email** and set send times
+4. Smoke: create late + open checkout records → advance test clock past send time → `php artisan attendance:send-daily-reports` → owner receives digests once
+5. Pest: `tests/Feature/Tenant/Attendance/AttendanceDailyReportDigestTest.php`
 
 ## Deploy checklist (1.2.0)
 

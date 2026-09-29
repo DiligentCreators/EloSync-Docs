@@ -13,6 +13,8 @@ When Attendance is installed, open **Settings → Attendance** to set:
 - **Show check-in / check-out** — when off, self-service buttons are hidden
 - **Require late check-in reason** — when late, staff must pick a reason (**Other** needs a written note)
 - **Auto check-in on login** — off by default; when on, first login of the day can create an on-site check-in. If you are late and **Require late check-in reason** is on, login does **not** check in (use **Check in** and pick a reason).
+- **Daily late report email** / **Late report send time** — off by default; when on, owners and managers get an email after the configured local time listing who checked in late and who has not checked in yet.
+- **Yesterday’s attendance email** / send time — off by default; morning digest of yesterday’s late arrivals and missing check-outs.
 - Work week days (used for payroll working-day calendars)
 - **Deduct salary for absences** / **unpaid leave** — control whether pay runs reduce net for those days (on by default)
 - **Deduct salary for late check-ins** — off by default; when on, configure a ladder such as 3 lates → 1 day salary, 6 lates → 2 days. A single late day stays **Late** with **no** fee. Ladder deductions appear on the payslip.

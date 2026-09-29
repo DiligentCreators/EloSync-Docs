@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:attendance`, plus `can:attendance.*`.
 
-Catalog version: **1.4.0**.
+Catalog version: **1.5.0**.
 
 ## Stats
 
@@ -13,6 +13,19 @@ Catalog version: **1.4.0**.
 Same filters as list (minus pagination/sort). Payload:
 
 `total`, `present`, `absent`, `half_day`, `remote`, `late`, plus open presence counts `checked_in_open`, `on_site_open`, `remote_open` (today, checked in, not checked out).
+
+## Daily email digests
+
+Scheduled (not HTTP): `attendance:send-daily-reports` every 5 minutes. Tenant settings (Attendance group):
+
+| Key | Default | Purpose |
+|-----|---------|---------|
+| `attendance_late_report_enabled` | `false` | Send late-today digest after local time |
+| `attendance_late_report_time` | `09:30` | Workspace-local `H:i` gate |
+| `attendance_daily_report_enabled` | `false` | Send yesterday digest after local time |
+| `attendance_daily_report_time` | `08:00` | Workspace-local `H:i` gate |
+
+Recipients: non-suspended owners / admins / managers with `attendance.view`. Notification types `attendance.late.digest` and `attendance.yesterday.digest` (database + mail). Idempotent via `daily_summary_deliveries`.
 
 ## Today / self check-in
 

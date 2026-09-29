@@ -1,6 +1,6 @@
 # Attendance — Developer Guide
 
-Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.4.0**.
+Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.5.0**.
 
 ## Domain
 
@@ -16,15 +16,27 @@ Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + op
 
 **Ownership:** Staff may only act on their linked active employee. Self check-in/out (`POST .../check-in`, `.../check-out`, `GET .../today`) requires a linked active employee and `attendance_self_check_enabled` — not `attendance.create` / `attendance.update`. Admin/manager CRUD uses `AttendanceRecordPolicy::canManageOthers` plus `attendance.*` permissions.
 
-Tenant settings (`attendance` group): office hours, `attendance_self_check_enabled`, `attendance_auto_check_in_on_login` (default **false**), `attendance_require_late_reason`, `remote_office_start_time`, `remote_grace_minutes`, `work_week_days`, `employee_custom_schedules_enabled`, `payroll_deduct_late` + `payroll_late_deduction_rules`, `payroll_deduct_absent`, `payroll_deduct_unpaid_leave`. Workspace timezone drives “today” and late thresholds. Auto-login check-in is skipped when the user would be late and late reasons are required. When custom schedules are enabled, late thresholds prefer each employee’s on-site / remote start times. Late remote check-ins store status **Late** with work mode **Remote**.
+Tenant settings (`attendance` group): office hours, `attendance_self_check_enabled`, `attendance_auto_check_in_on_login` (default **false**), `attendance_require_late_reason`, `attendance_late_report_enabled` (default **false**) + `attendance_late_report_time` (default `09:30`), `attendance_daily_report_enabled` (default **false**) + `attendance_daily_report_time` (default `08:00`), `remote_office_start_time`, `remote_grace_minutes`, `work_week_days`, `employee_custom_schedules_enabled`, `payroll_deduct_late` + `payroll_late_deduction_rules`, `payroll_deduct_absent`, `payroll_deduct_unpaid_leave`. Workspace timezone drives “today”, late thresholds, and digest send clocks. Auto-login check-in is skipped when the user would be late and late reasons are required. When custom schedules are enabled, late thresholds prefer each employee’s on-site / remote start times. Late remote check-ins store status **Late** with work mode **Remote**.
+
+### Daily email digests
+
+Scheduled command `attendance:send-daily-reports` (every 5 minutes, `onOneServer`) walks entitled tenants:
+
+| Digest | Setting toggle | Send time key | Contents | Recipients |
+|--------|----------------|---------------|----------|------------|
+| Late today | `attendance_late_report_enabled` | `attendance_late_report_time` | Today’s `status=late` check-ins + active employees past on-site start+grace with no check-in (excludes approved leave when Leave entitled; skips non-work days for the not-arrived bucket) | Owners / admins / managers with `attendance.view` |
+| Yesterday | `attendance_daily_report_enabled` | `attendance_daily_report_time` | Yesterday counts + late rows + missing check-out (`check_in` set, `check_out` null) | Same |
+
+Idempotency via `daily_summary_deliveries` kinds `attendance_late_daily` / `attendance_yesterday_daily`. Notifications: `AttendanceLateDigestNotification` / `AttendanceYesterdayDigestNotification` (database + mail). Empty late digest skips send; yesterday skips when there are no records for that date.
 
 ## Backend layout
 
 | Piece | Path |
 |-------|------|
 | Models | `AttendanceRecord`, `AttendanceRecordActivity`, `AttendanceReason` |
-| Services | `AttendanceRecordService`, `AttendanceReasonService` |
+| Services | `AttendanceRecordService`, `AttendanceReasonService`, `AttendanceDailyReportService` |
 | Controllers | `AttendanceRecordController`, `AttendanceReasonController` |
+| Commands | `attendance:send-daily-reports` |
 | Tests | `tests/Feature/Tenant/Attendance/` |
 
 ## API
@@ -38,6 +50,7 @@ See [tenant-v1-attendance.md](/api/tenant-v1-attendance).
 - Create/edit: required change reason + best-effort geolocation
 - View: IP/location details + edit history timeline
 - Login / 2FA / passkey: optional coordinates for auto check-in
+- Settings → Attendance: late / yesterday digest toggles + send times (workspace timezone)
 
 ## Tests
 
