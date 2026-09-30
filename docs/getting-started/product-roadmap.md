@@ -10,7 +10,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 | Capability | Status |
 |------------|--------|
-| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
+| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
 | [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
@@ -21,10 +21,9 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 ### Planned / deferred after Phase 1 MVP
 
 - Calendar: Google/Outlook sync; named team calendars / department auto-share
-- Leads: real-time board sync
 - WhatsApp: alternate BSPs, AI WhatsApp features, Automation interactive send
 
-**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**).
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**).
 
 ---
 
@@ -220,6 +219,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Workspace record cohesion (2026-09-29):** Contact/Company related hubs (opportunities, help desk, projects, documents); Email CRM links UI (**email 1.4.0**); Documents reverse list filter (**documents 1.6.0**); catalog **contacts 1.6.0** / **companies 1.3.0**. Go-live: [production readiness](/deployment/workspace-record-cohesion-production-readiness) (**Go**).
 
 **Contact/Company follow-ups + import/export (2026-09-30):** Follow-ups CRUD + complete on Contacts and Companies (`next_follow_up_at`, Calendar projection, daily due/overdue reminders via `crm:send-due-notifications`); CSV/XLSX import wizard (upload → map → options → preview → run, no equal-distribute assignment mode) and CSV/XLSX export. Catalog **contacts 1.6.0 → 1.7.0**, **companies 1.3.0 → 1.4.0**. Closes the "Contact/Company follow-ups / import-export" residual noted in [workspace record cohesion readiness](/deployment/workspace-record-cohesion-production-readiness). Go-live: [production readiness](/deployment/contacts-companies-follow-ups-import-export-production-readiness).
+
+**Leads real-time board sync (2026-09-30):** Private Reverb channel `tenant.{id}.leads.board` (auth: same tenant + `leads.view`, mirrors the Live Chat inbox channel) broadcasts `LeadCreated` / `LeadUpdated` / `LeadStageChanged` / `LeadAssigned` / `LeadDeleted` from `LeadEventSubscriber`; SPA `useLeadsBoardRealtime` hook debounce-invalidates `leads/board` + `leads/stats` while the Kanban view is open. Catalog **leads 1.7.0 → 1.8.0**. Closes the "Leads: real-time board sync" deferred item above. Go-live: [production readiness](/deployment/leads-realtime-board-sync-1-8-0-production-readiness).
 
 Still deferred: Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
 
