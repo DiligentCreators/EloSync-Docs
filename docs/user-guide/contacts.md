@@ -2,7 +2,7 @@
 
 ## Who can use Contacts
 
-Your workspace must have the **Contacts** module installed. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign` as needed).
+Your workspace must have the **Contacts** module installed. Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `export`, `import` as needed).
 
 Without **assign**, you only see contacts assigned to you.
 
@@ -63,3 +63,35 @@ Users with **assign** can set or clear the assignee from the record page or the 
 ## Converting a Lead to a Contact
 
 When your workspace has both **Leads** and **Contacts** installed, converting a Lead (from the Lead record page) creates a linked Contact with lifecycle **On Boarded Clients**. If **Companies** is also installed and the lead has a company name, convert creates or reuses that Company and links it on the Contact. You can optionally create an **Opportunity** in the same step when Opportunities is installed. After conversion, the Lead record page shows **View contact** (and company / opportunity links when applicable).
+
+## Follow-ups (1.7.0)
+
+Open a contact record page and use the **Follow-ups** section:
+
+1. Enter a **Title** and **Due at** (workspace **Timezone**, Settings → General), optional notes/assignee — requires `contacts.update`
+2. **Create follow-up** saves it as **pending**. The contact's **Next follow-up** field (shown on the record header, table, and list sheet peek) always reflects the earliest pending follow-up
+3. **Reschedule** loads a follow-up back into the form so you can change its due date, title, or notes, then **Save follow-up**
+4. **Complete** marks a follow-up done — it drops out of Next follow-up and no longer triggers due/overdue reminders
+
+When **Calendar** is installed, each contact's next pending follow-up is projected onto the assignee's calendar as a 1-hour event (source **Contact**); completing or clearing the last pending follow-up removes that projection automatically.
+
+**Due / overdue reminders:** the assignee (falling back to the contact's assignee) gets an in-app notification when a follow-up's due date arrives or has passed, sent by the same daily `crm:send-due-notifications` job that runs Lead, Task, and Contract reminders — one notification per follow-up per day.
+
+## Import (1.7.0)
+
+Users with **import** can bulk-load contacts from **CSV** or **XLSX**:
+
+1. Open **Import** and download a sample template if needed (CSV or XLSX)
+2. Upload a file (drag & drop or browse)
+3. Map spreadsheet columns to contact fields (**Name** is required; Email, Phone, Company, Job Title, Source, Lifecycle Status, and Assigned To are optional)
+4. Choose unique fields (**Email** / **Phone**) and duplicate behavior (**Skip**, **Update existing**, or **Keep duplicate**)
+5. Preview counts and validation errors (nothing is written yet)
+6. Start the import — it runs in the background; watch progress until complete
+
+**Update existing** also requires the **update** permission. Unlike Leads, Contact import has **no equal-distribute assignment mode** — an **Assigned To** column (matched by user email) sets the assignee directly, or rows default the same way manual create does.
+
+Use **Import history** to review past imports, download the original file, **failed_records.csv**, or **error_report.csv**.
+
+## Export (1.7.0)
+
+Users with **export** can download the current filtered set as **CSV** or **XLSX**, including lifecycle status, assignee, creator, and next follow-up.

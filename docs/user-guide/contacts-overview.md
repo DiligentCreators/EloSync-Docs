@@ -21,6 +21,8 @@ Third product module on the frozen platform. Mirrors the [Leads](/user-guide/lea
 - From the contact record: **New quotation** / **New invoice** / **New payment** deep-links (module + create permission gated) with contact/company query prefill
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `contacts.assign`
 - Notes (comments) + activity timeline
+- **Follow-ups (1.7.0)** — titled reminders with due dates (create / reschedule / complete); `next_follow_up_at` denormalized on the contact and shown on list/table/sheet peek; Calendar projection (source **Contact**) when Calendar is installed; due/overdue notifications via `crm:send-due-notifications`
+- **Import / Export (1.7.0)** — CSV/XLSX export of the current filtered set (`contacts.export`); CSV/XLSX import wizard (upload → map → options → preview → run) with unique email/phone detection and duplicate Skip / Update / Keep (`contacts.import`); no equal-distribute assignment mode (Assigned To column only)
 - Table view with search, company filter, lifecycle filter, and **My Contacts** toggle
 - KPIs via `GET /contacts/stats` (includes on boarded / off boarded counts)
 - Trash filtering plus **Restore** and **Delete permanently** (trash **Active only** is unrelated to lifecycle)
@@ -29,7 +31,7 @@ Third product module on the frozen platform. Mirrors the [Leads](/user-guide/lea
 
 ## Permissions
 
-`contacts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
+`contacts.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `export` · `import`
 
 Enable Contacts from Marketplace (free). Only Leads and Tasks install automatically on new workspaces.
 
@@ -55,6 +57,4 @@ When the matching modules are entitled, the contact record also shows recent **o
 
 ## Explicitly deferred
 
-- Contact import/export
-- Follow-ups (see [Leads](/user-guide/leads-overview) for that pattern)
 - Legacy company-string → Company backfill job (see [Companies](/user-guide/companies-overview))
