@@ -2,7 +2,7 @@
 
 > **Status: Shipped 1.4.0** — billable Marketplace module `whatsapp-cloud`.
 >
-> Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, Lead soft link, Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template`. Deferred: interactive buttons/lists, alternate BSPs.
+> Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, interactive buttons/lists, Lead soft link, Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template` / `send_whatsapp_interactive` (Automation **1.5.0**). Deferred: alternate BSPs, AI WhatsApp features.
 >
 > Follow the [Module Architecture](/architecture/module-architecture), [Module Development Standard](/developer-guide/module-development), [Documentation Governance](/developer-guide/documentation-governance) same-PR rule, and the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
@@ -24,7 +24,7 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 
 **Still deferred:**
 
-- Alternate BSPs, AI WhatsApp features, Automation interactive send action
+- Alternate BSPs, AI WhatsApp features
 - Replacing Communication Templates’ `wa.me` (kept as fallback when Cloud is not ready)
 - Making WhatsApp the only messaging channel forever (drivers must stay replaceable)
 
@@ -42,7 +42,7 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 | Templates | Sync Meta Cloud templates; required outside the 24h window |
 | Lead soft link | Manual `lead_id`; timeline via Lead APIs |
 | Lead Source | Opt-in `auto_create_leads` + `default_lead_source` |
-| Automation | Soft dep: `whatsapp.message_received` / `send_whatsapp_template` |
+| Automation | Soft dep: `whatsapp.message_received` / `send_whatsapp_template` / `send_whatsapp_interactive` |
 | Notifications | Inbound, send failed, needs reauth |
 
 Canonical user docs: [WhatsApp Cloud](/user-guide/whatsapp-cloud) · [API](/api/tenant-v1-whatsapp-cloud) · [Deploy](/deployment/whatsapp-cloud).
@@ -61,7 +61,6 @@ EloSync **also** supports a lightweight WhatsApp handoff via [Communication Temp
 
 | Capability | Status |
 |------------|--------|
-| Interactive buttons / lists | ✅ Shipped (1.4.0) |
 | Alternate BSPs (Twilio / 360dialog) | ⬜ Deferred |
 | AI Features | ⬜ Deferred |
 
@@ -584,12 +583,13 @@ Both respect driver boundaries: no Meta parsing inside `LeadService`; no convers
 | WhatsApp Lead Source Driver (opt-in auto-create) | ✅ Shipped (1.1.0) |
 | Automation WhatsApp triggers / send template | ✅ Shipped (1.2.0) |
 | Media (image / document / audio / video) | ✅ Shipped (1.3.0) |
+| Interactive buttons / lists | ✅ Shipped (1.4.0) |
+| Automation `send_whatsapp_interactive` action | ✅ Shipped (Automation 1.5.0) |
 
 ### Deferred
 
 | Capability | Status |
 |------------|--------|
-| Interactive buttons / lists | ✅ Shipped (1.4.0) |
 | AI Features | ⬜ Deferred |
 | Alternate BSPs | ⬜ Deferred |
 

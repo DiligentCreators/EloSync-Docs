@@ -1,6 +1,6 @@
 # Automation — Developer Guide
 
-Billable marketplace module (`automation` **1.3.0**). Mirrors Tasks packaging; domain logic lives in a cross-module engine that subscribes to existing domain events.
+Billable marketplace module (`automation` **1.5.0**). Mirrors Tasks packaging; domain logic lives in a cross-module engine that subscribes to existing domain events.
 
 ## Backend layout
 
@@ -25,6 +25,9 @@ Billable marketplace module (`automation` **1.3.0**). Mirrors Tasks packaging; d
 - Tags/stages accept numeric ids or matching **name/slug**.
 - `create_task` appends a related-entity line and posts a note on lead/opportunity/task. Lead **follow-up** requires `create_lead_follow_up: true` (templates enable it).
 - `create_project` (**1.4.0**, module `projects`) soft-links `opportunity_id` / `company_id` / `contact_id` from the trigger, optional `starts_in_days` / `ends_in_days`, and notes opportunity/company/contact/lead. Template: `opportunity_stage_create_project`.
+- `send_whatsapp_interactive` (**1.5.0**, module `whatsapp-cloud`) wraps `WhatsAppConversationService::queueInteractive` — same conversation/lead resolution as `send_whatsapp_template`. Config: `interactive_type` (`button`|`list`), `body`, optional `footer`, and for `list` also `header` / `action_button` / `sections`, or for `button` `buttons` (id/title pairs, tokens interpolated per row). Requires the conversation's 24-hour customer service window to be open (same rule as manual interactive send). Template: `whatsapp_inbound_quick_replies`.
+- `generate_quotation` (**1.5.0**, module `quotations`) drafts a `Quotation` via `QuotationService::create` (status stays `draft`; nothing is sent). **Requires `opportunity_id`** resolved from config or from an `opportunity.*` trigger's `entity_id`; soft-links `company_id` / `contact_id` from the opportunity and notes it. Template: `opportunity_stage_generate_quotation`.
+- `generate_invoice` (**1.5.0**, module `invoices`) drafts a `CustomerInvoice` via `CustomerInvoiceService::create` (status stays `draft`). No FK is required — `quotation_id` / `company_id` / `contact_id` soft-link from the trigger when available (`quotation.*` → quotation + its company/contact; `opportunity.*` / `contact.*` / `company.*` → company/contact) and a note is added to that record.
 - Manual Run accepts `payload` with related entity fields; SPA dialog picks a record for entity-bound triggers.
 
 ## Activation gate
@@ -74,4 +77,4 @@ Builder disables items where `wired=false` (“Coming soon”) or `available=fal
 
 ## Explicit non-goals
 
-Marketing Automation, Branch / commercial document generators, WhatsApp interactive send action — deferred. `create_project` shipped in Automation **1.4.0** (requires Projects). WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers shipped with Help Desk **1.3.0**; SLA escalate template with Help Desk **1.9.0**.
+Marketing Automation, branching, `generate_order` action, and auto-send (Draft is final — the workflow never transitions the document past `draft` or emails/WhatsApps it to the customer) remain deferred. `create_project` shipped in Automation **1.4.0** (requires Projects); `send_whatsapp_interactive` / `generate_quotation` / `generate_invoice` shipped in Automation **1.5.0** (see Related context above). WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers shipped with Help Desk **1.3.0**; SLA escalate template with Help Desk **1.9.0**.

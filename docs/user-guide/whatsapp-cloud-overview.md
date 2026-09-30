@@ -13,7 +13,7 @@ Billable CRM Marketplace module (`whatsapp-cloud` **1.4.0**) that connects a Wha
 ## What is deferred
 
 - Alternate BSPs (Twilio, etc.)
-- AI WhatsApp features; Automation actions for interactive sends
+- AI WhatsApp features
 
 ## Lead Source (v1.1.0)
 
@@ -30,6 +30,8 @@ Send/receive image, document, audio, and video in the shared inbox (Storage quot
 ## Interactive (v1.4.0)
 
 Inside the 24-hour customer service window, agents can send **reply buttons** (up to 3) or a **list** message from the inbox. Customer `button_reply` / `list_reply` inbound messages are stored with reply id/title for the thread UI.
+
+Automation action `send_whatsapp_interactive` (Automation **1.5.0**) sends the same reply buttons / list messages from a workflow. See [Automation](/user-guide/automation).
 
 ## Permissions
 
