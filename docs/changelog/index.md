@@ -1,3 +1,9 @@
+## Payments partial refunds + gateway record (1.5.0) (2026-10-01)
+
+- **EloSync-Backend:** Partial/full refunds on posted customer payments (`POST …/payments/{id}/refund`, `payments.refund`); `customer_payment_refunds` ledger, `amount_refunded` + `partially_refunded`/`refunded` statuses, optional allocation reversals + reversing journal when Accounting is entitled; nullable gateway provider/transaction metadata on payments. Catalog **payments 1.4.0 → 1.5.0**. Pest: `CustomerPaymentRefundTest`.
+- **EloSync-Frontend:** Payment view **Record refund** dialog (auto allocation reversals when Accounting is installed) + refunds list on the payment page.
+- **EloSync-Docs:** Payments deployment notes + [production readiness](/deployment/payments-partial-refunds-gateway-record-1-5-0-production-readiness).
+
 ## Calendar Google/Outlook sync (1.4.0) (2026-09-30)
 
 - **EloSync-Backend:** Catalog **calendar 1.3.0 → 1.4.0**. Per-user Google/Microsoft OAuth (`calendar_provider_connections`, platform env in `config/calendar-sync.php`); tenant API `GET /calendar/integrations`, `GET …/{google|microsoft}/authorize`, `DELETE …/{provider}` (`calendar.manage_integrations`, admin role default). One-way push for **manual** events via `PushCalendarEventToProviderJob` on queue **`calendar-sync`** (`CalendarEventSubscriber` → `CalendarSyncService` + `GoogleCalendarProvider` / `MicrosoftCalendarProvider`). Nullable `external_provider` / `external_event_id` on `calendar_events`. Provider push soft-fails without blocking writes. Migrate-only bump + permission migration + CatalogSeeder. Pest: `CalendarIntegrationTest`, `CalendarEventProviderPushTest`.

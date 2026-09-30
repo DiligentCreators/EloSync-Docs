@@ -527,6 +527,10 @@ export default withMermaid(defineConfig({
             { text: 'Reseller Payouts', link: '/deployment/reseller-payouts' },
             { text: 'Invoices', link: '/deployment/invoices' },
             { text: 'Payments', link: '/deployment/payments' },
+            {
+              text: 'Payments Refunds 1.5.0 Readiness',
+              link: '/deployment/payments-partial-refunds-gateway-record-1-5-0-production-readiness',
+            },
             { text: 'Credit Notes', link: '/deployment/credit-notes' },
             { text: 'Estimates', link: '/deployment/estimates' },
             { text: 'Vendors', link: '/deployment/vendors' },

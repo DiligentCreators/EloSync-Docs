@@ -36,3 +36,4 @@ New Payments permissions for **existing** workspaces ship as an additive **data 
 6. Deploy Frontend SPA with Payments nav (Billing sidebar group, after Invoices) — verify a workspace **without** Invoices installed cannot install Payments from Marketplace
 7. Verify posting a payment correctly advances the linked invoice(s) to `partial`/`paid`, and voiding reverses it, in a staging smoke test before rollout
 8. Smoke **posted** payment: **Download receipt** PDF + **Email receipt** (`payments.send`) — draft/void must 422
+9. Run refund migrations (`customer_payment_refunds`, gateway fields, `payments.refund` permission) and smoke **Record refund** on a posted payment (`payments.refund`) — partial refund should update `amount_refunded` and invoice balances when allocation reversals are supplied (required when Accounting is entitled)
