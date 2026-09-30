@@ -477,6 +477,7 @@ export default withMermaid(defineConfig({
             { text: 'Contracts 1.7.0 Accept Evidence Readiness', link: '/deployment/contracts-1-7-0-production-readiness' },
             { text: 'Contracts Auto-Renew 1.8.0 Readiness', link: '/deployment/contracts-auto-renew-1-8-0-production-readiness' },
             { text: 'Leads 1.6.0 Created/Updated By Readiness', link: '/deployment/leads-created-by-updated-by-1-6-0-production-readiness' },
+            { text: 'Leads 1.8.0 Real-time Board Sync Readiness', link: '/deployment/leads-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
             { text: 'Short Links', link: '/deployment/short-links' },
             { text: 'Short Links Production Readiness', link: '/deployment/short-links-production-readiness' },

@@ -19,12 +19,14 @@ Reference implementation. Copy this layout for Tasks and later modules.
 | Resources | `app/Http/Resources/Tenant/Api/V1/Lead/*` |
 | Policy | `app/Policies/LeadPolicy.php` |
 | Events | `app/Events/Lead*.php` |
-| Subscriber | `app/Listeners/LeadEventSubscriber.php` (audit + notifications) |
+| Realtime board channel | `app/Broadcasting/LeadBoardChannel.php` (registered in `routes/channels.php`) |
+| Realtime board broadcasts | `app/Events/Lead/Lead{Created,Updated,StageChanged,Assigned,Deleted}Broadcast.php` + `LeadBoardBroadcastPayload.php` |
+| Subscriber | `app/Listeners/LeadEventSubscriber.php` (audit + notifications + realtime board broadcasts) |
 | Notifications | `app/Notifications/Tenant/Lead/*` (assign: database+broadcast+webpush; follow-ups/mentions: database + optional mail; mentions also broadcast+webpush; inactivity: database+broadcast+webpush) |
 | Inactivity job | `app/Services/Tenant/LeadInactivityService.php`, `app/Console/Commands/NotifyInactiveLeadsCommand.php` (`leads:notify-inactive`, daily) |
 | Mentions | `App\Support\NoteMentions`, `NoteMentionService`; wired from `LeadNoteAdded` in `LeadEventSubscriber` |
 | Seeder | `database/seeders/Tenant/LeadStageSeeder.php`, `LeadTagSeeder.php` |
-| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadTagTest.php`, `LeadTypeTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `LeadSameDayDuplicateTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
+| Tests | `tests/Feature/Tenant/Lead/LeadTest.php`, `LeadTagTest.php`, `LeadTypeTest.php`, `LeadValidationTest.php`, `LeadImportTest.php`, `LeadSameDayDuplicateTest.php`, `LeadRealtimeBoardTest.php`, `tests/Feature/Tenant/Notification/NoteMentionNotificationTest.php`, `tests/Unit/NoteMentionsTest.php` |
 
 ## Domain notes
 
@@ -48,6 +50,23 @@ Reference implementation. Copy this layout for Tasks and later modules.
 - **Commission rate:** `users.lead_commission_rate` (nullable decimal 0–100) is the user’s default. `LeadService::create` (when `assigned_to` is set) and `LeadService::update` / `assign` copy the assignee’s rate to `leads.commission_rate` on assign/reassign and clear it on unassign. Snapshot is reporting-only (export, list, detail) — no payout engine. Bulk assign and import equal distribute use `assign()` so snapshots apply there too.
 - **Inactivity alerts:** Workspace setting `leads.inactivity_working_days` (integer, default `3`; `0` disables). Scheduled command `leads:notify-inactive` runs daily per tenant. Counts Mon–Sat working days in the workspace timezone (Sundays excluded). Idle = assigned lead in an open stage (not Won/Lost) with no meaningful `lead_activities` since the last assignment baseline. Meaningful types: `note_added`, `follow_up_created`, `follow_up_completed`, `stage_changed`, `status_changed`, `crm_activity_logged`, `crm_activity_completed`, `tags_changed`. Excluded from resetting idle: `assigned`, `reassigned`, `imported`, `created`. Notifies assignee (`lead.inactive`) plus department managers of the assignee (`lead.inactive_escalation`), else workspace owners. Idempotent via `NotificationIdempotency` (daily dedupe per lead/recipient).
 - **Convert opportunity gates:** `leads.convert_require_opportunity` (boolean, default `false`) and `leads.convert_min_opportunity_amount` (numeric string, default `0`) under group `leads`. Resolved via `TenantSettingService::leadsConvertRequireOpportunity()` / `leadsConvertMinOpportunityAmount()`. Enforced in `LeadService::convert`. Pest: `LeadConvertOpportunitySettingsTest`.
+
+## Real-time board sync
+
+Mirrors the Live Chat inbox invalidate pattern (`LiveChatInboxChannel` / `useLiveChatRealtime`) — **not** the Team Chat message-patching pattern. The board refetches on change instead of patching individual cards.
+
+- **Channel:** private `tenant.{tenantId}.leads.board`, registered in `routes/channels.php`. Auth (`LeadBoardChannel::join`): same tenant **and** `leads.view` — same shape as `LiveChatInboxChannel`.
+- **Broadcast events** (`App\Events\Lead\*`, all `ShouldBroadcastNow`, kept separate from the existing domain events of the same base name):
+  - `LeadCreatedBroadcast` → `broadcastAs('LeadCreated')`
+  - `LeadUpdatedBroadcast` → `broadcastAs('LeadUpdated')`
+  - `LeadStageChangedBroadcast` → `broadcastAs('LeadStageChanged')` (includes `previous_stage_id`)
+  - `LeadAssignedBroadcast` → `broadcastAs('LeadAssigned')` (includes `assigned_to`)
+  - `LeadDeletedBroadcast` → `broadcastAs('LeadDeleted')`
+- **Payload shape** (`LeadBoardBroadcastPayload`, shared across all five events): `action`, `lead_id`, `uuid`, `actor_id`, `stage_id`, plus `previous_stage_id` (stage-changed only) / `assigned_to` (assigned only).
+- **Dispatch:** `LeadEventSubscriber` fires the matching broadcast from `handleLeadCreated` / `handleLeadUpdated` / `handleLeadStageChanged` / `handleLeadAssigned` / `handleLeadDeleted`, wrapped in a `safeBroadcast()` try/catch (mirrors `LiveChatConversationService::safeBroadcast`) so a Reverb outage never breaks the write path — only `report()`s the exception.
+- **Frontend:** `src/hooks/use-leads-board-realtime.ts` joins the channel via the shared `window.Echo` instance (never connects/disconnects Echo itself) while `leads-page.tsx` has `viewMode === 'board'`. Listens for `.LeadCreated` / `.LeadUpdated` / `.LeadStageChanged` / `.LeadAssigned` / `.LeadDeleted` and debounces (~200ms) an invalidate of `QUERY_KEYS.leadBoard` + `QUERY_KEYS.leadStats` so a burst of events (e.g. a bulk stage move) collapses into a single refetch — no per-card patching.
+- Catalog **leads 1.7.0 → 1.8.0** (migrate-only `DefaultModuleRegistrar::bumpVersion` + `CatalogSeeder` companion).
+- No Reverb broadcaster is spun up in CI; Pest verifies dispatch via `Illuminate\Support\Facades\Event::fake([...Broadcast::class])` + `Event::assertDispatched(...)`, the same approach `LiveChatModuleTest` uses (`Broadcast::fake()` is not available on this Laravel version's `Broadcast` facade). Production readiness: [Leads real-time board sync 1.8.0](/deployment/leads-realtime-board-sync-1-8-0-production-readiness).
 
 ## Permissions
 
@@ -122,9 +141,10 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 | Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed; touch pan on column lists) |
 | Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/crm.ts` (`lead.mentioned`, `lead.duplicate_detected`, `lead.inactive`, `lead.inactive_escalation`) |
+| Realtime board hook | `src/hooks/use-leads-board-realtime.ts` — joins `tenant.{id}.leads.board`, debounce-invalidates board + stats |
 | Service | `leadService` in `src/api/services.ts` |
 | Nav | `permission: leads.view`, `module: 'leads'` |
-| Catalog | **1.7.0** (convert require opportunity + min amount settings) |
+| Catalog | **1.8.0** (real-time board sync; **1.7.0** convert require opportunity + min amount settings) |
 
 ## Tests
 
@@ -132,6 +152,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 # Backend
 php artisan test --compact tests/Feature/Tenant/Lead
 php artisan test --compact tests/Feature/Tenant/Lead/LeadImportTest.php
+php artisan test --compact tests/Feature/Tenant/Lead/LeadRealtimeBoardTest.php
 
 # Worker (import jobs)
 php artisan queue:work --queue=imports,default
