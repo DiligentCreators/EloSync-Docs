@@ -11,7 +11,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 | Capability | Status |
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
-| [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped |
+| [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
 | [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
@@ -218,6 +218,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Projects workload heatmap (2026-09-29):** `GET /projects/heatmap` + SPA Heatmap view — catalog **projects 1.6.0**.
 
 **Workspace record cohesion (2026-09-29):** Contact/Company related hubs (opportunities, help desk, projects, documents); Email CRM links UI (**email 1.4.0**); Documents reverse list filter (**documents 1.6.0**); catalog **contacts 1.6.0** / **companies 1.3.0**. Go-live: [production readiness](/deployment/workspace-record-cohesion-production-readiness) (**Go**).
+
+**Contact/Company follow-ups + import/export (2026-09-30):** Follow-ups CRUD + complete on Contacts and Companies (`next_follow_up_at`, Calendar projection, daily due/overdue reminders via `crm:send-due-notifications`); CSV/XLSX import wizard (upload → map → options → preview → run, no equal-distribute assignment mode) and CSV/XLSX export. Catalog **contacts 1.6.0 → 1.7.0**, **companies 1.3.0 → 1.4.0**. Closes the "Contact/Company follow-ups / import-export" residual noted in [workspace record cohesion readiness](/deployment/workspace-record-cohesion-production-readiness). Go-live: [production readiness](/deployment/contacts-companies-follow-ups-import-export-production-readiness).
 
 Still deferred: Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
 

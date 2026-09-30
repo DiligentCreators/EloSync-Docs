@@ -18,6 +18,8 @@ CRM organizations module on the frozen platform. Mirrors the [Contacts](/user-gu
 - Name, email, phone, website, industry, address, source
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `companies.assign`
 - Notes (comments) + activity timeline
+- **Follow-ups (1.4.0)** — titled reminders with due dates (create / reschedule / complete); `next_follow_up_at` denormalized on the company and shown on list/table/sheet peek; Calendar projection (source **Company**) when Calendar is installed; due/overdue notifications via `crm:send-due-notifications`
+- **Import / Export (1.4.0)** — CSV/XLSX export of the current filtered set (`companies.export`); CSV/XLSX import wizard (upload → map → options → preview → run) with unique email/phone detection and duplicate Skip / Update / Keep (`companies.import`); no equal-distribute assignment mode (Assigned To column only)
 - Table view with search, industry filter, and **My Companies** toggle
 - Linked contacts shown on the company record page
 - KPIs via `GET /companies/stats`
@@ -27,7 +29,7 @@ CRM organizations module on the frozen platform. Mirrors the [Contacts](/user-gu
 
 ## Permissions
 
-`companies.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
+`companies.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `export` · `import`
 
 Enable Companies from Marketplace (free). Catalog: slug `companies`, `is_default_included = false`, `is_billable = false`, `sort_order = 12`. Only Leads and Tasks install automatically on new workspaces.
 
@@ -51,5 +53,3 @@ When the matching modules are entitled, the company record shows the billing hub
 
 - Backfill job for legacy contact `company` strings → Company records
 - Meta invent Companies (inbound lead ads creating organizations)
-- Company import/export
-- Follow-ups (see [Leads](/user-guide/leads-overview) for that pattern)

@@ -151,7 +151,7 @@ No new env vars, queues, or scheduler entries.
 ## Residual risks / follow-ups (product backlog — not ship blockers)
 
 1. Calendar Google/Outlook sync (deferred by product).
-2. Contact/Company follow-ups / import-export.
+2. ~~Contact/Company follow-ups / import-export.~~ **Closed 2026-09-30** — shipped in **contacts 1.7.0** / **companies 1.4.0**. See [Contact/Company follow-ups + import-export production readiness](/deployment/contacts-companies-follow-ups-import-export-production-readiness).
 3. Mobile Email CRM link/unlink UI (web Email CRM shipped; mobile inbox still read-focused).
 
 ---
