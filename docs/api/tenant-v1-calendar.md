@@ -18,7 +18,7 @@ Query: `limit` (1–25, default 8). Scheduled events with `starts_at >= now()`, 
 
 Query: `search`, `status`, `from`, `to`, `trashed`, `sort` (default `starts_at`), `direction` (default `asc`), `page`, `per_page`, `paginate` (`0`/`false` returns a non-paginated range collection when `from`+`to` are set).
 
-Events may have `source` `manual` | `meeting` | `project` | `task` | `lead` (sourced overlays are read on the grid; mutate via the parent module). Responses include `read_only` (boolean) for SPA gating.
+Events may have `source` `manual` | `meeting` | `project` | `task` | `lead` (sourced overlays are read on the grid; mutate via the parent module). Responses include `read_only` (boolean) for SPA gating, and nullable `external_provider` (`google`\|`microsoft`) / `external_event_id` when the event has been pushed to a connected Calendar sync provider (**1.4.0**).
 
 ### POST `/calendar/events`
 
@@ -53,6 +53,18 @@ Organizer or `calendar.view_all` may manage shares.
 | PUT | `/calendar/events/{id}/shares/{share}` | Body: `access` |
 | DELETE | `/calendar/events/{id}/shares/{share}` | Remove share |
 
+## Integrations (Google / Outlook sync — 1.4.0)
+
+Requires `calendar.manage_integrations`. Per-user connections; one-way push for manual events only (see [developer guide](/developer-guide/calendar#google-outlook-sync-1-4-0)).
+
+| Method | Path | Notes |
+|--------|------|-------|
+| GET | `/calendar/integrations` | Status per provider (`google`, `microsoft`) for the authenticated user: `connected` (bool), `status`, `external_calendar_id`, `connected_at` |
+| GET | `/calendar/integrations/{provider}/authorize` | Returns the OAuth authorize URL to redirect the browser to; 422 if the platform has no client id/secret configured for that provider |
+| DELETE | `/calendar/integrations/{provider}` | Disconnects; stops future pushes, does not remove events already created on the provider |
+
+OAuth callback (platform, not under `/api/tenant/v1`): `GET /api/oauth/calendar-sync/{provider}/callback` → redirects the browser to `{FRONTEND_URL}/#/calendar?integrations={status}`.
+
 ## Permissions
 
-`calendar.view` · `create` · `update` · `delete` · `view_all`
+`calendar.view` · `create` · `update` · `delete` · `view_all` · `manage_integrations`

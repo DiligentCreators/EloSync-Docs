@@ -12,7 +12,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
-| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares) |
+| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares; **1.4.0** Google/Outlook sync — Phase 1 one-way push) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
@@ -20,10 +20,10 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 ### Planned / deferred after Phase 1 MVP
 
-- Calendar: Google/Outlook sync; named team calendars / department auto-share
+- Calendar: named team calendars / department auto-share; two-way (inbound) Google/Outlook sync; pushing meeting/task/lead overlays to providers
 - WhatsApp: alternate BSPs, AI WhatsApp features, Automation interactive send
 
-**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**).
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**).
 
 ---
 
@@ -222,7 +222,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Leads real-time board sync (2026-09-30):** Private Reverb channel `tenant.{id}.leads.board` (auth: same tenant + `leads.view`, mirrors the Live Chat inbox channel) broadcasts `LeadCreated` / `LeadUpdated` / `LeadStageChanged` / `LeadAssigned` / `LeadDeleted` from `LeadEventSubscriber`; SPA `useLeadsBoardRealtime` hook debounce-invalidates `leads/board` + `leads/stats` while the Kanban view is open. Catalog **leads 1.7.0 → 1.8.0**. Closes the "Leads: real-time board sync" deferred item above. Go-live: [production readiness](/deployment/leads-realtime-board-sync-1-8-0-production-readiness).
 
-Still deferred: Google/Outlook sync; named team calendars; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
+**Calendar Google/Outlook sync Phase 1 (2026-09-30):** Per-user OAuth connect (platform-wide Google + Microsoft OAuth apps, env client id/secret) with token storage + refresh + disconnect (`calendar_provider_connections`). One-way EloSync → provider push (create/update/cancel) for **manual** calendar events only, queued via `PushCalendarEventToProviderJob` with safe soft-fail (a broken integration never blocks calendar writes). External event ID mapping on `calendar_events` (`external_provider` / `external_event_id`). New permission `calendar.manage_integrations`. Catalog **calendar 1.3.0 → 1.4.0**. Closes the "Calendar: Google/Outlook sync" deferred item above — two-way sync, named team calendars, and pushing meeting/task/lead overlays remain deferred. Go-live: [production readiness](/deployment/calendar-google-outlook-sync-1-4-0-production-readiness).
+
+Still deferred: named team calendars; two-way (inbound) Google/Outlook sync + pushing meeting/task/lead overlays; Customer Portal; multi-currency; PO/Vendor portals; Automation WhatsApp interactive send.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
