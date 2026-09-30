@@ -516,6 +516,7 @@ export default withMermaid(defineConfig({
             { text: 'Calendar', link: '/deployment/calendar' },
             { text: 'Calendar Invitee ACL 1.2.0 Readiness', link: '/deployment/calendar-invitee-acl-1-2-0-production-readiness' },
             { text: 'Calendar Event Shares 1.3.0 Readiness', link: '/deployment/calendar-event-shares-1-3-0-production-readiness' },
+            { text: 'Calendar Google/Outlook Sync 1.4.0 Readiness', link: '/deployment/calendar-google-outlook-sync-1-4-0-production-readiness' },
             { text: 'Depth WA/CAL/AI 2026-09-28 Readiness', link: '/deployment/depth-wa-cal-ai-2026-09-28-production-readiness' },
             { text: 'Meetings', link: '/deployment/meetings' },
             { text: 'Activities', link: '/deployment/activities' },

@@ -41,3 +41,19 @@ Times use the workspace **Timezone** from Settings → General (same zone as mee
 ## Dashboard
 
 The tenant dashboard shows an **Upcoming events** widget (same visibility rules as the list).
+
+## Sync to Google / Outlook (Phase 1)
+
+If your workspace admin has `calendar.manage_integrations`, a **Sync** button appears on the Calendar toolbar.
+
+1. Click **Sync** to open **Calendar sync**.
+2. Click **Connect account** next to Google Calendar or Microsoft Outlook and sign in when redirected.
+3. Once connected, every **manual** event you create, edit, or cancel is pushed to that provider automatically — you do not need to do anything else.
+4. Click **Disconnect** to stop future pushes at any time. This does not remove events already pushed to your Google/Outlook calendar.
+
+**What is not synced:**
+
+- Meeting, Task, Lead, Project, Contact, and Company events shown on your calendar (these stay EloSync-only in Phase 1).
+- Changes made directly in Google or Outlook are **not** pulled back into EloSync (one-way sync only).
+
+If **Connect account** is disabled with a "not configured on this platform" badge, ask your platform operator to configure that provider's OAuth app (see [Calendar deployment](/deployment/calendar)).

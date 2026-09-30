@@ -14,9 +14,9 @@
 
 `App\Models\CalendarEvent` — `BelongsToTenant`, `LogsActivity`, `SoftDeletes`.
 
-Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `status` (`scheduled`|`cancelled`), `source` (`manual`|`meeting`|`project`|`task`|`lead`), nullable `source_type`/`source_id` (Meetings uses morph alias `meeting`; Projects/Tasks/Leads use `project` / `task` / `lead`).
+Key fields: `organizer_id`, `starts_at`, `ends_at`, `all_day`, `timezone`, `status` (`scheduled`|`cancelled`), `source` (`manual`|`meeting`|`project`|`task`|`lead`), nullable `source_type`/`source_id` (Meetings uses morph alias `meeting`; Projects/Tasks/Leads use `project` / `task` / `lead`), nullable `external_provider` (`google`|`microsoft`) / `external_event_id` (Calendar sync mapping — **1.4.0**).
 
-**Excluded:** `assignee_id`, named team calendars, Google/Outlook sync.
+**Excluded:** `assignee_id`, named team calendars, two-way Google/Outlook sync, pushing sourced overlays.
 
 ## Visibility
 
@@ -45,9 +45,47 @@ When Calendar is entitled:
 | `task` | Tasks | Timed window from `due_at` (+1h); cleared when completed/cancelled/no due |
 | `lead` | Leads | Timed window from `next_follow_up_at` (+1h); cleared when converted/closed/archived/no follow-up |
 
-Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. **1.3.0** adds event-level shares (`viewer`/`editor`) for manual events. Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarEventShareTest.php`.
+Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. **1.3.0** adds event-level shares (`viewer`/`editor`) for manual events. **1.4.0** adds Google/Outlook sync Phase 1 (below). Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarEventShareTest.php`.
 
-**Excluded:** `assignee_id`, named team calendars, Google/Outlook sync.
+## Google / Outlook sync (1.4.0)
+
+Per-user, one-way (EloSync → provider) push for **manual** events only. Mirrors the Meetings Google Meet OAuth pattern, but connections are **per user** (not per tenant) and credentials are **platform env-based** (not stored per tenant).
+
+| Concept | Owner |
+|---------|-------|
+| Config | `config/calendar-sync.php` — `google.client_id/secret`, `microsoft.client_id/secret/tenant`, `oauth_callback_path`, `providers.fake` |
+| Connection model | `App\Models\CalendarProviderConnection` (`BelongsToTenant`, `SoftDeletes`) — `tenant_id`, `user_id`, `provider` (`CalendarSyncProviderEnum`: `google`\|`microsoft`), encrypted `access_token`/`refresh_token`, `expires_at`, `status` (`CalendarProviderConnectionStatusEnum`), `external_calendar_id`, `meta` json |
+| Providers | `App\Services\CalendarSync\Providers\GoogleCalendarProvider`, `MicrosoftCalendarProvider` — implement `CalendarSyncProviderInterface` (`authorizationUrl`, `exchangeCode`, `refreshAccessToken`, `pushEvent`, `updateEvent`, `cancelEvent`); driver resolution via `CalendarSyncProviderRegistry` |
+| Orchestration | `App\Services\Tenant\CalendarSyncService` — `statusForUser`, `hasPlatformCredentials`, `authorizationUrl`, `disconnect`, `pushEvent($event, $action)` |
+| Controller | `App\Http\Controllers\Tenant\Api\V1\CalendarIntegrationController` — `index` (status), `authorizeProvider` (redirect URL), `disconnect`; web OAuth `callback` lives on `routes/web.php` (no tenant auth on the callback route itself, nonce-verified) |
+| Queue job | `App\Jobs\Tenant\PushCalendarEventToProviderJob` (`calendar-sync` queue, `tries=3`, `backoff=[5,30,120]`) — dispatched from `CalendarEventSubscriber` on create/update/cancel/delete, **skipped when `source !== manual`** |
+
+Routes (tenant, `can:calendar.manage_integrations`):
+
+```
+GET    /calendar/integrations              status per provider for the authenticated user
+GET    /calendar/integrations/{provider}/authorize   OAuth authorize URL
+DELETE /calendar/integrations/{provider}   disconnect
+```
+
+Web (platform, no tenant scope on the route itself):
+
+```
+GET /api/oauth/calendar-sync/{provider}/callback   OAuth callback, redirects to `/#/calendar?integrations=…`
+```
+
+**Push behavior:**
+
+- Pushes to **every** connected provider for the event's organizer (a user may connect both Google and Microsoft).
+- `created` always calls `pushEvent()` on the driver (never `updateEvent()`), even if `external_event_id` is already set from a different provider.
+- `updated` calls `updateEvent()` only when the connection's provider matches the currently-stored `external_provider`; otherwise it treats the connection as unsynced and calls `pushEvent()`.
+- `cancelled`/`deleted` calls `cancelEvent()` only against the mapped provider.
+- **Known Phase-1 limitation:** `external_provider`/`external_event_id` on `calendar_events` is a single-value mapping, not per-provider. If a user has both Google and Microsoft connected, only the last-written provider's ID is persisted, so update/cancel is only guaranteed to reach the most-recently-synced provider — see the [production readiness audit](/deployment/calendar-google-outlook-sync-1-4-0-production-readiness).
+- Failures are caught, `report()`-ed, and logged (`calendar-sync.push-failed`) — a broken provider connection never blocks calendar writes (mirrors `LiveChatConversationService`'s soft-fail pattern).
+- `GoogleCalendarProvider`/`MicrosoftCalendarProvider` expose a `fake()` escape hatch that is forced on in `testing` (and never enabled in `production`), so Pest never makes real HTTP calls even without `Http::fake()`.
+
+**Excluded:** `assignee_id`, named team calendars, two-way (inbound) sync, pushing Meeting/Task/Lead/Project/Contact/Company overlays, Customer Portal visibility.
+
 ## Frontend
 
 | Piece | Location |
@@ -67,9 +105,11 @@ Configured in `config/tenant-permissions.php` + default role map:
 
 | Role | Grants |
 |------|--------|
-| admin | all including `view_all` |
-| manager | all except `delete`; includes `view_all` |
-| staff | `view`, `create`, `update`, `delete` (own only via policy); no `view_all` |
+| admin | all including `view_all` and `manage_integrations` |
+| manager | all except `delete`; includes `view_all`; no `manage_integrations` |
+| staff | `view`, `create`, `update`, `delete` (own only via policy); no `view_all`, no `manage_integrations` |
+
+`manage_integrations` (Calendar sync connect/disconnect) is admin-only, mirroring Meetings' `manage_integrations`.
 
 ## Registration
 
@@ -78,6 +118,10 @@ Migrate-only:
 - `2026_07_20_230514_create_calendar_events_table.php`
 - `2026_07_21_040000_register_calendar_module.php`
 - `2026_07_21_040001_add_calendar_permissions.php`
+- `2026_09_30_150000_create_calendar_provider_connections_table.php`
+- `2026_09_30_150001_add_external_provider_to_calendar_events_table.php` (adds `external_provider`/`external_event_id`, unique index on tenant+provider+external id)
+- `2026_09_30_150002_add_calendar_manage_integrations_permission.php`
+- `2026_09_30_150003_bump_calendar_module_version_to_1_4_0.php`
 
 Also listed in `CatalogSeeder` for fresh/local/CI.
 
@@ -92,9 +136,9 @@ Also listed in `CatalogSeeder` for fresh/local/CI.
 
 ## Tests
 
-- Pest: `tests/Feature/Tenant/Calendar/CalendarEventTest.php`, `MeetingInviteeCalendarAclTest.php`
+- Pest: `tests/Feature/Tenant/Calendar/CalendarEventTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarIntegrationTest.php`, `CalendarEventProviderPushTest.php`
 - Playwright: `npm run test:e2e:calendar` (includes invitee view-only)
 
 ## Explicit non-goals (v1)
 
-Assignment, named team calendars / department auto-share, Google/Outlook sync. Meetings/Zoom/Meet live in the Meetings module.
+Assignment, named team calendars / department auto-share, two-way (inbound) Google/Outlook sync, pushing Meeting/Task/Lead overlays to providers. Meetings/Zoom/Meet live in the Meetings module.
