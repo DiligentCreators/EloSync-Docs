@@ -40,6 +40,8 @@ From the workflow list, **Run** opens a dialog. For event-style triggers pick a 
 | Large expense alert | Expense created (amount ≥ 1000) | Notify | Automation, Expenses |
 | Employee onboarding | Employee created | Onboarding task | Automation, Employees, Tasks |
 | Project kickoff | Project created | Kickoff task + notify | Automation, Projects, Tasks |
+| Opportunity stage draft quotation | Opportunity stage changed | Draft a quotation for the opportunity | Automation, Opportunities, Quotations |
+| WhatsApp inbound quick replies | WhatsApp message received | Send interactive reply buttons | Automation, WhatsApp Cloud |
 
 Starter **Templates** seed the same journeys when the required modules are installed.
 
@@ -69,6 +71,9 @@ Starter **Templates** seed the same journeys when the required modules are insta
 | Move stage | Stage picker (leads / opportunities) |
 | Send notification | In-app; multi-recipient including record assignee; `source=workflow` |
 | Send WhatsApp template | Requires WhatsApp Cloud |
+| Send WhatsApp interactive | Requires WhatsApp Cloud. Reply buttons or a list; needs an open 24-hour customer service window (same rule as manual interactive send) |
+| Generate quotation (draft) | Requires Quotations. Drafts a quotation — **never sent**. Needs an opportunity (from the trigger or picked manually) |
+| Generate invoice (draft) | Requires Invoices. Drafts a customer invoice — **never sent**. Soft-links quotation/company/contact from the trigger when available |
 | Webhook | Signed outbound HTTP POST |
 | Delay | Wait before the next step |
 
