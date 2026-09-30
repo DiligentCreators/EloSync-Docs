@@ -8,8 +8,11 @@ Tenant workspace app for **iOS** and **Android**. Sign in with the same email an
 2. Enter your **email** and **password**.
 3. Optional: workspace slug for branded login or if directed by your administrator.
 4. Complete **email verification** if prompted.
+5. If your account has **two-factor authentication** turned on, enter the 6-digit code from your authenticator app (or a recovery code) on the follow-up screen to finish signing in.
 
 Forgot password requires your **workspace** slug or domain plus email (the mobile app is not tied to a workspace subdomain URL like the browser).
+
+Two-factor authentication is managed from **Profile → Two-factor authentication**: turn it on with your password, scan the setup key into an authenticator app (mobile shows the setup key as text rather than a QR code), confirm with a code, and save your recovery codes somewhere safe. Passkey sign-in, available on the web app, is not yet supported on mobile.
 
 ## Push notifications
 
@@ -30,10 +33,10 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 
 | Module | Mobile surface |
 |--------|----------------|
-| **Leads** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated) |
+| **Leads** | List with KPI stats strip, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated); **Trash** for restoring or permanently deleting deleted leads (permission-gated) |
 | **Tasks** | List, search, status / my-tasks / overdue filters, create, view, edit, delete, complete/reopen; notes and activity timeline on view when update permitted |
-| **Contacts** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted; Related hub for entitled Opportunities, Help Desk, Projects, and Documents |
-| **Companies** | List, search, create, view, edit, delete; notes and activity timeline on view when update permitted; Related hub for entitled Opportunities, Help Desk, Projects, and Documents |
+| **Contacts** | List with KPI stats strip, search, create, view, edit, delete; notes and activity timeline on view when update permitted; Related hub for entitled Opportunities, Help Desk, Projects, and Documents |
+| **Companies** | List with KPI stats strip, search, create, view, edit, delete; notes and activity timeline on view when update permitted; Related hub for entitled Opportunities, Help Desk, Projects, and Documents |
 | **Opportunities** | List, search, create, view, edit, delete; notes, AI copilot, and activity timeline on view (permission-gated); Pipeline tab |
 | **Activities** | List, search, create, view, edit, delete, complete (permission-gated); notes and activity timeline on view when update permitted; Log tab |
 | **ToDos** | List, search, create, view, edit, delete, mark complete (permission-gated); ToDos tab |
@@ -42,8 +45,8 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Meetings** | List (60-day range), search, create, view, edit, cancel, complete, delete (permission-gated); Meetings tab |
 | **Projects** | List, search, create, view, edit, status transitions, delete (permission-gated); notes and activity timeline on view when update permitted; Projects tab |
 | **Contracts** | List, search, create, view, edit (draft only), status transitions, delete (permission-gated); notes and activity timeline on view when update permitted; Contracts tab |
-| **Invoices** | List, search, create, view, edit (draft only), send, void, delete (permission-gated); notes and activity timeline on view when update permitted; Invoices tab |
-| **Payments** | List, search, create, view, edit (draft only), post, void, delete (permission-gated); optional invoice allocation; notes and activity timeline on view when update permitted; Payments tab |
+| **Invoices** | List, search, create, view, edit (draft only), send, void, delete, **download PDF** (permission-gated); notes and activity timeline on view when update permitted; Invoices tab |
+| **Payments** | List with KPI stats strip, search, create, view, edit (draft only), post, void, delete, **download receipt PDF** (permission-gated); optional invoice allocation; notes and activity timeline on view when update permitted; Payments tab |
 | **Credit notes** | List, search, create, view, edit (draft only), issue, apply, refund (applied), void (draft/issued), delete (permission-gated); notes and activity timeline on view when update permitted; Credits tab |
 | **Estimates** | List, search, create, view, edit (draft only), send, accept, reject, convert to invoice, delete (permission-gated); notes and activity timeline on view when update permitted; Ests tab |
 | **Expenses** | List, search, create, view, edit (draft only), submit, approve, reject, pay, cancel, delete (permission-gated); notes and activity timeline on view when update permitted; Spend tab |
@@ -51,7 +54,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Warehouses** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; WH tab |
 | **Inventory** | Stock levels, adjust, transfers (create/view/edit draft/dispatch/complete/cancel/delete); Stock tab |
 | **Communication templates** | List, search, create, view, edit, delete (permission-gated); Tmpl tab |
-| **Email** | Mailbox list (inbox/sent/drafts), search, read, mark read (permission-gated); Mail tab |
+| **Email** | Mailbox list (inbox/sent/drafts), search, read, mark read, **link/unlink to a Lead, Contact, Company, or Opportunity** (permission-gated); Mail tab |
 | **Announcements** | Inbox, search, view, mark read; create/edit/delete for managers; News tab |
 | **Assets** | List, search, create, view, edit, delete (permission-gated); notes and activity timeline on view when update permitted; Assets tab |
 | **Short links** | List, search, create, view, edit, delete, share short URL (permission-gated); Links tab |
@@ -78,7 +81,7 @@ Mobile modules roll out **PR-by-PR**. The app home screen lists modules your rol
 | **Branded** | Custom address status, DNS instructions, propose, verify, remove (permission-gated); Brand tab |
 | **EloSync AI** | Conversations, chat, starter prompts (including Search workspace), credits, confirm write actions (permission-gated); AI tab; citations deep-link entitled Wave A+B+C modules |
 | **Notifications** | In-app notification list, mark read |
-| **Profile** | Account details, sign out |
+| **Profile** | Account details, two-factor authentication settings, sign out |
 
 Everything else remains on the web app until a mobile module PR ships. See the [product roadmap](/getting-started/product-roadmap#elosync-mobile-tenant-app) and [developer mobile guide](/developer-guide/mobile-app).
 
