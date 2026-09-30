@@ -4,7 +4,7 @@
 
 - Catalog slug: `automation`
 - Billable marketplace add-on (`is_default_included: false`, `is_billable: true`)
-- Catalog version: **1.4.0** (`create_project` action; requires Projects entitlement)
+- Catalog version: **1.5.0** (`send_whatsapp_interactive` requires WhatsApp Cloud; `generate_quotation` requires Quotations; `generate_invoice` requires Invoices — see [1.5.0 production readiness](./automation-whatsapp-interactive-document-actions-1-5-0-production-readiness))
 - Initial price: **$29 / month**, **$290 / year** (same tier as Branded)
 - Workspaces must install from Marketplace; migrate does **not** auto-install
 
@@ -51,4 +51,6 @@ Shared cache driver required for `onOneServer()` locks. Schedule matching uses a
 
 Full go-live checklist: [Automation production readiness](./automation-production-readiness).  
 Related-context PATCH (**1.1.1**): [Automation related-context production readiness](./automation-related-context-production-readiness).  
-Cross-module triggers MINOR (**1.3.0**): [Automation 1.3.0 production readiness](./automation-1-3-0-production-readiness) — sole `IntegrationEventDispatcher` fan-out; installed-module catalog gating; expanded trigger/template coverage.
+Cross-module triggers MINOR (**1.3.0**): [Automation 1.3.0 production readiness](./automation-1-3-0-production-readiness) — sole `IntegrationEventDispatcher` fan-out; installed-module catalog gating; expanded trigger/template coverage.  
+`create_project` MINOR (**1.4.0**): [Automation create_project production readiness](./automation-create-project-1-4-0-production-readiness).  
+WhatsApp interactive + generate quotation/invoice MINOR (**1.5.0**): [Automation 1.5.0 production readiness](./automation-whatsapp-interactive-document-actions-1-5-0-production-readiness) — `send_whatsapp_interactive`, `generate_quotation` (requires `opportunity_id`), `generate_invoice` (draft only, no auto-send).

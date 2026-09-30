@@ -12,14 +12,14 @@ Cross-module workflow engine for EloSync. Install from Marketplace (billable add
 | Tenant API | [tenant-v1-automation.md](/api/tenant-v1-automation) |
 | Module Development Standard | [module-development.md](/developer-guide/module-development) |
 
-## Capabilities (v1.3.0)
+## Capabilities (v1.5.0)
 
 - Workflow builder: trigger, conditions (AND/OR), ordered actions
 - Manual run + schedule trigger (workspace timezone; builder configures frequency/time)
 - Event triggers wired across CRM, sales, billing, Help Desk, WhatsApp, HR, projects, documents, KB, and assets — gated by installed modules (`available` in catalog)
 - Related-context UX: people/tag/stage pickers; multi-notify; **Record assignee**; Manual Run related-record dialog; opt-in lead follow-up
-- Actions: create task/note, assign user, add/remove tag, update field, move stage, send notification, WhatsApp template, outbound webhook, delay
-- Starter templates filtered by entitled modules (lead/task/opportunity/invoice/payment/credit note/contact/quotation/expense/employee/Help Desk SLA/project recipes)
+- Actions: create task/project/note, assign user, add/remove tag, update field, move stage, send notification, WhatsApp template, WhatsApp interactive (buttons/list), generate quotation/invoice (draft only), outbound webhook, delay
+- Starter templates filtered by entitled modules (lead/task/opportunity/invoice/payment/credit note/contact/quotation/expense/employee/Help Desk SLA/project/WhatsApp recipes)
 - Run history + step logs
 - Module licensing (`module:automation`) + Spatie permissions
 - Loop guard: nested domain events during a run do not re-enter the engine
@@ -32,5 +32,5 @@ Cross-module workflow engine for EloSync. Install from Marketplace (billable add
 ## Explicitly deferred
 
 - Marketing Automation / Email Campaigns (separate SKUs)
-- Branching, generate quote/invoice/order actions, WhatsApp interactive send action
+- Branching; `generate_order` action; auto-send (generated documents always stay `draft` — no auto-email/WhatsApp to the customer)
 - Migrating hard-coded Lead tag auto follow-ups or inactivity digests into this engine
