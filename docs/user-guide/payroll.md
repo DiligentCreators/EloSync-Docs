@@ -8,27 +8,40 @@ Enable **Employees** first, then install **Payroll** from Marketplace (free). Fo
 2. Create one profile per employee: base salary, currency (defaults to workspace currency from Settings → General; editable), pay frequency (monthly / biweekly / weekly), optional effective-from date and notes.
 3. Only **active** employees with a profile are included when you create a pay run.
 
+## Working-day basis (Settings → Attendance)
+
+Choose how pay runs divide salary into a daily rate:
+
+| Basis | Working days | Gross |
+|-------|--------------|-------|
+| **Work week in period** (default) | Count of work-week days in the period (Settings → work week, default Mon–Fri) | Full base salary; leave/absent/late become adjustments |
+| **Calendar month days** | Days in the month when the period is the **full calendar month** (e.g. 1 Oct–31 Oct → 31). | Pro-rata: `daily × (working days − unpaid leave − absent)`; late ladder remains an adjustment |
+
+Paid leave (Leave Management paid types / `deduct_salary = false`) never reduces days counted or creates unpaid-leave deductions.
+
+When **Calendar month days** is selected, pay runs must start on the 1st and end on the last day of the same month (API returns 422 otherwise). Changing the basis does **not** recalculate existing draft pay runs — recreate drafts after switching.
+
 ## Pay runs
 
-1. Create a pay run with period start and end dates.
-2. The system generates a line per active employee profile:
-   - **Gross** = profile base salary
-   - **Daily rate** = gross ÷ working days in the period (from Settings → Attendance work week, default Mon–Fri)
-   - **Adjustments** = −daily rate × (unpaid leave days + unexcused absent days + late ladder days), each gated by Settings → Attendance toggles
+1. Create a pay run with period start and end dates (full month required for calendar-month basis).
+2. The system generates a line per active employee profile using the working-day basis above:
+   - **Daily rate** = base salary ÷ working days
+   - Unpaid leave / unexcused absences / late ladder each gated by Settings → Attendance toggles
    - Unpaid leave comes from approved Leave Management requests whose leave type is unpaid (when that module is installed and the unpaid-leave deduction toggle is on)
    - Unexcused absences come from Attendance `absent` / uncovered `half_day` records that do not overlap approved leave (when Attendance is installed and the absent deduction toggle is on)
-   - Late check-ins stay present for attendance; when the late-deduction toggle is on, a ladder (e.g. 3 lates → 1 day, 6 → 2 days) adds day-salary penalties. One late day never deducts. Payslips show late count and late deduction days.
+   - Late check-ins stay present for attendance; when the late-deduction toggle is on, a ladder (e.g. 3 lates → 1 day, 6 → 2 days) adds day-salary penalties. One late day never deducts.
    - Net is never negative; draft lines stay editable
-3. While **draft**, edit period notes and line gross/adjustments (net recalculates). Breakdown columns (work days, unpaid leave, absent, lates, late days) are shown for audit.
-4. **Approve** from the pay runs list row menu, the quick peek, or the full record page (requires at least one line).
-5. **Mark paid** the same way. When **Accounting** is installed, choose **Paid from** (cash/bank). EloSync posts (or creates and posts) the salary accrual journal, then posts a **payment** journal that credits the paid-from account so that bank’s balance decreases. Without Accounting, Mark paid is status-only.
-6. Optionally **Post to journal** from the full record page (approved, before payment) to create a **draft** accrual early (`Dr` Salary Expense `6400` / `Cr` Salaries Payable `2200`). Mark paid posts that draft if it still exists, then posts the payment.
+3. While **draft**, edit period notes and line gross/adjustments (net recalculates). Breakdown columns (work days, days counted, daily rate, unpaid leave, absent, lates, late days) are shown for audit.
+4. **Export CSV** from the pay run page downloads a register matching Person Name, Salary, Working Days, Per Day, Days Count, Salary for Days, Lates, Deduction Days, Leave Days, Deduction Amount, Payable (+ TOTALS).
+5. **Approve** from the pay runs list row menu, the quick peek, or the full record page (requires at least one line).
+6. **Mark paid** the same way. When **Accounting** is installed, choose **Paid from** (cash/bank). EloSync posts (or creates and posts) the salary accrual journal, then posts a **payment** journal that credits the paid-from account so that bank’s balance decreases. Without Accounting, Mark paid is status-only.
+7. Optionally **Post to journal** from the full record page (approved, before payment) to create a **draft** accrual early (`Dr` Salary Expense `6400` / `Cr` Salaries Payable `2200`). Mark paid posts that draft if it still exists, then posts the payment.
 
 ## My salary slips (employees)
 
 Linked employees with `payroll.view_own` (staff by default) can open **My salary slips** and download PDF copies of their **paid** pay-run lines for personal records. Managers with `payroll.view` can also download line PDFs from a paid pay run’s lines table (**Download**).
 
-Pay slip PDFs use the same company branding as invoices and quotations: logo and button color (when **Branded** is entitled), company name/tagline/address/phone/website from **Settings → Branding**, and tax registration ID from **Settings → General** when set. Each slip shows employee details, period attendance breakdown, gross/adjustments, and net pay.
+Pay slip PDFs use the same company branding as invoices and quotations: logo and button color (when **Branded** is entitled), company name/tagline/address/phone/website from **Settings → Branding**, and tax registration ID from **Settings → General** when set. Each slip shows employee details, period attendance breakdown (including daily rate and days counted), salary for days, deduction amount, and payable salary.
 
 ## Workflow
 
