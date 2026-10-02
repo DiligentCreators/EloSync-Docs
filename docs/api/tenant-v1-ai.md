@@ -104,6 +104,8 @@ Tools are not direct HTTP endpoints. The registry exposes them to the agent when
 
 **Workspace** (available with `ai.use`; per-module entitlement + view inside providers): `search_workspace`
 
+**Product help** (always-on with catalog mode; curated EloSync Settings → Action recipes): `search_product_help`
+
 **Leads** (`leads.view` / `leads.update` / `leads.assign`): `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`, `update_lead_status` (pending confirmation), `assign_lead` (pending confirmation; `assigned_to` is user id or null to unassign), `add_lead_note` (pending confirmation; text only)
 
 **Tasks** (`tasks.view` / `tasks.create` / `tasks.update` / `tasks.assign` / `tasks.complete`): `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `get_task`, `create_task` (pending confirmation), `update_task_status` (pending confirmation; visible with `tasks.update` **or** `tasks.complete`; complete/reopen need `tasks.complete` at propose+confirm; other statuses need `tasks.update`), `assign_task` (pending confirmation), `add_task_note` (pending confirmation; text only)

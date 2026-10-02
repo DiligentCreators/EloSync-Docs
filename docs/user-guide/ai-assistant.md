@@ -16,9 +16,19 @@ Without the module, AI menu items and API routes are hidden.
 
 Ask EloSync about your permitted data — open tasks, stale leads, projects, sales pipeline, overdue invoices, and more. Use **Search workspace** (or ask to find a record by name/number) to search across entitled modules in one step. Answers respect your **module entitlements** and **permissions** (for example you only see leads you are allowed to view).
 
-Off-topic requests (for example logo design, recipes, or external tool recommendations) are declined — EloSync only answers using workspace data and entitled modules.
+### Product how-tos
 
-On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view permission (**Search workspace** requires the AI module + `ai.use`). Citations link only to same-app record paths for modules you are entitled to (for example invoices, contacts, help desk, vendors, employees, products, documents, knowledge base, activities, meetings, and other entitled modules).
+Ask where to change a setting or how to complete a common action. EloSync answers with a navigation path such as **Settings → General → Timezone → Save** or **Leads → New → Create / Create & View**, using curated product-help recipes (not guessed UI paths). Examples:
+
+- “How do I change the workspace timezone?”
+- “How do I create a lead?”
+- “Where do I configure AI?”
+
+Paths respect installed modules. If you lack the permission to complete the action, EloSync still shows the path and notes that you may need an admin.
+
+Off-topic requests (for example logo design, recipes, or external tool recommendations) are declined — EloSync only answers using workspace data, entitled modules, and EloSync product how-tos.
+
+On an empty conversation, starter chips appear only when the matching module is installed **and** you have that module’s view (or create) permission (**Search workspace**, **Set timezone**, and similar AI starters require the AI module + `ai.use`). Citations link only to same-app paths for modules you are entitled to (for example settings, roles, marketplace, invoices, contacts, help desk, and other entitled modules).
 
 Write actions (such as creating a task) appear as **suggestions** first. Nothing is saved until you **confirm**.
 
