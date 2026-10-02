@@ -1,3 +1,8 @@
+## Mobile EAS Update (OTA) (2026-10-02)
+
+- **EloSync-Mobile:** Enabled Expo EAS Update so JavaScript/asset changes ship without a new App Store / Play Store review. Added `expo-updates`, `runtimeVersion` (`appVersion` policy), update URL, and `preview`/`production` channels on EAS Build profiles. Cold-start update check in `app/_layout.tsx` (`lib/expo-updates.ts`, 5s timeout). Scripts: `npm run update:preview` / `update:production`. Native binary still required for plugin/SDK/permission changes; first OTA-capable build must include `expo-updates`.
+- **EloSync-Docs:** Developer mobile guide + user guide “App updates” note + this changelog — OTA vs store-rebuild matrix.
+
 ## Payroll calendar-month working days (1.5.0) (2026-10-02)
 
 - **EloSync-Backend:** Tenant setting `payroll_working_days_basis` (`work_week` default | `calendar_month`); `PayPeriodCalculator` pro-rata gross + late-only adjustments; `pay_run_lines.daily_rate` / `days_counted`; CSV register export `GET pay-runs/{id}/export`; full-month period validation when calendar basis is on; historic line backfill. Catalog **payroll 1.4.1 → 1.5.0**.
