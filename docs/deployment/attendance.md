@@ -26,6 +26,7 @@ Self check-in “today”, the HH:MM timer, late classification, and **daily dig
 3. Smoke: two departments with managers + late employees → department manager A only sees/receives A’s team; Owner sees all; Spatie `manager` without `manager_id` does not get digests and is self-scoped on list
 4. Pest: `tests/Feature/Tenant/Attendance/AttendanceDailyReportDigestTest.php`, `AttendanceTest.php` department-scope cases
 5. Readiness: [Attendance department-scoped 1.6.0](./attendance-department-scoped-1-6-0-production-readiness)
+6. After Pulse slow-path indexes ship: migrate `2026_10_02_203742_add_attendance_records_list_stats_indexes` (list/stats/today date predicates) — [Pulse slow-path readiness](./pulse-slow-paths-production-readiness)
 
 ## Deploy checklist (1.5.0)
 

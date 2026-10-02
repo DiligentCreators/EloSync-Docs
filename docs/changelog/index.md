@@ -1,3 +1,8 @@
+## Pulse slow-path hardening (2026-10-03)
+
+- **EloSync-Backend:** Remediations for Pulse slow requests/queries/jobs — attendance GET list/stats/today via `AttendanceRecordReadService` (date-range predicates, grouped stats, indexes) while preserving department-manager `visibleEmployeeIds` scope from attendance **1.6.0**; tenant + central email-log lists omit body longtext (`list_has_body`) with list/prune indexes; IMAP sync unique job (`tries=1`, error backoff, ≤25 msgs/folder, single-connection body fetch); `SafeRealtimeBroadcast` for Leads/Live Chat; public bootstrap cache keyed by tenant epoch + central fingerprint; short-TTL unread-count + dashboard widget caches; mail transport fail-fast (SMTP 5xx / Dsn TypeError). Pest coverage + stable test `APP_KEY`.
+- **EloSync-Docs:** [Pulse slow-path production readiness](/deployment/pulse-slow-paths-production-readiness) + this changelog.
+
 ## OSS readiness: LICENSE + SECURITY.md (2026-10-02)
 
 - **All repos** (Backend, Frontend, Website, Mobile, Docs): added MIT `LICENSE` (copyright Diligent Creators; Mobile replaces the previous Expo template license) and root `SECURITY.md` with private reporting via GitHub Security Advisories and `security@elosync.com`.

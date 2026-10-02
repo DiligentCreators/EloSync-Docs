@@ -66,7 +66,9 @@ Enable Forge **Scheduler** (`schedule:run` every minute). The Email module regis
 php artisan email:sync
 ```
 
-**every minute** with `withoutOverlapping` + `onOneServer`. The command only dispatches `SyncEmailAccountJob` for accounts that are due based on each mailbox’s `sync_interval_minutes` (default **5**, options 5 / 10 / 15 / 30 / 60). Manual Sync from the SPA always dispatches immediately.
+**every minute** with `withoutOverlapping` + `onOneServer`. The command only dispatches `SyncEmailAccountJob` for accounts that are due based on each mailbox’s `sync_interval_minutes` (default **5**, options 5 / 10 / 15 / 30 / 60). Error accounts back off from `updated_at` (minimum 15 minutes) so broken credentials do not re-queue every tick. Jobs are `ShouldBeUnique` per tenant/account (`tries = 1`, timeout 180s) and pull at most **25** messages per folder per run. Manual Sync from the SPA always dispatches immediately.
+
+Performance / Pulse remediations (list indexes, body-omitted email-log index, sync uniqueness): [Pulse slow-path production readiness](./pulse-slow-paths-production-readiness).
 
 ```bash
 * * * * * php /path/to/artisan schedule:run
