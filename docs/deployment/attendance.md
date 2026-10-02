@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.5.0** (daily late / yesterday email digests + prior location/timeline features)
+- Current catalog version: **1.6.0** (department-scoped digests/list for department managers + prior daily digests / location/timeline features)
 
 ## Bootstrap
 
@@ -18,6 +18,14 @@
 ## Timezone
 
 Self check-in “today”, the HH:MM timer, late classification, and **daily digest send times** use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end, remote start, late report time, and yesterday report time are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+
+## Deploy checklist (1.6.0)
+
+1. Migrate through `2026_10_03_003500` (catalog **attendance → 1.6.0**)
+2. Confirm scheduler runs `attendance:send-daily-reports` every 5 minutes (`withoutOverlapping`, `onOneServer`) and `emails` queue workers are healthy
+3. Smoke: two departments with managers + late employees → department manager A only sees/receives A’s team; Owner sees all; Spatie `manager` without `manager_id` does not get digests and is self-scoped on list
+4. Pest: `tests/Feature/Tenant/Attendance/AttendanceDailyReportDigestTest.php`, `AttendanceTest.php` department-scope cases
+5. Readiness: [Attendance department-scoped 1.6.0](./attendance-department-scoped-1-6-0-production-readiness)
 
 ## Deploy checklist (1.5.0)
 

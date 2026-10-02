@@ -90,9 +90,9 @@ Shown when the **Attendance** module is installed.
 | **Show check-in / check-out** | When off, self-service Check in / Check out buttons are hidden (default on). |
 | **Require late check-in reason** | When late, staff must pick a catalog reason (**Other** needs a written note). Default on. |
 | **Auto check-in on login** | Off by default. When on, first login of the day may create an on-site check-in if the user is **not** late, or if late reasons are not required. When late **and** late reasons are required, login does **not** check in — staff must use **Check in** on Attendance. |
-| **Daily late report email** | Off by default. When on, owners/admins/managers receive an email after the configured local time listing who checked in late and who has not checked in yet (past office start + grace). |
+| **Daily late report email** | Off by default. When on, Owners/Admins receive a company-wide email after the configured local time listing who checked in late and who has not checked in yet (past office start + grace). Department managers receive the same report scoped to their team only. |
 | **Late report send time** | Workspace-local `H:i` (default `09:30`). Uses **Timezone** above. |
-| **Yesterday’s attendance email** | Off by default. Morning digest of yesterday’s late arrivals and missing check-outs. |
+| **Yesterday’s attendance email** | Off by default. Morning digest of yesterday’s late arrivals and missing check-outs. Owners/Admins receive the company digest; department managers receive their department employees only. |
 | **Yesterday report send time** | Workspace-local `H:i` (default `08:00`). |
 | **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri), using workspace-local dates. |
 
