@@ -13,8 +13,8 @@ When Attendance is installed, open **Settings → Attendance** to set:
 - **Show check-in / check-out** — when off, self-service buttons are hidden
 - **Require late check-in reason** — when late, staff must pick a reason (**Other** needs a written note)
 - **Auto check-in on login** — off by default; when on, first login of the day can create an on-site check-in. If you are late and **Require late check-in reason** is on, login does **not** check in (use **Check in** and pick a reason).
-- **Daily late report email** / **Late report send time** — off by default; when on, owners and managers get an email after the configured local time listing who checked in late and who has not checked in yet.
-- **Yesterday’s attendance email** / send time — off by default; morning digest of yesterday’s late arrivals and missing check-outs.
+- **Daily late report email** / **Late report send time** — off by default; when on, Owners and Admins get a company-wide email after the configured local time listing who checked in late and who has not checked in yet. Department managers get the same report **only for employees in their department(s)**.
+- **Yesterday’s attendance email** / send time — off by default; morning digest of yesterday’s late arrivals and missing check-outs. Owners/Admins get the company view; department managers get their team only.
 - Work week days (used for payroll working-day calendars)
 - **Deduct salary for absences** / **unpaid leave** — control whether pay runs reduce net for those days (on by default)
 - **Deduct salary for late check-ins** — off by default; when on, configure a ladder such as 3 lates → 1 day salary, 6 lates → 2 days. A single late day stays **Late** with **no** fee. Ladder deductions appear on the payslip.
@@ -35,12 +35,14 @@ Admins manage late/check-out reasons from **Attendance → Reasons**.
 
 ## Managers and admins
 
-Managers and admins can:
+Owners and Admins can:
 
 1. View everyone’s records, KPI stats, and who is checked in now (on-site vs remote).
 2. **Record attendance** for any employee and date (one record per employee per day).
 3. Edit check-in / check-out times, status, and notes for corrections — a **reason for change** is required and appears on the record’s **Edit history**.
 4. Manage attendance reasons (admin/owner).
+
+Department managers (assigned as manager on a department) see list, KPIs, and digests **only for employees in their department(s)** — not other departments. A workspace Manager role without a department assignment is limited to their own linked employee (same as staff).
 
 Manual create/edit also captures the actor’s IP and best-effort browser location (when the browser allows it). Self check-in/out and optional login auto check-in do the same.
 

@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:attendance`, plus `can:attendance.*`.
 
-Catalog version: **1.5.0**.
+Catalog version: **1.6.0**.
 
 ## Stats
 
@@ -25,7 +25,7 @@ Scheduled (not HTTP): `attendance:send-daily-reports` every 5 minutes. Tenant se
 | `attendance_daily_report_enabled` | `false` | Send yesterday digest after local time |
 | `attendance_daily_report_time` | `08:00` | Workspace-local `H:i` gate |
 
-Recipients: non-suspended owners / admins / managers with `attendance.view`. Notification types `attendance.late.digest` and `attendance.yesterday.digest` (database + mail). Idempotent via `daily_summary_deliveries`.
+Recipients: non-suspended **Owners / Admins** get the full company digest; **department managers** (`manager_id` on an active department) get only employees in their managed departments. Spatie `manager` without department assignment does not receive digests. Requires `attendance.view`. Notification types `attendance.late.digest` and `attendance.yesterday.digest` (database + mail). Idempotent via `daily_summary_deliveries`.
 
 ## Today / self check-in
 
