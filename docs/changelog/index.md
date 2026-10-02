@@ -1,3 +1,8 @@
+## OSS readiness: LICENSE + SECURITY.md (2026-10-02)
+
+- **All repos** (Backend, Frontend, Website, Mobile, Docs): added MIT `LICENSE` (copyright Diligent Creators; Mobile replaces the previous Expo template license) and root `SECURITY.md` with private reporting via GitHub Security Advisories and `security@elosync.com`.
+- **Frontend / Website / Mobile / Docs:** set `"license": "MIT"` in `package.json` (Backend already declared MIT in `composer.json`).
+
 ## Mobile EAS Update (OTA) (2026-10-02)
 
 - **EloSync-Mobile:** Enabled Expo EAS Update so JavaScript/asset changes ship without a new App Store / Play Store review. Added `expo-updates`, `runtimeVersion` (`appVersion` policy), update URL, and `preview`/`production` channels on EAS Build profiles. Cold-start update check in `app/_layout.tsx` (`lib/expo-updates.ts`, 5s timeout). Scripts: `npm run update:preview` / `update:production`. Native binary still required for plugin/SDK/permission changes; first OTA-capable build must include `expo-updates`.
