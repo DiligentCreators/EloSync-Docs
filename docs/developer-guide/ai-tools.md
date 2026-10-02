@@ -7,6 +7,7 @@ How EloSync registers permission-aware tools for `EloSyncBusinessAgent` and how 
 `App\AI\Tools\AIToolRegistry` maps tool names to `AiToolDefinition` classes. Defaults are registered in `registerDefaults()`:
 
 - Workspace: `search_workspace` (cross-module; `module()` is `null`; each provider enforces its own entitlement + `*.view`)
+- Product help: `search_product_help` (platform; `module()` is `null`; curated Settings → Action recipes filtered by entitled modules; soft-flags missing permissions)
 - Leads: `search_leads`, `get_lead`, `get_stale_leads`, `get_recent_lead_activity`, `update_lead_status`, `assign_lead`, `add_lead_note`
 - Tasks: `search_tasks`, `get_my_tasks`, `get_overdue_tasks`, `get_tasks_due_today`, `get_task`
 - Projects: `search_projects`, `get_project`, `get_overdue_projects`, `update_project_status`, `assign_project`, `add_project_note`
@@ -34,6 +35,14 @@ List/detail tool payloads that include an assignee expose numeric **`assigned_to
 Arguments: `query` (required), optional `modules` (slug filter), `limit_per_module` (default 5, max 10), `limit_total` (default 25, max 50). Hits include `module`, `id`, `uuid`, `title`, `subtitle`, `path`. Provider exceptions are isolated (`modules_failed`); other modules still return hits.
 
 List/detail tool payloads include both numeric **`id`** (for SPA deep links) and **`uuid`** (for tool lookups).
+
+### `search_product_help`
+
+Always-on (with catalog mode) read-only tool for EloSync product navigation. Backed by `App\AI\ProductHelp\ProductHelpCatalog` + `ProductHelpSearchService` under `app/AI/ProductHelp/`.
+
+Arguments: `query` (required), optional `limit` (default 5, max 10). Hits include `id`, `title`, `path` (breadcrumb array), `path_label`, `action`, `deep_link`, `user_can_perform`, `missing_permissions`, and optional `notes`. Recipes that require an uninstalled module are omitted; recipes the user cannot perform still return with `user_can_perform: false`.
+
+When catalog mode is enabled (`config/ai-tools.php`), always-on tools are `search_workspace`, `search_product_help`, and `get_ai_credit_status` (plus meta `search_ai_tools` / `execute_ai_tool`).
 
 `availableFor($user, $tenant, $entitlements)` filters tools when:
 
