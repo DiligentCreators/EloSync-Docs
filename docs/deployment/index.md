@@ -78,6 +78,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Leave Management](./leave-management) | Leave Management module ops |
 | [Attendance](./attendance) | Attendance module ops |
 | [Attendance department-scoped digests 1.6.0](./attendance-department-scoped-1-6-0-production-readiness) | Dept-manager scoped digests/list — **Go** |
+| [Pulse slow-path hardening](./pulse-slow-paths-production-readiness) | Pulse remediations (attendance/email/sync/realtime/cache) — **Go** |
 | [Payroll](./payroll) | Payroll module ops ([1.4.0 paid-from readiness](./payroll-1-4-0-paid-from-production-readiness) — **Go**) |
 | [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
 | [Assets](./assets) | Assets Marketplace opt-in ops |
