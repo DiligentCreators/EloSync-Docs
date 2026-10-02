@@ -71,10 +71,36 @@ Until Firebase native apps are configured, Profile shows that push is unsupporte
 |---------|---------|
 | `development` | Dev client, internal, physical devices. API is `https://api.elosync.com` (same live host as `preview` and `production`) |
 | `development-simulator` | Dev client for iOS Simulator |
-| `preview` | Internal release-like build |
-| `production` | Store binaries (`npm run build:production`) |
+| `preview` | Internal release-like build; update channel `preview` |
+| `production` | Store binaries (`npm run build:production`); update channel `production` |
 
 Store submission: `eas submit` after a `production` build.
+
+## Over-the-air updates (EAS Update)
+
+Ship JavaScript, styling, and asset changes without a new App Store / Play Store review. Keep a store binary for native capabilities (push, SecureStore, location).
+
+| Change type | Ship with |
+|-------------|-----------|
+| Screens, API clients, UI copy, most bug fixes | `eas update` (OTA) |
+| New native module / Expo plugin, SDK bump, permissions, push native config, `app.json` native fields | New EAS **build** (+ store submit for production) |
+
+Configuration (EloSync-Mobile):
+
+- `expo-updates` + `updates.url` pointing at the EAS project
+- `runtimeVersion.policy: appVersion` (matches `expo.version`)
+- EAS Build channels: `preview` → channel `preview`, `production` → channel `production`
+- Cold-start check in `app/_layout.tsx` via `lib/expo-updates.ts` (5s timeout, then launch embedded bundle)
+
+Publish:
+
+```bash
+npm run update:preview -- --message "Describe the change"
+npm run update:production -- --message "Describe the change"
+```
+
+Bump `expo.version` whenever you ship a new native binary so OTAs target the correct runtime. Adding or upgrading `expo-updates` itself requires a new binary before devices can receive OTAs.
+
 
 ## Authentication
 

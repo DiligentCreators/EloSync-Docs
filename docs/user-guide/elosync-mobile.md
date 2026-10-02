@@ -23,6 +23,10 @@ Two-factor authentication is managed from **Profile → Two-factor authenticatio
 
 Opt-in is remembered on the device across sign-out; the next sign-in re-registers quietly. Push requires a native build with Firebase Android/iOS configured — until then Profile explains that push is not ready on this build.
 
+## App updates
+
+Most feature and bug-fix updates arrive automatically when you open the app (no App Store / Play Store download required). You only need a store update when the release notes say a new native version is required (for example after a major platform upgrade).
+
 ## What's on mobile today
 
 Mobile modules roll out **PR-by-PR**. The app home screen lists modules your role can access.
