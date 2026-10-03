@@ -4,7 +4,7 @@ The Tenant Application is your workspace home. It uses the same layout as the Ce
 
 ## Tenant navigation
 
-The left sidebar is grouped by **module category** (CRM, Communication, Sales, Billing, Purchasing, Inventory, Operations, Finance, HR). Each section is a collapsible accordion — only the group for the page you are on stays open until you expand others. Use **Search pages** (`⌘K` / `Ctrl+K`) to jump without opening a section. Switching pages (for example Leads → Tasks) always shows the top of the new page — filters and pagination on the same list keep your scroll.
+The left sidebar is grouped by **module category** (CRM, Communication, Sales, Billing, Purchasing, Inventory, Operations, Finance, HR). Each section is a collapsible accordion — the group for the page you are on stays open (even if you had collapsed it) and that module is highlighted. When the list is longer than the sidebar, it scrolls so the current module stays in view. Use **Search pages** (`⌘K` / `Ctrl+K`) to jump without opening a section. Switching pages (for example Leads → Tasks) always shows the top of the new page — filters and pagination on the same list keep your scroll.
 
 | Item | Purpose |
 |------|---------|

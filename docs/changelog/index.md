@@ -1,3 +1,8 @@
+## Sidebar active module highlight + scroll (2026-10-03)
+
+- **EloSync-Frontend:** Navigating to a module (sidebar, command palette, deep link) always opens that module’s sidebar group, highlights the current `NavLink`, and scrolls it into the sidebar viewport. Stored collapse still applies to inactive groups. Unit tests for group-open + scroll helper; Playwright tenant dashboard covers Tasks highlight after a jump from Dashboard.
+- **EloSync-Docs:** Tenant application user guide + shared layout / module-development notes + this changelog.
+
 ## Document-field TipTap (2026-10-03)
 
 - **EloSync-Frontend:** Shared TipTap `RichTextEditor` on document bodies only: announcements `body` (required), Help Desk ticket `description`, task/project `description`, activity `body`. Display uses `RichTextHtml` (DOMPurify). List/dashboard/peek snippets strip tags (`htmlToPlainText`). Notes, chat, addresses, and other textareas stay plain. Playwright `fillRichText` helper.
