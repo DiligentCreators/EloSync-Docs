@@ -37,3 +37,4 @@ Ask EloSync Opportunity triage ships on catalog **`ai` 1.6.0** (not an Opportuni
 3. Run opportunities permissions migration so default roles receive missing `opportunities.*` grants
 4. Confirm `module:opportunities` + `opportunities.*` permissions on target roles
 5. Deploy Frontend SPA with Opportunities nav/pages (mirror Leads board + table, inline tags) when the SPA ships
+6. **1.3.0 real-time board sync:** `php artisan migrate --force` bumps catalog **opportunities → 1.3.0** (do **not** `db:seed`). Deploy Backend + Frontend together; confirm Reverb is up, then smoke two browser sessions on the Kanban board. See [Opportunities real-time board sync 1.3.0 readiness](./opportunities-realtime-board-sync-1-3-0-production-readiness).
