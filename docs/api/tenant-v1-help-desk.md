@@ -46,7 +46,7 @@ List items include `status`, `priority`, `source` (`manual`\|`email`), SLA clock
 
 ### POST `/help-desk`
 
-Body: `subject` (required), `description` (optional), `priority` (optional, default `medium`), `category_id` (optional — tenant `help_desk_categories` id, must be active; defaults to seeded **Other**), `contact_id` (optional — Contacts module must be entitled), `company_id` (optional — Companies module must be entitled), `knowledge_base_article_ids` (optional `int[]` — Knowledge Base module must be entitled; each id validated via `LinkableKnowledgeBaseArticle`: published for view-only actors, or draft/archived when actor has `knowledge-base.update`), `due_at` (optional ISO datetime), `assigned_to` (optional — requires actor to hold `help-desk.assign`; otherwise defaults to creator).
+Body: `subject` (required), `description` (optional HTML subset from the workspace editor), `priority` (optional, default `medium`), `category_id` (optional — tenant `help_desk_categories` id, must be active; defaults to seeded **Other**), `contact_id` (optional — Contacts module must be entitled), `company_id` (optional — Companies module must be entitled), `knowledge_base_article_ids` (optional `int[]` — Knowledge Base module must be entitled; each id validated via `LinkableKnowledgeBaseArticle`: published for view-only actors, or draft/archived when actor has `knowledge-base.update`), `due_at` (optional ISO datetime), `assigned_to` (optional — requires actor to hold `help-desk.assign`; otherwise defaults to creator).
 
 Status always starts at `open`; `number` is auto-generated (`HD-00001`, configurable via `help_desk_number_prefix` tenant setting).
 

@@ -43,6 +43,7 @@ Absolute columns use `UtcDateTime`. Audience visibility SQL compares `expires_at
 ## Frontend
 
 - Pages: `src/pages/announcements/` (`announcements-page.tsx`, `announcement-form.tsx`, `announcement-form-page.tsx`, `announcement-view-page.tsx`)
+- Form body: shared TipTap `RichTextEditor`; view/inbox use `RichTextHtml` (DOMPurify). Dashboard snippets use `htmlToPlainText`.
 - Post-login dialog: `src/components/announcements/announcement-inbox-dialog.tsx` in `AppLayout`
 - Dashboard section: `src/components/dashboard/announcements-dashboard-section.tsx`
 - Notifications: `src/notifications/modules/system.ts` deep-links to `/announcements/:id`

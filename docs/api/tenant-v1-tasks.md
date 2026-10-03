@@ -57,7 +57,7 @@ List and board task cards include `latest_note` — most recent note (`id`, `bod
 
 ### POST `/tasks`
 
-JSON or multipart. Body: `title` (required), `description`, `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`), optional `milestone_id` (same project), optional `depends_on_task_ids[]` (same-project blockers). Optional multipart `attachments[]` (max 10) — validated by workspace `storage.upload_policy`.
+JSON or multipart. Body: `title` (required), `description` (optional HTML subset from the workspace editor), `status`, `priority`, `due_at`, `assigned_to`, `tag_ids[]`, optional `project_id` (soft — requires the **Projects** module entitled and a project the actor may see; see `LinkableProject`), optional `milestone_id` (same project), optional `depends_on_task_ids[]` (same-project blockers). Optional multipart `attachments[]` (max 10) — validated by workspace `storage.upload_policy`.
 
 Initial `due_at` on create does not require `tasks.change_due_date`.
 

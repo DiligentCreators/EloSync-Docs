@@ -32,7 +32,7 @@ Status labels:
 ## Create & edit
 
 1. Click **New project**
-2. Enter a **title** (required) and optional description
+2. Enter a **title** (required) and optional description in the rich text editor
 3. Optionally set **starts on** / **ends on** dates
 4. If Contacts, Companies, or Opportunities are installed, optionally link them — use **New** beside a picker to create and select inline when you have that module’s create permission
 5. Optionally set an assignee and members (requires **assign**)

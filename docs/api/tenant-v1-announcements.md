@@ -40,7 +40,7 @@ Managers with `announcements.update` may filter:
 
 Permission: `announcements.create`
 
-Body: `title` (required), `body` (required), `status` (optional, default `draft`), `published_at`, `expires_at`.
+Body: `title` (required), `body` (required HTML subset from the workspace editor; notifications strip tags for previews), `status` (optional, default `draft`), `published_at`, `expires_at`.
 
 Publishing (`status=published`) notifies other tenant users (`type: announcement`).
 

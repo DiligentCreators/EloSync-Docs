@@ -17,6 +17,16 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Document-field TipTap — announcements 1.2.0 / help-desk 1.11.0 / tasks 1.7.0 / projects 1.7.0 / activities 1.2.0
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_03_182400_bump_document_rich_text_module_versions` — catalog only; **do not** `db:seed`)
+2. Confirm catalog versions: announcements **1.2.0**, help-desk **1.11.0**, tasks **1.7.0**, projects **1.7.0**, activities **1.2.0**
+3. Deploy the SPA **after** migrate — TipTap on those document fields; sanitized HTML on view/inbox
+4. Deploy Mobile (plain-text strip on those views) and Docs
+5. Staging smoke: published announcement with list/link/color → inbox + record HTML; dashboard snippet without tags; existing plain-text bodies still open
+
+Go-live: [Document-field TipTap production readiness](/deployment/document-tiptap-fields-production-readiness).
+
 ## Workspace record cohesion — contacts 1.6.0 / companies 1.3.0 / documents 1.6.0 / email 1.4.0
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_09_29_211500_bump_contacts_companies_documents_email_for_workspace_cohesion` — catalog only; **do not** `db:seed`)

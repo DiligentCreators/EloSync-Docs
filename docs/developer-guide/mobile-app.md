@@ -496,6 +496,7 @@ Workspace announcements with read tracking. Every entitled member sees the inbox
 | Routes | `app/(app)/(tabs)/announcements/` — `index`, `new`, `[id]/index`, `[id]/edit` |
 | Nav | `config/modules.ts` — module only (no view permission), tab `/(app)/(tabs)/announcements` (label **News**) |
 | Permissions | `announcements.create`, `announcements.update`, `announcements.delete` |
+| HTML | `lib/html.ts` — `htmlToPlainText` for list/view/edit (TipTap HTML is authored on web) |
 
 Tenant API reference: [Tenant API — Announcements](/api/tenant-v1-announcements).
 

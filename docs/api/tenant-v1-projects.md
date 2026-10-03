@@ -134,7 +134,7 @@ List items include `title`, `status`, `description`, `starts_on`, `ends_on`, sof
 
 ### POST `/projects`
 
-Body: `title` (required), `description`, `contact_id`, `company_id`, `opportunity_id`, `starts_on`, `ends_on` (`after_or_equal:starts_on`), `assigned_to`, `member_ids[]`.
+Body: `title` (required), `description` (optional HTML subset from the workspace editor), `contact_id`, `company_id`, `opportunity_id`, `starts_on`, `ends_on` (`after_or_equal:starts_on`), `assigned_to`, `member_ids[]`.
 
 Status always starts at `planned`. Without `projects.assign`, `assigned_to` / `member_ids` are ignored and the creator becomes the assignee. Assignee ids are stripped from `member_ids`.
 

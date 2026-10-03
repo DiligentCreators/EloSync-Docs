@@ -39,7 +39,7 @@ When Help Desk is installed and you have `help-desk.view`, the dashboard may sho
 ## Create a ticket
 
 1. Click **New ticket**
-2. Enter a subject and optional description
+2. Enter a subject and optional description in the rich text editor (HTML stored on the server)
 3. Choose category (from your workspace list) and priority
 4. Optionally set a due date (interpreted in your workspace timezone)
 5. If **Contacts** or **Companies** are installed, optionally link a contact and/or company — use **New** beside a picker to create and select inline when you have create permission

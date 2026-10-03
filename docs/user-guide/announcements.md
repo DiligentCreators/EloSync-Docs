@@ -30,7 +30,7 @@ Open **Announcements** from the sidebar under **Communication**.
 Requires `announcements.create`.
 
 1. Click **New announcement**
-2. Enter title and body
+2. Enter title and body in the rich text editor (headings, lists, links, text color — HTML stored on the server)
 3. Set status to **Draft**, **Published**, or **Archived**
 4. Optional expires-at (workspace timezone for display; stored as UTC)
 

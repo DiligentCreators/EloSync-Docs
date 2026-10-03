@@ -14,7 +14,7 @@ Free Communication Marketplace module for workspace-wide announcements with read
 
 ## Capabilities
 
-- Title + body, status (`draft` / `published` / `archived`), optional expiry
+- Title + HTML body (TipTap on web), status (`draft` / `published` / `archived`), optional expiry
 - **After login:** unread published announcements open in a dialog (Mark as read)
 - **Dashboard:** unread announcements after the welcome greeting (hidden when none remain unread); each row has **Mark as read**
 - **History:** `/announcements` for every signed-in user (no `view` permission)
