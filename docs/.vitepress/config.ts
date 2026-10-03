@@ -490,6 +490,7 @@ export default withMermaid(defineConfig({
             { text: 'Workspace File a complaint Production Readiness', link: '/deployment/workspace-complaint-dialog-production-readiness' },
             { text: 'Go-Live Hardening', link: '/deployment/go-live-hardening-2026-07-15' },
             { text: 'Pulse Slow-Path Hardening Readiness', link: '/deployment/pulse-slow-paths-production-readiness' },
+            { text: 'Pulse Uncached Slow-Path Follow-up Readiness', link: '/deployment/pulse-uncached-slow-paths-production-readiness' },
             { text: 'Authentication', link: '/deployment/authentication' },
             { text: 'Tenant RBAC', link: '/deployment/tenant-rbac' },
             { text: 'Central Settings', link: '/deployment/central-settings' },

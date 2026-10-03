@@ -1,3 +1,8 @@
+## Pulse uncached slow-path follow-up (2026-10-03)
+
+- **EloSync-Backend:** Speed the remaining Pulse slow *requests* (no slow queries) without raising TTLs: lean `GET /leads/stats`, dashboard widget miss (GROUP BY pipeline, memoized stages, `hasModule` via 1h entitlements cache), public settings miss (request-scoped settings hydrate + cached central bootstrap), attendance `/today` single employee load. Invoice PDF left as Dompdf; `SyncEmailAccountJob` unchanged (`tries=1`). Pest: stats query-log, attendance today employee query, public bootstrap invalidation.
+- **EloSync-Docs:** [Pulse uncached slow-path follow-up production readiness](/deployment/pulse-uncached-slow-paths-production-readiness) + this changelog.
+
 ## Pulse slow-path hardening (2026-10-03)
 
 - **EloSync-Backend:** Remediations for Pulse slow requests/queries/jobs — attendance GET list/stats/today via `AttendanceRecordReadService` (date-range predicates, grouped stats, indexes) while preserving department-manager `visibleEmployeeIds` scope from attendance **1.6.0**; tenant + central email-log lists omit body longtext (`list_has_body`) with list/prune indexes; IMAP sync unique job (`tries=1`, error backoff, ≤25 msgs/folder, single-connection body fetch); `SafeRealtimeBroadcast` for Leads/Live Chat; public bootstrap cache keyed by tenant epoch + central fingerprint; short-TTL unread-count + dashboard widget caches; mail transport fail-fast (SMTP 5xx / Dsn TypeError). Pest coverage + stable test `APP_KEY`.

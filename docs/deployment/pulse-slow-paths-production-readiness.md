@@ -5,7 +5,7 @@
 | **Date** | 2026-10-03 |
 | **Status** | **Go for production** |
 | **Scope** | Platform performance remediations from Laravel Pulse slow requests/queries/jobs: attendance list/stats/today, email logs list, email IMAP sync storms, public bootstrap / dashboard / notification unread caching, CRM + Live Chat safe realtime dispatch, mail transport fail-fast |
-| **Companion** | [Laravel Forge](./laravel-forge) · [Email deploy](./email) · [Attendance deploy](./attendance) · [Notifications](./notifications) · [Attendance 1.6.0 readiness](./attendance-department-scoped-1-6-0-production-readiness) · [CHANGELOG](/changelog/) |
+| **Companion** | [Laravel Forge](./laravel-forge) · [Email deploy](./email) · [Attendance deploy](./attendance) · [Notifications](./notifications) · [Attendance 1.6.0 readiness](./attendance-department-scoped-1-6-0-production-readiness) · [Uncached follow-up](./pulse-uncached-slow-paths-production-readiness) · [CHANGELOG](/changelog/) |
 
 ---
 
@@ -50,7 +50,7 @@ Pulse surfaced expensive list/stats queries (attendance, email logs), IMAP sync 
 - **Email sync:** `ShouldBeUnique` per tenant/account; `tries = 1`; timeout 180s; error accounts back off from `updated_at`; ≤25 messages/folder; IMAP body on same connection; secret redaction in logs/errors.
 - **Mail:** Permanent SMTP 5xx / Dsn `TypeError` / relay-denied classified as config errors; `EmailManager::clearRuntimeSecrets` resets `mail.default` to `log`; SMTP host required before Dsn build.
 - **Realtime:** `App\Support\Realtime\SafeRealtimeBroadcast` used by Leads board + Live Chat presence/conversation paths.
-- **Caching:** Tenant public bootstrap + admin settings epoch; notification unread count 15s; dashboard widgets 30s.
+- **Caching:** Tenant public bootstrap + admin settings epoch; notification unread count 15s; dashboard widgets 30s. Uncached-path follow-up (hydration / entitlement reuse): [Pulse uncached slow-path follow-up](./pulse-uncached-slow-paths-production-readiness).
 - **CRM notifications:** Broadcast channel delayed 3s; PK `exists` check before broadcast payload.
 - **Tests:** Pest coverage for the above; `phpunit.xml` stable `APP_KEY` for encrypted casts.
 
