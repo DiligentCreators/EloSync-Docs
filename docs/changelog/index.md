@@ -3,6 +3,12 @@
 - **EloSync-Frontend:** Navigating to a module (sidebar, command palette, deep link) always opens that module’s sidebar group, highlights the current `NavLink`, and scrolls it into the sidebar viewport. Stored collapse still applies to inactive groups. Unit tests for group-open + scroll helper; Playwright tenant dashboard covers Tasks highlight after a jump from Dashboard.
 - **EloSync-Docs:** Tenant application user guide + shared layout / module-development notes + this changelog.
 
+## Live Chat 1.6.0 department-routed notifications (2026-10-03)
+
+- **EloSync-Backend:** Catalog **1.5.2 → 1.6.0**. First visitor message wakes Live Chat **department** agents (`database` + `broadcast` + FCM), not everyone with `live-chat.view`. Later messages go to the assignee (in-app only). First agent reply auto-assigns. Widget `idle_minutes` (default 5, 0 = off) plus `live-chat:scan-idle` alert other department agents. Public `agent_name` on visitor messages; embed cache-bust **1.6.0**.
+- **EloSync-Frontend:** Settings → Live Chat idle minutes + copy that only department agents get first-chat push. Notification registry `live-chat.assigned` / `live-chat.idle`. Playwright idle-minutes control.
+- **EloSync-Docs:** User/developer/API/deployment + changelog **1.6.0**.
+
 ## Document-field TipTap (2026-10-03)
 
 - **EloSync-Frontend:** Shared TipTap `RichTextEditor` on document bodies only: announcements `body` (required), Help Desk ticket `description`, task/project `description`, activity `body`. Display uses `RichTextHtml` (DOMPurify). List/dashboard/peek snippets strip tags (`htmlToPlainText`). Notes, chat, addresses, and other textareas stay plain. Playwright `fillRichText` helper.

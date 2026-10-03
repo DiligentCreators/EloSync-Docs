@@ -1,6 +1,6 @@
 # Live Chat (developer)
 
-Free Communication module (`live-chat` **1.5.2**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
+Free Communication module (`live-chat` **1.6.0**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
 
 ## Surfaces
 
@@ -16,7 +16,7 @@ Throttle: `live-chat-widget` (60/min by IP + key) and `live-chat-widget-session`
 
 **CORS:** `LiveChatPublicCors` reflects `Origin` for credential-less public widget paths only (does not open the rest of the API).
 
-**Public DTOs:** Visitor responses use `LiveChatPublicConversationResource` / `LiveChatPublicMessageResource` — uuid/status/body/direction/attachment meta/timestamps only (no assignee, Lead, visitor IP, sender email, or `direction=note`).
+**Public DTOs:** Visitor responses use `LiveChatPublicConversationResource` / `LiveChatPublicMessageResource` — uuid/status/body/direction/attachment meta/`agent_name` (agent rows; workspace user Name, no email/id)/timestamps only (no assignee, Lead, visitor IP, sender email, or `direction=note`).
 
 **Sessions:** Expire after 7 days from creation. Regenerating the public key (or deactivating the widget / cancelling the module) revokes all visitor session hashes. Retention: `live-chat:purge-visitors --days=90` (daily). Banned visitors (`is_banned`) cannot create sessions or send messages.
 
@@ -24,7 +24,7 @@ Throttle: `live-chat-widget` (60/min by IP + key) and `live-chat-widget-session`
 
 ## Branding, hours, offline, presence
 
-Widget settings store `primary_color`, `launcher_text`, `position`, `header_title`, `logo_url`, `offline_*`, `business_hours`, `email_notify_agents`, `default_department_id`, `suggested_replies`, `show_powered_by`, `agent_display_name`. Bootstrap returns branding plus `within_hours` / `accepting_live` and optional Reverb public realtime hints. Outside hours (or inactive accepting), visitors leave offline messages when `offline_enabled`.
+Widget settings store `primary_color`, `launcher_text`, `position`, `header_title`, `logo_url`, `offline_*`, `business_hours`, `email_notify_agents`, `idle_minutes`, `default_department_id`, `suggested_replies`, `show_powered_by`, `agent_display_name`. Bootstrap returns branding plus `within_hours` / `accepting_live` and optional Reverb public hints. Outside hours (or inactive accepting), visitors leave offline messages when `offline_enabled`.
 
 `POST …/heartbeat` (Bearer session) updates `last_seen_at`, `page_url`, `referrer`, UA-derived `browser`/`os`, optional country from CDN headers, and `pages_viewed`. Tenant `GET …/visitors/live` and `GET …/stats` power the Live visitors + Overview tabs. Presence broadcasts throttle on the inbox channel as `LiveChatVisitorPresence`.
 
@@ -57,7 +57,17 @@ Wired triggers: `live_chat.conversation_opened`, `live_chat.message_inbound`, `l
 
 ## Notifications
 
-`LiveChatInboundMessageNotification` (`live-chat.inbound`) → recipients with `live-chat.view` (assignee-scoped when assigned). Channels: `database` + `broadcast` (open-tab bell via Reverb `NotificationCreated`); optional email when `email_notify_agents` is true.
+Do **not** fan out to every user with `live-chat.view`. Recipients are members of the conversation’s Live Chat department (widget default department on create) who also have `live-chat.reply`, capped at 20. Empty roster skips notify (`live-chat.notify_skipped_empty_roster`). Keep production workers out of Live Chat departments even if Staff still has Live Chat permissions.
+
+| Event | Recipients | Channels |
+|---|---|---|
+| First visitor message (unassigned) | Department agents | `database` + `broadcast` + FCM; optional mail when `email_notify_agents` |
+| Later visitor messages while unassigned | Department agents | `database` + `broadcast` |
+| Visitor messages after assign | Assignee only | `database` + `broadcast` |
+| First agent reply | Auto-assigns that agent; `live-chat.assigned` | FCM + in-app |
+| Idle (`idle_minutes`, default 5; `0` = off) | Department minus assignee | FCM + in-app once (`live-chat.idle`); `live-chat:scan-idle` every minute |
+
+Inbox Reverb conversation list updates remain separate from notification wake-ups. Types: `live-chat.inbound`, `live-chat.assigned`, `live-chat.idle`.
 
 ## Tests
 

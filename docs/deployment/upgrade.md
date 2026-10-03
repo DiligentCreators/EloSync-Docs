@@ -65,6 +65,15 @@ After migrate (`2026_09_26_112037_add_created_by_and_updated_by_to_leads_table`,
 
 Go-live: [Leads 1.6.0 created/updated by production readiness](/deployment/leads-created-by-updated-by-1-6-0-production-readiness).
 
+## Live Chat 1.5.2 → 1.6.0 — department-routed notifications
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_03_223500_add_live_chat_idle_routing_and_bump_to_1_6_0` — **do not** `db:seed`)
+2. Confirm catalog `live-chat` version is `1.6.0`
+3. Confirm `emails` queue workers (or sync) process Live Chat notifications and that the scheduler runs `live-chat:scan-idle` every minute
+4. Deploy the SPA **after** migrate — Settings → Live Chat idle minutes; notification types `live-chat.assigned` / `live-chat.idle`
+5. Purge CDN for `public/widgets/live-chat.js` (snippet `?v=1.6.0`)
+6. Staging smoke: department agents get first-chat bell + FCM; Staff outside the department do not; first agent reply claims the chat; idle minutes later alerts other department agents; visitor widget shows the answering agent’s Name
+
 ## Live Chat 1.5.1 → 1.5.2 — inbound notification broadcast
 
 After migrate (`2026_09_25_210000_bump_live_chat_module_version_to_1_5_2`):
