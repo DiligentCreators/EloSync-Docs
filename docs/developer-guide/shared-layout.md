@@ -100,7 +100,7 @@ Central remains under `/central/*` with the same shell and its own navigation gr
 3. Register list + `/new` + `/:id` + `/:id/edit` under `TenantProtectedRoute` → `AppLayout` in `App.tsx`.
 4. Ship list/create/view/edit UI mirroring Leads (not a long-lived `PlaceholderPage`).
 
-Nav visibility is filtered by installed module subscriptions and Spatie permissions. Sidebar **sections collapse** by default; the group that contains the current route stays open. Users can expand additional sections; that preference is stored per Central/Tenant context in `localStorage`.
+Nav visibility is filtered by installed module subscriptions and Spatie permissions. Sidebar **sections collapse** by default; the group that contains the current route always stays open (stored collapse is ignored for that group) and the active `NavLink` is highlighted (`aria-current="page"`). After the route paints, `scrollSidebarActiveNavIntoView` scrolls that link into the sidebar viewport (`block: nearest`). Users can expand additional sections; that preference is stored per Central/Tenant context in `localStorage`.
 
 ## Auth / API notes
 
