@@ -1,3 +1,10 @@
+## Document-field TipTap (2026-10-03)
+
+- **EloSync-Frontend:** Shared TipTap `RichTextEditor` on document bodies only: announcements `body` (required), Help Desk ticket `description`, task/project `description`, activity `body`. Display uses `RichTextHtml` (DOMPurify). List/dashboard/peek snippets strip tags (`htmlToPlainText`). Notes, chat, addresses, and other textareas stay plain. Playwright `fillRichText` helper.
+- **EloSync-Backend:** HTML stored as submitted (Knowledge Base pattern, not billing sanitizer). Pest store cases. Catalog MINOR: **announcements 1.1.0 → 1.2.0**, **help-desk 1.10.0 → 1.11.0**, **tasks 1.6.0 → 1.7.0**, **projects 1.6.0 → 1.7.0**, **activities 1.1.0 → 1.2.0** (migrate-only + CatalogSeeder).
+- **EloSync-Mobile:** Strip HTML for announcement/task/project/help-desk/activity view and edit (`lib/html.ts`). Create/edit remain `FormTextarea`.
+- **EloSync-Docs:** User/API/developer guides + [document-field TipTap production readiness](/deployment/document-tiptap-fields-production-readiness) + this changelog.
+
 ## Pulse uncached slow-path follow-up (2026-10-03)
 
 - **EloSync-Backend:** Speed the remaining Pulse slow *requests* (no slow queries) without raising TTLs: lean `GET /leads/stats`, dashboard widget miss (GROUP BY pipeline, memoized stages, `hasModule` via 1h entitlements cache), public settings miss (request-scoped settings hydrate + cached central bootstrap), attendance `/today` single employee load. Invoice PDF left as Dompdf; `SyncEmailAccountJob` unchanged (`tries=1`). Pest: stats query-log, attendance today employee query, public bootstrap invalidation.

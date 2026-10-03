@@ -39,6 +39,8 @@ Staff defaults include `activities.view` + `activities.complete` (same pattern a
 
 Routes use `module:activities` then `can:activities.*` / policies.
 
+Catalog version **1.2.0** (TipTap HTML `body` on web; stored as string, sanitized on display).
+
 ## API (tenant)
 
 Base: `/api/tenant/v1` — full reference [tenant-v1-activities.md](/api/tenant-v1-activities).

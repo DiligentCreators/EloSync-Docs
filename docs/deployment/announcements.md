@@ -32,3 +32,4 @@ Platform audit events: `announcement_created`, `announcement_updated`, `announce
 5. Confirm routes return 403 when module not installed
 6. Confirm queue workers are running so publish notifications are delivered
 7. Optional: set workspace timezone ≠ UTC and verify `expires_at` matches Settings → General wall clock
+8. Catalog **1.2.0**: body is TipTap HTML on web — see [document-field TipTap production readiness](/deployment/document-tiptap-fields-production-readiness)

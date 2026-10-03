@@ -24,7 +24,7 @@ List items include related `contact` / `company` / `lead` refs when loaded, `is_
 
 ### POST `/activities`
 
-Body: `type` (required: `call`|`email`|`note`|`follow_up`|`other`), `subject` (required), `body`, `due_at`, `contact_id`, `company_id`, `lead_id`, `assigned_to`.
+Body: `type` (required: `call`|`email`|`note`|`follow_up`|`other`), `subject` (required), `body` (optional HTML subset from the workspace editor), `due_at`, `contact_id`, `company_id`, `lead_id`, `assigned_to`.
 
 At least one of `contact_id`, `company_id`, `lead_id` is required. Each FK requires the corresponding module to be entitled.
 

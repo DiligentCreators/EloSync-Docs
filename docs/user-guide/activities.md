@@ -21,7 +21,7 @@ Open **Activities** from the sidebar under **CRM** (after Meetings).
 
 1. Click **New activity**
 2. Choose a type (call, email, note, follow-up, other)
-3. Enter subject (required) and optional body / due date / assignee
+3. Enter subject (required) and optional body in the rich text editor, plus due date / assignee
 4. Link at least one **Contact**, **Company**, or **Lead** (pickers appear when those modules are installed — use **New** beside a picker to create and select inline when you have create permission)
 5. Save
 

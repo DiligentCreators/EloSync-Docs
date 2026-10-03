@@ -34,7 +34,7 @@ Status labels in the UI:
 ## Create & edit
 
 1. Click **New task**
-2. Enter title (required) and optional description, status, priority, due date, and assignee
+2. Enter title (required) and optional description in the rich text editor, plus status, priority, due date, and assignee
 3. Optionally attach **images or videos** (and other allowed file types) — limits come from **Settings → Storage → Upload limits**
 4. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
 5. If **Projects** is installed, optionally link a **project**
