@@ -83,6 +83,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Document-field TipTap](./document-tiptap-fields-production-readiness) | Announcements / Help Desk / Tasks / Projects / Activities HTML bodies — **Go** |
 | [Payroll](./payroll) | Payroll module ops ([1.4.0 paid-from readiness](./payroll-1-4-0-paid-from-production-readiness) — **Go**) |
 | [Help Desk](./help-desk) | Help Desk module ops (migrate-only catalog + permissions) |
+| [Help Desk 1.12.0 real-time board sync](./help-desk-realtime-board-sync-1-12-0-production-readiness) | Status Kanban Reverb/Echo invalidate — **Go** |
 | [Assets](./assets) | Assets Marketplace opt-in ops |
 | [Documents](./documents) | Documents Marketplace opt-in ops ([1.0.1 readiness](./documents-production-readiness); hard Storage dependency) |
 | [WhatsApp Cloud](./whatsapp-cloud) | WhatsApp Cloud API ops (env, webhook, queues) |

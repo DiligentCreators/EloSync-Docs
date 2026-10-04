@@ -54,6 +54,7 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 12. Smoke (Kanban): Board view → drag ticket between status columns → confirm status persists
 13. Smoke (@mentions): Add ticket note with `@agent` → confirm database notification
 14. Smoke (template reply): With Communication Templates + WhatsApp entitled and contact phone → ticket view → WhatsApp template picker
+15. **1.12.0 real-time board sync:** `php artisan migrate --force` bumps catalog **help-desk → 1.12.0** (do **not** `db:seed`). Deploy Backend + Frontend together; confirm Reverb is up, then smoke two browser sessions on the Kanban board. See [Help Desk real-time board sync 1.12.0 readiness](./help-desk-realtime-board-sync-1-12-0-production-readiness).
 
 ## Roadmap context
 
