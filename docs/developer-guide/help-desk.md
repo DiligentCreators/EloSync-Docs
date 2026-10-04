@@ -14,13 +14,13 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 | Resources | `app/Http/Resources/Tenant/Api/V1/HelpDesk/*`, `HelpDeskSlaPolicy/*`, `HelpDeskMailbox/*` |
 | Policy | `HelpDeskTicketPolicy`, `HelpDeskCategoryPolicy`, `HelpDeskSlaPolicyPolicy`, `HelpDeskMailboxPolicy` (maps to `help-desk.*`) |
 | Events | `app/Events/HelpDeskTicket*.php`, `HelpDeskSlaBreached` |
-| Subscriber | `app/Listeners/HelpDeskEventSubscriber.php` (audit + assignment/status/SLA notifications) |
+| Subscriber | `app/Listeners/HelpDeskEventSubscriber.php` (audit + assignment/status/SLA notifications + board realtime via `SafeRealtimeBroadcast`) |
 | Notifications | `HelpDeskAssignedNotification`, `HelpDeskStatusNotification`, `HelpDeskSlaBreachNotification` |
 | Automation | Wired triggers `help_desk.ticket_created`, `help_desk.ticket_status_changed`, `help_desk.sla_breached` via `AutomationTriggerRegistry` + `AutomationEventBridge` |
 | Commands / jobs | `help-desk:scan-sla-breaches` (every 5 min); `help-desk:sync-mailboxes` (every minute) → `SyncHelpDeskMailboxJob` on queue `help-desk-ingest` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `LinkableKnowledgeBaseArticle` — optional, tenant-scoped, module-entitlement-checked |
 | Pivot | `help_desk_ticket_knowledge_base_article` — soft M2M (no `module_dependencies` row) |
-| Tests | `HelpDeskTicketTest`, `HelpDeskCategoryTest`, `HelpDeskKnowledgeBaseLinkTest`, `HelpDeskSlaTest`, `HelpDeskMailIngestTest` |
+| Tests | `HelpDeskTicketTest`, `HelpDeskCategoryTest`, `HelpDeskKnowledgeBaseLinkTest`, `HelpDeskSlaTest`, `HelpDeskMailIngestTest`, `HelpDeskRealtimeBoardTest` |
 | Migrations | `2026_08_14_*` baseline … `2026_08_30_16000*` SLA (1.3.0) … `2026_08_30_11530*` mailboxes + email source (1.4.0) |
 
 ## Domain notes
@@ -47,7 +47,7 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.11.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.12.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## Communication Templates (soft)
 
@@ -71,13 +71,31 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 | Form page | Subject, description, category picker, priority, due date, conditional contact/company pickers, and **Knowledge base articles** multi-select when `hasModule('knowledge-base')` + `knowledge-base.view` |
 | Service | `helpDeskService` + `helpDeskCategoryService` + `helpDeskSlaPolicyService` + `helpDeskMailboxService` in `src/api/services.ts` |
 | Types | `HelpDesk*` in `src/types/api.ts` |
-| Query keys | `QUERY_KEYS.helpDeskTickets` / `helpDeskTicket(id)` / `helpDeskTicketTimeline(id)` / `helpDeskStats` / `helpDeskCategories` / `helpDeskSlaPolicies` / `helpDeskMailboxes` |
+| Query keys | `QUERY_KEYS.helpDeskTickets` / `helpDeskTicket(id)` / `helpDeskTicketTimeline(id)` / `helpDeskStats` / `helpDeskBoard` / `helpDeskCategories` / `helpDeskSlaPolicies` / `helpDeskMailboxes` |
+| Realtime hook | `src/hooks/use-help-desk-board-realtime.ts` — board-view-only, debounce-invalidate `helpDeskBoard` + `helpDeskStats` |
 | Permissions | `PERMISSIONS.helpDesk.*` |
 | Nav | **Operations** sidebar group — `permission: PERMISSIONS.helpDesk.view`, `module: 'help-desk'` |
 | Route | `tenantRoutes.helpDesk = '/help-desk'`, lazy-loaded in `App.tsx` behind `RequireAccess module="help-desk"` |
 | Dashboard | `tenant-dashboard-widgets.tsx` — `help_desk_my_open` widget |
 | Notifications | `src/notifications/modules/help-desk.ts` — assigned/closed/reopened/due/overdue/SLA breach types (deep link `/help-desk/:id`) |
 | Playwright | `e2e/pages/help-desk.page.ts`, `e2e/tests/help-desk/`, `npm run test:e2e:help-desk` |
+
+## Real-time board sync
+
+Mirrors the Tasks 1.8.0 / Leads 1.8.0 / Live Chat inbox invalidate pattern — **not** the Team Chat message-patching pattern. The board refetches on change instead of patching individual cards. Columns are `HelpDeskStatusEnum` values, not pipeline stages.
+
+- **Channel:** private `tenant.{tenantId}.help-desk.board`, registered in `routes/channels.php`. Auth (`HelpDeskBoardChannel::join`): same tenant **and** `help-desk.view`.
+- **Broadcast events** (`App\Events\HelpDesk\*Broadcast`, all `ShouldBroadcastNow`, kept separate from the existing domain events `App\Events\HelpDeskTicketCreated` etc.):
+  - `HelpDeskTicketCreatedBroadcast` → `broadcastAs('HelpDeskTicketCreated')`
+  - `HelpDeskTicketUpdatedBroadcast` → `broadcastAs('HelpDeskTicketUpdated')`
+  - `HelpDeskTicketStatusChangedBroadcast` → `broadcastAs('HelpDeskTicketStatusChanged')` (includes `previous_status`; fired from `handleHelpDeskTicketStatusChanged` on the existing domain event)
+  - `HelpDeskTicketAssignedBroadcast` → `broadcastAs('HelpDeskTicketAssigned')` (includes `assigned_to`)
+  - `HelpDeskTicketDeletedBroadcast` → `broadcastAs('HelpDeskTicketDeleted')`
+- **Payload shape** (`HelpDeskBoardBroadcastPayload`): `action`, `ticket_id`, `uuid`, `actor_id`, `status`, plus `previous_status` (status-changed only) / `assigned_to` (assigned only).
+- **Dispatch:** `HelpDeskEventSubscriber` fires the matching broadcast from create/update/assign/delete/status handlers via `SafeRealtimeBroadcast::dispatch` so a Reverb outage never breaks the write path.
+- **Frontend:** `src/hooks/use-help-desk-board-realtime.ts` joins the channel via shared `window.Echo` while `help-desk-page.tsx` has `viewMode === 'board'`. Listens for `.HelpDeskTicketCreated` / `.HelpDeskTicketUpdated` / `.HelpDeskTicketStatusChanged` / `.HelpDeskTicketAssigned` / `.HelpDeskTicketDeleted` and debounces (~200ms) an invalidate of `QUERY_KEYS.helpDeskBoard` + `QUERY_KEYS.helpDeskStats`.
+- Catalog **help-desk 1.11.0 → 1.12.0** (migrate-only + `CatalogSeeder` companion).
+- Production readiness: [Help Desk real-time board sync 1.12.0](/deployment/help-desk-realtime-board-sync-1-12-0-production-readiness).
 
 ## Tests
 
@@ -113,4 +131,4 @@ Ask EloSync Help Desk tools (`get_help_desk_ticket`, confirmed status/assign/not
 
 ## Deferred
 
-- Customer portal, chat/social intake, Kanban
+- Customer portal, chat/social intake

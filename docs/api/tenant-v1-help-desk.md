@@ -36,6 +36,8 @@ Same filters as list (minus pagination/sort). Response:
 
 One column per status (`open`, `in_progress`, `waiting`, `resolved`, `closed`): `status`, `label`, `ticket_count`, `tickets[]`. Honors the same filters as list (including assignee scoping). Optional `per_column` (1–100, default 50). Fixed enum columns — same pattern as Tasks, not Opportunities stages.
 
+Real-time (catalog **1.12.0**): private Echo channel `tenant.{tenantId}.help-desk.board` (auth: same tenant + `help-desk.view`). Broadcast names `.HelpDeskTicketCreated` / `.HelpDeskTicketUpdated` / `.HelpDeskTicketStatusChanged` / `.HelpDeskTicketAssigned` / `.HelpDeskTicketDeleted`. SPA invalidates this board + stats; payloads are id-only (`action`, `ticket_id`, `uuid`, `status`, optional `previous_status` / `assigned_to`).
+
 ## Tickets CRUD
 
 ### GET `/help-desk`

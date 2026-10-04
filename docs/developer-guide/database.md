@@ -419,7 +419,7 @@ Notes (author + body) and expense timeline (`type`, `description`, `properties` 
 
 ### `help_desk_tickets`
 
-`tenant_id`, `uuid`, `number` (unique per tenant), `subject`, nullable `description`, `status` (`open`|`in_progress`|`waiting`|`resolved`|`closed`), `priority` (`low`|`medium`|`high`|`urgent`), nullable `category_id` (FK → `help_desk_categories`, null on delete), nullable `contact_id` (FK → `contacts`, null on delete; soft entitlement), nullable `company_id` (FK → `companies`, null on delete; soft entitlement), `assigned_to`, `created_by`, nullable `due_at` (UTC), soft deletes. Spatie activity log name `help-desk`. Content edits are **blocked when closed**.
+`tenant_id`, `uuid`, `number` (unique per tenant), `subject`, nullable `description`, `status` (`open`|`in_progress`|`waiting`|`resolved`|`closed`), `priority` (`low`|`medium`|`high`|`urgent`), nullable `category_id` (FK → `help_desk_categories`, null on delete), nullable `contact_id` (FK → `contacts`, null on delete; soft entitlement), nullable `company_id` (FK → `companies`, null on delete; soft entitlement), `assigned_to`, `created_by`, nullable `due_at` (UTC), soft deletes. Spatie activity log name `help-desk`. Content edits are **blocked when closed**. Catalog **1.12.0** (real-time board sync).
 
 ### `help_desk_notes` / `help_desk_activities`
 

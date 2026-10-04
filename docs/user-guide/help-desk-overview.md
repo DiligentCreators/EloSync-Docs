@@ -35,6 +35,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 - KPIs via `GET /help-desk/stats` (total, mine, open, in progress, waiting, resolved, closed, overdue, sla_breached, sla_at_risk)
 - Dashboard widget `help_desk_my_open` (module + `help-desk.view`; assignee-scoped like list)
 - Trash filtering plus **Restore** and **Delete permanently**
+- **Real-time board sync** — private Reverb channel `tenant.{id}.help-desk.board` (auth: same tenant + `help-desk.view`) broadcasts `HelpDeskTicketCreated` / `HelpDeskTicketUpdated` / `HelpDeskTicketStatusChanged` (with `previous_status`) / `HelpDeskTicketAssigned` / `HelpDeskTicketDeleted`; the board view invalidates `help-desk/board` + `help-desk/stats` (debounced) so teammates see moves, assignments, and deletes without a manual refresh. Mirrors the Tasks / Leads invalidate pattern. Catalog **1.12.0**. Go-live: [production readiness](/deployment/help-desk-realtime-board-sync-1-12-0-production-readiness).
 - Module licensing (`module:help-desk`) + Spatie permissions — **free Marketplace opt-in**, no hard dependencies
 - In-app notifications on assignment, close, reopen, and SLA breaches
 - Automation triggers (when Automation entitled): `help_desk.ticket_created`, `help_desk.ticket_status_changed`, `help_desk.sla_breached`
@@ -51,7 +52,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | **manager** | `view`, `create`, `update`, `assign`, `close`, `reopen` |
 | **staff** | `view`, `create`, `update`, `close`, `reopen` |
 
-Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.8.0**.
+Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.12.0**.
 
 ## Why standalone (soft dependencies)
 
