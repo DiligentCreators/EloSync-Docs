@@ -25,6 +25,16 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 4. Restart queue workers (`php artisan queue:restart`) so `leads:notify-inactive` mail jobs pick up the digest notification
 5. Confirm the scheduler already runs `leads:notify-inactive` daily (`routes/console.php`)
 
+## Projects 1.7.0 → 1.8.0 — real-time board sync
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_031200_bump_projects_module_to_1_8_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: projects **1.8.0**
+3. Deploy the SPA **after** migrate — Projects Kanban board realtime (`useProjectsBoardRealtime`; Gantt/Heatmap stay poll-on-navigate)
+4. Confirm Reverb is running (`php artisan reverb:restart` if already up)
+5. Staging smoke: two browser sessions on the Projects **Board** — create, drag status, assign, delete
+
+Go-live: [Projects real-time board sync 1.8.0 production readiness](/deployment/projects-realtime-board-sync-1-8-0-production-readiness).
+
 ## Help Desk 1.11.0 → 1.12.0 — real-time board sync
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_023800_bump_help_desk_module_to_1_12_0` — catalog only; **do not** `db:seed`)

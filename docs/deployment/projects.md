@@ -5,7 +5,7 @@
 - Catalog slug: `projects`
 - Category: `operations` (**Operations**), `category_sort_order = 40`, `sort_order = 10`
 - **Free Marketplace opt-in** module (not auto-installed)
-- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, version **1.7.0**
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, version **1.8.0**
 - **No hard module dependency** — Projects installs standalone; Contact / Company / Opportunity are optional soft links
 - Soft reverse link: Tasks may set `project_id` when Projects is entitled (Tasks catalog **1.2.0**+)
 - New workspaces receive only **Leads** + **Tasks** (+ ToDos) by default; enable Projects from Marketplace at any time

@@ -24,6 +24,7 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 - Soft Task `project_id` (Tasks → Projects optional) plus optional task `milestone_id` and same-project task dependencies (Tasks catalog **1.5.0**)
 - **Milestones** — open/completed milestones on a project (`due_on`, sort order); complete action; timeline events (`milestone_*`)
 - Board + list + **Gantt** (portfolio timeline) + **Heatmap** (assignee × week load) + stats + notes/timeline
+- **Real-time board sync** — private Reverb channel `tenant.{id}.projects.board` (auth: same tenant + `projects.view`); board view invalidates `projects/board` + `projects/stats` (debounced). Catalog **1.8.0**. Go-live: [production readiness](/deployment/projects-realtime-board-sync-1-8-0-production-readiness).
 - **Gantt** — project bars from `starts_on`/`ends_on`; expand for milestone diamonds and soft Task due markers (when Tasks is entitled); drag bars to shift dates when you can update
 - **Heatmap** — per-assignee weekly load cells + open/overdue counts and pressure band (soft Tasks when entitled)
 - **Calendar projection** — all-day events on `starts_on` / `ends_on` (assignee as organizer); cancelled projects cancel/remove projection
@@ -37,7 +38,7 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 
 `projects.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.6.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
+Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.8.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
 
 ## Why standalone (soft dependencies)
 

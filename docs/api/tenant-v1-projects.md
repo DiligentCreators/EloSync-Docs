@@ -40,6 +40,8 @@ Same filters as list (minus pagination/sort). Response:
 
 One column per status (`planned`, `active`, `on_hold`, `completed`, `cancelled`): `status`, `project_count`, `projects[]`. Honors the same filters as list. Optional `per_column` (1–100, default 50).
 
+Real-time (catalog **1.8.0**): private Echo channel `tenant.{tenantId}.projects.board` (auth: same tenant + `projects.view`). Broadcast names `.ProjectCreated` / `.ProjectUpdated` / `.ProjectStatusChanged` / `.ProjectAssigned` / `.ProjectDeleted`. SPA invalidates this board + stats while Kanban is open (Gantt/Heatmap are not subscribed).
+
 ## Gantt
 
 ### GET `/projects/gantt`
