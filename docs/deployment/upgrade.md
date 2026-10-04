@@ -17,6 +17,16 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Tasks 1.7.0 → 1.8.0 — real-time board sync
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_04_193500_bump_tasks_module_to_1_8_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: tasks **1.8.0**
+3. Deploy the SPA **after** migrate — Tasks Kanban board realtime (`useTasksBoardRealtime`)
+4. Confirm Reverb is running (`php artisan reverb:restart` if already up)
+5. Staging smoke: two browser sessions on the Tasks board — create, drag status, assign, delete; the other session’s board + KPIs update without a manual refresh
+
+Go-live: [Tasks real-time board sync 1.8.0 production readiness](/deployment/tasks-realtime-board-sync-1-8-0-production-readiness).
+
 ## Document-field TipTap — announcements 1.2.0 / help-desk 1.11.0 / tasks 1.7.0 / projects 1.7.0 / activities 1.2.0
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_03_182400_bump_document_rich_text_module_versions` — catalog only; **do not** `db:seed`)

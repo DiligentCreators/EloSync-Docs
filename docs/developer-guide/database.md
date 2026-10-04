@@ -308,7 +308,7 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 
 ### `tasks`
 
-`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, nullable `project_id` (FK → `projects`, null on delete; soft entitlement via `LinkableProject`), nullable `milestone_id` (FK → `project_milestones`, null on delete; same project via `LinkableProjectMilestone`), `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**. Catalog version **1.5.0** (milestone link + dependencies).
+`tenant_id`, `uuid`, `title`, `description`, `status` (`open`|`in_progress`|`waiting`|`completed`|`cancelled`), `priority` (`low`|`medium`|`high`|`urgent`), `due_at`, `assigned_to`, `created_by`, nullable `project_id` (FK → `projects`, null on delete; soft entitlement via `LinkableProject`), nullable `milestone_id` (FK → `project_milestones`, null on delete; same project via `LinkableProjectMilestone`), `completed_at`, soft deletes. Spatie activity log name `tasks`. UI labels `open` as **To Do**. Catalog version **1.8.0** (real-time board sync).
 
 ### `task_dependencies`
 

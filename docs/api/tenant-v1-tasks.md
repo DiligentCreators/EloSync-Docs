@@ -38,6 +38,8 @@ Same filters as list (minus pagination/sort). Payload includes:
 
 ### GET `/tasks/board`
 
+Columns keyed by `TaskStatusEnum`. Open Kanban boards also subscribe to private Reverb channel `tenant.{tenantId}.tasks.board` (auth: same tenant + `tasks.view`) for invalidate-on-change refresh.
+
 One column per status (`open`, `in_progress`, `waiting`, `completed`, `cancelled`): `status`, `task_count`, `tasks[]`. Honors the same filters as list.
 
 ## Tasks CRUD
