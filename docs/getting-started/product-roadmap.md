@@ -10,7 +10,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 | Capability | Status |
 |------------|--------|
-| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.8.0** real-time board sync; **1.5.0** milestone link + dependencies) |
+| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.9.0** inactivity manager digest; **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.8.0** real-time board sync; **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
 | [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares; **1.4.0** Google/Outlook sync — Phase 1 one-way push) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
@@ -23,7 +23,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 - Calendar: named team calendars / department auto-share; two-way (inbound) Google/Outlook sync; pushing meeting/task/lead overlays to providers
 - WhatsApp: alternate BSPs, AI WhatsApp features
 
-**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Tasks real-time board sync (**tasks 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**).
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Lead inactivity manager digest (**leads 1.9.0**); Tasks real-time board sync (**tasks 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**).
 
 ---
 

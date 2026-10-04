@@ -79,6 +79,7 @@ Without steps 1–3, only Meta test Apps / test users work.
 | Command | Cadence | Purpose |
 |---------|---------|---------|
 | `crm:send-due-notifications` | Every 5 minutes (`onOneServer`) | Idempotent due/overdue follow-up (and task) notifications |
+| `leads:notify-inactive` | Daily (`onOneServer`) | Assignee + manager inactivity digests |
 
 Ensure the Laravel scheduler is running in production.
 
@@ -86,12 +87,13 @@ Ensure the Laravel scheduler is running in production.
 
 1. Migrate lead tables + Sprint 2 enhance migration + `lead_assignment_histories` + `lead_imports` + `lead_tags` / `lead_lead_tag` + `lead_follow_ups.lead_tag_id` + **`created_by` / `updated_by` (1.6.0)**
 2. Deploy frontend (Kanban/table, KPIs, Manage tags, export, import wizard/history, convert → contact when Contacts installed, notifications, **Created by / Updated by** columns + filters)
-3. Confirm `module:leads` + expanded permissions (including `leads.import`); catalog version **1.7.0**
+3. Confirm `module:leads` + expanded permissions (including `leads.import`); catalog version **1.9.0**
 4. Confirm queue worker includes `imports`
 5. Smoke: register/login → Leads board → Manage tags → create lead (default tag) → apply Follow Up Later with due date → DnD stage → export/import → convert (On Boarded contact when Contacts installed) → **Created by / Updated by** filter + System
 
 ## Related
 
+- [Leads 1.9.0 inactivity manager digest production readiness](/deployment/leads-inactivity-digest-1-9-0-production-readiness) — **Go**
 - [Leads 1.6.0 created/updated by production readiness](/deployment/leads-created-by-updated-by-1-6-0-production-readiness) — **Go**
 - [Meta App Setup](/developer-guide/meta-app-setup) — Meta Developer App + EloSync wiring
 - [Meta Lead Ads Integration](/developer-guide/meta-lead-ads-integration)

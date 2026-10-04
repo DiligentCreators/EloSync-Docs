@@ -17,6 +17,14 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Leads 1.8.0 → 1.9.0 — inactivity manager digest
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_04_193718_bump_leads_module_to_1_9_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: leads **1.9.0**
+3. Deploy the SPA — Settings → Leads inactivity controls
+4. Restart queue workers (`php artisan queue:restart`) so `leads:notify-inactive` mail jobs pick up the digest notification
+5. Confirm the scheduler already runs `leads:notify-inactive` daily (`routes/console.php`)
+
 ## Tasks 1.7.0 → 1.8.0 — real-time board sync
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_04_193500_bump_tasks_module_to_1_8_0` — catalog only; **do not** `db:seed`)

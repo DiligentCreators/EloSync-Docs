@@ -478,6 +478,7 @@ export default withMermaid(defineConfig({
             { text: 'Contracts Auto-Renew 1.8.0 Readiness', link: '/deployment/contracts-auto-renew-1-8-0-production-readiness' },
             { text: 'Leads 1.6.0 Created/Updated By Readiness', link: '/deployment/leads-created-by-updated-by-1-6-0-production-readiness' },
             { text: 'Leads 1.8.0 Real-time Board Sync Readiness', link: '/deployment/leads-realtime-board-sync-1-8-0-production-readiness' },
+            { text: 'Leads 1.9.0 Inactivity Digest Readiness', link: '/deployment/leads-inactivity-digest-1-9-0-production-readiness' },
             { text: 'Opportunities 1.3.0 Real-time Board Sync Readiness', link: '/deployment/opportunities-realtime-board-sync-1-3-0-production-readiness' },
             { text: 'Tasks 1.8.0 Real-time Board Sync Readiness', link: '/deployment/tasks-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
