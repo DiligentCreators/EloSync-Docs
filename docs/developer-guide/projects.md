@@ -47,7 +47,7 @@ projects.view | create | update | delete | restore | force.delete | assign
 
 Routes use `module:projects` then `can:projects.*` / policies.
 
-Catalog: slug `projects`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.7.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `projects`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.8.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## API (tenant)
 
@@ -95,11 +95,16 @@ SPA should mirror **Tasks** (board default + list + Gantt + Heatmap, create/edit
 | Route | `tenantRoutes.projects = '/projects'`, `RequireAccess module="projects"` |
 | Notifications | `project.assigned`, `project.member_added` → `/projects?project={id}` |
 | Playwright | `e2e/pages/projects.page.ts`, `e2e/tests/projects/`, `npm run test:e2e:projects` |
+| Realtime hook | `src/hooks/use-projects-board-realtime.ts` — Kanban-only debounce-invalidate |
+
+## Real-time board sync
+
+Mirrors Help Desk 1.12.0 / Tasks 1.8.0. Channel `tenant.{tenantId}.projects.board` (`ProjectBoardChannel`: same tenant + `projects.view`). Broadcasts `ProjectCreated` / `ProjectUpdated` / `ProjectStatusChanged` / `ProjectAssigned` / `ProjectDeleted` via `SafeRealtimeBroadcast`. Status-changed uses the existing `ProjectStatusChanged` domain event. SPA hook is **board-view only** (Gantt/Heatmap do not join). Catalog **1.7.0 → 1.8.0**. Readiness: [Projects 1.8.0](/deployment/projects-realtime-board-sync-1-8-0-production-readiness).
 
 ## Tests
 
 ```bash
-php artisan test --compact tests/Feature/Tenant/Project/ProjectTest.php tests/Feature/Tenant/Project/ProjectMilestoneTest.php tests/Feature/Tenant/Project/ProjectGanttTest.php tests/Feature/Tenant/Project/ProjectHeatmapTest.php
+php artisan test --compact tests/Feature/Tenant/Project/
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:projects
 ```

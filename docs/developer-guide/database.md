@@ -316,7 +316,7 @@ Mention rows (`message_id`, `user_id`, unique per pair). Reactions (`message_id`
 
 ### `projects`
 
-`tenant_id`, `uuid`, `title` (not `name`), `status` (`planned`|`active`|`on_hold`|`completed`|`cancelled`, default `planned`), nullable `description`, nullable soft FKs `contact_id` / `company_id` / `opportunity_id` (null on delete), nullable date `starts_on` / `ends_on`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `projects`. Indexes on tenant+status/assignee/contact/company/opportunity/ends_on/title. Catalog **1.4.0**.
+`tenant_id`, `uuid`, `title` (not `name`), `status` (`planned`|`active`|`on_hold`|`completed`|`cancelled`, default `planned`), nullable `description`, nullable soft FKs `contact_id` / `company_id` / `opportunity_id` (null on delete), nullable date `starts_on` / `ends_on`, `assigned_to`, `created_by`, soft deletes. Spatie activity log name `projects`. Indexes on tenant+status/assignee/contact/company/opportunity/ends_on/title. Catalog **1.8.0** (real-time board sync).
 
 ### `project_milestones`
 

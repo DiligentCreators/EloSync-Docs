@@ -482,6 +482,7 @@ export default withMermaid(defineConfig({
             { text: 'Opportunities 1.3.0 Real-time Board Sync Readiness', link: '/deployment/opportunities-realtime-board-sync-1-3-0-production-readiness' },
             { text: 'Tasks 1.8.0 Real-time Board Sync Readiness', link: '/deployment/tasks-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Help Desk 1.12.0 Real-time Board Sync Readiness', link: '/deployment/help-desk-realtime-board-sync-1-12-0-production-readiness' },
+            { text: 'Projects 1.8.0 Real-time Board Sync Readiness', link: '/deployment/projects-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
             { text: 'Short Links', link: '/deployment/short-links' },
             { text: 'Short Links Production Readiness', link: '/deployment/short-links-production-readiness' },
