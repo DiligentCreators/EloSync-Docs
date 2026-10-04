@@ -44,3 +44,4 @@ New Tasks permissions for **existing** workspaces must ship as an additive **dat
 5. Confirm scheduler + `php artisan queue:work --queue=emails` (digest + CRM summary mail is queued)
 6. Shared cache driver required for schedule `onOneServer()` locks
 7. Smoke: register/login → Tasks board → create (with tag) → complete → note → due-date permission check → set reminder time → confirm personal/team CRM summary after gate
+8. **1.8.0 real-time board sync:** `php artisan migrate --force` bumps catalog **tasks → 1.8.0** (do **not** `db:seed`). Deploy Backend + Frontend together; confirm Reverb is up, then smoke two browser sessions on the Kanban board. See [Tasks real-time board sync 1.8.0 readiness](./tasks-realtime-board-sync-1-8-0-production-readiness).

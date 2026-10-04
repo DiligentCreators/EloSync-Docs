@@ -8,7 +8,7 @@ Without **assign**, you only see tasks assigned to you.
 
 ## Board & list
 
-Open **Tasks** from the sidebar under **CRM**. The default view is the **Board** (columns by status). Switch to **List** for a table.
+Open **Tasks** from the sidebar under **CRM**. The default view is the **Board** (columns by status). Switch to **List** for a table. Open boards stay in sync across teammates (create, status drag, assign, delete) without a manual refresh.
 
 - Search by title or description
 - Each status column header and its cards use a fixed status color; Status badges in the list and record page match

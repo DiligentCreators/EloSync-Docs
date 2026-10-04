@@ -29,7 +29,7 @@ Mirror of the [Leads developer guide](/developer-guide/leads). Prefer copying Le
 - Updating `due_at` after create requires `tasks.change_due_date` (enforced in `TaskService` / policy). Initial `due_at` on create is allowed without that permission.
 - `due_at` is a UTC instant (`UtcDateTime` / `UtcIso`). Overdue / due-today / due-this-week SQL uses `App\Support\UtcInstant` so non-UTC workspace timezones do not mark upcoming tasks overdue. SPA create/edit uses `appLocalInputToIso` / `isoToAppLocalInput` (Settings → General timezone), not raw `datetime-local` / ISO slice.
 - Board columns are one per `TaskStatusEnum` case.
-- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. Optional `milestone_id` (FK → `project_milestones`, `nullOnDelete`) via `LinkableProjectMilestone` (requires `project_id` and same project). Optional `depends_on_task_ids[]` syncs `task_dependencies` (same project; self/cycle rejected). Clearing `project_id` clears milestone and dependencies. List/show embed `project`, `milestone`, and `depends_on_task_ids` when loaded. Catalog version **1.7.0**. See [Projects developer guide](/developer-guide/projects).
+- Optional soft `project_id` (nullable FK → `projects`, `nullOnDelete`) validated by `LinkableProject` — Projects module must be entitled and the project must be visible to the actor. Optional `milestone_id` (FK → `project_milestones`, `nullOnDelete`) via `LinkableProjectMilestone` (requires `project_id` and same project). Optional `depends_on_task_ids[]` syncs `task_dependencies` (same project; self/cycle rejected). Clearing `project_id` clears milestone and dependencies. List/show embed `project`, `milestone`, and `depends_on_task_ids` when loaded. Catalog version **1.8.0**. See [Projects developer guide](/developer-guide/projects).
 - **Calendar overlay:** open tasks with `due_at` project onto Calendar (source `task`, organizer = assignee or creator) when Calendar is entitled; completed/cancelled/cleared due date removes the projection.
 - **Attachments:** `task_attachments` and `task_note_attachments` on the workspace uploads disk (`tenants/{uuid}/tasks/`). Types/sizes from workspace `storage.upload_policy` via `WorkspaceUploadPolicy`. Multi-file batches assert total bytes against remaining Storage quota before any object is written. Auth’d download/delete; bytes count toward Storage used. Production checklist: [upload policy + task media readiness](/deployment/workspace-upload-policy-task-media-production-readiness).
 
@@ -71,6 +71,23 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 
 Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). Assign on store/update via `tag_ids[]` or `PUT …/tags`; filter list/board with `tag_id`.
 
+## Real-time board sync
+
+Mirrors the Leads 1.8.0 / Opportunities 1.3.0 / Live Chat inbox invalidate pattern — **not** the Team Chat message-patching pattern. The board refetches on change instead of patching individual cards. Columns are `TaskStatusEnum` values, not pipeline stages.
+
+- **Channel:** private `tenant.{tenantId}.tasks.board`, registered in `routes/channels.php`. Auth (`TaskBoardChannel::join`): same tenant **and** `tasks.view`.
+- **Broadcast events** (`App\Events\Task\*Broadcast`, all `ShouldBroadcastNow`, kept separate from the existing domain events `App\Events\TaskCreated` etc.):
+  - `TaskCreatedBroadcast` → `broadcastAs('TaskCreated')`
+  - `TaskUpdatedBroadcast` → `broadcastAs('TaskUpdated')`
+  - `TaskStatusChangedBroadcast` → `broadcastAs('TaskStatusChanged')` (includes `previous_status`; fired from `handleTaskUpdated` when `before`/`after` status differ — no extra domain event)
+  - `TaskAssignedBroadcast` → `broadcastAs('TaskAssigned')` (includes `assigned_to`)
+  - `TaskDeletedBroadcast` → `broadcastAs('TaskDeleted')`
+- **Payload shape** (`TaskBoardBroadcastPayload`): `action`, `task_id`, `uuid`, `actor_id`, `status`, plus `previous_status` (status-changed only) / `assigned_to` (assigned only).
+- **Dispatch:** `TaskEventSubscriber` fires the matching broadcast from create/update/assign/delete handlers via `SafeRealtimeBroadcast::dispatch` so a Reverb outage never breaks the write path.
+- **Frontend:** `src/hooks/use-tasks-board-realtime.ts` joins the channel via shared `window.Echo` while `tasks-page.tsx` has `viewMode === 'board'`. Listens for `.TaskCreated` / `.TaskUpdated` / `.TaskStatusChanged` / `.TaskAssigned` / `.TaskDeleted` and debounces (~200ms) an invalidate of `QUERY_KEYS.taskBoard` + `QUERY_KEYS.taskStats`.
+- Catalog **tasks 1.7.0 → 1.8.0** (migrate-only + `CatalogSeeder` companion).
+- Production readiness: [Tasks real-time board sync 1.8.0](/deployment/tasks-realtime-board-sync-1-8-0-production-readiness).
+
 ## Frontend
 
 | Piece | Path |
@@ -82,13 +99,16 @@ Colored tags are **create-only** for MVP (no tag update/delete/reorder routes). 
 | Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |
 | Service | `taskService` in `src/api/services.ts` |
+| Realtime board hook | `src/hooks/use-tasks-board-realtime.ts` — joins `tenant.{id}.tasks.board`, debounce-invalidates board + stats |
 | Nav | `permission: tasks.view`, `module: 'tasks'` |
+| Catalog | **1.8.0** (real-time board sync) |
 
 ## Tests
 
 ```bash
 # Backend
 php artisan test --compact tests/Feature/Tenant/Task/TaskTest.php
+php artisan test --compact tests/Feature/Tenant/Task/TaskRealtimeBoardTest.php
 php artisan test --compact tests/Feature/Tenant/Task/TaskTagTest.php
 php artisan test --compact tests/Unit/UtcInstantTest.php
 

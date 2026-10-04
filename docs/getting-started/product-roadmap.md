@@ -10,7 +10,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 | Capability | Status |
 |------------|--------|
-| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.5.0** milestone link + dependencies) |
+| [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.8.0** real-time board sync; **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
 | [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares; **1.4.0** Google/Outlook sync — Phase 1 one-way push) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
@@ -23,7 +23,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 - Calendar: named team calendars / department auto-share; two-way (inbound) Google/Outlook sync; pushing meeting/task/lead overlays to providers
 - WhatsApp: alternate BSPs, AI WhatsApp features
 
-**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**).
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Tasks real-time board sync (**tasks 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**).
 
 ---
 
@@ -223,6 +223,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Leads real-time board sync (2026-09-30):** Private Reverb channel `tenant.{id}.leads.board` (auth: same tenant + `leads.view`, mirrors the Live Chat inbox channel) broadcasts `LeadCreated` / `LeadUpdated` / `LeadStageChanged` / `LeadAssigned` / `LeadDeleted` from `LeadEventSubscriber`; SPA `useLeadsBoardRealtime` hook debounce-invalidates `leads/board` + `leads/stats` while the Kanban view is open. Catalog **leads 1.7.0 → 1.8.0**. Closes the "Leads: real-time board sync" deferred item above. Go-live: [production readiness](/deployment/leads-realtime-board-sync-1-8-0-production-readiness).
 
 **Opportunities real-time board sync (2026-10-04):** Private Reverb channel `tenant.{id}.opportunities.board` (auth: same tenant + `opportunities.view`, mirrors Leads 1.8.0) broadcasts `OpportunityCreated` / `OpportunityUpdated` / `OpportunityStageChanged` / `OpportunityAssigned` / `OpportunityDeleted` from `OpportunityEventSubscriber`; SPA `useOpportunitiesBoardRealtime` hook debounce-invalidates `opportunities/board` + `opportunities/stats` while the Kanban view is open. Catalog **opportunities 1.2.0 → 1.3.0**. Closes the Opportunities deferred "Real-time board sync" item. Go-live: [production readiness](/deployment/opportunities-realtime-board-sync-1-3-0-production-readiness).
+
+**Tasks real-time board sync (2026-10-04):** Private Reverb channel `tenant.{id}.tasks.board` (auth: same tenant + `tasks.view`, mirrors Leads 1.8.0 / Opportunities 1.3.0) broadcasts `TaskCreated` / `TaskUpdated` / `TaskStatusChanged` (with `previous_status`) / `TaskAssigned` / `TaskDeleted` from `TaskEventSubscriber`; SPA `useTasksBoardRealtime` hook debounce-invalidates `tasks/board` + `tasks/stats` while the Kanban view is open. Catalog **tasks 1.7.0 → 1.8.0**. Closes the Tasks deferred "Real-time board sync" item. Go-live: [production readiness](/deployment/tasks-realtime-board-sync-1-8-0-production-readiness).
 
 **Automation WhatsApp interactive + document draft actions (2026-10-01):** Actions `send_whatsapp_interactive` (module `whatsapp-cloud`, wraps `queueInteractive`), `generate_quotation` (module `quotations`, requires `opportunity_id`, draft only), and `generate_invoice` (module `invoices`, draft only, soft-links from the trigger) via `ActionRunner`; starter templates `opportunity_stage_generate_quotation` and `whatsapp_inbound_quick_replies`. Catalog **automation 1.4.0 → 1.5.0** (no `whatsapp-cloud` bump). Closes the "Automation interactive send" and "generate quote/invoice" deferred items above (`generate_order` and auto-send remain deferred). Go-live: [production readiness](/deployment/automation-whatsapp-interactive-document-actions-1-5-0-production-readiness).
 
