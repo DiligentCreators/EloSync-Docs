@@ -4,7 +4,7 @@
 
 | Piece | Role |
 |-------|------|
-| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `contract_renewal_notice_days`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`, `leads.inactivity_working_days`, `leads.convert_require_opportunity`, `leads.convert_min_opportunity_amount`) |
+| `App\Support\TenantSettingDefinitions` | Catalog of overridable keys + sensitive keys (includes `task_reminder_time`, `contract_renewal_notice_days`, `email_notifications`, attendance office-hour keys, `meetings_default_provider`, `trash.retention_days`, `team-chat.retention_days`, `session_lifetime_minutes`, `leads.inactivity_working_days`, `leads.inactivity_active_only`, `leads.inactivity_skip_pending_follow_up`, `leads.inactivity_manager_email`, `leads.inactivity_assignee_notify`, `leads.inactivity_reminder_working_days`, `leads.convert_require_opportunity`, `leads.convert_min_opportunity_amount`) |
 | `App\Services\Tenant\TenantSettingService` | Hierarchy resolver, cache, branding uploads, runtime mail/config, public bootstrap |
 | `App\Services\Storage\FileUploadService` | Disk-agnostic store/replace/delete/url (shared with Central) |
 | `TenantSettingController` | Authenticated list/update, test-mail, branding upload |
@@ -43,6 +43,11 @@ Leads group keys (Settings → Leads when Leads is installed; system defaults wh
 | Key | Type | Default | Notes |
 |-----|------|---------|-------|
 | `leads.inactivity_working_days` | integer | `3` | `0` disables inactivity alerts |
+| `leads.inactivity_active_only` | boolean | `true` | Restrict idle digests to status Active |
+| `leads.inactivity_skip_pending_follow_up` | boolean | `true` | Skip leads with a future pending follow-up |
+| `leads.inactivity_manager_email` | boolean | `true` | One manager table email per workspace day |
+| `leads.inactivity_assignee_notify` | boolean | `true` | One assignee in-app/push digest per workspace day |
+| `leads.inactivity_reminder_working_days` | integer | `7` | `0` = first threshold crossing only. `1` = daily digest while idle. `7` = at most one digest per recipient per 7 working days, listing every still-idle assigned lead. |
 | `leads.convert_require_opportunity` | boolean | `false` | Requires Opportunities entitlement to enable; enforced on `POST /leads/{id}/convert` |
 | `leads.convert_min_opportunity_amount` | numeric | `0` | Floor for effective opportunity amount on convert |
 

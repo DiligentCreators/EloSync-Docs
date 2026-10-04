@@ -80,6 +80,10 @@ When the **Communication Templates** module is installed and you have **use** pe
 
 WhatsApp opens with the message pre-filled. EloSync does not send the message for you. See [Communication Templates](/user-guide/communication-templates).
 
+## Inactivity
+
+Assigned open leads with no meaningful activity (notes, follow-ups, stage/status, CRM activity, tags, WhatsApp) for the configured working days get **one** digest per person per day — not one alert per lead. Assignees get an in-app/push digest; department managers (or workspace owners) get a table email with clickable name, phone, and email so they can log activity. Leads stay assigned. Tune this under **Settings → Leads**. See [Tenant settings](/user-guide/tenant-settings#leads).
+
 ## Convert
 
 Users with **convert** can convert a lead from the record page. Behavior depends on which Marketplace modules are installed:

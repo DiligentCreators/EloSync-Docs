@@ -144,7 +144,12 @@ Shown when the **Leads** module is installed (**Settings → Leads**).
 
 | Field | Behavior |
 |-------|----------|
-| **Inactivity alert (working days)** | Notify assignees (and managers/owners) when an open assigned lead has no meaningful activity for this many Mon–Sat days (`leads.inactivity_working_days`, default **3**). Set **0** to disable. |
+| **Inactivity alert (working days)** | First digest when an assigned lead has no meaningful activity for this many Mon–Sat days (`leads.inactivity_working_days`, default **3**). Set **0** to disable. |
+| **Active leads only** | When on (default), only status **Active** is included. Won/Lost stages are never included (`leads.inactivity_active_only`). |
+| **Skip leads with a scheduled follow-up** | When on (default), skip leads that already have a future pending follow-up (`leads.inactivity_skip_pending_follow_up`). |
+| **Email managers a daily table** | When on (default), department managers (or workspace owners) get one email with clickable lead name, phone, and email. Leads stay assigned (`leads.inactivity_manager_email`). |
+| **Notify assignees in-app** | When on (default), each assignee gets one bell/push digest instead of one alert per lead (`leads.inactivity_assignee_notify`). |
+| **Remind again after (working days)** | How often to resend while the lead stays idle (`leads.inactivity_reminder_working_days`, default **7**). **0** sends only the first alert until someone logs activity. |
 | **Require opportunity when converting** | When on, converting a lead must create an opportunity (`leads.convert_require_opportunity`, default **off**). Requires the Opportunities module (switch disabled / API 422 without it). |
 | **Minimum opportunity amount** | When creating an opportunity on convert, the amount (or lead value fallback) must be at least this value (`leads.convert_min_opportunity_amount`, default **0**). |
 
