@@ -45,11 +45,11 @@ When Calendar is entitled:
 | `task` | Tasks | Timed window from `due_at` (+1h); cleared when completed/cancelled/no due |
 | `lead` | Leads | Timed window from `next_follow_up_at` (+1h); cleared when converted/closed/archived/no follow-up |
 
-Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. **1.3.0** adds event-level shares (`viewer`/`editor`) for manual events. **1.4.0** adds Google/Outlook sync Phase 1 (manual push). **1.5.0** extends push to Meeting / Task / Lead overlays. Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarEventShareTest.php`, `CalendarEventProviderPushTest.php`.
+Catalog version **1.1.0** (overlays). **1.2.0** invitee ACL. **1.3.0** shares. **1.4.0** OAuth push. **1.5.0** Meeting/Task/Lead overlay push. **1.6.0** inbound pull (`source=external`). Pest: overlay + push + `CalendarInboundPullTest.php`.
 
-## Google / Outlook sync (1.4.0 + overlay push 1.5.0)
+## Google / Outlook sync (1.4.0–1.6.0)
 
-Per-user, one-way (EloSync → provider) push for **manual** events and **Meeting / Task / Lead** overlays (`CalendarEventSourceEnum::shouldPushToProvider()`). Project / Contact / Company overlays stay deferred. Connections are **per user** (not per tenant) and credentials are **platform env-based**.
+Per-user push for **manual** + Meeting/Task/Lead (`shouldPushToProvider()`). **1.6.0** inbound: `listEvents` → ingest as `External` (read-only; never pushed). EloSync-owned mappings skipped on pull. `POST /calendar/integrations/sync` + hourly `calendar:pull-provider-events`. Project/Contact/Company overlays stay deferred.
 
 | Concept | Owner |
 |---------|-------|

@@ -48,12 +48,13 @@ If your workspace admin has `calendar.manage_integrations`, a **Sync** button ap
 
 1. Click **Sync** to open **Calendar sync**.
 2. Click **Connect account** next to Google Calendar or Microsoft Outlook and sign in when redirected.
-3. Once connected, **manual** events and **Meeting / Task / Lead** overlays you create, edit, or clear are pushed to that provider automatically — you do not need to do anything else.
-4. Click **Disconnect** to stop future pushes at any time. This does not remove events already pushed to your Google/Outlook calendar.
+3. Once connected, **manual** events and **Meeting / Task / Lead** overlays are pushed to that provider, and provider events are pulled into EloSync as read-only **External** events (calendar **1.6.0**).
+4. Click **Sync now** to pull immediately (also runs hourly).
+5. Click **Disconnect** to stop future push/pull. This does not remove events already on the provider calendar.
 
 **What is not synced:**
 
-- Project, Contact, and Company events shown on your calendar (these stay EloSync-only; Meeting / Task / Lead overlays **are** pushed when Sync is connected — calendar **1.5.0**).
-- Changes made directly in Google or Outlook are **not** pulled back into EloSync (one-way sync only).
+- Project, Contact, and Company overlays stay EloSync-only (not pushed).
+- External (pulled) events are view-only in EloSync — edit them in Google/Outlook.
 
 If **Connect account** is disabled with a "not configured on this platform" badge, ask your platform operator to configure that provider's OAuth app (see [Calendar deployment](/deployment/calendar)).

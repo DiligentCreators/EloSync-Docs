@@ -24,9 +24,9 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 - `calendar.view_all` for workspace Owner / Admin / Manager oversight
 - Upcoming events dashboard widget
 - **Overlays** — [Meetings](/user-guide/meetings-overview) (host + internal invitees, view-only for invitees), [Projects](/user-guide/projects-overview) (start/end all-day), [Tasks](/user-guide/tasks-overview) (due datetime), and [Leads](/user-guide/leads-overview) (next follow-up) project sourced events (`source` = `meeting`|`project`|`task`|`lead`)
-- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.5.0**
+- Module licensing (`module:calendar`) + Spatie permissions — catalog **1.6.0**
 - **Event shares (1.3.0)** — share a manual event with workspace users as **viewer** (read-only) or **editor** (can edit/delete with Spatie permissions)
-- **Google / Outlook sync (1.4.0 + overlay push 1.5.0)** — each user connects their own Google Calendar or Microsoft Outlook account; **manual** events and **Meeting / Task / Lead** overlays are pushed one-way to the connected provider(s). See "Google / Outlook sync" below.
+- **Google / Outlook sync (1.4.0–1.6.0)** — push manual + Meeting/Task/Lead overlays; pull provider events as read-only External events (**1.6.0**). See "Google / Outlook sync" below.
 - Meeting invitee list/view ACL for projected meetings (**1.2.0**)
 - Activity logging (`LogsActivity`)
 - API `read_only` flag for invitee / sharee / non-organizer viewers
@@ -38,17 +38,17 @@ Personal calendar events for tenant workspaces. Week/Day time grids, Month, and 
 ## Google / Outlook sync
 
 - Personal, per-user connect — Settings live at **Calendar → Sync** (requires `calendar.manage_integrations`, granted to the admin role by default).
-- One-way **EloSync → provider** push only. Editing an event in Google/Outlook does **not** flow back into EloSync.
-- **Pushed:** manual calendar events, plus Meeting / Task / Lead overlays when they appear (or update / clear) on Calendar (**1.5.0**).
+- **Push (EloSync → provider):** manual events + Meeting / Task / Lead overlays (**1.5.0**).
+- **Pull (provider → EloSync):** provider events appear as read-only **External** events (**1.6.0**). Use **Sync now** or wait for the hourly pull. EloSync-owned events are not overwritten from the provider.
 - **Not pushed:** Project / Contact / Company overlays (still deferred).
 - Requires the platform operator to configure a Google and/or Microsoft OAuth app (see [deployment](/deployment/calendar)); if not configured, the Connect button is disabled with a "not configured on this platform" badge.
-- Disconnecting stops future pushes; it does not delete events already created on the provider's calendar.
+- Disconnecting stops future push/pull; it does not delete events already created on the provider's calendar.
 
 ## Explicitly deferred
 
 - Calendar assignment / assignee / create-on-behalf
 - Named team calendars / department auto-share
-- Two-way (inbound) Google/Outlook sync — pulling provider events back into EloSync
+- Webhook / push-notification driven inbound (polling only in **1.6.0**)
 - Pushing Project / Contact / Company overlay events to providers
 - Customer Portal visibility into calendar sync
 

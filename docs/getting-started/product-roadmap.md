@@ -12,7 +12,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.9.0** inactivity manager digest; **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.8.0** real-time board sync; **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
-| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.1.0** overlays; **1.2.0** invitee view ACL; **1.3.0** event shares; **1.4.0** Google/Outlook sync one-way push; **1.5.0** Meeting/Task/Lead overlay push) |
+| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.6.0** two-way sync + External pull; **1.5.0** Meeting/Task/Lead overlay push; **1.4.0** OAuth push) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
@@ -20,7 +20,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 ### Planned / deferred after Phase 1 MVP
 
-- Calendar: named team calendars / department auto-share; two-way (inbound) Google/Outlook sync; pushing Project/Contact/Company overlays to providers
+- Calendar: named team calendars / department auto-share; webhook-driven inbound (polling shipped **1.6.0**); pushing Project/Contact/Company overlays to providers
 - WhatsApp: alternate BSPs, AI WhatsApp features
 
 **Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Lead inactivity manager digest (**leads 1.9.0**); Tasks real-time board sync (**tasks 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**); Meeting/Task/Lead overlay provider push (**calendar 1.5.0**).
@@ -238,7 +238,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Automation document auto-send (2026-10-05):** Optional `auto_send` on `generate_quotation` / `generate_invoice` — after create, `send()` then email PDF to bill-to contact/company; fails the run when no recipient email. Catalog **automation 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/automation-document-auto-send-1-6-0-production-readiness).
 
-Still deferred: named team calendars; two-way (inbound) Google/Outlook sync; Project/Contact/Company overlay push; Customer Portal; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents.
+**Calendar two-way inbound (2026-10-05):** Provider → EloSync pull as `source=external` (read-only); Sync now + hourly `calendar:pull-provider-events`; EloSync-owned mapped events skipped. Catalog **calendar 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
+
+Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; Customer Portal; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 

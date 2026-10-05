@@ -17,6 +17,16 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Calendar 1.5.0 → 1.6.0 — two-way inbound sync
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_170000_bump_calendar_module_version_to_1_6_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: calendar **1.6.0**
+3. Deploy the SPA — Calendar → Sync gains **Sync now** + two-way copy
+4. Confirm scheduler: `calendar:pull-provider-events` hourly; Horizon **`calendar-sync`**
+5. Staging smoke: Connect provider → Sync now → External events appear as view-only
+
+Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
+
 ## Automation 1.5.0 → 1.6.0 — document auto-send
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_160000_bump_automation_module_version_to_1_6_0` — catalog only; **do not** `db:seed`)
