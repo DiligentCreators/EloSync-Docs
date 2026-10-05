@@ -17,6 +17,16 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Calendar 1.4.0 → 1.5.0 — Meeting/Task/Lead overlay provider push
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_153000_bump_calendar_module_version_to_1_5_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: calendar **1.5.0**
+3. Deploy the SPA — Calendar → Sync copy mentions Meeting/Task/Lead overlays
+4. Confirm Horizon workers process the **`calendar-sync`** queue (`php artisan queue:restart`)
+5. Staging smoke (with OAuth connected): create Task with due / Lead follow-up / Meeting → provider calendar updates; clear due or cancel meeting → provider event cancelled
+
+Go-live: [Calendar overlay provider push 1.5.0 production readiness](/deployment/calendar-overlay-provider-push-1-5-0-production-readiness).
+
 ## Leads 1.8.0 → 1.9.0 — inactivity manager digest
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_04_193718_bump_leads_module_to_1_9_0` — catalog only; **do not** `db:seed`)

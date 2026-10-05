@@ -1,3 +1,9 @@
+## Calendar overlay provider push (1.5.0) (2026-10-05)
+
+- **EloSync-Backend:** `CalendarEventSourceEnum::shouldPushToProvider()` gates `PushCalendarEventToProviderJob` for **manual + meeting + task + lead** (create/update/cancel/delete). Project / Contact / Company overlays stay deferred. Same soft-fail `CalendarSyncService::pushEvent` path as **1.4.0**. Catalog **calendar 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: `CalendarEventProviderPushTest` — overlay push + deferred sources + task API lifecycle.
+- **EloSync-Frontend:** Calendar → Sync dialog copy documents Meeting/Task/Lead overlay push. Playwright `calendar-overlay-sync.spec.ts` (one session: panel copy, create validation, manual event, Task/Lead/Meeting overlays) + `calendar-integrations.spec.ts` copy assert.
+- **EloSync-Docs:** User/developer/deployment/roadmap/upgrade + [production readiness](/deployment/calendar-overlay-provider-push-1-5-0-production-readiness) + this changelog.
+
 ## Projects real-time board sync (1.8.0) (2026-10-05)
 
 - **EloSync-Backend:** Private Reverb channel `tenant.{tenantId}.projects.board` (`ProjectBoardChannel` auth: same tenant + `projects.view`, mirrors Help Desk 1.12.0 / Tasks 1.8.0) registered in `routes/channels.php`. `ProjectEventSubscriber` fires `ShouldBroadcastNow` events `ProjectCreated` / `ProjectUpdated` / `ProjectStatusChanged` (with `previous_status`) / `ProjectAssigned` (with `assigned_to`) / `ProjectDeleted` off the existing domain events, wrapped in `SafeRealtimeBroadcast`. Shared `ProjectBoardBroadcastPayload`. Catalog **projects 1.7.0 → 1.8.0** (migrate-only + CatalogSeeder). Pest: `ProjectRealtimeBoardTest`.
