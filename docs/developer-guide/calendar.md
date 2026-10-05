@@ -45,11 +45,11 @@ When Calendar is entitled:
 | `task` | Tasks | Timed window from `due_at` (+1h); cleared when completed/cancelled/no due |
 | `lead` | Leads | Timed window from `next_follow_up_at` (+1h); cleared when converted/closed/archived/no follow-up |
 
-Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. **1.3.0** adds event-level shares (`viewer`/`editor`) for manual events. **1.4.0** adds Google/Outlook sync Phase 1 (below). Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarEventShareTest.php`.
+Catalog version **1.1.0** (overlays). **1.2.0** adds invitee list/view ACL for meeting projections. **1.3.0** adds event-level shares (`viewer`/`editor`) for manual events. **1.4.0** adds Google/Outlook sync Phase 1 (manual push). **1.5.0** extends push to Meeting / Task / Lead overlays. Pest: `TaskLeadCalendarOverlayTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarEventShareTest.php`, `CalendarEventProviderPushTest.php`.
 
-## Google / Outlook sync (1.4.0)
+## Google / Outlook sync (1.4.0 + overlay push 1.5.0)
 
-Per-user, one-way (EloSync → provider) push for **manual** events only. Mirrors the Meetings Google Meet OAuth pattern, but connections are **per user** (not per tenant) and credentials are **platform env-based** (not stored per tenant).
+Per-user, one-way (EloSync → provider) push for **manual** events and **Meeting / Task / Lead** overlays (`CalendarEventSourceEnum::shouldPushToProvider()`). Project / Contact / Company overlays stay deferred. Connections are **per user** (not per tenant) and credentials are **platform env-based**.
 
 | Concept | Owner |
 |---------|-------|
@@ -58,7 +58,7 @@ Per-user, one-way (EloSync → provider) push for **manual** events only. Mirror
 | Providers | `App\Services\CalendarSync\Providers\GoogleCalendarProvider`, `MicrosoftCalendarProvider` — implement `CalendarSyncProviderInterface` (`authorizationUrl`, `exchangeCode`, `refreshAccessToken`, `pushEvent`, `updateEvent`, `cancelEvent`); driver resolution via `CalendarSyncProviderRegistry` |
 | Orchestration | `App\Services\Tenant\CalendarSyncService` — `statusForUser`, `hasPlatformCredentials`, `authorizationUrl`, `disconnect`, `pushEvent($event, $action)` |
 | Controller | `App\Http\Controllers\Tenant\Api\V1\CalendarIntegrationController` — `index` (status), `authorizeProvider` (redirect URL), `disconnect`; web OAuth `callback` lives on `routes/web.php` (no tenant auth on the callback route itself, nonce-verified) |
-| Queue job | `App\Jobs\Tenant\PushCalendarEventToProviderJob` (`calendar-sync` queue, `tries=3`, `backoff=[5,30,120]`) — dispatched from `CalendarEventSubscriber` on create/update/cancel/delete, **skipped when `source !== manual`** |
+| Queue job | `App\Jobs\Tenant\PushCalendarEventToProviderJob` (`calendar-sync` queue, `tries=3`, `backoff=[5,30,120]`) — dispatched from `CalendarEventSubscriber` on create/update/cancel/delete when `source->shouldPushToProvider()` (manual + meeting + task + lead) |
 
 Routes (tenant, `can:calendar.manage_integrations`):
 
@@ -84,7 +84,7 @@ GET /api/oauth/calendar-sync/{provider}/callback   OAuth callback, redirects to 
 - Failures are caught, `report()`-ed, and logged (`calendar-sync.push-failed`) — a broken provider connection never blocks calendar writes (mirrors `LiveChatConversationService`'s soft-fail pattern).
 - `GoogleCalendarProvider`/`MicrosoftCalendarProvider` expose a `fake()` escape hatch that is forced on in `testing` (and never enabled in `production`), so Pest never makes real HTTP calls even without `Http::fake()`.
 
-**Excluded:** `assignee_id`, named team calendars, two-way (inbound) sync, pushing Meeting/Task/Lead/Project/Contact/Company overlays, Customer Portal visibility.
+**Excluded:** `assignee_id`, named team calendars, two-way (inbound) sync, pushing Project/Contact/Company overlays, Customer Portal visibility.
 
 ## Frontend
 
@@ -137,8 +137,8 @@ Also listed in `CatalogSeeder` for fresh/local/CI.
 ## Tests
 
 - Pest: `tests/Feature/Tenant/Calendar/CalendarEventTest.php`, `MeetingInviteeCalendarAclTest.php`, `CalendarIntegrationTest.php`, `CalendarEventProviderPushTest.php`
-- Playwright: `npm run test:e2e:calendar` (includes invitee view-only)
+- Playwright: `npm run test:e2e:calendar` (includes invitee view-only + `calendar-overlay-sync.spec.ts`)
 
 ## Explicit non-goals (v1)
 
-Assignment, named team calendars / department auto-share, two-way (inbound) Google/Outlook sync, pushing Meeting/Task/Lead overlays to providers. Meetings/Zoom/Meet live in the Meetings module.
+Assignment, named team calendars / department auto-share, two-way (inbound) Google/Outlook sync, pushing Project/Contact/Company overlays to providers. Meetings/Zoom/Meet live in the Meetings module.

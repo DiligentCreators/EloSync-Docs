@@ -16,10 +16,11 @@ Do **not** rely on `db:seed` in production for catalog/RBAC.
 - **1.2.0** — Meeting invitee list/view ACL (`read_only` on resource)
 - **1.3.0** — Manual event shares (`calendar_event_shares`, viewer/editor)
 - **1.4.0** — Google/Outlook sync Phase 1 (`calendar_provider_connections`; `external_provider`/`external_event_id` on `calendar_events`; `calendar.manage_integrations` permission)
+- **1.5.0** — Push Meeting / Task / Lead overlays to connected Google/Outlook (same job + soft-fail); Project/Contact/Company still deferred
 
-Bump: migrate-only `2026_09_28_000001_bump_calendar_module_version_to_1_3_0`, then `2026_09_30_150003_bump_calendar_module_version_to_1_4_0` (do **not** `db:seed`).
+Bump: migrate-only through `2026_10_05_153000_bump_calendar_module_version_to_1_5_0` (do **not** `db:seed`).
 
-## Environment (Calendar sync — 1.4.0)
+## Environment (Calendar sync — 1.4.0+)
 
 Google/Microsoft OAuth apps are **platform-wide** (unlike Meetings, which is per-workspace). Set in platform `.env`:
 
@@ -44,14 +45,15 @@ Register the platform callback URL once on each OAuth app (Google Cloud Console 
 7. Share a manual event as viewer → sharee lists with `read_only: true`; as editor → can mutate.
 8. Dashboard includes `calendar` upcoming widget when entitled (invitee/share scope included).
 
-Go-live: [Calendar invitee ACL 1.2.0 production readiness](/deployment/calendar-invitee-acl-1-2-0-production-readiness) · [Calendar event shares 1.3.0 production readiness](/deployment/calendar-event-shares-1-3-0-production-readiness) · [Calendar Google/Outlook sync 1.4.0 production readiness](/deployment/calendar-google-outlook-sync-1-4-0-production-readiness).
+Go-live: [Calendar invitee ACL 1.2.0 production readiness](/deployment/calendar-invitee-acl-1-2-0-production-readiness) · [Calendar event shares 1.3.0 production readiness](/deployment/calendar-event-shares-1-3-0-production-readiness) · [Calendar Google/Outlook sync 1.4.0 production readiness](/deployment/calendar-google-outlook-sync-1-4-0-production-readiness) · [Calendar overlay provider push 1.5.0 production readiness](/deployment/calendar-overlay-provider-push-1-5-0-production-readiness).
 
-### Smoke (Calendar sync — 1.4.0)
+### Smoke (Calendar sync — 1.4.0 / overlay push 1.5.0)
 
-9. Admin with `calendar.manage_integrations`: Calendar → **Sync** lists Google + Microsoft; Connect disabled when platform OAuth env is unset.
+9. Admin with `calendar.manage_integrations`: Calendar → **Sync** lists Google + Microsoft; Connect disabled when platform OAuth env is unset; copy mentions Meeting/Task/Lead overlays.
 10. After Connect (staging OAuth app): create manual event → appears in provider calendar; update/cancel in EloSync propagates (async — confirm Horizon **`calendar-sync`** worker).
-11. Organizer disconnects provider → new manual events no longer push (existing provider copies remain).
+11. With Connect active: create a Task with `due_at`, a Lead follow-up, and a Meeting → each projected overlay appears on the provider calendar; clear due / cancel meeting → provider event cancelled.
+12. Organizer disconnects provider → new manual/overlay events no longer push (existing provider copies remain).
 
 ## Rollback note
 
-Catalog/permission data migrations are intentionally irreversible; use a forward migration to retire the module if required. Roll the **1.4.0** bump `down` → **1.3.0** → **1.2.0** only with matching code rollback.
+Catalog/permission data migrations are intentionally irreversible; use a forward migration to retire the module if required. Roll the **1.5.0** bump `down` → **1.4.0** only with matching code rollback.
