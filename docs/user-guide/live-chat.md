@@ -37,7 +37,11 @@ Tabs under **Live Chat**:
 
 ## Departments
 
-Create departments under **Settings → Live Chat** (`live-chat.manage`), assign agents, and set a default department on the widget for new conversations.
+Create departments under **Settings → Live Chat** (`live-chat.manage`), assign **only the people who should handle chats**, and set a default department on the widget for new conversations. First-chat push/in-app alerts go to that department, not the whole workspace. Production or other teams should stay off the Live Chat department even if they can otherwise open the inbox.
+
+## Idle alerts
+
+On the widget, **Idle alert (minutes)** (default 5; 0 = off) notifies other department agents when an assigned chat has no agent reply for that long.
 
 ## Leads
 
@@ -56,4 +60,4 @@ With `live-chat.manage`, ban a visitor from the visitor panel. Banned visitors c
 
 ## Notifications
 
-New visitor messages create an in-app notification that opens `/live-chat?conversation={uuid}`. Optional email notify (widget setting) alerts agents when configured.
+The first visitor message creates an in-app notification and (when desktop/mobile push is enabled) an FCM alert for agents in the widget’s default Live Chat department. After someone replies, only that assignee gets further in-app alerts for the thread. If the assignee does not reply within the configured idle minutes, other department agents get an idle alert. Notifications open `/live-chat?conversation={uuid}`. Optional email notify (widget setting) applies to that first inbound message.
