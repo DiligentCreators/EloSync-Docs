@@ -17,6 +17,16 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Automation 1.5.0 → 1.6.0 — document auto-send
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_160000_bump_automation_module_version_to_1_6_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: automation **1.6.0**
+3. Deploy the SPA — Generate Quotation / Invoice actions gain **Auto-send** checkbox
+4. Restart queue workers so billed document emails process (`emails` / mail queue)
+5. Staging smoke: workflow with `auto_send` + company email → Sent/Unpaid + mail; without email → failed run
+
+Go-live: [Automation document auto-send 1.6.0 production readiness](/deployment/automation-document-auto-send-1-6-0-production-readiness).
+
 ## Calendar 1.4.0 → 1.5.0 — Meeting/Task/Lead overlay provider push
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_153000_bump_calendar_module_version_to_1_5_0` — catalog only; **do not** `db:seed`)

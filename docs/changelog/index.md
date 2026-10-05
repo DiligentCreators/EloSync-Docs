@@ -1,3 +1,9 @@
+## Automation document auto-send (1.6.0) (2026-10-05)
+
+- **EloSync-Backend:** Optional `auto_send` on `generate_quotation` / `generate_invoice` — after create, call `send()` then email PDF to bill-to via existing email services; run fails when no recipient email (document may already be Sent/Unpaid). Catalog **automation 1.5.0 → 1.6.0**. Pest: `AutomationDocumentAndWhatsAppActionsTest` auto-send cases.
+- **EloSync-Frontend:** Builder checkboxes for auto-send on Generate Quotation / Invoice; config persisted as boolean. Playwright automation suite covers the opt-in.
+- **EloSync-Docs:** Automation guides + roadmap + [production readiness](/deployment/automation-document-auto-send-1-6-0-production-readiness) + this changelog.
+
 ## Calendar overlay provider push (1.5.0) (2026-10-05)
 
 - **EloSync-Backend:** `CalendarEventSourceEnum::shouldPushToProvider()` gates `PushCalendarEventToProviderJob` for **manual + meeting + task + lead** (create/update/cancel/delete). Project / Contact / Company overlays stay deferred. Same soft-fail `CalendarSyncService::pushEvent` path as **1.4.0**. Catalog **calendar 1.4.0 → 1.5.0** (migrate-only + CatalogSeeder). Pest: `CalendarEventProviderPushTest` — overlay push + deferred sources + task API lifecycle.

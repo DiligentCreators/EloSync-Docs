@@ -4,7 +4,7 @@
 
 - Catalog slug: `automation`
 - Billable marketplace add-on (`is_default_included: false`, `is_billable: true`)
-- Catalog version: **1.5.0** (`send_whatsapp_interactive` requires WhatsApp Cloud; `generate_quotation` requires Quotations; `generate_invoice` requires Invoices — see [1.5.0 production readiness](./automation-whatsapp-interactive-document-actions-1-5-0-production-readiness))
+- Catalog version: **1.6.0** (`auto_send` on generate quotation/invoice — see [1.6.0 production readiness](./automation-document-auto-send-1-6-0-production-readiness); **1.5.0** WhatsApp interactive + generate draft actions)
 - Initial price: **$29 / month**, **$290 / year** (same tier as Branded)
 - Workspaces must install from Marketplace; migrate does **not** auto-install
 
