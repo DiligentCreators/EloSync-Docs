@@ -145,7 +145,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 - Knowledge Base: public URLs, nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
-- Automation: Marketing campaigns / email campaigns (separate SKUs); branching; `generate_order` action; auto-send generated documents (drafts only — see **automation 1.5.0**)
+- Automation: Marketing campaigns / email campaigns (separate SKUs); branching; `generate_order` action; WhatsApp auto-send of generated documents (email `auto_send` shipped **automation 1.6.0**)
 
 ---
 
@@ -154,7 +154,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
-| [Automation](/user-guide/automation-overview) | Shipped (billable; **1.4.0** `create_project` action) |
+| [Automation](/user-guide/automation-overview) | Shipped (billable; **1.4.0** `create_project`; **1.5.0** WhatsApp interactive + generate quote/invoice; **1.6.0** document `auto_send`) |
 | [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + Contact triage **1.18.0** + Company triage **1.19.0** + product guidance **1.20.0** + confirmed writes) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
@@ -236,7 +236,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Calendar overlay provider push (2026-10-05):** `CalendarEventSourceEnum::shouldPushToProvider()` gates `PushCalendarEventToProviderJob` for **manual + meeting + task + lead** (create/update/cancel/delete). Project/Contact/Company overlays remain deferred. Catalog **calendar 1.4.0 → 1.5.0**. Pest + Playwright one-session overlay sync. Go-live: [production readiness](/deployment/calendar-overlay-provider-push-1-5-0-production-readiness).
 
-Still deferred: named team calendars; two-way (inbound) Google/Outlook sync; Project/Contact/Company overlay push; Customer Portal; multi-currency; PO/Vendor portals; Automation `generate_order` action + auto-send.
+**Automation document auto-send (2026-10-05):** Optional `auto_send` on `generate_quotation` / `generate_invoice` — after create, `send()` then email PDF to bill-to contact/company; fails the run when no recipient email. Catalog **automation 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/automation-document-auto-send-1-6-0-production-readiness).
+
+Still deferred: named team calendars; two-way (inbound) Google/Outlook sync; Project/Contact/Company overlay push; Customer Portal; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
