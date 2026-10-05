@@ -1,3 +1,9 @@
+## Calendar two-way inbound sync (1.6.0) (2026-10-05)
+
+- **EloSync-Backend:** Inbound pull via `listEvents` on Google/Microsoft providers (fake sample in tests). `CalendarSyncService::pullForUser` creates/updates `source=external` events; skips EloSync-owned mappings. `POST /calendar/integrations/sync`, hourly `calendar:pull-provider-events`, pull after OAuth connect. Restores missing calendar integrations tenant routes. Catalog **calendar 1.5.0 → 1.6.0**. Pest: `CalendarInboundPullTest`.
+- **EloSync-Frontend:** Calendar → Sync **Sync now** + two-way copy; External event badge/help. Playwright integrations/overlay sync asserts.
+- **EloSync-Docs:** Guides + roadmap + [production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness) + this changelog.
+
 ## Automation document auto-send (1.6.0) (2026-10-05)
 
 - **EloSync-Backend:** Optional `auto_send` on `generate_quotation` / `generate_invoice` — after create, call `send()` then email PDF to bill-to via existing email services; run fails when no recipient email (document may already be Sent/Unpaid). Catalog **automation 1.5.0 → 1.6.0**. Pest: `AutomationDocumentAndWhatsAppActionsTest` auto-send cases.

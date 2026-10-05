@@ -17,8 +17,9 @@ Do **not** rely on `db:seed` in production for catalog/RBAC.
 - **1.3.0** — Manual event shares (`calendar_event_shares`, viewer/editor)
 - **1.4.0** — Google/Outlook sync Phase 1 (`calendar_provider_connections`; `external_provider`/`external_event_id` on `calendar_events`; `calendar.manage_integrations` permission)
 - **1.5.0** — Push Meeting / Task / Lead overlays to connected Google/Outlook (same job + soft-fail); Project/Contact/Company still deferred
+- **1.6.0** — Inbound pull (provider → EloSync) as read-only External events; Sync now + hourly schedule
 
-Bump: migrate-only through `2026_10_05_153000_bump_calendar_module_version_to_1_5_0` (do **not** `db:seed`).
+Bump: migrate-only through `2026_10_05_170000_bump_calendar_module_version_to_1_6_0` (do **not** `db:seed`).
 
 ## Environment (Calendar sync — 1.4.0+)
 
