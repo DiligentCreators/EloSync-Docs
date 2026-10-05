@@ -1,6 +1,6 @@
 # Tenant Live Chat API
 
-Module: `live-chat` **1.5.2** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
+Module: `live-chat` **1.6.0** · Base: `/api/tenant/v1/live-chat` (authenticated) and `/api/public/live-chat/{publicKey}` (widget).
 
 ## Public widget
 
@@ -10,7 +10,7 @@ Module: `live-chat` **1.5.2** · Base: `/api/tenant/v1/live-chat` (authenticated
 | POST | `/api/public/live-chat/{publicKey}/sessions` | Returns `session_token` once (max body 64KB; throttle `live-chat-widget-session`); banned visitors 403; seeds presence |
 | POST | `/api/public/live-chat/{publicKey}/heartbeat` | Bearer session; updates last_seen_at / page / referrer / UA fields; returns `open_conversation_uuid` when an open thread exists (embed resume) |
 | POST | `/api/public/live-chat/{publicKey}/conversations` | Bearer session; open/create — may be offline thread |
-| GET | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Poll with `since_id` (excludes `direction=note`) |
+| GET | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Poll with `since_id` (excludes `direction=note`; agent rows include `agent_name`) |
 | POST | `/api/public/live-chat/{publicKey}/conversations/{uuid}/messages` | Visitor text or multipart attachment; offline leave-a-message when outside hours. Persist succeeds even if Reverb/notify fail (soft-fail). |
 | POST | `/api/public/live-chat/{publicKey}/conversations/{uuid}/typing` | Bearer session; fans out `LiveChatTyping` (`direction=visitor`) |
 
@@ -23,7 +23,7 @@ The public embed (`public/widgets/live-chat.js`) stores the session token in `lo
 | Method | Path | Permission |
 |--------|------|------------|
 | GET | `/live-chat/widget` | `view` or `manage` |
-| PATCH | `/live-chat/widget` | `manage` (includes suggested_replies, show_powered_by, agent_display_name) |
+| PATCH | `/live-chat/widget` | `manage` (includes suggested_replies, show_powered_by, agent_display_name, idle_minutes 0–1440) |
 | POST | `/live-chat/widget/regenerate-key` | `manage` |
 | GET/POST/PATCH/DELETE | `/live-chat/canned-replies` | `view` list; `manage` write |
 | GET/POST/PATCH/DELETE | `/live-chat/departments` | `view` list; `manage` write |
