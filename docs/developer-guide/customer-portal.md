@@ -16,6 +16,7 @@ Marketplace Operations module (`customer-portal` **1.0.0**). Flat namespaces (no
 
 ## Services
 
+- `App\Services\Central\PortalWorkspaceLookupService` — email → workspaces that already have that portal account (`POST /api/central/v1/public/portal-workspaces`)
 - `App\Services\Tenant\CustomerPortal\PortalUserService` — invite / resend / disable / enable / accept invite
 - `App\Services\Tenant\CustomerPortal\PortalAuthService` — login / logout / token / password reset
 - `App\Services\Tenant\CustomerPortal\PortalRecordScope` — contact + optional company scope
@@ -25,7 +26,7 @@ Marketplace Operations module (`customer-portal` **1.0.0**). Flat namespaces (no
 ## Frontend
 
 - Staff: `src/pages/customer-portal/`, Contact invite actions, nav under Operations
-- Portal SPA: `src/pages/portal/*`, `PortalLayout` / `PortalAuthLayout`, `usePortalAuthStore` (isolated token storage)
+- Portal SPA: `src/pages/portal/*`, `PortalLayout` / `PortalAuthLayout`, `usePortalAuthStore` (isolated token storage). Shared-host login/forgot: email first, then searchable company picker from the central lookup (invite/reset links still carry `?workspace=`).
 - Routes: `/#/portal/login`, invite/reset, authenticated `/#/portal/...`
 - `FrontendUrl::portalInvite()` / `portalResetPassword()`
 

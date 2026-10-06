@@ -31,6 +31,16 @@ Tenancy via domain / `X-Tenant-Domain`. Prefix `/portal/auth`.
 
 Throttled (login uses `auth-login`; invite/reset `6,1`). No open registration endpoint.
 
+## Shared-host workspace lookup (central)
+
+Unauthenticated. Not a tenant directory — returns only workspaces where this email already has an invited or active portal account.
+
+| Method | Path |
+|--------|------|
+| POST | `/api/central/v1/public/portal-workspaces` `{ email }` → `{ workspaces: [{ name, domain, slug }] }` |
+
+Throttle: `portal-workspace-lookup` (8/min per IP+email). Disabled accounts and unavailable tenants are omitted. Unknown email returns an empty list (200).
+
 ## Portal data
 
 Middleware: `auth:portal-api`, `module:customer-portal`. Soft module checked per resource (403 if missing). Scope via `PortalRecordScope` — out of scope → **404**.

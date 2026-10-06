@@ -9,6 +9,8 @@ Install **Customer Portal** from Marketplace (free **Operations** module). It re
 3. The contact receives an email with a link to `/#/portal/invite/{token}` to set a password.
 4. They sign in at `/#/portal/login` with email + password.
 
+On a **shared** app host (not a tenant subdomain), login asks for **email first**, then a searchable **company/workspace** list of only the workspaces that already invited that email. Invitation and reset emails still include `?workspace=` so most customers skip the picker. On a tenant-bound domain the workspace step is hidden.
+
 From **Operations → Customer Portal** you can list accounts, resend invites, disable, or enable access (`customer-portal.manage` for disable/enable).
 
 ## What customers see

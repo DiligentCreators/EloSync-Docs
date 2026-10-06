@@ -26,7 +26,7 @@
 ## Monitoring
 
 - Mail: portal invite + password reset notifications
-- Auth throttles on portal login / invite / reset
+- Auth throttles on portal login / invite / reset / `POST /api/central/v1/public/portal-workspaces`
 - Platform audit: follow existing tenant login patterns if extended later
 
 ## Related
