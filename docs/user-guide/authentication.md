@@ -14,7 +14,7 @@ Registration creates your workspace, owner account, default roles, and default m
 ### Login
 
 1. Open `/login`.
-2. Enter your workspace, email, and password. The workspace is preselected when you open the application on its workspace domain.
+2. Enter your email and password. On a workspace domain the host already selects the workspace.
 3. Optionally enable **Keep me signed in for 30 days** to extend your session to about 30 days on the server. You stay signed in across browser tabs even when this is unchecked; your workspace session length still applies until the token expires.
 4. Guest auth pages show the form on the left and a full-bleed image on the right (Central Branding defaults; workspaces with [Branded](/user-guide/branded) may override the images).
 5. Verify your email when prompted; unverified accounts cannot open protected workspace pages. On the verify-email gate, **Sign out** ends the session and returns you to `/login` (or `/central/login` for Central).
@@ -26,12 +26,12 @@ If a new member never receives the verification email, a workspace owner or admi
 
 Workspace owners (and anyone granted `users.impersonate`) can open **Administration → Users**, choose **Login as user** on a non-owner member, and enter a reason. An amber **Impersonation mode is active** banner appears until you click **End impersonation**, which restores your own session. You cannot nest impersonation sessions or impersonate the workspace Owner.
 
-Your browser does not save a workspace selection in local storage. Open the correct workspace host or enter the workspace again when using the shared login URL.
+Your browser does not save a workspace selection in local storage. Open the shared login URL (`/login`) and sign in with email and password; the platform resolves the workspace from your account email.
 
 ### Forgot password
 
 1. Open `/forgot-password` (or use the link on the login page).
-2. Enter your email and submit.
+2. Enter your email and submit. You do not need a workspace name on the shared app URL (`app.elosync.com`).
 3. If an account exists, you receive a reset email.
 
 ### Reset password

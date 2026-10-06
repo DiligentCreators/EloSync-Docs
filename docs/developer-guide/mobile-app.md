@@ -123,11 +123,11 @@ Shipped in 1.5.0. Mirrors the Fortify-backed web flow, minus QR-code rendering:
 
 Workspace resolution (`InitializeTenancy` on the backend):
 
-- Login can resolve tenant from **email alone** (tenant user emails are globally unique).
-- Optional `workspace` body or `X-Tenant-Domain` header disambiguates branding (`GET /public/settings`) and forgot-password flows.
+- Login, forgot-password, and reset-password can resolve tenant from **email alone** (tenant user emails are globally unique).
+- Optional `workspace` body or `X-Tenant-Domain` header disambiguates branding (`GET /public/settings`) and remains accepted on auth endpoints.
 - After login, tenant context is carried by the Bearer token.
 
-Forgot password on mobile always includes **workspace** + email (the app is never host-bound like a workspace subdomain).
+Forgot password on mobile sends **email** (workspace is optional, matching sign-in).
 
 ## Authorization gates
 

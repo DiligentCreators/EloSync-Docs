@@ -1,3 +1,10 @@
+## Email-only tenant password reset (2026-10-06)
+
+- **EloSync-Backend:** `InitializeTenancy` resolves workspace from email for `POST /auth/forgot-password` and `POST /auth/reset-password` (same globally unique tenant emails as login). Unknown emails return the generic reset-link success instead of `workspace_required`. Pest: `TenantAuthTest`, `PasswordResetParityTest`.
+- **EloSync-Frontend:** Shared-host `/forgot-password` and `/reset-password/{token}` no longer require a workspace name. Reset form keeps the token in sync with the HashRouter URL. Headed Playwright workflow: validation, unknown/known email, reset, sign-in (one session).
+- **EloSync-Mobile:** Forgot-password workspace is optional; email alone submits the reset request.
+- **EloSync-Docs:** User/developer authentication + mobile-app notes + [production readiness](/deployment/email-only-tenant-password-reset-production-readiness) + this changelog.
+
 ## Customer Portal MVP 1.0.0 (2026-10-06)
 
 - **EloSync-Backend:** Free Operations Marketplace module `customer-portal` **1.0.0** (hard dep `contacts`). `PortalUser` + Sanctum `portal-api` guard; staff invite/resend/disable/enable; portal auth accept-invite / login / forgot-reset; scoped invoices/payments/quotations/contracts (PDF + acceptance-link) and Help Desk submit/track. Help Desk notes gain nullable `portal_user_id` — catalog **help-desk 1.12.0 → 1.13.0**. Shared-host `POST /api/central/v1/public/portal-workspaces` returns only workspaces that already invited that email (rate-limited; not a tenant directory). Pest: `PortalAuthTest`, `PortalDocumentsTest`, `PortalHelpDeskTest`, `PortalWorkspaceLookupTest`.
