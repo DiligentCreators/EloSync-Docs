@@ -72,6 +72,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Email](./email) | Personal IMAP/SMTP mailbox, sync jobs, templates, signatures |
 | [Automation](./automation) | Cross-module trigger → condition → action engine |
 | [Help Desk](./help-desk) | Internal ticketing MVP engineering guide |
+| [Customer Portal](./customer-portal) | Invite-only Contact portal (`portal-api`) engineering guide |
 | [Assets](./assets) | Equipment / fixed-asset register (Operations, free) |
 | [Documents](./documents) | Flat file library on Storage (Operations, free; hard Storage dep) |
 

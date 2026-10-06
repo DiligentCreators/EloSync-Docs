@@ -131,4 +131,4 @@ Ask EloSync Help Desk tools (`get_help_desk_ticket`, confirmed status/assign/not
 
 ## Deferred
 
-- Customer portal, chat/social intake
+- Chat/social intake (Customer Portal submit/track is a separate module — see [customer-portal](/developer-guide/customer-portal))

@@ -126,7 +126,8 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.12.0** (real-time board sync; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
+| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.13.0** (portal note authorship; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.0.0** (invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
@@ -138,7 +139,14 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 ### Help Desk deferred
 
 - Multi-channel intake beyond shared IMAP (chat, social)
-- Customer portal (external submit / track)
+
+### Customer Portal (shipped)
+
+| Capability | Status |
+|------------|--------|
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.0.0** (invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track) |
+
+Deferred beyond 1.0.0: projects/tasks visibility; magic-link login; public Knowledge Base; portal 2FA.
 
 ### Other Operations deferred
 
@@ -240,7 +248,7 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Calendar two-way inbound (2026-10-05):** Provider → EloSync pull as `source=external` (read-only); Sync now + hourly `calendar:pull-provider-events`; EloSync-owned mapped events skipped. Catalog **calendar 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
-Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; Customer Portal; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents.
+Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents. Customer Portal **1.0.0** shipped (projects/tasks portal visibility remains deferred).
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
@@ -250,7 +258,7 @@ Next when prioritized: demand-driven items below (broader AI tools continue ligh
 
 | Item | Notes |
 |------|--------|
-| Customer Portal | External Help Desk submit/track — when beta demand is clear |
+| Customer Portal projects/tasks / magic-link login | Beyond **1.0.0** hub — on demand |
 | Recruitment | HR expansion — on demand |
 | Documents nested folders / versioning | Soft record links shipped (create + reverse list); folders/versioning on demand |
 | Marketing campaigns / email campaigns | Separate SKUs; Automation deferred |

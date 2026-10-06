@@ -51,7 +51,7 @@ Optional workspace toggles under **Settings → General** (Contracts installed) 
 
 Staff see phone, IP, signature method, and download buttons for the signature image and ID file on the contract record. Signature and ID uploads require the free **Storage** module — Settings disables those two toggles (and the API rejects enabling them) until Storage is installed. Phone-only does not need Storage. Soft-deleting a contract keeps evidence files; **Delete permanently** removes the signature and ID files from storage. Staff downloads are recorded on the contract timeline.
 
-This is a lightweight accept page — not a full customer portal. Multi-signer and third-party e-sign providers remain deferred.
+This is a lightweight accept page for one-shot e-sign. Logged-in document history lives in the [Customer Portal](/user-guide/customer-portal) module. Multi-signer and third-party e-sign providers remain deferred.
 
 ## Create invoice
 

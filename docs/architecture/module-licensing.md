@@ -29,7 +29,8 @@ These postures can change over product releases without redesigning the moduleâ€
 | Sales | Opportunities, Resellers, Reseller Payouts | Free Marketplace opt-in under category `sales`; Sales Pipeline is **not** a separate SKU |
 | Collaboration | Team Chat | Free Marketplace opt-in under category `collaboration` (`team-chat`, catalog **1.3.2**; not billable yet) |
 | Communication | Live Chat | Free Marketplace opt-in under category `communication` (`live-chat`, catalog **1.0.1**; website widget + agent inbox) |
-| Operations | Help Desk | Free Marketplace opt-in under category `operations` (`help-desk`, catalog **1.0.0**; internal ticketing MVP) |
+| Operations | Help Desk | Free Marketplace opt-in under category `operations` (`help-desk`; internal ticketing) |
+| Operations | Customer Portal | Free Marketplace opt-in under category `operations` (`customer-portal`, catalog **1.0.0**; invite-only Contact hub; **hard dep** Contacts) |
 | Operations | Knowledge Base, Projects | Free Marketplace opt-in under category `operations` (`knowledge-base`, `projects`; catalog **1.0.0**; KB internal-only; not billable) |
 | Operations | Assets | Free Marketplace opt-in under category `operations` (`assets`, catalog **1.0.0**; equipment/fixed-asset register; not billable; no hard deps) |
 | Operations | Documents | Free Marketplace opt-in under category `operations` (`documents`, catalog **1.0.0**; flat file library; not billable; **hard dep** on Storage) |

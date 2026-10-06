@@ -304,6 +304,17 @@ Help Desk installs standalone with **no** `module_dependencies` rows — it work
 
 **Status:** Shipped — see [Help Desk Overview](/user-guide/help-desk-overview) and [Product Roadmap](/getting-started/product-roadmap) Phase 8.
 
+### Customer Portal → Contacts (required, shipped)
+
+```text
+Customer Portal
+  └── depends on Contacts   (required)
+```
+
+Customer Portal declares Contacts as a required hard dependency. Portal accounts are 1:1 with Contacts. Soft sections (invoices, payments, quotations, contracts, help-desk) hide or 403 when those modules are not entitled — no hard rows for those soft links.
+
+**Status:** Shipped **1.0.0** — see [Customer Portal Overview](/user-guide/customer-portal-overview).
+
 ### WhatsApp Cloud → Leads (optional, shipped)
 
 ```text
