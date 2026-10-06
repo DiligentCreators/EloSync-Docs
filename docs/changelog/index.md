@@ -1,3 +1,8 @@
+## Password reset uses Central mail (2026-10-07)
+
+- **EloSync-Backend:** Tenant and Customer Portal forgot-password always apply the **Central** mail provider (`CentralMail::apply`) before sending, so workspaces without custom SMTP/Postmark still receive reset links. Workspace billing/CRM mail is unchanged. Pest: `TenantPasswordResetUsesCentralMailTest`.
+- **EloSync-Docs:** Changelog + authentication / production-readiness notes.
+
 ## Password reset mail sends immediately (2026-10-06)
 
 - **EloSync-Backend:** Tenant, Central, and Customer Portal password-reset notifications no longer implement `ShouldQueue`. Forgot-password creates the token and sends mail in the same request so delivery does not wait on Horizon / the `emails` worker. Other product mail stays on the `emails` queue. Pest: `AuthPasswordResetNotificationSyncTest`.

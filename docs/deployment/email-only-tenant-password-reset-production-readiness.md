@@ -22,6 +22,7 @@ Tenant Application password reset on a non-workspace host (`app.elosync.com`). C
 | A6 | Low | Empty-login e2e submitted Vite DEV-prefilled credentials instead of validating blank fields | `LoginPage.clearCredentials()` before empty submit |
 | A7 | Info | Mobile forgot-password required workspace even though login is email-first | Workspace is optional; email alone submits |
 | A8 | **High** | Password-reset notifications were `ShouldQueue` on `emails`. Local `QUEUE_CONNECTION=database` had **458** stuck jobs (including resets) with no worker — token created, inbox empty. Central mail provider was also `log` | Fixed: tenant / central / portal reset notifications send **synchronously** in the HTTP request. Ops still need a real mail provider (not `log`) for inbox delivery; other product mail still uses the `emails` queue |
+| A9 | **High** | Tenant forgot-password used workspace mail runtime config. Workspaces with custom mail received resets; workspaces on system/unset mail did not | Fixed: `CentralMail::apply()` before tenant/portal reset send so platform auth always uses Central Settings → Mail |
 
 ## Verification matrix
 
@@ -36,14 +37,14 @@ Tenant Application password reset on a non-workspace host (`app.elosync.com`). C
 
 ## Go-live
 
-1. Deploy Backend (`InitializeTenancy` + `ForgotPasswordController` generic success + **synchronous** password-reset notifications).
+1. Deploy Backend (`InitializeTenancy` + synchronous reset notifications + **CentralMail** for tenant/portal forgot-password).
 2. Deploy Frontend (email-only forgot/reset + reset token URL sync).
 3. Deploy Mobile (optional workspace on forgot-password).
-4. Confirm Central **Settings → Mail** is a real provider (SMTP / Postmark / Mailgun), not `log` — `log` never reaches an inbox.
-5. Smoke `https://app.elosync.com/#/forgot-password`: no Workspace field; submit email; open reset mail; set password; sign in with email only.
+4. Confirm Central **Settings → Mail** is a real provider (SMTP / Postmark / Mailgun), not `log` — forgot-password uses this Central provider for every workspace (not tenant custom mail).
+5. Smoke `https://app.elosync.com/#/forgot-password` on a workspace **without** tenant mail configured: submit email; open reset mail from the Central From address; set password; sign in with email only.
 6. Confirm Customer Portal `/#/portal/forgot-password` still uses email → company picker (portal emails are not globally unique).
 
 ## Pest / Playwright
 
-- `php artisan test --compact tests/Unit/AuthPasswordResetNotificationSyncTest.php tests/Feature/Tenant/Auth/TenantAuthTest.php tests/Feature/Tenant/Auth/PasswordResetParityTest.php tests/Feature/Tenant/Isolation/TenantIsolationTest.php`
+- `php artisan test --compact tests/Unit/AuthPasswordResetNotificationSyncTest.php tests/Feature/Tenant/Auth/TenantPasswordResetUsesCentralMailTest.php tests/Feature/Tenant/Auth/TenantAuthTest.php tests/Feature/Tenant/Auth/PasswordResetParityTest.php tests/Feature/Tenant/Isolation/TenantIsolationTest.php`
 - `E2E_BROWSER_CHANNEL=chrome E2E_BASE_URL=http://localhost:5175 npm run test:e2e:auth:headed` (or the workflow spec alone)
