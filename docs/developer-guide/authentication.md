@@ -68,7 +68,7 @@ Defined in `config/auth.php`:
 - `central-api` — Sanctum driver, `central_users` provider
 - `tenant-api` — Sanctum driver, `users` provider
 
-Tenant routes also run `tenancy` + `tenant.available`. Workspace resolution prefers the request host (including future custom domains), then the authenticated token's workspace, then the submitted `workspace` value or `X-Tenant-Domain` header. Central routes run `central.domain`.
+Tenant routes also run `tenancy` + `tenant.available`. Workspace resolution prefers the request host (including future custom domains), then the authenticated token's workspace, then the submitted `workspace` value or `X-Tenant-Domain` header. **Login, forgot-password, and reset-password** may also resolve the workspace from a globally unique tenant user email (same as the shared SPA on `app.elosync.com`). Central routes run `central.domain`.
 
 When a Bearer token is present but cannot resolve a workspace (unknown, revoked, or pruned token row), `InitializeTenancy` returns **401 Unauthenticated** so the SPA can redirect to login. A true missing-workspace case with no Bearer still returns **400** with `code: workspace_required`; the SPA treats that as session expiry on authenticated API calls (not `skipAuth`) so idle token-clear races hard-redirect to login instead of toasting.
 
@@ -95,9 +95,11 @@ When registration is disabled and no invite token is supplied, the API returns 4
 
 ## Password reset
 
+On the shared tenant SPA (`/forgot-password`, `/reset-password/{token}`), users enter **email only**. `InitializeTenancy` resolves the workspace from that email the same way login does. Unknown emails still return the generic “If the email address you entered is registered with us…” success (no `workspace_required`). Reset emails may include `?workspace=` as a hint; it is not required to complete the reset. The reset form always uses the token from the current URL so HashRouter navigations cannot keep a stale hidden token.
+
 | Step | Tenant | Central |
 |------|--------|---------|
-| Request | `POST /api/tenant/v1/auth/forgot-password` | `POST /api/central/v1/auth/forgot-password` |
+| Request | `POST /api/tenant/v1/auth/forgot-password` (`{ email }`) | `POST /api/central/v1/auth/forgot-password` |
 | Email link | `{FRONTEND_URL}/reset-password/{token}?email=` | `{FRONTEND_URL}/central/reset-password/{token}?email=` |
 | Reset | `POST /api/tenant/v1/auth/reset-password` | `POST /api/central/v1/auth/reset-password` |
 

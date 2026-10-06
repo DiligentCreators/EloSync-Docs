@@ -15,6 +15,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Laravel Forge Deployment](./laravel-forge) | Three-site Forge topology, `.env`, deploy scripts, daemons, Reverb, email |
 | [Marketing pixels](./marketing-pixels) | Optional GTM, Meta, LinkedIn, X tags (product SPA + marketing site) |
 | [Production Runbook](./platform-production-runbook) | Primary deploy / go-live checklist |
+| [Email-only tenant password reset](./email-only-tenant-password-reset-production-readiness) | Shared-host forgot/reset without workspace name — **Go** |
 | [Upgrade Guide](./upgrade) | Migrate-only upgrades for modules & permissions |
 | [Release Process](./release-process) | Tagging, versioning, three-repo release checklist |
 | [Notification System](./notifications) | Redis, workers, Reverb, rollout checklist, troubleshooting |
