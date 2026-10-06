@@ -40,7 +40,7 @@ When a quotation is **Sent**, staff with `quotations.send` can **Copy accept lin
 
 Customers open `/#/accept/quotations/{token}` (no login), review totals and lines, enter their name and email, and confirm. That marks the quotation **Accepted**, records signer name/email/IP on the record, and invalidates the link. Regenerating or re-emailing creates a new link and invalidates the previous one. Links expire at the earlier of **valid until** (end of day) or 30 days.
 
-This is a lightweight accept page — not a full customer portal. Multi-signer and third-party e-sign providers remain deferred.
+This is a lightweight accept page for one-shot e-sign. Logged-in document history lives in the [Customer Portal](/user-guide/customer-portal) module. Multi-signer and third-party e-sign providers remain deferred.
 
 ## Convert to invoice
 

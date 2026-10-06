@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Customer Portal 1.0.0 (+ Help Desk 1.12.0 → 1.13.0)
+
+1. Deploy Backend and run `php artisan migrate --force` (registers `customer-portal`, permissions, `portal_users` / reset tokens, contacts hard dependency, Help Desk `portal_user_id` + catalog **1.13.0** — **do not** `db:seed`)
+2. Confirm catalog: `customer-portal` **1.0.0**, `help-desk` **1.13.0**
+3. Deploy the SPA — Operations → Customer Portal + `/#/portal/*` guest shell
+4. Staging smoke: install Contacts → Customer Portal → invite Contact → accept invite → login → invoice/ticket smoke when those modules are entitled
+
+Go-live: [Customer Portal 1.0.0 production readiness](/deployment/customer-portal-1-0-0-production-readiness).
+
 ## Calendar 1.5.0 → 1.6.0 — two-way inbound sync
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_170000_bump_calendar_module_version_to_1_6_0` — catalog only; **do not** `db:seed`)
