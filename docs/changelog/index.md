@@ -1,3 +1,8 @@
+## Password reset mail sends immediately (2026-10-06)
+
+- **EloSync-Backend:** Tenant, Central, and Customer Portal password-reset notifications no longer implement `ShouldQueue`. Forgot-password creates the token and sends mail in the same request so delivery does not wait on Horizon / the `emails` worker. Other product mail stays on the `emails` queue. Pest: `AuthPasswordResetNotificationSyncTest`.
+- **EloSync-Docs:** Changelog + production-readiness note for the email-only tenant reset ship.
+
 ## Email-only tenant password reset (2026-10-06)
 
 - **EloSync-Backend:** `InitializeTenancy` resolves workspace from email for `POST /auth/forgot-password` and `POST /auth/reset-password` (same globally unique tenant emails as login). Unknown emails return the generic reset-link success instead of `workspace_required`. Pest: `TenantAuthTest`, `PasswordResetParityTest`.
