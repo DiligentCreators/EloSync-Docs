@@ -21,6 +21,7 @@ Tenant Application password reset on a non-workspace host (`app.elosync.com`). C
 | A5 | Med | Playwright `auth` project did not honour `E2E_BROWSER_CHANNEL` (headed Chrome missing bundled Chromium) | Applied the same channel mapping as the `tenant` project |
 | A6 | Low | Empty-login e2e submitted Vite DEV-prefilled credentials instead of validating blank fields | `LoginPage.clearCredentials()` before empty submit |
 | A7 | Info | Mobile forgot-password required workspace even though login is email-first | Workspace is optional; email alone submits |
+| A8 | **High** | Password-reset notifications were `ShouldQueue` on `emails`. Local `QUEUE_CONNECTION=database` had **458** stuck jobs (including resets) with no worker — token created, inbox empty. Central mail provider was also `log` | Fixed: tenant / central / portal reset notifications send **synchronously** in the HTTP request. Ops still need a real mail provider (not `log`) for inbox delivery; other product mail still uses the `emails` queue |
 
 ## Verification matrix
 
@@ -35,13 +36,14 @@ Tenant Application password reset on a non-workspace host (`app.elosync.com`). C
 
 ## Go-live
 
-1. Deploy Backend (`InitializeTenancy` + `ForgotPasswordController` generic success).
+1. Deploy Backend (`InitializeTenancy` + `ForgotPasswordController` generic success + **synchronous** password-reset notifications).
 2. Deploy Frontend (email-only forgot/reset + reset token URL sync).
 3. Deploy Mobile (optional workspace on forgot-password).
-4. Smoke `https://app.elosync.com/#/forgot-password`: no Workspace field; submit email; open reset mail; set password; sign in with email only.
-5. Confirm Customer Portal `/#/portal/forgot-password` still uses email → company picker (portal emails are not globally unique).
+4. Confirm Central **Settings → Mail** is a real provider (SMTP / Postmark / Mailgun), not `log` — `log` never reaches an inbox.
+5. Smoke `https://app.elosync.com/#/forgot-password`: no Workspace field; submit email; open reset mail; set password; sign in with email only.
+6. Confirm Customer Portal `/#/portal/forgot-password` still uses email → company picker (portal emails are not globally unique).
 
 ## Pest / Playwright
 
-- `php artisan test --compact tests/Feature/Tenant/Auth/TenantAuthTest.php tests/Feature/Tenant/Auth/PasswordResetParityTest.php tests/Feature/Tenant/Isolation/TenantIsolationTest.php`
+- `php artisan test --compact tests/Unit/AuthPasswordResetNotificationSyncTest.php tests/Feature/Tenant/Auth/TenantAuthTest.php tests/Feature/Tenant/Auth/PasswordResetParityTest.php tests/Feature/Tenant/Isolation/TenantIsolationTest.php`
 - `E2E_BROWSER_CHANNEL=chrome E2E_BASE_URL=http://localhost:5175 npm run test:e2e:auth:headed` (or the workflow spec alone)
