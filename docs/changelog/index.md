@@ -1,7 +1,7 @@
 ## Customer Portal MVP 1.0.0 (2026-10-06)
 
 - **EloSync-Backend:** Free Operations Marketplace module `customer-portal` **1.0.0** (hard dep `contacts`). `PortalUser` + Sanctum `portal-api` guard; staff invite/resend/disable/enable; portal auth accept-invite / login / forgot-reset; scoped invoices/payments/quotations/contracts (PDF + acceptance-link) and Help Desk submit/track. Help Desk notes gain nullable `portal_user_id` — catalog **help-desk 1.12.0 → 1.13.0**. Pest: `PortalAuthTest`, `PortalDocumentsTest`, `PortalHelpDeskTest`.
-- **EloSync-Frontend:** Staff Operations → Customer Portal + Contact invite actions. Isolated portal SPA (`/#/portal/*`, own auth store/layout). Persists portal workspace domain (`dc_saas_portal_workspace`) so shared-host tenancy survives navigation. Playwright `test:e2e:customer-portal` (smoke + full human workflow) **3/3**.
+- **EloSync-Frontend:** Staff Operations → Customer Portal + Contact invite actions. Isolated portal SPA (`/#/portal/*`, own auth store/layout). Persists portal workspace domain (`dc_saas_portal_workspace`) so shared-host tenancy survives navigation. Playwright `test:e2e:customer-portal` (smoke + full human workflow) **3/3**. Sidebar Operations unit test updated so production publish is not blocked by the new nav item.
 - **EloSync-Docs:** User/developer/API/deployment + [production readiness / audit](/deployment/customer-portal-1-0-0-production-readiness) + roadmap (Customer Portal shipped; Vendor Portal remains parked) + this changelog.
 - **EloSync-Website:** Roadmap copy updated — Customer Portal MVP shipped.
 
