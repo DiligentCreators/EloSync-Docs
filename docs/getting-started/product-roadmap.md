@@ -126,8 +126,8 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.13.0** (portal note authorship; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.0.0** (invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
+| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.14.0** (public replies vs internal notes; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.2.0** (rich Support replies + attachments; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |

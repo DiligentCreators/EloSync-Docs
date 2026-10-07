@@ -54,7 +54,7 @@ Status always starts at `open`; `number` is auto-generated (`HD-00001`, configur
 
 ### GET `/help-desk/{id}`
 
-Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes, and timeline activities. Contact refs include `email` / `phone` when present (for soft-gated Communication Template WhatsApp). Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes (`help_desk_notes` with `is_internal`), and timeline activities. Contact refs include `email` / `phone` when present (for soft-gated Communication Template WhatsApp). Embedded notes and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC). Public conversation replies use `is_internal: false`; internal notes use `is_internal: true`.
 
 ### PUT `/help-desk/{id}`
 
@@ -96,7 +96,10 @@ Permission: `help-desk.update`. Rejects disallowed transitions with a 422 valida
 
 ### POST `/help-desk/{id}/notes`
 
-`{ "body": string }`
+JSON or multipart: `body` (required string, max 10000), `is_internal` (optional boolean, **default `true`**), optional `attachment` file (workspace upload policy).
+
+- `is_internal: true` — staff-only note (`@mentions` supported). Does **not** mark SLA first response.
+- `is_internal: false` — customer-visible public reply (HTML body). Marks SLA first response when unset. Visible on Customer Portal.
 
 Permission: `help-desk.update`.
 

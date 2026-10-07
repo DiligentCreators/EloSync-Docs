@@ -51,9 +51,11 @@ Middleware: `auth:portal-api`, `module:customer-portal`. Soft module checked per
 | Payments | `GET /portal/payments`, `/{id}`, `/{id}/pdf` | `payments` |
 | Quotations | `GET …`, `/{id}`, `/{id}/pdf`, `POST …/acceptance-link` | `quotations` |
 | Contracts | same as quotations | `contracts` |
-| Help Desk | `GET/POST /portal/help-desk`, `GET /{id}`, `POST /{id}/notes` | `help-desk` |
+| Help Desk | `GET/POST /portal/help-desk`, `GET /{id}`, `POST /{id}/notes`, `GET /note-attachments/{uuid}/download` | `help-desk` |
 | Projects | `GET /portal/projects`, `/{id}`, `/{id}/tasks`, `/{id}/timeline` | `projects` (+ `tasks` for nested tasks) |
 
-Create ticket body: `subject` (required), `description` optional. Server stamps `contact_id` / `company_id` from the portal user’s Contact — client-supplied party IDs are ignored.
+Create ticket body: `subject` (required), `description` optional (HTML, max 10000). Server stamps `contact_id` / `company_id` from the portal user’s Contact — client-supplied party IDs are ignored.
+
+Help Desk show embeds **public** notes only (`is_internal = false`), oldest-first conversation order, with optional attachments. `POST /{id}/notes` accepts JSON or multipart (`body` max 10000, optional `attachment`). Portal replies are always public and do not set SLA first response. `GET /portal/help-desk/note-attachments/{uuid}/download` streams a public-note attachment in scope (404 for internal attachments or out-of-scope tickets).
 
 Projects require `portal_visible` plus Contact/Company scope. Nested tasks require `visible_to_portal`. Timeline is filtered to customer-safe activity types.

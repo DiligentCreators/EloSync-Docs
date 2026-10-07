@@ -73,9 +73,10 @@ When **Knowledge Base** is installed, the create/edit form shows a **Knowledge b
 
 Users with **assign** can set or clear the assignee from the ticket page or the create/edit form. The assignee receives an in-app notification when someone else assigns them.
 
-## Notes & timeline
+## Conversation, notes & timeline
 
-- **Notes** — free-form internal notes on the ticket
+- **Conversation** — customer-visible replies (rich text + optional attachment). Shown in the Customer Portal and to staff.
+- **Internal notes** — staff-only notes with `@mentions` and optional attachments. Never shown to portal customers.
 - **Timeline** — history of create, update, assignment, status change, note, and delete/restore events
 
 ## Due dates & overdue
@@ -84,7 +85,7 @@ Set an optional **due date** on create or edit. Overdue filtering and KPIs compa
 
 ## SLAs
 
-Define policies under **Manage SLAs**. Each policy sets first-response and resolve targets in minutes, optionally limited to a category and/or priority. Open tickets get response/resolve clocks; the first staff note or status leave from **Open** counts as first response. Breached tickets notify the assignee and show on the list/KPIs. Manual `due_at` remains independent of SLA clocks.
+Define policies under **Manage SLAs**. Each policy sets first-response and resolve targets in minutes, optionally limited to a category and/or priority. Open tickets get response/resolve clocks; the first **staff public reply** (or status leave from **Open**) counts as first response — internal notes do not. Breached tickets notify the assignee and show on the list/KPIs. Manual `due_at` remains independent of SLA clocks.
 
 ## Email intake
 
@@ -92,7 +93,7 @@ Define policies under **Manage SLAs**. Each policy sets first-response and resol
 
 ## What's not here yet
 
-External customer submit/track ships via the [Customer Portal](/user-guide/customer-portal) module (not inside this page). Chat/social intake channels remain deferred — see the [Product Roadmap](/getting-started/product-roadmap). Ticket notes support `@mentions`. Use **Board** / **List** for status Kanban. Soft-gated WhatsApp Communication Templates appear on ticket view when that module is installed and the contact has a phone.
+External customer submit/track ships via the [Customer Portal](/user-guide/customer-portal) module (not inside this page). Chat/social intake channels remain deferred — see the [Product Roadmap](/getting-started/product-roadmap). **Internal notes** support `@mentions`. Use **Board** / **List** for status Kanban. Soft-gated WhatsApp Communication Templates appear on ticket view when that module is installed and the contact has a phone.
 
 When **Communication Templates** is installed and you have `communication-templates.use`, open a ticket with a linked contact that has a phone number and click **WhatsApp** to pick a Help Desk template (or a blank chat). EloSync opens WhatsApp Web/app with the message pre-filled — it does not send messages for you.
 

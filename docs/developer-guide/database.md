@@ -423,7 +423,7 @@ Notes (author + body) and expense timeline (`type`, `description`, `properties` 
 
 ### `help_desk_notes` / `help_desk_activities`
 
-Notes (author + body) and ticket timeline (`type`, `description`, `properties` JSON; includes `status_changed`).
+Notes: `user_id` / `portal_user_id` (nullable), `body`, `is_internal` (boolean, default `true`; public conversation when `false`). Ticket timeline (`type`, `description`, `properties` JSON; includes `status_changed`). Note attachments in `help_desk_note_attachments`.
 
 ## Assets module tables
 
