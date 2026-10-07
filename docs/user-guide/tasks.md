@@ -37,7 +37,7 @@ Status labels in the UI:
 2. Enter title (required) and optional description in the rich text editor, plus status, priority, due date, and assignee
 3. Optionally attach **images or videos** (and other allowed file types) — limits come from **Settings → Storage → Upload limits**
 4. Optionally assign **tags** (colored labels). Create a new tag inline with a name and color, then tick it
-5. If **Projects** is installed, optionally link a **project**
+5. If **Projects** is installed, optionally link a **project**. When Customer Portal is installed and that project is shared, optionally turn on **Visible to customer** so the portal customer can see the task (otherwise it stays internal)
 6. Save
 
 Edit from the row menu or the record page. Dragging a card on the board auto-saves the new status (no drawer).

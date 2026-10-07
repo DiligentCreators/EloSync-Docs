@@ -35,8 +35,9 @@ Status labels:
 2. Enter a **title** (required) and optional description in the rich text editor
 3. Optionally set **starts on** / **ends on** dates
 4. If Contacts, Companies, or Opportunities are installed, optionally link them — use **New** beside a picker to create and select inline when you have that module’s create permission
-5. Optionally set an assignee and members (requires **assign**)
-6. Save — new projects start as **Planned**; without assign permission the creator becomes the assignee
+5. When **Customer Portal** is installed and a Contact or Company is linked, optionally turn on **Share with customer portal** so that customer can see the project (tasks stay internal unless marked visible on each task)
+6. Optionally set an assignee and members (requires **assign**)
+7. Save — new projects start as **Planned**; without assign permission the creator becomes the assignee
 
 Edit from the row menu or the record page. Status changes use the status action (not free-form field edits of status).
 
@@ -65,7 +66,7 @@ Contact, Company, and Opportunity links are **soft** — they only appear when t
 
 ## Tasks on a project
 
-When Projects is enabled, Tasks can optionally set a **project** (`project_id`). The link is soft: Tasks still work without Projects; linking fails validation if Projects is not entitled or you cannot see that project. See [Tasks](/user-guide/tasks).
+When Projects is enabled, Tasks can optionally set a **project** (`project_id`). The link is soft: Tasks still work without Projects; linking fails validation if Projects is not entitled or you cannot see that project. On a shared portal project, use **Visible to customer** so that task appears in the Customer Portal; leave it off for internal work. See [Tasks](/user-guide/tasks).
 
 ## Dates & overdue
 

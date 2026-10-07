@@ -16,6 +16,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Marketing pixels](./marketing-pixels) | Optional GTM, Meta, LinkedIn, X tags (product SPA + marketing site) |
 | [Production Runbook](./platform-production-runbook) | Primary deploy / go-live checklist |
 | [Email-only tenant password reset](./email-only-tenant-password-reset-production-readiness) | Shared-host forgot/reset without workspace name — **Go** |
+| [Customer Portal 1.1.0 projects/tasks](./customer-portal-1-1-0-production-readiness) | Shared projects + customer-visible tasks — **Go** |
 | [Upgrade Guide](./upgrade) | Migrate-only upgrades for modules & permissions |
 | [Release Process](./release-process) | Tagging, versioning, three-repo release checklist |
 | [Notification System](./notifications) | Redis, workers, Reverb, rollout checklist, troubleshooting |
