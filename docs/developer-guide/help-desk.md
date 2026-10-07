@@ -23,6 +23,14 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 | Tests | `HelpDeskTicketTest`, `HelpDeskCategoryTest`, `HelpDeskKnowledgeBaseLinkTest`, `HelpDeskSlaTest`, `HelpDeskMailIngestTest`, `HelpDeskRealtimeBoardTest` |
 | Migrations | `2026_08_14_*` baseline … `2026_08_30_16000*` SLA (1.3.0) … `2026_08_30_11530*` mailboxes + email source (1.4.0) |
 
+## Notes visibility (`is_internal`)
+
+`help_desk_notes.is_internal` (default `true`):
+
+- **Internal** (`true`) — staff-only; `@mentions`; does not mark SLA first response. AI `add_help_desk_ticket_note` always internal.
+- **Public** (`false`) — customer-visible conversation; TipTap HTML + attachments on web; marks SLA first response for staff authors. Portal and email ingest always create public notes.
+- Portal show loads `publicHelpDeskNotes` only (ASC). Staff show embeds all notes newest-first with `is_internal` on each row.
+
 ## Domain notes
 
 - **No hard module dependency**: Help Desk has no `module_dependencies` row — installable standalone. `contact_id` / `company_id` are nullable columns.
@@ -47,7 +55,7 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.12.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.14.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## Communication Templates (soft)
 
@@ -67,7 +75,7 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 |-------|------|
 | Page | `src/pages/help-desk/` (`help-desk-page.tsx`, `help-desk-form.tsx`, `help-desk-form-page.tsx`, `help-desk-view-page.tsx`, `help-desk-categories-dialog.tsx`, `help-desk-sla-policies-dialog.tsx`, `help-desk-mailboxes-dialog.tsx`) |
 | Shared board | `src/components/crm/kanban-board.tsx` (status Kanban; per-column vertical scroll + contained horizontal scroll; titles stay fixed) |
-| View page | Details (category, priority, status, due date, SLA clocks, source, assignee, related contact/company + soft-gated WhatsApp template picker, related KB articles), notes with `@mentions`, timeline — actions: assign, add note, status transitions, close, reopen, edit (non-closed), delete |
+| View page | Details (category, priority, status, due date, SLA clocks, source, assignee, related contact/company + soft-gated WhatsApp template picker, related KB articles), **Conversation** (public TipTap replies) + **Internal notes** (`@mentions`), timeline — actions: assign, reply/add note, status transitions, close, reopen, edit (non-closed), delete |
 | Form page | Subject, description, category picker, priority, due date, conditional contact/company pickers, and **Knowledge base articles** multi-select when `hasModule('knowledge-base')` + `knowledge-base.view` |
 | Service | `helpDeskService` + `helpDeskCategoryService` + `helpDeskSlaPolicyService` + `helpDeskMailboxService` in `src/api/services.ts` |
 | Types | `HelpDesk*` in `src/types/api.ts` |

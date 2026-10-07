@@ -1,3 +1,11 @@
+## Help Desk public replies vs internal notes (1.14.0) (2026-10-07)
+
+- **EloSync-Backend:** `help_desk_notes.is_internal` (default staff internal; portal/email public). Staff `POST …/notes` accepts `is_internal` + richer body max; SLA first response only on staff public replies (or leave Open). Portal show filters public notes; multipart reply + note-attachment download; portal replies never set SLA first response. AI confirm forces internal. Catalog **help-desk 1.13.0 → 1.14.0**, **customer-portal 1.1.0 → 1.2.0** (migrate-only + CatalogSeeder). Pest: `PortalHelpDeskTest`, `HelpDeskSlaTest`, mail/AI note cases, version bump tests.
+- **EloSync-Frontend:** Ticket view **Conversation** (TipTap public reply) + **Internal notes** (`MentionComposer`). Portal Support TipTap description/reply + attachments. Playwright help-desk + customer-portal workflows updated (SLA Priority combobox locator hardened for headed e2e).
+- **Go-live:** [Help Desk public replies 1.14.0 production readiness](/deployment/help-desk-public-replies-1-14-0-production-readiness).
+- **EloSync-Mobile:** Help Desk note composer toggles Internal vs Reply to customer; strips HTML for display.
+- **EloSync-Docs:** User/API/developer/deployment/upgrade guides + roadmap + [production readiness / audit](/deployment/help-desk-public-replies-1-14-0-production-readiness) + this changelog.
+
 ## Customer Portal projects & tasks (1.1.0) (2026-10-07)
 
 - **EloSync-Backend:** Portal read APIs for shared projects — `GET /portal/projects`, `/{id}`, `/{id}/tasks`, `/{id}/timeline`. Projects need `portal_visible` + Contact/Company scope; tasks need `visible_to_portal` (default internal). Unsharing a project clears task portal flags. Customer-safe timeline (no members/assignee/notes internals). Catalog **customer-portal 1.0.0 → 1.1.0**, **projects 1.8.0 → 1.9.0**, **tasks 1.8.0 → 1.9.0**. Pest: `PortalProjectsTest`.

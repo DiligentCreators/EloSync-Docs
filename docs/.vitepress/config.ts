@@ -486,6 +486,7 @@ export default withMermaid(defineConfig({
             { text: 'Opportunities 1.3.0 Real-time Board Sync Readiness', link: '/deployment/opportunities-realtime-board-sync-1-3-0-production-readiness' },
             { text: 'Tasks 1.8.0 Real-time Board Sync Readiness', link: '/deployment/tasks-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Help Desk 1.12.0 Real-time Board Sync Readiness', link: '/deployment/help-desk-realtime-board-sync-1-12-0-production-readiness' },
+            { text: 'Help Desk 1.14.0 Public Replies Readiness', link: '/deployment/help-desk-public-replies-1-14-0-production-readiness' },
             { text: 'Customer Portal 1.0.0 Production Readiness', link: '/deployment/customer-portal-1-0-0-production-readiness' },
             { text: 'Email-only Tenant Password Reset Readiness', link: '/deployment/email-only-tenant-password-reset-production-readiness' },
             { text: 'Projects 1.8.0 Real-time Board Sync Readiness', link: '/deployment/projects-realtime-board-sync-1-8-0-production-readiness' },

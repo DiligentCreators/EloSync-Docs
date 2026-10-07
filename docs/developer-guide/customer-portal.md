@@ -1,6 +1,6 @@
 # Customer Portal — Developer Guide
 
-Marketplace Operations module (`customer-portal` **1.1.0**). Flat namespaces (no `Modules/` package). Invite-only Contact accounts with a dedicated Sanctum guard.
+Marketplace Operations module (`customer-portal` **1.2.0**). Flat namespaces (no `Modules/` package). Invite-only Contact accounts with a dedicated Sanctum guard.
 
 ## Identity
 
@@ -22,7 +22,7 @@ Marketplace Operations module (`customer-portal` **1.1.0**). Flat namespaces (no
 - `App\Services\Tenant\CustomerPortal\PortalRecordScope` — contact + optional company scope
 - Document services: `PortalInvoiceService`, `PortalPaymentService`, `PortalQuotationService`, `PortalContractService`
 - `PortalProjectService` — shared projects (`portal_visible` + `PortalRecordScope`); customer-visible tasks (`visible_to_portal`); filtered timeline
-- `PortalHelpDeskService` — create stamps `contact_id` / `company_id`; notes set `portal_user_id`
+- `PortalHelpDeskService` — create stamps `contact_id` / `company_id`; notes set `portal_user_id` and `is_internal = false`; show loads public notes + attachments only
 
 ## Frontend
 
@@ -33,7 +33,7 @@ Marketplace Operations module (`customer-portal` **1.1.0**). Flat namespaces (no
 
 ## Help Desk note authorship
 
-`help_desk_notes.portal_user_id` (nullable) — catalog **help-desk 1.12.0 → 1.13.0**. Staff resources expose `portal_author` when present.
+`help_desk_notes.portal_user_id` (nullable) — catalog **help-desk 1.12.0 → 1.13.0**. Staff resources expose `portal_author` when present. **1.14.0** adds `is_internal`; portal never receives internal notes. Customer Portal **1.2.0** adds public reply attachments + TipTap UI.
 
 ## Portal projects / tasks (1.1.0)
 

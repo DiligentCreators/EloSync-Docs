@@ -52,13 +52,13 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 | **manager** | `view`, `create`, `update`, `assign`, `close`, `reopen` |
 | **staff** | `view`, `create`, `update`, `close`, `reopen` |
 
-Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.13.0**.
+Enable Help Desk from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Contacts / Companies. Catalog: slug `help-desk`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.14.0**.
 
 ## Why standalone (soft dependencies)
 
 Most internal tickets (IT requests, billing questions) do not require a CRM contact or company record. Both links are optional and only appear once the related module is installed. This keeps Help Desk usable as a lightweight, install-anywhere operations module rather than forcing the full CRM stack.
 
-External customers submit/track tickets through the separate [Customer Portal](/user-guide/customer-portal-overview) module (requires Contacts). Portal notes set `portal_user_id` on `help_desk_notes` (**1.13.0**).
+External customers submit/track tickets through the separate [Customer Portal](/user-guide/customer-portal-overview) module (requires Contacts). Portal notes set `portal_user_id` on `help_desk_notes`. **1.14.0** adds `is_internal` so staff internal notes stay private while public replies (rich text + attachments) appear in the portal.
 
 ## Explicitly deferred
 

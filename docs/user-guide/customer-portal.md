@@ -24,7 +24,7 @@ After login, the portal shell shows sections only when the related workspace mod
 | Payments | `payments` | List, view, download receipt PDF |
 | Quotations | `quotations` | List, view, PDF, get accept link |
 | Contracts | `contracts` | List, view, PDF, get accept link |
-| Support | `help-desk` | List, open ticket, add notes |
+| Support | `help-desk` | List, open ticket (rich description), reply with rich text + attachment |
 
 Visibility is limited to the Contact’s own records, or records for their Company when `company_id` is set. Contracts resolve via the linked Opportunity’s party.
 
@@ -40,4 +40,6 @@ One-shot e-sign pages (`/#/accept/quotations|contracts/...`) still work without 
 
 ## Deferred
 
-Magic-link login and public Knowledge Base are not in **1.1.0** — see the [overview](/user-guide/customer-portal-overview) and [Product Roadmap](/getting-started/product-roadmap).
+Magic-link login and public Knowledge Base are not in **1.2.0** — see the [overview](/user-guide/customer-portal-overview) and [Product Roadmap](/getting-started/product-roadmap).
+
+Staff **internal notes** on Help Desk tickets are never shown in the portal. Only public replies appear in the Support conversation.

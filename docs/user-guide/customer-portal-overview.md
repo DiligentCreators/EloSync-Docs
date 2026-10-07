@@ -16,7 +16,7 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 | Production readiness | [1.1.0](/deployment/customer-portal-1-1-0-production-readiness) · [1.0.0](/deployment/customer-portal-1-0-0-production-readiness) |
 | Tenant API | [../api/tenant-v1-customer-portal.md](/api/tenant-v1-customer-portal) |
 
-## Capabilities (1.1.0)
+## Capabilities (1.2.0)
 
 - Invite-only portal accounts linked 1:1 to a Contact (email + password; no open self-registration)
 - Separate Sanctum guard (`portal-api`) — never staff `User` / Spatie roles
@@ -39,7 +39,7 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 
 ## Licensing
 
-- Catalog slug: `customer-portal`, category `operations`, version **1.1.0**
+- Catalog slug: `customer-portal`, category `operations`, version **1.2.0**
 - `is_default_included = false`, `is_billable = false`
 - **Hard dependency:** `contacts`
 - Soft: `projects`, `tasks`, `invoices`, `payments`, `quotations`, `contracts`, `help-desk` (section hidden / API 403 when not entitled)
