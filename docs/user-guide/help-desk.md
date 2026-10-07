@@ -58,6 +58,7 @@ A ticket starts **Open**. Move it forward with status actions or the status pick
 - **Resolved** (`open | in_progress | waiting → resolved`)
 - **Close** (`open | in_progress | waiting | resolved → closed`) — requires `help-desk.close`
 - **Reopen** (`resolved → open` or `closed → open`) — requires `help-desk.reopen`
+- **Customer reply reopen** — when a customer replies from the Customer Portal (or inbound email) on a **Closed** or **Resolved** ticket, the ticket automatically returns to **Open** (no staff permission needed)
 
 Invalid transitions are rejected with a validation error. Use **Close** for a terminal closed state; **Resolved** can still move to **Closed** or back to **Open**.
 
@@ -75,9 +76,11 @@ Users with **assign** can set or clear the assignee from the ticket page or the 
 
 ## Conversation, notes & timeline
 
-- **Conversation** — customer-visible replies (rich text + optional attachment). Shown in the Customer Portal and to staff.
+- **Conversation** — customer-visible replies (rich text + optional attachment). Shown in the Customer Portal and to staff as a chat-style thread.
 - **Internal notes** — staff-only notes with `@mentions` and optional attachments. Never shown to portal customers.
-- **Timeline** — history of create, update, assignment, status change, note, and delete/restore events
+- **Timeline** — history of create, update, assignment, status change (including “Reopened by customer reply”), note, and delete/restore events
+
+Assignees get an **in-app** notification on customer reply (and on close/reopen). Optional **email** for those events is controlled under Settings → Notifications (`help_desk_customer_reply`, `help_desk_closed`, `help_desk_reopened` — default off).
 
 ## Due dates & overdue
 

@@ -56,6 +56,7 @@ New Help Desk permissions for **existing** workspaces ship as an additive **data
 14. Smoke (template reply): With Communication Templates + WhatsApp entitled and contact phone → ticket view → WhatsApp template picker
 15. **1.12.0 real-time board sync:** `php artisan migrate --force` bumps catalog **help-desk → 1.12.0** (do **not** `db:seed`). Deploy Backend + Frontend together; confirm Reverb is up, then smoke two browser sessions on the Kanban board. See [Help Desk real-time board sync 1.12.0 readiness](./help-desk-realtime-board-sync-1-12-0-production-readiness).
 16. **1.14.0 public replies vs internal notes:** `php artisan migrate --force` adds `help_desk_notes.is_internal` + catalog **help-desk → 1.14.0** / **customer-portal → 1.2.0** (do **not** `db:seed`). Deploy Backend + Frontend + Mobile together. Smoke: staff public reply visible in portal; internal note hidden; SLA first response only after staff public reply. See [Help Desk public replies 1.14.0 readiness](./help-desk-public-replies-1-14-0-production-readiness).
+17. **1.15.0 customer reply reopen:** migrate with Customer Portal **1.3.0** (catalog **help-desk → 1.15.0**). Smoke: customer reply on closed/resolved ticket → Open + assignee in-app notify; Settings → Notifications Help Desk mail toggles default off. See [Help Desk 1.15.0 readiness](./help-desk-1-15-0-production-readiness).
 
 ## Roadmap context
 
