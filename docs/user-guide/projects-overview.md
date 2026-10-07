@@ -38,7 +38,7 @@ Projects is **standalone**: it installs with no hard `module_dependencies`, and 
 
 `projects.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
 
-Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.8.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks.
+Enable Projects from Marketplace (free). Catalog: slug `projects`, category `operations` (Operations), version **1.9.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Nav: **Workspace** group, after Tasks. Supports optional **Share with customer portal** when Customer Portal is installed.
 
 ## Why standalone (soft dependencies)
 

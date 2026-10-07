@@ -1,3 +1,9 @@
+## Customer Portal projects & tasks (1.1.0) (2026-10-07)
+
+- **EloSync-Backend:** Portal read APIs for shared projects — `GET /portal/projects`, `/{id}`, `/{id}/tasks`, `/{id}/timeline`. Projects need `portal_visible` + Contact/Company scope; tasks need `visible_to_portal` (default internal). Unsharing a project clears task portal flags. Customer-safe timeline (no members/assignee/notes internals). Catalog **customer-portal 1.0.0 → 1.1.0**, **projects 1.8.0 → 1.9.0**, **tasks 1.8.0 → 1.9.0**. Pest: `PortalProjectsTest`.
+- **EloSync-Frontend:** Staff toggles — Share with customer portal (project) and Visible to customer (task). Portal SPA Projects nav + list/detail (milestones, customer-visible tasks, timeline). Logout preserves `?workspace=` on shared hosts. Headed Playwright `test:e2e:customer-portal:headed` **3/3**.
+- **EloSync-Docs:** Guides + API + [production readiness / audit](/deployment/customer-portal-1-1-0-production-readiness) + this changelog.
+
 ## Password reset uses Central mail (2026-10-07)
 
 - **EloSync-Backend:** Tenant and Customer Portal forgot-password always apply the **Central** mail provider (`CentralMail::apply`) before sending, so workspaces without custom SMTP/Postmark still receive reset links. Workspace billing/CRM mail is unchanged. Pest: `TenantPasswordResetUsesCentralMailTest`.

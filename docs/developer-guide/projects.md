@@ -33,6 +33,7 @@ Lean Operations module mirroring Tasks / Opportunities patterns (board, stats, a
 - **Assignee/member pickers:** `GET /users` excludes the authenticated user (Users admin list). The Projects form and record page merge the signed-in user into picker options (same pattern as Departments) so a solo owner can assign themselves.
 - `starts_on` / `ends_on` are `date` casts. Overdue = open status + non-null `ends_on` + `ends_on` **before** workspace “today” (`TenantSettingService::applyRuntimeConfig` so `now()->toDateString()` is workspace TZ).
 - Soft Task link: nullable `tasks.project_id` FK → `projects` (`nullOnDelete`). Validated by `LinkableProject` (Projects entitled + project visible to actor). Optional `tasks.milestone_id` → `project_milestones` (`nullOnDelete`) via `LinkableProjectMilestone` (same project). Same-project task dependencies in `task_dependencies` (cycle rejected). Catalog bump Tasks **1.5.0**.
+- **Customer Portal share (1.9.0):** `portal_visible` (default `false`) — requires `contact_id` or `company_id`. Portal lists only shared projects in Contact/Company scope. Clearing share sets all linked tasks’ `visible_to_portal` to `false`.
 - **Milestones:** nested under projects (`project_milestones`: title, description, `due_on`, status `open`|`completed`, `sort_order`, `completed_at`). CRUD + `POST …/complete`. Timeline types `milestone_created` / `updated` / `completed` / `deleted`. Show resource embeds `milestones` when loaded.
 - **Portfolio Gantt:** `GET /projects/gantt` — same filters/visibility as list; rows include project dates, milestones, and soft Tasks when Tasks is entitled + actor can `tasks.view` and `view` each task. `depends_on_task_ids` intersected with visible task ids. Date `range` is min/max of project/milestone/task dates. Limit default 100 (max 200). Clears list default eager loads. Catalog **projects 1.5.0**.
 - **Workload heatmap:** `GET /projects/heatmap` — assignee × week cells from open projects (schedule overlap) + soft project Tasks (due week) when entitled; pressure score/band mirrors CRM Analytics staff pressure idea. Optional `weeks` 1–16 (default 8) from workspace start-of-week. Catalog **projects 1.6.0**.
@@ -47,7 +48,7 @@ projects.view | create | update | delete | restore | force.delete | assign
 
 Routes use `module:projects` then `can:projects.*` / policies.
 
-Catalog: slug `projects`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.8.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `projects`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.9.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## API (tenant)
 

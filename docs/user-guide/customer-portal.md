@@ -19,6 +19,7 @@ After login, the portal shell shows sections only when the related workspace mod
 
 | Section | Module | Actions |
 |---------|--------|---------|
+| Projects | `projects` (+ `tasks` for task list) | List/view shared projects, customer-visible tasks, milestones, timeline |
 | Invoices | `invoices` | List, view, download PDF |
 | Payments | `payments` | List, view, download receipt PDF |
 | Quotations | `quotations` | List, view, PDF, get accept link |
@@ -26,6 +27,8 @@ After login, the portal shell shows sections only when the related workspace mod
 | Support | `help-desk` | List, open ticket, add notes |
 
 Visibility is limited to the Contact’s own records, or records for their Company when `company_id` is set. Contracts resolve via the linked Opportunity’s party.
+
+**Projects:** Staff must turn on **Share with customer portal** on the project (and link a Contact or Company). Tasks stay internal unless **Visible to customer** is enabled on each task.
 
 One-shot e-sign pages (`/#/accept/quotations|contracts/...`) still work without a portal login.
 
@@ -37,4 +40,4 @@ One-shot e-sign pages (`/#/accept/quotations|contracts/...`) still work without 
 
 ## Deferred
 
-Projects, tasks, magic-link login, and public Knowledge Base are not in **1.0.0** — see the [overview](/user-guide/customer-portal-overview) and [Product Roadmap](/getting-started/product-roadmap).
+Magic-link login and public Knowledge Base are not in **1.1.0** — see the [overview](/user-guide/customer-portal-overview) and [Product Roadmap](/getting-started/product-roadmap).

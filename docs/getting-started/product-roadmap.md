@@ -248,7 +248,7 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Calendar two-way inbound (2026-10-05):** Provider → EloSync pull as `source=external` (read-only); Sync now + hourly `calendar:pull-provider-events`; EloSync-owned mapped events skipped. Catalog **calendar 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
-Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents. Customer Portal **1.0.0** shipped (projects/tasks portal visibility remains deferred).
+Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents. Customer Portal **1.1.0** ships shared projects/tasks (magic-link login remains deferred).
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
@@ -258,7 +258,7 @@ Next when prioritized: demand-driven items below (broader AI tools continue ligh
 
 | Item | Notes |
 |------|--------|
-| Customer Portal projects/tasks / magic-link login | Beyond **1.0.0** hub — on demand |
+| Customer Portal magic-link login | Beyond **1.1.0** hub — on demand |
 | Recruitment | HR expansion — on demand |
 | Documents nested folders / versioning | Soft record links shipped (create + reverse list); folders/versioning on demand |
 | Marketing campaigns / email campaigns | Separate SKUs; Automation deferred |

@@ -52,5 +52,8 @@ Middleware: `auth:portal-api`, `module:customer-portal`. Soft module checked per
 | Quotations | `GET …`, `/{id}`, `/{id}/pdf`, `POST …/acceptance-link` | `quotations` |
 | Contracts | same as quotations | `contracts` |
 | Help Desk | `GET/POST /portal/help-desk`, `GET /{id}`, `POST /{id}/notes` | `help-desk` |
+| Projects | `GET /portal/projects`, `/{id}`, `/{id}/tasks`, `/{id}/timeline` | `projects` (+ `tasks` for nested tasks) |
 
 Create ticket body: `subject` (required), `description` optional. Server stamps `contact_id` / `company_id` from the portal user’s Contact — client-supplied party IDs are ignored.
+
+Projects require `portal_visible` plus Contact/Company scope. Nested tasks require `visible_to_portal`. Timeline is filtered to customer-safe activity types.
