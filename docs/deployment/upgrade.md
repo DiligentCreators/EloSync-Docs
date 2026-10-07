@@ -17,6 +17,14 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Customer Portal 1.2.0 → 1.3.0 (+ Help Desk 1.14.0 → 1.15.0)
+
+1. Deploy Backend and run `php artisan migrate --force` (portal magic-link + 2FA columns; catalog bumps — **do not** `db:seed`)
+2. Confirm catalog: `customer-portal` **1.3.0**, `help-desk` **1.15.0**
+3. Deploy Frontend (magic-link / Security 2FA / portal KB; Help Desk conversation polish; Settings Help Desk email toggles)
+
+Go-live: [Customer Portal 1.3.0](/deployment/customer-portal-1-3-0-production-readiness) · [Help Desk 1.15.0](/deployment/help-desk-1-15-0-production-readiness).
+
 ## Help Desk 1.13.0 → 1.14.0 (+ Customer Portal 1.1.0 → 1.2.0)
 
 1. Deploy Backend and run `php artisan migrate --force` (`help_desk_notes.is_internal` + backfill + catalog bumps — **do not** `db:seed`)

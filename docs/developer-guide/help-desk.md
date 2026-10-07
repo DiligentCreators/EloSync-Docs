@@ -30,6 +30,7 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 - **Internal** (`true`) — staff-only; `@mentions`; does not mark SLA first response. AI `add_help_desk_ticket_note` always internal.
 - **Public** (`false`) — customer-visible conversation; TipTap HTML + attachments on web; marks SLA first response for staff authors. Portal and email ingest always create public notes.
 - Portal show loads `publicHelpDeskNotes` only (ASC). Staff show embeds all notes newest-first with `is_internal` on each row.
+- **Customer reply reopen (1.15.0):** `HelpDeskTicketService::reopenFromCustomerReply()` runs after portal/`addEmailNote` public notes when status is `closed` or `resolved` → `open` (system actor). Fires `HelpDeskTicketStatusChanged` + timeline “Reopened by customer reply”. `HelpDeskCustomerReplyNotification` to assignee (fallback creator); in-app always; mail via `email_notifications.help_desk_customer_reply` (default off). Close/reopen mail use `help_desk_closed` / `help_desk_reopened` (no longer `task_status`).
 
 ## Domain notes
 
@@ -55,7 +56,7 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.14.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.15.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
 ## Communication Templates (soft)
 
@@ -85,7 +86,7 @@ SPA mirrors **Expenses** (dedicated create/view/edit pages, no create/edit page 
 | Nav | **Operations** sidebar group — `permission: PERMISSIONS.helpDesk.view`, `module: 'help-desk'` |
 | Route | `tenantRoutes.helpDesk = '/help-desk'`, lazy-loaded in `App.tsx` behind `RequireAccess module="help-desk"` |
 | Dashboard | `tenant-dashboard-widgets.tsx` — `help_desk_my_open` widget |
-| Notifications | `src/notifications/modules/help-desk.ts` — assigned/closed/reopened/due/overdue/SLA breach types (deep link `/help-desk/:id`) |
+| Notifications | `src/notifications/modules/help-desk.ts` — assigned/closed/reopened/customer_reply/due/overdue/SLA breach types (deep link `/help-desk/:id`) |
 | Playwright | `e2e/pages/help-desk.page.ts`, `e2e/tests/help-desk/`, `npm run test:e2e:help-desk` |
 
 ## Real-time board sync

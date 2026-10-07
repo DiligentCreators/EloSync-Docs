@@ -1,3 +1,10 @@
+## Customer Portal depth + Help Desk reopen (1.3.0 / 1.15.0) (2026-10-08)
+
+- **EloSync-Backend:** Portal magic-link (`POST /portal/auth/magic-link` + consume; Central mail; 15 min single-use token); Fortify TOTP on `PortalUser` (login/magic-link challenge + `/portal/auth/two-factor*`); published Knowledge Base portal read APIs. Help Desk: `reopenFromCustomerReply` on portal/email public notes (closed/resolved → open); `HelpDeskCustomerReplyNotification`; email prefs `help_desk_closed` / `help_desk_reopened` / `help_desk_customer_reply` (default off; in-app always). Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**. Pest: PortalAuth/TwoFactor/KnowledgeBase/HelpDesk reopen + catalog bump tests.
+- **EloSync-Frontend:** Portal magic-link request/consume pages, Security (2FA), Knowledge Base list/view, login 2FA challenge; Help Desk staff + portal conversation UI polish; Settings → Notifications Help Desk email toggles; `help_desk.customer_reply` notification registry. Headed Playwright `test:e2e:customer-portal:headed` **3/3** (magic-link, KB, reopen-on-reply, Security, settings toggles); `test:e2e:help-desk:headed` **3/3**.
+- **EloSync-Docs:** User/developer/API/roadmap + [Customer Portal 1.3.0 audit](/deployment/customer-portal-1-3-0-production-readiness) / [Help Desk 1.15.0 audit](/deployment/help-desk-1-15-0-production-readiness) + this changelog.
+- **Go-live:** migrate-only; deploy Backend + Frontend together. Verdict **Go**.
+
 ## Help Desk public replies vs internal notes (1.14.0) (2026-10-07)
 
 - **EloSync-Backend:** `help_desk_notes.is_internal` (default staff internal; portal/email public). Staff `POST …/notes` accepts `is_internal` + richer body max; SLA first response only on staff public replies (or leave Open). Portal show filters public notes; multipart reply + note-attachment download; portal replies never set SLA first response. AI confirm forces internal. Catalog **help-desk 1.13.0 → 1.14.0**, **customer-portal 1.1.0 → 1.2.0** (migrate-only + CatalogSeeder). Pest: `PortalHelpDeskTest`, `HelpDeskSlaTest`, mail/AI note cases, version bump tests.

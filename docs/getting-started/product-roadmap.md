@@ -126,8 +126,8 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.14.0** (public replies vs internal notes; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.2.0** (rich Support replies + attachments; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
+| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.15.0** (customer reply reopens closed/resolved + reply notify; public replies **1.14.0**; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.3.0** (magic-link + portal 2FA + public KB; Support replies **1.2.0**; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
@@ -144,13 +144,13 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.0.0** (invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track) |
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.3.0** (magic-link, portal 2FA, public KB; projects/tasks **1.1.0**; Support **1.2.0**) |
 
-Deferred beyond 1.0.0: projects/tasks visibility; magic-link login; public Knowledge Base; portal 2FA.
+Deferred beyond 1.3.0: online checkout; portal passkeys.
 
 ### Other Operations deferred
 
-- Knowledge Base: public URLs, nested categories
+- Knowledge Base: anonymous public URLs (portal published read shipped **customer-portal 1.3.0**); nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
 - Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
 - Automation: Marketing campaigns / email campaigns (separate SKUs); branching; `generate_order` action; WhatsApp auto-send of generated documents (email `auto_send` shipped **automation 1.6.0**)
@@ -248,7 +248,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Calendar two-way inbound (2026-10-05):** Provider → EloSync pull as `source=external` (read-only); Sync now + hourly `calendar:pull-provider-events`; EloSync-owned mapped events skipped. Catalog **calendar 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
-Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents. Customer Portal **1.1.0** ships shared projects/tasks (magic-link login remains deferred).
+Still deferred: named team calendars; webhook-driven inbound; Project/Contact/Company overlay push; multi-currency; PO/Vendor portals; Automation `generate_order` + WhatsApp auto-send of documents. Customer Portal **1.3.0** ships magic-link, portal 2FA, and published KB (online checkout / passkeys remain deferred).
+
+**Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 
 Next when prioritized: demand-driven items below (broader AI tools continue lightly).
 
