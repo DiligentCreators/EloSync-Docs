@@ -140,4 +140,4 @@ Ask EloSync Help Desk tools (`get_help_desk_ticket`, confirmed status/assign/not
 
 ## Deferred
 
-- Chat/social intake (Customer Portal submit/track is a separate module — see [customer-portal](/developer-guide/customer-portal))
+- Social network DMs / auto-ticket on WhatsApp inbound / bidirectional sync (Portal + Live Chat escalate + WhatsApp escalate ship — see [customer-portal](/developer-guide/customer-portal), Live Chat escalate, WhatsApp Cloud **1.5.0** `POST …/whatsapp/conversations/{id}/escalate`)

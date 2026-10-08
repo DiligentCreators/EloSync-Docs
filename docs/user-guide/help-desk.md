@@ -96,7 +96,7 @@ Define policies under **Manage SLAs**. Each policy sets first-response and resol
 
 ## What's not here yet
 
-External customer submit/track ships via the [Customer Portal](/user-guide/customer-portal) module (not inside this page). Chat/social intake channels remain deferred — see the [Product Roadmap](/getting-started/product-roadmap). **Internal notes** support `@mentions`. Use **Board** / **List** for status Kanban. Soft-gated WhatsApp Communication Templates appear on ticket view when that module is installed and the contact has a phone.
+External customer submit/track ships via the [Customer Portal](/user-guide/customer-portal) module (not inside this page). **Chat intake:** escalate from [Live Chat](/user-guide/live-chat) or [WhatsApp Cloud](/user-guide/whatsapp-cloud) (Help Desk **1.16.0**) — tickets show a source badge (Email / Portal / Live Chat / WhatsApp). Social network DMs remain deferred — see the [Product Roadmap](/getting-started/product-roadmap). **Internal notes** support `@mentions`. Use **Board** / **List** for status Kanban. Soft-gated WhatsApp Communication Templates appear on ticket view when that module is installed and the contact has a phone.
 
 When **Communication Templates** is installed and you have `communication-templates.use`, open a ticket with a linked contact that has a phone number and click **WhatsApp** to pick a Help Desk template (or a blank chat). EloSync opens WhatsApp Web/app with the message pre-filled — it does not send messages for you.
 

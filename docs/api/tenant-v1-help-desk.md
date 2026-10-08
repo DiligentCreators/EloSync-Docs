@@ -44,7 +44,7 @@ Real-time (catalog **1.12.0**): private Echo channel `tenant.{tenantId}.help-des
 
 Query: `search` (matches `subject`, `number`, or `description`), `status` (`open`\|`in_progress`\|`waiting`\|`resolved`\|`closed`), `priority` (`low`\|`medium`\|`high`\|`urgent`), `category_id`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_tickets`, `overdue`, `sla_breached` (`1` / `true` / `response` / `resolve`), `sla_at_risk`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `priority`, `source` (`manual`\|`email`), SLA clock fields (`sla_policy_id`, `first_responded_at`, `sla_response_due_at`, `sla_resolve_due_at`, `sla_response_breached_at`, `sla_resolve_breached_at`), embedded `sla_policy` / `category`, `due_at`, contact/company refs (when linked), `knowledge_base_articles` summary, assignee/creator refs, and `latest_note`.
+List items include `status`, `priority`, `source` (`manual`\|`email`\|`portal`\|`live-chat`\|`whatsapp`), optional filter `source`, SLA clock fields (`sla_policy_id`, `first_responded_at`, `sla_response_due_at`, `sla_resolve_due_at`, `sla_response_breached_at`, `sla_resolve_breached_at`), embedded `sla_policy` / `category`, `due_at`, contact/company refs (when linked), `knowledge_base_articles` summary, assignee/creator refs, and `latest_note`.
 
 ### POST `/help-desk`
 

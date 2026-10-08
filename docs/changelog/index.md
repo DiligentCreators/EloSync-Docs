@@ -1,3 +1,10 @@
+## Help Desk multi-channel intake (1.16.0) + WhatsApp escalate (1.5.0) (2026-10-08)
+
+- **EloSync-Backend:** WhatsApp Cloud `POST …/conversations/{id}/escalate` creates a Help Desk ticket (`source=whatsapp`, transcript snapshot, soft FK `whatsapp_conversations.help_desk_ticket_id`); soft-fails when Help Desk not entitled. Help Desk list accepts `?source=`. Catalog **help-desk 1.15.0 → 1.16.0**, **whatsapp-cloud 1.4.0 → 1.5.0**. Pest: escalate happy/fail + catalog bumps.
+- **EloSync-Frontend:** WhatsApp inbox **Escalate** + ticket deep link; Help Desk source badges for email / portal / live-chat / whatsapp. Playwright WhatsApp one-session escalate assert.
+- **EloSync-Docs:** User/developer/API/upgrade/roadmap + [production readiness](/deployment/help-desk-1-16-0-production-readiness) + this changelog.
+- **Go-live:** migrate-only; no new permissions. Headed Playwright Help Desk **3/3** + WhatsApp Cloud **9/9**. Verdict **Go**.
+
 ## Automation generate_order / Purchase Order (1.8.0) (2026-10-08)
 
 - **EloSync-Backend:** New action `generate_order` → `PurchaseOrderService::create` (empty lines; requires `vendor_id` from config or vendor trigger). Optional `auto_send` / `auto_send_whatsapp` mark Sent and email/WhatsApp the vendor (reuses `AutomationDocumentWhatsAppSender`). Registered in `AutomationActionRegistry` / `ActionRunner`; starter template `manual_generate_purchase_order` (`required_modules: ['purchase-orders']`). Catalog **automation 1.7.0 → 1.8.0**. Pest: generate_order draft + email auto-send; catalog bump; companion versions.

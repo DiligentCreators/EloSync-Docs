@@ -138,7 +138,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 ### Help Desk deferred
 
-- Multi-channel intake beyond shared IMAP (chat, social)
+- Social network DMs (Instagram / Messenger / X / Telegram); auto-create ticket on WhatsApp inbound; bidirectional chat ↔ ticket note sync (WhatsApp escalate + Live Chat escalate + Portal + IMAP already ship — see Help Desk **1.16.0**)
 
 ### Customer Portal (shipped)
 
@@ -255,6 +255,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Calendar Project/Contact/Company overlay provider push (2026-10-08):** `CalendarEventSourceEnum::shouldPushToProvider()` extended to **Project + Contact + Company** overlays (alongside the existing manual/meeting/task/lead sources), so every sourced calendar event now pushes to connected Google/Outlook accounts the same soft-fail way. Catalog **calendar 1.6.0 → 1.7.0**.
 
 **Calendar webhook-driven inbound sync (2026-10-08):** Google channel + Microsoft Graph subscription watches (`createWatch`/`renewWatch`/`stopWatch`, soft-fail) persisted on `calendar_provider_connections.meta`; ensured on OAuth connect + Sync now. Public `POST /webhooks/calendar-sync/{provider}` resolves the connection and queues the existing inbound pull job — near real-time instead of waiting for the hourly backstop. Daily `calendar:renew-provider-watches` renews before Graph's ~3-day expiry. Catalog **calendar 1.7.0 → 1.8.0**.
+
+**Help Desk multi-channel intake (2026-10-08):** WhatsApp escalate → ticket (`source=whatsapp`) peers Live Chat escalate / Portal / IMAP; Help Desk source badges. Catalog **help-desk 1.15.0 → 1.16.0**, **whatsapp-cloud 1.4.0 → 1.5.0**. Closes the “chat beyond IMAP” deferred item (social DMs remain). Go-live: [production readiness](/deployment/help-desk-1-16-0-production-readiness).
 
 **Calendar named team/department calendars (2026-10-08):** New `calendars` table (name/slug, optional soft-linked `department_id`, creator); `calendar_events.calendar_id` nullable FK (`null` stays personal). `GET/POST/PUT/DELETE /calendar/calendars` behind new `calendar.manage_calendars` permission (admin/manager default). Visibility adds creator + department members/manager (only when Departments is entitled) + `calendar.view_all`; posting to a named calendar needs `calendar.create` and membership. SPA filter chips (All/Personal/named), manage-calendars dialog, and an event-form calendar picker. Catalog **calendar 1.8.0 → 1.9.0**. Closes the "Calendar: named team calendars" deferred item above.
 
