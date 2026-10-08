@@ -1,3 +1,9 @@
+## Payroll pay slip PDF polish (1.5.1) (2026-10-08)
+
+- **EloSync-Backend:** Pay slip PDF hides **Daily rate**; slip number displays as zero-padded four digits (`0001`). Catalog **payroll 1.5.0 → 1.5.1**. Pest: `MyPaySlipTest` + catalog bump.
+- **EloSync-Docs:** User/developer guides + this changelog.
+- **Go-live:** migrate-only; no new permissions. Pay-run admin table still shows daily rate for audit.
+
 ## Leads follow-up KPI filters (1.9.1) (2026-10-08)
 
 - **EloSync-Backend:** List/board/export accept `follow_up=today|overdue` (pending follow-ups via `UtcInstant` day bounds / now). Stats ignores `follow_up` so KPI strip stays stable. Catalog **leads 1.9.0 → 1.9.1**. Pest: filter + catalog bump.

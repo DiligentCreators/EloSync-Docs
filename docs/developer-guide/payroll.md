@@ -56,17 +56,18 @@ See [tenant-v1-payroll.md](/api/tenant-v1-payroll).
 - Settings → Attendance: working-day basis radios
 - List / peek / view: **Approve**, **Mark paid**, **Export CSV**; Accounting entitled → Paid-from dialog (`PayRunMarkPaidDialog`)
 - Full page: **Post to journal** for optional early accrual
-- Catalog version **1.5.0**
+- Catalog version **1.5.1**
 
 ## Pay slip PDF
 
 `MyPaySlipService::render` builds Layout A (matching invoice/receipt chrome):
 
 - Seller header from `BrandedDocumentPdfContext::companyProfile` + `logoDataUri` / `primaryColor`
-- Right meta: **PAY SLIP**, status, period dates, slip id
-- Parties: **Employee** | **Period details** (working days, daily rate, days counted, present/leave/absent/late)
+- Right meta: **PAY SLIP**, status, period dates, slip # zero-padded to 4 digits (`str_pad` on `pay_run_lines.id`, e.g. `0001`)
+- Parties: **Employee** | **Period details** (working days, days counted, present/leave/absent/late — daily rate omitted from the employee PDF; still on pay-run line admin/API)
 - Amounts table: Salary for days counted + Deduction amount; totals + **PAYABLE SALARY** bar
 - Money uses workspace `currency` from Settings → General
+- Catalog version **1.5.1**
 
 ## Tests
 
