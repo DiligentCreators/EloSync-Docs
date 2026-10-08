@@ -42,6 +42,35 @@ Go-live: [Help Desk public replies 1.14.0 production readiness](/deployment/help
 
 Go-live: [Customer Portal 1.0.0 production readiness](/deployment/customer-portal-1-0-0-production-readiness).
 
+## Calendar 1.8.0 → 1.9.0 — named team/department calendars
+
+1. Deploy Backend and run `php artisan migrate --force` (`calendars` table, `calendar_events.calendar_id`, `calendar.manage_calendars`, bump to **1.9.0** — **do not** `db:seed`)
+2. Confirm catalog version: calendar **1.9.0**; admin/manager have `calendar.manage_calendars`
+3. Deploy the SPA — Manage calendars, filter chips, event Calendar picker
+4. Staging smoke: create named calendar → post event → filter; with Departments entitled, department member sees team events
+
+Go-live: [Calendar named calendars 1.9.0 production readiness](/deployment/calendar-named-calendars-1-9-0-production-readiness).
+
+## Calendar 1.7.0 → 1.8.0 — webhook-driven inbound sync
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_08_160000_bump_calendar_module_to_1_8_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: calendar **1.8.0**
+3. Confirm public `POST /webhooks/calendar-sync/{provider}` is reachable; scheduler runs `calendar:renew-provider-watches` daily; Horizon **`calendar-sync`**; hourly pull remains
+4. Deploy the SPA — Sync panel “near real-time” copy / badge
+5. Staging smoke: Connect → Sync now → provider-side create appears as External without waiting for the hourly job
+
+Go-live: [Calendar webhook inbound 1.8.0 production readiness](/deployment/calendar-webhook-inbound-1-8-0-production-readiness).
+
+## Calendar 1.6.0 → 1.7.0 — Project/Contact/Company overlay push
+
+1. Deploy Backend and run `php artisan migrate --force` (catalog bump to **1.7.0** — **do not** `db:seed`)
+2. Confirm catalog version: calendar **1.7.0**
+3. Deploy the SPA — Sync panel copy lists Project/Contact/Company overlays
+4. Confirm Horizon **`calendar-sync`**
+5. Staging smoke (OAuth connected): Project dates / Contact or Company follow-up → provider calendar
+
+Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar-overlay-provider-push-1-7-0-production-readiness).
+
 ## Calendar 1.5.0 → 1.6.0 — two-way inbound sync
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_170000_bump_calendar_module_version_to_1_6_0` — catalog only; **do not** `db:seed`)
