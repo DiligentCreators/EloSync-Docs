@@ -723,7 +723,7 @@ Daily attendance records per employee: list and filter, record attendance, self 
 | Form | `components/forms/AttendanceFormFields.tsx` — shared create/edit + employee picker |
 | Routes | `app/(app)/(tabs)/attendance/` — `index`, `new`, `[id]/index`, `[id]/edit` |
 | Nav | `config/modules.ts` — `permission: attendance.view`, tab `/(app)/(tabs)/attendance` (label **Clock**) |
-| Permissions | `attendance.view`, `attendance.create`, `attendance.update`, `attendance.delete` |
+| Permissions | `attendance.view`, `attendance.create`, `attendance.update`, `attendance.delete`, `attendance.backdate` |
 
 KPI stats, date-range filters, trash/restore, geolocation, and office-hours automation remain web-only on mobile v1. Requires **Employees** module entitlement.
 

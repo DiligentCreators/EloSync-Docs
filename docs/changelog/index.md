@@ -1,3 +1,10 @@
+## Attendance backdate permission (1.7.0) (2026-10-08)
+
+- **EloSync-Backend:** Manual create/update for a date other than workspace **today** requires new `attendance.backdate` (default admin + manager). Workspace owner (`superadmin`) may always backdate without the permission. Staff remain today-only. Catalog **attendance 1.6.0 → 1.7.0**. Pest: `AttendanceBackdateTest`.
+- **EloSync-Frontend / Mobile:** Date picker locked to today unless the actor has `attendance.backdate` (owner bypass via existing `hasPermission` superadmin rule).
+- **EloSync-Docs:** User/developer/API/deployment + this changelog.
+- **Go-live:** migrate-only; grant `attendance.backdate` to default admin/manager roles.
+
 ## Invoices post-send edit approval (1.10.0) (2026-10-08)
 
 - **EloSync-Backend:** Unpaid invoices (no payments/credits) can receive a **pending edit request** (`POST …/edit-requests`); live content unchanged until `approve`. New permission `invoices.approve_edit` (admin/manager defaults). Approvers notified in-app + email (`customer_invoice.edit_requested`). Reject discards the proposal. Catalog **invoices 1.9.5 → 1.10.0**. Pest: `CustomerInvoiceEditApprovalTest`.

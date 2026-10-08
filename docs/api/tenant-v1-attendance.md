@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:attendance`, plus `can:attendance.*`.
 
-Catalog version: **1.6.0**.
+Catalog version: **1.7.0**.
 
 ## Stats
 
@@ -82,11 +82,13 @@ Kinds: `check_in_late`, `check_out`. Each kind has a protected **Other** row (`i
 
 Body: `employee_id`, `date` (required; unique per employee), required `change_reason` (min 5), optional `check_in` / `check_out` (`HH:MM` or `HH:MM:SS`), `status` (`present`\|`absent`\|`half_day`\|`remote`\|`late`, default `present`), `notes`, optional `latitude` / `longitude`. Server stamps check-in/out IP when times are set (client IPs are ignored).
 
+**Date rules:** `date` other than workspace today requires `attendance.backdate` (or workspace owner / `superadmin`). Actors without that privilege receive a `date` validation error.
+
 Login side-effect (optional): when `attendance_auto_check_in_on_login` is **true**, successful `POST /auth/login`, passkey login, or 2FA challenge may upsert today’s on-site check-in for the user’s active linked employee (optional `latitude` / `longitude` on those payloads). Default is **false** — staff must use check-in. If the login would be **late** and `attendance_require_late_reason` is **true**, auto check-in is **skipped** (no reason can be collected on login).
 
 ### PUT `/attendance-records/{attendanceRecord}`
 
-Partial update of the same fields (plus work mode / reason fields for managers). **`change_reason` is required** (min 5). Optional `latitude` / `longitude` re-stamp location when check-in/out times change.
+Partial update of the same fields (plus work mode / reason fields for managers). **`change_reason` is required** (min 5). Optional `latitude` / `longitude` re-stamp location when check-in/out times change. Changing `date` to a day other than today requires `attendance.backdate` (or owner); leaving a past date unchanged does not.
 
 ### GET `/attendance-records/{attendanceRecord}/timeline`
 

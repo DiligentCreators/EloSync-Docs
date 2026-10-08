@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.6.0** (department-scoped digests/list for department managers + prior daily digests / location/timeline features)
+- Current catalog version: **1.7.0** (manual today-only for staff + `attendance.backdate`; prior department-scoped digests/list)
 
 ## Bootstrap
 
@@ -18,6 +18,13 @@
 ## Timezone
 
 Self check-in “today”, the HH:MM timer, late classification, and **daily digest send times** use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end, remote start, late report time, and yesterday report time are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+
+## Deploy checklist (1.7.0)
+
+1. Migrate through `2026_10_08_203346` (grant `attendance.backdate` to default admin/manager + catalog **attendance → 1.7.0**)
+2. Confirm default roles: admin + manager have `attendance.backdate`; staff does **not**
+3. Smoke: staff manual create accepts today only and rejects yesterday; owner/admin can create past dates; staff with `attendance.backdate` can create past dates
+4. Pest: `tests/Feature/Tenant/Attendance/AttendanceBackdateTest.php`
 
 ## Deploy checklist (1.6.0)
 
