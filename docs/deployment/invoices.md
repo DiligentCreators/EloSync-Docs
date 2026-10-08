@@ -8,7 +8,7 @@ Full go-live audit / checklist: [Invoices 1.1.0 production readiness](./invoices
 - Category: **Billing** (`billing`)
 - **Free Marketplace opt-in** (not auto-installed)
 - Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 10`
-- Catalog version: **1.6.0** (`contract_id` for invoices created from contracts; status model `draft` / `unpaid` / `paid` / `cancelled`; recurring + branded PDF)
+- Catalog version: **1.9.4** (money KPIs, CSV/XLSX export, overdue digest, show `payment_bank`; status model `draft` / `unpaid` / `paid` / `cancelled`; recurring + branded PDF)
 - **No hard dependency** — unlike Quotations/Contracts, Invoices does **not** require Opportunities (or any other module) and can be installed standalone
 - The **Payments** module (shipped — see [deployment/payments.md](/deployment/payments)) declares a required `module_dependencies` row on Invoices, so Invoices must be installed first before a workspace can enable Payments
 
@@ -27,11 +27,12 @@ New Invoices permissions for **existing** workspaces ship as an additive **data 
 ## Monitoring
 
 - Platform audit events: `customer_invoice_created`, `customer_invoice_updated`, `customer_invoice_deleted`, `customer_invoice_assigned`, `customer_invoice_status_changed`, `customer_invoice_note_added`
-- Notifications: assignment via `CustomerInvoiceAssignedNotification`
+- Notifications: assignment via `CustomerInvoiceAssignedNotification`; daily overdue digest via `CustomerInvoiceOverdueDigestNotification` (`invoice.overdue.digest`)
 
 ## Scheduler
 
 - `invoices:generate-recurring` daily (`withoutOverlapping(120)`, `onOneServer`) — for entitled workspaces, creates **draft** occurrences when `recurrence_next_issue_on` is due in the **workspace timezone**. Skips tenants without Invoices installed.
+- `invoices:send-overdue-digest` daily (`withoutOverlapping(120)`, `onOneServer`) — emails managers with `invoices.view` + `invoices.assign` (or superadmin) when unpaid overdue invoices exist.
 - Chunks due series roots (`INVOICES_RECURRING_CHUNK_SIZE`, default 100) and stops a tenant run when the time budget is reached (`INVOICES_RECURRING_TIME_BUDGET_SECONDS`, default 45). Catch-up is capped per series per run (`INVOICES_RECURRING_CATCHUP_CAP`, default 52); remaining periods run on the next daily tick.
 - Exit code is **non-zero** if any entitled tenant had a failed series or an exception. Watch `invoices.generate-recurring.tenant_failed` / `series_failed` and Nightwatch command duration.
 
@@ -58,8 +59,9 @@ Defaults are production-safe. Override only if Nightwatch shows slow generate or
 3. Run invoices permissions migration so default roles receive missing `invoices.*` grants
 4. Confirm `module:invoices` + `invoices.*` permissions on target roles
 5. Deploy Frontend SPA with Invoices nav (new **Billing** sidebar group)/pages (mirror Quotations table + form) when the SPA ships
-6. Confirm scheduler includes `invoices:generate-recurring`
-7. Payments (shipped) declares a `module_dependencies` row on `invoices` — confirm it blocks install on workspaces without Invoices entitled (see [deployment/payments.md](/deployment/payments))
+6. Confirm scheduler includes `invoices:generate-recurring` and `invoices:send-overdue-digest`
+7. Confirm `invoices.export` is granted to default admin/manager roles (bump migration)
+8. Payments (shipped) declares a `module_dependencies` row on `invoices` — confirm it blocks install on workspaces without Invoices entitled (see [deployment/payments.md](/deployment/payments))
 
 ## Ask EloSync
 

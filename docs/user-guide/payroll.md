@@ -41,7 +41,7 @@ When **Calendar month days** is selected, pay runs must start on the 1st and end
 
 Linked employees with `payroll.view_own` (staff by default) can open **My salary slips** and download PDF copies of their **paid** pay-run lines for personal records. Managers with `payroll.view` can also download line PDFs from a paid pay run’s lines table (**Download**).
 
-Pay slip PDFs use the same company branding as invoices and quotations: logo and button color (when **Branded** is entitled), company name/tagline/address/phone/website from **Settings → Branding**, and tax registration ID from **Settings → General** when set. Each slip shows employee details, period attendance breakdown (including daily rate and days counted), salary for days, deduction amount, and payable salary.
+Pay slip PDFs use the same company branding as invoices and quotations: logo and button color (when **Branded** is entitled), company name/tagline/address/phone/website from **Settings → Branding**, and tax registration ID from **Settings → General** when set. Each slip shows a zero-padded slip number (e.g. **0001**), employee details, period attendance breakdown (working days, days counted, present/leave/absent/late — daily rate is kept on the pay-run admin table only), salary for days, deduction amount, and payable salary.
 
 ## Workflow
 

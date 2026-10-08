@@ -1,3 +1,23 @@
+## Invoices money KPIs, export, overdue digest (1.9.4) (2026-10-08)
+
+- **EloSync-Backend:** Invoice stats add money KPIs (`total_amount`, `received_amount`, `pending_amount`, `outstanding_balance`); stats ignore `overdue` so the KPI strip stays stable. List/export accept `date_from` / `date_to` (issue date). `GET /invoices/export` (CSV/XLSX) behind new `invoices.export`. Show includes workspace `payment_bank` from Branding. Daily `invoices:send-overdue-digest` emails managers (`invoices.view` + `invoices.assign` / superadmin) with overdue rows and deep links (`?overdue=1`). Catalog **invoices 1.9.3 → 1.9.4**. Pest: export, stats money fields, digest, payment bank, catalog bump.
+- **EloSync-Frontend:** List defaults to month-to-date issue dates; money KPI strip (colors); Overdue KPI/`?overdue=1` clears dates; 60‑minute list/stats poll; Export menu; create form defaults issue/due to today; record view shows bank account when configured; notification route for `invoice.overdue.digest`.
+- **EloSync-Docs:** User/developer/API/deployment + this changelog.
+- **Go-live:** migrate-only; grant `invoices.export` to default admin/manager roles via bump migration. Confirm scheduler includes `invoices:send-overdue-digest`.
+
+## Payroll pay slip PDF polish (1.5.1) (2026-10-08)
+
+- **EloSync-Backend:** Pay slip PDF hides **Daily rate**; slip number displays as zero-padded four digits (`0001`). Catalog **payroll 1.5.0 → 1.5.1**. Pest: `MyPaySlipTest` + catalog bump.
+- **EloSync-Docs:** User/developer guides + this changelog.
+- **Go-live:** migrate-only; no new permissions. Pay-run admin table still shows daily rate for audit.
+
+## Leads follow-up KPI filters (1.9.1) (2026-10-08)
+
+- **EloSync-Backend:** List/board/export accept `follow_up=today|overdue` (pending follow-ups via `UtcInstant` day bounds / now). Stats ignores `follow_up` so KPI strip stays stable. Catalog **leads 1.9.0 → 1.9.1**. Pest: filter + catalog bump.
+- **EloSync-Frontend:** Today's / Overdue follow-up KPI cards toggle the matching list/board filter (click again to clear).
+- **EloSync-Docs:** User/developer/API + this changelog.
+- **Go-live:** migrate-only; no new permissions.
+
 ## Help Desk multi-channel intake (1.16.0) + WhatsApp escalate (1.5.0) (2026-10-08)
 
 - **EloSync-Backend:** WhatsApp Cloud `POST …/conversations/{id}/escalate` creates a Help Desk ticket (`source=whatsapp`, transcript snapshot, soft FK `whatsapp_conversations.help_desk_ticket_id`); soft-fails when Help Desk not entitled. Help Desk list accepts `?source=`. Catalog **help-desk 1.15.0 → 1.16.0**, **whatsapp-cloud 1.4.0 → 1.5.0**. Pest: escalate happy/fail + catalog bumps.

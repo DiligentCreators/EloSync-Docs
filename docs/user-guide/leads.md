@@ -17,7 +17,7 @@ Open **Leads** from the sidebar under **CRM**. The default view is the **Kanban 
 - Search by name, email, phone, or company
 - Each stage column header and its cards use that stage’s color; Stage badges in the table and record page use the same colors
 - Filter by stage, status, priority, tag, assignee, **created by**, **updated by**, and lead value range
-- KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope
+- KPI cards summarize totals, pipeline value, follow-ups, and conversion metrics for your scope. Click **Today's follow-ups** or **Overdue follow-ups** to filter the board/table to leads with matching pending follow-ups (click again to clear)
 - Table columns include **Created by** and **Updated by** (shows **System** for imports/webhooks with no actor); board cards may show a short “By …” badge. **Updated by** changes when someone edits the lead, adds a note, changes tags, or manages follow-ups.
 - Table and board both show **lead type**, **tags**, the **latest note**, and **next follow-up**; hover a truncated preview to read the full note or follow-up details
 - With **update** permission, click tag badges (or **Add tags** when empty) on a table row or board card to open an inline tag picker — no need to open the lead record. Applying **Follow Up Later** still requires a follow-up due date in the popover before **Save tags**

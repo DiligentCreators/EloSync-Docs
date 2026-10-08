@@ -2,13 +2,13 @@
 
 ## Who can use Invoices
 
-Your workspace must have the **Invoices** module installed (free from Marketplace — not auto-installed, and **no other module is required first**). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `send`, `void` as needed).
+Your workspace must have the **Invoices** module installed (free from Marketplace — not auto-installed, and **no other module is required first**). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `send`, `void`, `export` as needed).
 
 Without **assign**, you only see invoices assigned to you.
 
 ## List & table
 
-Open **Invoices** from the sidebar (**Billing**). Search by title, number, contact name, company name, or phone, filter by status or assignee, toggle **My invoices** or **Overdue only**, and switch KPI cards (Total, My Invoices, Draft, Sent, Overdue) to quick-filter the table. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
+Open **Invoices** from the sidebar (**Billing**). Search by title, number, contact name, company name, or phone, filter by status or assignee, toggle **My invoices** or **Overdue only**, and use the money KPI strip (**Total Amount**, **Received**, **Pending**, **Balance**, **Overdue**). The list defaults to **month-to-date** issue dates (workspace timezone); choosing **Overdue** clears those dates and sets `?overdue=1` so the full overdue set is shown. **Export** (CSV or Excel) downloads the current filters when you have `invoices.export`. The table and KPI strip refresh about once an hour. The table shows total, balance due, due date, and the **latest note**; hover a truncated preview to read the full note.
 
 - A **Partial** badge appears when an invoice is **Unpaid** but has payments posted (`amount_paid > 0`) and a remaining balance (`balance_due > 0`). This is display-only — the stored status stays **Unpaid** until the balance clears.
 - An **Overdue** badge appears next to the status badge for unpaid invoices past their due date
@@ -18,7 +18,7 @@ Open **Invoices** from the sidebar (**Billing**). Search by title, number, conta
 ## Create & edit
 
 1. Click **New invoice** (or open **New invoice** from a [Contact](/user-guide/contacts) record — contact/company are prefilled from the URL)
-2. Enter a title, optional contact/company link (when Contacts/Companies is installed — use **New** beside each picker to create and select without leaving the form), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date, due date, notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline). New invoices prefill Terms & conditions from **Settings → Branding → Default terms & conditions** when that workspace setting is set.
+2. Enter a title, optional contact/company link (when Contacts/Companies is installed — use **New** beside each picker to create and select without leaving the form), optional linked quotation, currency (defaults to your workspace currency; full shared currency list), issue date and due date (both default to **today** in the workspace timezone), notes, and optional **Terms & conditions** (rich text — headings, lists, bold/italic/underline). New invoices prefill Terms & conditions from **Settings → Branding → Default terms & conditions** when that workspace setting is set.
 3. Choose a shared **line discount type** (none, percent, or fixed), then add lines. When **Products** is installed, optionally **select a product** to auto-fill name, details (from the product description), and unit price — you can still edit those fields. Lines also include Qty, Discount value (when type is not none), Tax %, with optional rich-text **Details** under each row — subtotal, discount, tax, and total update automatically. Tax is applied after line discounts. The totals panel also shows **Paid**, **Credits**, and **Balance due** on existing invoices.
 4. Optionally set an assignee (requires **assign**)
 5. Save with **Create** (returns to the list) or **Create & View** (opens the record). Invoices also offer **Create & Send**.
@@ -41,6 +41,12 @@ Stopping the series does **not** void history by itself.
 ## Download PDF
 
 **Download PDF** is on the invoice record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), company profile, and optional bank details — plus line items, subtotal/discount/tax/total breakdown, balance due, and the memo notes. When **Settings → General → Tax registration ID** is filled, that ID appears under the company address on the PDF; when it is blank, the line is omitted. Long notes and terms continue across as many pages as needed. When payments have been posted, the PDF includes a **Payments received** table (date, payment number, method, reference, amount). A **Partial** chip appears when the invoice is unpaid with partial payments. Configure missing company/payment fields under Branding.
+
+The invoice **record page** also shows a **Bank account** section when Branding bank details are configured (same fields as on the PDF).
+
+## Overdue digest email
+
+Managers with **view** and **assign** (and workspace owners/superadmins) receive a daily **overdue invoices** email when there is at least one unpaid overdue invoice in scope. The email lists overdue invoices and links into the list with `?overdue=1`.
 
 ## Email customer
 
