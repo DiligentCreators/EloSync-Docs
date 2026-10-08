@@ -27,12 +27,12 @@ New Invoices permissions for **existing** workspaces ship as an additive **data 
 ## Monitoring
 
 - Platform audit events: `customer_invoice_created`, `customer_invoice_updated`, `customer_invoice_deleted`, `customer_invoice_assigned`, `customer_invoice_status_changed`, `customer_invoice_note_added`
-- Notifications: assignment via `CustomerInvoiceAssignedNotification`; daily overdue digest via `CustomerInvoiceOverdueDigestNotification` (`invoice.overdue.digest`)
+- Notifications: assignment via `CustomerInvoiceAssignedNotification`; open-invoice digest via `CustomerInvoiceOverdueDigestNotification` (`invoice.digest`) when Settings enable it
 
 ## Scheduler
 
 - `invoices:generate-recurring` daily (`withoutOverlapping(120)`, `onOneServer`) — for entitled workspaces, creates **draft** occurrences when `recurrence_next_issue_on` is due in the **workspace timezone**. Skips tenants without Invoices installed.
-- `invoices:send-overdue-digest` daily (`withoutOverlapping(120)`, `onOneServer`) — emails managers with `invoices.view` + `invoices.assign` (or superadmin) when unpaid overdue invoices exist.
+- `invoices:send-overdue-digest` every 5 minutes (`withoutOverlapping(10)`, `onOneServer`) — when `invoices.digest_enabled` is on and local time ≥ `invoices.digest_time`, emails `invoices.digest_user_ids` a table of draft/unpaid/partial invoices (Overdue Yes/No; all rows).
 - Chunks due series roots (`INVOICES_RECURRING_CHUNK_SIZE`, default 100) and stops a tenant run when the time budget is reached (`INVOICES_RECURRING_TIME_BUDGET_SECONDS`, default 45). Catch-up is capped per series per run (`INVOICES_RECURRING_CATCHUP_CAP`, default 52); remaining periods run on the next daily tick.
 - Exit code is **non-zero** if any entitled tenant had a failed series or an exception. Watch `invoices.generate-recurring.tenant_failed` / `series_failed` and Nightwatch command duration.
 

@@ -46,9 +46,9 @@ Stopping the series does **not** void history by itself.
 
 The invoice **record page** also shows a **Bank account** section when Branding bank details are configured (same fields as on the PDF).
 
-## Overdue digest email
+## Open invoice digest email
 
-Managers with **view** and **assign** (and workspace owners/superadmins) receive a daily **overdue invoices** email when there is at least one unpaid overdue invoice in scope. The email lists overdue invoices and links into the list with `?overdue=1`.
+Under **Settings → Notifications → Invoice digest** (off by default), pick a send time and one or more recipients. When enabled, those users get one daily email of all **not fully paid** invoices (draft, unpaid, and partial), with columns Client | Invoice # | Amount | Status | Overdue (Yes/No). Invoice numbers open the record in EloSync. There is no separate overdue-only digest.
 
 ## Email customer
 

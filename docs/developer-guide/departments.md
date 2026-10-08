@@ -9,6 +9,7 @@ Phase 7 HR module. Slug `departments`, middleware `module:departments`, permissi
 | `Department` / `departments` | Soft deletes; UUID; unique `(tenant_id, slug)`; `manager_id` → users |
 | `department_user` | User membership pivot (+ `tenant_id`) |
 | `department_employee` | Employee membership pivot (+ `tenant_id`) |
+| `department_report_user` | Digest report recipients (late/yesterday attendance + department task summary); manager not implied |
 
 Enum: `DepartmentStatusEnum` (`active` \| `inactive`).
 

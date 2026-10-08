@@ -18,10 +18,12 @@ Open **Departments** from the sidebar, under the **HR** group.
 ## Create & edit
 
 1. Click **New department**
-2. Enter a name (required); optionally description, status, manager, users, and employees
+2. Enter a name (required); optionally description, status, manager, **report recipients**, users, and employees
 3. Save
 
 The **manager** must be a user with a login. Workspace admins assign managers (you can assign yourself). One user can manage multiple departments. Department managers can update their department and members, but cannot reassign the manager role.
+
+**Report recipients** (workspace admins) receive late attendance, yesterday attendance, and department task summary emails for that department’s people. Managers are not included unless you add them here. Someone listed on multiple departments gets one combined email.
 
 ## Members
 

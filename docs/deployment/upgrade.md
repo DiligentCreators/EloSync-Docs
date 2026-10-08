@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Configurable digests — invoices 1.11.0 / departments 1.2.0 / attendance 1.8.0
+
+1. Deploy Backend and run `php artisan migrate --force` (`department_report_user` + catalog bumps — **do not** `db:seed`)
+2. Confirm catalog: `invoices` **1.11.0**, `departments` **1.2.0**, `attendance` **1.8.0**
+3. Deploy Frontend — Settings → Notifications invoice digest; department **Report recipients**
+4. Staging smoke: enable invoice digest + recipients; assign department report recipients; confirm attendance digests stay silent until both Settings toggles and recipients are set
+
+Go-live: [Configurable digests production readiness](/deployment/configurable-digests-2026-10-09-production-readiness).
+
 ## Help Desk 1.15.0 → 1.16.0 (+ WhatsApp Cloud 1.4.0 → 1.5.0) — multi-channel intake
 
 1. Deploy Backend and run `php artisan migrate --force` (`whatsapp_conversations.help_desk_ticket_id` + catalog bumps — **do not** `db:seed`)
