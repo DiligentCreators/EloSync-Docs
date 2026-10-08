@@ -4,7 +4,7 @@
 
 - Catalog slug: `automation`
 - Billable marketplace add-on (`is_default_included: false`, `is_billable: true`)
-- Catalog version: **1.6.0** (`auto_send` on generate quotation/invoice — see [1.6.0 production readiness](./automation-document-auto-send-1-6-0-production-readiness); **1.5.0** WhatsApp interactive + generate draft actions)
+- Catalog version: **1.8.0** (`generate_order` Purchase Order — [1.8.0 readiness](./automation-generate-order-1-8-0-production-readiness); WhatsApp PDF auto-send **1.7.0** — [readiness](./automation-whatsapp-document-auto-send-1-7-0-production-readiness); email `auto_send` **1.6.0**; WhatsApp interactive + generate draft **1.5.0**)
 - Initial price: **$29 / month**, **$290 / year** (same tier as Branded)
 - Workspaces must install from Marketplace; migrate does **not** auto-install
 
@@ -22,7 +22,7 @@ Keep `CatalogSeeder` in sync for local/CI fresh DBs only.
 
 | Worker / command | Purpose |
 |------------------|---------|
-| `php artisan queue:work redis --queue=automations,emails,default --sleep=1 --tries=3 --timeout=90 --max-time=3600` | Execute workflow actions (include `automations` before `default`) |
+| `php artisan queue:work redis --queue=automations,emails,whatsapp-outbound,default --sleep=1 --tries=3 --timeout=90 --max-time=3600` | Execute workflow actions (include `automations` before `default`; `whatsapp-outbound` for PDF auto-send) |
 | `automation:dispatch-schedules` | Every minute, `withoutOverlapping(5)`, `onOneServer` — due schedule triggers |
 
 Shared cache driver required for `onOneServer()` locks. Schedule matching uses a **90-second** window after the configured `H:i` (workspace timezone) and skips a workflow that already has a `schedule` run in the last **2 minutes**.
@@ -53,4 +53,7 @@ Full go-live checklist: [Automation production readiness](./automation-productio
 Related-context PATCH (**1.1.1**): [Automation related-context production readiness](./automation-related-context-production-readiness).  
 Cross-module triggers MINOR (**1.3.0**): [Automation 1.3.0 production readiness](./automation-1-3-0-production-readiness) — sole `IntegrationEventDispatcher` fan-out; installed-module catalog gating; expanded trigger/template coverage.  
 `create_project` MINOR (**1.4.0**): [Automation create_project production readiness](./automation-create-project-1-4-0-production-readiness).  
-WhatsApp interactive + generate quotation/invoice MINOR (**1.5.0**): [Automation 1.5.0 production readiness](./automation-whatsapp-interactive-document-actions-1-5-0-production-readiness) — `send_whatsapp_interactive`, `generate_quotation` (requires `opportunity_id`), `generate_invoice` (draft only, no auto-send).
+WhatsApp interactive + generate quotation/invoice MINOR (**1.5.0**): [Automation 1.5.0 production readiness](./automation-whatsapp-interactive-document-actions-1-5-0-production-readiness) — `send_whatsapp_interactive`, `generate_quotation` (requires `opportunity_id`), `generate_invoice` (draft only, no auto-send).  
+Document email auto-send MINOR (**1.6.0**): [1.6.0 readiness](./automation-document-auto-send-1-6-0-production-readiness).  
+WhatsApp document auto-send MINOR (**1.7.0**): [1.7.0 readiness](./automation-whatsapp-document-auto-send-1-7-0-production-readiness) — Horizon `whatsapp-outbound` + open 24h CS window.  
+`generate_order` Purchase Order MINOR (**1.8.0**): [1.8.0 readiness](./automation-generate-order-1-8-0-production-readiness).

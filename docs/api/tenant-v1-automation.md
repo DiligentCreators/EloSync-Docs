@@ -1,8 +1,20 @@
 # Tenant API v1 — Automation
 
+Catalog: **automation 1.8.0**.
+
 Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:automation`, plus `can:automation.*`.
+
+### Document generate actions (config)
+
+| Action | Module | Notable config |
+|--------|--------|----------------|
+| `generate_quotation` | `quotations` | `opportunity_id` (required unless opportunity trigger); `auto_send` (**1.6.0**); `auto_send_whatsapp` (**1.7.0**); optional `conversation_id` |
+| `generate_invoice` | `invoices` | Soft-links from trigger; same `auto_send` / `auto_send_whatsapp` |
+| `generate_order` | `purchase-orders` | Creates a **Purchase Order**; `vendor_id` (required unless vendor trigger); `auto_send` / `auto_send_whatsapp` (**1.8.0**) |
+
+`auto_send*` are booleans (default false). When enabled and delivery cannot complete (missing email / closed WhatsApp window / no conversation), the run **fails** after the document status transition.
 
 ## Catalog
 

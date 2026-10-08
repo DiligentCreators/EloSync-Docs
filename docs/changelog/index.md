@@ -1,3 +1,17 @@
+## Automation generate_order / Purchase Order (1.8.0) (2026-10-08)
+
+- **EloSync-Backend:** New action `generate_order` → `PurchaseOrderService::create` (empty lines; requires `vendor_id` from config or vendor trigger). Optional `auto_send` / `auto_send_whatsapp` mark Sent and email/WhatsApp the vendor (reuses `AutomationDocumentWhatsAppSender`). Registered in `AutomationActionRegistry` / `ActionRunner`; starter template `manual_generate_purchase_order` (`required_modules: ['purchase-orders']`). Catalog **automation 1.7.0 → 1.8.0**. Pest: generate_order draft + email auto-send; catalog bump; companion versions.
+- **EloSync-Frontend:** Builder **Generate Purchase Order** (vendor picker, title/notes/assignee, email + WhatsApp auto-send). Playwright extends one-session automation workflow (PO action + WA persist).
+- **EloSync-Docs:** User/developer/deployment/upgrade/roadmap + [production readiness](/deployment/automation-generate-order-1-8-0-production-readiness) + this changelog.
+- **Go-live:** migrate-only; Horizon `automations` / `emails` / `whatsapp-outbound`. Headed Playwright `test:e2e:automation:headed` **1/1**. Verdict **Go**.
+
+## Automation WhatsApp document auto-send (1.7.0) (2026-10-08)
+
+- **EloSync-Backend:** Optional `auto_send_whatsapp` on `generate_quotation` / `generate_invoice` — after create (and after email `send()` when both flags set), render PDF and `queueMedia` document into an open 24h conversation via `AutomationDocumentWhatsAppSender` (resolve `conversation_id` → `lead_id` → bill-to phone). Soft-gates WhatsApp Cloud; fails the run when conversation/window/actor missing. Catalog **automation 1.6.0 → 1.7.0**. Pest: WA happy path, outside window, module missing, email+WA both on.
+- **EloSync-Frontend:** Builder checkbox “Also send PDF on WhatsApp (open 24h conversation)” gated by `hasModule('whatsapp-cloud')`; config persisted. Playwright toggle + save/reload.
+- **EloSync-Docs:** Guides + [production readiness](/deployment/automation-whatsapp-document-auto-send-1-7-0-production-readiness) + this changelog.
+- **Go-live:** migrate-only; no new permissions. Headed Playwright `test:e2e:automation:headed` **1/1**. Verdict **Go**.
+
 ## Calendar named team/department calendars (1.9.0) (2026-10-08)
 
 - **EloSync-Backend:** New `calendars` table (tenant-scoped, soft-deletable `name` + unique `slug` + optional `department_id`, `created_by`). `calendar_events.calendar_id` nullable FK — `null` stays personal (unchanged default). `CalendarController` (`GET/POST/PUT/DELETE /calendar/calendars`, `module:calendar`) behind new `calendar.manage_calendars` permission (admin/manager defaults) for CRUD. `CalendarEventService::applyVisibilityScope` adds named-calendar visibility: the calendar's creator, department members/manager (only when the soft `departments` module is entitled), and anyone with `calendar.view_all`/`calendar.manage_calendars`. Posting an event onto a named calendar requires `calendar.create` **and** membership (creator, department member/manager, or an admin override) — enforced in `CalendarEventService::resolveCalendarId` and mirrored in `CalendarEventPolicy::view` for single-event checks. Overlays (task/lead/meeting) and provider push continue to key off `organizer_id`/`source` and always stay `calendar_id = null`. Catalog **calendar 1.8.0 → 1.9.0** (migrate-only + CatalogSeeder). Pest: `NamedCalendarTest` (CRUD authorization, department entitlement gating, visibility scoping, posting membership), catalog bump test.

@@ -12,7 +12,7 @@
 
 ## Executive summary
 
-Automation **1.5.0** always left generated quotations/invoices as **draft**. **1.6.0** adds opt-in `auto_send`: after create, the action transitions status (`Sent` / `Unpaid`) and emails the bill-to contact/company with PDF attached (same mailer as the SPA Send → Email flow). Default remains draft-only. Missing recipient email fails the run (after status transition). WhatsApp auto-send and `generate_order` stay deferred.
+Automation **1.5.0** always left generated quotations/invoices as **draft**. **1.6.0** adds opt-in `auto_send`: after create, the action transitions status (`Sent` / `Unpaid`) and emails the bill-to contact/company with PDF attached (same mailer as the SPA Send → Email flow). Default remains draft-only. Missing recipient email fails the run (after status transition). WhatsApp auto-send shipped later in **1.7.0**; `generate_order` in **1.8.0**.
 
 | Gate | Result |
 |------|--------|
