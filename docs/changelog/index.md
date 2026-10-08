@@ -1,3 +1,10 @@
+## Configurable digests: open invoices + department report recipients (2026-10-09)
+
+- **EloSync-Backend:** One open-invoice digest (draft / unpaid / partial; Overdue Yes/No column; no row cap) gated by Settings `invoices.digest_enabled` (default off), `invoices.digest_time` (`H:i`), `invoices.digest_user_ids`. Command `invoices:send-overdue-digest` every 5 minutes. Attendance late/yesterday digests send only to department **report recipients** (`department_report_user`); manager not auto-included; no owner fallback; multi-dept recipients get one combined email. Department task summary digest at Daily Reminder Time for the same recipients. Catalog **invoices 1.10.0 → 1.11.0**, **departments 1.1.1 → 1.2.0**, **attendance 1.7.0 → 1.8.0**. Pest: invoice digest, department report recipient digests, attendance digest updates.
+- **EloSync-Frontend:** Settings → Notifications invoice digest controls (searchable recipients; current user includable); department create/edit **Report recipients** multi-select (searchable); Playwright headed `tenant-settings.invoice-digest` + departments report-recipient coverage.
+- **EloSync-Docs:** Guides/deployment + [production readiness](/deployment/configurable-digests-2026-10-09-production-readiness) + this changelog.
+- **Go-live:** migrate-only (`department_report_user` + catalog bumps). Configure invoice digest recipients and department report recipients after deploy; enable attendance digests and assign recipients or emails will not send.
+
 ## Attendance backdate permission (1.7.0) (2026-10-08)
 
 - **EloSync-Backend:** Manual create/update for a date other than workspace **today** requires new `attendance.backdate` (default admin + manager). Workspace owner (`superadmin`) may always backdate without the permission. Staff remain today-only. Catalog **attendance 1.6.0 → 1.7.0**. Pest: `AttendanceBackdateTest`.

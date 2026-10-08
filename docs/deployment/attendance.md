@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.7.0** (manual today-only for staff + `attendance.backdate`; prior department-scoped digests/list)
+- Current catalog version: **1.8.0** (department report recipients for digests; prior 1.7.0 backdate permission)
 
 ## Bootstrap
 

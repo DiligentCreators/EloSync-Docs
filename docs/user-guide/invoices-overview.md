@@ -22,7 +22,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 - Invoice fields: title, optional contact/company link (with gated **New** inline create when Contacts/Companies is entitled), optional quotation / estimate / contract links, currency, issue date, due date, notes, terms (workspace default from Settings → Branding)
 - Recurring series (weekly / monthly / quarterly / semi-annually / yearly). **Next invoice date** auto-fills from the issue date plus frequency and can be overridden; later drafts follow the frequency from that date. **Stop recurring** ends the series without voiding history
 - Download invoice PDF (workspace-branded from Settings → Branding: color, logo, company profile, bank details; Tax registration ID from Settings → General when set)
-- Money KPI strip + month-to-date default filter; CSV/Excel export (`invoices.export`); daily overdue digest email to managers
+- Money KPI strip + month-to-date default filter; CSV/Excel export (`invoices.export`); optional open-invoice digest email (Settings → Notifications)
 - Record page shows Branding **bank account** details when configured; lists posted **payment allocations** when Payments is entitled (`payments.view`)
 - **Email customer** after Send (`POST /invoices/{id}/email`, `invoices.send`) — optional PDF attachment; default recipient from linked contact/company; records `emailed` timeline + tenant email log
 - Auto-numbered (`INV-00001`; prefix backed by the `invoices_number_prefix` tenant setting, default `INV-` — editable under **Settings → General → Document number prefixes**)
@@ -40,7 +40,7 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 
 `invoices.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `void` · `export` · `approve_edit`
 
-Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.10.0**.
+Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.11.0**.
 
 ## Related modules
 

@@ -26,10 +26,10 @@ Scheduled command `attendance:send-daily-reports` (every 5 minutes, `onOneServer
 
 | Digest | Setting toggle | Send time key | Contents | Recipients |
 |--------|----------------|---------------|----------|------------|
-| Late today | `attendance_late_report_enabled` | `attendance_late_report_time` | Today’s `status=late` check-ins + active employees past on-site start+grace with no check-in (excludes approved leave when Leave entitled; skips non-work days for the not-arrived bucket) | Owners / Admins (full company); department managers (managed employees only); requires `attendance.view` |
+| Late today | `attendance_late_report_enabled` | `attendance_late_report_time` | Today’s `status=late` check-ins + active employees past on-site start+grace with no check-in (excludes approved leave when Leave entitled; skips non-work days for the not-arrived bucket) | Department **report recipients** only (`department_report_user`); scoped to department employees (+ employees linked to department users); manager not auto-included; no owner fallback; multi-dept → one combined email |
 | Yesterday | `attendance_daily_report_enabled` | `attendance_daily_report_time` | Yesterday counts + late rows + missing check-out (`check_in` set, `check_out` null) | Same |
 
-Idempotency via `daily_summary_deliveries` kinds `attendance_late_daily` / `attendance_yesterday_daily`. Notifications: `AttendanceLateDigestNotification` / `AttendanceYesterdayDigestNotification` (database + mail). Empty late digest skips send; yesterday skips when there are no records for that date. Department managers receive a per-recipient scoped payload (skipped when their team has no attention items).
+Idempotency via `daily_summary_deliveries` kinds `attendance_late_daily` / `attendance_yesterday_daily` / `department_task_daily`. Notifications: `AttendanceLateDigestNotification` / `AttendanceYesterdayDigestNotification` / `DepartmentTaskDigestNotification` (database + mail). Empty late digest skips send; yesterday skips when there are no records for that date. Department task summary sends at `task_reminder_time` to the same report recipients.
 
 ## Backend layout
 
