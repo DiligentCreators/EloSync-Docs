@@ -15,6 +15,7 @@
 - Inside the **24-hour customer service window** (after an inbound message): send free-form text.
 - Outside the window: pick an **approved** Meta Cloud template from the list and send.
 - Soft Lead link (when Leads is installed): search and link a Lead from the conversation header, or unlink. Lead detail **Inbox** still opens the filtered list (`?lead=`).
+- **Escalate to Help Desk** (when Help Desk is installed): creates a ticket from the conversation transcript (`source=whatsapp`) and shows a ticket link — same one-shot pattern as Live Chat escalate.
 
 ## Lead detail
 

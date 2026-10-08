@@ -32,6 +32,7 @@ OAuth callback (central web): `GET /api/oauth/whatsapp/cloud/callback`
 | POST | `/whatsapp/conversations/{id}/media` | `send` (multipart file; requires open CS window) |
 | POST | `/whatsapp/conversations/{id}/templates` | `send` (approved template) |
 | POST | `/whatsapp/conversations/{id}/interactive` | `send` (reply buttons or list; requires open CS window) |
+| POST | `/whatsapp/conversations/{id}/escalate` | `send` (soft-gated Help Desk; creates ticket `source=whatsapp`, links `help_desk_ticket_id`) |
 
 ## Templates
 

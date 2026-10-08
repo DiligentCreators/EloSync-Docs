@@ -488,6 +488,7 @@ export default withMermaid(defineConfig({
             { text: 'Help Desk 1.12.0 Real-time Board Sync Readiness', link: '/deployment/help-desk-realtime-board-sync-1-12-0-production-readiness' },
             { text: 'Help Desk 1.14.0 Public Replies Readiness', link: '/deployment/help-desk-public-replies-1-14-0-production-readiness' },
             { text: 'Help Desk 1.15.0 Customer Reply Reopen Readiness', link: '/deployment/help-desk-1-15-0-production-readiness' },
+            { text: 'Help Desk 1.16.0 Multi-channel Intake Readiness', link: '/deployment/help-desk-1-16-0-production-readiness' },
             { text: 'Customer Portal 1.0.0 Production Readiness', link: '/deployment/customer-portal-1-0-0-production-readiness' },
             { text: 'Customer Portal 1.3.0 Depth Readiness', link: '/deployment/customer-portal-1-3-0-production-readiness' },
             { text: 'Email-only Tenant Password Reset Readiness', link: '/deployment/email-only-tenant-password-reset-production-readiness' },

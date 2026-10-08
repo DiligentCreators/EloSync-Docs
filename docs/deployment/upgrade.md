@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Help Desk 1.15.0 → 1.16.0 (+ WhatsApp Cloud 1.4.0 → 1.5.0) — multi-channel intake
+
+1. Deploy Backend and run `php artisan migrate --force` (`whatsapp_conversations.help_desk_ticket_id` + catalog bumps — **do not** `db:seed`)
+2. Confirm catalog: `help-desk` **1.16.0**, `whatsapp-cloud` **1.5.0**
+3. Deploy Frontend — WhatsApp Escalate + Help Desk source badges
+4. Staging smoke: entitle both modules → escalate conversation → ticket link + WhatsApp badge on Help Desk
+
+Go-live: [Help Desk 1.16.0 production readiness](/deployment/help-desk-1-16-0-production-readiness).
+
 ## Customer Portal 1.2.0 → 1.3.0 (+ Help Desk 1.14.0 → 1.15.0)
 
 1. Deploy Backend and run `php artisan migrate --force` (portal magic-link + 2FA columns; catalog bumps — **do not** `db:seed`)
