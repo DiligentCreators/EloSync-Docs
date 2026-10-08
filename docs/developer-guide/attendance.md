@@ -1,6 +1,6 @@
 # Attendance — Developer Guide
 
-Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.6.0**.
+Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.7.0**.
 
 ## Domain
 
@@ -12,7 +12,9 @@ Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. H
 
 Enums: `AttendanceStatusEnum`, `AttendanceWorkModeEnum`, `AttendanceReasonKindEnum`, `AttendanceActivityTypeEnum`.
 
-Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn` + `timeline`). IP always from `request()->ip()`; coordinates best-effort from the client. Manual `store` / `update` require `change_reason` (min 5 chars) — uses existing `attendance.create` / `attendance.update` (no extra permission).
+Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn` + `timeline`). IP always from `request()->ip()`; coordinates best-effort from the client. Manual `store` / `update` require `change_reason` (min 5 chars) — uses existing `attendance.create` / `attendance.update` (no extra permission for same-day).
+
+**Backdating:** Manual create (or changing `date` on update) for any day other than workspace **today** requires `attendance.backdate`, except the workspace owner (`superadmin`) who may always backdate. Enforced in `StoreAttendanceRecordRequest` / `UpdateAttendanceRecordRequest` and `AttendanceRecordService::constrainDateForActor` via `AttendanceRecordPolicy::canBackdate`. Default admin + manager roles receive `attendance.backdate`; staff does not. Self check-in/out stay today-only.
 
 **Ownership:** Staff may only act on their linked active employee. Self check-in/out (`POST .../check-in`, `.../check-out`, `GET .../today`) requires a linked active employee and `attendance_self_check_enabled` — not `attendance.create` / `attendance.update`. Owner/Admin are org-wide. Department managers (`departments.manager_id`) are scoped to employees in their managed departments (`department_employee` ∪ employees linked via `department_user`, plus own linked employee). Spatie `manager` without a department assignment is self-scoped. List/KPIs/CRUD use `AttendanceRecordPolicy::visibleEmployeeIds` / `canAccessEmployee`.
 

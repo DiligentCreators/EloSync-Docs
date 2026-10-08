@@ -38,9 +38,11 @@ Admins manage late/check-out reasons from **Attendance → Reasons**.
 Owners and Admins can:
 
 1. View everyone’s records, KPI stats, and who is checked in now (on-site vs remote).
-2. **Record attendance** for any employee and date (one record per employee per day).
+2. **Record attendance** for any employee (one record per employee per day).
 3. Edit check-in / check-out times, status, and notes for corrections — a **reason for change** is required and appears on the record’s **Edit history**.
 4. Manage attendance reasons (admin/owner).
+
+**Past (or future) dates:** staff may only create manual attendance for **today** (workspace timezone). Recording another date requires `attendance.backdate` (granted to default Admin and Manager roles). The workspace **owner** (`superadmin`) may always backdate without that permission. Self check-in/out remain today-only for everyone.
 
 Department managers (assigned as manager on a department) see list, KPIs, and digests **only for employees in their department(s)** — not other departments. A workspace Manager role without a department assignment is limited to their own linked employee (same as staff).
 
@@ -55,7 +57,7 @@ Manual create/edit also captures the actor’s IP and best-effort browser locati
 ## Daily records
 
 1. Open **Attendance**.
-2. Create or complete a record for the day (staff: self only; managers: any employee).
+2. Create or complete a record for the day (staff: self only, today only unless they have `attendance.backdate`; managers with backdate: any employee/date).
 3. Enter a **reason for entry / change** (required for audit).
 4. Optionally set check-in and check-out times (managers may edit either).
 5. Choose status: Present, Absent, Half day, Remote, or Late.
