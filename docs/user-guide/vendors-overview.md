@@ -18,6 +18,7 @@ Phase 4 Purchasing module (Milestone 1) on the frozen platform. Mirrors the [Com
 - Name, email, phone, website, address, tax ID, payment terms, currency, status (active/inactive)
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `vendors.assign`
 - Notes (comments) + activity timeline
+- Ask EloSync triage (with AI Assistant entitled): fetch vendor, confirmed assign / note writes — see [AI Assistant](/user-guide/ai-assistant)
 - Table view with search (including tax ID), status filter, and **My Vendors** toggle
 - KPIs via `GET /vendors/stats` (total, my vendors, unassigned, active, inactive)
 - Dashboard widget `active_vendors` (module + `vendors.view`)

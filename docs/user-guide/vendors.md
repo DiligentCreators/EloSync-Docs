@@ -41,3 +41,7 @@ Users with **assign** can set or clear the assignee from the vendor record page 
 ## Status
 
 Vendors have a **status** of Active or Inactive (default Active). Inactive vendors remain in the directory but signal they are not currently used for procurement.
+
+## Ask EloSync
+
+With the **AI Assistant** module installed, Ask EloSync can fetch a vendor and propose assignment or a timeline note. Nothing is saved until you **confirm** the suggestion. Active/Inactive status changes stay on the Vendors screens. See [AI Assistant](/user-guide/ai-assistant).

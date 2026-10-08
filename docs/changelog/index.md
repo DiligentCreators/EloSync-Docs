@@ -166,6 +166,12 @@
 - **All repos** (Backend, Frontend, Website, Mobile, Docs): added MIT `LICENSE` (copyright Diligent Creators; Mobile replaces the previous Expo template license) and root `SECURITY.md` with private reporting via GitHub Security Advisories and `security@elosync.com`.
 - **Frontend / Website / Mobile / Docs:** set `"license": "MIT"` in `package.json` (Backend already declared MIT in `composer.json`).
 
+## Ask EloSync Vendor triage tools (ai 1.21.0) (2026-10-08)
+
+- **EloSync-Backend:** Ask EloSync Vendor triage: `get_vendor` plus confirmed writes `assign_vendor` / `add_vendor_note` (`EligibleVendorAssignee`; status exposed on get; no Active/Inactive write tool in this MINOR). Catalog **ai 1.20.0 → 1.21.0** (migrate-only + CatalogSeeder). Pest: write confirmation + registry authz + catalog version bump.
+- **EloSync-Frontend:** Playwright AI suite Vendor triage propose→confirm note/assign.
+- **EloSync-Docs:** User guide, AI tools, deployment/CHANGELOG/roadmap for **1.21.0**, [production readiness](/deployment/ai-vendor-triage-production-readiness).
+
 ## Ask EloSync product guidance (ai 1.20.0) (2026-10-03)
 
 - **EloSync-Backend:** Always-on `search_product_help` tool over a curated Settings → Action recipe catalog (`app/AI/ProductHelp/`). System prompt + scope guard allow EloSync how-tos while still refusing off-topic/external-tool requests. Catalog always-on fallback includes the new tool. Catalog **ai 1.19.0 → 1.20.0** (migrate-only). Pest: product-help search/filter, scope-guard how-tos, catalog version bump.
