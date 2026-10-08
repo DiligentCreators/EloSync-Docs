@@ -596,6 +596,7 @@ export default withMermaid(defineConfig({
             { text: 'AI Contact Triage Production Readiness', link: '/deployment/ai-contact-triage-production-readiness' },
             { text: 'AI Company Triage Production Readiness', link: '/deployment/ai-company-triage-production-readiness' },
             { text: 'AI Product Guidance Production Readiness', link: '/deployment/ai-product-guidance-production-readiness' },
+            { text: 'AI Vendor Triage Production Readiness', link: '/deployment/ai-vendor-triage-production-readiness' },
             { text: 'Automation create_project 1.4.0 Production Readiness', link: '/deployment/automation-create-project-1-4-0-production-readiness' },
             { text: 'Automation + AI Company Depth 2026-09-29 Readiness', link: '/deployment/automation-create-project-ai-company-2026-09-29-production-readiness' },
             { text: 'Automation WhatsApp Interactive + Document Actions 1.5.0 Readiness', link: '/deployment/automation-whatsapp-interactive-document-actions-1-5-0-production-readiness' },
