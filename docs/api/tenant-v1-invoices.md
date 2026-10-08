@@ -31,7 +31,7 @@ Same filters as list (minus pagination/sort). Response:
 }
 ```
 
-`overdue` / `pending_amount` / `outstanding_balance` only consider invoices with `status` = `unpaid` and (for `overdue`) `due_date` in the past with `balance_due > 0`. `total_amount` / `received_amount` sum non-cancelled invoices. The `overdue` query flag is **ignored** for stats so KPI cards stay stable while the list is overdue-filtered.
+`overdue` / `pending_amount` / `outstanding_balance` only consider invoices with `status` = `unpaid` and (for `overdue`) `due_date` in the past with `balance_due > 0`. `total_amount` / `received_amount` sum non-cancelled invoices. When `overdue=true` is passed to stats, money KPIs (`total_amount`, `received_amount`, `pending_amount`, `outstanding_balance`) and the `overdue` count are computed on that overdue-filtered set.
 
 ### GET `/invoices/export`
 

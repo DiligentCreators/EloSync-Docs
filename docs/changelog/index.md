@@ -1,3 +1,9 @@
+## Invoices overdue KPI money scope (1.9.5) (2026-10-08)
+
+- **EloSync-Backend:** `GET /invoices/stats?overdue=1` scopes money KPIs (`total_amount`, `received_amount`, `pending_amount`, `outstanding_balance`) to the overdue set (same as the list). Catalog **invoices 1.9.4 → 1.9.5**. Pest: overdue-scoped stats.
+- **EloSync-Docs:** User/developer/API + this changelog.
+- **Go-live:** migrate-only; no new permissions.
+
 ## Invoices money KPIs, export, overdue digest (1.9.4) (2026-10-08)
 
 - **EloSync-Backend:** Invoice stats add money KPIs (`total_amount`, `received_amount`, `pending_amount`, `outstanding_balance`); stats ignore `overdue` so the KPI strip stays stable. List/export accept `date_from` / `date_to` (issue date). `GET /invoices/export` (CSV/XLSX) behind new `invoices.export`. Show includes workspace `payment_bank` from Branding. Daily `invoices:send-overdue-digest` emails managers (`invoices.view` + `invoices.assign` / superadmin) with overdue rows and deep links (`?overdue=1`). Catalog **invoices 1.9.3 → 1.9.4**. Pest: export, stats money fields, digest, payment bank, catalog bump.
