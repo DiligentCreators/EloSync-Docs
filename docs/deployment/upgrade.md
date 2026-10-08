@@ -81,6 +81,26 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## Automation 1.7.0 → 1.8.0 — generate_order (Purchase Order)
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_08_181000_bump_automation_module_to_1_8_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: automation **1.8.0**
+3. Deploy the SPA — new **Generate Purchase Order** action (`vendor_id`, email/WhatsApp auto-send)
+4. Ensure Purchase Orders (+ Vendors) entitled for workspaces that use the action; Horizon `automations` / `emails` / `whatsapp-outbound`
+5. Staging smoke: Manual or Vendor trigger → draft PO; with `auto_send` → Sent + vendor email
+
+Go-live: [Automation generate_order 1.8.0 production readiness](/deployment/automation-generate-order-1-8-0-production-readiness).
+
+## Automation 1.6.0 → 1.7.0 — WhatsApp document auto-send
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_08_180000_bump_automation_module_to_1_7_0` — catalog only; **do not** `db:seed`)
+2. Confirm catalog version: automation **1.7.0**
+3. Deploy the SPA — Generate Quotation / Invoice gain **Also send PDF on WhatsApp** (gated by WhatsApp Cloud)
+4. Restart workers including `whatsapp-outbound`; WhatsApp Cloud platform connection must be ready
+5. Staging smoke: `auto_send_whatsapp` + open 24h conversation matched by bill-to phone → PDF document queued; closed window → failed run
+
+Go-live: [Automation WhatsApp document auto-send 1.7.0 production readiness](/deployment/automation-whatsapp-document-auto-send-1-7-0-production-readiness).
+
 ## Automation 1.5.0 → 1.6.0 — document auto-send
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_05_160000_bump_automation_module_version_to_1_6_0` — catalog only; **do not** `db:seed`)
