@@ -1,3 +1,10 @@
+## Leads follow-up KPI filters (1.9.1) (2026-10-08)
+
+- **EloSync-Backend:** List/board/export accept `follow_up=today|overdue` (pending follow-ups via `UtcInstant` day bounds / now). Stats ignores `follow_up` so KPI strip stays stable. Catalog **leads 1.9.0 → 1.9.1**. Pest: filter + catalog bump.
+- **EloSync-Frontend:** Today's / Overdue follow-up KPI cards toggle the matching list/board filter (click again to clear).
+- **EloSync-Docs:** User/developer/API + this changelog.
+- **Go-live:** migrate-only; no new permissions.
+
 ## Help Desk multi-channel intake (1.16.0) + WhatsApp escalate (1.5.0) (2026-10-08)
 
 - **EloSync-Backend:** WhatsApp Cloud `POST …/conversations/{id}/escalate` creates a Help Desk ticket (`source=whatsapp`, transcript snapshot, soft FK `whatsapp_conversations.help_desk_ticket_id`); soft-fails when Help Desk not entitled. Help Desk list accepts `?source=`. Catalog **help-desk 1.15.0 → 1.16.0**, **whatsapp-cloud 1.4.0 → 1.5.0**. Pest: escalate happy/fail + catalog bumps.
