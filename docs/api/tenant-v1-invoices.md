@@ -23,18 +23,25 @@ Same filters as list (minus pagination/sort). Response:
   "paid": 0,
   "cancelled": 0,
   "overdue": 0,
+  "total_amount": 0,
+  "received_amount": 0,
+  "pending_amount": 0,
   "outstanding_balance": 0,
   "scope": "org | mine"
 }
 ```
 
-`overdue` / `outstanding_balance` only consider invoices with `status` = `unpaid` and (for `overdue`) `due_date` in the past with `balance_due > 0`.
+`overdue` / `pending_amount` / `outstanding_balance` only consider invoices with `status` = `unpaid` and (for `overdue`) `due_date` in the past with `balance_due > 0`. `total_amount` / `received_amount` sum non-cancelled invoices. The `overdue` query flag is **ignored** for stats so KPI cards stay stable while the list is overdue-filtered.
+
+### GET `/invoices/export`
+
+Permission: `invoices.export` (assignee-scoped like list). Query: same filters as list plus `format` (`csv`\|`xlsx`, default `csv`). Streams a download of matching invoices.
 
 ## Invoices CRUD
 
 ### GET `/invoices`
 
-Query: `search` (matches `title`, `number`, related contact `name`/`phone`/`company`, or related company `name`/`phone`), `status`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_invoices`, `overdue` (`true`), `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `title`, `number`, related contact `name`/`phone`/`company`, or related company `name`/`phone`), `status`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_invoices`, `overdue` (`true`), `date_from` / `date_to` (issue date, `Y-m-d`), `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
 List items include `status`, `currency`, `subtotal`/`discount_total`/`tax_total`/`total`/`amount_paid`/`amount_credited`/`balance_due`, `issue_date`/`due_date`, recurrence fields (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurring_source_invoice_id` / `recurring_source`), `contact`/`company`/`quotation`/`estimate`/`contract` refs, assignee/creator refs, and `latest_note`. Query also accepts `recurring=true` (series roots only).
 
@@ -48,7 +55,7 @@ Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and
 
 ### GET `/invoices/{id}`
 
-Includes contact, company, quotation, estimate, contract, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, `payment_allocations` (when loaded: allocation `amount` + nested `customer_payment` `{id,uuid,number,status,method,reference,currency,paid_at}`), timeline activities, recurrence fields, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, quotation, estimate, contract, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, `payment_allocations` (when loaded: allocation `amount` + nested `customer_payment` `{id,uuid,number,status,method,reference,currency,paid_at}`), timeline activities, recurrence fields, `payment_bank` (workspace Branding bank fields: `bank_name`, `bank_account_name`, `bank_account_number`, `bank_iban`, `bank_swift`, `has_bank`), and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### GET `/invoices/{id}/pdf`
 

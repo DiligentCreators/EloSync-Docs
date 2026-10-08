@@ -19,9 +19,11 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 | Policy | `app/Policies/CustomerInvoicePolicy.php` |
 | Events | `app/Events/CustomerInvoice*.php` |
 | Subscriber | `app/Listeners/CustomerInvoiceEventSubscriber.php` (audit + assignment notification) |
-| Notifications | `app/Notifications/Tenant/CustomerInvoice/CustomerInvoiceAssignedNotification.php` |
+| Notifications | `CustomerInvoiceAssignedNotification`, `CustomerInvoiceOverdueDigestNotification` |
+| Export | `app/Exports/CustomerInvoicesExport.php` |
+| Digest | `CustomerInvoiceOverdueDigestService`, `invoices:send-overdue-digest` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `LinkableReseller`, `EligibleInvoiceAssignee` — `quotation_id` is a plain tenant-scoped `Rule::exists()`, **not** gated by a `LinkableQuotation`-style entitlement rule; `reseller_id` requires Resellers entitlement + assignee scope via `LinkableReseller` |
-| Tests | `tests/Feature/Tenant/CustomerInvoice/CustomerInvoiceTest.php`, `CustomerInvoiceRecurrenceTest.php`, `CustomerInvoiceSearchTest.php` |
+| Tests | `CustomerInvoiceTest.php`, `CustomerInvoiceRecurrenceTest.php`, `CustomerInvoiceSearchTest.php`, `CustomerInvoiceExportAndDigestTest.php` |
 
 ## Domain notes
 
@@ -44,18 +46,22 @@ Mirror of the [Quotations developer guide](/developer-guide/quotations) (assigne
 - `invoices.force.delete` is not granted to any default role — owner/superadmin only.
 - `estimate_id` and `contract_id` are set by convert actions (`nullOnDelete`); `estimate_id` is **unique** when not null (one-shot estimate convert); `quotation_id` is **not** unique so contracts can bill more than once.
 - Auto-numbering: `CustomerInvoiceService::nextNumber()` reads the `invoices_number_prefix` tenant setting (default `INV-`), then zero-pads a running count (`CustomerInvoice::withTrashed()->count() + 1`) to 5 digits. `customer_invoices` has a `unique(tenant_id, number)` DB index; `create()` wraps the insert with the shared `RetriesOnDuplicateNumber` trait (`app/Services/Tenant/Concerns/RetriesOnDuplicateNumber.php`), retrying up to 3 times with a freshly generated number if two concurrent requests race to the same count-derived sequence. The same trait/index pattern is used by Payments, Credit Notes, and Estimates.
-- Overdue definition (shared by list `overdue=true` filter and `stats.overdue`): `due_date < today`, `status` = `unpaid`, `balance_due > 0`.
+- Overdue definition (shared by list `overdue=true` filter, `stats.overdue`, and the daily digest): `due_date < today` (workspace timezone), `status` = `unpaid`, `balance_due > 0`.
 - List `search` matches invoice `title` / `number`, related contact `name` / `phone` / free-text `company`, and related company `name` / `phone`.
+- List/export accept `date_from` / `date_to` on **issue_date**. Stats money fields: `total_amount` / `received_amount` (non-cancelled), `pending_amount` / `outstanding_balance` (unpaid `balance_due` sum). Stats **strips** `overdue` from the base query so KPI cards stay stable while the Overdue filter is on.
+- `GET …/export` (`invoices.export`) streams CSV/XLSX via `CustomerInvoicesExport` using the same filters as list (assignee-scoped).
+- Show attaches `payment_bank` from `BrandedDocumentPdfContext::companyProfile()` (Branding bank fields).
+- Daily `invoices:send-overdue-digest` → `CustomerInvoiceOverdueDigestService` notifies users with `invoices.view` + (`invoices.assign` or superadmin) when overdue rows exist; database type `invoice.overdue.digest` with list route `filters.overdue=1`.
 
 ## Permissions
 
 ```
-invoices.view | create | update | delete | restore | force.delete | assign | send | void
+invoices.view | create | update | delete | restore | force.delete | assign | send | void | export
 ```
 
 Routes use `module:invoices` then `can:invoices.*` / policies.
 
-Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.9.3**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer; 1.6.0 adds `contract_id` for contract-created invoices; 1.6.1 adds unique nullable `estimate_id` for one-shot estimate convert; 1.7.0 dedicated record pages; 1.7.1 PDF long-notes pagination; 1.7.2 PDF long line-body pagination; 1.8.0 customer email delivery (`POST …/email`); 1.9.2 list search includes contact/company name and phone; 1.9.3 invoice PDF shows workspace `tax_registration_id` when set.
+Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.9.4**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.5.0 added optional product line picker; 1.5.1 hardens linking + sanitizer; 1.6.0 adds `contract_id` for contract-created invoices; 1.6.1 adds unique nullable `estimate_id` for one-shot estimate convert; 1.7.0 dedicated record pages; 1.7.1 PDF long-notes pagination; 1.7.2 PDF long line-body pagination; 1.8.0 customer email delivery (`POST …/email`); 1.9.2 list search includes contact/company name and phone; 1.9.3 invoice PDF shows workspace `tax_registration_id` when set; 1.9.4 money KPIs, export, overdue digest, show `payment_bank`.
 
 ## API (tenant)
 
@@ -76,7 +82,7 @@ SPA mirrors **Quotations** (table + create/edit page, record page) under the exi
 | Permissions | `PERMISSIONS.customerInvoices.*` (maps to `invoices.*` permission strings) |
 | Nav | New **Billing** sidebar group (after Sales) — `permission: PERMISSIONS.customerInvoices.view`, `module: 'invoices'`. Kept separate from the Central Billing nav. |
 | Route | `tenantRoutes.invoices = '/invoices'`, lazy-loaded in `App.tsx` behind `RequireAccess module="invoices"` |
-| Notifications | `src/notifications/modules/invoices.ts` — `customer_invoice.assigned` → `/invoices?invoice={id}` |
+| Notifications | `src/notifications/modules/invoices.ts` — `customer_invoice.assigned` → record; `invoice.overdue.digest` → `/invoices?overdue=1` |
 | Playwright | One shared login, headed human workflow: validation, CRUD, Overview memo + activity notes/timeline, PDF, send/void, recurring generate + stop with optional void, shortcuts, trash. `e2e/pages/invoices.page.ts`, `e2e/tests/invoices/`, `npm run test:e2e:invoices` / `test:e2e:invoices:headed` |
 
 Production readiness: [Invoices 1.1.0](/deployment/invoices-production-readiness).

@@ -1,3 +1,10 @@
+## Invoices money KPIs, export, overdue digest (1.9.4) (2026-10-08)
+
+- **EloSync-Backend:** Invoice stats add money KPIs (`total_amount`, `received_amount`, `pending_amount`, `outstanding_balance`); stats ignore `overdue` so the KPI strip stays stable. List/export accept `date_from` / `date_to` (issue date). `GET /invoices/export` (CSV/XLSX) behind new `invoices.export`. Show includes workspace `payment_bank` from Branding. Daily `invoices:send-overdue-digest` emails managers (`invoices.view` + `invoices.assign` / superadmin) with overdue rows and deep links (`?overdue=1`). Catalog **invoices 1.9.3 → 1.9.4**. Pest: export, stats money fields, digest, payment bank, catalog bump.
+- **EloSync-Frontend:** List defaults to month-to-date issue dates; money KPI strip (colors); Overdue KPI/`?overdue=1` clears dates; 60‑minute list/stats poll; Export menu; create form defaults issue/due to today; record view shows bank account when configured; notification route for `invoice.overdue.digest`.
+- **EloSync-Docs:** User/developer/API/deployment + this changelog.
+- **Go-live:** migrate-only; grant `invoices.export` to default admin/manager roles via bump migration. Confirm scheduler includes `invoices:send-overdue-digest`.
+
 ## Payroll pay slip PDF polish (1.5.1) (2026-10-08)
 
 - **EloSync-Backend:** Pay slip PDF hides **Daily rate**; slip number displays as zero-padded four digits (`0001`). Catalog **payroll 1.5.0 → 1.5.1**. Pest: `MyPaySlipTest` + catalog bump.
