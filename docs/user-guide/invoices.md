@@ -2,7 +2,7 @@
 
 ## Who can use Invoices
 
-Your workspace must have the **Invoices** module installed (free from Marketplace — not auto-installed, and **no other module is required first**). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `send`, `void`, `export` as needed).
+Your workspace must have the **Invoices** module installed (free from Marketplace — not auto-installed, and **no other module is required first**). Your role must include the relevant permissions (`view`, `create`, `update`, `delete`, `restore`, `force.delete`, `assign`, `send`, `void`, `export`, `approve_edit` as needed).
 
 Without **assign**, you only see invoices assigned to you.
 
@@ -23,7 +23,9 @@ Open **Invoices** from the sidebar (**Billing**). Search by title, number, conta
 4. Optionally set an assignee (requires **assign**)
 5. Save with **Create** (returns to the list) or **Create & View** (opens the record). Invoices also offer **Create & Send**.
 
-Edit from the row menu or the record page while the invoice is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the invoice is still **Draft**. Editing replaces the full line-item list.
+
+After **Send**, use **Request edit** (requires `update` or `send`) while the invoice is still **Unpaid** with **no payments or credits**. Your changes are saved as a pending proposal — the live invoice, PDF, and balance stay as-sent until someone with **approve_edit** (typically owner/admin/manager) **Approves** or **Rejects**. Partial and paid invoices cannot be edited this way. Approvers get an in-app notification and email when a request is submitted.
 
 ## Recurring invoices
 
