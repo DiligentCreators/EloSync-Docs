@@ -1,3 +1,10 @@
+## Invoices post-send edit approval (1.10.0) (2026-10-08)
+
+- **EloSync-Backend:** Unpaid invoices (no payments/credits) can receive a **pending edit request** (`POST …/edit-requests`); live content unchanged until `approve`. New permission `invoices.approve_edit` (admin/manager defaults). Approvers notified in-app + email (`customer_invoice.edit_requested`). Reject discards the proposal. Catalog **invoices 1.9.5 → 1.10.0**. Pest: `CustomerInvoiceEditApprovalTest`.
+- **EloSync-Frontend:** Request edit from list/view for unpaid; form submits for approval; view banner + Approve/Reject for `approve_edit`.
+- **EloSync-Docs:** User/developer/API/deployment + this changelog.
+- **Go-live:** migrate-only; grant `invoices.approve_edit`.
+
 ## Invoices overdue KPI money scope (1.9.5) (2026-10-08)
 
 - **EloSync-Backend:** `GET /invoices/stats?overdue=1` scopes money KPIs (`total_amount`, `received_amount`, `pending_amount`, `outstanding_balance`) to the overdue set (same as the list). Catalog **invoices 1.9.4 → 1.9.5**. Pest: overdue-scoped stats.

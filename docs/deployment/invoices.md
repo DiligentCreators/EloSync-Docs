@@ -8,7 +8,7 @@ Full go-live audit / checklist: [Invoices 1.1.0 production readiness](./invoices
 - Category: **Billing** (`billing`)
 - **Free Marketplace opt-in** (not auto-installed)
 - Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 10`
-- Catalog version: **1.9.5** (overdue filter scopes stats money KPIs; money KPIs, CSV/XLSX export, overdue digest, show `payment_bank`; status model `draft` / `unpaid` / `paid` / `cancelled`; recurring + branded PDF)
+- Catalog version: **1.10.0** (post-send edit approval; overdue filter scopes stats money KPIs; money KPIs, CSV/XLSX export, overdue digest, show `payment_bank`; status model `draft` / `unpaid` / `paid` / `cancelled`; recurring + branded PDF)
 - **No hard dependency** — unlike Quotations/Contracts, Invoices does **not** require Opportunities (or any other module) and can be installed standalone
 - The **Payments** module (shipped — see [deployment/payments.md](/deployment/payments)) declares a required `module_dependencies` row on Invoices, so Invoices must be installed first before a workspace can enable Payments
 
@@ -60,7 +60,7 @@ Defaults are production-safe. Override only if Nightwatch shows slow generate or
 4. Confirm `module:invoices` + `invoices.*` permissions on target roles
 5. Deploy Frontend SPA with Invoices nav (new **Billing** sidebar group)/pages (mirror Quotations table + form) when the SPA ships
 6. Confirm scheduler includes `invoices:generate-recurring` and `invoices:send-overdue-digest`
-7. Confirm `invoices.export` is granted to default admin/manager roles (bump migration)
+7. Confirm `invoices.export` and `invoices.approve_edit` are granted to default admin/manager roles (bump migrations)
 8. Payments (shipped) declares a `module_dependencies` row on `invoices` — confirm it blocks install on workspaces without Invoices entitled (see [deployment/payments.md](/deployment/payments))
 
 ## Ask EloSync

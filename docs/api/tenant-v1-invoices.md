@@ -65,7 +65,21 @@ PDF includes sanitized memo HTML, line items, subtotal/discount/tax/total, balan
 
 ### PUT `/invoices/{id}`
 
-Partial update of **draft** invoices only. Sending `lines` replaces the full line-item set and recalculates totals (including `line_discount_type` and per-line `discount_value`). Non-draft invoices return 422 on `status` (`Only draft invoices can be edited.`). Assignment after send uses `POST /invoices/{id}/assign`.
+Partial update of **draft** invoices only. Sending `lines` replaces the full line-item set and recalculates totals (including `line_discount_type` and per-line `discount_value`). Non-draft invoices return 422 on `status`. Assignment after send uses `POST /invoices/{id}/assign`. Sent invoices use the edit-request endpoints below.
+
+### POST `/invoices/{id}/edit-requests`
+
+Permission: `invoices.update` **or** `invoices.send` (assignee-scoped via policy). Body: same fields as `PUT` (title, lines, dates, etc.). Creates a **pending** edit request; live invoice unchanged. Requires unpaid status with zero `amount_paid` / `amount_credited`, and no other pending request. Notifies users with `invoices.approve_edit`.
+
+### POST `/invoices/{id}/edit-requests/approve`
+
+Permission: `invoices.approve_edit`. Applies the pending payload to the invoice, refreshes totals/PDF, and may void/repost the accrual journal when Accounting is entitled.
+
+### POST `/invoices/{id}/edit-requests/reject`
+
+Permission: `invoices.approve_edit`. Body optional `{ "reason": "…" }`. Discards the pending proposal.
+
+Show includes `can_request_edit` and `pending_edit_request` when loaded.
 
 ### DELETE `/invoices/{id}`
 

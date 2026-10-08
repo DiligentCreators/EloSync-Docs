@@ -38,9 +38,9 @@ Tenant customer-billing module on the frozen platform — the first Phase 3 (Bil
 
 ## Permissions
 
-`invoices.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `void` · `export`
+`invoices.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `void` · `export` · `approve_edit`
 
-Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.9.5**.
+Enable Invoices from Marketplace (free) — no other module is required first. Catalog: slug `invoices`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.10.0**.
 
 ## Related modules
 
