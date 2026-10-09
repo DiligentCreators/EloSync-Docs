@@ -17,6 +17,29 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Invoice edit requests table already exists (Forge migrate `42S01`)
+
+If deploy fails on `2026_10_08_171215_create_customer_invoice_edit_requests_table` with **Table 'customer_invoice_edit_requests' already exists**:
+
+1. Prefer pulling the Backend fix that makes that migration **idempotent** (`Schema::hasTable` + short index `cie_edit_req_tenant_invoice_status_idx`), then re-run `php artisan migrate --force`.
+2. If you cannot deploy that fix first and the table is already correct, record the migration without re-running `up()` (migrate-only — **do not** `db:seed` / drop the table unless empty and unused):
+
+```sql
+INSERT INTO migrations (migration, batch)
+SELECT '2026_10_08_171215_create_customer_invoice_edit_requests_table',
+       IFNULL(MAX(batch), 0) + 1
+FROM migrations;
+```
+
+Then ensure the short composite index exists if missing:
+
+```sql
+CREATE INDEX cie_edit_req_tenant_invoice_status_idx
+  ON customer_invoice_edit_requests (tenant_id, customer_invoice_id, status);
+```
+
+Finally: `php artisan migrate --force` and retry Forge deploy.
+
 ## Configurable digests — invoices 1.11.0 / departments 1.2.0 / attendance 1.8.0
 
 1. Deploy Backend and run `php artisan migrate --force` (`department_report_user` + catalog bumps — **do not** `db:seed`)
