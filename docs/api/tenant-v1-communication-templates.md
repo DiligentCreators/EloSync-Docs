@@ -32,7 +32,9 @@ Returns placeholder definitions (`key`, `label`, `group`, `description`, `sample
 
 Permission: `communication-templates.view`
 
-Query: `search`, `context`, `channel`, `category`, `is_active`, `trashed`, `sort` (`name`|`created_at`|`updated_at`|`last_used_at`), `direction`, `page`, `per_page`.
+Query: `search`, `context`, `channel`, `category`, `is_active`, `is_shared`, `for_use` (`1` = picker: own + shared + active only), `trashed`, `sort` (`name`|`created_at`|`updated_at`|`last_used_at`), `direction`, `page`, `per_page`.
+
+Visibility: non-owners see own + shared. Owners see all on the management list; `for_use=1` still hides others’ private templates. Responses include `is_shared`, `can_edit`, `can_delete`.
 
 ### POST `/communication-templates`
 
@@ -48,6 +50,7 @@ Body:
 | `category` | nullable, max 80 |
 | `body` | required, max 4000; only known `{{tokens}}` |
 | `is_active` | boolean, default true |
+| `is_shared` | boolean, default true (shared with workspace) |
 
 ### GET `/communication-templates/{uuid}`
 

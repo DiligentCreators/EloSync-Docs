@@ -474,6 +474,7 @@ export default withMermaid(defineConfig({
             { text: 'Storage Production Readiness', link: '/deployment/storage-production-readiness' },
             { text: 'Invoices Production Readiness', link: '/deployment/invoices-production-readiness' },
             { text: 'Configurable Digests Readiness (2026-10-09)', link: '/deployment/configurable-digests-2026-10-09-production-readiness' },
+            { text: 'Communication Templates 1.1.0 Shared/Private Readiness', link: '/deployment/communication-templates-1-1-0-production-readiness' },
             { text: 'Party Billing Production Readiness', link: '/deployment/party-billing-production-readiness' },
             { text: 'Workspace Record Cohesion Readiness', link: '/deployment/workspace-record-cohesion-production-readiness' },
             { text: 'Contacts/Companies Follow-ups + Import-Export Readiness', link: '/deployment/contacts-companies-follow-ups-import-export-production-readiness' },
