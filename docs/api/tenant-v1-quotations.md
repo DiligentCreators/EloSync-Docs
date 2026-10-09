@@ -78,6 +78,17 @@ Queues a branded email via the tenant mailer (optional PDF attachment from `Quot
 
 Permission: `quotations.send` (assignee-scoped). Requires status `sent`. Rotates the acceptance token and returns `{ url, expires_at, has_acceptance_link, acceptance_link_expires_at }`.
 
+### POST `/quotations/{id}/share-link`
+
+Permission: `quotations.send` (assignee-scoped). Mints/rotates a public **view** token for **sent** or **accepted** quotations. Returns `{ url, expires_at, has_public_view_link, public_view_link_expires_at }` (guest SPA `/#/view/quotations/{token}`, 90-day expiry). Cleared on reject/expire. Separate from the accept e-sign link.
+
+### Public customer view (unauthenticated)
+
+Requires tenancy and Quotations entitlement. Throttles: `document-share` / `document-share-pdf`.
+
+- `GET /public/quotations/view/{token}` — read-only summary (title, status, totals, lines). Invalid/expired → 404.
+- `GET /public/quotations/view/{token}/pdf` — same branded PDF as authenticated `GET /quotations/{id}/pdf`.
+
 ### POST `/quotations/{id}/accept`
 
 Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). Clears any outstanding acceptance token.
