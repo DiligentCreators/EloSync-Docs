@@ -9,9 +9,10 @@ php artisan optimize
 
 This ships:
 
-1. Schema for `communication_templates`
+1. Schema for `communication_templates` (including `is_shared` from **1.1.0**)
 2. Catalog row + workspace entitlements for `communication-templates` (data migration)
 3. Additive permission grants for default roles (data migration)
+4. Catalog version bump to **1.1.0** (`is_shared` visibility parity with Email templates)
 
 Do **not** run `db:seed`, `CatalogSeeder`, or any permission seeder in production for this module.
 
@@ -68,7 +69,10 @@ Frontend (optional):
 ```bash
 cd EloSync-Frontend
 npm run test:e2e:communication-templates
+npm run test:e2e:communication-templates:headed   # one-session validation + shared/private
 ```
+
+Production readiness (1.1.0 shared/private): [communication-templates-1-1-0-production-readiness](/deployment/communication-templates-1-1-0-production-readiness).
 
 Smoke after deploy:
 

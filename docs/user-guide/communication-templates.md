@@ -11,6 +11,7 @@ EloSync does not send messages for you. WhatsApp opens in a new tab with the mes
 3. Enter a name, choose context (e.g. Leads or Help Desk), channel (WhatsApp), optional category, and message body.
 4. Click placeholder chips to insert tokens at the cursor (or replace selected text).
 5. Save. Toggle **Active** off to hide a template from pickers without deleting it.
+6. Leave **Shared with workspace** on (default) so teammates with use permission can pick the template. Turn it off to keep the template private — only you and the workspace owner can see or edit it.
 
 ## Send via WhatsApp from a Lead
 

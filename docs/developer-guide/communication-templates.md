@@ -77,11 +77,19 @@ Table: `communication_templates`
 | `category` | Optional free-text grouping |
 | `body` | Plain text, max 4000; only known `{{tokens}}` |
 | `is_active` | Inactive templates hidden from pickers; still editable |
+| `is_shared` | Default `true` for new rows; existing rows backfilled `true` (workspace-wide before 1.1.0). Private = creator only (+ owner on manage list). |
 | `created_by` / `updated_by` | Nullable user FKs |
 | `last_used_at` | Set on successful **render** |
 | soft deletes | |
 
-Indexes cover `(tenant_id, context, channel, is_active)`, name, and `last_used_at`.
+Indexes cover `(tenant_id, context, channel, is_active)`, `(tenant_id, is_shared, is_active)`, name, and `last_used_at`.
+
+List visibility (mirrors Email templates):
+
+- Management list: own templates **or** `is_shared`; workspace owner (`superadmin`) sees all (including others’ private) for administration.
+- Picker list (`for_use=1`): own **or** shared, and `is_active` — even owner does not get others’ private in the picker.
+- Update/delete: creator **or** workspace owner, with `communication-templates.update` / `delete`.
+- Resource includes `creator`, `can_edit`, `can_delete`.
 
 ## Domain rules
 
@@ -91,6 +99,7 @@ Indexes cover `(tenant_id, context, channel, is_active)`, name, and `last_used_a
 - Render replaces missing/null values with `""` and returns `missing_placeholders`
 - WhatsApp phone normalization: digits only, minimum 8 digits; no silent country-code inventing
 - Render requires an active template and (for WhatsApp) a valid entity phone
+- Preview/render of private templates is allowed only for the creator or workspace owner
 
 ## Placeholder registry
 

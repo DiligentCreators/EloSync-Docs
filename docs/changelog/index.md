@@ -1,3 +1,10 @@
+## Communication Templates shared/private visibility (1.1.0) (2026-10-09)
+
+- **EloSync-Backend:** Communication Templates gain `is_shared` (default `true`; existing rows backfilled shared). List scope mirrors Email templates: own + shared for staff; workspace owner sees all private on the manage list; picker/`for_use=1` is own + shared + active only. Update/delete limited to creator or owner. Resource exposes `can_edit` / `can_delete`. Catalog **communication-templates 1.0.0 → 1.1.0**. Pest: `CommunicationTemplateSharingTest`.
+- **EloSync-Frontend / Mobile:** “Shared with workspace” on create/edit; Shared/Private column + visibility filter; WhatsApp picker uses `for_use`; row actions respect `can_edit` / `can_delete`. Playwright headed one-session: validation + shared/private CRUD (`test:e2e:communication-templates:headed`).
+- **EloSync-Docs:** User/developer/API guides + [production readiness](/deployment/communication-templates-1-1-0-production-readiness) + this changelog.
+- **Go-live:** migrate-only; no new permissions. Existing templates stay shared. See [production readiness](/deployment/communication-templates-1-1-0-production-readiness).
+
 ## Invoice edit-requests migration idempotent for Forge (2026-10-09)
 
 - **EloSync-Backend:** `2026_10_08_171215_create_customer_invoice_edit_requests_table` skips create when the table already exists and ensures short index `cie_edit_req_tenant_invoice_status_idx` (avoids MySQL 64-char name / half-applied deploy `42S01`).
