@@ -1,3 +1,9 @@
+## Invoice edit-requests migration idempotent for Forge (2026-10-09)
+
+- **EloSync-Backend:** `2026_10_08_171215_create_customer_invoice_edit_requests_table` skips create when the table already exists and ensures short index `cie_edit_req_tenant_invoice_status_idx` (avoids MySQL 64-char name / half-applied deploy `42S01`).
+- **EloSync-Docs:** Upgrade note for operators when Forge migrate fails with table already exists.
+- **Go-live:** pull Backend + Docs; re-run `php artisan migrate --force` (no seed). If still blocked on an old release, use the SQL bookkeeping steps in [Upgrade](/deployment/upgrade).
+
 ## Configurable digests: open invoices + department report recipients (2026-10-09)
 
 - **EloSync-Backend:** One open-invoice digest (draft / unpaid / partial; Overdue Yes/No column; no row cap) gated by Settings `invoices.digest_enabled` (default off), `invoices.digest_time` (`H:i`), `invoices.digest_user_ids`. Command `invoices:send-overdue-digest` every 5 minutes. Attendance late/yesterday digests send only to department **report recipients** (`department_report_user`); manager not auto-included; no owner fallback; multi-dept recipients get one combined email. Department task summary digest at Daily Reminder Time for the same recipients. Catalog **invoices 1.10.0 → 1.11.0**, **departments 1.1.1 → 1.2.0**, **attendance 1.7.0 → 1.8.0**. Pest: invoice digest, department report recipient digests, attendance digest updates.
