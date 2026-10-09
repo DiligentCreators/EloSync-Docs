@@ -52,6 +52,10 @@ Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use 
 - A quotation can only be converted **once** — the action is hidden once any invoice already has this quotation linked (including invoices created from a linked estimate or contract)
 - Without Invoices installed, the action is hidden; the API returns a validation error if called directly
 
+## Share link (view + PDF)
+
+When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can **Copy share link**. Customers open `/#/view/quotations/{token}` (no login), review totals and lines, and download the same branded PDF as the CRM. Links expire after 90 days and are cleared if the quotation is rejected or expired. This is separate from the **accept** link used for e-signature.
+
 ## Download PDF
 
 **Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Long notes and terms continue across as many pages as needed.

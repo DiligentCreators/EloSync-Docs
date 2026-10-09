@@ -23,6 +23,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 - Download quotation PDF (workspace-branded; line HTML, memo, terms)
 - **Email customer** after Send (`POST /quotations/{id}/email`, `quotations.send`) — optional PDF attachment; for **Sent** quotes, appends a one-time customer accept link; default recipient from linked contact/company; records `emailed` timeline + tenant email log
 - **Customer e-signature (v1)** — public accept page (`/#/accept/quotations/{token}`); staff can **Copy accept link**; signer name/email/IP recorded on accept
+- **Public share link** — `/#/view/quotations/{token}` for sent/accepted quotes (view + download same branded PDF; separate from accept)
 - **Convert to invoice** (`POST /quotations/{id}/convert`) — one-shot draft CustomerInvoice when Invoices is entitled (soft check; not a Marketplace hard dependency)
 - Assignment with assignee scoping via `quotations.assign`
 - Notes + domain activity timeline (mirrors Opportunities)
@@ -35,7 +36,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 
 `quotations.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.9.0**.
+Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.10.0**.
 
 ## Related modules
 

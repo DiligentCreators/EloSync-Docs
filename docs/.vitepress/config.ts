@@ -473,6 +473,7 @@ export default withMermaid(defineConfig({
             { text: 'Reports Production Readiness', link: '/deployment/analytics-production-readiness' },
             { text: 'Storage Production Readiness', link: '/deployment/storage-production-readiness' },
             { text: 'Invoices Production Readiness', link: '/deployment/invoices-production-readiness' },
+            { text: 'Multi-bank + Public Share Links Readiness (2026-10-10)', link: '/deployment/billing-share-multi-bank-2026-10-10-production-readiness' },
             { text: 'Configurable Digests Readiness (2026-10-09)', link: '/deployment/configurable-digests-2026-10-09-production-readiness' },
             { text: 'Communication Templates 1.1.0 Shared/Private Readiness', link: '/deployment/communication-templates-1-1-0-production-readiness' },
             { text: 'Party Billing Production Readiness', link: '/deployment/party-billing-production-readiness' },

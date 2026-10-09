@@ -55,7 +55,19 @@ Body: `title` (required), `notes` (HTML memo, sanitized server-side), `terms_and
 
 ### GET `/invoices/{id}`
 
-Includes contact, company, quotation, estimate, contract, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, `payment_allocations` (when loaded: allocation `amount` + nested `customer_payment` `{id,uuid,number,status,method,reference,currency,paid_at}`), timeline activities, recurrence fields, `payment_bank` (workspace Branding bank fields: `bank_name`, `bank_account_name`, `bank_account_number`, `bank_iban`, `bank_swift`, `has_bank`), and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes contact, company, quotation, estimate, contract, assignee, creator, lines (`product_id`, optional `product` `{id,sku,name}` when loaded, `name`, `body`, `discount_value`), document `line_discount_type` / `discount_total`, `notes`, `terms_and_conditions`, `payment_allocations` (when loaded: allocation `amount` + nested `customer_payment` `{id,uuid,number,status,method,reference,currency,paid_at}`), timeline activities, recurrence fields, `payment_bank` (enabled Branding banks: `bank_accounts[]` plus legacy first-account `bank_name` / `bank_account_name` / `bank_account_number` / `bank_iban` / `bank_swift`, `has_bank`), `has_public_view_link` / `public_view_link_expires_at`, and (for an active series root) `latest_unpaid_generated_invoice` `{ id, number, status }` when one exists. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+
+### POST `/invoices/{id}/share-link`
+
+Permission: `invoices.send` (assignee-scoped). Mints/rotates a public view token for **unpaid** or **paid** invoices. Returns `{ url, expires_at, has_public_view_link, public_view_link_expires_at }` (guest SPA `/#/view/invoices/{token}`, 90-day expiry). Cleared on void/cancel.
+
+### GET `/public/invoices/view/{token}`
+
+Unauthenticated (tenancy required). Throttled `document-share`. Returns read-only summary (number, title, status, totals, lines, enabled `payment_bank`). 404 when invalid/expired/unavailable.
+
+### GET `/public/invoices/view/{token}/pdf`
+
+Unauthenticated. Throttled `document-share-pdf`. Same branded PDF bytes as authenticated `GET /invoices/{id}/pdf`.
 
 ### GET `/invoices/{id}/pdf`
 

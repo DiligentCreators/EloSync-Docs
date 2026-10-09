@@ -1,3 +1,10 @@
+## Multi bank accounts + public invoice/quotation share links (2026-10-10)
+
+- **EloSync-Backend:** Settings `invoice_bank_accounts` (json) supports multiple remittance accounts with per-account enable/disable; PDF Payment Information and invoice `payment_bank.bank_accounts` show enabled accounts only; legacy flat `invoice_bank_*` keys still hydrate and sync from the first enabled account (cleared when none enabled). Public share tokens on invoices/quotations: `POST …/share-link`, guest `GET …/public/{invoices|quotations}/view/{token}` + `/pdf` (same branded PDF as CRM). Catalog **invoices 1.11.0 → 1.12.0**, **quotations 1.9.0 → 1.10.0**. Pest: bank accounts settings, public share invoice/quotation (incl. token rotation), catalog bump.
+- **EloSync-Frontend:** Settings → Branding multi-bank UI (add/remove + show-on-invoice toggle). Invoice/quotation record **Copy share link**; guest pages `/#/view/invoices/:token` and `/#/view/quotations/:token` with PDF download. Accept links remain separate for quotations. Playwright headed one-session: `test:e2e:billing-share:headed`.
+- **EloSync-Docs:** User/developer/API guides + [production readiness](/deployment/billing-share-multi-bank-2026-10-10-production-readiness) + this changelog.
+- **Go-live:** migrate-only; no new permissions. Existing single bank settings continue to work until edited. See [production readiness](/deployment/billing-share-multi-bank-2026-10-10-production-readiness).
+
 ## Communication Templates shared/private visibility (1.1.0) (2026-10-09)
 
 - **EloSync-Backend:** Communication Templates gain `is_shared` (default `true`; existing rows backfilled shared). List scope mirrors Email templates: own + shared for staff; workspace owner sees all private on the manage list; picker/`for_use=1` is own + shared + active only. Update/delete limited to creator or owner. Resource exposes `can_edit` / `can_delete`. Catalog **communication-templates 1.0.0 → 1.1.0**. Pest: `CommunicationTemplateSharingTest`.

@@ -40,6 +40,15 @@ CREATE INDEX cie_edit_req_tenant_invoice_status_idx
 
 Finally: `php artisan migrate --force` and retry Forge deploy.
 
+## Multi-bank remittance + public share links — invoices 1.12.0 / quotations 1.10.0
+
+1. Deploy Backend and run `php artisan migrate --force` (public view token columns + catalog bumps — **do not** `db:seed`)
+2. Confirm catalog: `invoices` **1.12.0**, `quotations` **1.10.0**
+3. Deploy Frontend — Settings → Branding bank accounts; invoice/quotation **Copy share link**; guest `/#/view/…` pages
+4. Staging smoke: two banks / one disabled → send → share link → guest view + PDF → void/reject clears link
+
+Go-live: [Billing share + multi-bank production readiness](/deployment/billing-share-multi-bank-2026-10-10-production-readiness).
+
 ## Configurable digests — invoices 1.11.0 / departments 1.2.0 / attendance 1.8.0
 
 1. Deploy Backend and run `php artisan migrate --force` (`department_report_user` + catalog bumps — **do not** `db:seed`)

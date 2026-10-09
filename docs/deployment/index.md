@@ -35,6 +35,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Storage Production Readiness](./storage-production-readiness) | Storage module audit, blockers, smoke, rollback, sign-off |
 | [Workspace upload policy + Task media](./workspace-upload-policy-task-media-production-readiness) | Upload limits + task attachments — **Go** |
 | [Invoices Production Readiness](./invoices-production-readiness) | Invoices 1.1.0 recurring + PDF audit, smoke, rollback, sign-off |
+| [Multi-bank + public share links (2026-10-10)](./billing-share-multi-bank-2026-10-10-production-readiness) | Invoice banks + guest invoice/quotation share — **Go** |
 | [Contracts Production Readiness](./contracts-production-readiness) | Contracts 1.1.0 auto-fill + HTML memos — **Go** |
 | [Contracts 1.7.0 Accept Evidence Readiness](./contracts-1-7-0-production-readiness) | Phone / signature / ID on public accept — **Go** |
 | [Billing product line picker](./billing-product-line-picker-production-readiness) | Quotes/estimates/invoices optional `product_id` + Products HTML — **Go** |
@@ -71,7 +72,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Opportunities](./opportunities) | Opportunities module ops |
 | [Quotations](./quotations) | Quotations module ops |
 | [Contracts](./contracts) | Contracts module ops ([1.7.0 readiness](./contracts-1-7-0-production-readiness) · [1.1.0](./contracts-production-readiness)) |
-| [Invoices](./invoices) | Invoices module ops ([1.1.0 readiness](./invoices-production-readiness)) |
+| [Invoices](./invoices) | Invoices module ops ([1.1.0 readiness](./invoices-production-readiness) · [1.12.0 share/banks](./billing-share-multi-bank-2026-10-10-production-readiness)) |
 | [Payments](./payments) | Payments module ops |
 | [Credit Notes](./credit-notes) | Credit Notes module ops |
 | [Estimates](./estimates) | Estimates module ops |
