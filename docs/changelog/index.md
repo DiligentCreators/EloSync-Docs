@@ -1,3 +1,8 @@
+## Open invoice digest email render fix (2026-10-10)
+
+- **EloSync-Backend:** HTML mail for `CustomerInvoiceOverdueDigestNotification` no longer references undefined `$remainingCount` (leftover from the old capped digest). That undefined variable aborted the mail channel after the in-app notification was written, so recipients saw a bell item but no Email Log / inbox message, and same-day dedupe blocked retries. Pest: render regression in `CustomerInvoiceExportAndDigestTest`.
+- **Go-live:** deploy Backend; no migrate. For workspaces already marked sent today with no email, clear today’s `invoice.digest:{date}:{userId}` notifications (and matching cache dedupe keys) then run `php artisan invoices:send-overdue-digest`, or wait until the next workspace day.
+
 ## Multi bank accounts + public invoice/quotation share links (2026-10-10)
 
 - **EloSync-Backend:** Settings `invoice_bank_accounts` (json) supports multiple remittance accounts with per-account enable/disable; PDF Payment Information and invoice `payment_bank.bank_accounts` show enabled accounts only; legacy flat `invoice_bank_*` keys still hydrate and sync from the first enabled account (cleared when none enabled). Public share tokens on invoices/quotations: `POST …/share-link`, guest `GET …/public/{invoices|quotations}/view/{token}` + `/pdf` (same branded PDF as CRM). Catalog **invoices 1.11.0 → 1.12.0**, **quotations 1.9.0 → 1.10.0**. Pest: bank accounts settings, public share invoice/quotation (incl. token rotation), catalog bump.
