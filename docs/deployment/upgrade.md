@@ -44,7 +44,7 @@ Finally: `php artisan migrate --force` and retry Forge deploy.
 
 1. Deploy Backend and run `php artisan migrate --force` (public view token columns + catalog bumps — **do not** `db:seed`)
 2. Confirm catalog: `invoices` **1.12.0**, `quotations` **1.10.0**
-3. Deploy Frontend — Settings → Branding bank accounts; invoice/quotation **Copy share link**; guest `/#/view/…` pages
+3. Deploy Frontend from **`build-artifacts`** (not `main`) after **Frontend production build** succeeds — Settings → Branding bank accounts; invoice/quotation **Copy share link**; guest `/#/view/…` pages. If Actions failed typecheck on `invoice_bank_accounts`, merge the share-link SPA publish fix first so artifacts update.
 4. Staging smoke: two banks / one disabled → send → share link → guest view + PDF → void/reject clears link
 
 Go-live: [Billing share + multi-bank production readiness](/deployment/billing-share-multi-bank-2026-10-10-production-readiness).

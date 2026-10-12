@@ -88,8 +88,10 @@ Playwright headed (`--workers=1`, one workspace login): **4 passed** — banks (
 
 1. Deploy Backend → `php artisan migrate --force` (**do not** `db:seed`)
 2. Confirm catalog: `invoices` **1.12.0**, `quotations` **1.10.0**
-3. Deploy Frontend SPA
+3. Confirm GitHub **Frontend production build** on `main` succeeded and published `build-artifacts` (Forge SPA site branch is **`build-artifacts`**, not `main`). Redeploying Forge alone does not ship source from `main`.
 4. Smoke: Settings → Branding two banks / one disabled → send invoice → Copy share link → guest view + PDF (only enabled bank) → void → link 404; same for sent quotation share (accept link still works)
+
+**Post-merge note (2026-10-12):** The first merge of this feature failed CI typecheck (`invoice_bank_accounts` settings payload typing), so production SPA stayed on the prior artifact without **Copy share link**. Fix: Frontend type for `InvoiceBankAccountSetting` → merge → wait for artifact publish → Forge deploy.
 
 ## Related
 
