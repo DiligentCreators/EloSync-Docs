@@ -101,13 +101,21 @@ Mirrors the Leads 1.8.0 / Opportunities 1.3.0 / Live Chat inbox invalidate patte
 | Service | `taskService` in `src/api/services.ts` |
 | Realtime board hook | `src/hooks/use-tasks-board-realtime.ts` — joins `tenant.{id}.tasks.board`, debounce-invalidates board + stats |
 | Nav | `permission: tasks.view`, `module: 'tasks'` |
-| Catalog | **1.8.0** (real-time board sync) |
+| Catalog | **1.10.0** (status timing) |
+
+## Status timing (1.10.0)
+
+- Column `tasks.started_at` (nullable UTC) set on first enter to `in_progress`; cleared on reopen with `completed_at`
+- Activity type `status_changed` with `properties.before/after.status` + `duration_seconds`
+- `TaskService::timing()` builds `created_to_completed`, `started_to_completed`, `segments`, `time_in_status` (current cycle after latest `reopened`)
+- SPA: `TaskTimingSummary` on view Activity + list peek overview; durations as `DD:HH:MM`
 
 ## Tests
 
 ```bash
 # Backend
 php artisan test --compact tests/Feature/Tenant/Task/TaskTest.php
+php artisan test --compact tests/Feature/Tenant/Task/TaskStatusTimingTest.php
 php artisan test --compact tests/Feature/Tenant/Task/TaskRealtimeBoardTest.php
 php artisan test --compact tests/Feature/Tenant/Task/TaskTagTest.php
 php artisan test --compact tests/Unit/UtcInstantTest.php
@@ -119,7 +127,7 @@ npm run test:e2e:tasks
 ## Logging
 
 - Spatie `LogsActivity` on `Task` (log name `tasks`)
-- Domain `task_activities` timeline
+- Domain `task_activities` timeline (`status_changed` for status hops)
 - `PlatformAuditService` via `TaskEventSubscriber` (includes `task_tag_created`, `task_tags_synced`)
 
 ## Intentional differences from Leads

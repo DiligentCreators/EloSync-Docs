@@ -12,7 +12,7 @@ Open **Tasks** from the sidebar under **CRM**. The default view is the **Board**
 
 - Search by title or description
 - Each status column header and its cards use a fixed status color; Status badges in the list and record page match
-- Click a row or board card to open a **quick peek** sheet with status, priority, tags, description, assignee, due date, project, creator, and attachment count — use **Edit** for light changes or **Open full page** for comments, attachments, assignment, and activity
+- Click a row or board card to open a **tabbed sheet** (Overview, Comments, Activity) — use **Edit** for light changes or **Open full page** for attachments, assignment history, and other deep work
 - Filter by status, priority, assignee, **tag**, and **Overdue** (open items past their due date)
 - KPI cards summarize totals, due today / this week, overdue, and completion metrics for your scope — click **Overdue** to apply the same filter
 - Table and board both show **tags** and the **latest note**; hover a truncated preview to read the full note
@@ -66,8 +66,18 @@ Users with **complete** can mark a task completed (sets `completed_at`) or reope
 
 With the **AI Assistant** module installed, Ask EloSync can load a task and suggest status changes, assignments, or notes — nothing is saved until you **Confirm**. Completing or reopening a completed task still needs the **complete** permission.
 
+Reopening clears completion and **Started** time so a new timing cycle begins. Prior status history remains in Activity.
+
+## Status timing
+
+The task **Activity** section (full record page) and list peek overview show timing in **DD:HH:MM**:
+
+- **Created → Completed** — total time from create to complete
+- **Started → Completed** — from first move into **In Progress** until complete
+- **Time in each status** and each status-to-status segment for the current cycle
+
 ## Comments, attachments & history
 
 - **Attachments** — on the full record page, upload multiple files to explain the task; download or delete with **update** permission. Allowed types and max sizes follow workspace Storage upload policy
 - **Comments** — free-text notes; optional attachments on each comment (up to 5). Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
-- **History** — activity timeline (create, update, assignment, complete, reopen, note, etc.)
+- **History** — activity timeline (create, update, status change, assignment, complete, reopen, note, etc.). Status changes include time spent in the previous status

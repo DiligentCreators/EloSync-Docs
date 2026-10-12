@@ -23,7 +23,7 @@ Second product module on the frozen platform. Mirrors the [Leads](/user-guide/le
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `tasks.assign`
 - **`tasks.change_due_date`** — required to change `due_at` after create (initial due date allowed on create)
 - Complete / reopen (`tasks.complete`)
-- Comments (notes) + History (timeline) tabs
+- Comments (notes) + History (timeline) tabs; Activity shows status timing (DD:HH:MM)
 - **Board (default)** + List view; drag-and-drop auto-saves status
 - **Real-time board sync** — private Reverb channel `tenant.{id}.tasks.board` (auth: same tenant + `tasks.view`) broadcasts `TaskCreated` / `TaskUpdated` / `TaskStatusChanged` (with `previous_status`) / `TaskAssigned` / `TaskDeleted`; the board view invalidates `tasks/board` + `tasks/stats` (debounced) so teammates see moves, assignments, and deletes without a manual refresh. Mirrors the Leads / Opportunities invalidate pattern. Catalog **1.8.0**. Go-live: [production readiness](/deployment/tasks-realtime-board-sync-1-8-0-production-readiness).
 - KPIs via `GET /tasks/stats`; board via `GET /tasks/board`
