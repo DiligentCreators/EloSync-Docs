@@ -1,3 +1,10 @@
+## Task status timing (1.10.0) (2026-10-12)
+
+- **EloSync-Backend:** Tasks track per-status time. Nullable `started_at` (first `in_progress`); activity type `status_changed` with `duration_seconds`; detail `timing` summary (`created_to_completed`, `started_to_completed`, segments, `time_in_status`) as `DD:HH:MM`. Reopen clears `started_at` / `completed_at` and starts a new cycle. Catalog **tasks 1.9.0 → 1.10.0**. Pest: `TaskStatusTimingTest`.
+- **EloSync-Frontend:** Activity section (full page) and list peek overview show timing summary; status-change rows show durations. Playwright workflow asserts Created → Completed timing.
+- **EloSync-Docs:** User/developer/API guides + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA.
+
 ## Tabbed module record drawers (2026-10-12)
 
 - **EloSync-Frontend:** List peeks use tabbed `ModuleRecordSheet` / `EntityRecordSheet` view mode (Overview, Notes, Follow-ups, Activity, Lines, Timeline, etc.) so agents can work without opening the full page. Shared `RecordSheet*Panel` helpers; **Open full page** remains the escape hatch. Billing docs stay view-peek only for create/edit. Playwright headed one-session: `test:e2e:sheets:headed`.
