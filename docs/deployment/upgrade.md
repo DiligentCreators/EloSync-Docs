@@ -65,6 +65,15 @@ Go-live: [Billing share + multi-bank production readiness](/deployment/billing-s
 
 Go-live: [Configurable digests production readiness](/deployment/configurable-digests-2026-10-09-production-readiness).
 
+## WhatsApp Cloud 1.5.0 → 1.6.0 (+ Help Desk → 1.18.0) — auto-ticket + note sync
+
+1. `php artisan migrate --force` (`auto_create_help_desk_tickets`, note/message FKs, catalog bumps — do **not** `db:seed`)
+2. Confirm catalog: `whatsapp-cloud` **1.6.0**, `help-desk` **1.18.0**
+3. Deploy Frontend — WhatsApp **Auto-create Help Desk tickets** toggle
+4. Staging smoke: entitle both modules → enable auto-create → inbound creates ticket; public note syncs inside 24h; internal notes stay local
+
+Go-live: [WhatsApp Help Desk bridge 1.6.0 production readiness](/deployment/whatsapp-help-desk-bridge-1-6-0-production-readiness).
+
 ## Tasks 1.10.0 → 1.10.1 / Help Desk 1.17.0 → 1.17.1 — human-readable status timing
 
 1. `php artisan migrate --force` (do **not** `db:seed`)

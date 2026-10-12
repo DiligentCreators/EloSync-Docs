@@ -12,7 +12,7 @@ Middleware: `module:whatsapp-cloud` + Spatie `can:whatsapp-cloud.*`
 | GET | `/whatsapp/integrations/wabas` | `manage_integrations` |
 | GET | `/whatsapp/integrations/phones?waba_id=` | `manage_integrations` |
 | POST | `/whatsapp/integrations/phones` | `manage_integrations` |
-| PATCH | `/whatsapp/integrations` | `manage_integrations` (`auto_create_leads`, `default_lead_source`) |
+| PATCH | `/whatsapp/integrations` | `manage_integrations` (`auto_create_leads`, `auto_create_help_desk_tickets`, `default_lead_source`) |
 | POST | `/whatsapp/integrations/disconnect` | `manage_integrations` |
 
 OAuth callback (central web): `GET /api/oauth/whatsapp/cloud/callback`

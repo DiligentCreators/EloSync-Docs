@@ -1,3 +1,11 @@
+## WhatsApp Help Desk auto-ticket + bidirectional note sync (1.6.0 / 1.18.0) (2026-10-13)
+
+- **EloSync-Backend:** Opt-in `auto_create_help_desk_tickets` on WhatsApp connections; inbound chats can auto-open Help Desk tickets when Help Desk is entitled. Public notes sync both ways (WhatsApp inbound → ticket notes without SLA first response; staff public notes → WhatsApp inside the 24h window) with FK loop prevention. Catalog **whatsapp-cloud 1.5.0 → 1.6.0**, **help-desk 1.17.x → 1.18.0**. Pest: `WhatsAppHelpDeskBridgeTest` + catalog bumps.
+- **EloSync-Frontend:** WhatsApp inbox setting toggle for auto-create Help Desk tickets (gated by Help Desk entitlement). Playwright headed one-session: `test:e2e:whatsapp-cloud:headed` **10/10**.
+- **EloSync-Mobile:** Connection type exposes `auto_create_help_desk_tickets`.
+- **EloSync-Docs:** User/developer/API/upgrade/roadmap + [production readiness](/deployment/whatsapp-help-desk-bridge-1-6-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA.
+
 ## Human-readable status timing (tasks 1.10.1 / help-desk 1.17.1) (2026-10-13)
 
 - **EloSync-Backend:** Status timing `formatted` / `duration_formatted` values use compact human text (`45m`, `3h`, `1d 2h 5m`) instead of `DD:HH:MM`. Catalog **tasks 1.10.0 → 1.10.1**, **help-desk 1.17.0 → 1.17.1**. Pest: `DurationFormatTest`, status timing + catalog bump tests.

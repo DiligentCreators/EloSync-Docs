@@ -1,6 +1,6 @@
 # WhatsApp Cloud — Overview
 
-Billable CRM Marketplace module (`whatsapp-cloud` **1.4.0**) that connects a WhatsApp Business Account via the official **WhatsApp Cloud API**.
+Billable CRM Marketplace module (`whatsapp-cloud` **1.6.0**) that connects a WhatsApp Business Account via the official **WhatsApp Cloud API**.
 
 ## What it does
 
@@ -18,6 +18,10 @@ Billable CRM Marketplace module (`whatsapp-cloud` **1.4.0**) that connects a Wha
 ## Lead Source (v1.1.0)
 
 Opt-in on the WhatsApp connection: **Auto-create leads from unknown numbers**. When enabled and Leads is installed, the first inbound message from an unlinked contact creates or links a Lead via the WhatsApp Lead Source driver (`source_reference = whatsapp_cloud`).
+
+## Help Desk bridge (v1.6.0)
+
+Opt-in on the WhatsApp connection: **Auto-create Help Desk tickets from inbound chats**. When enabled and Help Desk is installed, the first inbound message opens a ticket. Public ticket notes sync with WhatsApp inside the 24-hour customer service window (internal notes stay in EloSync). Manual **Escalate to Help Desk** still works when auto-create is off.
 
 ## Automation (v1.2.0)
 
