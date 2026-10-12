@@ -82,6 +82,10 @@ Users with **assign** can set or clear the assignee from the ticket page or the 
 
 Assignees get an **in-app** notification on customer reply (and on close/reopen). Optional **email** for those events is controlled under Settings → Notifications (`help_desk_customer_reply`, `help_desk_closed`, `help_desk_reopened` — default off).
 
+## Status timing
+
+The ticket **Timeline** summarizes time spent in each status (`DD:HH:MM`), including **Created → Resolved** and **Started → Resolved** when the ticket reaches Resolved or Closed. **Started** means the first move into **In Progress**. Reopening a ticket clears the cycle so the next resolve starts fresh. Status-change rows also show how long the previous status lasted.
+
 ## Due dates & overdue
 
 Set an optional **due date** on create or edit. Overdue filtering and KPIs compare `due_at` against the current instant using the workspace timezone convention (same as Tasks and Leads follow-ups). Tickets in **Resolved** or **Closed** are excluded from the overdue count.
