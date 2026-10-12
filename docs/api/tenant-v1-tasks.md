@@ -117,7 +117,7 @@ JSON or multipart: `{ "body": string }` required, optional `attachments[]` (max 
 
 ### GET `/tasks/{id}/timeline`
 
-Task activity timeline entries (History / Activity). Entries of type `status_changed` include `properties.duration_seconds` (time in the previous status) and resource fields `duration_seconds` / `duration_formatted` (`DD:HH:MM`).
+Task activity timeline entries (History / Activity). Entries of type `status_changed` include `properties.duration_seconds` (time in the previous status) and resource fields `duration_seconds` / `duration_formatted` (compact human text, e.g. `3h`, `1d 2h 5m`).
 
 ### Status timing on show / write responses
 

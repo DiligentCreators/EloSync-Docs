@@ -56,14 +56,14 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.17.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.17.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
 
-## Status timing (1.17.0)
+## Status timing (1.17.0 / 1.17.1)
 
 - Columns `help_desk_tickets.started_at` / `resolved_at` (nullable UTC): `started_at` on first enter to `in_progress`; `resolved_at` on first `resolved` or `closed`; both cleared on reopen to `open`
 - Activity type `status_changed` with `properties.before/after.status` + `duration_seconds`
 - `HelpDeskTicketService::timing()` builds `created_to_resolved`, `started_to_resolved`, `segments`, `time_in_status` (current cycle after latest reopen to `open`)
-- SPA: `HelpDeskTimingSummary` on view Timeline + list peek Activity; durations as `DD:HH:MM`
+- SPA: `HelpDeskTimingSummary` on view Timeline + list peek Activity; durations as compact human text (`45m`, `3h`, `1d 2h 5m`) via `DurationFormat::human` / `formatDurationHuman`
 
 ## Communication Templates (soft)
 

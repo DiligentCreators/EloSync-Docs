@@ -101,14 +101,14 @@ Mirrors the Leads 1.8.0 / Opportunities 1.3.0 / Live Chat inbox invalidate patte
 | Service | `taskService` in `src/api/services.ts` |
 | Realtime board hook | `src/hooks/use-tasks-board-realtime.ts` — joins `tenant.{id}.tasks.board`, debounce-invalidates board + stats |
 | Nav | `permission: tasks.view`, `module: 'tasks'` |
-| Catalog | **1.10.0** (status timing) |
+| Catalog | **1.10.1** (human-readable status timing) |
 
-## Status timing (1.10.0)
+## Status timing (1.10.0 / 1.10.1)
 
 - Column `tasks.started_at` (nullable UTC) set on first enter to `in_progress`; cleared on reopen with `completed_at`
 - Activity type `status_changed` with `properties.before/after.status` + `duration_seconds`
 - `TaskService::timing()` builds `created_to_completed`, `started_to_completed`, `segments`, `time_in_status` (current cycle after latest `reopened`)
-- SPA: `TaskTimingSummary` on view Activity + list peek overview; durations as `DD:HH:MM`
+- SPA: `TaskTimingSummary` on view Activity + list peek overview; durations as compact human text (`45m`, `3h`, `1d 2h 5m`) via `DurationFormat::human` / `formatDurationHuman`
 
 ## Tests
 

@@ -1,3 +1,10 @@
+## Human-readable status timing (tasks 1.10.1 / help-desk 1.17.1) (2026-10-13)
+
+- **EloSync-Backend:** Status timing `formatted` / `duration_formatted` values use compact human text (`45m`, `3h`, `1d 2h 5m`) instead of `DD:HH:MM`. Catalog **tasks 1.10.0 → 1.10.1**, **help-desk 1.17.0 → 1.17.1**. Pest: `DurationFormatTest`, status timing + catalog bump tests.
+- **EloSync-Frontend:** Timing summaries and activity duration fallbacks use the same human-readable formatter.
+- **EloSync-Docs:** User/developer/API guides + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA.
+
 ## Help Desk status timing (1.17.0) (2026-10-13)
 
 - **EloSync-Backend:** Help Desk tickets track per-status time. Nullable `started_at` (first `in_progress`) and `resolved_at` (first `resolved` / `closed`); activity type `status_changed` with `duration_seconds`; detail `timing` summary (`created_to_resolved`, `started_to_resolved`, segments, `time_in_status`) as `DD:HH:MM`. Reopen clears `started_at` / `resolved_at` and starts a new cycle. Catalog **help-desk 1.16.0 → 1.17.0**. Pest: `HelpDeskStatusTimingTest`.
