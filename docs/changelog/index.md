@@ -1,3 +1,10 @@
+## Task status timing (1.10.0) (2026-10-12)
+
+- **EloSync-Backend:** Tasks track per-status time. Nullable `started_at` (first `in_progress`); activity type `status_changed` with `duration_seconds`; detail `timing` summary (`created_to_completed`, `started_to_completed`, segments, `time_in_status`) as `DD:HH:MM`. Reopen clears `started_at` / `completed_at` and starts a new cycle. Catalog **tasks 1.9.0 → 1.10.0**. Pest: `TaskStatusTimingTest`.
+- **EloSync-Frontend:** Activity section (full page) and list peek overview show timing summary; status-change rows show durations. Playwright workflow asserts Created → Completed timing.
+- **EloSync-Docs:** User/developer/API guides + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA.
+
 ## Guest share preview PDF parity + branded logo chrome (2026-10-12)
 
 - **EloSync-Backend:** Public invoice/quotation view summaries add Branded-gated chrome (`branded_active`, `logo_url`, `brand_name`), seller `issuer`, `bill_to`, richer lines (`body`, tax), and invoice paid/credited fields for guest HTML preview. Catalog **invoices 1.12.0 → 1.12.1**, **quotations 1.10.0 → 1.10.1**. Pest: share preview chrome + catalog bump.
