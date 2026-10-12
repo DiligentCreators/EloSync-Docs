@@ -37,7 +37,7 @@ Pipeline stages are part of Opportunities — there is no separate “Sales Pipe
 
 Seeded stages: **Prospecting** (default) → **Qualification** → **Proposal** → **Negotiation** → **Won** / **Lost**.
 
-- Moving a card on the board auto-saves the stage change (same as [Leads](/user-guide/leads)); click a card to open the drawer for edits
+- Moving a card on the board auto-saves the stage change (same as [Leads](/user-guide/leads)); click a card to open the tabbed drawer (Overview, Notes, Activity) for edits — **Open full page** for related records and other deep work
 - Won / Lost columns mark closed deals for KPIs (pipeline value excludes them)
 
 ## Assignment

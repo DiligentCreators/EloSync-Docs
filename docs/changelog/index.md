@@ -1,3 +1,9 @@
+## Tabbed module record drawers (2026-10-12)
+
+- **EloSync-Frontend:** List peeks use tabbed `ModuleRecordSheet` / `EntityRecordSheet` view mode (Overview, Notes, Follow-ups, Activity, Lines, Timeline, etc.) so agents can work without opening the full page. Shared `RecordSheet*Panel` helpers; **Open full page** remains the escape hatch. Billing docs stay view-peek only for create/edit.
+- **EloSync-Docs:** Module-development / shared-layout hybrid-sheet guidance updated for `renderTabs`; this changelog.
+- **Go-live:** deploy Frontend after production build; hard-refresh SPA. No Backend migrate.
+
 ## Guest share preview PDF parity + branded logo chrome (2026-10-12)
 
 - **EloSync-Backend:** Public invoice/quotation view summaries add Branded-gated chrome (`branded_active`, `logo_url`, `brand_name`), seller `issuer`, `bill_to`, richer lines (`body`, tax), and invoice paid/credited fields for guest HTML preview. Catalog **invoices 1.12.0 → 1.12.1**, **quotations 1.10.0 → 1.10.1**. Pest: share preview chrome + catalog bump.
