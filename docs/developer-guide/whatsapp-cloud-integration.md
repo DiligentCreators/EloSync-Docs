@@ -1,8 +1,8 @@
 # WhatsApp Cloud Integration
 
-> **Status: Shipped 1.4.0** — billable Marketplace module `whatsapp-cloud`.
+> **Status: Shipped 1.6.0** — billable Marketplace module `whatsapp-cloud`.
 >
-> Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, interactive buttons/lists, Lead soft link, Help Desk escalate (**1.5.0**, soft-gated), Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template` / `send_whatsapp_interactive` (Automation **1.5.0**). Deferred: alternate BSPs, AI WhatsApp features, auto-ticket on inbound.
+> Includes: Meta WABA/phone connect, text + media send/receive, shared inbox, interactive buttons/lists, Lead soft link, Help Desk escalate (**1.5.0**, soft-gated), opt-in Help Desk auto-ticket + bidirectional public-note sync (**1.6.0**), Meta Cloud template sync + outside-24h enforcement, opt-in WhatsApp Lead Source Driver, Automation `whatsapp.message_received` / `send_whatsapp_template` / `send_whatsapp_interactive` (Automation **1.5.0**). Deferred: alternate BSPs, AI WhatsApp features.
 >
 > Follow the [Module Architecture](/architecture/module-architecture), [Module Development Standard](/developer-guide/module-development), [Documentation Governance](/developer-guide/documentation-governance) same-PR rule, and the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract).
 
@@ -19,6 +19,7 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 - Shared inbox, Meta Cloud templates, delivery/read status webhooks
 - Soft-link conversations to Leads; mirror messages on the Lead timeline
 - Opt-in WhatsApp Lead Source Driver (`auto_create_leads`, default off)
+- Opt-in Help Desk bridge (`auto_create_help_desk_tickets`, default off) via `WhatsAppHelpDeskBridge`
 - Automation trigger `whatsapp.message_received` and action `send_whatsapp_template`
 - Notifications for inbound / send failed / needs reauth
 
@@ -42,6 +43,7 @@ Evolve EloSync from a **manual WhatsApp handoff** (`wa.me`) into a complete **Wh
 | Templates | Sync Meta Cloud templates; required outside the 24h window |
 | Lead soft link | Manual `lead_id`; timeline via Lead APIs |
 | Help Desk escalate | `POST …/conversations/{id}/escalate` → ticket `source=whatsapp` + `help_desk_ticket_id` (soft Help Desk entitlement) |
+| Help Desk auto-ticket + note sync | Opt-in `auto_create_help_desk_tickets`; inbound → public notes (no SLA first response); staff public notes → WA in 24h; FKs `help_desk_notes.whatsapp_message_id` / `whatsapp_messages.help_desk_note_id` |
 | Lead Source | Opt-in `auto_create_leads` + `default_lead_source` |
 | Automation | Soft dep: `whatsapp.message_received` / `send_whatsapp_template` / `send_whatsapp_interactive` |
 | Notifications | Inbound, send failed, needs reauth |

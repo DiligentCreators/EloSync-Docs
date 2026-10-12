@@ -16,7 +16,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
-| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | Shipped (billable; media + Automation triggers + interactive buttons/lists **1.4.0**) |
+| [WhatsApp Cloud](/user-guide/whatsapp-cloud-overview) | Shipped (billable; Help Desk auto-ticket + note sync **1.6.0**; escalate **1.5.0**; media + Automation triggers + interactive buttons/lists **1.4.0**) |
 
 ### Planned / deferred after Phase 1 MVP
 
@@ -126,7 +126,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.17.1** (human-readable status timing; WhatsApp escalate intake **1.16.0**; customer reply reopen **1.15.0**; public replies **1.14.0**; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
+| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.18.0** (WhatsApp auto-ticket + bidirectional public-note sync; human-readable status timing **1.17.1**; WhatsApp escalate intake **1.16.0**; customer reply reopen **1.15.0**; public replies **1.14.0**; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
 | [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.3.0** (magic-link + portal 2FA + public KB; Support replies **1.2.0**; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
@@ -138,7 +138,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 ### Help Desk deferred
 
-- Social network DMs (Instagram / Messenger / X / Telegram); auto-create ticket on WhatsApp inbound; bidirectional chat ↔ ticket note sync (WhatsApp escalate + Live Chat escalate + Portal + IMAP already ship — see Help Desk **1.16.0**)
+- Social network DMs (Instagram / Messenger / X / Telegram) (WhatsApp escalate + opt-in auto-ticket + public-note sync + Live Chat escalate + Portal + IMAP already ship — see Help Desk **1.18.0** / WhatsApp Cloud **1.6.0**)
 
 ### Customer Portal (shipped)
 
@@ -259,6 +259,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Help Desk multi-channel intake (2026-10-08):** WhatsApp escalate → ticket (`source=whatsapp`) peers Live Chat escalate / Portal / IMAP; Help Desk source badges. Catalog **help-desk 1.15.0 → 1.16.0**, **whatsapp-cloud 1.4.0 → 1.5.0**. Closes the “chat beyond IMAP” deferred item (social DMs remain). Go-live: [production readiness](/deployment/help-desk-1-16-0-production-readiness).
 
 **Help Desk status timing (2026-10-13):** `started_at` / `resolved_at` + `status_changed` durations + detail `timing` (human-readable, e.g. `3h`), mirroring Tasks **1.10.1**. Catalog **help-desk 1.16.0 → 1.17.1**. Go-live: [production readiness](/deployment/help-desk-1-17-0-production-readiness).
+
+**WhatsApp Help Desk auto-ticket + bidirectional note sync (2026-10-13):** Opt-in `auto_create_help_desk_tickets`; public notes sync WA ↔ Help Desk inside the 24h window (no SLA first response on customer inbound). Catalog **whatsapp-cloud 1.5.0 → 1.6.0**, **help-desk 1.17.x → 1.18.0**. Go-live: [production readiness](/deployment/whatsapp-help-desk-bridge-1-6-0-production-readiness).
 
 **Calendar named team/department calendars (2026-10-08):** New `calendars` table (name/slug, optional soft-linked `department_id`, creator); `calendar_events.calendar_id` nullable FK (`null` stays personal). `GET/POST/PUT/DELETE /calendar/calendars` behind new `calendar.manage_calendars` permission (admin/manager default). Visibility adds creator + department members/manager (only when Departments is entitled) + `calendar.view_all`; posting to a named calendar needs `calendar.create` and membership. SPA filter chips (All/Personal/named), manage-calendars dialog, and an event-form calendar picker. Catalog **calendar 1.8.0 → 1.9.0**. Closes the "Calendar: named team calendars" deferred item above.
 

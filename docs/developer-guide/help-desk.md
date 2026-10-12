@@ -147,4 +147,4 @@ Ask EloSync Help Desk tools (`get_help_desk_ticket`, confirmed status/assign/not
 
 ## Deferred
 
-- Social network DMs / auto-ticket on WhatsApp inbound / bidirectional sync (Portal + Live Chat escalate + WhatsApp escalate ship — see [customer-portal](/developer-guide/customer-portal), Live Chat escalate, WhatsApp Cloud **1.5.0** `POST …/whatsapp/conversations/{id}/escalate`)
+- Social network DMs (Portal + Live Chat escalate + WhatsApp escalate + opt-in WhatsApp auto-ticket / public-note sync ship — see [customer-portal](/developer-guide/customer-portal), Live Chat escalate, WhatsApp Cloud **1.6.0** `WhatsAppHelpDeskBridge` + `POST …/whatsapp/conversations/{id}/escalate`)
