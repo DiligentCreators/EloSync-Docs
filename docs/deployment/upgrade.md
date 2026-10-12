@@ -65,6 +65,14 @@ Go-live: [Billing share + multi-bank production readiness](/deployment/billing-s
 
 Go-live: [Configurable digests production readiness](/deployment/configurable-digests-2026-10-09-production-readiness).
 
+## Help Desk 1.16.0 → 1.17.0 — status timing
+
+1. `php artisan migrate --force` (do **not** `db:seed`)
+2. Confirm catalog: `help-desk` **1.17.0**
+3. Smoke: ticket Open → In Progress → Resolved/Closed → Timeline shows Created → Resolved; reopen clears cycle
+
+Go-live: [Help Desk 1.17.0 production readiness](/deployment/help-desk-1-17-0-production-readiness).
+
 ## Help Desk 1.15.0 → 1.16.0 (+ WhatsApp Cloud 1.4.0 → 1.5.0) — multi-channel intake
 
 1. Deploy Backend and run `php artisan migrate --force` (`whatsapp_conversations.help_desk_ticket_id` + catalog bumps — **do not** `db:seed`)

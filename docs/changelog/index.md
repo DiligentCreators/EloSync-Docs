@@ -1,3 +1,10 @@
+## Help Desk status timing (1.17.0) (2026-10-13)
+
+- **EloSync-Backend:** Help Desk tickets track per-status time. Nullable `started_at` (first `in_progress`) and `resolved_at` (first `resolved` / `closed`); activity type `status_changed` with `duration_seconds`; detail `timing` summary (`created_to_resolved`, `started_to_resolved`, segments, `time_in_status`) as `DD:HH:MM`. Reopen clears `started_at` / `resolved_at` and starts a new cycle. Catalog **help-desk 1.16.0 → 1.17.0**. Pest: `HelpDeskStatusTimingTest`.
+- **EloSync-Frontend:** Timeline (full page) and list peek Activity show timing summary; status-change rows show durations. Playwright workflow asserts Created → Resolved timing.
+- **EloSync-Docs:** User/developer/API/upgrade/roadmap + [production readiness](/deployment/help-desk-1-17-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA.
+
 ## Invoice PDF omit-empty bank fields + quotation share payment_bank (2026-10-12)
 
 - **EloSync-Backend:** Invoice Dompdf Payment Information omits remittance cells when bank name / account name / account number / IBAN / SWIFT are empty (no dash placeholders). Quotation public view summary includes `payment_bank` (enabled accounts only), matching invoices. Pest: sparse-bank PDF HTML + quotation share `payment_bank`.

@@ -54,7 +54,17 @@ Status always starts at `open`; `number` is auto-generated (`HD-00001`, configur
 
 ### GET `/help-desk/{id}`
 
-Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes (`help_desk_notes` with `is_internal`), and timeline activities. Contact refs include `email` / `phone` when present (for soft-gated Communication Template WhatsApp). Embedded notes and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC). Public conversation replies use `is_internal: false`; internal notes use `is_internal: true`.
+Includes category, contact, company, assignee, creator, `knowledge_base_articles` (when KB entitled), notes (`help_desk_notes` with `is_internal`), timeline activities, `started_at` / `resolved_at`, and `timing` (status timing summary). Contact refs include `email` / `phone` when present (for soft-gated Communication Template WhatsApp). Embedded notes and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC). Public conversation replies use `is_internal: false`; internal notes use `is_internal: true`.
+
+**Status timing (1.17.0):**
+
+- `started_at` — first enter to `in_progress` in the current cycle (cleared on reopen to `open`)
+- `resolved_at` — first enter to `resolved` or `closed` in the current cycle (cleared on reopen)
+- `timing`:
+  - `created_to_resolved` / `started_to_resolved`: `{ seconds, formatted }` (`DD:HH:MM`) or `null`
+  - `segments`: ordered `{ from, to, seconds, formatted }` for the current cycle (after latest reopen)
+  - `time_in_status`: map of status → `{ seconds, formatted }` (includes live age in the current status)
+- `status_changed` activities include `duration_seconds` / `duration_formatted` for time spent in the previous status
 
 ### PUT `/help-desk/{id}`
 
@@ -92,7 +102,7 @@ Transitions to `open` from `resolved` or `closed`. Permission: `help-desk.reopen
 
 `{ "status": "open"|"in_progress"|"waiting"|"resolved"|"closed" }`
 
-Permission: `help-desk.update`. Rejects disallowed transitions with a 422 validation error on `status`. Records a `status_changed` timeline entry. Prefer explicit `close` / `reopen` when those semantics apply (they use dedicated permissions).
+Permission: `help-desk.update`. Rejects disallowed transitions with a 422 validation error on `status`. Records a `status_changed` timeline entry with `duration_seconds`. Prefer explicit `close` / `reopen` when those semantics apply (they use dedicated permissions).
 
 ### POST `/help-desk/{id}/notes`
 

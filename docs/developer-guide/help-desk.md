@@ -20,7 +20,7 @@ Simplified mirror of [Expenses](/developer-guide/expenses) / [Tasks](/developer-
 | Commands / jobs | `help-desk:scan-sla-breaches` (every 5 min); `help-desk:sync-mailboxes` (every minute) → `SyncHelpDeskMailboxJob` on queue `help-desk-ingest` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `LinkableKnowledgeBaseArticle` — optional, tenant-scoped, module-entitlement-checked |
 | Pivot | `help_desk_ticket_knowledge_base_article` — soft M2M (no `module_dependencies` row) |
-| Tests | `HelpDeskTicketTest`, `HelpDeskCategoryTest`, `HelpDeskKnowledgeBaseLinkTest`, `HelpDeskSlaTest`, `HelpDeskMailIngestTest`, `HelpDeskRealtimeBoardTest` |
+| Tests | `HelpDeskTicketTest`, `HelpDeskStatusTimingTest`, `HelpDeskCategoryTest`, `HelpDeskKnowledgeBaseLinkTest`, `HelpDeskSlaTest`, `HelpDeskMailIngestTest`, `HelpDeskRealtimeBoardTest` |
 | Migrations | `2026_08_14_*` baseline … `2026_08_30_16000*` SLA (1.3.0) … `2026_08_30_11530*` mailboxes + email source (1.4.0) |
 
 ## Notes visibility (`is_internal`)
@@ -56,7 +56,14 @@ help-desk.view | create | update | delete | restore | force.delete | assign | cl
 
 Routes use `module:help-desk` then `can:help-desk.*` / policies. SLA policy and mailbox CRUD reuse the same permissions (categories pattern).
 
-Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.15.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+Catalog: slug `help-desk`, category `operations`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`, version **1.17.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row.
+
+## Status timing (1.17.0)
+
+- Columns `help_desk_tickets.started_at` / `resolved_at` (nullable UTC): `started_at` on first enter to `in_progress`; `resolved_at` on first `resolved` or `closed`; both cleared on reopen to `open`
+- Activity type `status_changed` with `properties.before/after.status` + `duration_seconds`
+- `HelpDeskTicketService::timing()` builds `created_to_resolved`, `started_to_resolved`, `segments`, `time_in_status` (current cycle after latest reopen to `open`)
+- SPA: `HelpDeskTimingSummary` on view Timeline + list peek Activity; durations as `DD:HH:MM`
 
 ## Communication Templates (soft)
 

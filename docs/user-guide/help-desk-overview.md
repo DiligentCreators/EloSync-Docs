@@ -26,7 +26,7 @@ Operations module on the frozen platform. An internal ticketing MVP — number, 
 - Status workflow: `open → in_progress | waiting | resolved | closed`; `resolved → closed | open`; `closed → open`
 - Content edits blocked when status is **Closed** — use status actions, assignment, and notes instead
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `help-desk.assign`
-- Notes (comments) + activity timeline; optional **attachments** on ticket create and note replies (counts toward [Storage](/user-guide/storage-overview) quota)
+- Notes (comments) + activity timeline; Timeline shows status timing (DD:HH:MM); optional **attachments** on ticket create and note replies (counts toward [Storage](/user-guide/storage-overview) quota)
 - **SLA policies** (1.3.0): response/resolve targets by category and/or priority; ticket clocks; breach scanner + notifications; list filters for breached / at risk
 - **Shared email intake** (1.4.0): workspace IMAP support mailbox (not personal Email accounts); inbound creates tickets or appends notes when the subject/body references `HD-#####`
 - **@mentions** (1.5.0): ticket notes support `@user` mentions with in-app notifications
