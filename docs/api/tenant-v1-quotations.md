@@ -86,7 +86,7 @@ Permission: `quotations.send` (assignee-scoped). Mints/rotates a public **view**
 
 Requires tenancy and Quotations entitlement. Throttles: `document-share` / `document-share-pdf`.
 
-- `GET /public/quotations/view/{token}` — PDF-parity guest preview (title, status, totals, lines with body/tax, notes/terms, `issuer`, `bill_to`, Branded chrome `logo_url` / `brand_name`). Invalid/expired → 404.
+- `GET /public/quotations/view/{token}` — PDF-parity guest preview (title, status, totals, lines with body/tax, notes/terms, `issuer`, `bill_to`, `payment_bank` enabled remittance accounts, Branded chrome `logo_url` / `brand_name`). Invalid/expired → 404.
 - `GET /public/quotations/view/{token}/pdf` — same branded PDF as authenticated `GET /quotations/{id}/pdf`.
 
 ### POST `/quotations/{id}/accept`

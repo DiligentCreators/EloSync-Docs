@@ -1,3 +1,10 @@
+## Invoice PDF omit-empty bank fields + quotation share payment_bank (2026-10-12)
+
+- **EloSync-Backend:** Invoice Dompdf Payment Information omits remittance cells when bank name / account name / account number / IBAN / SWIFT are empty (no dash placeholders). Quotation public view summary includes `payment_bank` (enabled accounts only), matching invoices. Pest: sparse-bank PDF HTML + quotation share `payment_bank`.
+- **EloSync-Frontend:** Quotation guest share passes `payment_bank` into the shared preview (empty fields already hidden). Headed e2e asserts enabled bank on quotation guest page.
+- **EloSync-Docs:** API/user-guide + this changelog.
+- **Go-live:** deploy Backend + Frontend together; no migrate / no catalog bump.
+
 ## Guest share preview PDF parity + branded logo chrome (2026-10-12)
 
 - **EloSync-Backend:** Public invoice/quotation view summaries add Branded-gated chrome (`branded_active`, `logo_url`, `brand_name`), seller `issuer`, `bill_to`, richer lines (`body`, tax), and invoice paid/credited fields for guest HTML preview. Catalog **invoices 1.12.0 → 1.12.1**, **quotations 1.10.0 → 1.10.1**. Pest: share preview chrome + catalog bump.
