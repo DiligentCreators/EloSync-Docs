@@ -1,3 +1,9 @@
+## Fix invoice/quotation share link SPA publish (2026-10-12)
+
+- **EloSync-Frontend:** Multi-bank settings save typed `invoice_bank_accounts` correctly for TypeScript (`InvoiceBankAccountSetting`), unblocking `tsc` after the billing share PR. Production **Frontend production build** had failed on merge of that feature, so `build-artifacts` never received **Copy share link** / guest view pages; this fix re-publishes artifacts once merged to `main`.
+- **EloSync-Docs:** This changelog note + redeploy reminder.
+- **Go-live:** merge Frontend → wait for Actions to update `build-artifacts` → Forge deploy SPA from `build-artifacts` (not `main`). Hard-refresh; **Copy share link** appears on unpaid/paid invoices and sent/accepted quotations.
+
 ## Open invoice digest email render fix (2026-10-10)
 
 - **EloSync-Backend:** HTML mail for `CustomerInvoiceOverdueDigestNotification` no longer references undefined `$remainingCount` (leftover from the old capped digest). That undefined variable aborted the mail channel after the in-app notification was written, so recipients saw a bell item but no Email Log / inbox message, and same-day dedupe blocked retries. Pest: render regression in `CustomerInvoiceExportAndDigestTest`.
