@@ -36,7 +36,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 
 `quotations.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.10.0**.
+Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.10.1**.
 
 ## Related modules
 

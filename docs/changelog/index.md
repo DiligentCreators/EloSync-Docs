@@ -1,3 +1,10 @@
+## Guest share preview PDF parity + branded logo chrome (2026-10-12)
+
+- **EloSync-Backend:** Public invoice/quotation view summaries add Branded-gated chrome (`branded_active`, `logo_url`, `brand_name`), seller `issuer`, `bill_to`, richer lines (`body`, tax), and invoice paid/credited fields for guest HTML preview. Catalog **invoices 1.12.0 → 1.12.1**, **quotations 1.10.0 → 1.10.1**. Pest: share preview chrome + catalog bump.
+- **EloSync-Frontend:** Guest `/#/view/invoices|quotations/:token` uses API chrome (tenant logo when Branded; else EloSync) and renders a full document-style preview (issuer, bill-to, lines, totals, banks, notes/terms) with PDF download retained.
+- **EloSync-Docs:** User/API/developer notes + this changelog.
+- **Go-live:** Backend migrate-only (catalog bump); deploy Frontend after **Frontend production build** publishes `build-artifacts`; Forge-deploy SPA; hard-refresh guest share links.
+
 ## Fix invoice/quotation share link SPA publish (2026-10-12)
 
 - **EloSync-Frontend:** Multi-bank settings save typed `invoice_bank_accounts` correctly for TypeScript (`InvoiceBankAccountSetting`), unblocking `tsc` after the billing share PR. Production **Frontend production build** had failed on merge of that feature, so `build-artifacts` never received **Copy share link** / guest view pages; this fix re-publishes artifacts once merged to `main`.

@@ -49,7 +49,7 @@ quotations.view | create | update | delete | restore | force.delete | assign | s
 
 Routes use `module:quotations` then `can:quotations.*` / policies.
 
-Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.9.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement); 1.4.1 adds convert row locks + soft-delete recovery messaging; 1.5.0 dedicated record pages; 1.5.1 PDF long-notes pagination; 1.5.2 PDF long line-body pagination; 1.6.0 customer email delivery (`POST …/email`); 1.8.0 Automation triggers; **1.9.0 customer e-signature accept links**.
+Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.10.1**. Registered via `DefaultModuleRegistrar` migration (migrate-only); 1.3.0 added optional product line picker; 1.3.1 hardens linking + sanitizer; 1.4.0 adds convert-to-invoice (soft Invoices entitlement); 1.4.1 adds convert row locks + soft-delete recovery messaging; 1.5.0 dedicated record pages; 1.5.1 PDF long-notes pagination; 1.5.2 PDF long line-body pagination; 1.6.0 customer email delivery (`POST …/email`); 1.8.0 Automation triggers; **1.9.0** customer e-signature accept links; **1.10.0** public share links; **1.10.1** guest share PDF-parity preview + Branded logo chrome.
 
 ## API (tenant)
 

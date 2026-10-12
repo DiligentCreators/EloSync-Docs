@@ -63,7 +63,7 @@ Permission: `invoices.send` (assignee-scoped). Mints/rotates a public view token
 
 ### GET `/public/invoices/view/{token}`
 
-Unauthenticated (tenancy required). Throttled `document-share`. Returns read-only summary (number, title, status, totals, lines, enabled `payment_bank`). 404 when invalid/expired/unavailable.
+Unauthenticated (tenancy required). Throttled `document-share`. Returns a PDF-parity guest preview payload: number, title, status, dates, totals (`subtotal` / discount / tax / total / paid / credited / balance), line items (incl. `body` / tax), notes, terms, `issuer`, `bill_to`, enabled `payment_bank`, plus chrome `branded_active`, `logo_url`, `brand_name` (Branded module → tenant logo; otherwise platform / EloSync press-kit). 404 when invalid/expired/unavailable.
 
 ### GET `/public/invoices/view/{token}/pdf`
 

@@ -54,7 +54,7 @@ Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use 
 
 ## Share link (view + PDF)
 
-When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can **Copy share link**. Customers open `/#/view/quotations/{token}` (no login), review totals and lines, and download the same branded PDF as the CRM. Links expire after 90 days and are cleared if the quotation is rejected or expired. This is separate from the **accept** link used for e-signature.
+When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can **Copy share link**. Customers open `/#/view/quotations/{token}` (no login), review a PDF-style preview (issuer, bill-to, lines, totals, notes/terms), and download the same branded PDF as the CRM. Header logo is the tenant logo when **Branded** is installed; otherwise EloSync. Links expire after 90 days and are cleared if the quotation is rejected or expired. This is separate from the **accept** link used for e-signature.
 
 ## Download PDF
 
