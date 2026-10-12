@@ -70,10 +70,10 @@ Reopening clears completion and **Started** time so a new timing cycle begins. P
 
 ## Status timing
 
-The task **Activity** section (full record page) and list peek overview show timing in **DD:HH:MM**:
+The task **Activity** section (full record page) and list peek overview show timing in compact human text (for example `45m`, `3h 20m`, `1d 2h`):
 
 - **Created → Completed** — total time from create to complete
-- **Started → Completed** — from first move into **In Progress** until complete
+- **Started → Completed** — from first move into **In Progress** until complete (active work time)
 - **Time in each status** and each status-to-status segment for the current cycle
 
 ## Comments, attachments & history

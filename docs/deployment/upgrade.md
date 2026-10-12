@@ -65,6 +65,12 @@ Go-live: [Billing share + multi-bank production readiness](/deployment/billing-s
 
 Go-live: [Configurable digests production readiness](/deployment/configurable-digests-2026-10-09-production-readiness).
 
+## Tasks 1.10.0 → 1.10.1 / Help Desk 1.17.0 → 1.17.1 — human-readable status timing
+
+1. `php artisan migrate --force` (do **not** `db:seed`)
+2. Confirm catalog: `tasks` **1.10.1**, `help-desk` **1.17.1**
+3. Smoke: task/ticket timing shows values like `3h` / `1d 2h` (not `DD:HH:MM`)
+
 ## Help Desk 1.16.0 → 1.17.0 — status timing
 
 1. `php artisan migrate --force` (do **not** `db:seed`)

@@ -84,7 +84,7 @@ Assignees get an **in-app** notification on customer reply (and on close/reopen)
 
 ## Status timing
 
-The ticket **Timeline** summarizes time spent in each status (`DD:HH:MM`), including **Created → Resolved** and **Started → Resolved** when the ticket reaches Resolved or Closed. **Started** means the first move into **In Progress**. Reopening a ticket clears the cycle so the next resolve starts fresh. Status-change rows also show how long the previous status lasted.
+The ticket **Timeline** summarizes time spent in each status in compact human text (for example `45m`, `3h 20m`, `1d 2h`), including **Created → Resolved** and **Started → Resolved** when the ticket reaches Resolved or Closed. **Started** means the first move into **In Progress**. Reopening a ticket clears the cycle so the next resolve starts fresh. Status-change rows also show how long the previous status lasted.
 
 ## Due dates & overdue
 

@@ -126,7 +126,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.17.0** (status timing; WhatsApp escalate intake **1.16.0**; customer reply reopen **1.15.0**; public replies **1.14.0**; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
+| [Help Desk](/user-guide/help-desk-overview) | Shipped **1.17.1** (human-readable status timing; WhatsApp escalate intake **1.16.0**; customer reply reopen **1.15.0**; public replies **1.14.0**; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
 | [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.3.0** (magic-link + portal 2FA + public KB; Support replies **1.2.0**; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
@@ -258,7 +258,7 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Help Desk multi-channel intake (2026-10-08):** WhatsApp escalate → ticket (`source=whatsapp`) peers Live Chat escalate / Portal / IMAP; Help Desk source badges. Catalog **help-desk 1.15.0 → 1.16.0**, **whatsapp-cloud 1.4.0 → 1.5.0**. Closes the “chat beyond IMAP” deferred item (social DMs remain). Go-live: [production readiness](/deployment/help-desk-1-16-0-production-readiness).
 
-**Help Desk status timing (2026-10-13):** `started_at` / `resolved_at` + `status_changed` durations + detail `timing` (`DD:HH:MM`), mirroring Tasks **1.10.0**. Catalog **help-desk 1.16.0 → 1.17.0**. Go-live: [production readiness](/deployment/help-desk-1-17-0-production-readiness).
+**Help Desk status timing (2026-10-13):** `started_at` / `resolved_at` + `status_changed` durations + detail `timing` (human-readable, e.g. `3h`), mirroring Tasks **1.10.1**. Catalog **help-desk 1.16.0 → 1.17.1**. Go-live: [production readiness](/deployment/help-desk-1-17-0-production-readiness).
 
 **Calendar named team/department calendars (2026-10-08):** New `calendars` table (name/slug, optional soft-linked `department_id`, creator); `calendar_events.calendar_id` nullable FK (`null` stays personal). `GET/POST/PUT/DELETE /calendar/calendars` behind new `calendar.manage_calendars` permission (admin/manager default). Visibility adds creator + department members/manager (only when Departments is entitled) + `calendar.view_all`; posting to a named calendar needs `calendar.create` and membership. SPA filter chips (All/Personal/named), manage-calendars dialog, and an event-form calendar picker. Catalog **calendar 1.8.0 → 1.9.0**. Closes the "Calendar: named team calendars" deferred item above.
 
