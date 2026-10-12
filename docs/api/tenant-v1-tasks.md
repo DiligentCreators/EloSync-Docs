@@ -109,7 +109,7 @@ Marks status `completed` and sets `completed_at`.
 
 ### POST `/tasks/{id}/reopen`
 
-Clears completion and returns the task to a non-completed status (typically open/in-progress workflow in the UI).
+Clears `completed_at` and `started_at`, returns the task to a non-completed status (typically open), and starts a new timing cycle. Prior `status_changed` activities remain for audit.
 
 ### POST `/tasks/{id}/notes`
 
@@ -117,4 +117,14 @@ JSON or multipart: `{ "body": string }` required, optional `attachments[]` (max 
 
 ### GET `/tasks/{id}/timeline`
 
-Task activity timeline entries (History tab).
+Task activity timeline entries (History / Activity). Entries of type `status_changed` include `properties.duration_seconds` (time in the previous status) and resource fields `duration_seconds` / `duration_formatted` (`DD:HH:MM`).
+
+### Status timing on show / write responses
+
+`GET|PUT /tasks/{id}` (and complete/reopen/assign responses that return `TaskResource`) include:
+
+- `started_at` — first transition into `in_progress` in the current cycle (null until then; cleared on reopen)
+- `timing` — computed summary:
+  - `created_to_completed` / `started_to_completed`: `{ seconds, formatted }` or `null`
+  - `segments[]`: `{ from, to, seconds, formatted }` for the current cycle (after latest reopen, else from create)
+  - `time_in_status`: map of status → `{ seconds, formatted }` (includes live age in the current status)
