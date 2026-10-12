@@ -1,8 +1,8 @@
 ## Tabbed module record drawers (2026-10-12)
 
-- **EloSync-Frontend:** List peeks use tabbed `ModuleRecordSheet` / `EntityRecordSheet` view mode (Overview, Notes, Follow-ups, Activity, Lines, Timeline, etc.) so agents can work without opening the full page. Shared `RecordSheet*Panel` helpers; **Open full page** remains the escape hatch. Billing docs stay view-peek only for create/edit.
-- **EloSync-Docs:** Module-development / shared-layout hybrid-sheet guidance updated for `renderTabs`; this changelog.
-- **Go-live:** deploy Frontend after production build; hard-refresh SPA. No Backend migrate.
+- **EloSync-Frontend:** List peeks use tabbed `ModuleRecordSheet` / `EntityRecordSheet` view mode (Overview, Notes, Follow-ups, Activity, Lines, Timeline, etc.) so agents can work without opening the full page. Shared `RecordSheet*Panel` helpers; **Open full page** remains the escape hatch. Billing docs stay view-peek only for create/edit. Playwright headed one-session: `test:e2e:sheets:headed`.
+- **EloSync-Docs:** Module-development / shared-layout hybrid-sheet guidance updated for `renderTabs`; [production readiness](/deployment/tabbed-module-record-drawers-production-readiness) + this changelog.
+- **Go-live:** deploy Frontend after production build; hard-refresh SPA. No Backend migrate. See [production readiness](/deployment/tabbed-module-record-drawers-production-readiness).
 
 ## Guest share preview PDF parity + branded logo chrome (2026-10-12)
 
