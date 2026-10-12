@@ -40,6 +40,13 @@ CREATE INDEX cie_edit_req_tenant_invoice_status_idx
 
 Finally: `php artisan migrate --force` and retry Forge deploy.
 
+## Guest share PDF-parity preview — invoices 1.12.1 / quotations 1.10.1
+
+1. Deploy Backend and run `php artisan migrate --force` (catalog bumps only — **do not** `db:seed`)
+2. Confirm catalog: `invoices` **1.12.1**, `quotations` **1.10.1**
+3. Deploy Frontend from **`build-artifacts`** after CI publishes — guest share pages show Branded logo chrome + full document preview
+4. Smoke: open an unpaid invoice share link with Branded installed (tenant logo) and without (EloSync logo); confirm issuer/bill-to/lines/notes match PDF download
+
 ## Multi-bank remittance + public share links — invoices 1.12.0 / quotations 1.10.0
 
 1. Deploy Backend and run `php artisan migrate --force` (public view token columns + catalog bumps — **do not** `db:seed`)
