@@ -51,7 +51,7 @@ Middleware: `auth:portal-api`, `module:customer-portal`. Soft module checked per
 
 | Area | Paths | Soft module |
 |------|-------|-------------|
-| Invoices | `GET /portal/invoices`, `/{id}`, `/{id}/pdf` | `invoices` |
+| Invoices | `GET /portal/invoices`, `/{id}`, `/{id}/pdf`, `POST /{id}/checkout` (Stripe; also requires `payments` + workspace Stripe ready) | `invoices` |
 | Payments | `GET /portal/payments`, `/{id}`, `/{id}/pdf` | `payments` |
 | Quotations | `GET …`, `/{id}`, `/{id}/pdf`, `POST …/acceptance-link` | `quotations` |
 | Contracts | same as quotations | `contracts` |

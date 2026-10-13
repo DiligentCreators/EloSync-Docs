@@ -43,6 +43,10 @@ One-shot e-sign pages (`/#/accept/quotations|contracts/...`) still work without 
 - Portal users never receive `invoices.view` or other staff permissions.
 - Disabling a portal account blocks login without deleting the Contact.
 
+## Online invoice payment (1.4.0)
+
+When the workspace has **Payments** entitled and Stripe configured (**Payments → Stripe**, sandbox or live), unpaid invoices with a balance show **Pay now**. Stripe Checkout opens in the browser; after success you return to the invoice and the payment appears once the webhook posts it.
+
 ## Deferred
 
-Online checkout and portal passkeys are not in **1.3.0** — see the [overview](/user-guide/customer-portal-overview) and [Product Roadmap](/getting-started/product-roadmap).
+Portal passkeys remain deferred — see the [overview](/user-guide/customer-portal-overview) and [Product Roadmap](/getting-started/product-roadmap).

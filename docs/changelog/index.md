@@ -1,3 +1,10 @@
+## Tenant Stripe + Customer Portal invoice Checkout (1.6.0 / 1.4.0) (2026-10-13)
+
+- **EloSync-Backend:** Workspace Stripe connection (`tenant_stripe_connections`) with sandbox/live keys, mode toggle, enable, test, disconnect; permission `payments.manage_integrations`. Soft-deleted connections are **restored** on save so reconnect stays ready on GET. Portal `POST /portal/invoices/{id}/checkout` creates Stripe Checkout Session; webhook `POST /webhooks/tenant/{tenant}/stripe/customer-payments` posts gateway `CustomerPayment` (idempotent). Catalog **payments 1.5.0 → 1.6.0**, **customer-portal 1.3.0 → 1.4.0**. Pest: `TenantStripeIntegrationTest` (incl. restore), `PortalInvoiceCheckoutTest`, catalog bumps.
+- **EloSync-Frontend:** Payments → Stripe dialog; portal invoice **Pay now** when `online_payment_available`. Playwright payments workflow asserts Stripe dialog.
+- **EloSync-Docs:** User/developer/API/upgrade/roadmap + [production readiness](/deployment/tenant-stripe-portal-checkout-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA. Configure Stripe webhook URL from the dialog for sandbox and/or live.
+
 ## Calendar named-calendar provider sync/watches (1.10.0) (2026-10-13)
 
 - **EloSync-Backend:** Named EloSync calendars get secondary Google/Outlook calendars + watches (`calendar_provider_links`); ensure on create / Sync now / OAuth connect. Named-calendar events push to the link’s secondary calendar; inbound pull/webhook resolve link watches and ingest with `calendar_id`. Per-provider `calendar_event_provider_mappings` (fixes dual-connect single-column clobber). Google OAuth scope → full `calendar` (reconnect required). Catalog **calendar 1.9.0 → 1.10.0**. Pest: `NamedCalendarProviderSyncTest`, catalog bump.

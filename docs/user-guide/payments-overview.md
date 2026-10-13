@@ -43,5 +43,5 @@ Enable Payments from Marketplace (free) — **Invoices must already be installed
 ## Explicitly deferred
 
 - Partial refunds of a posted payment (today, voiding reverses the full allocation set)
-- Payment gateway capture (online card/bank payments) — this module only records payments received through other channels
+- Tenant Stripe online capture via Customer Portal (**1.6.0**) — workspace keys, sandbox/live mode; ledger refunds ship; live Stripe refund API remains deferred
 - Multi-currency conversion
