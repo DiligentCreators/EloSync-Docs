@@ -52,8 +52,17 @@ Users with **send** (`payments.send`) can **Email receipt** — same dialog patt
 - **Notes** — free-form notes on the payment
 - **Activity** — timeline of create, update, assignment, post, void, note, emailed, and delete/restore events
 
-## What's not here yet
+## Stripe (Customer Portal online payments) — 1.6.0
 
-Partial refunds of a posted payment and online payment-gateway capture are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Workspace admins/managers with **`payments.manage_integrations`** can open **Payments → Stripe** and connect the workspace’s own Stripe account (not EloSync SaaS billing):
+
+1. Paste **sandbox** and/or **live** publishable + secret keys (and webhook signing secrets).
+2. Choose **Mode**: Sandbox or Live — Checkout and webhooks use only the active mode’s keys.
+3. Enable online payments, then **Test connection**.
+4. In Stripe Dashboard → Webhooks, point the endpoint URL shown in the dialog at `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+
+When Stripe is ready, Customer Portal contacts see **Pay now** on unpaid invoices with a balance. Successful Checkout posts a gateway `CustomerPayment` allocated to that invoice.
+
+Live gateway refunds (money movement back through Stripe) remain deferred — ledger refunds already ship.
 
 To credit an invoice directly (independent of a payment), see [Credit Notes](/user-guide/credit-notes).

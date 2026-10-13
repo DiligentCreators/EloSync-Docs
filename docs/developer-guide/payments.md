@@ -20,7 +20,17 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 | Notifications | `app/Notifications/Tenant/CustomerPayment/CustomerPaymentAssignedNotification.php` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `EligiblePaymentAssignee` — `allocations.*.customer_invoice_id` is a plain tenant-scoped `Rule::exists()` on `CustomerInvoice` |
 | PDF / email | `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `resources/views/payments/receipt.blade.php` — posted-only; mirrors invoice billing document mailer |
-| Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php` |
+| Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php`, `TenantStripeIntegrationTest.php` |
+| Tenant Stripe (1.6.0) | `TenantStripeConnection`, `TenantStripeConnectionService`, `TenantStripeCheckoutService`, `TenantStripeApi`, `TenantStripeIntegrationController`, `TenantStripeWebhookController` |
+
+## Tenant Stripe + portal Checkout (1.6.0)
+
+Workspace-owned Stripe credentials (encrypted secrets, `mode` sandbox|live) for Customer Portal invoice pay. **Not** Central `payment_gateways` / Cashier.
+
+- Staff API: `/payments/integrations/stripe` (`payments.manage_integrations`)
+- Portal: `POST /portal/invoices/{id}/checkout` → Checkout Session URL
+- Webhook: `POST /webhooks/tenant/{tenant}/stripe/customer-payments` → create+post gateway `CustomerPayment` (idempotent on `gateway_transaction_id`)
+- Companion catalog: **customer-portal 1.4.0** (`online_payment_available` on portal invoice resource)
 
 ## Domain notes
 
@@ -39,12 +49,12 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 ## Permissions
 
 ```
-payments.view | create | update | delete | restore | force.delete | assign | post | void | send
+payments.view | create | update | delete | restore | force.delete | assign | post | void | send | refund | manage_integrations
 ```
 
-Routes use `module:payments` then `can:payments.*` / policies.
+Routes use `module:payments` then `can:payments.*` / policies. Default admin/manager receive `manage_integrations` (1.6.0).
 
-Catalog: slug `payments`, category `billing`, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`.
+Catalog: slug `payments`, category `billing`, version **1.6.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`.
 
 ## API (tenant)
 

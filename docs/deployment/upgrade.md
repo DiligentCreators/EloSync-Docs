@@ -122,6 +122,15 @@ Go-live: [Help Desk public replies 1.14.0 production readiness](/deployment/help
 
 Go-live: [Customer Portal 1.0.0 production readiness](/deployment/customer-portal-1-0-0-production-readiness).
 
+## Payments 1.5.0 → 1.6.0 / Customer Portal 1.3.0 → 1.4.0 — tenant Stripe portal Checkout
+
+1. Deploy Backend and run `php artisan migrate --force` (`tenant_stripe_connections`, gateway txn unique index, `payments.manage_integrations`, catalog bumps — **do not** `db:seed`)
+2. Confirm catalog: payments **1.6.0**, customer-portal **1.4.0**; admin/manager have `payments.manage_integrations`
+3. Deploy the SPA — Payments → Stripe; portal invoice **Pay now**
+4. Staging smoke: save sandbox keys → enable → test → configure Stripe webhook → portal Pay now → invoice paid
+
+Go-live: [Tenant Stripe portal checkout production readiness](/deployment/tenant-stripe-portal-checkout-production-readiness).
+
 ## Calendar 1.9.0 → 1.10.0 — named-calendar provider sync/watches
 
 1. Deploy Backend and run `php artisan migrate --force` (`calendar_provider_links`, `calendar_event_provider_mappings`, bump to **1.10.0** — **do not** `db:seed`)

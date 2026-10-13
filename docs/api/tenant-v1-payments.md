@@ -8,6 +8,19 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 Requires the **Invoices** module (hard `module_dependencies` row) — allocations reference `CustomerInvoice` rows and cannot be created without it.
 
+## Stripe integration (1.6.0)
+
+Permission: `payments.manage_integrations`. Distinct from Central `payment_gateways` (EloSync SaaS billing).
+
+| Method | Path | Notes |
+|--------|------|-------|
+| GET | `/payments/integrations/stripe` | Status (redacted secrets; `webhook_url`) |
+| PUT | `/payments/integrations/stripe` | Save `enabled`, `mode` (`sandbox`\|`live`), sandbox/live keys (empty secret = leave unchanged) |
+| POST | `/payments/integrations/stripe/test` | Probe active-mode secret key |
+| DELETE | `/payments/integrations/stripe` | Clear credentials + disable |
+
+Public webhook (no tenant API auth): `POST /webhooks/tenant/{tenant}/stripe/customer-payments` — verifies active-mode webhook secret; settles `checkout.session.completed` / `async_payment_succeeded` into a posted gateway payment.
+
 ## Stats
 
 ### GET `/payments/stats`

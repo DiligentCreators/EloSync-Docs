@@ -52,12 +52,12 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Invoices](/user-guide/invoices-overview) | Shipped |
 | [Estimates](/user-guide/estimates-overview) | Shipped (requires Invoices) |
 | [Credit Notes](/user-guide/credit-notes-overview) | Shipped **1.2.0** (requires Invoices; PDF + email; applied refund) |
-| [Payments](/user-guide/payments-overview) | Shipped (requires Invoices; receipt PDF + email shipped) |
+| [Payments](/user-guide/payments-overview) | Shipped **1.6.0** (tenant Stripe portal Checkout + sandbox/live; requires Invoices; receipt PDF + email; ledger refunds **1.5.0**) |
 
 ### Deferred
 
 - Credit Notes: standalone notes not tied to an invoice; multi-currency
-- Payments: partial refunds; payment-gateway capture
+- Payments: live Stripe refund API (ledger refunds + portal Stripe Checkout capture shipped **1.6.0**)
 - Invoices / Estimates: multi-currency conversion
 
 ---
@@ -126,7 +126,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | [Help Desk](/user-guide/help-desk-overview) | Shipped **1.18.0** (WhatsApp auto-ticket + bidirectional public-note sync; human-readable status timing **1.17.1**; WhatsApp escalate intake **1.16.0**; customer reply reopen **1.15.0**; public replies **1.14.0**; TipTap + attachments; portal note authorship **1.13.0**; real-time board sync **1.12.0**; SLA + IMAP; @mentions; status Kanban; soft Communication Templates; shell File a complaint) |
-| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.3.0** (magic-link + portal 2FA + public KB; Support replies **1.2.0**; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.4.0** (portal Stripe invoice Pay now; magic-link + portal 2FA + public KB **1.3.0**; Support replies **1.2.0**; projects/tasks **1.1.0**; invite-only Contact accounts; invoices/payments/quotations/contracts; Help Desk submit/track; hard dep Contacts) |
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
@@ -143,9 +143,9 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 
 | Capability | Status |
 |------------|--------|
-| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.3.0** (magic-link, portal 2FA, public KB; projects/tasks **1.1.0**; Support **1.2.0**) |
+| [Customer Portal](/user-guide/customer-portal-overview) | Shipped **1.4.0** (portal Stripe Pay now; magic-link, portal 2FA, public KB **1.3.0**; projects/tasks **1.1.0**; Support **1.2.0**) |
 
-Deferred beyond 1.3.0: online checkout; portal passkeys.
+Deferred beyond 1.4.0: portal passkeys.
 
 ### Other Operations deferred
 
@@ -265,7 +265,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Calendar named-calendar provider sync/watches (2026-10-13):** Secondary Google/Outlook calendars + watches for named EloSync calendars (`calendar_provider_links`); per-provider `calendar_event_provider_mappings`; Google full `calendar` scope. Catalog **calendar 1.9.0 → 1.10.0**. Go-live: [production readiness](/deployment/calendar-named-provider-sync-1-10-0-production-readiness).
 
-Still deferred: multi-currency; PO/Vendor portals; Automation Marketing/branching. Customer Portal **1.3.0** ships magic-link, portal 2FA, and published KB (online checkout / passkeys remain deferred).
+**Tenant Stripe + portal invoice Checkout (2026-10-13):** Workspace-owned Stripe keys (sandbox/live), `payments.manage_integrations`, portal `POST …/invoices/{id}/checkout`, webhook `POST /webhooks/tenant/{tenant}/stripe/customer-payments` posts gateway `CustomerPayment`. Catalog **payments 1.5.0 → 1.6.0**, **customer-portal 1.3.0 → 1.4.0**. Go-live: [production readiness](/deployment/tenant-stripe-portal-checkout-production-readiness).
+
+Still deferred: multi-currency; PO/Vendor portals; Automation Marketing/branching; portal passkeys; live Stripe refund API.
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 

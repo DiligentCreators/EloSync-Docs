@@ -497,6 +497,7 @@ export default withMermaid(defineConfig({
             { text: 'WhatsApp Help Desk Bridge 1.6.0 Readiness', link: '/deployment/whatsapp-help-desk-bridge-1-6-0-production-readiness' },
             { text: 'Customer Portal 1.0.0 Production Readiness', link: '/deployment/customer-portal-1-0-0-production-readiness' },
             { text: 'Customer Portal 1.3.0 Depth Readiness', link: '/deployment/customer-portal-1-3-0-production-readiness' },
+            { text: 'Tenant Stripe Portal Checkout Readiness', link: '/deployment/tenant-stripe-portal-checkout-production-readiness' },
             { text: 'Email-only Tenant Password Reset Readiness', link: '/deployment/email-only-tenant-password-reset-production-readiness' },
             { text: 'Projects 1.8.0 Real-time Board Sync Readiness', link: '/deployment/projects-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },

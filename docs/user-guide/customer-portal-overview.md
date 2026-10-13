@@ -13,10 +13,10 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 | Operators / workspace users | [customer-portal.md](/user-guide/customer-portal) |
 | Engineers | [customer-portal.md](/developer-guide/customer-portal) |
 | Production / ops | [customer-portal.md](/deployment/customer-portal) |
-| Production readiness | [1.3.0](/deployment/customer-portal-1-3-0-production-readiness) · [1.1.0](/deployment/customer-portal-1-1-0-production-readiness) · [1.0.0](/deployment/customer-portal-1-0-0-production-readiness) |
+| Production readiness | [Stripe portal checkout / payments 1.6.0](/deployment/tenant-stripe-portal-checkout-production-readiness) · [1.3.0](/deployment/customer-portal-1-3-0-production-readiness) · [1.1.0](/deployment/customer-portal-1-1-0-production-readiness) · [1.0.0](/deployment/customer-portal-1-0-0-production-readiness) |
 | Tenant API | [../api/tenant-v1-customer-portal.md](/api/tenant-v1-customer-portal) |
 
-## Capabilities (1.3.0)
+## Capabilities (1.4.0)
 
 - Invite-only portal accounts linked 1:1 to a Contact (email + password; no open self-registration)
 - Separate Sanctum guard (`portal-api`) — never staff `User` / Spatie roles
@@ -26,6 +26,7 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 - Projects: staff **Share with customer portal** + per-task **Visible to customer**; portal shows milestones/tasks/timeline
 - Document PDF download; quotation/contract acceptance-link from portal (existing public accept pages)
 - Help Desk: customer creates tickets (contact stamped server-side) and public replies; closed/resolved tickets reopen on customer reply
+- **Online invoice Pay now (1.4.0)** — unpaid invoices when workspace Stripe is configured (Payments **1.6.0**); Stripe Checkout → webhook posts a gateway payment
 
 ## Permissions (staff)
 
@@ -39,7 +40,7 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 
 ## Licensing
 
-- Catalog slug: `customer-portal`, category `operations`, version **1.3.0**
+- Catalog slug: `customer-portal`, category `operations`, version **1.4.0**
 - `is_default_included = false`, `is_billable = false`
 - **Hard dependency:** `contacts`
 - Soft: `projects`, `tasks`, `invoices`, `payments`, `quotations`, `contracts`, `help-desk`, `knowledge-base` (section hidden / API 403 when not entitled)
@@ -47,5 +48,4 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 ## Explicitly deferred
 
 - Vendor / reseller portals
-- Online payment checkout
 - Portal passkeys
