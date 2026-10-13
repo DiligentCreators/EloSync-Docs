@@ -53,7 +53,9 @@ Organizer or `calendar.view_all` may manage shares.
 | PUT | `/calendar/events/{id}/shares/{share}` | Body: `access` |
 | DELETE | `/calendar/events/{id}/shares/{share}` | Remove share |
 
-## Named calendars (1.9.0)
+## Named calendars (1.9.0 / provider links 1.10.0)
+
+List/show responses may include `provider_links[]` with `provider`, `external_calendar_id`, and `watch_active` when the named calendar has secondary Google/Outlook calendars (**1.10.0**).
 
 | Method | Path | Notes |
 |--------|------|-------|

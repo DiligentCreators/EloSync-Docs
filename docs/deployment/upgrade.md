@@ -122,6 +122,16 @@ Go-live: [Help Desk public replies 1.14.0 production readiness](/deployment/help
 
 Go-live: [Customer Portal 1.0.0 production readiness](/deployment/customer-portal-1-0-0-production-readiness).
 
+## Calendar 1.9.0 → 1.10.0 — named-calendar provider sync/watches
+
+1. Deploy Backend and run `php artisan migrate --force` (`calendar_provider_links`, `calendar_event_provider_mappings`, bump to **1.10.0** — **do not** `db:seed`)
+2. Confirm catalog version: calendar **1.10.0**
+3. Deploy the SPA — Manage calendars provider badges; Sync panel named-calendar copy
+4. Existing Google Calendar connections: **Disconnect → Connect** (full `calendar` scope required to create secondary calendars)
+5. Staging smoke: connect provider → create named calendar → synced badge → post event on named calendar → Sync now
+
+Go-live: [Calendar named-provider sync 1.10.0 production readiness](/deployment/calendar-named-provider-sync-1-10-0-production-readiness).
+
 ## Calendar 1.8.0 → 1.9.0 — named team/department calendars
 
 1. Deploy Backend and run `php artisan migrate --force` (`calendars` table, `calendar_events.calendar_id`, `calendar.manage_calendars`, bump to **1.9.0** — **do not** `db:seed`)
