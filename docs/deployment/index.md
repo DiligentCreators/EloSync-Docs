@@ -16,6 +16,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Marketing pixels](./marketing-pixels) | Optional GTM, Meta, LinkedIn, X tags (product SPA + marketing site) |
 | [Production Runbook](./platform-production-runbook) | Primary deploy / go-live checklist |
 | [Email-only tenant password reset](./email-only-tenant-password-reset-production-readiness) | Shared-host forgot/reset without workspace name — **Go** |
+| [Calendar named-provider sync 1.10.0](./calendar-named-provider-sync-1-10-0-production-readiness) | Named-calendar Google/Outlook calendars + watches — **Go** |
 | [Calendar named calendars 1.9.0](./calendar-named-calendars-1-9-0-production-readiness) | Named team/department calendars — **Go** |
 | [Calendar webhook inbound 1.8.0](./calendar-webhook-inbound-1-8-0-production-readiness) | Provider watches + public webhooks — **Go** |
 | [Calendar overlay push 1.7.0](./calendar-overlay-provider-push-1-7-0-production-readiness) | Project/Contact/Company overlay push — **Go** |

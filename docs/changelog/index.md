@@ -1,3 +1,10 @@
+## Calendar named-calendar provider sync/watches (1.10.0) (2026-10-13)
+
+- **EloSync-Backend:** Named EloSync calendars get secondary Google/Outlook calendars + watches (`calendar_provider_links`); ensure on create / Sync now / OAuth connect. Named-calendar events push to the link’s secondary calendar; inbound pull/webhook resolve link watches and ingest with `calendar_id`. Per-provider `calendar_event_provider_mappings` (fixes dual-connect single-column clobber). Google OAuth scope → full `calendar` (reconnect required). Catalog **calendar 1.9.0 → 1.10.0**. Pest: `NamedCalendarProviderSyncTest`, catalog bump.
+- **EloSync-Frontend:** Manage calendars shows Google/Outlook synced badges from `provider_links`; Sync panel copy covers named-calendar secondary calendars + reconnect note. Playwright integrations asserts named-calendar copy.
+- **EloSync-Docs:** User/developer/API/upgrade/roadmap + [production readiness](/deployment/calendar-named-provider-sync-1-10-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only; deploy Frontend after production build; hard-refresh SPA. Existing Google connections must disconnect/reconnect for the expanded scope.
+
 ## WhatsApp Help Desk auto-ticket + bidirectional note sync (1.6.0 / 1.18.0) (2026-10-13)
 
 - **EloSync-Backend:** Opt-in `auto_create_help_desk_tickets` on WhatsApp connections; inbound chats can auto-open Help Desk tickets when Help Desk is entitled. Public notes sync both ways (WhatsApp inbound → ticket notes without SLA first response; staff public notes → WhatsApp inside the 24h window) with FK loop prevention. Catalog **whatsapp-cloud 1.5.0 → 1.6.0**, **help-desk 1.17.x → 1.18.0**. Pest: `WhatsAppHelpDeskBridgeTest` + catalog bumps.

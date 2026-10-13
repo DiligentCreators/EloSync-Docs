@@ -12,7 +12,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.9.0** inactivity manager digest; **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.8.0** real-time board sync; **1.5.0** milestone link + dependencies) |
 | [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
-| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.9.0** named team/department calendars; **1.8.0** webhook-driven near real-time inbound; **1.7.0** Project/Contact/Company overlay push; **1.6.0** two-way sync + External pull; **1.5.0** Meeting/Task/Lead overlay push; **1.4.0** OAuth push) |
+| [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.10.0** named-calendar provider sync/watches + per-provider mappings; **1.9.0** named team/department calendars; **1.8.0** webhook-driven near real-time inbound; **1.7.0** Project/Contact/Company overlay push; **1.6.0** two-way sync + External pull; **1.5.0** Meeting/Task/Lead overlay push; **1.4.0** OAuth push) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |
 | Meta Lead Ads / inbound webhooks | Shipped |
@@ -20,10 +20,9 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 
 ### Planned / deferred after Phase 1 MVP
 
-- Calendar: named-calendar provider sync/watches; per-provider `external_event_id` mapping is still single-value (named team calendars, P/C/C overlay push, and webhook-driven inbound shipped **1.7.0–1.9.0**)
 - WhatsApp: alternate BSPs, AI WhatsApp features
 
-**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Lead inactivity manager digest (**leads 1.9.0**); Tasks real-time board sync (**tasks 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**); Meeting/Task/Lead overlay provider push (**calendar 1.5.0**); Project/Contact/Company overlay provider push (**calendar 1.7.0**); webhook-driven near real-time inbound sync (**calendar 1.8.0**); named team/department calendars (**calendar 1.9.0**).
+**Shipped depth (CRM):** Calendar Task/Lead overlays (**calendar 1.1.0**); meeting invitee Calendar ACL (**calendar 1.2.0**); Lead convert polish (**leads 1.5.0**); Lead **created_by / updated_by** filters and columns (**leads 1.6.0**); Lead convert opportunity settings (**leads 1.7.0**); Lead real-time board sync (**leads 1.8.0**); Lead inactivity manager digest (**leads 1.9.0**); Tasks real-time board sync (**tasks 1.8.0**); Calendar Google/Outlook sync Phase 1 — per-user OAuth connect, one-way push for manual events (**calendar 1.4.0**); Meeting/Task/Lead overlay provider push (**calendar 1.5.0**); Project/Contact/Company overlay provider push (**calendar 1.7.0**); webhook-driven near real-time inbound sync (**calendar 1.8.0**); named team/department calendars (**calendar 1.9.0**); named-calendar provider sync/watches + per-provider event mappings (**calendar 1.10.0**).
 
 ---
 
@@ -264,7 +263,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Calendar named team/department calendars (2026-10-08):** New `calendars` table (name/slug, optional soft-linked `department_id`, creator); `calendar_events.calendar_id` nullable FK (`null` stays personal). `GET/POST/PUT/DELETE /calendar/calendars` behind new `calendar.manage_calendars` permission (admin/manager default). Visibility adds creator + department members/manager (only when Departments is entitled) + `calendar.view_all`; posting to a named calendar needs `calendar.create` and membership. SPA filter chips (All/Personal/named), manage-calendars dialog, and an event-form calendar picker. Catalog **calendar 1.8.0 → 1.9.0**. Closes the "Calendar: named team calendars" deferred item above.
 
-Still deferred: named-calendar provider sync/watches; multi-currency; PO/Vendor portals; Automation Marketing/branching. Customer Portal **1.3.0** ships magic-link, portal 2FA, and published KB (online checkout / passkeys remain deferred).
+**Calendar named-calendar provider sync/watches (2026-10-13):** Secondary Google/Outlook calendars + watches for named EloSync calendars (`calendar_provider_links`); per-provider `calendar_event_provider_mappings`; Google full `calendar` scope. Catalog **calendar 1.9.0 → 1.10.0**. Go-live: [production readiness](/deployment/calendar-named-provider-sync-1-10-0-production-readiness).
+
+Still deferred: multi-currency; PO/Vendor portals; Automation Marketing/branching. Customer Portal **1.3.0** ships magic-link, portal 2FA, and published KB (online checkout / passkeys remain deferred).
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 

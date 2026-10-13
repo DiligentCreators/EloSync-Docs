@@ -137,7 +137,16 @@ DELETE /calendar/calendars/{calendar} can:calendar.manage_calendars
 
 Catalog **calendar 1.8.0 → 1.9.0** (migrate-only + CatalogSeeder). New permission `calendar.manage_calendars` (admin/manager defaults, additive via `TenantPermissionSynchronizer`). Pest: `tests/Feature/Tenant/Calendar/NamedCalendarTest.php`.
 
-**Excluded:** named-calendar provider push/watches, per-calendar notification digests.
+## Named-calendar provider sync/watches (1.10.0)
+
+| Concept | Owner |
+|---------|-------|
+| Link model | `App\Models\CalendarProviderLink` — one row per named calendar + provider; `external_calendar_id` + `meta.watch` |
+| Event mappings | `App\Models\CalendarEventProviderMapping` — one `external_event_id` per event+provider (dual-connect safe); `calendar_events.external_*` remains last-written for API compat |
+| Orchestration | `CalendarSyncService::ensureNamedCalendarLinks` (create / Sync now / OAuth connect), `ensureLinkWatch` / `renewLinkWatch` / `stopLinkWatch`, push via link owner + secondary calendar, inbound pull with `calendar_id` |
+| Google scope | `config/calendar-sync.php` → `https://www.googleapis.com/auth/calendar` (create secondary calendars); existing Google connections must reconnect |
+
+**Excluded:** per-calendar notification digests.
 
 ## Frontend
 
@@ -199,4 +208,4 @@ Also listed in `CatalogSeeder` for fresh/local/CI.
 
 ## Explicit non-goals
 
-`assignee_id` field, named-calendar provider sync/watches (team events still push via each event’s `organizer_id` OAuth connection), per-provider `external_event_id` mapping (single-value today — see the [1.4.0 production readiness audit](/deployment/calendar-google-outlook-sync-1-4-0-production-readiness)), Customer Portal calendar visibility. Meetings/Zoom/Meet live in the Meetings module.
+`assignee_id` field, Customer Portal calendar visibility. Meetings/Zoom/Meet live in the Meetings module.
