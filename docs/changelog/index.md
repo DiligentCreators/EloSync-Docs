@@ -1,3 +1,9 @@
+## Attendance holidays + auto-absent (1.10.0) (2026-10-14)
+
+- **EloSync-Backend:** Workspace holidays (`attendance_holidays`) with admin/owner CRUD (`/attendance-holidays`). Month matrix synthesizes `source=inferred` Absent for past/today work days with no record (never future; never holidays) and `source=holiday` cells. Export adds `H=Holiday`. `PayPeriodCalculator` deducts inferred absents and skips holidays. Catalog **attendance 1.9.0 → 1.10.0**. Pest: `AttendanceHolidayAndMatrixInferenceTest`, catalog bump; existing matrix/payroll tests freeze time before fixture months.
+- **EloSync-Frontend:** Settings → Attendance **Manage holidays**; Attendance → Month **Holidays** dialog + click day header to mark/clear; matrix shows Holiday / auto-Absent vs off-day/future blanks.
+- **EloSync-Docs:** User/API/developer/deployment + this changelog note for holidays and auto-absent.
+
 ## Attendance month matrix + export (1.9.0) (2026-10-14)
 
 - **EloSync-Backend:** `GET /attendance-records/matrix` (employee × day for `month=YYYY-MM`) and `GET /attendance-records/export` (CSV/XLSX with `P`/`A`/`L`/`R`/`HD` codes). New permission `attendance.export` granted to default admin + manager. Visibility matches list (`visibleEmployeeIds`). Catalog **attendance 1.8.0 → 1.9.0**. Pest: `AttendanceMatrixTest`, catalog bump.

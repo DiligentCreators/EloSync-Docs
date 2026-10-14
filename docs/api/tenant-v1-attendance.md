@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:attendance`, plus `can:attendance.*`.
 
-Catalog version: **1.9.0**.
+Catalog version: **1.10.0**.
 
 ## Stats
 
@@ -64,6 +64,18 @@ Body: optional `reason_id` / `reason_notes`, optional `latitude` / `longitude`. 
 
 Kinds: `check_in_late`, `check_out`. Each kind has a protected **Other** row (`is_other`).
 
+## Workspace holidays
+
+| Method | Path | Permission |
+|--------|------|------------|
+| GET | `/attendance-holidays` | `attendance.view` |
+| POST | `/attendance-holidays` | `attendance.update` (admin/owner catalog) |
+| GET | `/attendance-holidays/{attendanceHoliday}` | `attendance.view` |
+| PUT | `/attendance-holidays/{attendanceHoliday}` | `attendance.update` (admin/owner) |
+| DELETE | `/attendance-holidays/{attendanceHoliday}` | `attendance.update` (admin/owner) |
+
+Body: `date` (required, unique per tenant), optional `name`. List filters: `year`, `date_from`, `date_to`, `search`. Holidays are never treated as Absent for matrix inference or payroll deduction.
+
 ## Month matrix & export
 
 | Method | Path | Permission |
@@ -73,9 +85,9 @@ Kinds: `check_in_late`, `check_out`. Each kind has a protected **Other** row (`i
 
 Query params: `month` (`YYYY-MM`, required), optional `search`, `department_id`, `employee_status` (default `active`), and for export `format` (`csv`\|`xlsx`, default `csv`).
 
-**Matrix JSON:** `month`, `timezone`, `days[]` (`date`, `label`, `is_today`), `employees[]` (`id`, `employee_number`, `full_name`, `job_title`, `departments[]`, `status`, `days` map of `YYYY-MM-DD` → `{ status, record_id }`). Missing day keys mean no record. Visibility matches list (`AttendanceRecordPolicy::visibleEmployeeIds`).
+**Matrix JSON:** `month`, `timezone`, `days[]` (`date`, `label`, `is_today`, `is_work_day`, `is_holiday`, `holiday_name`), `holidays[]` (`id`, `date`, `name`), `employees[]` (`id`, `employee_number`, `full_name`, `job_title`, `departments[]`, `status`, `days` map of `YYYY-MM-DD` → `{ status, record_id, source, holiday_name }`). `source` is `record` \| `inferred` \| `holiday`. Missing day keys mean off day / future (not inferred). Past/today work days with no record and not a holiday get `status=absent`, `source=inferred`. Visibility matches list (`AttendanceRecordPolicy::visibleEmployeeIds`).
 
-**Export:** Same filters as matrix. Sheet starts with a legend row (`P`/`A`/`L`/`R`/`HD`), then header columns `ID`, `Employee number`, `Name`, `Job title`, `Department`, `Employee status`, then one column per calendar day. Filename `attendance_MM_YYYY.csv` or `.xlsx`.
+**Export:** Same filters as matrix. Sheet starts with a legend row (`P`/`A`/`L`/`R`/`HD`/`H`), then header columns `ID`, `Employee number`, `Name`, `Job title`, `Department`, `Employee status`, then one column per calendar day. Filename `attendance_MM_YYYY.csv` or `.xlsx`.
 
 ## Attendance records CRUD
 

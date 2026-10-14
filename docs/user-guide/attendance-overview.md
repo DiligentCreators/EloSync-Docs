@@ -32,7 +32,7 @@ Phase 7 HR module on the frozen platform. Tracks **daily attendance records** pe
 
 `attendance.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `backdate` · `export`
 
-Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in, version **1.9.0**.
+Catalog: slug `attendance`, category `hr`, `sort_order = 30`, free opt-in, version **1.10.0**.
 
 ## Explicitly deferred
 

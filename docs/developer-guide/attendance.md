@@ -1,6 +1,6 @@
 # Attendance — Developer Guide
 
-Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.9.0**.
+Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.10.0**.
 
 ## Domain
 
@@ -9,12 +9,17 @@ Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. H
 | `AttendanceRecord` | `attendance_records` | Unique `(tenant_id, employee_id, date)`; soft deletes; work_mode + reason FKs; check-in/out IP + lat/lng |
 | `AttendanceRecordActivity` | `attendance_record_activities` | Timeline: who / why / field diffs; newest-first |
 | `AttendanceReason` | `attendance_reasons` | Catalog kinds `check_in_late` / `check_out`; protected `is_other` |
+| `AttendanceHoliday` | `attendance_holidays` | Unique `(tenant_id, date)`; optional name; admin/owner catalog |
 
 Enums: `AttendanceStatusEnum`, `AttendanceWorkModeEnum`, `AttendanceReasonKindEnum`, `AttendanceActivityTypeEnum`.
 
-Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn` + `timeline`). `AttendanceMatrixService` builds the month employee×day matrix and CSV/XLSX export (`AttendanceMatrixExport`). IP always from `request()->ip()`; coordinates best-effort from the client. Manual `store` / `update` require `change_reason` (min 5 chars) — uses existing `attendance.create` / `attendance.update` (no extra permission for same-day).
+Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn` + `timeline`). `AttendanceMatrixService` builds the month employee×day matrix and CSV/XLSX export (`AttendanceMatrixExport`). `AttendanceWorkCalendar` shares work-week / holiday / infer-absent helpers with `PayPeriodCalculator`. `AttendanceHolidayService` CRUD. IP always from `request()->ip()`; coordinates best-effort from the client. Manual `store` / `update` require `change_reason` (min 5 chars) — uses existing `attendance.create` / `attendance.update` (no extra permission for same-day).
 
-**Month matrix / export:** `GET /attendance-records/matrix` (`attendance.view`) and `GET /attendance-records/export` (`attendance.export`). Rows are visible employees (default Active); cells are records for that month (blank when none). Export codes: `P`/`A`/`L`/`R`/`HD`. Default admin + manager receive `attendance.export`.
+**Month matrix / export:** `GET /attendance-records/matrix` (`attendance.view`) and `GET /attendance-records/export` (`attendance.export`). Rows are visible employees (default Active). Cells: real records (`source=record`), inferred Absent for past/today work days with no record (`source=inferred`), or holiday (`source=holiday`, `status=holiday`). Blank = off day / future. Export codes: `P`/`A`/`L`/`R`/`HD`/`H`. Default admin + manager receive `attendance.export`.
+
+**Holidays:** `GET/POST/PUT/DELETE /attendance-holidays` — view with `attendance.view`; writes require `attendance.update` **and** owner/admin (`AttendanceHolidayPolicy::canManageCatalog`). Holidays skip matrix inference and payroll absent deduction.
+
+**Payroll:** When `payroll_deduct_absent` is on, `PayPeriodCalculator` counts explicit Absent plus inferred missing past/today work days; holidays and approved leave coverage are not deducted as Absent.
 
 **Backdating:** Manual create (or changing `date` on update) for any day other than workspace **today** requires `attendance.backdate`, except the workspace owner (`superadmin`) who may always backdate. Enforced in `StoreAttendanceRecordRequest` / `UpdateAttendanceRecordRequest` and `AttendanceRecordService::constrainDateForActor` via `AttendanceRecordPolicy::canBackdate`. Default admin + manager roles receive `attendance.backdate`; staff does not. Self check-in/out stay today-only.
 
@@ -37,10 +42,10 @@ Idempotency via `daily_summary_deliveries` kinds `attendance_late_daily` / `atte
 
 | Piece | Path |
 |-------|------|
-| Models | `AttendanceRecord`, `AttendanceRecordActivity`, `AttendanceReason` |
-| Services | `AttendanceRecordService`, `AttendanceRecordReadService`, `AttendanceMatrixService`, `AttendanceReasonService`, `AttendanceDailyReportService` |
+| Models | `AttendanceRecord`, `AttendanceRecordActivity`, `AttendanceReason`, `AttendanceHoliday` |
+| Services | `AttendanceRecordService`, `AttendanceRecordReadService`, `AttendanceMatrixService`, `AttendanceWorkCalendar`, `AttendanceHolidayService`, `AttendanceReasonService`, `AttendanceDailyReportService` |
 | Exports | `AttendanceMatrixExport` |
-| Controllers | `AttendanceRecordController`, `AttendanceReasonController` |
+| Controllers | `AttendanceRecordController`, `AttendanceReasonController`, `AttendanceHolidayController` |
 | Commands | `attendance:send-daily-reports` |
 | Tests | `tests/Feature/Tenant/Attendance/` |
 
@@ -50,12 +55,13 @@ See [tenant-v1-attendance.md](/api/tenant-v1-attendance).
 
 ## Frontend
 
-- `attendanceRecordService` / `attendanceReasonService` (+ `timeline`)
+- `attendanceRecordService` / `attendanceReasonService` / `attendanceHolidayService` (+ `timeline`)
 - List: search + check-in/out + HH:MM timer + reasons dialog (best-effort geolocation)
+- Month: matrix with Holiday / inferred Absent; Holidays dialog + day-header quick-mark (admin/owner)
 - Create/edit: required change reason + best-effort geolocation
 - View: IP/location details + edit history timeline
 - Login / 2FA / passkey: optional coordinates for auto check-in
-- Settings → Attendance: late / yesterday digest toggles + send times (workspace timezone)
+- Settings → Attendance: late / yesterday digest toggles + send times (workspace timezone) + Manage holidays
 
 ## Tests
 

@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.9.0** (month matrix + export; prior 1.8.0 digest report recipients; 1.7.0 backdate permission)
+- Current catalog version: **1.10.0** (holidays + auto-absent; prior 1.9.0 month matrix + export; 1.8.0 digest report recipients; 1.7.0 backdate permission)
 
 ## Bootstrap
 
@@ -18,6 +18,13 @@
 ## Timezone
 
 Self check-in “today”, the HH:MM timer, late classification, month matrix bounds, and **daily digest send times** use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end, remote start, late report time, and yesterday report time are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+
+## Deploy checklist (1.10.0)
+
+1. Migrate through `2026_10_14_173200` (`attendance_holidays` + catalog **attendance → 1.10.0**). Do **not** `db:seed`.
+2. Smoke: Settings → Attendance → Manage holidays; Month day-header mark/clear holiday; past work day without record shows Absent; holiday shows H and is not deducted on a pay run
+3. Pest: `tests/Feature/Tenant/Attendance/AttendanceHolidayAndMatrixInferenceTest.php`, `AttendanceMatrixTest.php`, `PayPeriodCalculatorTest.php`
+4. Readiness: [Attendance holidays + auto-absent 1.10.0](./attendance-holidays-auto-absent-1-10-0-production-readiness)
 
 ## Deploy checklist (1.9.0)
 
