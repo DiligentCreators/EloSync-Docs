@@ -95,6 +95,9 @@ Shown when the **Attendance** module is installed.
 | **Yesterday’s attendance email** | Off by default. Morning digest of yesterday’s late arrivals and missing check-outs. Owners/Admins receive the company digest; department managers receive their department employees only. |
 | **Yesterday report send time** | Workspace-local `H:i` (default `08:00`). |
 | **Work week days** | Weekdays that count as working days for payroll calendars (default Mon–Fri), using workspace-local dates. |
+| **Deduct salary for absences / unpaid leave** | When on (default), pay runs reduce net for unexcused absences and approved unpaid leave. |
+| **Deduct salary for offs/holidays next to absences** | Off by default. When on, absence or unpaid leave on the working day before or after a weekly off or holiday also deducts those days. Paid leave does not bridge. |
+| **Deduct salary for late check-ins** | Off by default; optional late ladder converts late counts into day-salary deductions. |
 
 See [Attendance](/user-guide/attendance).
 

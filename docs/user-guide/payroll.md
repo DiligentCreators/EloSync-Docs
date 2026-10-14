@@ -29,6 +29,7 @@ When **Calendar month days** is selected, pay runs must start on the 1st and end
    - Unpaid leave / unexcused absences / late ladder each gated by Settings → Attendance toggles
    - Unpaid leave comes from approved Leave Management requests whose leave type is unpaid (when that module is installed and the unpaid-leave deduction toggle is on)
    - Unexcused absences come from Attendance `absent` / uncovered `half_day` records that do not overlap approved leave (when Attendance is installed and the absent deduction toggle is on)
+   - Optional **Deduct salary for offs/holidays next to absences** (off by default): absence or unpaid leave on the working day before/after a weekly off or holiday also deducts those off/holiday days; paid leave does not bridge
    - Late check-ins stay present for attendance; when the late-deduction toggle is on, a ladder (e.g. 3 lates → 1 day, 6 → 2 days) adds day-salary penalties. One late day never deducts.
    - Net is never negative; draft lines stay editable
 3. While **draft**, edit period notes and line gross/adjustments (net recalculates). Breakdown columns (work days, days counted, daily rate, unpaid leave, absent, lates, late days) are shown for audit.

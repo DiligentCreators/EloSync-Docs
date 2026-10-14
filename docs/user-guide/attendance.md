@@ -17,6 +17,7 @@ When Attendance is installed, open **Settings → Attendance** to set:
 - **Yesterday’s attendance email** / send time — off by default; morning digest of yesterday’s late arrivals and missing check-outs for the same report recipients (combined when a user is on multiple departments).
 - Work week days (used for payroll working-day calendars)
 - **Deduct salary for absences** / **unpaid leave** — control whether pay runs reduce net for those days (on by default)
+- **Deduct salary for offs/holidays next to absences** — off by default; when on, absence or unpaid leave on the working day before or after a weekly off or holiday also deducts those off/holiday days (for example absent Monday also deducts Sunday; absent the day before Independence Day also deducts the holiday). **Paid leave does not bridge** — the holiday/off stays free so staff can travel home early.
 - **Deduct salary for late check-ins** — off by default; when on, configure a ladder such as 3 lates → 1 day salary, 6 lates → 2 days. A single late day stays **Late** with **no** fee. Ladder deductions appear on the payslip.
 
 Attendance uses the same workspace **Timezone** as Daily Reminder Time, meetings, and task/follow-up due dates (for example `Asia/Karachi`). There is no separate attendance timezone. See [Tenant Settings — Workspace timezone](/user-guide/tenant-settings#workspace-timezone).
