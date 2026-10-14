@@ -6,7 +6,7 @@
 - Category: `hr`, `sort_order = 30`
 - Free Marketplace opt-in
 - **Hard dependency** on `employees` (`add_attendance_employees_dependency`)
-- Current catalog version: **1.8.0** (department report recipients for digests; prior 1.7.0 backdate permission)
+- Current catalog version: **1.9.0** (month matrix + export; prior 1.8.0 digest report recipients; 1.7.0 backdate permission)
 
 ## Bootstrap
 
@@ -17,7 +17,15 @@
 
 ## Timezone
 
-Self check-in “today”, the HH:MM timer, late classification, and **daily digest send times** use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end, remote start, late report time, and yesterday report time are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+Self check-in “today”, the HH:MM timer, late classification, month matrix bounds, and **daily digest send times** use **Settings → General → Timezone** (same convention as Daily Reminder Time, meetings, and task/follow-up dues). Office start/end, remote start, late report time, and yesterday report time are workspace-local `H:i` values — not server UTC. See [Workspace timezone convention](/developer-guide/tenant-settings#timezone-and-scheduled-datetimes).
+
+## Deploy checklist (1.9.0)
+
+1. Migrate through `2026_10_14_205701` (grant `attendance.export` to default admin/manager + catalog **attendance → 1.9.0**)
+2. Confirm default roles: admin + manager have `attendance.export`; staff does **not**
+3. Smoke: Month view shows employee×day grid; Export CSV/XLSX downloads `attendance_MM_YYYY.*`; staff without export gets 403 on `/attendance-records/export`
+4. Pest: `tests/Feature/Tenant/Attendance/AttendanceMatrixTest.php`
+5. Readiness: [Attendance month matrix 1.9.0](./attendance-month-matrix-1-9-0-production-readiness)
 
 ## Deploy checklist (1.7.0)
 

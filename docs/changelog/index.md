@@ -1,3 +1,10 @@
+## Attendance month matrix + export (1.9.0) (2026-10-14)
+
+- **EloSync-Backend:** `GET /attendance-records/matrix` (employee × day for `month=YYYY-MM`) and `GET /attendance-records/export` (CSV/XLSX with `P`/`A`/`L`/`R`/`HD` codes). New permission `attendance.export` granted to default admin + manager. Visibility matches list (`visibleEmployeeIds`). Catalog **attendance 1.8.0 → 1.9.0**. Pest: `AttendanceMatrixTest`, catalog bump.
+- **EloSync-Frontend:** Attendance **Table | Month** toggle, month stepper (calendar-safe, no timezone day-shift), department/employee-status filters, matrix grid, Export CSV/Excel. Playwright headed shared-session: validation, CRUD, self check-in/out, late reason, month matrix + export downloads (`test:e2e:attendance:headed`).
+- **EloSync-Docs:** User/developer/API/deployment guides + [production readiness](/deployment/attendance-month-matrix-1-9-0-production-readiness) + this changelog.
+- **Go-live:** migrate-only (grant `attendance.export` + catalog bump). Deploy Frontend after production build; hard-refresh SPA. See [production readiness](/deployment/attendance-month-matrix-1-9-0-production-readiness).
+
 ## Tenant Stripe + Customer Portal invoice Checkout (1.6.0 / 1.4.0) (2026-10-13)
 
 - **EloSync-Backend:** Workspace Stripe connection (`tenant_stripe_connections`) with sandbox/live keys, mode toggle, enable, test, disconnect; permission `payments.manage_integrations`. Soft-deleted connections are **restored** on save so reconnect stays ready on GET. Portal `POST /portal/invoices/{id}/checkout` creates Stripe Checkout Session; webhook `POST /webhooks/tenant/{tenant}/stripe/customer-payments` posts gateway `CustomerPayment` (idempotent). Catalog **payments 1.5.0 → 1.6.0**, **customer-portal 1.3.0 → 1.4.0**. Pest: `TenantStripeIntegrationTest` (incl. restore), `PortalInvoiceCheckoutTest`, catalog bumps.

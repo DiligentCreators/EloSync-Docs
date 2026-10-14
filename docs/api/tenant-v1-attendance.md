@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:attendance`, plus `can:attendance.*`.
 
-Catalog version: **1.7.0**.
+Catalog version: **1.9.0**.
 
 ## Stats
 
@@ -64,12 +64,27 @@ Body: optional `reason_id` / `reason_notes`, optional `latitude` / `longitude`. 
 
 Kinds: `check_in_late`, `check_out`. Each kind has a protected **Other** row (`is_other`).
 
+## Month matrix & export
+
+| Method | Path | Permission |
+|--------|------|------------|
+| GET | `/attendance-records/matrix` | `attendance.view` |
+| GET | `/attendance-records/export` | `attendance.export` |
+
+Query params: `month` (`YYYY-MM`, required), optional `search`, `department_id`, `employee_status` (default `active`), and for export `format` (`csv`\|`xlsx`, default `csv`).
+
+**Matrix JSON:** `month`, `timezone`, `days[]` (`date`, `label`, `is_today`), `employees[]` (`id`, `employee_number`, `full_name`, `job_title`, `departments[]`, `status`, `days` map of `YYYY-MM-DD` → `{ status, record_id }`). Missing day keys mean no record. Visibility matches list (`AttendanceRecordPolicy::visibleEmployeeIds`).
+
+**Export:** Same filters as matrix. Sheet starts with a legend row (`P`/`A`/`L`/`R`/`HD`), then header columns `ID`, `Employee number`, `Name`, `Job title`, `Department`, `Employee status`, then one column per calendar day. Filename `attendance_MM_YYYY.csv` or `.xlsx`.
+
 ## Attendance records CRUD
 
 | Method | Path | Permission |
 |--------|------|------------|
 | GET | `/attendance-records` | `attendance.view` |
 | GET | `/attendance-records/stats` | `attendance.view` |
+| GET | `/attendance-records/matrix` | `attendance.view` |
+| GET | `/attendance-records/export` | `attendance.export` |
 | POST | `/attendance-records` | `attendance.create` |
 | GET | `/attendance-records/{attendanceRecord}` | `attendance.view` |
 | GET | `/attendance-records/{attendanceRecord}/timeline` | `attendance.view` |
