@@ -21,7 +21,7 @@ Tenant setting `payroll_working_days_basis` (Attendance group, default `work_wee
 
 Changing `payroll_working_days_basis` does not rebuild existing draft lines — recreate drafts after switching.
 
-`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator`. Unpaid leave days use each approved request’s `deduct_salary` flag (defaulted on approve from `!leaveType.is_paid`; null legacy rows fall back to `!is_paid`). Paid leave never enters unpaid leave. Migration `2026_10_01_213611_*` backfills pre-1.5.0 zero `daily_rate`/`days_counted` from `gross`/`working_days`.
+`PayRunService::create` builds lines from active employees’ profiles via `PayPeriodCalculator`. Unpaid leave days use each approved request’s `deduct_salary` flag (defaulted on approve from `!leaveType.is_paid`; null legacy rows fall back to `!is_paid`). Paid leave never enters unpaid leave. When `payroll_deduct_adjacent_non_work` is on, contiguous weekly offs / holidays adjacent to full Absent or unpaid leave are added to `absent_days` (paid leave does not bridge). Migration `2026_10_01_213611_*` backfills pre-1.5.0 zero `daily_rate`/`days_counted` from `gross`/`working_days`.
 
 `GET pay-runs/{payRun}/export` streams CSV register (`PayRunRegisterExport`) for `payroll.view`.
 

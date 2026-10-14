@@ -89,6 +89,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Leave Management](./leave-management) | Leave Management module ops |
 | [Attendance](./attendance) | Attendance module ops |
 | [Attendance holidays + auto-absent 1.10.0](./attendance-holidays-auto-absent-1-10-0-production-readiness) | Workspace holidays + inferred Absent / payroll — **Go** |
+| [Payroll adjacent offs/holidays deduction](./payroll-adjacent-non-work-deduction-production-readiness) | Settings toggle bridges offs/holidays next to absences — **Go** |
 | [Attendance month matrix + export 1.9.0](./attendance-month-matrix-1-9-0-production-readiness) | Month employee×day grid + CSV/XLSX export — **Go** |
 | [Attendance department-scoped digests 1.6.0](./attendance-department-scoped-1-6-0-production-readiness) | Dept-manager scoped digests/list — **Go** |
 | [Pulse slow-path hardening](./pulse-slow-paths-production-readiness) | Pulse remediations (attendance/email/sync/realtime/cache) — **Go** |

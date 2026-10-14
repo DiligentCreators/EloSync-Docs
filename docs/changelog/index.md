@@ -1,3 +1,10 @@
+## Payroll deduct offs/holidays adjacent to absences (2026-10-15)
+
+- **EloSync-Backend:** New tenant setting `payroll_deduct_adjacent_non_work` (Attendance group, default **off**). When on, `PayPeriodCalculator` deducts contiguous weekly offs and workspace holidays whose adjacent work day is full Absent (incl. inferred) or unpaid leave. Paid leave does not bridge. Pest: `PayPeriodCalculatorTest` adjacent cases.
+- **EloSync-Frontend:** Settings → Attendance toggle **Deduct salary for offs/holidays next to absences**. Headed one-session Playwright: `test:e2e:payroll-adjacent-non-work:headed`.
+- **EloSync-Docs:** User/developer attendance, payroll, tenant-settings + [production readiness](/deployment/payroll-adjacent-non-work-deduction-production-readiness) + this changelog note.
+- **Go-live:** deploy Backend + Frontend together; no migrate / no catalog bump. Toggle stays off until an admin enables it. See [production readiness](/deployment/payroll-adjacent-non-work-deduction-production-readiness).
+
 ## Attendance holidays + auto-absent (1.10.0) (2026-10-14)
 
 - **EloSync-Backend:** Workspace holidays (`attendance_holidays`) with admin/owner CRUD (`/attendance-holidays`). Month matrix synthesizes `source=inferred` Absent for past/today work days with no record (never future; never holidays) and `source=holiday` cells. Export adds `H=Holiday`. `PayPeriodCalculator` deducts inferred absents and skips holidays. Catalog **attendance 1.9.0 → 1.10.0**. Pest: `AttendanceHolidayAndMatrixInferenceTest`, catalog bump; existing matrix/payroll tests freeze time before fixture months.
