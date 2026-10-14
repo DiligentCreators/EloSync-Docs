@@ -88,6 +88,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Employees](./employees) | Employees module ops |
 | [Leave Management](./leave-management) | Leave Management module ops |
 | [Attendance](./attendance) | Attendance module ops |
+| [Attendance month matrix + export 1.9.0](./attendance-month-matrix-1-9-0-production-readiness) | Month employee×day grid + CSV/XLSX export — **Go** |
 | [Attendance department-scoped digests 1.6.0](./attendance-department-scoped-1-6-0-production-readiness) | Dept-manager scoped digests/list — **Go** |
 | [Pulse slow-path hardening](./pulse-slow-paths-production-readiness) | Pulse remediations (attendance/email/sync/realtime/cache) — **Go** |
 | [Pulse uncached slow-path follow-up](./pulse-uncached-slow-paths-production-readiness) | Dashboard / leads stats / public settings / attendance today miss-path — **Go** |

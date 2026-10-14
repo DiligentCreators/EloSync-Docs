@@ -1,6 +1,6 @@
 # Attendance — Developer Guide
 
-Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.7.0**.
+Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. Hard-depends on `employees`. Catalog **1.9.0**.
 
 ## Domain
 
@@ -12,7 +12,9 @@ Slug `attendance`, middleware `module:attendance`, permissions `attendance.*`. H
 
 Enums: `AttendanceStatusEnum`, `AttendanceWorkModeEnum`, `AttendanceReasonKindEnum`, `AttendanceActivityTypeEnum`.
 
-Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn` + `timeline`). IP always from `request()->ip()`; coordinates best-effort from the client. Manual `store` / `update` require `change_reason` (min 5 chars) — uses existing `attendance.create` / `attendance.update` (no extra permission for same-day).
+Service: `AttendanceRecordService` (CRUD + stats + today + checkIn/checkOut + optional `markLoginCheckIn` + `timeline`). `AttendanceMatrixService` builds the month employee×day matrix and CSV/XLSX export (`AttendanceMatrixExport`). IP always from `request()->ip()`; coordinates best-effort from the client. Manual `store` / `update` require `change_reason` (min 5 chars) — uses existing `attendance.create` / `attendance.update` (no extra permission for same-day).
+
+**Month matrix / export:** `GET /attendance-records/matrix` (`attendance.view`) and `GET /attendance-records/export` (`attendance.export`). Rows are visible employees (default Active); cells are records for that month (blank when none). Export codes: `P`/`A`/`L`/`R`/`HD`. Default admin + manager receive `attendance.export`.
 
 **Backdating:** Manual create (or changing `date` on update) for any day other than workspace **today** requires `attendance.backdate`, except the workspace owner (`superadmin`) who may always backdate. Enforced in `StoreAttendanceRecordRequest` / `UpdateAttendanceRecordRequest` and `AttendanceRecordService::constrainDateForActor` via `AttendanceRecordPolicy::canBackdate`. Default admin + manager roles receive `attendance.backdate`; staff does not. Self check-in/out stay today-only.
 
@@ -36,7 +38,8 @@ Idempotency via `daily_summary_deliveries` kinds `attendance_late_daily` / `atte
 | Piece | Path |
 |-------|------|
 | Models | `AttendanceRecord`, `AttendanceRecordActivity`, `AttendanceReason` |
-| Services | `AttendanceRecordService`, `AttendanceReasonService`, `AttendanceDailyReportService` |
+| Services | `AttendanceRecordService`, `AttendanceRecordReadService`, `AttendanceMatrixService`, `AttendanceReasonService`, `AttendanceDailyReportService` |
+| Exports | `AttendanceMatrixExport` |
 | Controllers | `AttendanceRecordController`, `AttendanceReasonController` |
 | Commands | `attendance:send-daily-reports` |
 | Tests | `tests/Feature/Tenant/Attendance/` |

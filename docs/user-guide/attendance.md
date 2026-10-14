@@ -71,6 +71,17 @@ Status badges use fixed colors so presence is easy to scan: **Present** (green),
 - KPI cards show totals including late; managers also see open check-ins (on-site / remote)
 - Soft-deleted records can be restored or permanently removed when you have permission
 
+## Month matrix & export
+
+Use **Table | Month** on Attendance to switch views:
+
+- **Table** — the daily record list (create, edit, trash).
+- **Month** — one row per visible employee and one column per day in the selected month (workspace timezone). Status marks match Present / Absent / Late / Remote / Half day; empty cells mean no record for that day. Click a filled cell to open the record.
+
+Month filters: search, department (when Departments is installed), and employee status (default Active). Owners/Admins see the whole workspace; department managers see their team; staff see themselves.
+
+**Export** (CSV or Excel) downloads the same matrix for the selected month. Day columns use short codes: `P` Present, `A` Absent, `L` Late, `R` Remote, `HD` Half day (blank = no record). Requires `attendance.export` (default Admin and Manager roles). Filename pattern: `attendance_MM_YYYY.xlsx`.
+
 ## Tips
 
 - Use **Remote** check-in for WFH days; remote late rules use the remote office start/grace settings.
