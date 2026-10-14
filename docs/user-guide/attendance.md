@@ -76,11 +76,13 @@ Status badges use fixed colors so presence is easy to scan: **Present** (green),
 Use **Table | Month** on Attendance to switch views:
 
 - **Table** — the daily record list (create, edit, trash).
-- **Month** — one row per visible employee and one column per day in the selected month (workspace timezone). Status marks match Present / Absent / Late / Remote / Half day; empty cells mean no record for that day. Click a filled cell to open the record.
+- **Month** — one row per visible employee and one column per day in the selected month (workspace timezone). Status marks match Present / Absent / Late / Remote / Half day; **Holiday** days show as **H**. Past/today work days with no record show as auto-**Absent**; future and off days stay blank. Click a recorded cell to open the record. Admins/owners can click a day header to mark or clear a holiday (also **Holidays** button).
 
 Month filters: search, department (when Departments is installed), and employee status (default Active). Owners/Admins see the whole workspace; department managers see their team; staff see themselves.
 
-**Export** (CSV or Excel) downloads the same matrix for the selected month. Day columns use short codes: `P` Present, `A` Absent, `L` Late, `R` Remote, `HD` Half day (blank = no record). Requires `attendance.export` (default Admin and Manager roles). Filename pattern: `attendance_MM_YYYY.xlsx`.
+**Auto-absent & holidays:** Missing attendance on past/today work days counts as Absent for the matrix and for payroll (when deduct-absent is on), unless the day is a workspace holiday or covered by approved leave. Manage holidays under Settings → Attendance or Attendance → Month.
+
+**Export** (CSV or Excel) downloads the same matrix for the selected month. Day columns use short codes: `P` Present, `A` Absent, `L` Late, `R` Remote, `HD` Half day, `H` Holiday (blank = off day / future). Requires `attendance.export` (default Admin and Manager roles). Filename pattern: `attendance_MM_YYYY.xlsx`.
 
 ## Tips
 
