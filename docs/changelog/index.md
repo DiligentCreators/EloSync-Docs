@@ -1,3 +1,9 @@
+## Queued mail resolves tenant provider without tenancy bootstrap (2026-10-16)
+
+- **EloSync-Backend:** `EmailConfigResolver::forQueueJob()` + `ApplyEmailRuntimeConfig` fall back to the job’s `tenantId` / notifiable `tenant_id` when Stancl tenancy is not initialized on the worker, so custom-SMTP workspaces no longer inherit a broken Central Postmark. System-mode tenants still use Central (failures remain acceptable when Central is misconfigured). Pest: `EmailQueueRuntimeConfigTest` lost-tenancy cases.
+- **EloSync-Docs:** [Multi-provider email](/developer-guide/multi-provider-email) + this changelog note.
+- **Go-live:** deploy Backend; restart Horizon (`php artisan horizon:terminate`). No migrate. Optional: prune old `emails` failed jobs that only failed with Postmark “valid Server token” after confirming custom-SMTP digests send.
+
 ## Payroll deduct offs/holidays adjacent to absences (2026-10-15)
 
 - **EloSync-Backend:** New tenant setting `payroll_deduct_adjacent_non_work` (Attendance group, default **off**). When on, `PayPeriodCalculator` deducts contiguous weekly offs and workspace holidays whose adjacent work day is full Absent (incl. inferred) or unpaid leave. Paid leave does not bridge. Pest: `PayPeriodCalculatorTest` adjacent cases.
