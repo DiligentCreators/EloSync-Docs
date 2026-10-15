@@ -12,12 +12,12 @@ Application code continues to send through Laravel `Mail` / Notification mail ch
 | `EmailManager` | Clears prior secrets, applies config to Laravel mailers, calls `Mail::forgetMailers()` |
 | `EmailDriverInterface` | Provider-specific config mapping + validation |
 | `SupportsWebhooks` | Optional delivery webhook verify/parse/catalog |
-| `ApplyEmailRuntimeConfig` | Queue middleware that re-applies config on the `emails` worker, then clears secrets |
+| `ApplyEmailRuntimeConfig` | Queue middleware that re-applies config on the `emails` worker via `forQueueJob()`, then clears secrets |
 | `ApplyCentralEmailRuntimeConfig` | Central HTTP middleware (`central.mail`) re-applies Central mail every request |
 
 Drivers are registered in `config/email.php`.
 
-**Queued mailables** (for example `BillingDocumentEmail` for invoice / quote / estimate / payment / credit note / purchase order) must register the same `ApplyEmailRuntimeConfig` middleware via `Mailable::middleware()`. Notifications get it through `QueuesOnEmails`. Stancl queue tenancy restores `tenant_id` only — it does **not** re-apply mail credentials.
+**Queued mailables** (for example `BillingDocumentEmail` for invoice / quote / estimate / payment / credit note / purchase order) must register the same `ApplyEmailRuntimeConfig` middleware via `Mailable::middleware()`. Notifications get it through `QueuesOnEmails`. Stancl queue tenancy restores `tenant_id` only — it does **not** re-apply mail credentials. `EmailConfigResolver::forQueueJob()` still picks the workspace from an initialized tenancy, the job’s `tenantId` / `tenant_id`, or the notifiable’s `tenant_id`, so a missing tenancy bootstrap does not force custom-SMTP tenants onto Central.
 
 ## Tenant modes
 
