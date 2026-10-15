@@ -1,3 +1,9 @@
+## Fix — Task drawer @mentions (2026-10-16)
+
+- **EloSync-Frontend:** Task list peek Comments tab uses `MentionComposer` (`#task-sheet-note`) like the full record page and Leads notes sheet — typing `@` suggests teammates and persists `@[Name](user:ID)` tokens for `task.mentioned` notifications.
+- **EloSync-Docs:** Tasks user/developer guides + [tabbed drawers readiness](/deployment/tabbed-module-record-drawers-production-readiness) R2 update + this changelog note.
+- **Go-live:** deploy Frontend after production build; hard-refresh SPA. No Backend migrate.
+
 ## Queued mail resolves tenant provider without tenancy bootstrap (2026-10-16)
 
 - **EloSync-Backend:** `EmailConfigResolver::forQueueJob()` + `ApplyEmailRuntimeConfig` fall back to the job’s `tenantId` / notifiable `tenant_id` when Stancl tenancy is not initialized on the worker, so custom-SMTP workspaces no longer inherit a broken Central Postmark. System-mode tenants still use Central (failures remain acceptable when Central is misconfigured). Pest: `EmailQueueRuntimeConfigTest` lost-tenancy cases.

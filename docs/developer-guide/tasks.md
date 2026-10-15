@@ -94,7 +94,7 @@ Mirrors the Leads 1.8.0 / Opportunities 1.3.0 / Live Chat inbox invalidate patte
 |-------|------|
 | Page | `src/pages/tasks/tasks-page.tsx` (board default + list; list row menu Complete/Reopen via `tasks.complete`) |
 | Form | `task-form-dialog.tsx` |
-| Detail | `task-detail-sheet.tsx` (Comments + History; Comments use `MentionComposer`; board DnD auto-saves status on the list page) |
+| Detail | `task-view-page.tsx` (full page) + `task-record-sheet.tsx` (list peek: Overview / Comments / Activity). Both Comments composers use `MentionComposer`; board DnD auto-saves status on the list page |
 | Shared board | `src/components/crm/kanban-board.tsx` (per-column vertical scroll + contained horizontal scroll; titles stay fixed; touch pan on column lists) |
 | Mentions UI | `src/components/crm/mention-composer.tsx` (shows `@Name` chips; emits `@[Name](user:id)`; keep typing after pick; Backspace/Delete removes chips), `src/lib/note-mentions.ts` (`formatNoteMentionsForDisplay` in record pages + `latest-note-follow-up.tsx` list/board previews) |
 | Notification registry | `src/notifications/modules/tasks.ts` (`task.mentioned`) |

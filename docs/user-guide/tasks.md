@@ -79,5 +79,5 @@ The task **Activity** section (full record page) and list peek overview show tim
 ## Comments, attachments & history
 
 - **Attachments** — on the full record page, upload multiple files to explain the task; download or delete with **update** permission. Allowed types and max sizes follow workspace Storage upload policy
-- **Comments** — free-text notes; optional attachments on each comment (up to 5). Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
+- **Comments** — free-text notes on the list peek **Comments** tab or the full record page (optional attachments on the full page, up to 5). Type `@` to mention a teammate (the composer shows their name; the system keeps the user id for notifications). They get an in-app notification (and optional email if **Settings → Notifications → Mentioned in a task comment** is on)
 - **History** — activity timeline (create, update, status change, assignment, complete, reopen, note, etc.). Status changes include time spent in the previous status

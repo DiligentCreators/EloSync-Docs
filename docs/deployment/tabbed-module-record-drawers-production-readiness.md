@@ -40,7 +40,7 @@ List drawers are upgraded from thin peeks to tabbed drawers (Leads parity). Agen
 | ID | Severity | Notes |
 |----|----------|-------|
 | R1 | Info | Billing line-item documents stay **view peek only** for create/edit (page-primary) |
-| R2 | Info | Leads Notes tab keeps `MentionComposer` (`#lead-sheet-note`); other modules use `#sheet-note-{entity}` textarea panels |
+| R2 | Info | Leads Notes (`#lead-sheet-note`) and Tasks Comments (`#task-sheet-note`) use `MentionComposer`; other modules still use `#sheet-note-{entity}` textarea panels |
 | R3 | Ops | Deploy Frontend after production build; hard-refresh SPA. No Backend migrate |
 
 ## What shipped
