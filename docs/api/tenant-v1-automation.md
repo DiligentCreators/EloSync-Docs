@@ -1,6 +1,6 @@
 # Tenant API v1 — Automation
 
-Catalog: **automation 1.8.0**.
+Catalog: **automation 1.9.0**.
 
 Base path: `/api/tenant/v1`
 
@@ -61,6 +61,28 @@ Permission: `automation.create`. Workflows are always stored inactive first. `is
   ],
   "actions": [
     { "type": "send_notification", "config": { "title": "Hi", "message": "There" }, "delay_seconds": 0, "sort_order": 0 }
+  ],
+  "branches": [
+    {
+      "name": "High priority",
+      "is_else": false,
+      "sort_order": 0,
+      "conditions": [
+        { "field": "priority", "operator": "eq", "value": ["high"], "logic_group": "and", "sort_order": 0 }
+      ],
+      "actions": [
+        { "type": "send_notification", "config": { "title": "High", "message": "High priority" }, "delay_seconds": 0, "sort_order": 0 }
+      ]
+    },
+    {
+      "name": "Otherwise",
+      "is_else": true,
+      "sort_order": 1,
+      "conditions": [],
+      "actions": [
+        { "type": "send_notification", "config": { "title": "Standard", "message": "Standard priority" }, "delay_seconds": 0, "sort_order": 0 }
+      ]
+    }
   ]
 }
 ```
@@ -69,7 +91,7 @@ Operators: `eq`, `neq`, `contains`, `starts_with`, `ends_with`, `gt`, `gte`, `lt
 
 ### GET `/automation/workflows/{id}`
 
-Includes trigger, conditions, actions, creator.
+Includes trigger, workflow conditions, shared actions, branches (conditions + actions), creator.
 
 ### PUT `/automation/workflows/{id}`
 

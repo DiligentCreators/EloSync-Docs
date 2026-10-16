@@ -1,12 +1,12 @@
 # Automation — Developer Guide
 
-Billable marketplace module (`automation` **1.8.0**). Mirrors Tasks packaging; domain logic lives in a cross-module engine that subscribes to existing domain events.
+Billable marketplace module (`automation` **1.9.0**). Mirrors Tasks packaging; domain logic lives in a cross-module engine that subscribes to existing domain events.
 
 ## Backend layout
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Automation{Workflow,Trigger,Condition,Action,Run,Log}.php` |
+| Models | `app/Models/Automation{Workflow,Branch,Trigger,Condition,Action,Run,Log}.php` |
 | Enums | `AutomationRunStatusEnum`, `AutomationConditionOperatorEnum`, `AutomationLogLevelEnum` |
 | Services | `app/Services/Tenant/Automation/*` (`WorkflowService`, `AutomationEngine`, `ConditionEvaluator`, `ActionRunner`, registries, handlers) |
 | Related resolver | `Support/AutomationRelatedResolver` — `trigger_assignee`, tag/stage by id or name/slug, related-entity labels |
@@ -76,6 +76,18 @@ Schedule evaluation uses workspace timezone from `TenantSettingService` — see 
 
 Builder disables items where `wired=false` (“Coming soon”) or `available=false` (“Module not installed”).
 
+## If / else branches (1.9.0)
+
+Workflow conditions still gate the whole run. Shared actions (`branch_id` null) always run. Optional `branches` are evaluated in order after that:
+
+- The first non-else branch whose conditions pass runs its actions.
+- One **otherwise** branch (`is_else: true`) may be last, has no conditions, and runs when nothing else matched.
+- If nothing matches and there is no otherwise branch, the run completes after the shared actions and logs `No branch matched.`
+- The chosen action id list is stored on the run payload (`_automation_action_ids`) so a delay resumes the same plan.
+- Branch conditions are not workflow gates. A failing branch does not stop the run from starting.
+
+Template: `manual_priority_branch` (no extra modules).
+
 ## Explicit non-goals
 
-Marketing Automation and branching remain deferred. Email `auto_send` shipped **1.6.0**; WhatsApp document auto-send (`auto_send_whatsapp`) shipped **1.7.0**; `generate_order` (Purchase Order) shipped **1.8.0**. Standalone `send_whatsapp_document` action and Sales Orders module stay out of scope. `create_project` shipped in Automation **1.4.0**; `send_whatsapp_interactive` / `generate_quotation` / `generate_invoice` shipped in Automation **1.5.0**. WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers shipped with Help Desk **1.3.0**; SLA escalate template with Help Desk **1.9.0**.
+Marketing Automation remains deferred. Email `auto_send` shipped **1.6.0**; WhatsApp document auto-send (`auto_send_whatsapp`) shipped **1.7.0**; `generate_order` (Purchase Order) shipped **1.8.0**; if/else branches shipped **1.9.0**. Standalone `send_whatsapp_document` action and Sales Orders module stay out of scope. `create_project` shipped in Automation **1.4.0**; `send_whatsapp_interactive` / `generate_quotation` / `generate_invoice` shipped in Automation **1.5.0**. WhatsApp Cloud trigger `whatsapp.message_received` and action `send_whatsapp_template` shipped in Automation **1.1.0** / WhatsApp Cloud **1.2.0**. Help Desk triggers shipped with Help Desk **1.3.0**; SLA escalate template with Help Desk **1.9.0**.

@@ -1,3 +1,10 @@
+## Automation if/else branches (1.9.0) (2026-10-17)
+
+- **EloSync-Backend:** Workflows can store `branches` (first match wins; one otherwise branch last, with no conditions). Shared actions still run first. Branch conditions are not workflow gates. The chosen action ids are stored on the run so a delay resumes the same plan. Template `manual_priority_branch`. Catalog **automation 1.8.0 → 1.9.0**. Pest: `AutomationBranchTest`.
+- **EloSync-Frontend:** Builder gains **Branches** (Add branch / Add otherwise) after shared actions. An empty branch condition shows the API validation toast and stays on the form. Headed one-session Playwright: `test:e2e:automation:headed` **1/1**.
+- **EloSync-Docs:** User, developer, API, roadmap, upgrade + [production readiness](/deployment/automation-branching-1-9-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only (new `automation_branches` table, nullable `branch_id` on conditions and actions, catalog bump). Deploy Frontend after production build; hard-refresh SPA. Existing linear workflows keep running. See [production readiness](/deployment/automation-branching-1-9-0-production-readiness).
+
 ## Payments live Stripe refunds (1.7.0) (2026-10-17)
 
 - **EloSync-Backend:** Posted payments with `gateway_provider=stripe` refund the captured PaymentIntent on the workspace Stripe account before the ledger write (`TenantStripeRefundService`). Checkout Session ids resolve to a PaymentIntent. `customer_payments.gateway_mode` records sandbox/live; `customer_payment_refunds.stripe_refund_id` is unique. `refund.created` / `charge.refunded` book the ledger once. Manual methods stay ledger-only. Catalog **payments 1.6.0 → 1.7.0**. Pest: `CustomerPaymentStripeRefundTest`.

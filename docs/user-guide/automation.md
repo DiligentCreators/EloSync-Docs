@@ -15,9 +15,10 @@ Workflow Automation lets your workspace react to CRM and operations events witho
 2. Choose a **trigger**. Triggers for modules you have not installed are marked **Module not installed** and cannot be activated until that module is entitled.
 3. For **Schedule**, set frequency (daily / weekly / monthly / cron) and time in the **workspace timezone**.
 4. Add optional **conditions** — pick fields from the trigger’s payload (AND or OR groups).
-5. Add one or more **actions** in order. People, tags, and stages use searchable pickers; notify supports **multiple recipients** including **Record assignee (from trigger)**.
-6. For **Create task** on a Lead trigger, optionally tick **Also create a lead follow-up** (off by default; templates may enable it).
-7. **Save** (inactive) or **Save & activate**. Only active workflows run.
+5. Add one or more **shared actions** in order. People, tags, and stages use searchable pickers; notify supports **multiple recipients** including **Record assignee (from trigger)**.
+6. Optional **branches**: the first matching branch runs after the shared actions. **Otherwise** is the fallback and must be last. Each if-branch needs a field, operator, and value.
+7. For **Create task** on a Lead trigger, optionally tick **Also create a lead follow-up** (off by default; templates may enable it).
+8. **Save** (inactive) or **Save & activate**. Only active workflows run.
 
 ### Manual Run
 
@@ -43,6 +44,7 @@ From the workflow list, **Run** opens a dialog. For event-style triggers pick a 
 | Opportunity stage draft quotation | Opportunity stage changed | Draft a quotation for the opportunity | Automation, Opportunities, Quotations |
 | WhatsApp inbound quick replies | WhatsApp message received | Send interactive reply buttons | Automation, WhatsApp Cloud |
 | Manual generate purchase order | Manual | Draft a purchase order for a vendor | Automation, Purchase Orders |
+| Manual priority branch | Manual | Shared notify, then high-priority or otherwise notify | Automation |
 
 Starter **Templates** seed the same journeys when the required modules are installed.
 
