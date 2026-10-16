@@ -20,7 +20,7 @@ Open **Companies** from the sidebar under **CRM** (between Leads and Contacts).
 ## Create & edit
 
 1. Click **New company**
-2. Enter name (required) and optional email, phone, website, industry, address, source, and assignee
+2. Enter name (required) and optional email, phone, website, industry, address, source, and assignee. Email must be a valid address when you fill it in.
 3. Save
 
 Edit from the row menu or the record page.

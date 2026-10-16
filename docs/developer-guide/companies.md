@@ -112,6 +112,7 @@ Auth login/`me` include `modules: string[]` for SPA gating.
 # Backend
 php artisan test --compact tests/Feature/Tenant/Company/CompanyTest.php
 php artisan test --compact tests/Feature/Tenant/Company/CompanyFollowUpTest.php
+php artisan test --compact tests/Feature/Tenant/Company/CompanyDuplicateTest.php
 php artisan test --compact tests/Feature/Tenant/Company/CompanyImportTest.php
 php artisan test --compact tests/Feature/Tenant/Company/CompanyExportTest.php
 php artisan test --compact tests/Feature/Tenant/PartyBilling/PartyBillingSummaryAndStatementTest.php
@@ -122,12 +123,13 @@ php artisan queue:work --queue=imports,default
 # Frontend
 npm run typecheck && npm run lint && npm run build
 npm run test:e2e:companies
+npm run test:e2e:companies:headed
 ```
 
 | Suite | Location |
 |-------|----------|
-| Pest | `tests/Feature/Tenant/Company/CompanyTest.php`, `CompanyFollowUpTest.php`, `CompanyImportTest.php`, `CompanyExportTest.php`; PartyBilling suite |
-| E2E | `e2e/tests/companies/`, including `companies.follow-ups.spec.ts`, `companies.import.spec.ts`; company hub smoke in `contacts.party-billing.spec.ts` |
+| Pest | `tests/Feature/Tenant/Company/CompanyTest.php`, `CompanyFollowUpTest.php`, `CompanyImportTest.php`, `CompanyDuplicateTest.php`, `CompanyExportTest.php`; PartyBilling suite |
+| E2E | `e2e/tests/companies/`, including `companies.duplicate-merge.headed.spec.ts`, `companies.follow-ups.spec.ts`, `companies.import.spec.ts`; company hub smoke in `contacts.party-billing.spec.ts` |
 
 ## Logging
 
