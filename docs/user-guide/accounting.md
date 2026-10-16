@@ -53,6 +53,17 @@ When Accounting is entitled:
 - **Credit Notes — Apply**: posts Dr Sales Revenue / Cr Accounts Receivable for the credit total; links the journal (applied credits stay irreversible).
 - No backfill for invoices or credits issued before Accounting was installed.
 
+## Purchase orders and inventory (when those modules are installed)
+
+When Accounting is entitled:
+
+- **Receive** a purchase order: tracked products post Dr Inventory Asset (`1200`) / Cr Accounts Payable (`2000`) for quantity × unit price. Lines that are not tracked products post Dr Operating Expenses (`6000`) / Cr Accounts Payable. Purchase-order tax is not included. One journal per receipt. Receipts from before this version are not backfilled.
+- If that purchase order was already converted to an expense, no payable journal is posted. If the payable journal already exists, **Convert to expense** is blocked. Pay the vendor with a journal that debits Accounts Payable and credits cash.
+- **Stock in** (not from a purchase-order receipt): Dr Inventory Asset / Cr Owner Equity (`3000`) at product cost.
+- **Stock out**: Dr Cost of Goods Sold (`5000`) / Cr Inventory Asset at product cost.
+- **Adjust** posts only the change in quantity, using the stock-in or stock-out pair. A zero change posts nothing.
+- **Transfers** between warehouses post no journal. Cancelling a purchase order does not reverse the receipt journal.
+
 ## Payments, expenses & payroll (when those modules are installed)
 
 - **Payments**: choose **Deposit to** (cash/bank). On **Post**, Accounting creates Dr deposit / Cr Accounts Receivable (settles the receivable booked on invoice send).

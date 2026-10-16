@@ -33,6 +33,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Automation 1.3.0 Cross-module Readiness](./automation-1-3-0-production-readiness) | Sole fan-out + cross-module triggers/templates — **Go** |
 | [WhatsApp Cloud Production Readiness](./whatsapp-cloud-production-readiness) | WhatsApp Cloud MVP go-live checklist, smoke, residual risk |
 | [Payments Stripe refunds 1.7.0](./payments-stripe-refunds-1-7-0-production-readiness) | Workspace Stripe PaymentIntent refunds — **Go** |
+| [Accounting AP/COGS 1.8.0](./accounting-ap-cogs-1-8-0-production-readiness) | Purchase-order receipts and inventory journals — **Go** |
 | [Tenant Stripe Portal Checkout Readiness](./tenant-stripe-portal-checkout-production-readiness) | Workspace Stripe sandbox/live + portal Pay now — **Go** |
 | [WhatsApp Help Desk Bridge 1.6.0 Readiness](./whatsapp-help-desk-bridge-1-6-0-production-readiness) | Auto-ticket + bidirectional public-note sync — **Go** |
 | [Knowledge Base Production Readiness](./knowledge-base-production-readiness) | Knowledge Base audit, go-live checklist, smoke, rollback, sign-off |

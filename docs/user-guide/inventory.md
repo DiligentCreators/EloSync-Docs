@@ -30,4 +30,6 @@ You can cancel Draft or In-transit transfers. Completed and cancelled transfers 
 
 ## Purchase order receipts
 
-Marking a Purchase Order as **Received** posts stock-in once for each line that has a `product_id` and whose product tracks stock, provided both Products and Inventory are installed. You may choose a warehouse when receiving; otherwise the default warehouse is used. **Partially received** remains acknowledgement-only and posts no stock.
+Marking a Purchase Order as **Received** posts stock-in once for each line that has a `product_id` and whose product tracks stock, provided both Products and Inventory are installed. You may choose a warehouse when receiving; otherwise the default warehouse is used. **Partially received** without line quantities remains acknowledgement-only and posts no stock.
+
+When Accounting is installed, a manual stock in posts Dr Inventory Asset (`1200`) / Cr Owner Equity (`3000`) at the product cost. A stock out posts Dr Cost of Goods Sold (`5000`) / Cr Inventory Asset. An adjust posts only the quantity change. A warehouse transfer posts no journal. Stock received from a purchase order is journaled on the receipt (Accounts Payable), not again on the stock movement.

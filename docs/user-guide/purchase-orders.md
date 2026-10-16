@@ -61,4 +61,6 @@ If the **Expenses** module is installed on your workspace and you have the `purc
 
 If Expenses is not installed, the button does not appear; attempting the conversion via the API returns an error explaining that the Expenses module is required.
 
+If Accounting already posted a receipt journal for this purchase order, conversion is blocked. Pay the vendor with a journal that debits Accounts Payable instead of creating an expense.
+
 Vendor portal / scorecards remain deferred — see the [Product Roadmap](/getting-started/product-roadmap).

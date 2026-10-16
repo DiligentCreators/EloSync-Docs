@@ -97,10 +97,10 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Accounting](/user-guide/accounting-overview) (CoA, journals, GL) | Shipped |
 | [Financial Reports](/user-guide/financial-reports) (TB, P&L, BS) | Shipped (requires Accounting) |
 | Soft cash movements from Payments / Expenses / transfers | Shipped |
+| Soft AP from purchase-order receipts and inventory / COGS journals | Shipped (**accounting 1.8.0**) |
 
 ### Deferred
 
-- Auto-post from POs / Inventory (AP/COGS)
 - Multi-currency accounting / FX; budgets
 
 ---
@@ -270,7 +270,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Automation if/else branches (2026-10-17):** Shared actions still run in order. Optional branches run the first match; one otherwise branch is the fallback. Branch conditions do not gate the workflow. Template `manual_priority_branch`. Catalog **automation 1.8.0 → 1.9.0**. Go-live: [production readiness](/deployment/automation-branching-1-9-0-production-readiness).
 
-Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys. If/else branches shipped in Automation **1.9.0**.
+**Accounting purchase receipts and inventory journals (2026-10-17):** Receiving a purchase order posts Dr Inventory `1200` or Operating Expenses `6000` / Cr Accounts Payable `2000` when Accounting is entitled. Manual stock in credits Owner Equity `3000`; stock out debits Cost of Goods Sold `5000`. Transfers post nothing. An existing purchase-order expense skips the payable journal, and convert-to-expense is blocked after that journal exists. Catalog **accounting 1.7.2 → 1.8.0**. Go-live: [production readiness](/deployment/accounting-ap-cogs-1-8-0-production-readiness).
+
+Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 

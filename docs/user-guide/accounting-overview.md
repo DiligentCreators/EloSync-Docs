@@ -1,6 +1,6 @@
 # Accounting Module
 
-Phase 6 Finance module on the frozen platform. Provides the financial backbone: **chart of accounts**, **manual journal entries** (draft → post → void), **account transfers**, **fiscal periods / year-end close**, **bank reconciliation**, and **general ledger inquiry**. Single-currency. Soft auto-post from **Invoices** (send), **Credit Notes** (apply), **Payments** (deposit), **Expenses** (paid from), and **Payroll** (paid from) when those modules are entitled alongside Accounting. Aged receivables lives under [Financial Reports](/user-guide/financial-reports-overview).
+Phase 6 Finance module on the frozen platform. Provides the financial backbone: **chart of accounts**, **manual journal entries** (draft → post → void), **account transfers**, **fiscal periods / year-end close**, **bank reconciliation**, and **general ledger inquiry**. Single-currency. Soft auto-post from **Invoices** (send), **Credit Notes** (apply), **Payments** (deposit), **Expenses** (paid from), **Payroll** (paid from), **Purchase Orders** (receipt → accounts payable), and **Inventory** (stock in / out) when those modules are entitled alongside Accounting. Aged receivables lives under [Financial Reports](/user-guide/financial-reports-overview).
 
 ## Guides
 
@@ -27,22 +27,23 @@ Phase 6 Finance module on the frozen platform. Provides the financial backbone: 
 - **Account transfers** (`TRF-` numbers): move money between cash/bank accounts (auto-posted journal; void reverses)
 - Soft accrual journals from [Invoices](/user-guide/invoices-overview) (**Send**: Dr AR / Cr Revenue / Cr Tax Payable when tax &gt; 0) and [Credit Notes](/user-guide/credit-notes-overview) (**Apply**: reverse split) when Accounting is installed
 - Soft cash movements from [Payments](/user-guide/payments-overview) (Deposit to; optional **withholding** splits deposit vs WHT receivable), [Expenses](/user-guide/expenses-overview) (Paid from; optional **withholding** splits cash vs WHT payable), and [Payroll](/user-guide/payroll) (Paid from on Mark paid; payment JE after accrual) when Accounting is installed
+- Soft receipt journals from [Purchase Orders](/user-guide/purchase-orders-overview): tracked lines Dr Inventory Asset `1200` / Cr Accounts Payable `2000` at quantity × unit price; other lines Dr Operating Expenses `6000` / Cr `2000`. `tax_rate` is not posted. A purchase order already converted to an expense does not post this journal
+- Soft inventory journals: manual stock in Dr `1200` / Cr Owner Equity `3000` at product cost; stock out Dr Cost of Goods Sold `5000` / Cr `1200`; adjust journals only the quantity change; warehouse transfers post nothing
 - **Fiscal periods**: `fiscal_year_start_month` (Settings → General); period CRUD + lock/unlock (`accounting.void` to unlock); journal post/void blocked in locked periods; year-end close zeros P&L into Retained Earnings `3100` and locks the FY
 - **Bank reconciliation**: clear posted cash/bank lines against a statement; complete only when cleared balance matches the statement
 - **Bank reconciliation**: start against cash/bank, clear lines, complete
 - General ledger inquiry over posted lines with optional account and date filters
 - Module licensing (`module:accounting`) + Spatie permissions — **free Marketplace opt-in**
-- Soft dependency optional later: Inventory COGS / valuations (not in this MVP)
+- Optional soft dependencies from Purchase Orders and Inventory (receipt and stock journals; no valuation layers)
 
 ## Permissions
 
 `accounting.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `post` · `void`
 
-Catalog: slug `accounting`, category `finance`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Version **1.7.1** (tax types + withholding; see [tax-types](/user-guide/tax-types)).
+Catalog: slug `accounting`, category `finance`, `is_default_included = false`, `is_billable = false`, `sort_order = 10`. Version **1.8.0** (purchase-order receipt and inventory journals; tax types remain in [tax-types](/user-guide/tax-types)).
 
 ## Explicitly deferred
 
-- Auto-posting from Purchase Orders / Inventory (AP/COGS not yet)
 - Multi-currency accounting / FX on transfers
 - Budgets
 - Split a single payment across multiple deposit accounts

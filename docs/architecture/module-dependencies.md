@@ -292,6 +292,24 @@ Expenses
 
 Expenses installs standalone. When Accounting is entitled, `POST /expenses/{id}/pay` requires `paid_from_account_id` (cash/bank) and posts Dr expense / Cr paid-from for amount+tax. Optional `module_dependencies` row.
 
+### Purchase Orders → Accounting (optional, shipped)
+
+```text
+Purchase Orders
+  └── may use Accounting   (optional — receipt journal to accounts payable)
+```
+
+Purchase Orders install without Accounting. When Accounting is entitled, a receive with quantities posts Dr Inventory `1200` (tracked products) or Operating Expenses `6000` (other lines) / Cr Accounts Payable `2000`. An existing expense for that purchase order skips the journal. Convert to expense is rejected after the journal exists. Optional `module_dependencies` row.
+
+### Inventory → Accounting (optional, shipped)
+
+```text
+Inventory
+  └── may use Accounting   (optional — stock in/out journals)
+```
+
+Inventory installs without Accounting. When Accounting is entitled, manual stock in credits Owner Equity `3000` and stock out debits Cost of Goods Sold `5000`. Transfers post no journal. Optional `module_dependencies` row.
+
 ### Help Desk → Contacts, Companies (optional, shipped)
 
 ```text

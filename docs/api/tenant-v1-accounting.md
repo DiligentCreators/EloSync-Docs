@@ -53,6 +53,8 @@ Create body: `target_balance` (required), `entry_date`, optional `offset_account
 
 Create/update body: `entry_date`, optional `memo`, `lines[]` with `account_id`, `debit`, `credit`, optional `memo` / `sort_order`. Lines must balance; each line has debit XOR credit. Draft-only edit/delete. Void body optional `void_reason`.
 
+Purchase-order receive and inventory stock adjust do not add accounting routes. When Accounting is entitled they create a posted journal and store `journal_entry_id` on `purchase_order_receipts` or `stock_movements`. Receipt: Dr `1200` or `6000` / Cr `2000`. Stock in: Dr `1200` / Cr `3000`. Stock out: Dr `5000` / Cr `1200`. Transfers post nothing.
+
 ## Account transfers
 
 | Method | Path | Permission |
