@@ -11,7 +11,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 | Capability | Status |
 |------------|--------|
 | [Leads](/user-guide/leads-overview), [Tasks](/user-guide/tasks-overview), [ToDos](/user-guide/todos-overview) | Shipped (default-included; Leads **1.9.0** inactivity manager digest; **1.8.0** real-time board sync; **1.7.0** convert opportunity gates; Tasks **1.8.0** real-time board sync; **1.5.0** milestone link + dependencies) |
-| [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** / Companies **1.4.0** follow-ups + import/export) |
+| [Contacts](/user-guide/contacts-overview), [Companies](/user-guide/companies-overview) | Shipped (Contacts **1.7.0** follow-ups + import/export; Companies **1.5.0** duplicate matching and merge, **1.4.0** follow-ups + import/export) |
 | [Calendar](/user-guide/calendar-overview), [Meetings](/user-guide/meetings-overview) | Shipped (Meetings requires Calendar; Calendar **1.10.0** named-calendar provider sync/watches + per-provider mappings; **1.9.0** named team/department calendars; **1.8.0** webhook-driven near real-time inbound; **1.7.0** Project/Contact/Company overlay push; **1.6.0** two-way sync + External pull; **1.5.0** Meeting/Task/Lead overlay push; **1.4.0** OAuth push) |
 | [Activities](/user-guide/activities-overview), [Communication Templates](/user-guide/communication-templates) | Shipped |
 | Module Marketplace | Shipped |

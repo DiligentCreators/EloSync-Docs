@@ -1,3 +1,10 @@
+## Companies duplicate matching and merge (1.5.0) (2026-10-16)
+
+- **EloSync-Backend:** Companies store a non-unique `normalized_name` (lowercase, trimmed, punctuation and suffixes such as Inc/LLC/Ltd removed), backfilled for existing rows. Company CSV/XLSX import matches that key, or website/email domain, before creating a company. Contact import and lead conversion reuse the same key so spelling variants stay on one company. Preview reports matched existing company vs new company. `POST /companies/{id}/merge-preview` and `POST /companies/{id}/merge` (`companies.delete`) move related records onto the primary, fill only empty fields, write a merged-from activity, and soft-delete the duplicates. Catalog **companies 1.4.0 → 1.5.0**. Pest: `CompanyDuplicateTest`.
+- **EloSync-Frontend:** Company import preview shows the matched/new counts. The company directory badges possible duplicates. The company page lists them and confirms a merge with the records that will move. The create form rejects an invalid email before submit, and the merge confirmation labels empty fields (Email, Phone, Website, Industry, Address, Source). Headed one-session Playwright: `npm run test:e2e:companies:headed`.
+- **EloSync-Docs:** Companies user, developer, and API guides + [production readiness](/deployment/companies-duplicate-merge-1-5-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only (adds `companies.normalized_name`, backfills it, bumps the catalog). Deploy Frontend after production build; hard-refresh SPA. Do not add a unique index until existing duplicate companies are merged. See [production readiness](/deployment/companies-duplicate-merge-1-5-0-production-readiness).
+
 ## Fix — Task drawer @mentions (2026-10-16)
 
 - **EloSync-Frontend:** Task list peek Comments tab uses `MentionComposer` (`#task-sheet-note`) like the full record page and Leads notes sheet — typing `@` suggests teammates and persists `@[Name](user:ID)` tokens for `task.mentioned` notifications.

@@ -20,7 +20,7 @@ Same filters as list (minus pagination/sort). Payload includes:
 
 Query: `search`, `industry`, `assigned_to` (`unassigned` or user id), `my_companies`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`, `next_follow_up_at` (denormalized due timestamp for the earliest **pending** follow-up), and `next_follow_up` (the full follow-up object, or `null`). May include `contacts_count` when counted.
+List items include `latest_note` — most recent note (`id`, `body`, `author`, timestamps) or `null`, `next_follow_up_at` (denormalized due timestamp for the earliest **pending** follow-up), and `next_follow_up` (the full follow-up object, or `null`). May include `contacts_count` when counted. `possible_duplicates_count` is how many other active companies share `normalized_name`.
 
 ### POST `/companies`
 
@@ -37,6 +37,18 @@ Partial update of company fields (including `assigned_to`).
 ### DELETE `/companies/{id}`
 
 Soft delete. Permission: `companies.delete`.
+
+### POST `/companies/{id}/merge-preview`
+
+Permission: `companies.delete`.
+
+Body: `{ "duplicate_ids": [number, ...] }`
+
+Returns the primary, the duplicates found in this workspace, `moves` (`key`, `label`, `count` for contacts, notes, follow-ups, activity, deals, leads, billing documents, projects, tickets, documents, emails, and calendar events), and `fills` (empty primary fields that will be copied).
+
+### POST `/companies/{id}/merge`
+
+Same body and permission. Runs in one database transaction: reassigns related records to the primary, fills only empty profile fields, writes a `merged` activity (“Merged from …”), and soft-deletes the duplicates. A failure rolls the transaction back. Another workspace’s company id is rejected with `422`.
 
 ### POST `/companies/{id}/restore`
 

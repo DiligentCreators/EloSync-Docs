@@ -20,7 +20,7 @@ Open **Companies** from the sidebar under **CRM** (between Leads and Contacts).
 ## Create & edit
 
 1. Click **New company**
-2. Enter name (required) and optional email, phone, website, industry, address, source, and assignee
+2. Enter name (required) and optional email, phone, website, industry, address, source, and assignee. Email must be a valid address when you fill it in.
 3. Save
 
 Edit from the row menu or the record page.
@@ -63,6 +63,17 @@ When **Calendar** is installed, each company's next pending follow-up is project
 
 **Due / overdue reminders:** the assignee (falling back to the company's assignee) gets an in-app notification when a follow-up's due date arrives or has passed, sent by the same daily `crm:send-due-notifications` job that runs Lead, Contact, Task, and Contract reminders — one notification per follow-up per day.
 
+## Possible duplicates and merge (1.5.0)
+
+Company names are compared after lowercasing, trimming, collapsing spaces, and removing punctuation plus trailing suffixes such as Inc, LLC, Ltd, Pvt, Co, and Corp. The directory shows **Possible duplicate** when another active company shares that key.
+
+On the company page, the same matches are listed. Users with **delete** can **Merge duplicates**:
+
+1. Choose the extra companies. The page you started from stays as the primary.
+2. The confirmation lists the contacts, notes, follow-ups, activity, deals, leads, and other linked records that will move.
+3. The primary keeps its own field values. Only empty fields are filled from the duplicates.
+4. The duplicates are archived (soft-deleted). A timeline entry records “Merged from …”.
+
 ## Import (1.4.0)
 
 Users with **import** can bulk-load companies from **CSV** or **XLSX**:
@@ -71,7 +82,7 @@ Users with **import** can bulk-load companies from **CSV** or **XLSX**:
 2. Upload a file (drag & drop or browse)
 3. Map spreadsheet columns to company fields (**Name** is required; Email, Phone, Website, Industry, Source, and Assigned To are optional)
 4. Choose unique fields (**Email** / **Phone**) and duplicate behavior (**Skip**, **Update existing**, or **Keep duplicate**)
-5. Preview counts and validation errors (nothing is written yet)
+5. Preview counts and validation errors (nothing is written yet). **New company** and **Matched existing company** show how many rows would create a company versus reuse one that already matches the normalized name or website/email domain
 6. Start the import — it runs in the background; watch progress until complete
 
 **Update existing** also requires the **update** permission. Like Contacts, Company import has **no equal-distribute assignment mode** — an **Assigned To** column (matched by user email) sets the assignee directly, or rows default the same way manual create does.
