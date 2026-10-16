@@ -612,6 +612,7 @@ export default withMermaid(defineConfig({
             { text: 'Automation Document Auto-send 1.6.0 Readiness', link: '/deployment/automation-document-auto-send-1-6-0-production-readiness' },
             { text: 'Automation WhatsApp Document Auto-send 1.7.0 Readiness', link: '/deployment/automation-whatsapp-document-auto-send-1-7-0-production-readiness' },
             { text: 'Automation generate_order 1.8.0 Readiness', link: '/deployment/automation-generate-order-1-8-0-production-readiness' },
+            { text: 'Automation branching 1.9.0 Readiness', link: '/deployment/automation-branching-1-9-0-production-readiness' },
             { text: 'Communication Templates', link: '/deployment/communication-templates' },
             { text: 'Email', link: '/deployment/email' },
             { text: 'Branded', link: '/deployment/branded' },

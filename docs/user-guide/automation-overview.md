@@ -12,9 +12,9 @@ Cross-module workflow engine for EloSync. Install from Marketplace (billable add
 | Tenant API | [tenant-v1-automation.md](/api/tenant-v1-automation) |
 | Module Development Standard | [module-development.md](/developer-guide/module-development) |
 
-## Capabilities (v1.8.0)
+## Capabilities (v1.9.0)
 
-- Workflow builder: trigger, conditions (AND/OR), ordered actions
+- Workflow builder: trigger, conditions (AND/OR), ordered shared actions, if/else branches
 - Manual run + schedule trigger (workspace timezone; builder configures frequency/time)
 - Event triggers wired across CRM, sales, billing, Help Desk, WhatsApp, HR, projects, documents, KB, and assets — gated by installed modules (`available` in catalog)
 - Related-context UX: people/tag/stage pickers; multi-notify; **Record assignee**; Manual Run related-record dialog; opt-in lead follow-up
@@ -32,5 +32,5 @@ Cross-module workflow engine for EloSync. Install from Marketplace (billable add
 ## Explicitly deferred
 
 - Marketing Automation / Email Campaigns (separate SKUs)
-- Branching; standalone `send_whatsapp_document` action; Sales Orders module (PO generation ships as `generate_order` in **1.8.0**)
+- Standalone `send_whatsapp_document` action; Sales Orders module (PO generation ships as `generate_order` in **1.8.0**)
 - Migrating hard-coded Lead tag auto follow-ups or inactivity digests into this engine

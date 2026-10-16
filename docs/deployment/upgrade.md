@@ -190,6 +190,16 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## Automation 1.8.0 → 1.9.0 — if/else branches
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_16_215505_create_automation_branches_and_link_steps` and `2026_10_16_215506_bump_automation_module_to_1_9_0`; **do not** `db:seed`)
+2. Confirm catalog version: automation **1.9.0**
+3. Deploy the SPA — workflow builder gains **Branches**
+4. Restart Horizon so workers load the branch planner (`automations` queue)
+5. Staging smoke: save a workflow with an if branch and an otherwise branch; manual run with `priority=high` takes the if branch
+
+Go-live: [Automation branching 1.9.0 production readiness](/deployment/automation-branching-1-9-0-production-readiness).
+
 ## Automation 1.7.0 → 1.8.0 — generate_order (Purchase Order)
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_08_181000_bump_automation_module_to_1_8_0` — catalog only; **do not** `db:seed`)

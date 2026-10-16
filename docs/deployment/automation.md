@@ -4,7 +4,7 @@
 
 - Catalog slug: `automation`
 - Billable marketplace add-on (`is_default_included: false`, `is_billable: true`)
-- Catalog version: **1.8.0** (`generate_order` Purchase Order — [1.8.0 readiness](./automation-generate-order-1-8-0-production-readiness); WhatsApp PDF auto-send **1.7.0** — [readiness](./automation-whatsapp-document-auto-send-1-7-0-production-readiness); email `auto_send` **1.6.0**; WhatsApp interactive + generate draft **1.5.0**)
+- Catalog version: **1.9.0** (if/else branches — [1.9.0 readiness](./automation-branching-1-9-0-production-readiness); `generate_order` Purchase Order **1.8.0** — [1.8.0 readiness](./automation-generate-order-1-8-0-production-readiness); WhatsApp PDF auto-send **1.7.0** — [readiness](./automation-whatsapp-document-auto-send-1-7-0-production-readiness); email `auto_send` **1.6.0**; WhatsApp interactive + generate draft **1.5.0**)
 - Initial price: **$29 / month**, **$290 / year** (same tier as Branded)
 - Workspaces must install from Marketplace; migrate does **not** auto-install
 
@@ -56,4 +56,5 @@ Cross-module triggers MINOR (**1.3.0**): [Automation 1.3.0 production readiness]
 WhatsApp interactive + generate quotation/invoice MINOR (**1.5.0**): [Automation 1.5.0 production readiness](./automation-whatsapp-interactive-document-actions-1-5-0-production-readiness) — `send_whatsapp_interactive`, `generate_quotation` (requires `opportunity_id`), `generate_invoice` (draft only, no auto-send).  
 Document email auto-send MINOR (**1.6.0**): [1.6.0 readiness](./automation-document-auto-send-1-6-0-production-readiness).  
 WhatsApp document auto-send MINOR (**1.7.0**): [1.7.0 readiness](./automation-whatsapp-document-auto-send-1-7-0-production-readiness) — Horizon `whatsapp-outbound` + open 24h CS window.  
-`generate_order` Purchase Order MINOR (**1.8.0**): [1.8.0 readiness](./automation-generate-order-1-8-0-production-readiness).
+`generate_order` Purchase Order MINOR (**1.8.0**): [1.8.0 readiness](./automation-generate-order-1-8-0-production-readiness).  
+If/else branches MINOR (**1.9.0**): [1.9.0 readiness](./automation-branching-1-9-0-production-readiness).
