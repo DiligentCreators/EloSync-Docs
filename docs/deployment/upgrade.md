@@ -190,6 +190,15 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## Accounting 1.7.2 → 1.8.0 — purchase receipts and inventory journals
+
+1. Deploy Backend and run `php artisan migrate --force` (`2026_10_16_224416_add_journal_entry_id_to_purchase_order_receipts_and_stock_movements` and `2026_10_16_224417_bump_accounting_module_version_to_1_8_0`; **do not** `db:seed`)
+2. Confirm catalog version: accounting **1.8.0**
+3. No SPA deploy is required for this bump
+4. Staging smoke: with Accounting installed, receive a tracked purchase order and confirm one posted journal (Dr `1200` / Cr `2000`). Issue stock and confirm Dr `5000` / Cr `1200`. Complete a warehouse transfer and confirm it adds no journal
+
+Go-live: [Accounting AP/COGS 1.8.0 production readiness](/deployment/accounting-ap-cogs-1-8-0-production-readiness).
+
 ## Automation 1.8.0 → 1.9.0 — if/else branches
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_16_215505_create_automation_branches_and_link_steps` and `2026_10_16_215506_bump_automation_module_to_1_9_0`; **do not** `db:seed`)
