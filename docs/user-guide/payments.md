@@ -59,10 +59,10 @@ Workspace admins/managers with **`payments.manage_integrations`** can open **Pay
 1. Paste **sandbox** and/or **live** publishable + secret keys (and webhook signing secrets).
 2. Choose **Mode**: Sandbox or Live — Checkout and webhooks use only the active mode’s keys.
 3. Enable online payments, then **Test connection**.
-4. In Stripe Dashboard → Webhooks, point the endpoint URL shown in the dialog at `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+4. In Stripe Dashboard → Webhooks, point the endpoint URL shown in the dialog at `checkout.session.completed`, `checkout.session.async_payment_succeeded`, and `refund.created`.
 
 When Stripe is ready, Customer Portal contacts see **Pay now** on unpaid invoices with a balance. Successful Checkout posts a gateway `CustomerPayment` allocated to that invoice.
 
-Live gateway refunds (money movement back through Stripe) remain deferred — ledger refunds already ship.
+On a posted Stripe payment, **Refund via Stripe** sends the amount back to the card (partial or full, up to the refundable balance) and records the same ledger refund, invoice reversals, and accounting entry as a manual refund. Cash, bank, cheque, and other methods keep **Record refund** (ledger only). A refund created in the Stripe Dashboard is recorded once when `refund.created` arrives. Each Stripe refund row shows the Stripe refund id.
 
 To credit an invoice directly (independent of a payment), see [Credit Notes](/user-guide/credit-notes).

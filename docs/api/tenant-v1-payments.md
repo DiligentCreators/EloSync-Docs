@@ -19,7 +19,17 @@ Permission: `payments.manage_integrations`. Distinct from Central `payment_gatew
 | POST | `/payments/integrations/stripe/test` | Probe active-mode secret key |
 | DELETE | `/payments/integrations/stripe` | Clear credentials + disable |
 
-Public webhook (no tenant API auth): `POST /webhooks/tenant/{tenant}/stripe/customer-payments` — verifies active-mode webhook secret; settles `checkout.session.completed` / `async_payment_succeeded` into a posted gateway payment.
+Public webhook (no tenant API auth): `POST /webhooks/tenant/{tenant}/stripe/customer-payments` — verifies active-mode webhook secret; settles `checkout.session.completed` / `async_payment_succeeded` into a posted gateway payment; `refund.created` and `charge.refunded` record a ledger refund once (`stripe_refund_id`).
+
+## Refunds (1.7.0)
+
+### POST `/payments/{id}/refund`
+
+Permission: `payments.refund`. Body: `amount` (required), optional `allocation_reversals` (`customer_invoice_id` + `amount`). Posted or partially refunded payments only.
+
+Cash, bank, cheque, and other methods update the ledger only. A payment with `gateway_provider=stripe` refunds the Stripe PaymentIntent first (minor units, including zero-decimal currencies). Checkout Session ids (`cs_`) are resolved to a PaymentIntent and stored. Stripe errors return 422 on `amount` and leave the payment posted. Success stores `stripe_refund_id` on the refund row. A later `refund.created` webhook for that id does not refund again.
+
+When Accounting is installed, allocation reversals must equal the refund amount and book a reversing journal. Dashboard refunds reverse allocations oldest-first up to the Stripe amount.
 
 ## Stats
 

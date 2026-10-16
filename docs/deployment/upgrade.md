@@ -122,6 +122,16 @@ Go-live: [Help Desk public replies 1.14.0 production readiness](/deployment/help
 
 Go-live: [Customer Portal 1.0.0 production readiness](/deployment/customer-portal-1-0-0-production-readiness).
 
+## Payments 1.6.0 → 1.7.0 — live Stripe refunds
+
+1. Deploy Backend and run `php artisan migrate --force` (`customer_payments.gateway_mode`, `customer_payment_refunds.stripe_refund_id`, catalog **1.7.0** — **do not** `db:seed`)
+2. Confirm catalog: payments **1.7.0**
+3. Deploy the SPA — posted Stripe payments show **Refund via Stripe**; other methods keep **Record refund**
+4. Stripe webhook for the active mode must include `refund.created` (Checkout events stay)
+5. Staging smoke: portal Pay now → posted gateway payment → partial **Refund via Stripe** in sandbox → Stripe refund id on the payment → invoice balance restored
+
+Go-live: [Payments Stripe refunds 1.7.0 production readiness](/deployment/payments-stripe-refunds-1-7-0-production-readiness).
+
 ## Payments 1.5.0 → 1.6.0 / Customer Portal 1.3.0 → 1.4.0 — tenant Stripe portal Checkout
 
 1. Deploy Backend and run `php artisan migrate --force` (`tenant_stripe_connections`, gateway txn unique index, `payments.manage_integrations`, catalog bumps — **do not** `db:seed`)
