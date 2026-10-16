@@ -43,5 +43,5 @@ Enable Payments from Marketplace (free) — **Invoices must already be installed
 ## Explicitly deferred
 
 - Partial refunds of a posted payment (today, voiding reverses the full allocation set)
-- Tenant Stripe online capture via Customer Portal (**1.6.0**) — workspace keys, sandbox/live mode; ledger refunds ship; live Stripe refund API remains deferred
+- Tenant Stripe online capture via Customer Portal (**1.6.0**) and live Stripe refunds of those card payments (**1.7.0**). Cash, bank, and cheque refunds stay ledger-only.
 - Multi-currency conversion

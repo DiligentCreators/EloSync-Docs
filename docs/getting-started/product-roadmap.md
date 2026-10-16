@@ -52,13 +52,12 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Invoices](/user-guide/invoices-overview) | Shipped |
 | [Estimates](/user-guide/estimates-overview) | Shipped (requires Invoices) |
 | [Credit Notes](/user-guide/credit-notes-overview) | Shipped **1.2.0** (requires Invoices; PDF + email; applied refund) |
-| [Payments](/user-guide/payments-overview) | Shipped **1.6.0** (tenant Stripe portal Checkout + sandbox/live; requires Invoices; receipt PDF + email; ledger refunds **1.5.0**) |
+| [Payments](/user-guide/payments-overview) | Shipped **1.7.0** (Stripe PaymentIntent refunds; tenant Stripe portal Checkout **1.6.0**; requires Invoices; receipt PDF + email; ledger refunds **1.5.0**) |
 
 ### Deferred
 
 - Credit Notes: standalone notes not tied to an invoice; multi-currency
-- Payments: live Stripe refund API (ledger refunds + portal Stripe Checkout capture shipped **1.6.0**)
-- Invoices / Estimates: multi-currency conversion
+- Invoices / Estimates / Payments: multi-currency conversion
 
 ---
 
@@ -267,7 +266,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Tenant Stripe + portal invoice Checkout (2026-10-13):** Workspace-owned Stripe keys (sandbox/live), `payments.manage_integrations`, portal `POST …/invoices/{id}/checkout`, webhook `POST /webhooks/tenant/{tenant}/stripe/customer-payments` posts gateway `CustomerPayment`. Catalog **payments 1.5.0 → 1.6.0**, **customer-portal 1.3.0 → 1.4.0**. Go-live: [production readiness](/deployment/tenant-stripe-portal-checkout-production-readiness).
 
-Still deferred: multi-currency; PO/Vendor portals; Automation Marketing/branching; portal passkeys; live Stripe refund API.
+**Payments Stripe refunds (2026-10-17):** Posted payments with `gateway_provider=stripe` refund the captured PaymentIntent on the workspace Stripe account, then record the existing ledger refund (`stripe_refund_id`). Manual methods stay ledger-only. `refund.created` books a dashboard refund once. Catalog **payments 1.6.0 → 1.7.0**. Go-live: [production readiness](/deployment/payments-stripe-refunds-1-7-0-production-readiness).
+
+Still deferred: multi-currency; PO/Vendor portals; Automation Marketing/branching; portal passkeys.
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 

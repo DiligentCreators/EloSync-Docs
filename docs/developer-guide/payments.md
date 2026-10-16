@@ -20,8 +20,8 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 | Notifications | `app/Notifications/Tenant/CustomerPayment/CustomerPaymentAssignedNotification.php` |
 | Link rules | `LinkableContact`, `LinkableCompany`, `EligiblePaymentAssignee` — `allocations.*.customer_invoice_id` is a plain tenant-scoped `Rule::exists()` on `CustomerInvoice` |
 | PDF / email | `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `resources/views/payments/receipt.blade.php` — posted-only; mirrors invoice billing document mailer |
-| Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php`, `TenantStripeIntegrationTest.php` |
-| Tenant Stripe (1.6.0) | `TenantStripeConnection`, `TenantStripeConnectionService`, `TenantStripeCheckoutService`, `TenantStripeApi`, `TenantStripeIntegrationController`, `TenantStripeWebhookController` |
+| Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentRefundTest.php`, `CustomerPaymentStripeRefundTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php`, `TenantStripeIntegrationTest.php` |
+| Tenant Stripe (1.7.0) | `TenantStripeConnection`, `TenantStripeConnectionService`, `TenantStripeCheckoutService`, `TenantStripeRefundService`, `TenantStripeApi`, `StripeMoney`, `TenantStripeIntegrationController`, `TenantStripeWebhookController` |
 
 ## Tenant Stripe + portal Checkout (1.6.0)
 
@@ -29,8 +29,9 @@ Workspace-owned Stripe credentials (encrypted secrets, `mode` sandbox|live) for 
 
 - Staff API: `/payments/integrations/stripe` (`payments.manage_integrations`)
 - Portal: `POST /portal/invoices/{id}/checkout` → Checkout Session URL
-- Webhook: `POST /webhooks/tenant/{tenant}/stripe/customer-payments` → create+post gateway `CustomerPayment` (idempotent on `gateway_transaction_id`)
-- Companion catalog: **customer-portal 1.4.0** (`online_payment_available` on portal invoice resource)
+- Webhook: `POST /webhooks/tenant/{tenant}/stripe/customer-payments` → create+post gateway `CustomerPayment` (idempotent on `gateway_transaction_id`); `refund.created` / `charge.refunded` book a ledger refund once on `stripe_refund_id`
+- Staff refund of `gateway_provider=stripe` calls Stripe `refunds.create` on the PaymentIntent (Checkout Session ids are resolved first) **before** the ledger write. The secret is the mode stored on `gateway_mode`, else the `(sandbox)` / `(live)` capture note, else the connection’s current mode. A Stripe error leaves the payment posted. Manual methods never call Stripe.
+- Catalog **payments 1.7.0**. Companion catalog: **customer-portal 1.4.0** (`online_payment_available` on portal invoice resource)
 
 ## Domain notes
 
@@ -54,7 +55,7 @@ payments.view | create | update | delete | restore | force.delete | assign | pos
 
 Routes use `module:payments` then `can:payments.*` / policies. Default admin/manager receive `manage_integrations` (1.6.0).
 
-Catalog: slug `payments`, category `billing`, version **1.6.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`.
+Catalog: slug `payments`, category `billing`, version **1.7.0**, `is_default_included = false`, `is_billable = false`, `sort_order = 20`. Registered via `DefaultModuleRegistrar` migration (migrate-only), with a follow-up migration inserting the `module_dependencies` row on `invoices`.
 
 ## API (tenant)
 
@@ -73,7 +74,7 @@ SPA mirrors **Invoices** (table + create/edit page, record page) under the exist
 | Types | `CustomerPayment*` in `src/types/api.ts` (kept distinct from the pre-existing Central `Payment*` types) |
 | Query keys | `QUERY_KEYS.customerPayments` / `customerPayment(id)` / `customerPaymentTimeline(id)` / `customerPaymentStats` |
 | Permissions | `PERMISSIONS.customerPayments.*` (maps to `payments.*` permission strings) |
-| Receipt actions | `payment-view-page.tsx` — **Download receipt** + **Email receipt** (`payments.send`) when `status === posted`; shared `BillingDocumentEmailDialog` with `kind: 'payment'` |
+| Receipt actions | `payment-view-page.tsx` — **Download receipt** + **Email receipt** (`payments.send`) when posted or partially refunded; **Refund via Stripe** when `gateway_provider=stripe`, otherwise **Record refund** |
 | Nav | **Billing** sidebar group, after Invoices — `permission: PERMISSIONS.customerPayments.view`, `module: 'payments'`. Kept separate from the Central Billing nav. |
 | Route | `tenantRoutes.payments = '/payments'`, lazy-loaded in `App.tsx` behind `RequireAccess module="payments"` |
 | Notifications | `src/notifications/modules/payments.ts` — `customer_payment.assigned` → `/payments?payment={id}` |
