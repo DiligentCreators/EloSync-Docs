@@ -21,15 +21,15 @@ For products with **Track serials**, enter one serial number per unit (one per l
 ## Transfers
 
 1. Create a transfer with different source and destination warehouses.
-2. Add each stock-tracked product and quantity (serial- and lot-tracked products cannot be transferred yet — use stock out then stock in with serials/lots).
+2. Add each stock-tracked product and quantity.
 3. Edit or delete it while it is **Draft**.
 4. **Dispatch** it to move it to **In transit**.
-5. **Complete** it to post transfer-out at the source and transfer-in at the destination.
+5. **Complete** it to post transfer-out at the source and transfer-in at the destination. For serial-tracked lines, enter the serials moving; for lot-tracked lines, enter the lot number.
 
 You can cancel Draft or In-transit transfers. Completed and cancelled transfers are terminal; cancellation does not post stock.
 
 ## Purchase order receipts
 
-Marking a Purchase Order as **Received** posts stock-in once for each line that has a `product_id` and whose product tracks stock (and does not track serials or lots), provided both Products and Inventory are installed. Serial- and lot-tracked lines must be stocked via Inventory adjust. You may choose a warehouse when receiving; otherwise the default warehouse is used. **Partially received** without line quantities remains acknowledgement-only and posts no stock.
+Marking a Purchase Order as **Received** (or receiving with per-line quantities) posts stock-in for each line that has a `product_id` and whose product tracks stock, provided both Products and Inventory are installed. Serial-tracked lines require matching serial numbers; lot-tracked lines require a lot number (optional expiry). Full receive without line quantities is not allowed when any remaining line is serial/lot tracked — open the receive dialog and enter serials or lots. You may choose a warehouse when receiving; otherwise the default warehouse is used. **Partially received** without line quantities remains acknowledgement-only and posts no stock.
 
 When Accounting is installed, a manual stock in posts Dr Inventory Asset (`1200`) / Cr Owner Equity (`3000`) at the product cost. A stock out posts Dr Cost of Goods Sold (`5000`) / Cr Inventory Asset. An adjust posts only the quantity change. A warehouse transfer posts no journal. Stock received from a purchase order is journaled on the receipt (Accounts Payable), not again on the stock movement.

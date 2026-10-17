@@ -34,7 +34,7 @@ A purchase order starts in **Draft**. Move it forward with:
 
 Invalid transitions (e.g. receiving directly from Draft) are rejected with a validation error. `Received` and `Cancelled` are terminal — no further transitions.
 
-If both **Products** and **Inventory** are installed, receiving posts stock-in for the **quantity deltas** on this receive for each line with a selected Product that has **Track stock** enabled. You may choose a warehouse when receiving; otherwise the default warehouse is used. Lines without a Product, and products that do not track stock, do not post stock.
+If both **Products** and **Inventory** are installed, receiving posts stock-in for the **quantity deltas** on this receive for each line with a selected Product that has **Track stock** enabled. Serial-tracked products require one serial per unit on the receive dialog; lot-tracked products require a lot number (optional expiry). You may choose a warehouse when receiving; otherwise the default warehouse is used. Lines without a Product, and products that do not track stock, do not post stock.
 
 ## Assignment
 

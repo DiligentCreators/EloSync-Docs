@@ -1,3 +1,10 @@
+## Inventory serial/lot PO receive + transfers (inventory 1.4.0 / purchase-orders 1.7.0) (2026-10-17)
+
+- **EloSync-Backend:** Purchase-order receive accepts per-line `serials[]` / `lot` (+ optional `lot_expires_at`) and posts serial/lot stock in. Omitting `lines` on full receive is rejected when any remaining line is serial/lot tracked. Transfer complete accepts per-line `serials[]` / `lot`, moves serials between warehouses, and adjusts lot quantities on transfer out/in. Catalog **inventory 1.3.0 → 1.4.0**, **purchase-orders → 1.7.0**. Pest: `StockSerialTest`, `StockLotTest`, `PurchaseOrderSerialLotReceiveTest`, catalog bumps.
+- **EloSync-Frontend:** Receive dialog collects serials/lot per tracked line. Transfer complete dialog collects serials/lot when lines are tracked. Headed Playwright: `test:e2e:inventory-phase:headed` **10/10**.
+- **EloSync-Docs:** Inventory/PO user, developer, API, deployment guides + [production readiness](/deployment/inventory-serial-lot-receive-transfer-1-4-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only (catalog bumps). Deploy Frontend after production build; hard-refresh SPA.
+
 ## Inventory serial + lot tracking MVP (products 1.5.0 / inventory 1.3.0) (2026-10-17)
 
 - **EloSync-Backend:** Products gain `track_serials` and `track_lots` (mutually exclusive; enable only at zero on-hand). `stock_serials` stores per-unit serials; `stock_lots` stores lot quantities with optional `expires_at`. Stock adjust `in`/`out` accept `serials[]` or `lot` (+ optional `lot_expires_at`). Absolute adjust, purchase-order receive, and warehouse transfer complete reject serial/lot-tracked products. Catalog **products → 1.5.0**, **inventory → 1.3.0**. Pest: `StockSerialTest`, `StockLotTest`, `ProductSerialFlagTest`, catalog bumps.
