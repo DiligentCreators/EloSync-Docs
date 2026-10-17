@@ -162,7 +162,7 @@ Deferred beyond 1.4.0: portal passkeys.
 |------------|--------|
 | [Branded](/user-guide/branded) (white-label) | Shipped (billable) |
 | [Automation](/user-guide/automation-overview) | Shipped (billable; **1.4.0** `create_project`; **1.5.0** WhatsApp interactive + generate quote/invoice; **1.6.0** email `auto_send`; **1.7.0** WhatsApp PDF auto-send; **1.8.0** `generate_order` PO; **1.9.0** if/else branches) |
-| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + Contact triage **1.18.0** + Company triage **1.19.0** + product guidance **1.20.0** + Vendor triage **1.21.0** + confirmed writes) |
+| [AI Assistant](/user-guide/ai-assistant) | Shipped (billable; Lead Copilot + workspace search **1.3.0** + Help Desk triage **1.4.0** + Task triage **1.5.0** + Opportunity triage **1.6.0** + Invoice triage **1.7.0** + Expense triage **1.8.0** + Project triage **1.9.0** + PO triage **1.10.0** + Payment triage **1.11.0** + Lead assign/note **1.12.0** + Estimate triage **1.13.0** + Quotation triage **1.14.0** + Credit Note triage **1.15.0** + Leave triage **1.16.0** + Contract triage **1.17.0** + Contact triage **1.18.0** + Company triage **1.19.0** + product guidance **1.20.0** + Vendor triage **1.21.0** + Inventory triage **1.22.0** + confirmed writes) |
 | [Storage](/user-guide/storage-overview) | Shipped (free packs / quota) |
 | [Tenant API & Webhooks](/developer-guide/tenant-api-webhooks) | Shipped (Settings → Developers; payment / Help Desk / credit-note events + endpoint edit) |
 | Desktop wake push | Shipped (**FCM only**) |
@@ -278,6 +278,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Inventory serial/lot PO receive + transfers (2026-10-17):** PO receive accepts per-line serials/lots; transfer complete moves serials and lot quantities between warehouses. Catalog **inventory 1.3.0 → 1.4.0**, **purchase-orders → 1.7.0**. Go-live: [production readiness](/deployment/inventory-serial-lot-receive-transfer-1-4-0-production-readiness).
 
 **Inventory moving-average valuation (2026-10-17):** Stock in / PO receive update `products.cost` as a moving average; stock list and stats expose on-hand value. Catalog **inventory 1.4.0 → 1.5.0**. Go-live: [production readiness](/deployment/inventory-moving-average-1-5-0-production-readiness).
+
+**Inventory AI triage (2026-10-17):** Ask EloSync `get_product`, `get_low_stock`, `get_inventory_stats`, confirmed `add_product_note`. Catalog **ai 1.21.0 → 1.22.0**. Go-live: [production readiness](/deployment/ai-inventory-triage-production-readiness).
 
 Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; FIFO cost layers. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
 

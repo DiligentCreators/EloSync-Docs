@@ -1,3 +1,10 @@
+## Ask EloSync Inventory triage tools (ai 1.22.0) (2026-10-17)
+
+- **EloSync-Backend:** Ask EloSync Inventory triage: `get_product` (stock levels / value when `inventory.view`), `get_low_stock`, `get_inventory_stats`, confirmed write `add_product_note`. Catalog **ai 1.21.0 → 1.22.0** (migrate-only + CatalogSeeder). Pest: authz + write confirmation + catalog bump.
+- **EloSync-Frontend:** Playwright AI suite Inventory triage propose→confirm product note.
+- **EloSync-Docs:** AI tools / API / user guide / deployment + [production readiness](/deployment/ai-inventory-triage-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only catalog bump. Confirm UI is tool-agnostic.
+
 ## Inventory moving-average valuation (1.5.0) (2026-10-17)
 
 - **EloSync-Backend:** Stock in and purchase-order receive fold inbound unit cost into a product-level moving average on `products.cost`. Stock movements store `unit_cost`. Stock levels expose `unit_cost` / `value`; stats add `total_inventory_value`. Optional adjust `unit_cost` for stock in / set-quantity increases. Catalog **inventory 1.4.0 → 1.5.0**. Pest: `InventoryMovingAverageValuationTest`, catalog bump.

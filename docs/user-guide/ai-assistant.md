@@ -70,6 +70,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - With Contacts installed, ask about a contact, then confirm lifecycle status (`on_boarded` / `off_boarded`), assignment, or a timeline note.
 - With Companies installed, ask about a company, then confirm assignment or a timeline note (companies have no lifecycle status).
 - With Vendors installed, ask about a vendor, then confirm assignment or a timeline note (Active/Inactive status stays in the Vendors screens for this release).
+- With Products / Inventory installed, ask about a product, low stock, or inventory value, then confirm a product timeline note before it applies. Stock adjusts stay in the Inventory screens for this release.
 - With Expenses installed, ask about expenses awaiting approval or a specific expense, then confirm suggested status changes, assignments, or notes before they apply. Approving needs **approve**; rejecting needs **reject**; marking paid needs **pay** (and when Accounting is installed, a paid-from account should already be set on the expense — same as changing status in the app without the dedicated Mark as paid dialog).
 - With Projects installed, ask about a project or overdue projects, then confirm suggested status changes, assignments, or notes before they apply.
 - With Purchase Orders installed, ask about a PO, then confirm suggested status changes, assignments, or notes before they apply. Sending needs **send**; receiving needs **receive**; cancelling needs **cancel**.
@@ -93,6 +94,7 @@ If your operator allows it, workspace admins can switch to **BYOK** mode and sup
 - [Contacts](/user-guide/contacts-overview)
 - [Companies](/user-guide/companies-overview)
 - [Vendors](/user-guide/vendors-overview)
+- [Inventory](/user-guide/inventory)
 - [Payments](/user-guide/payments-overview)
 - [Credit Notes](/user-guide/credit-notes-overview)
 - [Leave Management](/user-guide/leave-management-overview)

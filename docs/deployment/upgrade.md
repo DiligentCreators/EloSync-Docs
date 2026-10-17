@@ -190,6 +190,16 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## AI Inventory triage tools 1.21.0 → 1.22.0
+
+After migrate (`2026_10_17_155210_bump_ai_module_to_1_22_0`):
+
+1. Confirm catalog `ai.version` is **1.22.0** (migrate-only; do **not** `db:seed`).
+2. No SPA deploy required for confirm UI (tool-agnostic); Frontend e2e covers propose→confirm product note.
+3. Smoke: entitle `ai` + `products` + `warehouses` + `inventory` → Ask EloSync `get_product` / `get_low_stock` / `get_inventory_stats` → propose product note → Confirm.
+
+Go-live: [AI Inventory triage production readiness](/deployment/ai-inventory-triage-production-readiness) · ops [AI deployment](/deployment/ai).
+
 ## Inventory 1.4.0 → 1.5.0 — moving-average valuation
 
 1. Deploy Backend and run `php artisan migrate --force` (`unit_cost` on `stock_movements`, catalog bump — **do not** `db:seed`)
