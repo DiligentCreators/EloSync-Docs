@@ -12,6 +12,12 @@
 - **EloSync-Docs:** Accounting and purchase-order guides, roadmap, upgrade, and [production readiness](/deployment/accounting-vendor-ap-settle-1-9-0-production-readiness).
 - **Go-live:** Backend migrate-only (receipt payment columns, permission grant, catalog bumps). Deploy Frontend after production build; hard-refresh SPA.
 
+## Fix — Purchase order positive-amount tests and receipt stock idempotency (2026-10-17)
+
+- **EloSync-Backend:** `StockService::postPurchaseOrderReceipt` locks the purchase order, advances `quantity_received`, and skips a second full post so stock cannot double. Purchase order Pest creates that relied on zero-total drafts now send a positive line (`ValidatePositiveDocumentAmount`). Pest: `PurchaseOrderTest`, `InventoryTest`, `InventoryCostJournalTest` green.
+- **EloSync-Docs:** This changelog note + [production readiness](/deployment/accounting-ap-cogs-1-8-0-production-readiness) regression note.
+- **Go-live:** deploy Backend; no migrate / no catalog bump.
+
 ## Accounting purchase receipts and inventory journals (1.8.0) (2026-10-17)
 
 - **EloSync-Backend:** Receiving a purchase order posts one journal when Accounting is installed. Tracked products debit Inventory Asset `1200` and credit Accounts Payable `2000` at quantity × unit price. Other lines debit Operating Expenses `6000`. `tax_rate` is not posted. A receipt that already has a journal is not posted again. Manual stock in debits `1200` and credits Owner Equity `3000` at product cost. Manual stock out debits Cost of Goods Sold `5000` and credits `1200`. Stock adjust journals only the quantity change. Warehouse transfers post no journal. Purchase-order receipt stock-in does not also post a movement journal. If the purchase order was already converted to an expense, the payable journal is skipped. Convert to expense is rejected when a receipt journal already exists. Cancelling a purchase order does not reverse stock or journals. Catalog **accounting 1.7.2 → 1.8.0**. Optional soft dependencies: purchase-orders and inventory → accounting. Pest: `InventoryCostJournalTest`, `AccountingModuleVersion180BumpTest`.
