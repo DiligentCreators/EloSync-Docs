@@ -6,9 +6,9 @@ Mirror of the [Vendors developer guide](/developer-guide/vendors). Prefer copyin
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Asset.php`, `AssetNote`, `AssetActivity` |
+| Models | `app/Models/Asset.php`, `AssetNote`, `AssetActivity`, `AssetDepreciation` |
 | Enums | `app/Enums/Tenant/AssetStatusEnum`, `AssetCategoryEnum`, `AssetActivityTypeEnum` |
-| Service | `app/Services/Tenant/AssetService.php` (`ScopesToAssignee` + `RetriesOnDuplicateNumber`) |
+| Service | `app/Services/Tenant/AssetService.php`, `AssetDepreciationService.php` |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/AssetController.php` |
 | Requests | `app/Http/Requests/Tenant/Api/V1/Asset/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/Asset/*` |
@@ -27,7 +27,8 @@ Mirror of the [Vendors developer guide](/developer-guide/vendors). Prefer copyin
 - Auto-number `AST-` via `assets_number_prefix` tenant setting (default `AST-`).
 - Status enum: `active` \| `in_repair` \| `retired` \| `disposed`.
 - Category enum: `equipment` \| `furniture` \| `vehicle` \| `electronics` \| `software_license` \| `other`.
-- Soft FKs: `vendor_id` (`LinkableVendor`), `employee_id` (`LinkableEmployee`) — no hard `module_dependencies`.
+- Soft FKs: `vendor_id` (`LinkableVendor`), `employee_id` (`LinkableEmployee`). Optional soft dependency `assets → accounting`.
+- Depreciation fields `useful_life_months`, `salvage_value`, `depreciation_starts_on` save without Accounting. `POST /assets/{asset}/depreciate` and `POST /assets/depreciate` require `assets.depreciate` and Accounting. First post capitalizes Dr `1500` / Cr `3000`; each month Dr `6500` / Cr `1550`. Book value is `purchase_cost` minus posted depreciation.
 - Location is free-text in v1 (no Warehouse FK).
 
 ## Permissions
@@ -35,7 +36,7 @@ Mirror of the [Vendors developer guide](/developer-guide/vendors). Prefer copyin
 `config/tenant-permissions.php`:
 
 ```
-assets.view | create | update | delete | restore | force.delete | assign
+assets.view | create | update | delete | restore | force.delete | assign | depreciate
 ```
 
 Routes use `module:assets` then `can:assets.*` / policies.
@@ -43,7 +44,7 @@ Routes use `module:assets` then `can:assets.*` / policies.
 ## Catalog
 
 - Slug `assets`, category `operations`, `sort_order` 80
-- `is_default_included = false`, `is_billable = false`, version **1.0.0**
+- `is_default_included = false`, `is_billable = false`, version **1.3.0**
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule` (no seeder in production)
 
 ## API (tenant)
@@ -62,6 +63,8 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-assets.md](/api/tenant-v1-a
 | POST | `/assets/{asset}/restore` | restore |
 | DELETE | `/assets/{asset}/force` | force.delete |
 | POST | `/assets/{asset}/assign` | assign |
+| POST | `/assets/{asset}/depreciate` | depreciate |
+| POST | `/assets/depreciate` | depreciate |
 | POST | `/assets/{asset}/notes` | update |
 
 ## Frontend

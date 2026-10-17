@@ -151,7 +151,7 @@ Deferred beyond 1.4.0: portal passkeys.
 
 - Knowledge Base: anonymous public URLs (portal published read shipped **customer-portal 1.3.0**); nested categories
 - Documents: nested folders, versioning, soft record links (on demand)
-- Assets: depreciation journals; Product/Inventory FKs; maintenance → Help Desk
+- Assets: Product/Inventory FKs; maintenance → Help Desk
 - Automation: Marketing campaigns / email campaigns (separate SKUs); standalone `send_whatsapp_document` action (`auto_send_whatsapp` on generate_* shipped **1.7.0**; `generate_order` PO shipped **1.8.0**; if/else branches shipped **1.9.0**)
 
 ---
@@ -280,6 +280,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Inventory moving-average valuation (2026-10-17):** Stock in / PO receive update `products.cost` as a moving average; stock list and stats expose on-hand value. Catalog **inventory 1.4.0 → 1.5.0**. Go-live: [production readiness](/deployment/inventory-moving-average-1-5-0-production-readiness).
 
 **Inventory AI triage (2026-10-17):** Ask EloSync `get_product`, `get_low_stock`, `get_inventory_stats`, confirmed `add_product_note`. Catalog **ai 1.21.0 → 1.22.0**. Go-live: [production readiness](/deployment/ai-inventory-triage-production-readiness).
+
+**Asset depreciation journals (2026-10-18):** Straight-line monthly depreciation. First post capitalizes Dr Fixed Assets `1500` / Cr Owner Equity `3000`; each month debits Depreciation Expense `6500` and credits Accumulated Depreciation `1550`. Catalog **assets 1.2.0 → 1.3.0**, **accounting 1.9.0 → 1.10.0**. Go-live: [production readiness](/deployment/asset-depreciation-journals-production-readiness).
 
 Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; FIFO cost layers. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
 

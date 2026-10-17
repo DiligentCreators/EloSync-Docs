@@ -1,3 +1,11 @@
+## Asset depreciation journals (assets 1.3.0 / accounting 1.10.0) (2026-10-18)
+
+- **EloSync-Backend:** Straight-line monthly depreciation. First post capitalizes Dr Fixed Assets `1500` / Cr Owner Equity `3000`. Each month debits Depreciation Expense `6500` and credits Accumulated Depreciation `1550`. New permission `assets.depreciate`. Soft dependency assets → accounting. Catalog **assets 1.2.0 → 1.3.0**, **accounting 1.9.0 → 1.10.0**. Pest: `AssetDepreciationTest`.
+- **EloSync-Frontend:** Asset form useful life, salvage, and depreciation start. Asset page and list **Post depreciation**. Headed one-session Playwright covers empty name, salvage, early month, journal lines `1500`/`3000` and `6500`/`1550`, duplicate month, and list batch skip. `npm run test:e2e:assets:depreciation:headed` **1/1**.
+- **EloSync-Mobile:** Same fields, book value, and post action on the asset screen.
+- **EloSync-Docs:** Assets and accounting guides, API, roadmap, upgrade, and [production readiness](/deployment/asset-depreciation-journals-production-readiness).
+- **Go-live:** Backend migrate-only. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build with the same API. Existing assets are not backfilled.
+
 ## Payment create hides fully paid invoices (2026-10-18)
 
 - **EloSync-Backend:** `GET /invoices?allocatable=1` returns invoices with `balance_due > 0` whose status is not `paid` or `cancelled`. Pest: `CustomerInvoiceTest`.
