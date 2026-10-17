@@ -36,9 +36,9 @@ Enable Purchase Orders from Marketplace (free) — Marketplace blocks the instal
 
 ## Receiving and Inventory
 
-Receiving accepts an optional **`lines`** payload (`id` + `quantity` this receive). Line `quantity_received` advances; header status becomes **partially_received** or **received** from remaining quantities. Omitting `lines` keeps the legacy path: **partially_received** is acknowledgement-only (no line/stock updates); **received** completes remaining quantities on all lines.
+Receiving accepts an optional **`lines`** payload (`id` + `quantity` this receive, plus optional `serials[]` / `lot` / `lot_expires_at`). Line `quantity_received` advances; header status becomes **partially_received** or **received** from remaining quantities. Omitting `lines` keeps the legacy path: **partially_received** is acknowledgement-only (no line/stock updates); **received** completes remaining quantities on all lines — except when any remaining line is serial/lot tracked, which requires an explicit `lines` payload.
 
-When Products and Inventory are entitled, stock-in posts for the received deltas on product-linked lines whose Product tracks stock (receipt batch per receive). Receiving may select an optional warehouse; the default warehouse is used otherwise. Lines without `product_id` do not post stock. When Accounting is entitled, the same receive posts Dr Inventory Asset `1200` or Operating Expenses `6000` and Cr Accounts Payable `2000`. A purchase order already converted to an expense does not post that journal.
+When Products and Inventory are entitled, stock-in posts for the received deltas on product-linked lines whose Product tracks stock (receipt batch per receive), including serial/lot metadata. Receiving may select an optional warehouse; the default warehouse is used otherwise. Lines without `product_id` do not post stock. When Accounting is entitled, the same receive posts Dr Inventory Asset `1200` or Operating Expenses `6000` and Cr Accounts Payable `2000`. A purchase order already converted to an expense does not post that journal.
 
 ## Convert to expense (soft, Phase 4 Milestone 3)
 

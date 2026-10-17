@@ -87,11 +87,15 @@ Email the purchase order to the vendor with optional PDF attachment. Body matche
 {
   "status": "partially_received"|"received",
   "warehouse_id": 2,
-  "lines": [{ "id": 10, "quantity": 2.5 }]
+  "lines": [
+    { "id": 10, "quantity": 2.5 },
+    { "id": 11, "quantity": 2, "serials": ["SN-1", "SN-2"] },
+    { "id": 12, "quantity": 5, "lot": "BATCH-A", "lot_expires_at": "2027-06-01" }
+  ]
 }
 ```
 
-Transitions `sent → partially_received|received` or `partially_received → received`. Any other `status` value is rejected with a 422 before the state machine is even evaluated. `warehouse_id` is optional for receipt posting. Optional `lines` maps line id → quantity received **this call** (must be &gt; 0 and not exceed remaining). When `lines` is present, header status is derived from remaining quantities after updating `quantity_received`. When `lines` is omitted: `partially_received` is acknowledgement-only; `received` completes remaining quantities on all lines. Permission: `purchase-orders.receive` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). When Products and Inventory are entitled, stock-in posts for the receive deltas on linked `track_stock` product lines, to `warehouse_id` or the default warehouse. When Accounting is entitled, the same deltas post one journal on the receipt: tracked lines Dr `1200` / Cr `2000`, other lines Dr `6000` / Cr `2000`, at quantity × `unit_price` (`tax_rate` is not posted). A purchase order that already has an expense skips that journal. Without Inventory, Accounting still stores a receipt (`warehouse_id` null) so the journal can be posted once. Line resources expose `quantity_received` and `quantity_remaining`.
+Transitions `sent → partially_received|received` or `partially_received → received`. Any other `status` value is rejected with a 422 before the state machine is even evaluated. `warehouse_id` is optional for receipt posting. Optional `lines` maps line id → quantity received **this call** (must be &gt; 0 and not exceed remaining), with optional `serials[]` / `lot` / `lot_expires_at` for serial/lot-tracked products. When `lines` is present, header status is derived from remaining quantities after updating `quantity_received`. When `lines` is omitted: `partially_received` is acknowledgement-only; `received` completes remaining quantities on all lines — except when any remaining line is serial/lot tracked (422 requiring per-line serials/lots). Permission: `purchase-orders.receive` (assignee-scoped unless the actor has `purchase-orders.assign` or is superadmin). When Products and Inventory are entitled, stock-in posts for the receive deltas on linked `track_stock` product lines (including serial/lot metadata), to `warehouse_id` or the default warehouse. When Accounting is entitled, the same deltas post one journal on the receipt: tracked lines Dr `1200` / Cr `2000`, other lines Dr `6000` / Cr `2000`, at quantity × `unit_price` (`tax_rate` is not posted). A purchase order that already has an expense skips that journal. Without Inventory, Accounting still stores a receipt (`warehouse_id` null) so the journal can be posted once. Line resources expose `quantity_received`, `quantity_remaining`, and product `track_serials` / `track_lots`.
 
 ### POST `/purchase-orders/{id}/cancel`
 

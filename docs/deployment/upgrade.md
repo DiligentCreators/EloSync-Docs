@@ -190,12 +190,21 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## Inventory 1.3.0 → 1.4.0 / Purchase Orders → 1.7.0 — serial/lot PO receive + transfers
+
+1. Deploy Backend and run `php artisan migrate --force` (catalog bumps only — **do not** `db:seed`)
+2. Confirm catalog versions: inventory **1.4.0**, purchase-orders **1.7.0**
+3. Deploy Frontend after production build; hard-refresh SPA
+4. Smoke: receive a serial/lot-tracked PO with serials/lot → complete a warehouse transfer with serials/lot
+
+Go-live: [Inventory serial/lot receive + transfer 1.4.0 production readiness](/deployment/inventory-serial-lot-receive-transfer-1-4-0-production-readiness).
+
 ## Products → 1.5.0 / Inventory → 1.3.0 — serial + lot tracking MVP
 
 1. Deploy Backend and run `php artisan migrate --force` (`track_serials`, `track_lots`, `stock_serials`, `stock_lots`, catalog bumps — **do not** `db:seed`)
 2. Confirm catalog versions: products **1.5.0**, inventory **1.3.0**
 3. Deploy Frontend after production build; hard-refresh SPA
-4. Smoke: enable **Track serials** or **Track lots** (zero on-hand) → stock in with serials/lot → confirm set-quantity, PO receive, and transfer complete reject that SKU
+4. Smoke: enable **Track serials** or **Track lots** (zero on-hand) → stock in with serials/lot → confirm set-quantity adjust rejects that SKU
 
 Go-live: [Inventory serial/lot 1.3.0 production readiness](/deployment/inventory-serial-lot-1-3-0-production-readiness).
 

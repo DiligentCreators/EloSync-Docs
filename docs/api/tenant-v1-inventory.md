@@ -68,6 +68,19 @@ Requires `inventory.transfer`; transitions `draft → in_transit`.
 
 Requires `inventory.transfer`; transitions `in_transit → completed`, posting paired `transfer_out` and `transfer_in` movements.
 
+Optional body when lines are serial/lot tracked:
+
+```json
+{
+  "lines": [
+    { "id": 12, "serials": ["SN-001"] },
+    { "id": 13, "lot": "BATCH-A" }
+  ]
+}
+```
+
+`id` is the transfer line id. Serial-tracked lines need exactly one serial per unit quantity; lot-tracked lines need `lot`. Serials move to the destination warehouse; lot quantities decrement at the source and increment at the destination.
+
 ### POST `/inventory/transfers/{transfer}/cancel`
 
 Requires `inventory.transfer`; transitions Draft or In transit to Cancelled without posting stock.

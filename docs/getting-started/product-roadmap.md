@@ -81,12 +81,12 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | Products & categories | Shipped |
-| [Warehouses](/user-guide/warehouses) & [Inventory](/user-guide/inventory) | Shipped (Inventory requires Products; serial/lot MVP **inventory 1.3.0** / **products 1.5.0**) |
+| [Warehouses](/user-guide/warehouses) & [Inventory](/user-guide/inventory) | Shipped (Inventory requires Products; serial/lot MVP **inventory 1.3.0** / **products 1.5.0**; serial/lot PO receive + transfers **inventory 1.4.0** / **purchase-orders 1.7.0**) |
 | PO receipt → stock-in (soft) | Shipped |
 
 ### Deferred
 
-- Serial/lot control, valuation, COGS jobs
+- Inventory valuation depth beyond soft Accounting COGS journals
 
 ---
 
@@ -273,9 +273,11 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Accounting purchase receipts and inventory journals (2026-10-17):** Receiving a purchase order posts Dr Inventory `1200` or Operating Expenses `6000` / Cr Accounts Payable `2000` when Accounting is entitled. Manual stock in credits Owner Equity `3000`; stock out debits Cost of Goods Sold `5000`. Transfers post nothing. An existing purchase-order expense skips the payable journal, and convert-to-expense is blocked after that journal exists. Catalog **accounting 1.7.2 → 1.8.0**. Go-live: [production readiness](/deployment/accounting-ap-cogs-1-8-0-production-readiness).
 
-**Inventory serial + lot tracking MVP (2026-10-17):** Products may enable **Track serials** or **Track lots** (mutually exclusive; zero on-hand to enable). Stock in/out require matching `serials[]` or `lot`. PO receive and warehouse transfers reject those SKUs until serial/lot-aware UX ships. Catalog **products → 1.5.0**, **inventory → 1.3.0**. Go-live: [production readiness](/deployment/inventory-serial-lot-1-3-0-production-readiness).
+**Inventory serial + lot tracking MVP (2026-10-17):** Products may enable **Track serials** or **Track lots** (mutually exclusive; zero on-hand to enable). Stock in/out require matching `serials[]` or `lot`. Catalog **products → 1.5.0**, **inventory → 1.3.0**. Go-live: [production readiness](/deployment/inventory-serial-lot-1-3-0-production-readiness).
 
-Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; serial/lot-aware PO receive / transfers. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
+**Inventory serial/lot PO receive + transfers (2026-10-17):** PO receive accepts per-line serials/lots; transfer complete moves serials and lot quantities between warehouses. Catalog **inventory 1.3.0 → 1.4.0**, **purchase-orders → 1.7.0**. Go-live: [production readiness](/deployment/inventory-serial-lot-receive-transfer-1-4-0-production-readiness).
+
+Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; inventory valuation depth. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 
