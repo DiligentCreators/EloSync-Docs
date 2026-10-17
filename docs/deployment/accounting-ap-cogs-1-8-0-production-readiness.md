@@ -37,6 +37,8 @@ When Accounting is installed, receiving a purchase order posts one journal for t
 
 Feature Pest on 2026-10-17: **9 passed / 59 assertions** (`InventoryCostJournalTest`, `AccountingModuleVersion180BumpTest`).
 
+**Regression follow-up (2026-10-17):** `StockService::postPurchaseOrderReceipt` now advances `quantity_received` under a row lock so a second full post is a no-op (inventory Pest expected `3.00`, not `6.00`). Purchase-order feature tests create with a positive line so `ValidatePositiveDocumentAmount` does not cascade into null-id 404s. Re-verified: `PurchaseOrderTest` + `InventoryTest` + `InventoryCostJournalTest` **44 passed**.
+
 Headed Playwright on 2026-10-17: **1 passed** (`test:e2e:accounting:ap-cogs:headed`, one demo login, Chrome). No product defect. The SPA was not changed for posting; the session exercises the existing receive, journal, stock, and transfer screens.
 
 ---
