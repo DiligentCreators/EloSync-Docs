@@ -1,3 +1,10 @@
+## Inventory moving-average valuation (1.5.0) (2026-10-17)
+
+- **EloSync-Backend:** Stock in and purchase-order receive fold inbound unit cost into a product-level moving average on `products.cost`. Stock movements store `unit_cost`. Stock levels expose `unit_cost` / `value`; stats add `total_inventory_value`. Optional adjust `unit_cost` for stock in / set-quantity increases. Catalog **inventory 1.4.0 → 1.5.0**. Pest: `InventoryMovingAverageValuationTest`, catalog bump.
+- **EloSync-Frontend:** Stock list shows Avg cost and Value; KPI **Inventory value**; adjust dialog optional unit cost. Playwright inventory-phase asserts the value KPI after stock in.
+- **EloSync-Docs:** Inventory user/developer/API/deployment guides + [production readiness](/deployment/inventory-moving-average-1-5-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only (`unit_cost` on `stock_movements`, catalog bump). Deploy Frontend after production build; hard-refresh SPA.
+
 ## Inventory serial/lot PO receive + transfers (inventory 1.4.0 / purchase-orders 1.7.0) (2026-10-17)
 
 - **EloSync-Backend:** Purchase-order receive accepts per-line `serials[]` / `lot` (+ optional `lot_expires_at`) and posts serial/lot stock in. Omitting `lines` on full receive is rejected when any remaining line is serial/lot tracked. Transfer complete accepts per-line `serials[]` / `lot`, moves serials between warehouses, and adjusts lot quantities on transfer out/in. Catalog **inventory 1.3.0 → 1.4.0**, **purchase-orders → 1.7.0**. Pest: `StockSerialTest`, `StockLotTest`, `PurchaseOrderSerialLotReceiveTest`, catalog bumps.

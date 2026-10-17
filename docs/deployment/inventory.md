@@ -20,4 +20,4 @@
 
 Stock posting is transactional and uses row locks. Never alter `stock_levels` as an operational shortcut: post through `StockService` so movement history and balances remain aligned. Monitor failed stock adjustments, incomplete transfers, and Purchase Order receipt references; receipt posting is idempotent per purchase order.
 
-Soft Accounting inventory journals remain optional when Accounting is entitled. Inventory valuation depth beyond those journals remains deferred.
+Soft Accounting inventory journals remain optional when Accounting is entitled. Moving-average product cost and on-hand value ship in inventory **1.5.0**. FIFO cost layers remain deferred.

@@ -30,6 +30,8 @@ Enable Inventory from Marketplace (free). Catalog: `inventory`, category `invent
 
 Inventory soft-uses Warehouses. Stock actions use the active default `MAIN` warehouse if no warehouse is selected; install Warehouses to manage location records in the UI.
 
-## Not included
+## Valuation
 
-Inventory valuation methods beyond soft Accounting journals are not included yet.
+Product cost is a **moving average**: stock in and purchase-order receive fold the inbound unit cost into `products.cost`. Stock levels show average cost and on-hand value; the stock KPI strip includes total inventory value. Soft Accounting COGS journals continue to use that average on stock out.
+
+FIFO / layered costing is not included yet.
