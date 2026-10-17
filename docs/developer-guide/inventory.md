@@ -7,7 +7,7 @@ Inventory is the Phase 5 stock module. It hard-depends on Products and soft-uses
 | Piece | Path |
 |-------|------|
 | Models | `StockLevel`, `StockMovement`, `StockTransfer`, `StockTransferLine`, `StockSerial`, `StockLot` |
-| Services | `StockService`, `StockTransferService` |
+| Services | `StockService`, `StockTransferService`, `InventoryValuationService` |
 | HTTP | `InventoryController`, `app/Http/Requests/Tenant/Api/V1/Inventory/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/Inventory/*` |
 | Authorization | `StockLevelPolicy`, `StockTransferPolicy` |
@@ -17,7 +17,9 @@ Routes use `module:inventory`; permissions are `inventory.view|adjust|transfer|d
 
 ## Posting invariant
 
-`StockService` is the only stock mutation boundary. It creates/retrieves the product/warehouse `StockLevel`, locks it with `lockForUpdate()` inside a database transaction, rejects negative balances, updates `quantity_on_hand`, and writes the immutable `StockMovement`. Direct callers may use only `in`, `out`, and `adjust`; transfers use internal `transfer_in`/`transfer_out`.
+`StockService` is the only stock mutation boundary. It creates/retrieves the product/warehouse `StockLevel`, locks it with `lockForUpdate()` inside a database transaction, rejects negative balances, updates `quantity_on_hand`, and writes the immutable `StockMovement` (including `unit_cost`). Direct callers may use only `in`, `out`, and `adjust`; transfers use internal `transfer_in`/`transfer_out`.
+
+`InventoryValuationService` maintains a product-level moving average on `products.cost`. Before increasing on-hand for stock `in` / absolute-adjust increases / PO receipt stock-in, it folds inbound qty × unit cost into the average using total on-hand across warehouses. Stock-out journals use the current average. Optional adjust `unit_cost` overrides the inbound rate; PO receive uses the line `unit_price`. Stock level resources expose `unit_cost` and `value`; stats expose `total_inventory_value`.
 
 When `products.track_serials` is true, adjust `in`/`out` require `serials[]` (exactly one unique serial per whole-number unit). Absolute `adjust` is rejected. Stock-in creates `stock_serials` rows (`in_stock`); stock-out marks matching in-stock serials `out`. Duplicate or missing serials validate with 422.
 

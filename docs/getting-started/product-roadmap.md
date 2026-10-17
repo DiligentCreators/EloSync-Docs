@@ -81,12 +81,12 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | Capability | Status |
 |------------|--------|
 | Products & categories | Shipped |
-| [Warehouses](/user-guide/warehouses) & [Inventory](/user-guide/inventory) | Shipped (Inventory requires Products; serial/lot MVP **inventory 1.3.0** / **products 1.5.0**; serial/lot PO receive + transfers **inventory 1.4.0** / **purchase-orders 1.7.0**) |
+| [Warehouses](/user-guide/warehouses) & [Inventory](/user-guide/inventory) | Shipped (Inventory requires Products; serial/lot MVP **inventory 1.3.0** / **products 1.5.0**; serial/lot PO receive + transfers **inventory 1.4.0** / **purchase-orders 1.7.0**; moving-average valuation **inventory 1.5.0**) |
 | PO receipt → stock-in (soft) | Shipped |
 
 ### Deferred
 
-- Inventory valuation depth beyond soft Accounting COGS journals
+- FIFO / layered cost methods beyond moving average
 
 ---
 
@@ -277,7 +277,9 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Inventory serial/lot PO receive + transfers (2026-10-17):** PO receive accepts per-line serials/lots; transfer complete moves serials and lot quantities between warehouses. Catalog **inventory 1.3.0 → 1.4.0**, **purchase-orders → 1.7.0**. Go-live: [production readiness](/deployment/inventory-serial-lot-receive-transfer-1-4-0-production-readiness).
 
-Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; inventory valuation depth. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
+**Inventory moving-average valuation (2026-10-17):** Stock in / PO receive update `products.cost` as a moving average; stock list and stats expose on-hand value. Catalog **inventory 1.4.0 → 1.5.0**. Go-live: [production readiness](/deployment/inventory-moving-average-1-5-0-production-readiness).
+
+Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; FIFO cost layers. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 

@@ -16,7 +16,9 @@ Select **Adjust stock**, choose a stock-tracked product, optionally choose a war
 - **Out** — remove the entered quantity
 - **Adjust** — set on-hand quantity to the entered value (not available for serial- or lot-tracked products)
 
-For products with **Track serials**, enter one serial number per unit (one per line). Quantity must be a whole number and must match the serial count. For **Track lots**, enter the lot/batch number (optional expiry on stock in). Stock cannot go below zero. If no warehouse is selected, the default `MAIN` warehouse is used.
+For products with **Track serials**, enter one serial number per unit (one per line). Quantity must be a whole number and must match the serial count. For **Track lots**, enter the lot/batch number (optional expiry on stock in). On stock in (or set-quantity increases), you may enter an optional **Unit cost** so the product moving-average cost updates; leave it blank to use the current product cost. Stock cannot go below zero. If no warehouse is selected, the default `MAIN` warehouse is used.
+
+The stock table shows **Avg cost** and **Value** (qty × avg cost). The KPI strip includes **Inventory value** across the current filters.
 
 ## Transfers
 

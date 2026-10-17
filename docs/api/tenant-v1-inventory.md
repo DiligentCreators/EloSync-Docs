@@ -33,7 +33,7 @@ Requires `inventory.adjust`.
 }
 ```
 
-`type` is `in`, `out`, or `adjust`; the last sets the on-hand quantity. The product must track stock; stock cannot become negative. Omitting `warehouse_id` uses the default warehouse. When the product has `track_serials`, only `in` and `out` are allowed, `quantity` must be a whole number, and `serials` must list exactly that many unique serials. When the product has `track_lots`, only `in` and `out` are allowed and `lot` is required (`lot_expires_at` optional on stock in).
+`type` is `in`, `out`, or `adjust`; the last sets the on-hand quantity. The product must track stock; stock cannot become negative. Omitting `warehouse_id` uses the default warehouse. Optional `unit_cost` applies on stock in / set-quantity increases to update the product moving-average cost (defaults to current `products.cost`). When the product has `track_serials`, only `in` and `out` are allowed, `quantity` must be a whole number, and `serials` must list exactly that many unique serials. When the product has `track_lots`, only `in` and `out` are allowed and `lot` is required (`lot_expires_at` optional on stock in). Movements return `unit_cost`. Stock levels return `unit_cost` and `value`; stats include `total_inventory_value`.
 
 ## Transfers
 

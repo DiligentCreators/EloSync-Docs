@@ -190,6 +190,15 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## Inventory 1.4.0 → 1.5.0 — moving-average valuation
+
+1. Deploy Backend and run `php artisan migrate --force` (`unit_cost` on `stock_movements`, catalog bump — **do not** `db:seed`)
+2. Confirm catalog version: inventory **1.5.0**
+3. Deploy Frontend after production build; hard-refresh SPA
+4. Smoke: stock in with unit cost → confirm Avg cost / Value columns and Inventory value KPI; receive a PO and confirm product cost moves toward the line price
+
+Go-live: [Inventory moving-average 1.5.0 production readiness](/deployment/inventory-moving-average-1-5-0-production-readiness).
+
 ## Inventory 1.3.0 → 1.4.0 / Purchase Orders → 1.7.0 — serial/lot PO receive + transfers
 
 1. Deploy Backend and run `php artisan migrate --force` (catalog bumps only — **do not** `db:seed`)
