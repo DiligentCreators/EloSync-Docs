@@ -26,11 +26,12 @@ Requires `inventory.adjust`.
   "warehouse_id": 2,
   "type": "in",
   "quantity": 10,
-  "notes": "Initial count"
+  "notes": "Initial count",
+  "serials": ["SN-001", "SN-002"]
 }
 ```
 
-`type` is `in`, `out`, or `adjust`; the last sets the on-hand quantity. The product must track stock; stock cannot become negative. Omitting `warehouse_id` uses the default warehouse.
+`type` is `in`, `out`, or `adjust`; the last sets the on-hand quantity. The product must track stock; stock cannot become negative. Omitting `warehouse_id` uses the default warehouse. When the product has `track_serials`, only `in` and `out` are allowed, `quantity` must be a whole number, and `serials` must list exactly that many unique serials.
 
 ## Transfers
 

@@ -15,8 +15,9 @@ Phase 5 Inventory module for stock visibility, controlled adjustments, purchase 
 
 - Per-product, per-warehouse stock levels, low-stock filtering, and movement history
 - Controlled stock changes: **in**, **out**, and set-to-value **adjust**
+- Optional **serial tracking** on products: stock in/out requires one serial per unit; set-quantity adjust, PO receive, and transfers are blocked for serial products (lot tracking deferred)
 - Transfers: `draft → in_transit → completed|cancelled`
-- Purchase Order receipt bridge: receive posts stock-in for stock-tracked product lines (full remaining or per-line quantity deltas) when Products and Inventory are entitled
+- Purchase Order receipt bridge: receive posts stock-in for stock-tracked (non-serial) product lines (full remaining or per-line quantity deltas) when Products and Inventory are entitled
 - Transactional posting and protection against negative stock
 
 ## Permissions
@@ -31,4 +32,4 @@ Inventory soft-uses Warehouses. Stock actions use the active default `MAIN` ware
 
 ## Not included
 
-Phase 5 does not include serial or lot tracking, inventory valuation, or COGS.
+Lot tracking, inventory valuation methods beyond soft Accounting journals, and serial-aware PO receive / warehouse transfer UX are not included yet.

@@ -6,7 +6,7 @@ Inventory is the Phase 5 stock module. It hard-depends on Products and soft-uses
 
 | Piece | Path |
 |-------|------|
-| Models | `StockLevel`, `StockMovement`, `StockTransfer`, `StockTransferLine` |
+| Models | `StockLevel`, `StockMovement`, `StockTransfer`, `StockTransferLine`, `StockSerial` |
 | Services | `StockService`, `StockTransferService` |
 | HTTP | `InventoryController`, `app/Http/Requests/Tenant/Api/V1/Inventory/*` |
 | Resources | `app/Http/Resources/Tenant/Api/V1/Inventory/*` |
@@ -19,7 +19,9 @@ Routes use `module:inventory`; permissions are `inventory.view|adjust|transfer|d
 
 `StockService` is the only stock mutation boundary. It creates/retrieves the product/warehouse `StockLevel`, locks it with `lockForUpdate()` inside a database transaction, rejects negative balances, updates `quantity_on_hand`, and writes the immutable `StockMovement`. Direct callers may use only `in`, `out`, and `adjust`; transfers use internal `transfer_in`/`transfer_out`.
 
-`postPurchaseOrderReceipt()` / `postPurchaseOrderReceiptDeltas()` post stock-in for linked `track_stock` product lines. Full-order receipt remains idempotent per Purchase Order reference; delta receives use a `purchase_order_receipts` batch so concurrent partial receives cannot double-post the same qty. Callers must hold (or the method itself takes) a `lockForUpdate()` on the Purchase Order before the movement-exists check. `PurchaseOrderService::receive()` wraps status transition + receipt posting in one transaction so a failed post rolls the PO status back; `changeStatus()` routes `partially_received` / `received` through `receive()` so `POST …/status` cannot skip stock posting. Optional `lines` on receive advances `quantity_received` and posts only those deltas.
+When `products.track_serials` is true, adjust `in`/`out` require `serials[]` (exactly one unique serial per whole-number unit). Absolute `adjust` is rejected. Stock-in creates `stock_serials` rows (`in_stock`); stock-out marks matching in-stock serials `out`. Duplicate or missing serials validate with 422. PO receipt posting and `transfer()` reject serial-tracked products until serial-aware UX ships.
+
+`postPurchaseOrderReceipt()` / `postPurchaseOrderReceiptDeltas()` post stock-in for linked `track_stock` (non-serial) product lines. Full-order receipt remains idempotent per Purchase Order reference; delta receives use a `purchase_order_receipts` batch so concurrent partial receives cannot double-post the same qty. Callers must hold (or the method itself takes) a `lockForUpdate()` on the Purchase Order before the movement-exists check. `PurchaseOrderService::receive()` wraps status transition + receipt posting in one transaction so a failed post rolls the PO status back; `changeStatus()` routes `partially_received` / `received` through `receive()` so `POST …/status` cannot skip stock posting. Optional `lines` on receive advances `quantity_received` and posts only those deltas.
 
 ## Transfers
 
