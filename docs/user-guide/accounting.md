@@ -58,7 +58,7 @@ When Accounting is entitled:
 When Accounting is entitled:
 
 - **Receive** a purchase order: tracked products post Dr Inventory Asset (`1200`) / Cr Accounts Payable (`2000`) for quantity × unit price. Lines that are not tracked products post Dr Operating Expenses (`6000`) / Cr Accounts Payable. Purchase-order tax is not included. One journal per receipt. Receipts from before this version are not backfilled.
-- If that purchase order was already converted to an expense, no payable journal is posted. If the payable journal already exists, **Convert to expense** is blocked. Pay the vendor with a journal that debits Accounts Payable and credits cash.
+- If that purchase order was already converted to an expense, no payable journal is posted. If the payable journal already exists, **Convert to expense** is blocked. Use **Pay vendor** on the purchase order (cash/bank **Paid from**) to post Dr Accounts Payable / Cr cash. Each open receipt is settled once.
 - **Stock in** (not from a purchase-order receipt): Dr Inventory Asset / Cr Owner Equity (`3000`) at product cost.
 - **Stock out**: Dr Cost of Goods Sold (`5000`) / Cr Inventory Asset at product cost.
 - **Adjust** posts only the change in quantity, using the stock-in or stock-out pair. A zero change posts nothing.

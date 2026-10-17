@@ -98,6 +98,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Financial Reports](/user-guide/financial-reports) (TB, P&L, BS) | Shipped (requires Accounting) |
 | Soft cash movements from Payments / Expenses / transfers | Shipped |
 | Soft AP from purchase-order receipts and inventory / COGS journals | Shipped (**accounting 1.8.0**) |
+| Pay vendor settle AP from cash/bank | Shipped (**accounting 1.9.0** / **purchase-orders 1.6.0**) |
 
 ### Deferred
 
