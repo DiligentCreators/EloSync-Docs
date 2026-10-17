@@ -190,6 +190,15 @@ Go-live: [Calendar overlay push 1.7.0 production readiness](/deployment/calendar
 
 Go-live: [Calendar two-way inbound 1.6.0 production readiness](/deployment/calendar-two-way-inbound-1-6-0-production-readiness).
 
+## Accounting 1.8.0 → 1.9.0 / Purchase Orders 1.5.0 → 1.6.0 — Pay vendor AP settle
+
+1. Deploy Backend and run `php artisan migrate --force` (receipt `paid_from_account_id` / `payment_journal_entry_id`, `purchase-orders.pay` grant, catalog bumps; **do not** `db:seed`)
+2. Confirm catalog versions: accounting **1.9.0**, purchase-orders **1.6.0**
+3. Deploy Frontend after production build; hard-refresh SPA
+4. Smoke: receive a tracked PO → **Pay vendor** from cash/bank → accounts payable open is zero
+
+Go-live: [Accounting vendor AP settle 1.9.0 production readiness](/deployment/accounting-vendor-ap-settle-1-9-0-production-readiness).
+
 ## Accounting 1.7.2 → 1.8.0 — purchase receipts and inventory journals
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_16_224416_add_journal_entry_id_to_purchase_order_receipts_and_stock_movements` and `2026_10_16_224417_bump_accounting_module_version_to_1_8_0`; **do not** `db:seed`)

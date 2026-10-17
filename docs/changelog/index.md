@@ -1,3 +1,10 @@
+## Accounting vendor AP settle / Pay vendor (1.9.0 / 1.6.0) (2026-10-17)
+
+- **EloSync-Backend:** `POST /purchase-orders/{id}/pay-vendor` with `paid_from_account_id` posts Dr Accounts Payable `2000` / Cr cash-bank for each open receipt journal, stores `payment_journal_entry_id` + `paid_from_account_id` on the receipt, and rejects a second settle. New permission `purchase-orders.pay`. Catalog **accounting 1.8.0 → 1.9.0**, **purchase-orders 1.5.0 → 1.6.0**. Pest: `PurchaseOrderVendorPaymentTest`, `AccountingModuleVersion190BumpTest`.
+- **EloSync-Frontend:** Purchase order page shows **Accounts payable open** and **Pay vendor** (cash/bank picker) when Accounting is entitled and AP is open; convert-to-expense is hidden while AP is open.
+- **EloSync-Docs:** Accounting and purchase-order guides, roadmap, upgrade, and [production readiness](/deployment/accounting-vendor-ap-settle-1-9-0-production-readiness).
+- **Go-live:** Backend migrate-only (receipt payment columns, permission grant, catalog bumps). Deploy Frontend after production build; hard-refresh SPA.
+
 ## Fix — Purchase order positive-amount tests and receipt stock idempotency (2026-10-17)
 
 - **EloSync-Backend:** `StockService::postPurchaseOrderReceipt` locks the purchase order, advances `quantity_received`, and skips a second full post so stock cannot double. Purchase order Pest creates that relied on zero-total drafts now send a positive line (`ValidatePositiveDocumentAmount`). Pest: `PurchaseOrderTest`, `InventoryTest`, `InventoryCostJournalTest` green.
