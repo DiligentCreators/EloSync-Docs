@@ -1,6 +1,6 @@
 # Accounting — Developer Guide
 
-Mirrors the Leads/Expenses module layers under flat `app/` namespaces. Slug `accounting`, middleware `module:accounting`, permissions `accounting.*`. Catalog version **1.8.0**.
+Mirrors the Leads/Expenses module layers under flat `app/` namespaces. Slug `accounting`, middleware `module:accounting`, permissions `accounting.*`. Catalog version **1.10.0**.
 
 ## Domain
 
@@ -18,11 +18,11 @@ Services: `AccountService`, `JournalEntryService`, `GeneralLedgerService`, `Char
 
 Periods: setting `fiscal_year_start_month` (1–12); journal post/void blocked in locked periods; year-end close zeros P&L into Retained Earnings `3100` (multi-line JE) and locks the FY period atomically / idempotently. Balance Sheet Net Income uses fiscal YTD (zero after a proper close). Bank rec: start / clear lines / complete against cash/bank accounts — book balance as of statement date, exclude prior cleared lines, require cleared = statement to complete. Invoice send/void and credit-note apply are transactional with period-lock checks.
 
-`ChartOfAccountsSeederService` seeds starter CoA (incl. Tax Payable `2100`, Salaries Payable `2200`, Salary Expense `6400`, Retained Earnings `3100`) and `ensureMissingSystemAccounts` backfills missing system codes for existing workspaces.
+`ChartOfAccountsSeederService` seeds starter CoA (incl. Tax Payable `2100`, Salaries Payable `2200`, Salary Expense `6400`, Retained Earnings `3100`, Fixed Assets `1500`, Accumulated Depreciation `1550`, Depreciation Expense `6500`) and `ensureMissingSystemAccounts` backfills missing system codes for existing workspaces.
 
 `OpeningBalanceService` posts a balanced multi-line opening journal (`POST /accounts/opening-balances`). Header accounts are rejected on journal lines.
 
-`CashMovementJournalService` creates+posts two-line journals and voids linked entries. Used by Payments post/void, Expenses pay, Payroll pay (payment JE), Account Transfers, balance adjustments, and invoice/credit accrual hooks. System codes include Inventory `1200`, Accounts Payable `2000`, Owner Equity `3000`, and Cost of Goods Sold `5000`.
+`CashMovementJournalService` creates+posts two-line journals and voids linked entries. Used by Payments post/void, Expenses pay, Payroll pay (payment JE), Account Transfers, balance adjustments, and invoice/credit accrual hooks. System codes include Inventory `1200`, Fixed Assets `1500`, Accumulated Depreciation `1550`, Accounts Payable `2000`, Owner Equity `3000`, Cost of Goods Sold `5000`, and Depreciation Expense `6500`. `AssetDepreciationService` capitalizes an asset once (Dr `1500` / Cr `3000`) and posts straight-line months (Dr `6500` / Cr `1550`) when Accounting is entitled.
 
 `InventoryCostJournalService` posts when Accounting is entitled and stores `journal_entry_id` on `purchase_order_receipts` and `stock_movements`. A purchase-order receipt debits `1200` for tracked lines and `6000` for every other line, and credits `2000`, at quantity × `unit_price` (`tax_rate` ignored). It skips the journal when an expense already references the purchase order, and a second call on the same receipt does not post again. Manual stock in debits `1200` and credits `3000` at `product.cost`. Stock out debits `5000` and credits `1200`. Adjust uses the signed quantity change. Transfers and purchase-order receipt movements post no second journal. `PurchaseOrderService::convertToExpense` rejects a purchase order that already has a receipt journal. Locked fiscal periods fail the journal inside the receive or stock transaction. No backfill.
 
@@ -32,7 +32,7 @@ Events → `AccountingEventSubscriber` → `PlatformAuditService` + Spatie `Logs
 
 ## Soft dependents
 
-Optional catalog deps (`is_optional=true`): **invoices → accounting**, **credit-notes → accounting**, **payments → accounting**, **expenses → accounting**, **payroll → accounting**.
+Optional catalog deps (`is_optional=true`): **invoices → accounting**, **credit-notes → accounting**, **payments → accounting**, **expenses → accounting**, **payroll → accounting**, **assets → accounting**.
 
 When Accounting is entitled:
 

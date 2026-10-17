@@ -424,7 +424,7 @@ Assets
   └── may link Employee               (soft, when Employees entitled)
 ```
 
-Assets installs as a free Operations Marketplace opt-in (`assets` **1.0.0**) with **no** `module_dependencies` rows. The register works alone (name, number, status, category, location, purchase/warranty, assignee, notes/timeline). Optional `vendor_id` / `employee_id` are validated only at the point of use (`LinkableVendor`, `LinkableEmployee`) — soft entitlement, no hard install dependency. Location is free-text in v1 (no Warehouse FK). Depreciation / Accounting, Products / Inventory coupling, and Help Desk maintenance tickets are deferred.
+Assets installs as a free Operations Marketplace opt-in (`assets` **1.3.0**) with an optional soft dependency on Accounting. The register works alone (name, number, status, category, location, purchase/warranty, assignee, notes/timeline). Optional `vendor_id` / `employee_id` are validated only at the point of use (`LinkableVendor`, `LinkableEmployee`). Straight-line depreciation journals post only when Accounting is entitled. Location is free-text (no Warehouse FK). Products / Inventory coupling and Help Desk maintenance tickets are deferred.
 
 **Status:** Shipped — see [Assets Overview](/user-guide/assets-overview) and [Product Roadmap](/getting-started/product-roadmap).
 

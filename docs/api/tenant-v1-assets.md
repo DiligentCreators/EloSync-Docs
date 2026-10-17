@@ -34,6 +34,9 @@ Body:
 | `manufacturer`, `model`, `serial_number`, `location` | optional strings |
 | `purchased_at`, `warranty_ends_at` | optional dates |
 | `purchase_cost` | optional numeric |
+| `useful_life_months` | optional integer 1–1200 |
+| `salvage_value` | optional numeric |
+| `depreciation_starts_on` | optional date |
 | `currency` | optional, max 3 chars |
 | `assigned_to` | optional user id (`EligibleAssetAssignee` — same pool as leads; owners excluded for explicit assign; `null` clears) |
 | `vendor_id` | optional; requires Vendors entitled (`LinkableVendor`) |
@@ -43,7 +46,7 @@ Body:
 
 ### GET `/assets/{id}`
 
-Includes assignee, creator, vendor, employee, notes, and activities. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
+Includes assignee, creator, vendor, employee, notes, activities, `accumulated_depreciation`, `book_value`, capitalization journal when loaded, and `depreciations`. Embedded `notes` and timeline/domain `activities` are **newest-first** (`created_at` DESC, then `id` DESC).
 
 ### PUT `/assets/{id}`
 
@@ -66,6 +69,14 @@ Permanently delete a soft-deleted asset. Permission: `assets.force.delete`.
 ### POST `/assets/{id}/assign`
 
 `{ "assigned_to": number|null }` — must be an eligible custodian (CRM lead pool) or `null` to unassign. Workspace owners cannot be selected for explicit assign.
+
+### POST `/assets/{id}/depreciate`
+
+`{ "period": "YYYY-MM" }`. Permission: `assets.depreciate`. Requires Accounting. Capitalizes once, then posts that month. Duplicate month, retired/disposed, foreign currency, missing cost or life, and a fully depreciated asset return 422.
+
+### POST `/assets/depreciate`
+
+Same body. Posts every eligible asset for the month. Response `data` is `{ period, posted, skipped, failed, results }`.
 
 ### POST `/assets/{id}/notes`
 

@@ -20,7 +20,8 @@ Phase 6 Finance module on the frozen platform. Provides the financial backbone: 
 - **Current balance** on account list/show (from posted journal lines)
 - **Opening trial balance**: balanced multi-line journal via `/accounts/opening-balances` (`POST /accounts/opening-balances`)
 - **Set balance** on cash/bank accounts: target amount posts a delta journal (`ADJ-`); default offset Owner Equity `3000`; voidable history on the account
-- Starter system accounts seeded on first Accounts list (Cash, AR, AP, Tax Payable `2100`, **Withholding Tax Receivable `1150`**, **Withholding Tax Payable `2150`**, **Salaries Payable `2200`**, Equity, Retained Earnings `3100`, Revenue, common expenses including **Salary Expense `6400`**); existing workspaces backfilled via `ensureMissingSystemAccounts`
+- Starter system accounts seeded on first Accounts list (Cash, AR, AP, Tax Payable `2100`, **Withholding Tax Receivable `1150`**, **Withholding Tax Payable `2150`**, **Salaries Payable `2200`**, Equity, Retained Earnings `3100`, Revenue, common expenses including **Salary Expense `6400`**, **Fixed Assets `1500`**, **Accumulated Depreciation `1550`**, **Depreciation Expense `6500`**); existing workspaces backfilled via `ensureMissingSystemAccounts`
+- Asset depreciation when Assets is installed: first post Dr `1500` / Cr Owner Equity `3000`; each month Dr `6500` / Cr `1550`
 - **Tax types** catalog ([tax-types](/user-guide/tax-types)): sales tax on billing lines; withholding on customer payments and expense pay
 - Journal entries with balanced debit/credit lines (`JE-` numbers)
 - Lifecycle: **draft → post → void** (voided entries excluded from GL and reports)

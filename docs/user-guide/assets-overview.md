@@ -19,6 +19,7 @@ Operations module on the frozen platform. A workspace register of company equipm
 - Name, status (`active` / `in_repair` / `retired` / `disposed`), category enum
 - Manufacturer, model, serial number, free-text location
 - Purchase date, purchase cost, currency, warranty end date
+- Straight-line depreciation (useful life, salvage, start date) posted to Accounting when that module is installed
 - Assignment (`created_by` / `assigned_to`) with assignee scoping via `assets.assign`
 - Optional `vendor_id` and `employee_id` — soft links, only validated (and only pickable in the UI) when the corresponding module is entitled
 - Notes + activity timeline
@@ -31,9 +32,9 @@ Operations module on the frozen platform. A workspace register of company equipm
 
 ## Permissions
 
-`assets.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign`
+`assets.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `depreciate`
 
-Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 80`, version **1.2.0**.
+Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operations` (Operations), `is_default_included = false`, `is_billable = false`, `sort_order = 80`, version **1.3.0**. Optional soft dependency on Accounting.
 
 ## Soft links (not install dependencies)
 
@@ -42,10 +43,10 @@ Enable Assets from Marketplace (free). Catalog: slug `assets`, category `operati
 | Vendor | Vendors module entitled |
 | Employee (custodian) | Employees module entitled |
 | Workspace assignee | Always (platform user) |
+| Accounting journals | Accounting module entitled; `assets.depreciate` |
 
 ## Explicitly deferred
 
-- Depreciation / Accounting journals
 - Product / Inventory / Warehouse FKs
 - Maintenance tickets → Help Desk
 - Attachments / barcodes / QR

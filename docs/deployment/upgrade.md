@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Assets 1.2.0 → 1.3.0 / Accounting 1.9.0 → 1.10.0 — depreciation journals
+
+1. Deploy Backend and run `php artisan migrate --force` (asset depreciation columns, `asset_depreciations`, `assets.depreciate`, soft dependency, catalog bumps — **do not** `db:seed`)
+2. Confirm catalog versions: assets **1.3.0**, accounting **1.10.0**. Admin and manager have `assets.depreciate`
+3. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build
+4. Existing assets are not depreciated until someone posts a month
+
+Go-live: [Asset depreciation journals production readiness](/deployment/asset-depreciation-journals-production-readiness).
+
 ## Invoice edit requests table already exists (Forge migrate `42S01`)
 
 If deploy fails on `2026_10_08_171215_create_customer_invoice_edit_requests_table` with **Table 'customer_invoice_edit_requests' already exists**:
