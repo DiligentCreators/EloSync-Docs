@@ -18,7 +18,7 @@ Query: `search`, `category_id`, `status` (`active|inactive`), `trashed` (`true|o
 
 ### POST `/products`
 
-Requires `products.create`. Body: `name` (required); `sku` optional (unique per tenant). When `sku` is omitted or blank, the server auto-generates one (`SKU-00001` style, or `products_sku_prefix`). Optional `category_id`, `description` (HTML, sanitized server-side, max 50000), `unit`, `cost`, `price`, `currency`, `track_stock`, `track_serials`, `reorder_level`, `status`. `track_serials` is ignored unless `track_stock` is true.
+Requires `products.create`. Body: `name` (required); `sku` optional (unique per tenant). When `sku` is omitted or blank, the server auto-generates one (`SKU-00001` style, or `products_sku_prefix`). Optional `category_id`, `description` (HTML, sanitized server-side, max 50000), `unit`, `cost`, `price`, `currency`, `track_stock`, `track_serials`, `track_lots`, `reorder_level`, `status`. `track_serials` / `track_lots` are ignored unless `track_stock` is true, and they are mutually exclusive. Enabling either on update requires zero on-hand quantity.
 
 ### GET/PUT/DELETE `/products/{product}`
 
