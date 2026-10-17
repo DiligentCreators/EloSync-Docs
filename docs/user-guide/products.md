@@ -18,7 +18,8 @@ The Products catalog covers both **goods** and **services**. Use one record type
 4. Optionally choose a category and add a rich-text description (headings, lists, bold/italic/underline), unit, cost, price, and reorder level.
 5. Choose a **currency** from the shared workspace currency list (defaults to your workspace currency from Settings).
 6. Keep **Track stock** enabled for goods whose quantities should be managed by Inventory. Turn **Track stock** off for services and other non-stocked items.
-7. Save.
+7. Optionally enable **Track serials** or **Track lots** (requires Track stock; not both) when units need serial numbers or lot/batch numbers on stock in and stock out. Enable either flag only while on-hand quantity is zero. Purchase-order receive and warehouse transfers are blocked for those products in this version — stock them with Inventory **Adjust stock**.
+8. Save.
 
 Products can be Active or Inactive. Inactive products remain in the catalog but should not be used for new operational work.
 
@@ -34,7 +35,7 @@ Delete is a soft delete. Restore requires `products.restore`; permanent deletion
 
 ## Inventory and purchasing
 
-Only products with **Track stock** enabled can receive stock adjustments, Purchase Order receipts, or transfers. Product selection on Purchase Order lines is optional; ordinary description-only lines still work. The picker requires the Products module and `products.view`, and only **Active** products appear.
+Only products with **Track stock** enabled can receive stock adjustments, Purchase Order receipts, or transfers. Serial- and lot-tracked products accept stock in/out only through Inventory adjust (serials or a lot number); they cannot be received on a purchase order or transferred between warehouses yet. Product selection on Purchase Order lines is optional; ordinary description-only lines still work. The picker requires the Products module and `products.view`, and only **Active** products appear.
 
 ## Billing documents (quotations, estimates, invoices)
 

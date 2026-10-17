@@ -1,3 +1,10 @@
+## Inventory serial + lot tracking MVP (products 1.5.0 / inventory 1.3.0) (2026-10-17)
+
+- **EloSync-Backend:** Products gain `track_serials` and `track_lots` (mutually exclusive; enable only at zero on-hand). `stock_serials` stores per-unit serials; `stock_lots` stores lot quantities with optional `expires_at`. Stock adjust `in`/`out` accept `serials[]` or `lot` (+ optional `lot_expires_at`). Absolute adjust, purchase-order receive, and warehouse transfer complete reject serial/lot-tracked products. Catalog **products → 1.5.0**, **inventory → 1.3.0**. Pest: `StockSerialTest`, `StockLotTest`, `ProductSerialFlagTest`, catalog bumps.
+- **EloSync-Frontend:** Product form **Track serials** / **Track lots** switches; Adjust stock collects serials or lot (+ optional expiry). Inventory-phase Playwright covers missing-serial and missing-lot validation plus happy-path stock in.
+- **EloSync-Docs:** Products/Inventory user, developer, API, deployment guides + [production readiness](/deployment/inventory-serial-lot-1-3-0-production-readiness) + this changelog.
+- **Go-live:** Backend migrate-only (`track_serials`, `track_lots`, `stock_serials`, `stock_lots`, catalog bumps). Deploy Frontend after production build; hard-refresh SPA. Serial/lot-aware PO receive and transfers remain deferred.
+
 ## Accounting vendor AP settle / Pay vendor (1.9.0 / 1.6.0) (2026-10-17)
 
 - **EloSync-Backend:** `POST /purchase-orders/{id}/pay-vendor` with `paid_from_account_id` posts Dr Accounts Payable `2000` / Cr cash-bank for each open receipt journal, stores `payment_journal_entry_id` + `paid_from_account_id` on the receipt, and rejects a second settle. New permission `purchase-orders.pay`. Catalog **accounting 1.8.0 → 1.9.0**, **purchase-orders 1.5.0 → 1.6.0**. Pest: `PurchaseOrderVendorPaymentTest`, `AccountingModuleVersion190BumpTest`.

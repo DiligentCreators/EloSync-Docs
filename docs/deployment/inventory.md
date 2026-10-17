@@ -14,9 +14,10 @@
 2. Register the Inventory catalog module, hard dependency, and additive role permissions.
 3. Deploy backend and frontend together; Purchase Order receipt behavior changes when Inventory and Products are entitled.
 4. Smoke: adjust stock in/out, verify movement balances, dispatch and complete a transfer, and receive a product-linked Purchase Order.
+5. For serial/lot MVP (products **1.5.0** / inventory **1.3.0**): enable **Track serials** or **Track lots** on a product (zero on-hand), stock in with serials/lot, confirm PO receive and transfer complete reject that SKU.
 
 ## Safety and monitoring
 
 Stock posting is transactional and uses row locks. Never alter `stock_levels` as an operational shortcut: post through `StockService` so movement history and balances remain aligned. Monitor failed stock adjustments, incomplete transfers, and Purchase Order receipt references; receipt posting is idempotent per purchase order.
 
-Phase 5 does not introduce serial/lot control, valuation, or COGS jobs.
+Serial/lot-aware PO receive and transfers are still deferred. Soft Accounting inventory journals remain optional when Accounting is entitled.
