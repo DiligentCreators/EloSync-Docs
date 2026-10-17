@@ -41,7 +41,7 @@ Permission: `invoices.export` (assignee-scoped like list). Query: same filters a
 
 ### GET `/invoices`
 
-Query: `search` (matches `title`, `number`, related contact `name`/`phone`/`company`, or related company `name`/`phone`), `status`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_invoices`, `overdue` (`true`), `date_from` / `date_to` (issue date, `Y-m-d`), `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `title`, `number`, related contact `name`/`phone`/`company`, or related company `name`/`phone`), `status`, `contact_id`, `company_id`, `assigned_to` (`unassigned` or user id), `my_invoices`, `overdue` (`true`), `allocatable` (`true` — `balance_due > 0` and status is not `paid` or `cancelled`; used by the payment create picker), `date_from` / `date_to` (issue date, `Y-m-d`), `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
 List items include `status`, `currency`, `subtotal`/`discount_total`/`tax_total`/`total`/`amount_paid`/`amount_credited`/`balance_due`, `issue_date`/`due_date`, recurrence fields (`is_recurring`, `recurrence_frequency`, `recurrence_status`, `recurrence_next_issue_on`, `recurrence_ends_on`, `recurring_source_invoice_id` / `recurring_source`), `contact`/`company`/`quotation`/`estimate`/`contract` refs, assignee/creator refs, and `latest_note`. Query also accepts `recurring=true` (series roots only).
 

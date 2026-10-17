@@ -1,3 +1,10 @@
+## Payment create hides fully paid invoices (2026-10-18)
+
+- **EloSync-Backend:** `GET /invoices?allocatable=1` returns invoices with `balance_due > 0` whose status is not `paid` or `cancelled`. Pest: `CustomerInvoiceTest`.
+- **EloSync-Frontend:** Create payment allocation picker uses that filter. Edit still shows invoices already allocated on the draft.
+- **EloSync-Docs:** Payments user/developer guides, invoice API query, [production readiness](/deployment/payment-allocatable-invoice-picker-production-readiness), and this changelog.
+- **Go-live:** deploy Backend and Frontend together. No migrate.
+
 ## Ask EloSync Inventory triage tools (ai 1.22.0) (2026-10-17)
 
 - **EloSync-Backend:** Ask EloSync Inventory triage: `get_product` (stock levels / value when `inventory.view`), `get_low_stock`, `get_inventory_stats`, confirmed write `add_product_note`. Catalog **ai 1.21.0 → 1.22.0** (migrate-only + CatalogSeeder). Pest: authz + write confirmation + catalog bump.
