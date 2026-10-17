@@ -563,6 +563,10 @@ export default withMermaid(defineConfig({
               text: 'Payments Refunds 1.5.0 Readiness',
               link: '/deployment/payments-partial-refunds-gateway-record-1-5-0-production-readiness',
             },
+            {
+              text: 'Payment allocatable picker readiness',
+              link: '/deployment/payment-allocatable-invoice-picker-production-readiness',
+            },
             { text: 'Credit Notes', link: '/deployment/credit-notes' },
             { text: 'Estimates', link: '/deployment/estimates' },
             { text: 'Vendors', link: '/deployment/vendors' },
