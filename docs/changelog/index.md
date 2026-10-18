@@ -1,3 +1,10 @@
+## Expense itemized lines (expenses 1.7.0) (2026-10-19)
+
+- **EloSync-Backend:** Optional `lines` on expense create/update (description, amount, tax, category, max 50). Header amount and tax are recomputed from the lines; header category is that category when every line shares one, otherwise null. Category list filter matches the header or any line. Purchase-order convert copies each line and splits purchase-order tax in proportion to line amount. Pay still posts one expense debit for the gross. Catalog **expenses 1.6.0 → 1.7.0**. Pest: `ExpenseLinesTest`, `ExpensesModuleVersion170BumpTest`.
+- **EloSync-Frontend:** Draft expense form line editor. List, view, and record sheet show lines and a Mixed badge when categories differ. Headed Playwright `npm run test:e2e:expenses:lines:headed`.
+- **EloSync-Mobile:** Create, edit, and view send and render the same lines.
+- **EloSync-Docs:** Expenses user guide, developer guide, tenant API, roadmap, upgrade, and [production readiness](/deployment/expense-lines-1-7-0-production-readiness). Reimbursement beyond paid stays deferred.
+
 ## Expense unpay (expenses 1.6.0) (2026-10-19)
 
 - **EloSync-Backend:** `POST /expenses/{id}/unpay` (`expenses.pay`) returns a paid expense to approved, clears the payment account links, and voids the payment journal when Accounting is entitled. A locked fiscal period leaves the expense paid. `POST /expenses/{id}/status` to `approved` from `paid` uses the same path and permission. Catalog **expenses 1.5.0 → 1.6.0**. Pest: `ExpenseAccountingTest`, `ExpensesModuleVersion160BumpTest`.

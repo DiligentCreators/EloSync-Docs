@@ -8,9 +8,9 @@ Without **assign**, you only see expenses assigned to you.
 
 ## List & table
 
-Open **Expenses** from the sidebar, under the **Purchasing** group (after Purchase Orders). Search by title or number, filter by status or category, toggle **My Expenses**, and switch KPI cards (Total, Mine, Draft, Submitted, Approved, Paid) to quick-filter the table. The table shows category, status, amount, expense date, assignee, and the **latest note**.
+Open **Expenses** from the sidebar, under the **Purchasing** group (after Purchase Orders). Search by title or number, filter by status or category, toggle **My Expenses**, and switch KPI cards (Total, Mine, Draft, Submitted, Approved, Paid) to quick-filter the table. The table shows category (or **Mixed** when lines use more than one), status, amount, expense date, assignee, and the **latest note**. A category filter includes expenses that use that category on any line.
 
-Use **Manage categories** (visible with `expenses.create`, `expenses.update`, or `expenses.delete`) to add, rename, activate/deactivate, or delete workspace expense categories. New workspaces start with Travel, Office, Software, Utilities, and Other. You cannot delete **Other** (it is the default for new expenses and Purchase Order convert). You also cannot delete a category that still has expenses. Renaming a starter category keeps its slug.
+Use **Manage categories** (visible with `expenses.create`, `expenses.update`, or `expenses.delete`) to add, rename, activate/deactivate, or delete workspace expense categories. New workspaces start with Travel, Office, Software, Utilities, and Other. You cannot delete **Other** (it is the default when a header-only expense is created without a category). You also cannot delete a category that still has expenses. Renaming a starter category keeps its slug.
 
 - Users with **restore** can filter **Active / Include deleted / Deleted only**, then **Restore** a soft-deleted expense from the row menu
 - **Delete permanently** requires `expenses.force.delete` — granted to the workspace **owner** by default
@@ -18,7 +18,7 @@ Use **Manage categories** (visible with `expenses.create`, `expenses.update`, or
 ## Create an expense
 
 1. Click **New expense**
-2. Enter a title, category (from your workspace list), amount, and optional tax amount
+2. Enter a title and at least one line: description, amount, optional tax, and a category from your workspace list. Add more lines when one receipt covers several categories. The expense total is the sum of the lines.
 3. Optionally set currency and an expense date
 4. If **Vendors** or **Purchase Orders** are installed on your workspace, optionally link a vendor and/or a purchase order — use **New** beside the vendor picker to create and select a vendor inline when you have `vendors.create`
 5. Optionally attach a **receipt** file — allowed types and max sizes follow **Settings → Storage → Upload limits** (counts toward your workspace [Storage](/user-guide/storage) quota)
@@ -63,6 +63,6 @@ With the **AI Assistant** module installed, Ask EloSync can list expenses awaiti
 
 ## What's not here yet
 
-Reimbursement/payout tracking beyond the **paid** status, and multi-line (itemized) expenses are planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap).
+Reimbursement/payout tracking beyond the **paid** status is planned but not part of this module yet — see the [Product Roadmap](/getting-started/product-roadmap). Itemized lines are available: each line has its own description, amount, tax, and category. Paying still posts one journal for the expense total.
 
 > **Accounting (shipped):** when Accounting is installed, **Mark as paid** posts a journal — see [Accounting](/user-guide/accounting).

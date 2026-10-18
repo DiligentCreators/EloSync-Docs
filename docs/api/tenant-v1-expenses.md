@@ -34,17 +34,17 @@ Same filters as list (minus pagination/sort). Response:
 
 ### GET `/expenses`
 
-Query: `search` (matches `title` or `number`), `status` (`draft`\|`submitted`\|`approved`\|`rejected`\|`paid`\|`cancelled`), `category_id`, `vendor_id`, `purchase_order_id`, `assigned_to` (`unassigned` or user id), `my_expenses`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
+Query: `search` (matches `title` or `number`), `status` (`draft`\|`submitted`\|`approved`\|`rejected`\|`paid`\|`cancelled`), `category_id` (header category or any line category), `vendor_id`, `purchase_order_id`, `assigned_to` (`unassigned` or user id), `my_expenses`, `trashed` (`true`\|`only`), `sort`, `direction`, `page`, `per_page`.
 
-List items include `status`, `category_id`, embedded `category` (`{ id, name, slug }` when loaded), `amount`, `tax_amount`, `currency`, `expense_date`, `vendor`/`purchase_order` refs (when linked), assignee/creator refs, and `latest_note`.
+List items include `status`, `category_id`, embedded `category` (`{ id, name, slug }` when loaded), `amount`, `tax_amount`, `lines` (description, amount, tax_amount, category), `currency`, `expense_date`, `vendor`/`purchase_order` refs (when linked), assignee/creator refs, and `latest_note`.
 
 ### POST `/expenses`
 
-Body: `title` (required), `category_id` (optional — tenant `expense_categories` id, must be active; defaults to the seeded **Other** category), `amount` (required), `tax_amount` (optional, default `0`), `currency` (3-letter, default `USD`), `expense_date`, `notes`, `vendor_id` (optional — must belong to the tenant and the Vendors module must be entitled), `purchase_order_id` (optional — must belong to the tenant and the Purchase Orders module must be entitled), `assigned_to`.
+Body: `title` (required), `category_id` (optional — tenant `expense_categories` id, must be active; defaults to the seeded **Other** category when `lines` is omitted), `amount` (required when `lines` is omitted), `tax_amount` (optional, default `0`), `lines` (optional, 1–50 items of `description`, `amount`, `tax_amount`, `category_id`, `sort_order`). When `lines` is present the server stores header `amount` and `tax_amount` as the sums and sets `category_id` only when every line shares one category. `currency` (3-letter, default `USD`), `expense_date`, `notes`, `vendor_id` (optional — must belong to the tenant and the Vendors module must be entitled), `purchase_order_id` (optional — must belong to the tenant and the Purchase Orders module must be entitled), `assigned_to`.
 
 Optional multipart field `receipt` (file, max 5120 KB): jpg/jpeg/png/gif/webp/pdf/txt/log. Stored as `ExpenseAttachment`; bytes count toward workspace Storage quota (`WorkspaceStorageService::assertCanStore`). Returns `attachments` array on the expense resource.
 
-Status always starts at `draft`; `number` is auto-generated (`EXP-00001`, configurable via the `expenses_number_prefix` tenant setting). There is no server-computed total — `amount` and `tax_amount` are stored as given.
+Status always starts at `draft`; `number` is auto-generated (`EXP-00001`, configurable via the `expenses_number_prefix` tenant setting). Without `lines`, `amount` and `tax_amount` are stored as given. With `lines`, those header fields are recomputed. Pay still debits one expense account for amount + tax.
 
 ### GET `/expenses/{id}`
 

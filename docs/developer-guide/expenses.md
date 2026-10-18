@@ -1,12 +1,12 @@
 ﻿# Expenses — Developer Guide
 
-Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Estimates](/developer-guide/estimates) (numbering, status machine, assignee scoping, notes, domain timeline) — no line-item child table (single `amount` + `tax_amount` MVP), and **no** hard module dependencies. `vendor_id` and `purchase_order_id` are both nullable soft links, validated only when the corresponding module is entitled.
+Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Estimates](/developer-guide/estimates) (numbering, status machine, assignee scoping, notes, domain timeline). Optional `expense_lines` replace the header amount, tax, and category when sent. Create without `lines` keeps a single header amount. **No** hard module dependencies. `vendor_id` and `purchase_order_id` are both nullable soft links, validated only when the corresponding module is entitled.
 
 ## Backend layout
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Expense.php`, `ExpenseCategory`, `ExpenseNote`, `ExpenseActivity`, `ExpenseAttachment` |
+| Models | `app/Models/Expense.php`, `ExpenseLine`, `ExpenseCategory`, `ExpenseNote`, `ExpenseActivity`, `ExpenseAttachment` |
 | Enums | `ExpenseStatusEnum`, `ExpenseActivityTypeEnum` |
 | Service | `app/Services/Tenant/ExpenseService.php` (+ `ScopesToAssignee`, `RetriesOnDuplicateNumber`), `ExpenseCategoryService`, `ExpenseCategorySeederService` |
 | Controller | `app/Http/Controllers/Tenant/Api/V1/ExpenseController.php`, `ExpenseCategoryController` |
@@ -57,7 +57,7 @@ purchase-orders.convert
 
 Routes use `module:expenses` then `can:expenses.*` / policies. The convert route lives under the existing `module:purchase-orders` group and only needs `can:purchase-orders.convert` — the Expenses module check happens in the service layer (soft), not route middleware (hard).
 
-Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.6.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`); receipt attachments are **1.3.0**; undo payment is **1.6.0**.
+Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.7.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`); receipt attachments are **1.3.0**; undo payment is **1.6.0**; itemized lines are **1.7.0**.
 
 ## API (tenant)
 
