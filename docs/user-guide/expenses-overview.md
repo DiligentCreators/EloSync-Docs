@@ -35,7 +35,7 @@ Phase 4 Purchasing module (Milestone 3, final) on the frozen platform. A simplif
 
 `expenses.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `submit` · `approve` · `reject` · `pay` · `cancel`
 
-Enable Expenses from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Vendors / Purchase Orders. Catalog: slug `expenses`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.4.0**.
+Enable Expenses from Marketplace (free) — it has no hard dependencies, so it can be installed on its own, before or after Vendors / Purchase Orders. Catalog: slug `expenses`, category `purchasing` (Purchasing), `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.6.0**.
 
 ## Why standalone (soft dependencies)
 
@@ -44,7 +44,6 @@ Purchase Orders hard-depends on Vendors because every purchase order **must** re
 ## Explicitly deferred
 
 - Reimbursement workflows and payout tracking beyond the `paid` status flag
-- Expense unpay / reverse the paid Accounting journal from the expense record
 - Multi-line expenses (itemized receipts) — this MVP is single-amount only
 
 > **Accounting soft integration (shipped):** when Accounting is installed, **Mark as paid** requires a cash/bank **Paid from** account and posts a journal. See [Accounting](/user-guide/accounting).

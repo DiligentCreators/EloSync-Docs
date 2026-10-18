@@ -38,10 +38,11 @@ An expense starts in **Draft**. Move it forward with:
 - **Submit** (`draft → submitted`) — sends the expense for approval
 - **Approve** (`submitted → approved`) — requires `expenses.approve`, not limited to the assignee
 - **Reject** (`submitted → rejected`) — requires `expenses.reject`; terminal
-- **Mark as paid** (`approved → paid`) — requires `expenses.pay`; terminal. When **Accounting** is installed, you must choose **Paid from** (cash/bank account); optionally pick an expense P&amp;L account (defaults to Operating Expenses). Accounting posts **Dr** expense / **Cr** paid-from for amount + tax so that bank's balance decreases
+- **Mark as paid** (`approved → paid`) — requires `expenses.pay`. When **Accounting** is installed, you must choose **Paid from** (cash/bank account); optionally pick an expense P&amp;L account (defaults to Operating Expenses). Accounting posts **Dr** expense / **Cr** paid-from for amount + tax so that bank's balance decreases
+- **Undo payment** (`paid → approved`) — requires `expenses.pay`. The expense can be marked paid again. When **Accounting** is installed, the payment journal is voided. A locked fiscal period blocks the undo and leaves the expense paid
 - **Cancel** (`draft → cancelled` or `submitted → cancelled`) — terminal
 
-Invalid transitions (e.g. paying directly from Draft) are rejected with a validation error. `Rejected`, `Paid`, and `Cancelled` are terminal — no further transitions.
+Invalid transitions (e.g. paying directly from Draft) are rejected with a validation error. `Rejected` and `Cancelled` are terminal. `Paid` can return to **Approved**.
 
 ## Optional vendor / purchase order links
 
@@ -58,7 +59,7 @@ Users with **assign** can set or clear the assignee from the record page or the 
 
 ## Ask EloSync
 
-With the **AI Assistant** module installed, Ask EloSync can list expenses awaiting approval, fetch an expense by UUID, and propose status changes, assignments, or notes. Nothing is saved until you **confirm** the suggestion. Approving needs **approve**; rejecting needs **reject**; marking paid needs **pay**. When Accounting is installed, set a paid-from account on the expense before confirming a paid status suggestion (same as changing status without the dedicated Mark as paid dialog). See [AI Assistant](/user-guide/ai-assistant).
+With the **AI Assistant** module installed, Ask EloSync can list expenses awaiting approval, fetch an expense by UUID, and propose status changes, assignments, or notes. Nothing is saved until you **confirm** the suggestion. Approving needs **approve**; rejecting needs **reject**; marking paid or undoing a payment needs **pay**. When Accounting is installed, set a paid-from account on the expense before confirming a paid status suggestion (same as changing status without the dedicated Mark as paid dialog). Confirming a return from paid to approved voids the payment journal. See [AI Assistant](/user-guide/ai-assistant).
 
 ## What's not here yet
 

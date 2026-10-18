@@ -94,9 +94,13 @@ Transitions `submitted → rejected` (terminal). Permission: `expenses.reject` (
 
 ### POST `/expenses/{id}/pay`
 
-Transitions `approved → paid` (terminal). Permission: `expenses.pay` (not assignee-scoped).
+Transitions `approved → paid`. Permission: `expenses.pay` (not assignee-scoped).
 
 Body (optional unless Accounting is entitled): `paid_from_account_id` (required active cash/bank when Accounting installed), `expense_account_id` (optional expense-type account; defaults to system Operating Expenses `6000`). When Accounting is entitled, creates a posted journal (**Dr** expense / **Cr** paid-from) for `amount + tax_amount` and sets `journal_entry_id`.
+
+### POST `/expenses/{id}/unpay`
+
+Transitions `paid → approved`. Permission: `expenses.pay` (not assignee-scoped). Clears `journal_entry_id`, `paid_from_account_id`, and `expense_account_id`. When Accounting is entitled and a payment journal exists, that journal is voided (`Expense unpaid`). A locked fiscal period returns 422 on `entry_date` and leaves the expense paid. A second unpay returns 422 on `status`.
 
 ### POST `/expenses/{id}/cancel`
 
@@ -108,7 +112,7 @@ Transitions `draft|submitted → cancelled` (terminal). Permission: `expenses.ca
 
 Authorization depends on the target status:
 - `submitted` → `expenses.submit`
-- `approved` → `expenses.approve`
+- `approved` → `expenses.approve`, or `expenses.pay` when the expense is already `paid` (same void as `POST …/unpay`)
 - `rejected` → `expenses.reject`
 - `paid` → `expenses.pay`
 - `cancelled` → `expenses.cancel`

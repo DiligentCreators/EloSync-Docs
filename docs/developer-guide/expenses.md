@@ -29,7 +29,7 @@ Simplified mirror of [Purchase Orders](/developer-guide/purchase-orders) / [Esti
 - Status machine lives on `ExpenseStatusEnum::allowedTransitions()` / `canTransitionTo()`: `draft → submitted|cancelled`, `submitted → approved|rejected|cancelled`, `approved → paid`, `rejected`/`paid`/`cancelled` are terminal. `ExpenseService::transitionStatus()` throws `ValidationException` (422, `status` field) for disallowed transitions.
 - Content updates (`PUT`) are **draft-only** via `Expense::isEditable()` (`status === draft`). Assignment remains available after submit via `POST …/assign`.
 - `submit()` / `cancel()` are assignee-scoped in `ExpensePolicy` (same as `view` / `update`) unless the actor has `expenses.assign` or is superadmin. `approve()` / `reject()` / `pay()` are **not** assignee-scoped — any actor with the specific permission can act, modeling an approver distinct from the submitter.
-- `POST …/status` route middleware requires `expenses.update`; the controller then re-checks the specific gate per target status (`submitted` → `submit`, `approved` → `approve`, `rejected` → `reject`, `paid` → `pay`, `cancelled` → `cancel`, otherwise `update`) before delegating to `ExpenseService::changeStatus()` — same pattern as Purchase Orders.
+- `POST …/status` route middleware requires `expenses.update`; the controller then re-checks the specific gate per target status (`submitted` → `submit`, `approved` → `approve`, `rejected` → `reject`, `paid` → `pay`, `cancelled` → `cancel`, otherwise `update`) before delegating to `ExpenseService::changeStatus()`. Target `approved` while the expense is `paid` authorizes `expenses.pay` and calls `unpay()`. `POST …/unpay` uses `expenses.pay` directly.
 - `vendor_id` validated via `LinkableVendor` (reused from Vendors/Purchase Orders — always optional here), `purchase_order_id` via the new `LinkablePurchaseOrder`. Both fail closed: null/absent value always passes; a non-null value requires the module to be entitled, the record to belong to the tenant, and (unless the actor has the `*.assign` permission or is superadmin) the record to be assigned to the actor.
 - No line-item child table — `amount` and `tax_amount` are plain decimal columns set directly from the request; there's no server-side computed total (the frontend renders `amount + tax_amount` for display).
 - `expenses.force.delete` is not granted to any default role — owner/superadmin only.
@@ -57,7 +57,7 @@ purchase-orders.convert
 
 Routes use `module:expenses` then `can:expenses.*` / policies. The convert route lives under the existing `module:purchase-orders` group and only needs `can:purchase-orders.convert` — the Expenses module check happens in the service layer (soft), not route middleware (hard).
 
-Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.3.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`); receipt attachments are **1.3.0**.
+Catalog: slug `expenses`, category `purchasing`, `is_default_included = false`, `is_billable = false`, `sort_order = 30`, version **1.6.0**. Registered via `DefaultModuleRegistrar` migration (migrate-only) — **no** `module_dependencies` row. Category CRUD is a MINOR bump (`1.0.0 → 1.1.0`); receipt attachments are **1.3.0**; undo payment is **1.6.0**.
 
 ## API (tenant)
 
@@ -99,7 +99,7 @@ npm run test:e2e:expenses
 - Domain `expense_activities` timeline
 - `PlatformAuditService` via `ExpenseEventSubscriber`
 
-Ask EloSync Expense tools (`get_expense`, confirmed status/assign/note writes, plus existing `get_expense_pending_approval`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Submitted→`submit`, Approved→`approve`, Rejected→`reject`, Paid→`pay`, Cancelled→`cancel`, else `update`) via `ExpenseAiSupport::authorizeStatusChange` and `ExpenseService::changeStatus`. Pending-approval rows include assignee id. See [AI tools](/developer-guide/ai-tools) and [AI Expense triage production readiness](/deployment/ai-expense-triage-production-readiness).
+Ask EloSync Expense tools (`get_expense`, confirmed status/assign/note writes, plus existing `get_expense_pending_approval`) are registered in `AIToolRegistry` and confirmed via `PendingAiActionService`. Status auth mirrors HTTP `POST …/status` (Submitted→`submit`, Approved→`approve`, Rejected→`reject`, Paid→`pay`, Cancelled→`cancel`, else `update`) via `ExpenseAiSupport::authorizeStatusChange` and `ExpenseService::changeStatus`. Returning a paid expense to approved authorizes `expenses.pay` and voids the payment journal. Pending-approval rows include assignee id. See [AI tools](/developer-guide/ai-tools) and [AI Expense triage production readiness](/deployment/ai-expense-triage-production-readiness).
 
 ## Intentional differences from Purchase Orders
 
@@ -107,8 +107,8 @@ Ask EloSync Expense tools (`get_expense`, confirmed status/assign/note writes, p
 |-----------------|----------|
 | Required `vendor_id`, hard-depends on Vendors | Optional `vendor_id` **and** `purchase_order_id`, no hard dependencies |
 | Line-item child table, server-computed totals | Single `amount` + `tax_amount`, no computed total column |
-| Statuses: `draft → sent → partially_received\|received\|cancelled` | Statuses: `draft → submitted → approved\|rejected`, `approved → paid`, `draft\|submitted → cancelled` |
-| `send` / `receive` / `cancel` actions, no convert | `submit` / `approve` / `reject` / `pay` / `cancel` actions; **is itself** the target of a convert action |
+| Statuses: `draft → sent → partially_received\|received\|cancelled` | Statuses: `draft → submitted → approved\|rejected`, `approved → paid → approved`, `draft\|submitted → cancelled` |
+| `send` / `receive` / `cancel` actions, no convert | `submit` / `approve` / `reject` / `pay` / `unpay` / `cancel` actions; **is itself** the target of a convert action |
 | approve/reject/pay N/A | `approve`/`reject`/`pay` are not assignee-scoped — any holder of the permission can act, modeling an approver role |
 
 ## Deferred
