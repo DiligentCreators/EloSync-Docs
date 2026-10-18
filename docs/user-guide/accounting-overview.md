@@ -48,5 +48,4 @@ Catalog: slug `accounting`, category `finance`, `is_default_included = false`, `
 - Multi-currency accounting / FX on transfers
 - Budgets
 - Split a single payment across multiple deposit accounts
-- Expense unpay / reverse paid journal from the expense record
 - Historical backfill of accrual journals for invoices/credits issued before Accounting entitlement

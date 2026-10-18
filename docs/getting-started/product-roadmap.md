@@ -283,6 +283,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 
 **Asset depreciation journals (2026-10-18):** Straight-line monthly depreciation. First post capitalizes Dr Fixed Assets `1500` / Cr Owner Equity `3000`; each month debits Depreciation Expense `6500` and credits Accumulated Depreciation `1550`. Catalog **assets 1.2.0 → 1.3.0**, **accounting 1.9.0 → 1.10.0**. Go-live: [production readiness](/deployment/asset-depreciation-journals-production-readiness).
 
+**Expense unpay (2026-10-19):** `POST /expenses/{id}/unpay` returns a paid expense to approved and voids its payment journal when Accounting is entitled. A locked period leaves the expense paid. Catalog **expenses 1.5.0 → 1.6.0**. Go-live: [production readiness](/deployment/expense-unpay-production-readiness).
+
 Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaigns; portal passkeys; FIFO cost layers. If/else branches shipped in Automation **1.9.0**. Purchase-order and inventory auto-post shipped in Accounting **1.8.0**.
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.

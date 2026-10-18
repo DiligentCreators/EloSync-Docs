@@ -1,3 +1,11 @@
+## Expense unpay (expenses 1.6.0) (2026-10-19)
+
+- **EloSync-Backend:** `POST /expenses/{id}/unpay` (`expenses.pay`) returns a paid expense to approved, clears the payment account links, and voids the payment journal when Accounting is entitled. A locked fiscal period leaves the expense paid. `POST /expenses/{id}/status` to `approved` from `paid` uses the same path and permission. Catalog **expenses 1.5.0 → 1.6.0**. Pest: `ExpenseAccountingTest`, `ExpensesModuleVersion160BumpTest`.
+- **EloSync-Frontend:** Expense page **Undo payment** confirm. Headed one-session Playwright `npm run test:e2e:expenses:unpay:headed` covers create validation, pay-dialog cancel, posted `6000`/`1000` journal, undo cancel, voided journal, and a second pay.
+- **EloSync-Mobile:** Expense screen **Undo payment** confirm, including expenses paid on the web.
+- **EloSync-Docs:** Expenses and accounting guides, API, roadmap, upgrade, and [production readiness](/deployment/expense-unpay-production-readiness).
+- **Go-live:** Backend migrate-only. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build with the same API.
+
 ## Asset depreciation journals (assets 1.3.0 / accounting 1.10.0) (2026-10-18)
 
 - **EloSync-Backend:** Straight-line monthly depreciation. First post capitalizes Dr Fixed Assets `1500` / Cr Owner Equity `3000`. Each month debits Depreciation Expense `6500` and credits Accumulated Depreciation `1550`. New permission `assets.depreciate`. Soft dependency assets → accounting. Catalog **assets 1.2.0 → 1.3.0**, **accounting 1.9.0 → 1.10.0**. Pest: `AssetDepreciationTest`.

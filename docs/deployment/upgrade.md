@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Expenses 1.5.0 → 1.6.0 — undo payment
+
+1. Deploy Backend and run `php artisan migrate --force` (catalog bump only — **do not** `db:seed`)
+2. Confirm catalog version: expenses **1.6.0**
+3. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build
+4. Existing paid expenses stay paid until someone undoes the payment
+
+Go-live: [Expense unpay production readiness](/deployment/expense-unpay-production-readiness).
+
 ## Assets 1.2.0 → 1.3.0 / Accounting 1.9.0 → 1.10.0 — depreciation journals
 
 1. Deploy Backend and run `php artisan migrate --force` (asset depreciation columns, `asset_depreciations`, `assets.depreciate`, soft dependency, catalog bumps — **do not** `db:seed`)
