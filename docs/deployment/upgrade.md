@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Expenses 1.6.0 → 1.7.0 — itemized lines
+
+1. Deploy Backend and run `php artisan migrate --force` (`expense_lines` table and catalog bump — **do not** `db:seed`)
+2. Confirm catalog version: expenses **1.7.0**
+3. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build
+4. Existing expenses stay header-only until the next draft save
+
+Go-live: [Expense itemized lines production readiness](/deployment/expense-lines-1-7-0-production-readiness).
+
 ## Expenses 1.5.0 → 1.6.0 — undo payment
 
 1. Deploy Backend and run `php artisan migrate --force` (catalog bump only — **do not** `db:seed`)
