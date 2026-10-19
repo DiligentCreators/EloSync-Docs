@@ -1,3 +1,10 @@
+## Central operator notification mailbox (2026-10-20)
+
+- **EloSync-Backend:** System setting `ops_notification_email` (Central Settings → Mail) receives queued mail for new feedback, beta applications, and self-service workspace signups. A blank address sends none of those. Superadmin users are not recipients. Admin-created workspaces stay quiet. Critical bugs use the same feedback mail with a critical subject. Public `support_email` is unchanged. Pest: feedback, beta application, registration, tenant provisioning, and system settings.
+- **EloSync-Frontend:** Operator notification email field on Central Settings → Mail. Headed Playwright `npm run test:e2e:ops-notification:headed` (one central login): invalid email shows the field error and toast, a valid address saves and reloads, clearing it saves blank, then the previous value is restored.
+- **EloSync-Docs:** Central settings, feedback system, central API, [production readiness](/deployment/ops-notification-email-production-readiness), and this changelog.
+- **Go-live:** No migrate. Deploy Backend and Frontend together, then set the mailbox under Central Settings → Mail. Until it is set, these three alerts are not sent.
+
 ## Expense itemized lines (expenses 1.7.0) (2026-10-19)
 
 - **EloSync-Backend:** Optional `lines` on expense create/update (description, amount, tax, category, max 50). Header amount and tax are recomputed from the lines; header category is that category when every line shares one, otherwise null. Category list filter matches the header or any line. Purchase-order convert copies each line and splits purchase-order tax in proportion to line amount. Pay still posts one expense debit for the gross. Catalog **expenses 1.6.0 → 1.7.0**. Pest: `ExpenseLinesTest`, `ExpensesModuleVersion170BumpTest`.

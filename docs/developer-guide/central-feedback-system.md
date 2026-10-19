@@ -225,11 +225,11 @@ Reuse existing notification infrastructure — do not build a second bus.
 
 | Event | Audience | Channel |
 |-------|----------|---------|
-| Critical bug reported | Operators via System Settings `support_email` | Mail (`CriticalFeedbackReported`) |
+| Feedback submitted (any type; critical bugs use a critical subject) | Operators via System Settings `ops_notification_email` | Mail (`FeedbackSubmitted`). Skipped when the mailbox is blank. Superadmin users are not recipients. |
 | Status changed (Central triage) | Submitting tenant user (`user_id`) | Mail (`FeedbackReporterUpdated`, kind `status_changed`) — delayed ~90s and suppressed if status moved again during debounce; skipped when the reporter is missing/soft-deleted or has no email; priority/module-only updates do not notify |
 | Public reply from Central | Submitting tenant user | Mail (`FeedbackReporterUpdated`, kind `public_reply`, immediate) — internal notes never notify |
 
-Reporter mail uses platform branding (same pattern as `CriticalFeedbackReported`), not tenant Branded chrome. Status/public-reply mail includes a **View feedback** CTA (`/#/feedback/{uuid}`) that opens the reporter’s dedicated ticket page (history, public comments, attachments). The shell dialog deep link (`/#/dashboard?feedback=submissions`) still opens **My submissions**. In-app / CRM preference mute channels remain out of scope (transactional platform mail, same as critical-bug operator alerts).
+Reporter mail uses platform branding (same pattern as `FeedbackSubmitted`), not tenant Branded chrome. Status/public-reply mail includes a **View feedback** CTA (`/#/feedback/{uuid}`) that opens the reporter’s dedicated ticket page (history, public comments, attachments). The shell dialog deep link (`/#/dashboard?feedback=submissions`) still opens **My submissions**. In-app / CRM preference mute channels remain out of scope (transactional platform mail, same as operator intake alerts).
 
 ---
 
@@ -264,7 +264,7 @@ Pest + SPA unit/e2e coverage ships with the feature and includes:
 5. Only Central can change status/priority
 6. Public comments visible; internal notes hidden on tenant show
 7. Public activity timeline on tenant show includes status/module changes; priority changes never leak
-8. Critical bugs mail `support_email` (cache cleared after system-settings seed)
+8. Feedback mail goes to `ops_notification_email` when set, including non-critical items and critical bugs, and is skipped when that mailbox is blank
 9. Frontend: dialog schema + detail page + Playwright shell wiring (`test:e2e:feedback`) against a stubbed tenant API
 
 ---
