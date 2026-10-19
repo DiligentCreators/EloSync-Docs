@@ -518,6 +518,7 @@ export default withMermaid(defineConfig({
             { text: 'Authentication', link: '/deployment/authentication' },
             { text: 'Tenant RBAC', link: '/deployment/tenant-rbac' },
             { text: 'Central Settings', link: '/deployment/central-settings' },
+            { text: 'Operator notification mailbox readiness', link: '/deployment/ops-notification-email-production-readiness' },
             { text: 'Tenant Settings', link: '/deployment/tenant-settings' },
             { text: 'Tenant API & Webhooks Production Readiness', link: '/deployment/tenant-api-webhooks-production-readiness' },
             { text: 'Payment Gateways', link: '/deployment/payment-gateways' },

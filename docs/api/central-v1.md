@@ -222,7 +222,7 @@ Settings groups: `general`, `localization`, `mail`, `branding`, `security`, `mai
 |-------|------|-------------|
 | general | `app_name`, `company_name`, `timezone`, `locale`, `currency`, `registration_enabled`, `founding_beta_enabled`, `founding_beta_apply_url`, `founding_beta_invite_ttl_days` | App title/config, tenant defaults, self-service registration, registration-closed beta CTA, invite lifetime |
 | localization | `date_format`, `time_format` | Central SPA formatters |
-| mail | `mail_provider`, SMTP / Postmark / Mailgun credentials, `mail_webhook_secret`, `mail_webhook_events`, From identity | Laravel mail + delivery webhooks |
+| mail | `mail_provider`, SMTP / Postmark / Mailgun credentials, `mail_webhook_secret`, `mail_webhook_events`, From identity, `ops_notification_email` | Laravel mail + delivery webhooks. `ops_notification_email` receives new feedback, beta applications, and self-service workspace signups. It is omitted from the public bootstrap. |
 | branding | `button_color`, `support_email`, `logo_path`, `favicon_path`, `auth_image_*_path` | SPA CSS/`document.title`/sidebar/auth panels; support footer on tenant-facing emails |
 | security | `session_lifetime_minutes`, `password_min_length`, `password_require_special` | Session lifetime; centralized `PasswordRule` / `Password::defaults()` |
 | maintenance | `maintenance_mode`, `maintenance_message`, `maintenance_eta` | **Tenant Application only** (`tenant.available` middleware). Central stays up. |

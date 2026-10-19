@@ -41,7 +41,7 @@ Permissions: `system-settings.list`, `system-settings.update`, `email-logs.list`
 
 Empty / `********` secrets (`mail_password`, Postmark token, Mailgun secret) on update leave existing encrypted values unchanged.
 
-Mail keys include `mail_provider` (canonical; `mail_driver` mirrored), SMTP fields, `mail_reply_to`, `mail_timeout`, and provider credentials. Runtime apply lives in `App\Services\Email\EmailManager`.
+Mail keys include `mail_provider` (canonical; `mail_driver` mirrored), SMTP fields, `mail_reply_to`, `mail_timeout`, provider credentials, and `ops_notification_email`. That mailbox receives new feedback, beta applications, and self-service workspace signups. It is not part of the public bootstrap. An empty value sends none of those alerts. Runtime apply lives in `App\Services\Email\EmailManager`.
 
 Branding assets use the configured branding disk (`FILESYSTEM_BRANDING_DISK`, defaults to uploads). Logo/favicon under `branding/logos` / `branding/favicons`; auth panel images under `branding/auth-images/{asset}`. See [object-storage.md](/developer-guide/object-storage).
 
