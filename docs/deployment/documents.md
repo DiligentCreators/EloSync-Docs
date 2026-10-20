@@ -1,13 +1,13 @@
 # Documents — Production Guide
 
-Full go-live audit / checklist: [Documents production readiness](./documents-production-readiness).
+Full go-live audit / checklist: [Documents production readiness](./documents-production-readiness) · [folders + versions 1.7.0](./documents-folders-versions-1-7-0-production-readiness).
 
 ## Licensing
 
 - Catalog slug: `documents`
 - Category: `operations` (**Operations**), `category_sort_order = 40`
 - **Free Marketplace opt-in** module (not auto-installed)
-- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 85`, version **1.1.0**
+- Catalog flags: `is_default_included = false`, `is_billable = false`, price `0`, `sort_order = 85`, version **1.7.0**
 - **Hard** `module_dependencies` row: Documents → Storage (`is_optional = false`)
 - New workspaces receive only **Leads** + **Tasks** (+ ToDos) by default; enable Storage, then Documents from Marketplace
 - To flip billable later: Central → Modules → Documents → set `is_billable` + prices via existing Update Module API (no new Central UI)
@@ -32,30 +32,31 @@ On large tenant fleets, run migrate in a maintenance window (or raise PHP `max_e
 ## Monitoring
 
 - Platform audit events: `document_created`, `document_updated`, `document_deleted`, `document_restored`, `document_force_deleted`
-- Spatie activity log names: `documents`, `document-categories`
-- Storage used bytes include active `documents.size_bytes`
-- Soft-deleted document objects remain on disk until **force delete** or workspace **trash retention** purge (`trash:purge-expired`, Settings → General → trash retention)
+- Spatie activity log names: `documents`, `document-categories`, `document-folders`
+- Storage used bytes include active `documents.size_bytes` **plus** `document_versions.size_bytes`
+- Soft-deleted document objects (and versions) remain on disk until **force delete** or workspace **trash retention** purge (`trash:purge-expired`, Settings → General → trash retention)
 
 ## Deploy checklist
 
-1. Migrate tables (`document_categories`, `documents`)
+1. Migrate tables (`document_categories`, `documents`, `document_folders`, `document_versions`, `documents.folder_id`) and catalog bump **1.7.0**
 2. Register the `documents` catalog module (migration, not seeder) as free opt-in under `operations`
 3. Register hard dependency Documents → Storage (`module_dependencies`)
 4. Confirm `module:documents` + `documents.*` permissions on target roles (permission sync migration)
-5. Confirm catalog version **1.1.0** (`110000` bump)
+5. Confirm catalog version **1.7.0**
 6. Confirm Storage is entitled before Documents smoke
-7. Confirm `trash:purge-expired` is scheduled (removes expired soft-deleted documents **and** disk objects)
-8. Deploy frontend (Documents nav item, list/form/categories; multipart update via POST; bulk delete toolbar)
+7. Confirm `trash:purge-expired` is scheduled (removes expired soft-deleted documents **and** disk objects including versions)
+8. Deploy frontend (Documents nav item, list/form/categories/folders; versions on view/sheet; multipart update via POST; bulk delete toolbar)
 9. Smoke:
    - Create a **new** workspace → install Storage → install Documents
    - Confirm Documents install fails when Storage is missing
-   - Upload / categorize / download a file
-   - Soft delete → used bytes drop → restore → used bytes return
+   - Upload / categorize / folder / download a file
+   - Replace file → version appears → download / restore version
+   - Soft delete → used bytes drop (including versions) → restore → used bytes return
    - Restore blocked when over quota
    - Bulk soft delete on Active list; bulk force delete on Deleted only
-   - Force delete removes the object
-   - Soft-delete category blocked while documents still use it
+   - Force delete removes current + version objects
+   - Soft-delete category/folder blocked while documents (or folder children) still use it
 
 ## Roadmap context
 
-Documents ships as free Operations Marketplace opt-in **v1.1.0** (shipped) with hard Storage dependency. Soft record links and nested folders remain deferred — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).
+Documents ships as free Operations Marketplace opt-in **v1.7.0** (shipped) with hard Storage dependency, soft record links, nested folders, and simple file version history — see [module-dependencies.md](/architecture/module-dependencies) and [product-roadmap.md](/getting-started/product-roadmap).

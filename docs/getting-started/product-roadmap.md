@@ -130,7 +130,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Projects](/user-guide/projects-overview) | Shipped **1.8.0** (real-time board sync; workload heatmap **1.6.0**; portfolio Gantt **1.5.0**; milestones **1.4.0**; soft Task `project_id` + dependencies **tasks 1.5.0**; Automation `create_project` via **automation 1.4.0**) |
 | [Knowledge Base](/user-guide/knowledge-base-overview) | Shipped (internal articles) |
 | [Assets](/user-guide/assets-overview) | Shipped |
-| [Documents](/user-guide/documents-overview) | Shipped (requires Storage) |
+| [Documents](/user-guide/documents-overview) | Shipped **1.7.0** (requires Storage; nested folders + file version history — [readiness](/deployment/documents-folders-versions-1-7-0-production-readiness)) |
 | [Reports / Analytics](/user-guide/analytics-overview) | Shipped |
 | [Announcements](/user-guide/announcements-overview) | Shipped |
 | [Live Chat](/user-guide/live-chat-overview) | Shipped **1.6.0** (department-routed first-chat FCM; assignee-only follow-up; idle department alert; per-bubble agent name) |
@@ -150,7 +150,7 @@ Deferred beyond 1.4.0: portal passkeys.
 ### Other Operations deferred
 
 - Knowledge Base: anonymous public URLs (portal published read shipped **customer-portal 1.3.0**); nested categories
-- Documents: nested folders, versioning, soft record links (on demand)
+- Documents: check-in/check-out; in-browser preview; recursive descendant folder filters (folders + version history shipped **1.7.0**; soft record links shipped earlier)
 - Assets: Product/Inventory FKs; maintenance → Help Desk
 - Automation: Marketing campaigns / email campaigns (separate SKUs); standalone `send_whatsapp_document` action (`auto_send_whatsapp` on generate_* shipped **1.7.0**; `generate_order` PO shipped **1.8.0**; if/else branches shipped **1.9.0**)
 
@@ -301,7 +301,7 @@ Next when prioritized: demand-driven items below (broader AI tools continue ligh
 |------|--------|
 | Customer Portal magic-link login | Beyond **1.1.0** hub — on demand |
 | Recruitment | HR expansion — on demand |
-| Documents nested folders / versioning | Soft record links shipped (create + reverse list); folders/versioning on demand |
+| Documents check-in/check-out / preview | Nested folders + simple version history shipped **documents 1.7.0**; soft record links shipped earlier |
 | Marketing campaigns / email campaigns | Separate SKUs; Automation deferred |
 | Vendor Portal | Parked |
 | Multi-currency / multi-branch | Parked |

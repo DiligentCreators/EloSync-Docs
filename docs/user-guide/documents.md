@@ -18,14 +18,14 @@ Without Storage, Marketplace blocks Documents install. Uploads also require rema
 Open **Documents** from the sidebar (Operations area).
 
 - Search by title, description, or original file name
-- Filter by category, or toggle trash filters (**Active / Include deleted / Deleted only**) when you have **restore**
+- Filter by category, folder (including **Unfiled**), or toggle trash filters (**Active / Include deleted / Deleted only**) when you have **restore**
 - KPI cards summarize total, categorized, and uncategorized counts
 - **Delete permanently** requires `documents.force.delete` (not on default role maps — same posture as Vendors / Assets)
 
 ## Upload
 
 1. Click **New document** (shortcut: `n` when the list is focused and you have create permission)
-2. Enter a title (required). Optionally add a description and category
+2. Enter a title (required). Optionally add a description, category, and folder
 3. Optionally link a **Contact**, **Company**, or **Lead** when those modules are installed — use **New** beside a picker to create and select inline when you have create permission
 4. Choose a file (required on create). Allowed types include common office docs, images, text/CSV, and archives; max **50 MB** per file
 5. Save — the file is stored on the workspace uploads disk under the tenant Documents directory. Allowed types and max sizes follow **Settings → Storage → Upload limits** (defaults include PDF, Word, Excel, and common office formats).
@@ -34,11 +34,19 @@ Focus search with `Ctrl/⌘+F`.
 
 ## Categories
 
-Categories are a flat list (no nested folders).
+Categories are a flat label list (separate from folders).
 
-- Create / edit categories from the Documents UI (permissions reuse `documents.create` / `update` / `delete` / `restore` / `force.delete`)
+- Create / edit categories from **Manage categories** (permissions reuse `documents.create` / `update` / `delete` / `restore` / `force.delete`)
 - Assign a category when uploading or editing a document
 - You cannot soft-delete a category that still has documents; clear or reassign them first
+
+## Folders
+
+Nested folders organize documents in a directory tree (up to **5** levels). Categories remain optional labels.
+
+- Create / rename / nest folders from **Manage folders** (same `documents.*` permissions)
+- Assign a folder when uploading or editing a document
+- You cannot delete a folder that still has documents or subfolders
 
 ## Download
 
@@ -46,7 +54,15 @@ Open a document and use **Download**, or call the download endpoint. Download re
 
 ## Edit & replace file
 
-Edit metadata (title, description, category) from the row menu or the document page. Optionally replace the file on update — the new size must fit remaining Storage quota (only the delta counts when the new file is larger).
+Edit metadata (title, description, category, folder) from the row menu or the document page. Optionally replace the file on update — the previous file is kept as a **version** (counts toward Storage). The new file size must fit remaining quota.
+
+## Versions
+
+On the document view (and list peek **Versions** tab):
+
+- Prior uploads appear as version history after a file replace
+- **Download** a prior version or **Restore** it (copies that blob as the new current file and archives the previous current file as another version)
+- There is no check-in / check-out lock
 
 ## Soft delete & restore
 
@@ -62,16 +78,16 @@ Edit metadata (title, description, category) from the row menu or the document p
 
 | Permission | Typical use |
 |------------|-------------|
-| `documents.view` | List, open, download, stats, browse categories |
-| `documents.create` | Upload documents; create categories |
-| `documents.update` | Edit metadata / replace file; update categories |
-| `documents.delete` | Soft delete documents and empty categories |
+| `documents.view` | List, open, download, stats, browse categories and folders, list versions |
+| `documents.create` | Upload documents; create categories and folders |
+| `documents.update` | Edit metadata / replace file / restore a version; update categories and folders |
+| `documents.delete` | Soft delete documents and empty categories / folders |
 | `documents.restore` | Restore soft-deleted rows; trash filters |
 | `documents.force.delete` | Permanently delete (owner/superadmin only by default) |
 
 ## Storage quota
 
-Every active document’s `size_bytes` counts toward the workspace Storage allowance (along with Team Chat attachments, feedback screenshots, and lead imports). Soft-deleted documents are excluded from used bytes. If upload fails with a quota error, free space or upgrade a Storage pack — see [Storage](/user-guide/storage).
+Every active document’s current `size_bytes` **plus** archived version bytes count toward the workspace Storage allowance (along with Team Chat attachments, feedback screenshots, and lead imports). Soft-deleted documents (and their versions) are excluded from used bytes. If upload fails with a quota error, free space or upgrade a Storage pack — see [Storage](/user-guide/storage).
 
 ## Related
 

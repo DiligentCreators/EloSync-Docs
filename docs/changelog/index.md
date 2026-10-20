@@ -1,3 +1,10 @@
+## Documents nested folders + version history (documents 1.7.0) (2026-10-20)
+
+- **EloSync-Backend:** Nested `document_folders` (max depth 5) with optional `documents.folder_id`; list filter `folder_id` / unfiled; folder CRUD under `/documents/folders`. File replace archives the previous blob as `document_versions`; list / download / restore versions (restore copies to a new path). Storage `usedBytes` includes version bytes; force-delete removes current + version objects. Catalog **documents 1.6.0 → 1.7.0**. Pest: `DocumentTest` folders + versions.
+- **EloSync-Frontend:** Manage folders dialog, folder filter/picker, Versions panel on view + list peek. Playwright Documents workflow covers nested folders, folder filter, replace → version download/restore.
+- **EloSync-Docs:** Documents user/developer/API/deployment guides, roadmap, [production readiness](/deployment/documents-folders-versions-1-7-0-production-readiness), and this changelog.
+- **Go-live:** Backend migrate-only (`document_folders`, `document_versions`, `folder_id`, catalog bump). Deploy Frontend after production build; hard-refresh SPA. Mobile Documents folders/versions remain out of scope for this release.
+
 ## Central operator notification mailbox (2026-10-20)
 
 - **EloSync-Backend:** System setting `ops_notification_email` (Central Settings → Mail) receives queued mail for new feedback, beta applications, and self-service workspace signups. A blank address sends none of those. Superadmin users are not recipients. Admin-created workspaces stay quiet. Critical bugs use the same feedback mail with a critical subject. Public `support_email` is unchanged. Pest: feedback, beta application, registration, tenant provisioning, and system settings.
