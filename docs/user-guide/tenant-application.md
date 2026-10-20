@@ -75,6 +75,16 @@ Marketplace shows paid prices in your **workspace currency** (Settings → Gener
 
 Widget data respects module licensing, your permissions, and assignee scope (without assign permission you only see your own leads/tasks; Calendar uses `calendar.view_all` for org vs mine).
 
+### Customize your dashboard
+
+Use **Customize** on the Dashboard to:
+
+1. Apply a **template** (Balanced, Sales rep, Sales manager, Service desk, Project ops, Finance ops, CRM lite). Only widgets you are entitled to appear.
+2. **Show or hide** widgets and **drag to reorder** them.
+3. **Save layout** — preferences are stored per user on the server (sync across devices).
+
+Templates and personal layouts never grant access. If a module is removed or a permission is revoked, related widgets disappear even if they were pinned. Newly entitled widgets stay hidden until you add them (Customize shows a **new** badge when any are waiting).
+
 ## Switching apps
 
 | App | Typical entry |
