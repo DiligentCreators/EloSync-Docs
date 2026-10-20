@@ -502,6 +502,7 @@ export default withMermaid(defineConfig({
             { text: 'Email-only Tenant Password Reset Readiness', link: '/deployment/email-only-tenant-password-reset-production-readiness' },
             { text: 'Projects 1.8.0 Real-time Board Sync Readiness', link: '/deployment/projects-realtime-board-sync-1-8-0-production-readiness' },
             { text: 'Documents Production Readiness', link: '/deployment/documents-production-readiness' },
+            { text: 'Documents Folders + Versions 1.7.0 Readiness', link: '/deployment/documents-folders-versions-1-7-0-production-readiness' },
             { text: 'Short Links', link: '/deployment/short-links' },
             { text: 'Short Links Production Readiness', link: '/deployment/short-links-production-readiness' },
             { text: 'Platform Polish A/B/C Production Readiness', link: '/deployment/platform-polish-a-b-c-production-readiness' },

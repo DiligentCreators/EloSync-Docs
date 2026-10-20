@@ -14,7 +14,7 @@ Permission: `documents.view`
 
 Same filters as list (minus pagination/sort). Payload:
 
-`total`, `categorized`, `uncategorized`.
+`total`, `categorized`, `uncategorized`, `in_folder`, `unfiled`.
 
 ## Documents CRUD
 
@@ -22,9 +22,9 @@ Same filters as list (minus pagination/sort). Payload:
 
 Permission: `documents.view`
 
-Query: `search` (title, description, original_name), `category_id`, `linkable_type` + `linkable_id` (filter documents soft-linked to a record; `linkable_type` accepts `lead` | `contact` | `company` | `project` | `employee` | `asset` | `task`, case-insensitive), `contact_id` / `company_id` (AND when both set — same party-chip pattern as invoices), `trashed` (`only` | `true` | `with`), `sort` (`title` | `original_name` | `size_bytes` | `created_at` | `updated_at`, default `created_at`), `direction`, `page`, `per_page`.
+Query: `search` (title, description, original_name), `category_id`, `folder_id` (exact folder id, or `unfiled` / empty / `null` for no folder), `linkable_type` + `linkable_id` (filter documents soft-linked to a record; `linkable_type` accepts `lead` | `contact` | `company` | `project` | `employee` | `asset` | `task`, case-insensitive), `contact_id` / `company_id` (AND when both set — same party-chip pattern as invoices), `trashed` (`only` | `true` | `with`), `sort` (`title` | `original_name` | `size_bytes` | `created_at` | `updated_at`, default `created_at`), `direction`, `page`, `per_page`.
 
-List items include nested `category` / `creator` when loaded, plus `original_name`, `mime`, `size_bytes`.
+List items include nested `category` / `folder` / `creator` when loaded, plus `original_name`, `mime`, `size_bytes`.
 
 ### POST `/documents`
 
@@ -37,6 +37,7 @@ Permission: `documents.create`
 | `title` | required, string, max 255 |
 | `description` | optional string, max 5000 |
 | `category_id` | optional; must exist in tenant `document_categories` and not soft-deleted |
+| `folder_id` | optional; must exist in tenant `document_folders` and not soft-deleted |
 | `lead_ids` | optional array of lead ids (requires entitled **Leads** + `LinkableLead` scope) |
 | `contact_ids` | optional array of contact ids (requires entitled **Contacts** + `LinkableContact` scope) |
 | `company_ids` | optional array of company ids (requires entitled **Companies** + `LinkableCompany` scope) |
@@ -52,21 +53,49 @@ Stores under the tenant Documents directory on the uploads disk. Counts toward S
 
 Permission: `documents.view`. Soft-deleted rows return not found on show.
 
-Includes category, creator, and `links` (with `label` per linkable) when loaded. Does **not** expose `path` / `disk`.
+Includes category, folder, creator, and `links` (with `label` per linkable) when loaded. Does **not** expose `path` / `disk`.
 
 ### PUT `/documents/{id}`
 
 Permission: `documents.update`
 
-JSON body (partial): `title`, `description`, `category_id`, and any of the optional `*_ids` link arrays above. Omitted link arrays leave that type unchanged; send `[]` to clear links for a type.
+JSON body (partial): `title`, `description`, `category_id`, `folder_id`, and any of the optional `*_ids` link arrays above. Omitted link arrays leave that type unchanged; send `[]` to clear links for a type.
 
 ### POST `/documents/{id}`
 
 Permission: `documents.update` (named route `documents.update.post`)
 
-`multipart/form-data` (partial): `title`, `description`, `category_id`, optional link arrays (`lead_ids[]`, …), optional `file` (same mime/size rules as create). Replacing a larger file checks quota on the positive size delta only.
+`multipart/form-data` (partial): `title`, `description`, `category_id`, `folder_id`, optional link arrays (`lead_ids[]`, …), optional `file` (same mime/size rules as create). Replacing a file archives the previous blob as a version and asserts quota for the **new** file size (old bytes remain counted as a version).
 
 **File replace:** use this `POST` twin — PHP does not populate uploaded files on a true HTTP `PUT`. The official SPA posts FormData here (no `_method` spoofing required). Method-spoofed `POST` + `_method=PUT` also works.
+
+## Versions
+
+### GET `/documents/{id}/versions`
+
+Permission: `documents.view`. Lists prior versions newest-first (`version_number`, `original_name`, `mime`, `size_bytes`, `creator`, `created_at`).
+
+### GET `/documents/{id}/versions/{version}/download`
+
+Permission: `documents.view` (download). Streams that version’s blob.
+
+### POST `/documents/{id}/versions/{version}/restore`
+
+Permission: `documents.update`. Archives the current file as a new version, copies the restored version’s blob to a new path as the current file, and asserts Storage quota for the restored size.
+
+## Folders
+
+### GET `/documents/folders`
+
+Permission: `documents.view`. Optional query `parent_id` (omit for all folders; empty/`null` for roots only). Includes `children_count` / `documents_count` when counted.
+
+### POST `/documents/folders`
+
+Permission: `documents.create`. Body: `name` (required), optional `slug`, `parent_id`, `sort_order`. Max nesting depth **5**. Slug unique under the same parent.
+
+### GET|PUT|DELETE `/documents/folders/{id}` (+ restore / force)
+
+Same permission pattern as categories. Soft/force delete blocked while the folder has children or documents.
 
 ### POST `/documents/bulk-delete`
 
@@ -90,7 +119,7 @@ Soft delete. Permission: `documents.delete`, and the actor must be the **uploade
 
 ### POST `/documents/{id}/restore`
 
-Restore a soft-deleted document. Permission: `documents.restore`. Re-checks Storage quota for the document's `size_bytes` (soft-deleted rows are excluded from used bytes until restored). Returns `422` with `STORAGE_QUOTA_EXCEEDED` when restore would exceed allowance.
+Restore a soft-deleted document. Permission: `documents.restore`. Re-checks Storage quota for the document's current `size_bytes` **plus** all version bytes (soft-deleted rows are excluded from used bytes until restored). Returns `422` with `STORAGE_QUOTA_EXCEEDED` when restore would exceed allowance.
 
 ### DELETE `/documents/{id}/force`
 

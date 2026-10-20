@@ -17,6 +17,15 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Documents 1.6.0 → 1.7.0 — nested folders + version history
+
+1. Deploy Backend and run `php artisan migrate --force` (`document_folders`, `document_versions`, `documents.folder_id`, catalog bump — **do not** `db:seed`)
+2. Confirm catalog version: documents **1.7.0**
+3. Deploy Frontend after production build; hard-refresh SPA
+4. Existing documents stay unfiled until assigned to a folder; prior replaces had no history
+
+Go-live: [Documents folders + versions production readiness](/deployment/documents-folders-versions-1-7-0-production-readiness).
+
 ## Expenses 1.6.0 → 1.7.0 — itemized lines
 
 1. Deploy Backend and run `php artisan migrate --force` (`expense_lines` table and catalog bump — **do not** `db:seed`)

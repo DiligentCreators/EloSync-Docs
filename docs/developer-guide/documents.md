@@ -6,37 +6,37 @@ Mirror of the [Assets developer guide](/developer-guide/assets) and Knowledge Ba
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/Document.php`, `DocumentCategory`, `DocumentLink` |
-| Services | `app/Services/Tenant/DocumentService.php`, `DocumentCategoryService.php`, `DocumentLinkService.php` |
+| Models | `app/Models/Document.php`, `DocumentCategory`, `DocumentFolder`, `DocumentVersion`, `DocumentLink` |
+| Services | `app/Services/Tenant/DocumentService.php`, `DocumentCategoryService.php`, `DocumentFolderService.php`, `DocumentVersionService.php`, `DocumentLinkService.php` |
 | Upload / quota | `app/Services/Storage/FileUploadService.php`, `WorkspaceStorageService.php` |
-| Controllers | `app/Http/Controllers/Tenant/Api/V1/DocumentController.php`, `DocumentCategoryController.php` |
-| Requests | `app/Http/Requests/Tenant/Api/V1/Document/*`, `DocumentCategory/*` |
-| Resources | `app/Http/Resources/Tenant/Api/V1/Document/*`, `DocumentCategory/*` |
-| Policies | `app/Policies/DocumentPolicy.php`, `DocumentCategoryPolicy.php` |
+| Controllers | `app/Http/Controllers/Tenant/Api/V1/DocumentController.php`, `DocumentCategoryController.php`, `DocumentFolderController.php`, `DocumentVersionController.php` |
+| Requests | `app/Http/Requests/Tenant/Api/V1/Document/*`, `DocumentCategory/*`, `DocumentFolder/*` |
+| Resources | `app/Http/Resources/Tenant/Api/V1/Document/*`, `DocumentCategory/*`, `DocumentFolder/*` |
+| Policies | `app/Policies/DocumentPolicy.php`, `DocumentCategoryPolicy.php`, `DocumentFolderPolicy.php` |
 | Events | `app/Events/DocumentCreated.php`, `DocumentUpdated.php`, `DocumentDeleted.php` |
 | Subscriber | `app/Listeners/DocumentEventSubscriber.php` (platform audit) |
 | Tests | `tests/Feature/Tenant/Document/DocumentTest.php` |
 
 ## Domain notes
 
-- Flat library only — optional `category_id` FK (`nullOnDelete`); no folder tree.
+- Optional flat `category_id` FK (`nullOnDelete`) plus optional nested `folder_id` FK (`nullOnDelete`) on `document_folders` (max depth **5**; delete blocked with children or documents).
+- **Versions (1.7.0):** file replace archives current blob as `document_versions` then stores the new file (old object kept). Restore copies the version blob to a new path, archives current, and asserts quota for the restored size. Force-delete removes current + all version blobs.
 - **Soft record links** via `document_links` polymorphic pivot (`DocumentLink` / `DocumentLinkService::sync` on create + update). Optional arrays: `lead_ids`, `contact_ids`, `company_ids`, `project_ids`, `employee_ids`, `asset_ids`, `task_ids`. Each id validated with the matching `Linkable*` rule (module entitlement + assignee / visibility scope). Omitted keys leave that link type unchanged; an empty array clears links for that type.
 - **Reverse list filter (1.6.0):** `GET /documents?linkable_type=contact&linkable_id=` (and peer types) returns documents linked to that record. Prefer party chips `contact_id` / `company_id` (AND when both set) for Contact/Company hubs and Documents list deep links.
 - Categories: `name`, auto `slug` (`Str::slug` when omitted), `sort_order`, `is_active`. Soft/force delete blocked while documents still reference the category.
 - Create requires multipart `file` (max 51200 KB / 50 MB). `DocumentService::create` calls `WorkspaceStorageService::assertCanStore` then `FileUploadService::store` under `FileUploadService::tenantDirectory($tenantId, 'documents')` (`public: false`).
-- Update may replace the file via `FileUploadService::replace`; quota check uses the positive size delta only.
-- Soft delete does **not** remove the object until force delete or trash retention purge; `forceDeleting` deletes via `FileUploadService` (covers API + `trash:purge-expired`).
+- Soft delete does **not** remove objects until force delete or trash retention purge; `forceDeleting` deletes current + version paths via `FileUploadService` (covers API + `trash:purge-expired`).
 - **Ownership:** `DocumentPolicy::delete` / `forceDelete` require the Spatie permission **and** (`created_by === actor` **or** workspace owner / `superadmin` role). Bulk endpoints use the same Gate checks per id.
-- Restore calls `assertCanStore` for the document's `size_bytes` before un-trashed bytes count again.
+- Restore calls `assertCanStore` for current `size_bytes` + sum of version bytes before un-trashed bytes count again.
 - Bulk: `DocumentService::bulkDelete` / `bulkForceDelete` (max 100 ids) with per-id failure reporting; force requires soft-deleted rows (single + bulk).
 - File replace: prefer `POST /documents/{id}` (named `documents.update.post`); JSON metadata-only updates may use `PUT`. PHP does not populate multipart files on true HTTP PUT.
-- `Document` / `DocumentCategory` are registered in `TrashPurgeRegistry` (workspace `trash.retention_days`).
-- `WorkspaceStorageService::usedBytes()` sums non-trashed `documents.size_bytes` with chat/feedback/lead-import usage.
-- Spatie activity log name `documents` / `document-categories` (path/disk excluded from document attribute logs).
+- `Document` / `DocumentCategory` / `DocumentFolder` are registered in `TrashPurgeRegistry` (workspace `trash.retention_days`).
+- `WorkspaceStorageService::usedBytes()` sums non-trashed `documents.size_bytes` **plus** their `document_versions.size_bytes`, with chat/feedback/lead-import usage.
+- Spatie activity log name `documents` / `document-categories` / `document-folders` (path/disk excluded from document attribute logs).
 - Platform audit events: `document_created`, `document_updated`, `document_deleted`, `document_restored`, `document_force_deleted`.
 - `documents.force.delete` is not granted to default roles — owner/superadmin only, matching Vendors / Assets.
-- Production readiness: [Documents production readiness](/deployment/documents-production-readiness).
-- Catalog version **1.3.0**
+- Production readiness: [Documents production readiness](/deployment/documents-production-readiness) · [folders + versions 1.7.0](/deployment/documents-folders-versions-1-7-0-production-readiness).
+- Catalog version **1.7.0**
 
 ## Permissions
 
@@ -51,7 +51,7 @@ Routes use `module:documents` then `can:documents.*` / policies. Category CRUD r
 ## Catalog
 
 - Slug `documents`, category `operations`, `sort_order` 85, icon `file-text`
-- `is_default_included = false`, `is_billable = false`, version **1.3.0**
+- `is_default_included = false`, `is_billable = false`, version **1.7.0**
 - Hard `module_dependencies` row: **documents → storage** (`is_optional = false`)
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule` (no seeder in production)
 
@@ -64,10 +64,10 @@ Flip catalog flags with the existing Central **Update Module** API (Central → 
 | Concern | Behavior |
 |---------|----------|
 | Install gate | `ModuleSubscriptionService` rejects Documents without entitled Storage |
-| Upload gate | `assertCanStore` before store/replace |
-| Used bytes | Active `documents.size_bytes` included in quota |
-| Soft delete | Excluded from `usedBytes`; object remains until force delete or trash purge |
-| Force delete / trash purge | Object removed from disk in `forceDeleting` |
+| Upload gate | `assertCanStore` before store / replace / version restore |
+| Used bytes | Active document + version `size_bytes` included in quota |
+| Soft delete | Excluded from `usedBytes`; objects remain until force delete or trash purge |
+| Force delete / trash purge | Current + version objects removed from disk in `forceDeleting` |
 
 ## API (tenant)
 
@@ -77,8 +77,18 @@ Base: `/api/tenant/v1` — full reference [tenant-v1-documents.md](/api/tenant-v
 |--------|------|------------|
 | GET | `/documents` | view |
 | GET | `/documents/stats` | view |
+| GET | `/documents/folders` | view |
+| GET | `/documents/folders/{documentFolder}` | view |
+| POST | `/documents/folders` | create |
+| PUT | `/documents/folders/{documentFolder}` | update |
+| DELETE | `/documents/folders/{documentFolder}` | delete |
+| POST | `/documents/folders/{documentFolder}/restore` | restore |
+| DELETE | `/documents/folders/{documentFolder}/force` | force.delete |
 | GET | `/documents/{document}` | view |
 | GET | `/documents/{document}/download` | view |
+| GET | `/documents/{document}/versions` | view |
+| GET | `/documents/{document}/versions/{version}/download` | view |
+| POST | `/documents/{document}/versions/{version}/restore` | update |
 | POST | `/documents` | create |
 | PUT | `/documents/{document}` | update |
 | DELETE | `/documents/{document}` | delete |
