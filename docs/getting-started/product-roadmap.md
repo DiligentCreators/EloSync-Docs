@@ -291,7 +291,9 @@ Still deferred: multi-currency; PO/Vendor portals; Automation marketing campaign
 
 **Customer Portal depth + Help Desk reopen (2026-10-08):** Magic-link + TOTP 2FA + portal published KB; Help Desk closed/resolved reopen on customer reply + dedicated email toggles. Catalog **customer-portal 1.2.0 → 1.3.0**, **help-desk 1.14.0 → 1.15.0**.
 
-Next when prioritized: demand-driven items below (broader AI tools continue lightly).
+**Documents folders + versions (2026-10-20):** Nested folders (max depth 5) + file version history on replace. Catalog **documents 1.6.0 → 1.7.0**. Go-live: [production readiness](/deployment/documents-folders-versions-1-7-0-production-readiness) (**Go**). Further Documents depth (check-in/check-out, in-browser preview, recursive folder filters, mobile folders/versions) is **paused until tenant feedback**.
+
+Next when prioritized: demand-driven items below only (no speculative module depth). Broader AI tools may continue lightly when cheap and patterned.
 
 ---
 
@@ -301,7 +303,7 @@ Next when prioritized: demand-driven items below (broader AI tools continue ligh
 |------|--------|
 | Customer Portal magic-link login | Beyond **1.1.0** hub — on demand |
 | Recruitment | HR expansion — on demand |
-| Documents check-in/check-out / preview | Nested folders + simple version history shipped **documents 1.7.0**; soft record links shipped earlier |
+| Documents check-in/check-out / preview / recursive filters / mobile folders | Nested folders + version history shipped **documents 1.7.0**; **paused pending tenant ask** |
 | Marketing campaigns / email campaigns | Separate SKUs; Automation deferred |
 | Vendor Portal | Parked |
 | Multi-currency / multi-branch | Parked |
