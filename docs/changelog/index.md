@@ -1,3 +1,10 @@
+## Customizable tenant dashboard layouts (2026-10-21)
+
+- **EloSync-Backend:** Per-user `users.dashboard_layout` JSON. `GET /dashboard` returns ordered/visible widgets plus `layout` (catalog, templates, `new_widget_ids`). `PUT /dashboard/layout` applies a platform template or custom show/hide + order. Eligibility (module + permission) always wins. Pest: `DashboardLayoutTest` + widget suite **14/14**.
+- **EloSync-Frontend:** Dashboard **Customize** sheet — templates (Balanced, Sales rep, Sales manager, Service desk, Project ops, Finance ops, CRM lite), drag-reorder, show/hide, save. Insights grid follows the saved order. Headed one-session Playwright `npm run test:e2e:tenant-dashboard:customize:headed` **1/1**; tenant dashboard suite **3/3**.
+- **EloSync-Docs:** Tenant application user guide, [tenant dashboard API](/api/tenant-v1-dashboard), and [production readiness](/deployment/dashboard-layout-customize-production-readiness).
+- **Go-live:** Backend migrate-only (`users.dashboard_layout`). Deploy Frontend after production build; hard-refresh SPA.
+
 ## Documents nested folders + version history (documents 1.7.0) (2026-10-20)
 
 - **EloSync-Backend:** Nested `document_folders` (max depth 5) with optional `documents.folder_id`; list filter `folder_id` / unfiled; folder CRUD under `/documents/folders`. File replace archives the previous blob as `document_versions`; list / download / restore versions (restore copies to a new path). Storage `usedBytes` includes version bytes; force-delete removes current + version objects. Catalog **documents 1.6.0 → 1.7.0**. Pest: `DocumentTest` folders + versions.

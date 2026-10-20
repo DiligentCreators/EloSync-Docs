@@ -7,7 +7,7 @@ REST API documentation for Central and Tenant surfaces of EloSync.
 | Document | Description |
 |----------|-------------|
 | [Central v1](./central-v1) | Central admin REST API |
-| [Tenant Dashboard](./tenant-v1-dashboard) | Dashboard + widget registry |
+| [Tenant Dashboard](./tenant-v1-dashboard) | Dashboard + widget registry + per-user layout |
 | [Tenant Leads](./tenant-v1-leads) | Leads CRUD and workflows |
 | [Tenant Companies](./tenant-v1-companies) | Companies CRUD, notes, timeline |
 | [Tenant Contacts](./tenant-v1-contacts) | Contacts CRUD, notes, timeline |
