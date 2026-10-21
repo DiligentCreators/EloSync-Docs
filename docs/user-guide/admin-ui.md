@@ -83,7 +83,8 @@ Tabbed layout:
 Header actions:
 
 - Lifecycle: edit, archive, delete, restore, force-delete
-- **Impersonate** (`impersonation.start`): reason dialog → `POST /tenants/{id}/impersonate`; end via `POST /impersonation/{id}/end`. The reason is stored on `impersonation_sessions` and in platform audit properties, and appears on the Impersonation and Audit Logs tabs.
+- **Owner login** (`tenants.update`): when an owner exists — dialog to change the owner **login** email and/or set a new password (`POST /tenants/{id}/owner-credentials`). This is distinct from the workspace contact **Email** on Overview. Password changes revoke the owner's API sessions. Audited as `workspace_owner_credentials_updated`.
+- **Impersonate** (`impersonation.start`): reason dialog → `POST /tenants/{id}/impersonate`; end via `POST /impersonation/{id}/end`. The reason is stored on `impersonation_sessions` and in platform audit properties, and appears on the Impersonation and Audit Logs tabs. The start response includes `workspace` (`slug` / `domain`) so the SPA replaces any stale shared-host workspace hint before calling the tenant API.
 
 Plan subscription and usage-limit cards removed.
 
