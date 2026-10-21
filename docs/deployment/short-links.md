@@ -27,6 +27,9 @@ See [Upgrade guide — Short Links 1.1.0 → 1.2.0](./upgrade#short-links-1-1-0-
 
 - **Queues:** `RecordShortLinkClickJob` runs on the default queue — workers must be running for click analytics.
 - **Rate limit:** `short-link-redirects` — 120 requests/minute per IP (disabled in `testing`).
+- **Geo:** country is read from `CF-IPCountry` or `X-Country-Code` at click time (2-letter codes only).
+- **Retention:** schedule `php artisan short-links:rollup-clicks --prune` (retention via `SHORT_LINK_CLICK_RETENTION_DAYS`, default 90).
+- **Custom short domains:** tenant proposes hostname + TXT `elosync-short-link-verify={token}`; point DNS/TLS at the same Laravel app as `go.elosync.com`.
 - **Public 404:** Missing or inactive links return HTTP 404 with branded HTML (not JSON).
 
 ## Permissions rollout
