@@ -10,7 +10,7 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 Same filters as list (minus pagination/sort). Payload:
 
-`total_links`, `active_links`, `paused_links`, `total_clicks`.
+`total_links`, `active_links`, `paused_links`, `total_clicks`, `clicks_last_7_days`, `top_links` (up to 5: `id`, `title`, `code`, `click_count`).
 
 ## Short links CRUD
 
@@ -59,13 +59,21 @@ Permanently delete a soft-deleted link and its click rows. Permission: `short-li
 
 Permission: `short-links.view_analytics`.
 
-Returns `click_count`, `last_clicked_at`, `clicks_by_day`, `top_referrers`, `devices`.
+Query: optional `from`, `to` (workspace-local calendar dates `Y-m-d`).
+
+Returns `click_count`, `range_click_count`, `unique_clicks` (distinct `ip_hash`), `last_clicked_at`, `clicks_by_day`, `clicks_by_hour`, `top_referrers`, `devices`, `browsers`, `os`.
 
 ### GET `/short-links/{id}/clicks`
 
 Permission: `short-links.view_analytics`.
 
-Paginated click log (`clicked_at`, `device_type`, `referrer`, `user_agent`).
+Paginated click log (`clicked_at`, `event`, `device_type`, `browser`, `os`, `referrer`, `user_agent`).
+
+### GET `/short-links/{id}/export`
+
+Permission: `short-links.view_analytics`.
+
+CSV download of clicks (same optional `from` / `to` as stats). Columns: `clicked_at`, `event`, `device_type`, `browser`, `os`, `referrer`, `user_agent`.
 
 ## Public redirect (central)
 

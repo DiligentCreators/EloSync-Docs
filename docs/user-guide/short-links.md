@@ -22,7 +22,7 @@ Open **Short Links** from the sidebar (Operations).
 
 - Search by title or destination URL
 - Filter by status (Active / Paused) and trash state when you can restore
-- KPI cards show total links, active links, and total clicks
+- KPI cards show total links, active links, total clicks, and clicks in the last 7 days
 - **Short URL** column shows each link with a copy icon; you can also copy from the row menu
 
 ## Create & edit
@@ -37,7 +37,7 @@ Edit from the row menu or the record page. Focus search with `Ctrl/⌘+F`.
 ## Record page
 
 - **Details** — slug, destination, status, expiry, copyable short URL (inline copy icon)
-- **Analytics** (requires `view_analytics`) — total clicks, clicks by day, top referrers, device breakdown
+- **Analytics** (requires `view_analytics`) — total and unique clicks, optional date range, clicks-by-day and by-hour charts, top referrers, devices, browsers, operating systems, and CSV export
 
 ## Status
 
