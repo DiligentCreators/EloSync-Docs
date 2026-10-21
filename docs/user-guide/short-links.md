@@ -40,6 +40,8 @@ Edit from the row menu or the record page. Focus search with `Ctrl/⌘+F`.
 
 - **Details** — slug, destination, status, expiry, copyable short URL (inline copy icon)
 - **Analytics** (requires `view_analytics`) — total and unique clicks, optional date range, clicks-by-day and by-hour charts, top referrers, devices, browsers, operating systems, and CSV export
+- **Download QR** — SVG QR code for the short URL
+- Optional **starts at**, **max clicks**, **password**, **campaign**, and **tags** for marketing controls
 
 ## Status
 
