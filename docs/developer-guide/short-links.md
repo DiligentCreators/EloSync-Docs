@@ -43,7 +43,7 @@ short-links.view | create | update | delete | restore | force.delete | view_anal
 ## Catalog
 
 - Slug `short-links`, category `operations`, `sort_order` 90
-- `is_default_included = false`, `is_billable = false`, version **1.2.0**
+- `is_default_included = false`, `is_billable = false`, version **2.0.0**
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule`
 
 ## API (tenant)

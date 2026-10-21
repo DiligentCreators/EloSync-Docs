@@ -78,6 +78,28 @@ Permission: `short-links.view_analytics`.
 
 CSV download of clicks (same optional `from` / `to` as stats). Columns: `clicked_at`, `event`, `device_type`, `browser`, `os`, `referrer`, `user_agent`.
 
+### GET `/short-links/{id}/qr`
+
+Permission: `short-links.view`. Returns SVG QR for the public short URL.
+
+## Custom short domain
+
+### GET `/short-links/domain`
+
+Current proposed/verified hostname + TXT instruction.
+
+### POST `/short-links/domain`
+
+Body: `{ "hostname": "links.example.com" }`. Permission: `short-links.update`.
+
+### POST `/short-links/domain/verify`
+
+Verifies TXT `elosync-short-link-verify={token}`.
+
+### DELETE `/short-links/domain`
+
+Removes the workspace custom short domain.
+
 ## Public redirect (central)
 
 ### GET `/r/{code}`
