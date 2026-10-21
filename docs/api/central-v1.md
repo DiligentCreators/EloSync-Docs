@@ -62,6 +62,7 @@ Paginated list endpoints populate `meta` (`current_page`, `last_page`, `per_page
 | POST | `/tenants/{tenant}/archive` | `tenants.archive` | Sets `archived_at`; independent of soft delete |
 | POST | `/tenants/{tenant}/unarchive` | `tenants.archive` | Clears `archived_at` |
 | POST | `/tenants/{tenant}/verify-owner` | `tenants.verify` | Marks workspace owner email verified |
+| POST | `/tenants/{tenant}/owner-credentials` | `tenants.update` | Update owner login email and/or password. Body: optional `owner_email`, optional `password` + `password_confirmation` (at least one required). Password change revokes owner Sanctum tokens. When the contact `tenants.email` matched the previous owner email, it is synced to the new address. |
 | POST | `/tenants/{tenant}/branded-domain/mark-ssl-provisioned` | `tenants.update` | After Forge / proxy TLS is live for the workspace custom domain |
 | GET | `/tenants/{tenant}/entitlements` | `tenants.read` | `{ core, modules }` — licensing only |
 | POST | `/tenants/{tenant}/modules` | `module-subscriptions.create` | Install module — body: `module_id`, optional `billing_cycle` |
@@ -180,9 +181,9 @@ Also accepts `billing.manage` as an alternate permission.
 | POST | `/tenants/{tenant}/impersonate` | `impersonation.start` | Creates session; audits reason, IP, user-agent |
 | POST | `/impersonation/{impersonation}/end` | `impersonation.end` (or session owner) | Sets `ended_at`, `duration_seconds` |
 
-Start returns session metadata plus a short-lived `tenant_token`. List responses never include tokens.
+Start returns session metadata plus a short-lived `tenant_token` and `workspace` (`id`, `slug`, `domain`) for SPA shared-host hints. List responses never include tokens.
 
-Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) include `impersonation_started` / `impersonation_ended` (and other platform events for that workspace). List responses **allowlist** `properties` to a safe subset — e.g. `reason`, impersonation session ids, `duration_seconds`, `tenant_id`, actor/ip metadata — and **omit** nested `before` / `after` blobs and other unreviewed keys. Full audit rows remain in the database; only the list resource redacts.
+Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) include `impersonation_started` / `impersonation_ended` (and other platform events for that workspace). List responses **allowlist** `properties` to a safe subset — e.g. `reason`, impersonation session ids, `duration_seconds`, `tenant_id`, actor/ip metadata, `owner_id` / `owner_email` / `email_changed` / `password_changed` — and **omit** nested `before` / `after` blobs and other unreviewed keys. Full audit rows remain in the database; only the list resource redacts.
 
 ## Stripe / gateway / email webhooks
 

@@ -68,9 +68,9 @@ Defined in `config/auth.php`:
 - `central-api` — Sanctum driver, `central_users` provider
 - `tenant-api` — Sanctum driver, `users` provider
 
-Tenant routes also run `tenancy` + `tenant.available`. Workspace resolution prefers the request host (including future custom domains), then the authenticated token's workspace, then the submitted `workspace` value or `X-Tenant-Domain` header. **Login, forgot-password, and reset-password** may also resolve the workspace from a globally unique tenant user email (same as the shared SPA on `app.elosync.com`). Central routes run `central.domain`.
+Tenant routes also run `tenancy` + `tenant.available`. Workspace resolution prefers the request host (including future custom domains), then the authenticated token's workspace, then the submitted `workspace` value or `X-Tenant-Domain` header. **Login, forgot-password, and reset-password** resolve the workspace from a globally unique tenant user email **before** any client `X-Tenant-*` / `workspace` hint (same as the shared SPA on `app.elosync.com`), so a leftover localStorage domain from another workspace cannot bind the wrong tenant. Unknown emails on those routes do not fall back to a stale header. Central routes run `central.domain`.
 
-When a Bearer token is present but cannot resolve a workspace (unknown, revoked, or pruned token row), `InitializeTenancy` returns **401 Unauthenticated** so the SPA can redirect to login. A true missing-workspace case with no Bearer still returns **400** with `code: workspace_required`; the SPA treats that as session expiry on authenticated API calls (not `skipAuth`) so idle token-clear races hard-redirect to login instead of toasting.
+When a Bearer token is present, that token's workspace wins even if `X-Tenant-Domain` points at another tenant (shared-host SPA + Central impersonation). The SPA also omits `X-Tenant-Domain` whenever a Bearer is attached. A true missing-workspace case with no Bearer still returns **400** with `code: workspace_required`; the SPA treats that as session expiry on authenticated API calls (not `skipAuth`) so idle token-clear races hard-redirect to login instead of toasting.
 
 Tenant token TTL comes from the workspace `session_lifetime_minutes` setting (`0` = non-expiring token), falling back to Central when unset. Remember-me still extends a positive TTL to at least 30 days.
 
@@ -157,7 +157,8 @@ Login and registration issue tokens through `TenantAuthBootstrapService::issueAc
 Central administrators with `impersonation.start` impersonate a workspace owner via `POST /api/central/v1/tenants/{tenant}/impersonate` (required `reason`, 5–1000 chars). The SPA:
 
 1. Stashes the active Central Sanctum token as **`resumeToken`** in `sessionStorage` (via `impersonationStorage`) before swapping to the short-lived tenant bearer returned by the start response.
-2. Ends the session with `POST /api/central/v1/impersonation/{id}/end`, passing **`skipSessionExpiry: true`** on the axios request so a transient 401 during token handoff does not clear the stashed Central session before `endImpersonation()` restores `resumeToken`.
+2. Clears any prior `dc_saas_tenant_domain` hint and sets it from the start response `workspace.domain` / `workspace.slug` so subsequent tenant calls target the impersonated workspace.
+3. Ends the session with `POST /api/central/v1/impersonation/{id}/end`, passing **`skipSessionExpiry: true`** on the axios request so a transient 401 during token handoff does not clear the stashed Central session before `endImpersonation()` restores `resumeToken`.
 3. Restores the Central admin context from `resumeToken` even when the end API fails (local cleanup + redirect to `/central/dashboard`).
 
 History and audit surfaces (tenant details tabs):
@@ -177,9 +178,9 @@ Workspace owners (permission `users.impersonate`) can start a same-workspace ses
 
 ## Token ↔ workspace binding
 
-Sanctum tenant tokens are not intrinsically bound to a workspace. Authenticated tenant routes use middleware `tenant.user` (`EnsureTenantUserBelongsToCurrentTenant`) so a token issued for workspace A is rejected (401) when `X-Tenant-Domain` / host resolves to workspace B.
+Sanctum tenant tokens are not intrinsically bound to a workspace. Authenticated tenant routes use middleware `tenant.user` (`EnsureTenantUserBelongsToCurrentTenant`) so a token issued for workspace A is rejected (401) if tenancy were initialized to workspace B. With a Bearer present, `InitializeTenancy` initializes from the token (not a conflicting header), so impersonation and shared-host sessions stay consistent.
 
-`InitializeTenancy` re-resolves the tenant on every request and switches context when the domain/header changes (important for SPA clients that keep one API host and swap `X-Tenant-Domain`).
+`InitializeTenancy` re-resolves the tenant on every request. Without a Bearer, clients may still swap `X-Tenant-Domain` on the shared API host for public/accept-link flows.
 
 The SPA does not persist a workspace identifier in `localStorage`. It derives workspace context from the current host or the explicitly supplied login/request workspace, preventing stale browser state from selecting a different workspace.
 

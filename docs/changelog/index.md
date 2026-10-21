@@ -1,3 +1,10 @@
+## Stale workspace header + Central owner login credentials (2026-10-21)
+
+- **EloSync-Backend:** `InitializeTenancy` prefers Bearer-token workspace over a conflicting `X-Tenant-*` header, and prefers email → workspace over a stale header on login / forgot / reset. Central `POST /tenants/{tenant}/owner-credentials` (`tenants.update`) updates owner login email and/or password (revokes tokens on password change; syncs contact email when it matched the previous owner email). Impersonation start returns `workspace` slug/domain. Pest: `StaleWorkspaceHeaderAuthTest`, `TenantUpdateOwnerCredentialsTest`, impersonation start payload.
+- **EloSync-Frontend:** Tenant axios omits `X-Tenant-Domain` when a Bearer is attached; Central impersonation clears/replaces `dc_saas_tenant_domain` from the start response. Tenant details **Owner login** dialog for email/password. Headed Playwright `npm run test:e2e:owner-credentials:headed` (one Central session).
+- **EloSync-Docs:** Authentication, Central API, Admin UI, [production readiness](/deployment/owner-credentials-stale-tenant-header-production-readiness), and this changelog.
+- **Go-live:** Deploy Backend and Frontend together. No migrate. Hard-refresh the SPA after Frontend deploy.
+
 ## Customizable tenant dashboard layouts (2026-10-21)
 
 - **EloSync-Backend:** Per-user `users.dashboard_layout` JSON. `GET /dashboard` returns ordered/visible widgets plus `layout` (catalog, templates, `new_widget_ids`). `PUT /dashboard/layout` applies a platform template or custom show/hide + order. Eligibility (module + permission) always wins. Pest: `DashboardLayoutTest` + widget suite **14/14**.

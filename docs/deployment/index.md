@@ -15,6 +15,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Laravel Forge Deployment](./laravel-forge) | Three-site Forge topology, `.env`, deploy scripts, daemons, Reverb, email |
 | [Marketing pixels](./marketing-pixels) | Optional GTM, Meta, LinkedIn, X tags (product SPA + marketing site) |
 | [Production Runbook](./platform-production-runbook) | Primary deploy / go-live checklist |
+| [Owner credentials + stale workspace header](./owner-credentials-stale-tenant-header-production-readiness) | Central owner login + shared-host X-Tenant fix — **Go** |
 | [Email-only tenant password reset](./email-only-tenant-password-reset-production-readiness) | Shared-host forgot/reset without workspace name — **Go** |
 | [Calendar named-provider sync 1.10.0](./calendar-named-provider-sync-1-10-0-production-readiness) | Named-calendar Google/Outlook calendars + watches — **Go** |
 | [Calendar named calendars 1.9.0](./calendar-named-calendars-1-9-0-production-readiness) | Named team/department calendars — **Go** |
