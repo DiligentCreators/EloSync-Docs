@@ -29,8 +29,10 @@ Open **Short Links** from the sidebar (Operations).
 
 1. Click **New short link** (shortcut: `n` when the list is focused and you have create permission)
 2. Enter a destination URL (required) and optional title, status, expiry, and UTM parameters
-3. Optionally set a **Custom slug** (e.g. `launch-2026`) for a vanity URL — leave blank for an auto-generated 7-character code. Slugs cannot be changed after creation.
-4. Save — EloSync generates a public short URL on `https://go.elosync.com/r/{code}`. Your operator may use a different short domain via `SHORT_LINK_BASE_URL`.
+3. Choose a **Type**: Redirect (immediate), Splash page (branded interstitial then continue), or Bio / link page (multiple outbound buttons)
+4. For splash pages, set headline, body, CTA label, optional delay, and theme. For bio pages, add links as `Label | URL` lines.
+5. Optionally set a **Custom slug** (e.g. `launch-2026`) for a vanity URL — leave blank for an auto-generated 7-character code. Slugs cannot be changed after creation.
+6. Save — EloSync generates a public short URL on `https://go.elosync.com/r/{code}`. Your operator may use a different short domain via `SHORT_LINK_BASE_URL`.
 
 Edit from the row menu or the record page. Focus search with `Ctrl/⌘+F`.
 

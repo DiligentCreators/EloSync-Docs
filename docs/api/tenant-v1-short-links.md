@@ -28,8 +28,11 @@ List items include `code`, `short_url`, `click_count`, `last_clicked_at`, and ne
 | `code` | optional custom slug (3–64 chars, lowercase letters/numbers/hyphens, globally unique, not reserved); auto-generated when omitted |
 | `destination_url` | required URL |
 | `status` | `active` \| `paused` (default `active`) |
+| `type` | `redirect` \| `splash` \| `bio` (default `redirect`) |
 | `expires_at` | optional datetime (workspace TZ in UI; stored UTC) |
 | `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` | optional strings |
+| `splash_headline`, `splash_body`, `splash_cta_label`, `splash_logo_path`, `splash_delay_seconds`, `splash_theme` | splash fields (`theme`: `light`\|`dark`) |
+| `items` | bio items array (`label`, `url`, optional `sort_order`, `icon`) |
 
 `uuid` and `short_url` are server-generated. `code` is set from the optional custom slug or auto-generated. `short_url` uses `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/launch-2026`). `code` cannot be changed after create.
 

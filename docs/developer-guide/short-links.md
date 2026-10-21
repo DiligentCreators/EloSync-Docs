@@ -26,6 +26,7 @@ Mirror the **Assets** / **Announcements** module pattern. Public redirects live 
 - `uuid` is globally unique for internal/API use; public URLs use `code` on `{SHORT_LINK_BASE_URL}/r/{code}` (default production: `https://go.elosync.com/r/{code}`). Auto-generated codes are 7 characters; optional custom vanity slugs are 3–64 characters (lowercase, numbers, hyphens). Legacy `{APP_URL}/r/{uuid}` redirects still work (UUID lookup takes precedence over slug format).
 - `expires_at` and `last_clicked_at` use `UtcDateTime`; compare with `UtcInstant` in scopes.
 - `isRedirectable()` returns false for trashed, paused, or expired links.
+- `type` is `redirect` \| `splash` \| `bio`. Splash/bio render Blade public pages; CTA/item clicks use `/r/{code}/go` and `/r/{code}/i/{itemId}` and record `event=cta` (page open records `view`).
 - Click rows store `ip_hash` (SHA-256) — not raw IPs — plus `browser`, `os`, and `event` (`redirect` \| `view` \| `cta`).
 - Bot user agents still redirect but skip click recording (`ShortLinkDeviceDetector` also parses browser/OS).
 - Link analytics support `from`/`to` date filters, unique clicks, hourly buckets, and CSV export (`GET …/export`).
