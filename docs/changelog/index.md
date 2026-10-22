@@ -1,7 +1,8 @@
 ## Short Links 2.0.0 — analytics, experiences, marketing, geo/domains (2026-10-22)
 
 - **EloSync-Backend:** Catalog **short-links 1.2.0 → 2.0.0**. Richer click analytics (unique clicks, browser/OS, hourly buckets, date filters, CSV export). Link types `redirect` \| `splash` \| `bio` with public Blade pages and `view`/`cta` click events. Marketing controls: `starts_at`, password gate, max clicks, campaign/tags, QR SVG (BaconQrCode). Geo via `CF-IPCountry`/`X-Country-Code`, daily rollups (`short-links:rollup-clicks`), custom short domains with TXT verify. Pest ShortLink suite **25** tests.
-- **EloSync-Frontend:** Analytics charts/date range/export/countries; splash/bio editors; marketing fields; QR download. Playwright short-links workflow asserts unique clicks + export controls.
+- **EloSync-Frontend:** Analytics charts/date range/export/countries; splash/bio editors; marketing fields; QR download; list type column/filter; view/sheet splash & bio panels; custom short domain panel (propose / TXT / verify). Playwright `test:e2e:short-links` (+ headed 2.0 workflow) covers unique clicks, export, splash/bio, QR, and domain panel.
+- **EloSync-Mobile:** Short link create/edit/view supports redirect/splash/bio types (headline/CTA/theme and bio link lines).
 - **EloSync-Mobile:** Analytics summary (totals + unique + recent by-day) on view; type field on models.
 - **EloSync-Docs:** User/developer/API/deployment short-links pages updated for 2.0.
 - **Go-live:** Backend migrate-only through `bump_short_links_module_to_2_0_0`. Deploy Frontend after build; hard-refresh SPA. Keep queue workers running for click jobs. Optional: schedule `short-links:rollup-clicks --prune`.

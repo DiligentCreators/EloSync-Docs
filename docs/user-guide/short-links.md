@@ -21,9 +21,9 @@ Your workspace must have the **Short Links** module installed. Your role needs t
 Open **Short Links** from the sidebar (Operations).
 
 - Search by title or destination URL
-- Filter by status (Active / Paused) and trash state when you can restore
+- Filter by status (Active / Paused), type (Redirect / Splash / Bio), and trash state when you can restore
 - KPI cards show total links, active links, total clicks, and clicks in the last 7 days
-- **Short URL** column shows each link with a copy icon; you can also copy from the row menu
+- **Type** and **Short URL** columns show experience type and a copyable short URL; you can also copy from the row menu
 
 ## Create & edit
 
@@ -38,10 +38,22 @@ Edit from the row menu or the record page. Focus search with `Ctrl/⌘+F`.
 
 ## Record page
 
-- **Details** — slug, destination, status, expiry, copyable short URL (inline copy icon)
-- **Analytics** (requires `view_analytics`) — total and unique clicks, optional date range, clicks-by-day and by-hour charts, top referrers, devices, browsers, operating systems, and CSV export
+- **Details** — type, slug, destination, status, campaign/tags, starts/expiry, copyable short URL
+- **Splash page** / **Bio links** — experience-specific fields when the link is not a plain redirect
+- **Analytics** (requires `view_analytics`) — total and unique clicks, optional date range, clicks-by-day and by-hour charts, top referrers, devices, browsers, operating systems, countries, and CSV export
 - **Download QR** — SVG QR code for the short URL
 - Optional **starts at**, **max clicks**, **password**, **campaign**, and **tags** for marketing controls
+
+## Custom short domain
+
+On the Short Links list page, workspaces with update permission can propose a custom hostname (for example `links.yourcompany.com`):
+
+1. Enter the hostname and save
+2. Add the shown DNS **TXT** record at your DNS provider
+3. Click **Verify DNS**
+4. Point the hostname (A/CNAME + TLS) at the same app that serves `go.elosync.com`
+
+After verification, new short URLs prefer your custom domain.
 
 ## Status
 
