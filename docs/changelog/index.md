@@ -1,3 +1,9 @@
+## Website module catalog sync (2026-10-23)
+
+- **EloSync-Website:** Static `MODULES` fallback and `/modules/[slug]/` pages now mirror Central product modules previously missing from marketing (Resellers, Reseller Payouts, Email, Announcements, Live Chat, Team Chat, Departments, Storage, Customer Portal, Assets, Short Links). Added `storage` and `collaboration` marketplace categories and Lucide icon maps. Mounted a light-theme filterable catalog on `/marketplace/` (was copy-only). Headed Playwright `npm run test:e2e:modules:headed` **1/1** (one session: catalog filters, detail pages, pricing free list, beta HTML5 validation + resend invite). Capacity packs stay in-app Marketplace billing, not marketing cards.
+- **EloSync-Docs:** [Website module catalog sync production readiness](/deployment/website-module-catalog-sync-production-readiness).
+- **Go-live:** Deploy Website static export after `npm run build`. No Backend/Frontend migrate.
+
 ## Short Links 2.0.0 — analytics, experiences, marketing, geo/domains (2026-10-22)
 
 - **EloSync-Backend:** Catalog **short-links 1.2.0 → 2.0.0**. Richer click analytics (unique clicks, browser/OS, hourly buckets, date filters, CSV export). Link types `redirect` \| `splash` \| `bio` with public Blade pages and `view`/`cta` click events. Marketing controls: `starts_at`, password gate, max clicks, campaign/tags, QR SVG (BaconQrCode). Geo via `CF-IPCountry`/`X-Country-Code`, daily rollups (`short-links:rollup-clicks`), custom short domains with TXT verify. Pest ShortLink suite **25** tests.
