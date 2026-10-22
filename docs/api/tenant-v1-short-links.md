@@ -16,9 +16,9 @@ Same filters as list (minus pagination/sort). Payload:
 
 ### GET `/short-links`
 
-Query: `search` (title, destination_url), `status`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search` (title, destination_url), `status`, `type` (`redirect` \| `splash` \| `bio`), `campaign`, `tag`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `code`, `short_url`, `click_count`, `last_clicked_at`, and nested `creator`.
+List items include `code`, `type`, `short_url`, `click_count`, `last_clicked_at`, and nested `creator`.
 
 ### POST `/short-links`
 
