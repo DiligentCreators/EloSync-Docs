@@ -4,8 +4,8 @@
 |-------|--------|
 | **Date** | 2026-08-24 |
 | **Status** | **Go for production** after migrate + DNS/env + staging smoke |
-| **Scope** | Free Marketplace opt-in `short-links` **1.2.0** (branded public 404, vanity slugs, copy UX) |
-| **Branch** | `feature/short-links-branded-404-vanity-slugs` |
+| **Scope** | Free Marketplace opt-in `short-links` **2.0.0** (analytics, splash/bio, marketing controls, geo/domains) |
+| **Branch** | `feature/short-links-2.0` |
 | **Companion** | [Short Links ops](./short-links) · [Developer](/developer-guide/short-links) · [User](/user-guide/short-links) · [API](/api/tenant-v1-short-links) |
 
 ---

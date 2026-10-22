@@ -8,10 +8,10 @@ Mirror the **Assets** / **Announcements** module pattern. Public redirects live 
 
 | Piece | Path |
 |-------|------|
-| Models | `app/Models/ShortLink.php`, `ShortLinkClick.php` |
-| Enum | `app/Enums/Tenant/ShortLinkStatusEnum` |
-| Service | `app/Services/Tenant/ShortLinkService.php` |
-| Controller | `app/Http/Controllers/Tenant/Api/V1/ShortLinkController.php` |
+| Models | `app/Models/ShortLink.php`, `ShortLinkClick.php`, `ShortLinkItem.php`, `ShortLinkDomain.php` |
+| Enum | `app/Enums/Tenant/ShortLinkStatusEnum`, `ShortLinkTypeEnum` |
+| Service | `app/Services/Tenant/ShortLinkService.php`, `ShortLinkDomainService.php` |
+| Controller | `app/Http/Controllers/Tenant/Api/V1/ShortLinkController.php`, `ShortLinkDomainController.php` |
 | Public redirect | `app/Http/Controllers/Central/ShortLinkRedirectController.php` |
 | Job | `app/Jobs/Tenant/RecordShortLinkClickJob.php` |
 | Support | `app/Support/ShortLinkDeviceDetector.php`, `ShortLinkCodeGenerator.php` |
@@ -26,8 +26,12 @@ Mirror the **Assets** / **Announcements** module pattern. Public redirects live 
 - `uuid` is globally unique for internal/API use; public URLs use `code` on `{SHORT_LINK_BASE_URL}/r/{code}` (default production: `https://go.elosync.com/r/{code}`). Auto-generated codes are 7 characters; optional custom vanity slugs are 3–64 characters (lowercase, numbers, hyphens). Legacy `{APP_URL}/r/{uuid}` redirects still work (UUID lookup takes precedence over slug format).
 - `expires_at` and `last_clicked_at` use `UtcDateTime`; compare with `UtcInstant` in scopes.
 - `isRedirectable()` returns false for trashed, paused, or expired links.
-- Click rows store `ip_hash` (SHA-256) — not raw IPs.
-- Bot user agents still redirect but skip click recording (`ShortLinkDeviceDetector`).
+- `type` is `redirect` \| `splash` \| `bio`. Splash/bio render Blade public pages; CTA/item clicks use `/r/{code}/go` and `/r/{code}/i/{itemId}` and record `event=cta` (page open records `view`).
+- Click rows store `ip_hash` (SHA-256) — not raw IPs — plus `browser`, `os`, `event` (`redirect` \| `view` \| `cta`), and optional `country_code` (from `CF-IPCountry` / `X-Country-Code`).
+- Bot user agents still redirect but skip click recording (`ShortLinkDeviceDetector` also parses browser/OS).
+- Link analytics support `from`/`to` date filters, unique clicks, hourly buckets, countries, and CSV export (`GET …/export`).
+- Custom short domains: `short_link_domains` + TXT verify via `DomainDnsLookup`; verified host preferred in `buildShortUrl()`.
+- Daily rollups: `short_link_click_daily` via `php artisan short-links:rollup-clicks` (optional `--prune`).
 - Redirect route throttle: `short-link-redirects` (120/min per IP; disabled in testing).
 
 ## Permissions
@@ -41,7 +45,7 @@ short-links.view | create | update | delete | restore | force.delete | view_anal
 ## Catalog
 
 - Slug `short-links`, category `operations`, `sort_order` 90
-- `is_default_included = false`, `is_billable = false`, version **1.2.0**
+- `is_default_included = false`, `is_billable = false`, version **2.0.0**
 - Registered via migrate-only `DefaultModuleRegistrar::ensureModule`
 
 ## API (tenant)
@@ -61,6 +65,7 @@ Missing, paused, expired, or soft-deleted links return HTTP **404** with the bra
 | `SHORT_LINK_BASE_URL` | Public short domain (e.g. `https://go.elosync.com`). Defaults to `APP_URL`. |
 | `SHORT_LINK_MARKETING_URL` | CTA link on branded 404 (default `https://elosync.com`). |
 | `SHORT_LINK_BETA_URL` | Beta CTA on branded 404 (default `https://elosync.com/beta`). |
+| `SHORT_LINK_CLICK_RETENTION_DAYS` | Days of raw click rows to keep when pruning after rollup (default `90`). |
 
 `config/short-links.php` also defines `custom_slug_min_length`, `custom_slug_max_length`, and `reserved_slugs`.
 
@@ -70,9 +75,9 @@ Point `go.elosync.com` DNS at the same Laravel app as the API. Local dev: add `g
 
 | Piece | Path |
 |-------|------|
-| Pages | `src/pages/short-links/` |
+| Pages | `src/pages/short-links/` (list includes `ShortLinkDomainPanel`) |
 | Copy component | `src/components/common/copyable-text.tsx` |
-| Service | `shortLinkService` in `src/api/services.ts` |
+| Service | `shortLinkService` in `src/api/services.ts` (CRUD, analytics, QR, domain) |
 | Nav | `permission: shortLinks.view`, `module: 'short-links'` |
 
 ## Tests

@@ -10,15 +10,15 @@ Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `modu
 
 Same filters as list (minus pagination/sort). Payload:
 
-`total_links`, `active_links`, `paused_links`, `total_clicks`.
+`total_links`, `active_links`, `paused_links`, `total_clicks`, `clicks_last_7_days`, `top_links` (up to 5: `id`, `title`, `code`, `click_count`).
 
 ## Short links CRUD
 
 ### GET `/short-links`
 
-Query: `search` (title, destination_url), `status`, `trashed`, `sort`, `direction`, `page`, `per_page`.
+Query: `search` (title, destination_url), `status`, `type` (`redirect` \| `splash` \| `bio`), `campaign`, `tag`, `trashed`, `sort`, `direction`, `page`, `per_page`.
 
-List items include `code`, `short_url`, `click_count`, `last_clicked_at`, and nested `creator`.
+List items include `code`, `type`, `short_url`, `click_count`, `last_clicked_at`, and nested `creator`.
 
 ### POST `/short-links`
 
@@ -28,8 +28,11 @@ List items include `code`, `short_url`, `click_count`, `last_clicked_at`, and ne
 | `code` | optional custom slug (3–64 chars, lowercase letters/numbers/hyphens, globally unique, not reserved); auto-generated when omitted |
 | `destination_url` | required URL |
 | `status` | `active` \| `paused` (default `active`) |
+| `type` | `redirect` \| `splash` \| `bio` (default `redirect`) |
 | `expires_at` | optional datetime (workspace TZ in UI; stored UTC) |
 | `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` | optional strings |
+| `splash_headline`, `splash_body`, `splash_cta_label`, `splash_logo_path`, `splash_delay_seconds`, `splash_theme` | splash fields (`theme`: `light`\|`dark`) |
+| `items` | bio items array (`label`, `url`, optional `sort_order`, `icon`) |
 
 `uuid` and `short_url` are server-generated. `code` is set from the optional custom slug or auto-generated. `short_url` uses `SHORT_LINK_BASE_URL` (e.g. `https://go.elosync.com/r/launch-2026`). `code` cannot be changed after create.
 
@@ -59,13 +62,43 @@ Permanently delete a soft-deleted link and its click rows. Permission: `short-li
 
 Permission: `short-links.view_analytics`.
 
-Returns `click_count`, `last_clicked_at`, `clicks_by_day`, `top_referrers`, `devices`.
+Query: optional `from`, `to` (workspace-local calendar dates `Y-m-d`).
+
+Returns `click_count`, `range_click_count`, `unique_clicks` (distinct `ip_hash`), `last_clicked_at`, `clicks_by_day`, `clicks_by_hour`, `top_referrers`, `devices`, `browsers`, `os`.
 
 ### GET `/short-links/{id}/clicks`
 
 Permission: `short-links.view_analytics`.
 
-Paginated click log (`clicked_at`, `device_type`, `referrer`, `user_agent`).
+Paginated click log (`clicked_at`, `event`, `device_type`, `browser`, `os`, `referrer`, `user_agent`).
+
+### GET `/short-links/{id}/export`
+
+Permission: `short-links.view_analytics`.
+
+CSV download of clicks (same optional `from` / `to` as stats). Columns: `clicked_at`, `event`, `device_type`, `browser`, `os`, `referrer`, `user_agent`.
+
+### GET `/short-links/{id}/qr`
+
+Permission: `short-links.view`. Returns SVG QR for the public short URL.
+
+## Custom short domain
+
+### GET `/short-links/domain`
+
+Current proposed/verified hostname + TXT instruction.
+
+### POST `/short-links/domain`
+
+Body: `{ "hostname": "links.example.com" }`. Permission: `short-links.update`.
+
+### POST `/short-links/domain/verify`
+
+Verifies TXT `elosync-short-link-verify={token}`.
+
+### DELETE `/short-links/domain`
+
+Removes the workspace custom short domain.
 
 ## Public redirect (central)
 
