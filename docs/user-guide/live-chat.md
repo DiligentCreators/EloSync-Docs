@@ -10,12 +10,27 @@ Install **Live Chat** from Marketplace (free). Open **Communication → Live Cha
 4. Optionally show **Powered by EloSync** on the widget footer.
 5. Configure **business hours** (workspace timezone). Outside hours, visitors see the offline greeting and can leave a message when offline mode is enabled.
 6. Optionally enable **email notify agents** for inbound/offline messages.
-7. Copy the embed snippet onto your website (script loads from your EloSync API host).
-8. Keep the widget **Active** so visitors can start conversations.
+7. Toggle **Email transcript when chat closes** to queue a transcript to the visitor’s email when an agent closes the thread (requires a known visitor email).
+8. Toggle **CSAT survey after close** (default on). When enabled, the embed prompts for a 1–5 rating and optional comment after the chat is closed.
+9. Configure **proactive chat rules** (see below).
+10. Copy the embed snippet onto your website (script loads from your EloSync API host; includes `?v=2.0.0` cache-bust).
+11. Keep the widget **Active** so visitors can start conversations.
 
 Visitors keep their chat across page refreshes on the same browser (session stored locally until it expires or you regenerate the public key). The pre-chat Name / Email fields use dark labels so they stay readable on any host site theme.
 
 Regenerating the public key invalidates existing embeds until you update the snippet.
+
+### Proactive chat rules
+
+Under **Settings → Live Chat**, add rules that automatically open a chat and send an invite message when a live visitor matches criteria:
+
+- **Path contains** — URL path fragment (optional).
+- **Minimum dwell** — seconds on the current page (0 = immediate once other checks pass).
+- **Minimum pages viewed** — session page count.
+- **Message** — invite text shown in the widget (same delivery path as agent **Chat** invites).
+- **Cooldown** — minutes before the same visitor can receive another proactive invite from that rule.
+
+Rules run on a workspace scheduler scan (`live-chat:scan-proactive`); keep the platform scheduler enabled in production.
 
 ## Agent desk
 
@@ -23,7 +38,7 @@ Tabs under **Live Chat**:
 
 - **Overview** — visitors today, chats answered/missed, page views (7d), recent history.
 - **Inbox** — fullscreen 3-pane shell (list, thread, visitor panel).
-- **Live visitors** — who is on site (heartbeat window); open or start a chat.
+- **Live visitors** — who is on site (heartbeat window). Use **Chat** to invite with a message (opens the visitor widget even if they have not clicked the launcher). **Open** resumes an existing thread.
 
 ### Inbox
 
@@ -31,9 +46,18 @@ Tabs under **Live Chat**:
 - Thread header: Claim, Close/Reopen, Escalate. Assign, lead link, and ban live in the visitor panel.
 - Composer: **Reply** (visitor-visible) or **Note** (internal only). Attach files from the composer.
 - Insert **canned replies** from Reply mode (type `/` in the composer to filter by shortcut/title; manage canned replies in Settings → Live Chat).
-- Visitor panel shows IP, country, browser/OS, page, referrer, pages viewed, last seen.
+- Visitor panel shows IP, country, city/region, browser/OS, device type, screen, language, current page title/URL, referrer, landing URL, UTM source/medium/campaign, pages viewed, visit count, session timing, recent **page trail**, external user id, and custom attributes when the site called **identify**.
+- **Visitor notes** — internal notes on the visitor record (visible in the panel; add/delete requires `live-chat.manage`; agents with `live-chat.view` can read).
 - Search filters by visitor name, email, page URL, or message preview.
 - New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback). Typing indicators work both ways when realtime is available; message send still succeeds if Reverb is down.
+
+### After close (visitor widget)
+
+When **CSAT** is enabled, closing a chat shows a short satisfaction survey in the embed. Transcript email sends when **Email transcript when chat closes** is on and the visitor has an email on file.
+
+## Identify (logged-in sites)
+
+Your website can call the public **identify** API (Bearer visitor session) to set name, email, an external user id, and custom attributes (for example plan tier). That enriches the visitor panel for agents without waiting for pre-chat fields. See the [developer guide](/developer-guide/live-chat).
 
 ## Departments
 
@@ -56,7 +80,7 @@ When **Help Desk** is installed, escalate a conversation to a ticket from the th
 
 ## Moderation
 
-With `live-chat.manage`, ban a visitor from the visitor panel. Banned visitors cannot start new sessions.
+With `live-chat.manage`, ban a visitor from the visitor panel. Optionally check **Also ban this IP** to block new sessions from that address (hashed at rest). Banned visitors cannot start new sessions.
 
 ## Notifications
 

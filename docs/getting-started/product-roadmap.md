@@ -133,7 +133,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Documents](/user-guide/documents-overview) | Shipped **1.7.0** (requires Storage; nested folders + file version history — [readiness](/deployment/documents-folders-versions-1-7-0-production-readiness)) |
 | [Reports / Analytics](/user-guide/analytics-overview) | Shipped |
 | [Announcements](/user-guide/announcements-overview) | Shipped |
-| [Live Chat](/user-guide/live-chat-overview) | Shipped **1.6.0** (department-routed first-chat FCM; assignee-only follow-up; idle department alert; per-bubble agent name) |
+| [Live Chat](/user-guide/live-chat-overview) | Shipped **2.0.0** (visitor intel, identify, agent/proactive invites, CSAT, transcript email, IP ban, visitor notes — [readiness](/deployment/live-chat-2-0-0-production-readiness)) |
 
 ### Help Desk deferred
 

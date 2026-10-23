@@ -1,3 +1,31 @@
+## Live Chat 2.0.0 — proactive rules, CSAT, transcript, IP ban, visitor notes (2026-10-23)
+
+- **EloSync-Backend:** Catalog **1.9.0 → 2.0.0** (`live_chat_phase_four_and_bump_to_2_0_0`). **Proactive rules** (`live_chat_proactive_rules`) + `live-chat:scan-proactive` (every minute) open chats and send invite messages when path/dwell/pages match; fans out `LiveChatInvite` + Automation `live_chat.proactive_invite_sent`. **CSAT** after close (`csat_score` / comment on conversation; public `POST …/csat`; widget `csat_enabled`). **Email transcript on close** (`email_transcript_on_close`, `LiveChatTranscriptMail`, soft-fail). **IP ban list** (`live_chat_banned_ips`; optional `ban_ip` on visitor ban). **Visitor notes** CRUD (`live_chat_visitor_notes`). Embed cache-bust **2.0.0** (`WidgetScriptVersion`). **Production remediations:** reactivate widgets on module activate/reinstall; unique per-visitor session revoke hashes (fixes unique constraint on cancel).
+- **EloSync-Frontend:** Settings → Live Chat proactive rules panel, CSAT + transcript toggles; inbox visitor panel notes + **Also ban this IP**; invite dialog validation + close; headed e2e **11/11** one-session coverage.
+- **EloSync-Mobile:** Live visitors invite body (from **1.7.0**); visitor intel type fields synced.
+- **EloSync-Docs:** User / developer / API / deployment hubs, [2.0.0 production readiness](/deployment/live-chat-2-0-0-production-readiness) (Go + local Pest/headed evidence), and this changelog.
+- **Go-live:** Migrate-only through `2026_10_23_130100_live_chat_phase_four_and_bump_to_2_0_0` (catalog **2.0.0**). Ensure scheduler runs `live-chat:scan-proactive` (with `live-chat:scan-idle` and `live-chat:purge-visitors`). Deploy Backend widget JS + Frontend SPA; re-copy embed snippet with `live-chat.js?v=2.0.0` (or purge CDN for stale unversioned URLs).
+
+## Live Chat 1.9.0 — public identify (2026-10-23)
+
+- **EloSync-Backend:** Catalog **1.8.0 → 1.9.0**. Public `POST …/identify` (Bearer session) sets name/email, `external_user_id` (`user_id`), and `custom_attributes` (max 20 keys). Visitor merge by `client_id` on session create when returning browsers match.
+- **EloSync-Frontend:** Visitor panel shows external user id + custom attributes when present.
+- **EloSync-Docs:** Developer + API identify docs; folded into **2.0.0** go-live path above.
+
+## Live Chat 1.8.0 — visitor intel (2026-10-23)
+
+- **EloSync-Backend:** Catalog **1.7.0 → 1.8.0**. Heartbeat/session capture page title, page history (rolling), city/region, device type, screen, language, landing URL, UTM params, `session_started_at`, `visit_count`, `client_id` (indexed per tenant). CDN headers enrich geo when available.
+- **EloSync-Frontend:** Live visitors + inbox visitor panel show richer intel (page trail, UTM, device, dwell hints).
+- **EloSync-Docs:** Developer heartbeat intel + user visitor panel; folded into **2.0.0** go-live path above.
+
+## Live Chat 1.7.0 proactive invite delivery (2026-10-23)
+
+- **EloSync-Backend:** Catalog **1.6.0 → 1.7.0**. `POST …/visitors/{id}/open-chat` accepts optional `body` invite text; fans out public `LiveChatInvite` on `live-chat.visitor.{uuid}` plus agent message when body present. Embed hydrates/polls/subscribes when heartbeat discovers an open conversation; subscribes to the visitor channel as soon as a session exists; auto-opens panel + soft beep on invite. Embed cache-bust stepped toward **2.0.0**.
+- **EloSync-Frontend:** Live visitors **Chat** opens an invite dialog (message required) then switches to Inbox.
+- **EloSync-Mobile:** `openVisitorChat` accepts optional invite body.
+- **EloSync-Docs:** User / developer / API hubs + this changelog.
+- **Go-live:** Included in the **2.0.0** migrate chain (`1.7.0` catalog bump migration + later phase migrations). Ship **2.0.0** readiness checklist for production.
+
 ## Website module catalog sync (2026-10-23)
 
 - **EloSync-Website:** Static `MODULES` fallback and `/modules/[slug]/` pages now mirror Central product modules previously missing from marketing (Resellers, Reseller Payouts, Email, Announcements, Live Chat, Team Chat, Departments, Storage, Customer Portal, Assets, Short Links). Added `storage` and `collaboration` marketplace categories and Lucide icon maps. Mounted a light-theme filterable catalog on `/marketplace/` (was copy-only). Headed Playwright `npm run test:e2e:modules:headed` **1/1** (one session: catalog filters, detail pages, pricing free list, beta HTML5 validation + resend invite). Capacity packs stay in-app Marketplace billing, not marketing cards.

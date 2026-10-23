@@ -417,6 +417,19 @@ After migrate (`2026_09_26_112037_add_created_by_and_updated_by_to_leads_table`,
 
 Go-live: [Leads 1.6.0 created/updated by production readiness](/deployment/leads-created-by-updated-by-1-6-0-production-readiness).
 
+## Live Chat 1.6.0 → 2.0.0 — intel, identify, proactive, CSAT, transcript, IP ban, visitor notes
+
+After migrate through `2026_10_23_130100_live_chat_phase_four_and_bump_to_2_0_0` (includes **1.7.0**, **1.8.0**, **1.9.0** bumps — **do not** `db:seed`):
+
+1. Confirm catalog `live-chat` version is **2.0.0**
+2. Confirm scheduler runs **`live-chat:scan-proactive`** every minute (with `live-chat:scan-idle` and `live-chat:purge-visitors`)
+3. Deploy the SPA **after** migrate — Settings proactive rules, CSAT/transcript toggles, visitor notes, ban IP checkbox, Live visitors invite
+4. Purge CDN for `public/widgets/live-chat.js`; Settings embed snippet **`?v=2.0.0`**
+5. Queue workers when **Email transcript when chat closes** is enabled
+6. Staging smoke: proactive rule invite, CSAT after close, optional transcript mail, ban IP blocks new session, visitor notes persist
+
+Go-live: [Live Chat 2.0.0 production readiness](/deployment/live-chat-2-0-0-production-readiness).
+
 ## Live Chat 1.5.2 → 1.6.0 — department-routed notifications
 
 1. Deploy Backend and run `php artisan migrate --force` (`2026_10_03_223500_add_live_chat_idle_routing_and_bump_to_1_6_0` — **do not** `db:seed`)

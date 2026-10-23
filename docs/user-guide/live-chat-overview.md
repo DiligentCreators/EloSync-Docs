@@ -8,31 +8,27 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 |----------|----------|
 | Operators / workspace users | [live-chat.md](/user-guide/live-chat) |
 | Engineers | [live-chat.md](/developer-guide/live-chat) |
-| Production / ops | [live-chat.md](/deployment/live-chat) · [1.5.0 / 1.5.1 readiness](/deployment/live-chat-1-5-0-production-readiness) |
+| Production / ops | [live-chat.md](/deployment/live-chat) · [2.0.0 readiness](/deployment/live-chat-2-0-0-production-readiness) · [1.5.0 / 1.5.1 readiness](/deployment/live-chat-1-5-0-production-readiness) |
 | Tenant API | [tenant-v1-live-chat.md](/api/tenant-v1-live-chat) |
 
-## Capabilities (1.6.0)
+## Capabilities (2.0.0)
 
-- One website widget per workspace (public key + embed snippet)
+- One website widget per workspace (public key + embed snippet `?v=2.0.0`)
 - Tawk-style visitor widget (circular FAB, branded header, agent avatar/name, suggested-reply chips, emoji/attach composer, optional “Powered by EloSync”)
-- In-panel send errors with **Retry** (no browser alert); send lock + hydrate-before-retry; visitor ↔ agent typing indicators
-- Embed snippet cache-bust (`?v=`) from Settings
-- Widget branding (color, launcher text, position, header, logo, agent display name, suggested replies)
-- Business hours + offline leave-a-message
-- Visitor presence heartbeats (“who is on site”) with browser/OS/country when available
-- Visitor text chat via public API (session token; short-poll with optional Reverb public channel); visitor attachments
-- Shared agent desk at `/live-chat` with **Overview / Inbox / Live visitors** tabs (AppLayout + design system)
-- Inbox: filters, assign/transfer, Reply|Note composer, `/` canned reply filter, visitor panel
-- Lightweight overview stats (visitors today, answered/missed, page views, recent history)
-- Widget / departments / canned replies under **Settings → Live Chat** (`/settings?tab=live-chat`)
-- Canned replies for agents
-- Departments + default routing
-- Media attachments on messages
-- Soft Lead create/link when Leads is entitled
-- Help Desk escalate when Help Desk is entitled
-- Ban visitor (manage)
-- Inbound notifications: first visitor message wakes **department agents** (in-app + FCM); after assign, only the assignee; idle chats alert other department agents; visitor widget shows the answering agent’s Name
-- Agent Echo realtime (inbox + conversation channels); message send soft-fails when Reverb is down; Automation triggers for open / inbound / closed
+- In-panel send errors with **Retry**; send lock + hydrate-before-retry; visitor ↔ agent typing indicators
+- Widget branding, business hours, offline leave-a-message, suggested replies, powered-by footer
+- Visitor presence heartbeats with rich intel: page title/trail, geo (country/city/region), device/screen/language, landing URL, UTM, visit count, client id, session timing
+- Public **identify** for name/email/external user id/custom attributes on logged-in sites
+- Visitor text chat via public API (session token; poll + optional Reverb public channel); visitor attachments
+- Agent-initiated and **proactive rule** invites (`LiveChatInvite` on visitor channel + heartbeat fallback)
+- Shared agent desk at `/live-chat`: **Overview / Inbox / Live visitors**
+- Inbox: filters, assign/transfer, Reply|Note, `/` canned filter, expanded visitor panel, **visitor notes**
+- CSAT survey in embed after close (toggle); optional **email transcript on close**
+- Ban visitor + optional **IP ban** list
+- Overview stats; Settings → Live Chat for widget, departments, canned replies, proactive rules, CSAT/transcript toggles
+- Soft Lead create/link; Help Desk escalate
+- Department-routed notifications + idle scan; Automation triggers including `live_chat.proactive_invite_sent`
+- Agent Echo realtime; message send soft-fails when Reverb is down
 
 ## Permissions
 
@@ -42,7 +38,7 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 
 - Slug: `live-chat`
 - Category: Communication
-- `is_default_included=false`, `is_billable=false`, prices `$0`, version **1.6.0**
+- `is_default_included=false`, `is_billable=false`, prices `$0`, version **2.0.0**
 - Install from Marketplace (not auto-installed)
 
 ## Explicitly deferred
@@ -52,4 +48,3 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 - Full analytics/reporting suite, AI bots, multi-widget brands
 - Map view / sentiment engines
 - Captcha / Turnstile beyond throttle + TTL
-- EloSync Mobile screen
