@@ -1,6 +1,6 @@
 # Live Chat (developer)
 
-Free Communication module (`live-chat` **2.0.0**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
+Free Communication module (`live-chat` **2.1.0**). Public widget traffic resolves the workspace by widget `public_key` (central/web routes), initializes tenancy, checks entitlement, then ends tenancy — same pattern as custom Lead webhooks.
 
 ## Surfaces
 
@@ -24,7 +24,11 @@ Throttle: `live-chat-widget` (60/min by IP + key) and `live-chat-widget-session`
 
 ## Branding, hours, offline, presence
 
-Widget settings store `primary_color`, `launcher_text`, `position`, `header_title`, `logo_url`, `offline_*`, `business_hours`, `email_notify_agents`, `idle_minutes`, `email_transcript_on_close`, `csat_enabled`, `default_department_id`, `suggested_replies`, `show_powered_by`, `agent_display_name`. Bootstrap returns branding plus `within_hours` / `accepting_live`, `csat_enabled`, and optional Reverb public hints. Outside hours (or inactive accepting), visitors leave offline messages when `offline_enabled`.
+Widget settings store `primary_color`, `launcher_text`, `position`, `header_title`, `logo_url`, `offline_*`, `business_hours`, `email_notify_agents`, `idle_minutes`, `email_transcript_on_close`, `csat_enabled`, `default_department_id`, `suggested_replies`, `show_powered_by`, `agent_display_name`. Bootstrap returns branding plus `within_hours` / `accepting_live`, `csat_enabled`, active `departments`, `default_department_id`, and optional Reverb public hints. Outside hours (or inactive accepting), visitors leave offline messages when `offline_enabled`.
+
+### Pre-chat identity (2.1.0+)
+
+Public `POST …/conversations` and offline leave-a-message require `name`, `email`, `phone`, and `department_id` when the workspace has active Live Chat departments (otherwise department falls back to widget `default_department_id`). Visitor `phone` is stored on `live_chat_visitors`. Embed `?v=2.1.0` always collects these fields before Start / Leave a message.
 
 ### Heartbeat intel (1.8.0+)
 
@@ -57,7 +61,7 @@ Agent channels (distinct from Team Chat):
 
 Visitor public channel: `live-chat.visitor.{uuid}` (UUID secrecy). Events: `LiveChatMessageSent`, `LiveChatConversationUpdated`, `LiveChatVisitorPresence`, `LiveChatTyping`, `LiveChatInvite` (`ShouldBroadcastNow`, soft-failed on send/open/close paths).
 
-Agent `POST …/visitors/{id}/open-chat` with optional `body` opens/assigns and invites the embed. **Proactive rules** use the same invite path via `LiveChatProactiveScanService` + `live-chat:scan-proactive` (scheduled every minute). Embed hydrates when heartbeat sees `open_conversation_uuid`, subscribes to the visitor channel as soon as a session exists, and auto-opens on invite. Embed keeps short-poll fallback; send lock + hydrate-before-retry on Retry. Typing also has HTTP endpoints: public + tenant `POST …/typing`. Settings embed snippet includes `?v=` cache-bust (`LiveChatWidgetService::WidgetScriptVersion` = **`2.0.0`**).
+Agent `POST …/visitors/{id}/open-chat` with optional `body` opens/assigns and invites the embed. **Proactive rules** use the same invite path via `LiveChatProactiveScanService` + `live-chat:scan-proactive` (scheduled every minute). Embed hydrates when heartbeat sees `open_conversation_uuid`, subscribes to the visitor channel as soon as a session exists, and auto-opens on invite. Embed keeps short-poll fallback; send lock + hydrate-before-retry on Retry. Typing also has HTTP endpoints: public + tenant `POST …/typing`. Settings embed snippet includes `?v=` cache-bust (`LiveChatWidgetService::WidgetScriptVersion` = **`2.1.0`**).
 
 ## CSAT and transcript (2.0.0)
 
@@ -82,7 +86,7 @@ Wired triggers: `live_chat.conversation_opened`, `live_chat.message_inbound`, `l
 
 ## Notifications
 
-Do **not** fan out to every user with `live-chat.view`. Recipients are members of the conversation’s Live Chat department (widget default department on create) who also have `live-chat.reply`, capped at 20. Empty roster skips notify (`live-chat.notify_skipped_empty_roster`). Keep production workers out of Live Chat departments even if Staff still has Live Chat permissions.
+Do **not** fan out to every user with `live-chat.view`. Recipients are members of the conversation’s Live Chat department (visitor-selected or widget default) who also have `live-chat.reply`, capped at 20. Empty roster skips notify (`live-chat.notify_skipped_empty_roster`). Intake payloads include `visitor_name`, `visitor_email`, `visitor_phone`, and `department_name`. Keep production workers out of Live Chat departments even if Staff still has Live Chat permissions.
 
 | Event | Recipients | Channels |
 |---|---|---|
@@ -106,4 +110,4 @@ Registered in `routes/console.php` (onOneServer):
 
 Pest: `tests/Feature/Tenant/LiveChat/` (identify, intel heartbeat, proactive scan, CSAT, IP ban, visitor notes, transcript mail). Playwright: `npm run test:e2e:live-chat`.
 
-Production readiness: [1.0.1 baseline](/deployment/live-chat-production-readiness) · [1.5.0 / 1.5.1 send resilience + typing](/deployment/live-chat-1-5-0-production-readiness) · [**2.0.0 milestone**](/deployment/live-chat-2-0-0-production-readiness).
+Production readiness: [1.0.1 baseline](/deployment/live-chat-production-readiness) · [1.5.0 / 1.5.1 send resilience + typing](/deployment/live-chat-1-5-0-production-readiness) · [2.0.0 milestone](/deployment/live-chat-2-0-0-production-readiness) · [**2.1.0 current**](/deployment/live-chat-2-1-0-production-readiness).

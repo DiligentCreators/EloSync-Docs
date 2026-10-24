@@ -417,6 +417,18 @@ After migrate (`2026_09_26_112037_add_created_by_and_updated_by_to_leads_table`,
 
 Go-live: [Leads 1.6.0 created/updated by production readiness](/deployment/leads-created-by-updated-by-1-6-0-production-readiness).
 
+## Live Chat 2.0.0 → 2.1.0 — pre-chat phone + department, richer intake notify
+
+After migrate through `2026_10_24_190027_expand_live_chat_visitor_phone_prechat_and_bump_to_2_1_0` (**do not** `db:seed`):
+
+1. Confirm catalog `live-chat` version is **2.1.0**
+2. Deploy Backend with updated `public/widgets/live-chat.js`; Settings embed snippet **`?v=2.1.0`** (purge CDN for unversioned URLs)
+3. Deploy SPA (visitor phone panel; Settings clears stale default department)
+4. Ensure each widget has a default department and agents with `live-chat.reply` on that roster
+5. Staging smoke: pre-chat requires name/email/phone/department → agent notification includes identity; desk shows phone
+
+Go-live: [Live Chat 2.1.0 production readiness](/deployment/live-chat-2-1-0-production-readiness).
+
 ## Live Chat 1.6.0 → 2.0.0 — intel, identify, proactive, CSAT, transcript, IP ban, visitor notes
 
 After migrate through `2026_10_23_130100_live_chat_phase_four_and_bump_to_2_0_0` (includes **1.7.0**, **1.8.0**, **1.9.0** bumps — **do not** `db:seed`):

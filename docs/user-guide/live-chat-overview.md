@@ -8,12 +8,13 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 |----------|----------|
 | Operators / workspace users | [live-chat.md](/user-guide/live-chat) |
 | Engineers | [live-chat.md](/developer-guide/live-chat) |
-| Production / ops | [live-chat.md](/deployment/live-chat) · [2.0.0 readiness](/deployment/live-chat-2-0-0-production-readiness) · [1.5.0 / 1.5.1 readiness](/deployment/live-chat-1-5-0-production-readiness) |
+| Production / ops | [live-chat.md](/deployment/live-chat) · [2.1.0 readiness](/deployment/live-chat-2-1-0-production-readiness) · [2.0.0 readiness](/deployment/live-chat-2-0-0-production-readiness) · [1.5.0 / 1.5.1 readiness](/deployment/live-chat-1-5-0-production-readiness) |
 | Tenant API | [tenant-v1-live-chat.md](/api/tenant-v1-live-chat) |
 
-## Capabilities (2.0.0)
+## Capabilities (2.1.0)
 
-- One website widget per workspace (public key + embed snippet `?v=2.0.0`)
+- One website widget per workspace (public key + embed snippet `?v=2.1.0`)
+- Pre-chat **name / email / phone / department** before start or offline leave-a-message
 - Tawk-style visitor widget (circular FAB, branded header, agent avatar/name, suggested-reply chips, emoji/attach composer, optional “Powered by EloSync”)
 - In-panel send errors with **Retry**; send lock + hydrate-before-retry; visitor ↔ agent typing indicators
 - Widget branding, business hours, offline leave-a-message, suggested replies, powered-by footer
@@ -38,7 +39,7 @@ Free Communication Marketplace module for an embeddable website widget and a sha
 
 - Slug: `live-chat`
 - Category: Communication
-- `is_default_included=false`, `is_billable=false`, prices `$0`, version **2.0.0**
+- `is_default_included=false`, `is_billable=false`, prices `$0`, version **2.1.0**
 - Install from Marketplace (not auto-installed)
 
 ## Explicitly deferred

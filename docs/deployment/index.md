@@ -4,7 +4,8 @@ Production runbooks and operational checklists for hosting EloSync.
 
 | Start here | When |
 |------------|------|
-| [Laravel Forge Deployment](./laravel-forge) | Hosting API + SPA + Docs on Forge (recommended) |
+| [Laravel Forge Deployment](./laravel-forge) | Hosting API + SPA + Docs on Forge (recommended); marketing notes |
+| [EloSync-Website DEPLOYMENT](https://github.com/DiligentCreators/EloSync-Website/blob/main/DEPLOYMENT.md) | Marketing `elosync.com` on **20i StackCP** (webhook + `build-artifacts`) |
 | [Production Runbook](./platform-production-runbook) | Launch blockers, smoke, rollback |
 | [Installation](/getting-started/installation) | Local Herd / Vite development only |
 
@@ -12,7 +13,7 @@ Production runbooks and operational checklists for hosting EloSync.
 
 | Document | Description |
 |----------|-------------|
-| [Laravel Forge Deployment](./laravel-forge) | Three-site Forge topology, `.env`, deploy scripts, daemons, Reverb, email |
+| [Laravel Forge Deployment](./laravel-forge) | API + SPA + Docs Forge topology; optional Forge marketing; 20i preferred for elosync.com |
 | [Marketing pixels](./marketing-pixels) | Optional GTM, Meta, LinkedIn, X tags (product SPA + marketing site) |
 | [Production Runbook](./platform-production-runbook) | Primary deploy / go-live checklist |
 | [Website module catalog sync](./website-module-catalog-sync-production-readiness) | Marketing catalog + `/marketplace/` grid — **Go** |

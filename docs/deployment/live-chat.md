@@ -24,12 +24,13 @@ Idempotent migrations:
 - `2026_10_23_125658_expand_live_chat_visitor_intel_and_bump_to_1_8_0` (visitor intel columns; catalog **1.7.0 → 1.8.0**)
 - `2026_10_23_130000_live_chat_identify_and_bump_to_1_9_0` (`external_user_id`, `custom_attributes`; catalog **1.8.0 → 1.9.0**)
 - `2026_10_23_130100_live_chat_phase_four_and_bump_to_2_0_0` (proactive rules, banned IPs, visitor notes, CSAT + transcript widget flags; catalog **1.9.0 → 2.0.0**)
+- `2026_10_24_190027_expand_live_chat_visitor_phone_prechat_and_bump_to_2_1_0` (visitor `phone`, pre-chat department; catalog **2.0.0 → 2.1.0**; embed **`?v=2.1.0`**)
 
-Catalog row: free Communication opt-in `live-chat` **2.0.0** (not default-included). Workspaces install from Marketplace.
+Catalog row: free Communication opt-in `live-chat` **2.1.0** (not default-included). Workspaces install from Marketplace.
 
 ## Runtime
 
-- Serve static `public/widgets/live-chat.js` from the API host (or CDN in front of it). Settings embed snippet includes **`?v=2.0.0`** for cache-bust; purge CDN for unversioned URLs.
+- Serve static `public/widgets/live-chat.js` from the API host (or CDN in front of it). Settings embed snippet includes **`?v=2.1.0`** for cache-bust; purge CDN for unversioned URLs.
 - Public widget routes need the APP_URL host reachable from third-party sites (CSRF excepted).
 - **CORS:** `LiveChatPublicCors` reflects `Origin` for credential-less `api/public/live-chat/*` (does not open the rest of the API).
 - Rate limits: `live-chat-widget` (60/min) and `live-chat-widget-session` (10/min for session create).
@@ -42,7 +43,8 @@ Catalog row: free Communication opt-in `live-chat` **2.0.0** (not default-includ
 
 - Baseline (CORS / sessions / PII): **Go** — [Live Chat production readiness](./live-chat-production-readiness) (**1.0.1**).
 - Send resilience + typing: [Live Chat 1.5.0 / 1.5.1 production readiness](./live-chat-1-5-0-production-readiness).
-- **Current ship (2.0.0):** [Live Chat 2.0.0 production readiness](./live-chat-2-0-0-production-readiness) — migrate through phase-four bump; enable `live-chat:scan-proactive`; redeploy embed **v=2.0.0**.
+- **2.0.0 milestone:** [Live Chat 2.0.0 production readiness](./live-chat-2-0-0-production-readiness) — proactive / CSAT / transcript / IP ban / notes.
+- **Current ship (2.1.0):** [Live Chat 2.1.0 production readiness](./live-chat-2-1-0-production-readiness) — pre-chat phone + department; richer intake notify; migrate through `2026_10_24_190027_…`; redeploy embed **v=2.1.0**.
 
 ## Verify
 

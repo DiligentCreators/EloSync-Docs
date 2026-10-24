@@ -543,6 +543,7 @@ export default withMermaid(defineConfig({
             { text: 'Live Chat Production Readiness', link: '/deployment/live-chat-production-readiness' },
             { text: 'Live Chat 1.5.0 Production Readiness', link: '/deployment/live-chat-1-5-0-production-readiness' },
             { text: 'Live Chat 2.0.0 Production Readiness', link: '/deployment/live-chat-2-0-0-production-readiness' },
+            { text: 'Live Chat 2.1.0 Production Readiness', link: '/deployment/live-chat-2-1-0-production-readiness' },
             { text: 'Daily CRM Summary', link: '/deployment/daily-crm-summary' },
             { text: 'Calendar', link: '/deployment/calendar' },
             { text: 'Calendar Invitee ACL 1.2.0 Readiness', link: '/deployment/calendar-invitee-acl-1-2-0-production-readiness' },
