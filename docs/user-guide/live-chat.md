@@ -5,7 +5,7 @@ Install **Live Chat** from Marketplace (free). Open **Communication → Live Cha
 ## Widget setup
 
 1. Open **Settings → Live Chat** (requires `live-chat.manage`), or use **Settings** from the Live Chat desk.
-2. Set greeting, branding (color, launcher text, position, header, logo, agent display name), and optionally require name/email before chat starts.
+2. Set greeting, branding (color, launcher text, position, header, logo, agent display name). The website widget always asks for **name, email, phone**, and a **department** (when you have departments) before a visitor can start a chat or leave a message.
 3. Add **suggested replies** (quick-reply chips in the visitor widget).
 4. Optionally show **Powered by EloSync** on the widget footer.
 5. Configure **business hours** (workspace timezone). Outside hours, visitors see the offline greeting and can leave a message when offline mode is enabled.
@@ -13,10 +13,11 @@ Install **Live Chat** from Marketplace (free). Open **Communication → Live Cha
 7. Toggle **Email transcript when chat closes** to queue a transcript to the visitor’s email when an agent closes the thread (requires a known visitor email).
 8. Toggle **CSAT survey after close** (default on). When enabled, the embed prompts for a 1–5 rating and optional comment after the chat is closed.
 9. Configure **proactive chat rules** (see below).
-10. Copy the embed snippet onto your website (script loads from your EloSync API host; includes `?v=2.0.0` cache-bust).
+10. Copy the embed snippet onto your website (script loads from your EloSync API host; includes `?v=2.1.0` cache-bust).
 11. Keep the widget **Active** so visitors can start conversations.
+12. Turn on **Offline mode** if visitors should leave a message outside business hours. Without it, the widget shows Away and blocks send.
 
-Visitors keep their chat across page refreshes on the same browser (session stored locally until it expires or you regenerate the public key). The pre-chat Name / Email fields use dark labels so they stay readable on any host site theme.
+Visitors keep their chat across page refreshes on the same browser (session stored locally until it expires or you regenerate the public key). The pre-chat Name / Email / Phone / Department fields use dark labels so they stay readable on any host site theme.
 
 Regenerating the public key invalidates existing embeds until you update the snippet.
 
@@ -46,7 +47,7 @@ Tabs under **Live Chat**:
 - Thread header: Claim, Close/Reopen, Escalate. Assign, lead link, and ban live in the visitor panel.
 - Composer: **Reply** (visitor-visible) or **Note** (internal only). Attach files from the composer.
 - Insert **canned replies** from Reply mode (type `/` in the composer to filter by shortcut/title; manage canned replies in Settings → Live Chat).
-- Visitor panel shows IP, country, city/region, browser/OS, device type, screen, language, current page title/URL, referrer, landing URL, UTM source/medium/campaign, pages viewed, visit count, session timing, recent **page trail**, external user id, and custom attributes when the site called **identify**.
+- Visitor panel shows name, email, **phone**, IP, country, city/region, browser/OS, device type, screen, language, current page title/URL, referrer, landing URL, UTM source/medium/campaign, pages viewed, visit count, session timing, recent **page trail**, external user id, and custom attributes when the site called **identify**.
 - **Visitor notes** — internal notes on the visitor record (visible in the panel; add/delete requires `live-chat.manage`; agents with `live-chat.view` can read).
 - Search filters by visitor name, email, page URL, or message preview.
 - New visitor messages update in near-realtime when Echo/Reverb is connected (polling remains as fallback). Typing indicators work both ways when realtime is available; message send still succeeds if Reverb is down.
@@ -84,4 +85,4 @@ With `live-chat.manage`, ban a visitor from the visitor panel. Optionally check 
 
 ## Notifications
 
-The first visitor message creates an in-app notification and (when desktop/mobile push is enabled) an FCM alert for agents in the widget’s default Live Chat department. After someone replies, only that assignee gets further in-app alerts for the thread. If the assignee does not reply within the configured idle minutes, other department agents get an idle alert. Notifications open `/live-chat?conversation={uuid}`. Optional email notify (widget setting) applies to that first inbound message.
+The first visitor message creates an in-app notification and (when mobile/desktop FCM is enabled) an FCM alert for agents in the conversation’s Live Chat department (visitor-selected or widget default). The notification includes the visitor’s **name, email, and phone**. After someone replies, only that assignee gets further in-app alerts for the thread. If the assignee does not reply within the configured idle minutes, other department agents get an idle alert. Notifications open `/live-chat?conversation={uuid}`. Optional email notify (widget setting) applies to that first inbound message.

@@ -37,7 +37,7 @@ echo "  VITE_X_PIXEL_ID: \"${VITE_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/
 
 No SPA rebuild is required to enable or disable pixels in production — only redeploy so Forge regenerates `config.js`.
 
-### elosync-website (Forge `config.js` + local `.env.local`)
+### elosync-website (20i `config.js` + local `.env.local`)
 
 | Variable | Vendor |
 |----------|--------|
@@ -49,19 +49,11 @@ No SPA rebuild is required to enable or disable pixels in production — only re
 
 Local: copy keys into `.env.local` (see `.env.example` in elosync-website). `public/config.js` is an empty stub; local `.env.local` is the fallback when `window.env` keys are absent.
 
-Production: add keys to the **marketing** Forge site `.env` and extend the deploy script `config.js` block (see [website build artifacts](https://github.com/DiligentCreators/EloSync-Website/blob/main/docs/ci-cd/website-build-artifacts.md)):
+Production (**20i StackCP**, preferred): set the `marketing` block in `~/deploy-config.php`. Host `deploy.php` writes `/config.js` after every webhook deploy; change IDs without a build via `refresh-config.php`. See [EloSync-Website DEPLOYMENT.md](https://github.com/DiligentCreators/EloSync-Website/blob/main/DEPLOYMENT.md) and [website build artifacts](https://github.com/DiligentCreators/EloSync-Website/blob/main/docs/ci-cd/website-build-artifacts.md).
 
-```bash
-echo "window.env = {" > "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  NEXT_PUBLIC_API_URL: \"${NEXT_PUBLIC_API_URL:-https://api.elosync.com}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  NEXT_PUBLIC_GTM_ID: \"${NEXT_PUBLIC_GTM_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  NEXT_PUBLIC_META_PIXEL_ID: \"${NEXT_PUBLIC_META_PIXEL_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  NEXT_PUBLIC_LINKEDIN_PARTNER_ID: \"${NEXT_PUBLIC_LINKEDIN_PARTNER_ID:-}\"," >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "  NEXT_PUBLIC_X_PIXEL_ID: \"${NEXT_PUBLIC_X_PIXEL_ID:-}\"" >> "$FORGE_RELEASE_DIRECTORY/config.js"
-echo "};" >> "$FORGE_RELEASE_DIRECTORY/config.js"
-```
+Optional Forge marketing: add the same keys to the marketing site `.env` and regenerate `/config.js` in the Forge deploy script (see [Laravel Forge](./laravel-forge) §4).
 
-No website rebuild is required to change API URL or pixels in production — only redeploy so Forge regenerates `config.js`.
+No website rebuild is required to change API URL or pixels in production — only refresh `config.js` on the host (20i) or redeploy so the host regenerates it.
 
 ## Code layout (elosync-website)
 
@@ -72,7 +64,7 @@ lib/
 components/analytics/
   MarketingScripts.tsx # client init from window.env
   MarketingPageView.tsx
-public/config.js       # local stub; Forge overwrites in production
+public/config.js       # local stub; 20i deploy.php overwrites in production
 ```
 
 ## Code layout (EloSync-Frontend)
@@ -130,4 +122,5 @@ Wire these at the same points you consider product funnel milestones (e.g. after
 ## Related
 
 - [Frontend build artifacts](/developer-guide/frontend-build-artifacts) — CI + Forge `config.js`
-- [Laravel Forge deployment](./laravel-forge) — three-site topology
+- [Laravel Forge deployment](./laravel-forge) — API + SPA + Docs; marketing on 20i preferred
+- [EloSync-Website DEPLOYMENT](https://github.com/DiligentCreators/EloSync-Website/blob/main/DEPLOYMENT.md) — 20i StackCP webhook

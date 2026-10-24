@@ -1,19 +1,22 @@
 # Laravel Forge Deployment
 
-Production-oriented guide for hosting EloSync on **[Laravel Forge](https://forge.laravel.com/)**: four sites (API, SPA, Docs, Marketing), environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
+Production-oriented guide for hosting EloSync on **[Laravel Forge](https://forge.laravel.com/)**: API, SPA, and Docs, plus an **optional** Forge marketing site. Environment variables, deploy scripts, daemons, scheduler, Reverb, and email.
+
+**Production marketing (`elosync.com`)** uses **20i StackCP** (same webhook + `build-artifacts` model as shaz3e / resellerbytes / diligentcreators). Operator guide: [EloSync-Website DEPLOYMENT.md](https://github.com/DiligentCreators/EloSync-Website/blob/main/DEPLOYMENT.md). Section 4 below remains for operators who host marketing on Forge instead.
 
 Use this with the [Production Runbook](./platform-production-runbook) (launch blockers / smoke) and [Notification System](./notifications) (Redis, Reverb TLS, Web Push). Local machines stay on [Installation](/getting-started/installation).
 
 ## Recommended topology
 
-Create **four Forge sites** (same server or separate servers). Do not mix PHP API, SPA static files, docs, and marketing on one web root.
+Create **three Forge sites** for API + SPA + Docs (same server or separate). Do not mix PHP API, SPA static files, and docs on one web root. Host marketing on **20i** (preferred) or a fourth Forge site.
 
 | Site | Domain example | Git repo | Branch | Web directory | Node on server |
 |------|----------------|----------|--------|---------------|----------------|
 | **API** | `api.example.com` | `DiligentCreators/EloSync-Backend` | `main` | `/public` | Not required |
 | **SPA** | `app.example.com` | `DiligentCreators/EloSync-Frontend` | `build-artifacts` | `/` (site root) | **Not required** |
 | **Docs** | `docs.example.com` | `DiligentCreators/EloSync-Docs` | `build-artifacts` | `/` (site root) | **Not required** |
-| **Marketing** | `elosync.com` / `www.example.com` | `DiligentCreators/EloSync-Website` | `build-artifacts` | `/` (site root) | **Not required** |
+| **Marketing** (20i preferred) | `elosync.com` | `DiligentCreators/EloSync-Website` | `build-artifacts` | StackCP docroot | **Not required** |
+| **Marketing** (optional Forge) | `www.example.com` | `DiligentCreators/EloSync-Website` | `build-artifacts` | `/` (site root) | **Not required** |
 
 ```mermaid
 flowchart LR
@@ -30,6 +33,8 @@ flowchart LR
     API[api.example.com]
     APP[app.example.com]
     DOCS[docs.example.com]
+  end
+  subgraph stackcp [20i StackCP]
     WEB[elosync.com]
   end
   Bmain -->|composer + migrate| API
@@ -38,17 +43,19 @@ flowchart LR
   Wmain -->|Actions build| Wart
   Fart -->|activate release + config.js| APP
   Dart -->|activate release| DOCS
-  Wart -->|activate release| WEB
+  Wart -->|signed webhook deploy.php| WEB
   APP -->|HTTPS API + CORS| API
   APP -->|wss Echo| API
+  WEB -->|public beta + stats API| API
 ```
 
 **Rules**
 
-- SPA, Docs, and Marketing: CI builds on merge to `main`; Forge deploys **compiled** `build-artifacts` only. Never run `npm ci` / `vite` / VitePress / `next build` on the Forge server for those sites.
+- SPA and Docs: CI builds on merge to `main`; Forge deploys **compiled** `build-artifacts` only. Never run `npm ci` / `vite` / VitePress / `next build` on the Forge server for those sites.
+- Marketing: CI publishes `build-artifacts`, then notifies **20i** `deploy.php` (HMAC webhook). Optional Forge marketing still works via activate-release + `/config.js` (section 4).
 - API: Forge runs Composer + `artisan` on each deploy. Prefer **zero-downtime** / quick deploy with shared `.env` and storage.
 - One SPA artifact serves many clients: each Forge SPA site owns its own `.env` and generated `/config.js`.
-- Marketing is a static Next.js export (`out/`) — no runtime Node; Forge writes `/config.js` for API URL and marketing pixels.
+- Marketing is a static Next.js export (`out/`) — no runtime Node; host writes `/config.js` for API URL and marketing pixels.
 
 ---
 
@@ -377,7 +384,9 @@ location / {
 
 ## 4. Marketing site (EloSync-Website)
 
-### 4.1 Site settings
+> **Preferred production path:** host `elosync.com` on **20i StackCP** — see [EloSync-Website DEPLOYMENT.md](https://github.com/DiligentCreators/EloSync-Website/blob/main/DEPLOYMENT.md). Use the Forge steps below only when marketing is not on 20i.
+
+### 4.1 Site settings (optional Forge marketing)
 
 | Setting | Value |
 |---------|--------|
