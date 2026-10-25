@@ -34,13 +34,13 @@ A quotation starts in **Draft**. Move it forward with:
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.
 
-## Customer acceptance (e-signature v1)
+## Customer acceptance (e-signature)
 
-When a quotation is **Sent**, staff with `quotations.send` can **Copy accept link**. Emailing a Sent quotation also appends the link to the message.
+When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can **Copy client link**. Sending a quotation and emailing a **Sent** quotation both use the same guest URL (`/#/view/quotations/{token}`).
 
-Customers open `/#/accept/quotations/{token}` (no login), review totals and lines, enter their name and email, and confirm. That marks the quotation **Accepted**, records signer name/email/IP on the record, and invalidates the link. Regenerating or re-emailing creates a new link and invalidates the previous one. Links expire at the earlier of **valid until** (end of day) or 30 days.
+Customers open that link (no login), review the full PDF-style preview, download the PDF, and — while status is **Sent** — accept online. Acceptance records signer name/email (and optional phone), IP/user agent, and optional drawn or uploaded signature / ID document when required in Settings → General. That marks the quotation **Accepted**, stamps the PDF with the acceptance block (and signature image when captured), and invalidates the one-time acceptance token. The share link remains usable for viewing after accept. Regenerating the client link or re-emailing rotates tokens. Share links expire after 90 days; acceptance windows still respect **valid until** (end of day) or 30 days for legacy accept tokens.
 
-This is a lightweight accept page for one-shot e-sign. Logged-in document history lives in the [Customer Portal](/user-guide/customer-portal) module. Multi-signer and third-party e-sign providers remain deferred.
+Optional Settings (Storage required for signature/ID): **Require phone / signature image / ID document on quotation accept**. Staff can download signature and ID evidence from the record. Logged-in document history also lives in the [Customer Portal](/user-guide/customer-portal). Multi-signer and third-party e-sign providers remain deferred. Legacy `/#/accept/quotations/{token}` links still work.
 
 ## Convert to invoice
 
@@ -52,17 +52,17 @@ Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use 
 - A quotation can only be converted **once** — the action is hidden once any invoice already has this quotation linked (including invoices created from a linked estimate or contract)
 - Without Invoices installed, the action is hidden; the API returns a validation error if called directly
 
-## Share link (view + PDF)
+## Client link (view + PDF + accept)
 
-When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can **Copy share link**. Customers open `/#/view/quotations/{token}` (no login), review a PDF-style preview (issuer, bill-to, lines, totals, enabled remittance bank details from Settings → Branding when configured, notes/terms), and download the same branded PDF as the CRM. Header logo is the tenant logo when **Branded** is installed; otherwise EloSync. Links expire after 90 days and are cleared if the quotation is rejected or expired. This is separate from the **accept** link used for e-signature.
+The **Copy client link** button is the single guest URL for preview, PDF download, and accept (when **Sent**). Header logo is the tenant logo when **Branded** is installed; otherwise EloSync. Remittance bank details come from Settings → Branding when configured. Links are cleared if the quotation is rejected or expired.
 
 ## Download PDF
 
-**Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, and terms & conditions. Long notes and terms continue across as many pages as needed.
+**Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, terms & conditions, and — after customer accept — the acceptance block with signature image when one was captured. Long notes and terms continue across as many pages as needed.
 
 ## Email customer
 
-After you **Send** the quotation (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email customer** on the record page (`quotations.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. When the quotation is still **Sent**, the message also includes a customer accept link. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
+After you **Send** the quotation (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email customer** on the record page (`quotations.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. When the quotation is still **Sent**, the message includes the client link to review and accept. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
 
 ## Assignment
 

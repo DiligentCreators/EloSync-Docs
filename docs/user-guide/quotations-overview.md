@@ -22,8 +22,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 - Status workflow: `draft → sent → accepted | rejected | expired` (`POST /quotations/{id}/send`, `.../accept`, `.../status`)
 - Download quotation PDF (workspace-branded; line HTML, memo, terms)
 - **Email customer** after Send (`POST /quotations/{id}/email`, `quotations.send`) — optional PDF attachment; for **Sent** quotes, appends a one-time customer accept link; default recipient from linked contact/company; records `emailed` timeline + tenant email log
-- **Customer e-signature (v1)** — public accept page (`/#/accept/quotations/{token}`); staff can **Copy accept link**; signer name/email/IP recorded on accept
-- **Public share link** — `/#/view/quotations/{token}` for sent/accepted quotes (view + download same branded PDF; separate from accept)
+- **Client share + e-signature** — one guest URL (`/#/view/quotations/{token}`) for preview, PDF, and accept when Sent; staff **Copy client link**; optional phone / drawn-or-uploaded signature / ID (Settings); signer evidence + PDF stamp; legacy `/#/accept/…` still works
 - **Convert to invoice** (`POST /quotations/{id}/convert`) — one-shot draft CustomerInvoice when Invoices is entitled (soft check; not a Marketplace hard dependency)
 - Assignment with assignee scoping via `quotations.assign`
 - Notes + domain activity timeline (mirrors Opportunities)
@@ -36,7 +35,7 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 
 `quotations.view` · `create` · `update` · `delete` · `restore` · `force.delete` · `assign` · `send` · `accept` · `convert`
 
-Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.10.1**.
+Enable Quotations from Marketplace (free) once Opportunities is installed. Catalog: slug `quotations`, category `sales`, `is_default_included = false`, `is_billable = false`, `sort_order = 50`, version **1.11.0**.
 
 ## Related modules
 
@@ -45,6 +44,5 @@ Enable Quotations from Marketplace (free) once Opportunities is installed. Catal
 ## Explicitly deferred
 
 - Multi-signer / countersign / third-party e-sign providers (DocuSign, Adobe Sign)
-- Drawn signature image capture on the PDF
 - Multi-currency conversion
 - Approval workflow beyond the status enum
