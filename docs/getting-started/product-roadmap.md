@@ -31,7 +31,7 @@ Canonical delivery status for EloSync modules and platform capabilities. Keep th
 | Capability | Status |
 |------------|--------|
 | [Opportunities](/user-guide/opportunities-overview) (pipeline + Kanban) | Shipped (**1.3.0** real-time board sync) |
-| [Quotations](/user-guide/quotations-overview) | Shipped (requires Opportunities; customer e-signature accept links **1.9.0**) |
+| [Quotations](/user-guide/quotations-overview) | Shipped (requires Opportunities; client share accept + signature evidence **1.11.0**) |
 | [Contracts](/user-guide/contracts-overview) | Shipped (requires Opportunities; PDF + e-signature **1.5.0**; renewal reminders **1.6.0**; accept evidence toggles **1.7.0**; auto-renew **1.8.0**) |
 | [Resellers](/user-guide/resellers-overview) / [Reseller Payouts](/user-guide/reseller-payouts-overview) | Shipped (free Sales opt-ins; Payments → Resellers → Payouts chain) |
 

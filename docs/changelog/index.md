@@ -1,3 +1,10 @@
+## Quotation client share accept + digital signature (quotations 1.11.0) (2026-10-25)
+
+- **EloSync-Backend:** Catalog **1.10.1 → 1.11.0**. One client link: Send mints share + acceptance tokens; email appends `/#/view/quotations/{token}` (“Review and accept”). Public share summary exposes `can_accept` + `acceptance_requirements`; `POST …/public/quotations/view/{token}/accept` accepts with optional phone / drawn-or-uploaded signature / ID (Settings `quotations.acceptance_require_*`, Storage-gated like contracts). Evidence columns, staff downloads, PDF acceptance stamp. Legacy `/accept/` links still work with the same evidence payload.
+- **EloSync-Frontend:** Guest share page Accept + `QuotationAcceptForm` (draw/upload signature). Staff **Copy client link** (share only). Settings → General quotation acceptance toggles. Staff evidence downloads on the record.
+- **EloSync-Docs:** User guide / overview / Settings / upgrade + this changelog.
+- **Go-live:** Migrate-only through `2026_10_25_144855_add_quotation_acceptance_evidence_fields_to_quotations_table` (catalog **1.11.0**). Enable signature/ID only with Storage installed.
+
 ## Live Chat 2.1.0 headed e2e retest — Windows baseURL harness (2026-10-25)
 
 - **EloSync-Frontend:** Playwright `E2E_BASE_URL` normalizes `localhost` → `127.0.0.1` so Windows does not hit another Vite on `[::1]:5173`. `.env.e2e.example` documents the pitfall. Retest: `npm run test:e2e:live-chat:headed` **11/11**.

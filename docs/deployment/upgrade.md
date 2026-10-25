@@ -76,6 +76,13 @@ CREATE INDEX cie_edit_req_tenant_invoice_status_idx
 
 Finally: `php artisan migrate --force` and retry Forge deploy.
 
+## Quotation client share accept + signature evidence — quotations 1.11.0
+
+1. Deploy Backend and run `php artisan migrate --force` (evidence columns + catalog bump — **do not** `db:seed`)
+2. Confirm catalog: `quotations` **1.11.0**
+3. Deploy Frontend from **`build-artifacts`** after CI publishes — quotation **Copy client link**; guest share Accept + signature form; Settings → General quotation acceptance toggles
+4. Smoke: Send quotation → Copy client link → guest preview → Accept (optionally enable signature require with Storage) → PDF shows acceptance stamp; staff can download signature/ID when required
+
 ## Guest share PDF-parity preview — invoices 1.12.1 / quotations 1.10.1
 
 1. Deploy Backend and run `php artisan migrate --force` (catalog bumps only — **do not** `db:seed`)

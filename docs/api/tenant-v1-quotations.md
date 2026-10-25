@@ -32,7 +32,15 @@ Includes opportunity, assignee, creator, lines (`product_id`, optional `product`
 
 ### GET `/quotations/{id}/pdf`
 
-Permission: `quotations.view` (assignee-scoped). Extra limiter `throttle:quotations-pdf`. Returns `application/pdf` attachment. Branded layout matches invoices (logo, button color, company profile). Includes sanitized memo HTML, line items, and discount/tax/total breakdown.
+Permission: `quotations.view` (assignee-scoped). Extra limiter `throttle:quotations-pdf`. Returns `application/pdf` attachment. Branded layout matches invoices (logo, button color, company profile). Includes sanitized memo HTML, line items, discount/tax/total breakdown, and — when accepted — signer metadata plus signature image when captured.
+
+### GET `/quotations/{id}/acceptance-signature`
+
+Permission: `quotations.view` (assignee-scoped). Streams the stored signature image when `has_acceptance_signature` is true; otherwise 404. Records `acceptance_evidence_downloaded` on the timeline.
+
+### GET `/quotations/{id}/acceptance-id-document`
+
+Permission: `quotations.view` (assignee-scoped). Streams the stored ID document when present; otherwise 404. Timeline-audited like the signature download.
 
 ### PUT `/quotations/{id}`
 
@@ -60,7 +68,7 @@ Permission: `quotations.assign`.
 
 ### POST `/quotations/{id}/send`
 
-Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). **Status-only** — does not email or generate a PDF. Issues a hashed customer acceptance token (plaintext returned only from `POST …/acceptance-link` or embedded in email).
+Transitions `draft → sent`. Permission: `quotations.send` (assignee-scoped unless the actor has `quotations.assign` or is superadmin). **Status-only** — does not email or generate a PDF. Issues hashed customer **acceptance** and **public view (client)** tokens (plaintext from `POST …/acceptance-link` / `…/share-link` or the share URL embedded in email).
 
 ### POST `/quotations/{id}/email`
 
@@ -72,22 +80,23 @@ Requires the quotation to already be sent — allowed statuses: `sent`, `accepte
 
 When `to` is omitted, resolves the recipient from the linked contact email, then company email. If no address is found, returns 422 on `to`.
 
-Queues a branded email via the tenant mailer (optional PDF attachment from `QuotationPdfService`). For **Sent** quotations, rotates the acceptance token and appends the accept URL to the message body. Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `quotation.emailed`).
+Queues a branded email via the tenant mailer (optional PDF attachment from `QuotationPdfService`). For **Sent** quotations, rotates acceptance + share tokens and appends the **client share URL** (`/#/view/quotations/{token}`) so the customer can review and accept. Records an `emailed` timeline entry and a tenant email log row (`notification_type`: `quotation.emailed`).
 
 ### POST `/quotations/{id}/acceptance-link`
 
-Permission: `quotations.send` (assignee-scoped). Requires status `sent`. Rotates the acceptance token and returns `{ url, expires_at, has_acceptance_link, acceptance_link_expires_at }`.
+Permission: `quotations.send` (assignee-scoped). Requires status `sent`. Rotates the acceptance token and returns `{ url, expires_at, has_acceptance_link, acceptance_link_expires_at }` (legacy guest SPA `/#/accept/quotations/{token}`). Prefer `share-link` for new client communications.
 
 ### POST `/quotations/{id}/share-link`
 
-Permission: `quotations.send` (assignee-scoped). Mints/rotates a public **view** token for **sent** or **accepted** quotations. Returns `{ url, expires_at, has_public_view_link, public_view_link_expires_at }` (guest SPA `/#/view/quotations/{token}`, 90-day expiry). Cleared on reject/expire. Separate from the accept e-sign link.
+Permission: `quotations.send` (assignee-scoped). Mints/rotates the public **client** token for **sent** or **accepted** quotations. Returns `{ url, expires_at, has_public_view_link, public_view_link_expires_at }` (guest SPA `/#/view/quotations/{token}`, 90-day expiry). Cleared on reject/expire. Guests accept from this page when status is Sent.
 
 ### Public customer view (unauthenticated)
 
-Requires tenancy and Quotations entitlement. Throttles: `document-share` / `document-share-pdf`.
+Requires tenancy and Quotations entitlement. Throttles: `document-share` / `document-share-pdf` / `quotation-acceptance` (accept).
 
-- `GET /public/quotations/view/{token}` — PDF-parity guest preview (title, status, totals, lines with body/tax, notes/terms, `issuer`, `bill_to`, `payment_bank` enabled remittance accounts, Branded chrome `logo_url` / `brand_name`). Invalid/expired → 404.
+- `GET /public/quotations/view/{token}` — PDF-parity guest preview (title, status, totals, lines with body/tax, notes/terms, `issuer`, `bill_to`, `payment_bank`, Branded chrome) plus `can_accept`, `acceptance_requirements` `{ phone, signature_image, id_document }`, and accepted_* when already signed. Invalid/expired → 404.
 - `GET /public/quotations/view/{token}/pdf` — same branded PDF as authenticated `GET /quotations/{id}/pdf`.
+- `POST /public/quotations/view/{token}/accept` — multipart or JSON. Always: `accepted_by_name`, `accepted_by_email`. When requirements demand: `accepted_by_phone`; `signature` file + `signature_method` (`drawn`|`uploaded`); `id_document` file + `id_document_type` (`national_id`|`passport`|`other`). Marks **accepted**, stores signer + IP (+ user agent / evidence files), clears acceptance token (share token kept for viewing), records `signed` activity. Settings `quotations.acceptance_require_*`; enabling signature/ID requires Storage.
 
 ### POST `/quotations/{id}/accept`
 
@@ -97,8 +106,8 @@ Transitions `sent → accepted`. Permission: `quotations.accept` (assignee-scope
 
 Requires tenancy (domain / `X-Tenant-Domain`) and Quotations entitlement. Throttle: `quotation-acceptance` (20/min per IP).
 
-- `GET /public/quotations/accept/{token}` — summary (title, totals, lines, workspace name, expiry). Invalid/expired/used → 404.
-- `POST /public/quotations/accept/{token}` — body `{ accepted_by_name, accepted_by_email }`; marks accepted, stores signer + IP, invalidates token, records `signed` activity.
+- `GET /public/quotations/accept/{token}` — legacy summary (title, totals, lines, workspace name, expiry, `acceptance_requirements`). Invalid/expired/used → 404.
+- `POST /public/quotations/accept/{token}` — same payload rules as share-page accept (multipart evidence when required); marks accepted, stores signer + evidence, invalidates acceptance token, records `signed` activity.
 
 ### POST `/quotations/{id}/convert`
 
