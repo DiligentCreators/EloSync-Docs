@@ -89,4 +89,6 @@ npm run test:e2e
 npm run test:e2e:report
 ```
 
+**Windows / port 5173:** Prefer `E2E_BASE_URL=http://127.0.0.1:5173` (not `localhost`). On Windows, `localhost` often resolves to `::1` first, so Playwright can hit another app’s Vite on `[::1]:5173` while EloSync is bound to `127.0.0.1:5173`. `playwright.config.ts` rewrites `localhost` → `127.0.0.1` for the base URL. Start EloSync with `npm run dev -- --port 5173 --host 127.0.0.1` (or set `E2E_SKIP_WEBSERVER=1` when the SPA is already up).
+
 See the Frontend guide for environment variables, CI usage, debugging, and extension patterns.

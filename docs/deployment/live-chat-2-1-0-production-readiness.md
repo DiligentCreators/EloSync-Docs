@@ -66,6 +66,7 @@ Queue workers still required for optional agent email notify and transcript mail
 | LC21-04 | Medium | **Fixed** | Intake notify lacked name/email/phone/department | `LiveChatInboundMessageNotification` visitor meta + FCM/database payload keys |
 | LC21-05 | Low | **Fixed** | Notify roster empty when conversation `department_id` null | Fallback to widget `default_department_id` |
 | LC21-06 | Low | **Fixed** | Inbox search ignored phone | Search `orWhere` visitor phone |
+| LC21-07 | Medium | **Fixed** (2026-10-25 retest) | Headed e2e hit another Vite via Windows `localhost`→`::1` (ESAPetCare on `[::1]:5173`) instead of EloSync on `127.0.0.1:5173` | Playwright baseURL normalizes `localhost`→`127.0.0.1`; `.env.e2e.example` + Docs Playwright guide |
 
 ### Ops (not code blockers)
 
@@ -92,8 +93,9 @@ Queue workers still required for optional agent email notify and transcript mail
 | `php vendor/bin/pest tests/Feature/Tenant/LiveChat/LiveChatModuleTest.php --filter="requires visitor identity"` | **Pass locally** | Includes tenant show `data.visitor.phone` |
 | Live Chat Pest batches (prior session) | **Pass locally 43/43** | Identity, offline, notify meta, widget validation |
 | `npm run test:e2e:live-chat:headed` | **Pass locally 11/11** | One shared demo login: gate → entitle → invite → filters → settings validation/save → regen key → visitor phone in panel + agent reply → notes/typing/canned → claim/close → lead → search |
+| Retest `npm run test:e2e:live-chat:headed` (2026-10-25) | **Pass locally 11/11** | After LC21-07 baseURL fix; Vite on `127.0.0.1:5173` |
 
-Do **not** claim remote CI green until companion PRs’ Quality Gates pass on the merge branch. Local headed + Pest evidence above is verified 2026-10-24.
+Local headed evidence verified **2026-10-24** (ship) and **2026-10-25** (regression retest). Companion CI for the localhost harness fix is on the follow-up Frontend/Docs PRs.
 
 ---
 
