@@ -28,6 +28,7 @@ After login, the portal shell shows sections only when the related workspace mod
 | Contracts | `contracts` | List, view, PDF, get accept link |
 | Support | `help-desk` | List, open ticket (rich description), reply with rich text + attachment |
 | Knowledge Base | `knowledge-base` | Browse published help articles |
+| Announcements | `announcements` | Read workspace announcements shared with the portal |
 
 Visibility is limited to the Contact’s own records, or records for their Company when `company_id` is set. Contracts resolve via the linked Opportunity’s party.
 

@@ -36,7 +36,7 @@ Columns on `announcements`:
 - `visible_to_customer_portal` (default `false`)
 - `visible_to_vendor_portal` (default `false`)
 
-`Announcement::scopeVisibleToAudience(AnnouncementAudienceEnum)` filters published + non-expired + the matching flag. Staff inbox/unread/list (non-managers) and publish fan-out to `User` use `Staff`. Customer/vendor portal delivery is separate (portal APIs). Customer/vendor flags are coerced off in `AnnouncementService::resolveAudienceFlags` when the matching module is not entitled.
+`Announcement::scopeVisibleToAudience(AnnouncementAudienceEnum)` filters published + non-expired + the matching flag. Staff inbox/unread/list (non-managers) and publish fan-out to `User` use `Staff`. Customer portal delivery: `PortalAnnouncementController` + `announcement_portal_reads` + `PortalAnnouncementPublishedNotification` (portal deep link). Customer/vendor flags are coerced off in `AnnouncementService::resolveAudienceFlags` when the matching module is not entitled. Catalog **1.3.0**.
 
 ## Read receipts
 
