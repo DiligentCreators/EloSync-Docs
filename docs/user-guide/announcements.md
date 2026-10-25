@@ -8,7 +8,7 @@ Each announcement has **Visible to** audiences:
 
 - **Internal staff** — owners, admins, agents, and employees with a User login (inbox, dashboard, notifications). There is no separate “view announcements” permission.
 - **Customer portal** — invited contacts in the customer portal (only when Customer Portal is installed). Toggle appears on create/edit when that module is entitled.
-- **Vendor portal** — reserved for when Vendor Portal is available; the toggle appears only if that module is installed.
+- **Vendor portal** — reserved for when Vendor Portal is available; the toggle appears only if that module is installed. Delivery inside a vendor portal ships with that product; the audience flag is already on each announcement.
 
 At least one audience is required. Employees without a linked login cannot open EloSync, so they cannot receive staff announcements.
 
