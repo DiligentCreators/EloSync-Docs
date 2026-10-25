@@ -22,11 +22,21 @@ Marketplace Communication module. Flat namespaces (no `Modules/` package). **Aut
 ## Authz
 
 - Routes: `module:announcements` for all endpoints
-- Consumer (`unread`, `inbox`, `index` published, `show` published, `read`): **no** `can:` middleware; `AnnouncementPolicy::viewAny` / `view` allow any authenticated user for published non-expired rows
+- Consumer (`unread`, `inbox`, `index` published, `show` published, `read`): **no** `can:` middleware; `AnnouncementPolicy::viewAny` / `view` allow any authenticated user for published non-expired **staff-audience** rows
 - Mutations: `can:announcements.create|update|delete|restore|force.delete`
 - Readers: `can:announcements.view_reads`
 
 Do **not** add `announcements.view` without a product decision — reading is intentionally open once installed.
+
+## Audiences
+
+Columns on `announcements`:
+
+- `visible_to_staff` (default `true`)
+- `visible_to_customer_portal` (default `false`)
+- `visible_to_vendor_portal` (default `false`)
+
+`Announcement::scopeVisibleToAudience(AnnouncementAudienceEnum)` filters published + non-expired + the matching flag. Staff inbox/unread/list (non-managers) and publish fan-out to `User` use `Staff`. Customer/vendor portal delivery is separate (portal APIs). Customer/vendor flags are coerced off in `AnnouncementService::resolveAudienceFlags` when the matching module is not entitled.
 
 ## Read receipts
 
