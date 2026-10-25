@@ -1,9 +1,9 @@
 ## Announcement multi-audience + customer portal delivery (announcements 1.3.0 / customer-portal 1.5.0) (2026-10-26)
 
-- **EloSync-Backend:** Audience flags `visible_to_staff`, `visible_to_customer_portal`, `visible_to_vendor_portal` (vendor reserved). Staff inbox/unread/notifications filter staff audience. Portal APIs `GET/POST /portal/announcements` (+ show, mark-read) with `announcement_portal_reads`. Soft entitlement on `announcements`. Catalog **announcements 1.2.0 → 1.3.0**, **customer-portal 1.4.0 → 1.5.0**.
-- **EloSync-Frontend:** Staff create/edit audience switches (module-gated). Portal Announcements nav + list/view/mark-read.
+- **EloSync-Backend:** Audience flags `visible_to_staff`, `visible_to_customer_portal`, `visible_to_vendor_portal` (vendor reserved; staff inbox excludes vendor-only). Portal APIs `GET/POST /portal/announcements` (+ show, mark-read) with `announcement_portal_reads`. Soft entitlement on `announcements`. Publish fan-out splits staff vs active `PortalUser`s. Catalog **announcements 1.2.0 → 1.3.0**, **customer-portal 1.4.0 → 1.5.0**.
+- **EloSync-Frontend:** Staff create/edit audience switches (Customer/Vendor gated by module). Portal Announcements nav + list/view/mark-read.
 - **EloSync-Mobile:** Audience switches on create/edit.
-- **EloSync-Docs:** User/API/developer guides + this changelog.
+- **EloSync-Docs:** User/API/developer guides + vendor-readiness note + this changelog.
 - **Go-live:** Migrate-only through `2026_10_26_043000_create_announcement_portal_reads_and_bump_announcement_audiences`.
 
 ## Quotation client share accept + digital signature (quotations 1.11.0) (2026-10-25)

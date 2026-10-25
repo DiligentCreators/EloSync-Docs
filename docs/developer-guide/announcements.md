@@ -38,6 +38,10 @@ Columns on `announcements`:
 
 `Announcement::scopeVisibleToAudience(AnnouncementAudienceEnum)` filters published + non-expired + the matching flag. Staff inbox/unread/list (non-managers) and publish fan-out to `User` use `Staff`. Customer portal delivery: `PortalAnnouncementController` + `announcement_portal_reads` + `PortalAnnouncementPublishedNotification` (portal deep link). Customer/vendor flags are coerced off in `AnnouncementService::resolveAudienceFlags` when the matching module is not entitled. Catalog **1.3.0**.
 
+### Vendor portal readiness
+
+`visible_to_vendor_portal` and `AnnouncementAudienceEnum::VendorPortal` are shipped. Staff UI shows the Vendor portal switch only when `vendor-portal` is entitled. `NotifyAnnouncementPublishedJob` no-ops vendor fan-out until Vendor Portal accounts exist. Do not invent `/vendor/*` announcement routes in this module — add them with the Vendor Portal module (mirror customer portal).
+
 ## Read receipts
 
 `announcement_reads`: unique `(announcement_id, user_id)`, `first_read_at` / `last_read_at`, `first_read_ip` / `last_read_ip`. First mark-read sets first_* ; later marks bump last_* only. `markRead` uses `firstOrCreate` with unique-constraint retry so concurrent double-submit is safe.
