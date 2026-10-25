@@ -1,3 +1,11 @@
+## Announcement multi-audience + customer portal delivery (announcements 1.3.0 / customer-portal 1.5.0) (2026-10-26)
+
+- **EloSync-Backend:** Audience flags `visible_to_staff`, `visible_to_customer_portal`, `visible_to_vendor_portal` (vendor reserved). Staff inbox/unread/notifications filter staff audience. Portal APIs `GET/POST /portal/announcements` (+ show, mark-read) with `announcement_portal_reads`. Soft entitlement on `announcements`. Catalog **announcements 1.2.0 → 1.3.0**, **customer-portal 1.4.0 → 1.5.0**.
+- **EloSync-Frontend:** Staff create/edit audience switches (module-gated). Portal Announcements nav + list/view/mark-read.
+- **EloSync-Mobile:** Audience switches on create/edit.
+- **EloSync-Docs:** User/API/developer guides + this changelog.
+- **Go-live:** Migrate-only through `2026_10_26_043000_create_announcement_portal_reads_and_bump_announcement_audiences`.
+
 ## Quotation client share accept + digital signature (quotations 1.11.0) (2026-10-25)
 
 - **EloSync-Backend:** Catalog **1.10.1 → 1.11.0**. One client link: Send mints share + acceptance tokens; email appends `/#/view/quotations/{token}` (“Review and accept”). Public share summary exposes `can_accept` + `acceptance_requirements`; `POST …/public/quotations/view/{token}/accept` accepts with optional phone / drawn-or-uploaded signature / ID (Settings `quotations.acceptance_require_*`, Storage-gated like contracts). Evidence columns, staff downloads, PDF acceptance stamp. Legacy `/accept/` links still work with the same evidence payload.

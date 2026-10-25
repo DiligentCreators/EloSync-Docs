@@ -17,6 +17,13 @@ php artisan up
 
 That is the complete path for catalog modules and tenant permission vocabulary changes that follow the platform pattern.
 
+## Announcements 1.2.0 → 1.3.0 / Customer Portal 1.4.0 → 1.5.0 — multi-audience + portal delivery
+
+1. Deploy Backend and run `php artisan migrate --force` (audience columns, `announcement_portal_reads`, catalog bumps — **do not** `db:seed`)
+2. Confirm catalog: announcements **1.3.0**, customer-portal **1.5.0**
+3. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build for audience toggles
+4. Existing announcements remain staff-visible (`visible_to_staff = true`). Opt into Customer portal per announcement when both modules are installed
+
 ## Documents 1.6.0 → 1.7.0 — nested folders + version history
 
 1. Deploy Backend and run `php artisan migrate --force` (`document_folders`, `document_versions`, `documents.folder_id`, catalog bump — **do not** `db:seed`)
