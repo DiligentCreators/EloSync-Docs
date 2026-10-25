@@ -1,3 +1,8 @@
+## Live Chat 2.1.0 headed e2e retest — Windows baseURL harness (2026-10-25)
+
+- **EloSync-Frontend:** Playwright `E2E_BASE_URL` normalizes `localhost` → `127.0.0.1` so Windows does not hit another Vite on `[::1]:5173`. `.env.e2e.example` documents the pitfall. Retest: `npm run test:e2e:live-chat:headed` **11/11**.
+- **EloSync-Docs:** Playwright guide note + [2.1.0 readiness](/deployment/live-chat-2-1-0-production-readiness) finding **LC21-07** + retest evidence.
+
 ## Marketing site → 20i StackCP (2026-10-24)
 
 - **EloSync-Website:** Production deploy for `elosync.com` matches shaz3e / resellerbytes / diligentcreators: CI publishes static `build-artifacts`, then notifies a signed HTTPS webhook; host `deploy.php` git-resets the document root and writes `/config.js` from `~/deploy-config.php` (API URL + marketing pixels). Added `server/` (`deploy.php`, `refresh-config.php`, `marketing-config-lib.php`, `deploy-config.example.php`), [DEPLOYMENT.md](https://github.com/DiligentCreators/EloSync-Website/blob/main/DEPLOYMENT.md), and webhook step in **Website production build**. `.htaccess` documents the 20i CDN rule (www→apex only; no `%{HTTPS}` force).
