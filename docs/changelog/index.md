@@ -4,7 +4,7 @@
 - **EloSync-Frontend:** Staff create/edit audience switches (Customer/Vendor gated by module). Portal Announcements nav + list/view/mark-read.
 - **EloSync-Mobile:** Audience switches on create/edit.
 - **EloSync-Docs:** User/API/developer guides + vendor-readiness note + this changelog.
-- **Go-live:** Migrate-only through `2026_10_26_043000_create_announcement_portal_reads_and_bump_announcement_audiences`.
+- **Go-live:** Migrate-only through `2026_10_26_043000_create_announcement_portal_reads_and_bump_announcement_audiences`. Readiness: [Announcements 1.3.0](/deployment/announcements-1-3-0-production-readiness) (includes portal Bearer tenancy fix A1).
 
 ## Quotation client share accept + digital signature (quotations 1.11.0) (2026-10-25)
 

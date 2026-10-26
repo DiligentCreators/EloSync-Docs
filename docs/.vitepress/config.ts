@@ -539,6 +539,7 @@ export default withMermaid(defineConfig({
             { text: 'Storage', link: '/deployment/storage' },
             { text: 'ToDos', link: '/deployment/todos' },
             { text: 'Announcements', link: '/deployment/announcements' },
+            { text: 'Announcements 1.3.0 Production Readiness', link: '/deployment/announcements-1-3-0-production-readiness' },
             { text: 'Live Chat', link: '/deployment/live-chat' },
             { text: 'Live Chat Production Readiness', link: '/deployment/live-chat-production-readiness' },
             { text: 'Live Chat 1.5.0 Production Readiness', link: '/deployment/live-chat-1-5-0-production-readiness' },

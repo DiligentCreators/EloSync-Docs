@@ -132,7 +132,7 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Assets](/user-guide/assets-overview) | Shipped |
 | [Documents](/user-guide/documents-overview) | Shipped **1.7.0** (requires Storage; nested folders + file version history — [readiness](/deployment/documents-folders-versions-1-7-0-production-readiness)) |
 | [Reports / Analytics](/user-guide/analytics-overview) | Shipped |
-| [Announcements](/user-guide/announcements-overview) | Shipped **1.3.0** (staff + customer portal audiences; vendor flag reserved for Vendor Portal) |
+| [Announcements](/user-guide/announcements-overview) | Shipped **1.3.0** (staff + customer portal audiences; vendor flag reserved — [readiness](/deployment/announcements-1-3-0-production-readiness)) |
 | [Live Chat](/user-guide/live-chat-overview) | Shipped **2.1.0** (pre-chat phone + department, richer intake notify — [readiness](/deployment/live-chat-2-1-0-production-readiness); builds on **2.0.0** proactive/CSAT/transcript/IP ban/notes) |
 
 ### Help Desk deferred

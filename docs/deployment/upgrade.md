@@ -24,6 +24,8 @@ That is the complete path for catalog modules and tenant permission vocabulary c
 3. Deploy Frontend after production build; hard-refresh SPA. Ship the mobile build for audience toggles
 4. Existing announcements remain staff-visible (`visible_to_staff = true`). Opt into Customer portal per announcement when both modules are installed
 
+Go-live: [Announcements 1.3.0 production readiness](/deployment/announcements-1-3-0-production-readiness).
+
 ## Documents 1.6.0 → 1.7.0 — nested folders + version history
 
 1. Deploy Backend and run `php artisan migrate --force` (`document_folders`, `document_versions`, `documents.folder_id`, catalog bump — **do not** `db:seed`)
