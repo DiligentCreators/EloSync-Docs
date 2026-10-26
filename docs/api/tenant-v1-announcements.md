@@ -4,7 +4,7 @@ Base path: `/api/tenant/v1`
 
 Middleware: `auth:tenant-api`, `tenant.user`, `not.suspended`, `verified`, `module:announcements`.
 
-**Read paths** (no Spatie permission): `GET unread`, `GET inbox`, `GET /announcements` (published for non-managers), `GET /{id}` (published), `POST /{id}/read`.
+**Read paths** (no Spatie permission): `GET unread`, `GET inbox`, `GET /announcements` (published + `visible_to_staff` for non-managers), `GET /{id}` (published + staff audience), `POST /{id}/read`.
 
 **Mutation paths** use `can:announcements.*` as noted.
 
@@ -14,7 +14,7 @@ Absolute datetimes serialize as UTC ISO-8601 (`...Z`).
 
 ### GET `/announcements/unread`
 
-Published, not expired, not yet read by the actor.
+Published, not expired, `visible_to_staff`, not yet read by the actor.
 
 ## Inbox
 
@@ -40,9 +40,15 @@ Managers with `announcements.update` may filter:
 
 Permission: `announcements.create`
 
-Body: `title` (required), `body` (required HTML subset from the workspace editor; notifications strip tags for previews), `status` (optional, default `draft`), `published_at`, `expires_at`.
+Body: `title` (required), `body` (required HTML subset from the workspace editor; notifications strip tags for previews), `status` (optional, default `draft`), `published_at`, `expires_at`, audience booleans:
 
-Publishing (`status=published`) notifies other tenant users (`type: announcement`).
+- `visible_to_staff` (default `true`)
+- `visible_to_customer_portal` (default `false`; coerced off unless Customer Portal is entitled)
+- `visible_to_vendor_portal` (default `false`; coerced off unless Vendor Portal is entitled)
+
+At least one audience must remain true after entitlement coercion. Resources include the three flags.
+
+Publishing (`status=published`) notifies other tenant users (`type: announcement`) only when `visible_to_staff` is true.
 
 ## Show
 

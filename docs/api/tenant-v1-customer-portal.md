@@ -57,6 +57,7 @@ Middleware: `auth:portal-api`, `module:customer-portal`. Soft module checked per
 | Contracts | same as quotations | `contracts` |
 | Help Desk | `GET/POST /portal/help-desk`, `GET /{id}`, `POST /{id}/notes`, `GET /note-attachments/{uuid}/download` | `help-desk` |
 | Knowledge Base | `GET /portal/knowledge-base`, `GET /{id}` | `knowledge-base` |
+| Announcements | `GET /portal/announcements`, `GET /{id}`, `POST /{id}/read` | `announcements` (rows with `visible_to_customer_portal`) |
 | Projects | `GET /portal/projects`, `/{id}`, `/{id}/tasks`, `/{id}/timeline` | `projects` (+ `tasks` for nested tasks) |
 
 Create ticket body: `subject` (required), `description` optional (HTML, max 10000). Server stamps `contact_id` / `company_id` from the portal user’s Contact — client-supplied party IDs are ignored.

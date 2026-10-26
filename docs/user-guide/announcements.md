@@ -4,9 +4,13 @@ Install **Announcements** from Marketplace (free Communication module). Until it
 
 ## Who can see announcements?
 
-Anyone who can sign in to the workspace — owners, admins, agents, and employees with a User login. There is no separate “view announcements” permission.
+Each announcement has **Visible to** audiences:
 
-Employees without a linked login cannot open EloSync, so they cannot receive announcements.
+- **Internal staff** — owners, admins, agents, and employees with a User login (inbox, dashboard, notifications). There is no separate “view announcements” permission.
+- **Customer portal** — invited contacts in the customer portal (only when Customer Portal is installed). Toggle appears on create/edit when that module is entitled.
+- **Vendor portal** — reserved for when Vendor Portal is available; the toggle appears only if that module is installed. Delivery inside a vendor portal ships with that product; the audience flag is already on each announcement.
+
+At least one audience is required. Employees without a linked login cannot open EloSync, so they cannot receive staff announcements.
 
 ## After login
 
@@ -33,8 +37,9 @@ Requires `announcements.create`.
 2. Enter title and body in the rich text editor (headings, lists, links, text color — HTML stored on the server)
 3. Set status to **Draft**, **Published**, or **Archived**
 4. Optional expires-at (workspace timezone for display; stored as UTC)
+5. Choose **Visible to** audiences (Internal staff and, when modules are installed, Customer portal / Vendor portal)
 
-Publishing notifies other workspace users in the notification center.
+Publishing notifies other workspace users in the notification center only when **Internal staff** is selected.
 
 ## Permissions (mutations only)
 

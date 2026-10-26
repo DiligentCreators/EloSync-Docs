@@ -22,11 +22,25 @@ Marketplace Communication module. Flat namespaces (no `Modules/` package). **Aut
 ## Authz
 
 - Routes: `module:announcements` for all endpoints
-- Consumer (`unread`, `inbox`, `index` published, `show` published, `read`): **no** `can:` middleware; `AnnouncementPolicy::viewAny` / `view` allow any authenticated user for published non-expired rows
+- Consumer (`unread`, `inbox`, `index` published, `show` published, `read`): **no** `can:` middleware; `AnnouncementPolicy::viewAny` / `view` allow any authenticated user for published non-expired **staff-audience** rows
 - Mutations: `can:announcements.create|update|delete|restore|force.delete`
 - Readers: `can:announcements.view_reads`
 
 Do **not** add `announcements.view` without a product decision — reading is intentionally open once installed.
+
+## Audiences
+
+Columns on `announcements`:
+
+- `visible_to_staff` (default `true`)
+- `visible_to_customer_portal` (default `false`)
+- `visible_to_vendor_portal` (default `false`)
+
+`Announcement::scopeVisibleToAudience(AnnouncementAudienceEnum)` filters published + non-expired + the matching flag. Staff inbox/unread/list (non-managers) and publish fan-out to `User` use `Staff`. Customer portal delivery: `PortalAnnouncementController` + `announcement_portal_reads` + `PortalAnnouncementPublishedNotification` (portal deep link). Customer/vendor flags are coerced off in `AnnouncementService::resolveAudienceFlags` when the matching module is not entitled. Catalog **1.3.0**.
+
+### Vendor portal readiness
+
+`visible_to_vendor_portal` and `AnnouncementAudienceEnum::VendorPortal` are shipped. Staff UI shows the Vendor portal switch only when `vendor-portal` is entitled. `NotifyAnnouncementPublishedJob` no-ops vendor fan-out until Vendor Portal accounts exist. Do not invent `/vendor/*` announcement routes in this module — add them with the Vendor Portal module (mirror customer portal).
 
 ## Read receipts
 

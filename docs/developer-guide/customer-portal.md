@@ -24,12 +24,13 @@ Marketplace Operations module (`customer-portal` **1.3.0**). Flat namespaces (no
 - `PortalProjectService` — shared projects (`portal_visible` + `PortalRecordScope`); customer-visible tasks (`visible_to_portal`); filtered timeline
 - `PortalHelpDeskService` — create stamps `contact_id` / `company_id`; notes set `portal_user_id` and `is_internal = false`; customer reply reopens closed/resolved via `HelpDeskTicketService::reopenFromCustomerReply`
 - `PortalKnowledgeBaseService` — published articles only (soft `knowledge-base`)
+- `PortalAnnouncementService` — published + `visible_to_customer_portal` (soft `announcements`); portal read receipts in `announcement_portal_reads`
 
 ## Frontend
 
 - Staff: `src/pages/customer-portal/`, Contact invite actions, nav under Operations
 - Portal SPA: `src/pages/portal/*`, `PortalLayout` / `PortalAuthLayout`, `usePortalAuthStore` (isolated token storage). Shared-host login/forgot/magic-link: email first, then searchable company picker from the central lookup (invite/reset/magic links still carry `?workspace=`).
-- Routes: `/#/portal/login`, magic-link request + `/#/portal/magic-login/:token`, invite/reset, Security (2FA), Knowledge Base, authenticated `/#/portal/...`
+- Routes: `/#/portal/login`, magic-link request + `/#/portal/magic-login/:token`, invite/reset, Security (2FA), Knowledge Base, Announcements, authenticated `/#/portal/...`
 - `FrontendUrl::portalInvite()` / `portalResetPassword()` / `portalMagicLogin()`
 
 ## Auth depth (1.3.0)
@@ -37,6 +38,7 @@ Marketplace Operations module (`customer-portal` **1.3.0**). Flat namespaces (no
 - **Magic link:** `POST /portal/auth/magic-link` (generic success; Active accounts only; Central mail) + `POST /portal/auth/magic-link/consume`. Single-use hashed token on `portal_users` (15 min TTL).
 - **2FA:** Fortify TOTP on `PortalUser` (`two_factor_*` columns). Login and magic-link consume return `two_factor_required` + `challenge_token` when enabled; `POST /portal/auth/two-factor-challenge` issues the portal token. Manage under `auth:portal-api` → `/portal/auth/two-factor/*` (same shape as staff `/me/two-factor`).
 - **Public KB:** `GET /portal/knowledge-base`, `/{id}` — published-only; soft entitlement.
+- **Announcements:** `GET /portal/announcements`, `/{id}`, `POST /{id}/read` — customer-portal audience only; soft entitlement.
 
 ## Help Desk note authorship
 
