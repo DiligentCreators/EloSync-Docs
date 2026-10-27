@@ -16,6 +16,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Laravel Forge Deployment](./laravel-forge) | API + SPA + Docs Forge topology; optional Forge marketing; 20i preferred for elosync.com |
 | [Marketing pixels](./marketing-pixels) | Optional GTM, Meta, LinkedIn, X tags (product SPA + marketing site) |
 | [Production Runbook](./platform-production-runbook) | Primary deploy / go-live checklist |
+| [Platform note @mentions](./platform-note-mentions-production-readiness) | Full page + drawer `@` mentions across note modules — **Go** |
 | [Website module catalog sync](./website-module-catalog-sync-production-readiness) | Marketing catalog + `/marketplace/` grid — **Go** |
 | [Owner credentials + stale workspace header](./owner-credentials-stale-tenant-header-production-readiness) | Central owner login + shared-host X-Tenant fix — **Go** |
 | [Email-only tenant password reset](./email-only-tenant-password-reset-production-readiness) | Shared-host forgot/reset without workspace name — **Go** |
