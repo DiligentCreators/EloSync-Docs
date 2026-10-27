@@ -35,13 +35,14 @@ Every business capability on this platform is a **module**. Modules are licensed
 - **Notifications** — Follow the frozen [Notification Architecture Contract](/developer-guide/notification-architecture-contract): versioned payload, route descriptors, NotificationBatch aggregation, Reverb/Echo realtime, modular SPA registry. Due/overdue work uses `crm:send-due-notifications`. Retention: `notifications:prune`.
 - **Realtime rooms** — Team Chat adds a private Reverb conversation channel `tenant.{tid}.conversation.{id}` (membership-gated) beside the existing `tenant.{tid}.user.{uid}` notification channel. See [Module Development Guide — in-app notifications](/developer-guide/module-development-guide#in-app-notifications).
 - **Assignee scoping** — reuse `ScopesToAssignee` so users without `{slug}.assign` only see their own records.
+- **Note @mentions** — staff note composers (full page + list peek) use SPA `MentionComposer` / `useMentionUsers` and `RecordSheetNotesPanel` with `mentionUsers`. Bodies store `@[Name](user:ID)`. Backend: register the module in `App\Support\Mentions\MentionableNoteRegistry`, call `NoteMentionService::syncFromRegistry` from `*NoteAdded` (Lead/Task/Help Desk keep dedicated tables). Wire `{entity}.mentioned` in the SPA notification registry and an `*_mentioned` email preference (default off).
 
 ## Definition of Done
 
 A module is complete only when:
 
 - [ ] Backend implementation complete (models, migrations, services, controllers, requests, resources, policies, events, notifications)
-- [ ] Frontend complete (list + dedicated create/view/edit pages; hybrid list `EntityRecordSheet` / `ModuleRecordSheet` for quick create + **tabbed** peek via `renderTabs` — billing docs view-peek only; forms, tables, filters, loading/empty/error states; dialogs only for secondary flows)
+- [ ] Frontend complete (list + dedicated create/view/edit pages; hybrid list `EntityRecordSheet` / `ModuleRecordSheet` for quick create + **tabbed** peek via `renderTabs` — billing docs keep create/edit page-primary but Notes peeks support `@mentions`; forms, tables, filters, loading/empty/error states; dialogs only for secondary flows)
 - [ ] Module list `PageHeader` wires `tourId` with steps under `src/tours/{slug}.ts` ([Module Tours](/developer-guide/module-tours))
 - [ ] Permissions enforced (Spatie + UI gates)
 - [ ] Module licensing enforced (`module:` middleware + SPA nav)

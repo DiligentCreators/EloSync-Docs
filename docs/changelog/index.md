@@ -1,3 +1,10 @@
+## Platform-wide note @mentions (full page + drawer) (2026-10-27)
+
+- **EloSync-Backend:** Polymorphic `note_mentions` + `MentionableNoteRegistry` + `RecordNoteMentionedNotification` extend Lead/Task/Help Desk mention parity to Activity, Asset, Company, Contact, Contract, Credit Note, Invoice, Payment, Estimate, Expense, Knowledge Base, Opportunity, Product, Project, Purchase Order, Quotation, Reseller, Vendor, and Warehouse notes. Per-module optional email prefs (default off). Catalog MINOR bumps for those modules (+ Help Desk **1.18.0 → 1.19.0** for drawer parity).
+- **EloSync-Frontend:** Shared `useMentionUsers` + `RecordSheetNotesPanel` `MentionComposer`; Notes work in list peeks and full pages. Invoice/Quotation/Estimate peeks unlock editable notes with `@`. Notification registries + Settings → Notifications mention toggles.
+- **EloSync-Docs:** Settings + developer notes + this changelog.
+- **Go-live:** Migrate-only through `2026_10_27_180000_bump_modules_for_platform_note_mentions` (includes `create_note_mentions_table`). Readiness: [Platform note mentions](/deployment/platform-note-mentions-production-readiness).
+
 ## Announcement multi-audience + customer portal delivery (announcements 1.3.0 / customer-portal 1.5.0) (2026-10-26)
 
 - **EloSync-Backend:** Audience flags `visible_to_staff`, `visible_to_customer_portal`, `visible_to_vendor_portal` (vendor reserved; staff inbox excludes vendor-only). Portal APIs `GET/POST /portal/announcements` (+ show, mark-read) with `announcement_portal_reads`. Soft entitlement on `announcements`. Publish fan-out splits staff vs active `PortalUser`s. Catalog **announcements 1.2.0 → 1.3.0**, **customer-portal 1.4.0 → 1.5.0**.

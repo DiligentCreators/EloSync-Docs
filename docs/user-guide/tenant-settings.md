@@ -53,8 +53,12 @@ There is no separate attendance or meeting timezone. Change **Timezone** once; a
 | **Follow-up created** | A lead follow-up is created |
 | **Follow-up due / overdue** | A lead follow-up becomes due or overdue |
 | **Mentioned in a lead note** | Someone @mentions you in a lead note |
+| **Mentioned in a help desk note** | Someone @mentions you in an internal help desk note |
+| **Mentioned in … note** (per module) | Someone @mentions you in a staff note on that record (company, contact, invoice, quotation, estimate, and other note-capable modules). Each module has its own toggle; defaults are off. |
 | **Meeting events** | Meeting invite, update, cancel, or reminder |
 | **Other module assignments** | Contact, company, opportunity, invoice, and similar assignment emails |
+
+Type `@` in a record’s Notes (full page or list peek) to mention a teammate. They get an in-app notification; email only if the matching toggle above is on.
 
 Always sent (not toggleable here):
 
