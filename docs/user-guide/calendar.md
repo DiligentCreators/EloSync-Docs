@@ -4,7 +4,7 @@ Use Calendar to manage **your** personal events. Default view is **Week** (Googl
 
 ## Access
 
-- Workspace must have the **Calendar** module installed (included by default).
+- Your workspace must have the **Calendar** module installed. It's free to install from the Marketplace.
 - Your role needs `calendar.view` (and `create` / `update` / `delete` for edits).
 
 ## Visibility

@@ -159,6 +159,10 @@ export default withMermaid(defineConfig({
           text: 'User Guide',
           items: [
             { text: 'Overview', link: '/user-guide/' },
+            { text: 'Getting started', link: '/user-guide/getting-started' },
+            { text: 'Connect a lead source', link: '/user-guide/lead-sources' },
+            { text: 'Module dependencies', link: '/user-guide/module-dependencies' },
+            { text: 'Troubleshooting', link: '/user-guide/troubleshooting' },
             { text: 'Tenant Application', link: '/user-guide/tenant-application' },
             { text: 'Authentication', link: '/user-guide/authentication' },
             { text: 'Admin UI', link: '/user-guide/admin-ui' },

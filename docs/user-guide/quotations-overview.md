@@ -21,9 +21,9 @@ Sales price-quoting module on the frozen platform. Mirrors the [Opportunities](/
 - Line items (description, quantity, unit price, tax rate) — subtotal / tax total / total computed server-side
 - Status workflow: `draft → sent → accepted | rejected | expired` (`POST /quotations/{id}/send`, `.../accept`, `.../status`)
 - Download quotation PDF (workspace-branded; line HTML, memo, terms)
-- **Email customer** after Send (`POST /quotations/{id}/email`, `quotations.send`) — optional PDF attachment; for **Sent** quotes, appends a one-time customer accept link; default recipient from linked contact/company; records `emailed` timeline + tenant email log
-- **Client share + e-signature** — one guest URL (`/#/view/quotations/{token}`) for preview, PDF, and accept when Sent; staff **Copy client link**; optional phone / drawn-or-uploaded signature / ID (Settings); signer evidence + PDF stamp; legacy `/#/accept/…` still works
-- **Convert to invoice** (`POST /quotations/{id}/convert`) — one-shot draft CustomerInvoice when Invoices is entitled (soft check; not a Marketplace hard dependency)
+- **Email quote** after Mark as sent (`POST /quotations/{id}/email`, `quotations.send`) — optional PDF attachment; for **Sent** quotes, appends a one-time customer accept link; default recipient from linked contact/company; records `emailed` timeline + tenant email log
+- **Share link + e-signature** — one guest URL (`/#/view/quotations/{token}`) for preview, PDF, and accept when Sent; staff **Share link**; optional phone / drawn-or-uploaded signature / ID (Settings); signer evidence + PDF stamp; legacy `/#/accept/…` still works
+- **Convert to invoice** (`POST /quotations/{id}/convert`) — one-shot **draft** CustomerInvoice from **Draft, Sent, or Accepted** when Invoices is entitled (soft check; not a Marketplace hard dependency)
 - Assignment with assignee scoping via `quotations.assign`
 - Notes + domain activity timeline (mirrors Opportunities)
 - Ask EloSync triage (with AI Assistant entitled): fetch quotation, confirmed status / assign / note writes — see [AI Assistant](/user-guide/ai-assistant)

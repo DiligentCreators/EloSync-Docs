@@ -2,14 +2,16 @@
 
 ## Tenant Application
 
-### Register
+### Register (invite only)
+EloSync is in an invite-only Founding Beta, and public sign-up is switched off.
 
-1. Open `/register`.
-2. If registration is closed, you will see: **We are not currently accepting new registrations.**
-3. Otherwise enter company name, your name, work email, and password.
-4. After success you are signed in and taken to the workspace dashboard.
+1. Apply at [elosync.com/beta](https://elosync.com/beta/).
+2. If you're accepted, open the invite link from your email. It takes you to registration.
+3. Enter your company name, your name, your work email (it must be the email you applied with) and a password.
 
-Registration creates your workspace, owner account, default roles, and default modules (Leads, Tasks, Communication Templates). The workspace platform domain is generated automatically from the company name (spaces and special characters become hyphens), for example `Acme Corp` → `acme-corp.localhost` (or your platform suffix in production). Custom domains require the [Branded](/user-guide/branded) module after signup.
+After registering, you're signed in and taken to the workspace dashboard. Registration creates your workspace, owner account, default roles and the included modules: Leads, Tasks and ToDos. The workspace platform domain is generated automatically from the company name (spaces and special characters become hyphens), for example `Acme Corp` → `acme-corp.localhost` (or your platform suffix in production). Custom domains require the [Branded](/user-guide/branded) module after signup.
+
+If you open `/register` without a valid invite, you'll see "We are not currently accepting new registrations." To get a new invite link, use **Already accepted? → Resend invite** on [elosync.com/beta](https://elosync.com/beta/).
 
 ### Login
 

@@ -1,6 +1,9 @@
 # Getting Started
 
-Welcome to **EloSync** documentation. Start here to understand the frozen platform foundation and how new product capability is delivered as modules.
+Welcome to EloSync documentation.
+
+**Using EloSync in your business?** Start with [Getting started for workspace owners](/user-guide/getting-started).
+**Building or running the platform?** The pages below cover the platform foundation and how new capability is delivered as modules.
 
 ## Where to begin
 

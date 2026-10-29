@@ -1,3 +1,9 @@
+## Quotations UI/UX redesign — Module 4 (2026-10-29)
+
+- **EloSync-Frontend:** Quotes list restyled to match batch1 mocks — compact KPI strip, status view chips (All / Draft / Sent / Accepted / Expired), column visibility prefs (default-hidden: company, phone, email, opportunity, latest note), Trash banner + **Move to Trash** wording, empty-state triad. Detail/peek: Draft → Sent → Accepted → Invoiced status trail (`PipelineStageBar`), ready-to-bill callout, relabelled **Mark as sent** / **Email quote** / **Share link**. Convert to invoice enabled for **Draft, Sent, and Accepted** (matches current backend `isConvertible()`), confirm creates a **draft** invoice only. Create form keeps rich-text Notes/Terms toolbar and **Create and view** / **Create and send**. Public accept/share success icons use theme success tokens.
+- **EloSync-Docs:** User + developer quotations guides updated for convert-from-draft and action labels; this changelog.
+- **Deferred (no invent):** list Export and Created-date filter (API lacks support); Duplicate action (no endpoint); mock “Value sent” KPI (stats expose `accepted_value` only).
+
 ## Platform-wide note @mentions (full page + drawer) (2026-10-27)
 
 - **EloSync-Backend:** Polymorphic `note_mentions` + `MentionableNoteRegistry` + `RecordNoteMentionedNotification` extend Lead/Task/Help Desk mention parity to Activity, Asset, Company, Contact, Contract, Credit Note, Invoice, Payment, Estimate, Expense, Knowledge Base, Opportunity, Product, Project, Purchase Order, Quotation, Reseller, Vendor, and Warehouse notes. Per-module optional email prefs (default off). Catalog MINOR bumps for those modules (+ Help Desk **1.18.0 → 1.19.0** for drawer parity).

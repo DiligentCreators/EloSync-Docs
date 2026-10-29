@@ -22,21 +22,21 @@ Open **Quotations** from the sidebar (Sales). Search by title, filter by status,
 5. Optionally set an assignee (requires **assign**)
 6. Save
 
-Edit from the row menu or the record page while the quotation is still **Draft**. Editing replaces the full line-item list. After **Send**, content is locked; use status actions and assignment instead.
+Edit from the row menu or the record page while the quotation is still **Draft**. Editing replaces the full line-item list. After **Mark as sent**, content is locked; use status actions and assignment instead. Soft-deleted quotations use **Move to Trash** (restore or permanently delete from Trash).
 
 ## Status workflow
 
 A quotation starts in **Draft**. Move it forward with:
 
-- **Send** (`draft → sent`) — marks the quote as sent in the CRM (does not email the customer by itself). Also issues a customer **accept link** (regenerated when you copy the link or email the customer).
+- **Mark as sent** (`draft → sent`) — marks the quote as sent in the CRM (does not email the customer by itself). Also issues a customer **accept link** (regenerated when you create a share link or email the quote).
 - **Accept** (`sent → accepted`) from the CRM, or let the customer accept via the public link
-- **Reject** / **Expire** via the status action (invalidates any outstanding accept link)
+- **Decline** / **Mark expired** via the status action (invalidates any outstanding accept link)
 
 Invalid transitions (e.g. accepting directly from Draft) are rejected with a validation error.
 
 ## Customer acceptance (e-signature)
 
-When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can **Copy client link**. Sending a quotation and emailing a **Sent** quotation both use the same guest URL (`/#/view/quotations/{token}`).
+When a quotation is **Sent** or **Accepted**, staff with `quotations.send` can use **Share link**. Marking a quotation as sent and emailing a **Sent** quotation both use the same guest URL (`/#/view/quotations/{token}`).
 
 Customers open that link (no login), review the full PDF-style preview, download the PDF, and — while status is **Sent** — accept online. Acceptance records signer name/email (and optional phone), IP/user agent, and optional drawn or uploaded signature / ID document when required in Settings → General. That marks the quotation **Accepted**, stamps the PDF with the acceptance block (and signature image when captured), and invalidates the one-time acceptance token. The share link remains usable for viewing after accept. Regenerating the client link or re-emailing rotates tokens. Share links expire after 90 days; acceptance windows still respect **valid until** (end of day) or 30 days for legacy accept tokens.
 
@@ -44,25 +44,25 @@ Optional Settings (Storage required for signature/ID): **Require phone / signatu
 
 ## Convert to invoice
 
-Once a quotation is **Sent** or **Accepted** and **Invoices** is installed, use **Convert to invoice** from the record page or row menu (`quotations.convert`):
+When a quotation is **Draft**, **Sent**, or **Accepted**, **Invoices** is installed, and it has not already been converted, use **Convert to invoice** from the record page, ready-to-bill callout, or row menu (`quotations.convert`):
 
-- Creates a new **draft** invoice with the same title, notes, terms & conditions, currency, line discounts, contact/company, assignee, and a copy of every line item
-- Marks the quotation **Accepted** automatically if it wasn't already
+- Creates a new **draft** invoice with the same title, notes, terms & conditions, currency, line discounts, contact/company, assignee, and a copy of every line item (does not send the invoice)
+- Marks the quotation **Accepted** automatically if it wasn't already (there is no separate Converted status)
 - The quotation record page then shows a link to the **converted invoice**
 - A quotation can only be converted **once** — the action is hidden once any invoice already has this quotation linked (including invoices created from a linked estimate or contract)
 - Without Invoices installed, the action is hidden; the API returns a validation error if called directly
 
-## Client link (view + PDF + accept)
+## Share link (view + PDF + accept)
 
-The **Copy client link** button is the single guest URL for preview, PDF download, and accept (when **Sent**). Header logo is the tenant logo when **Branded** is installed; otherwise EloSync. Remittance bank details come from Settings → Branding when configured. Links are cleared if the quotation is rejected or expired.
+The **Share link** button is the single guest URL for preview, PDF download, and accept (when **Sent**). Header logo is the tenant logo when **Branded** is installed; otherwise EloSync. Remittance bank details come from Settings → Branding when configured. Links are cleared if the quotation is rejected or expired.
 
 ## Download PDF
 
 **Download PDF** is on the quotation record page and the row menu. It generates a branded PDF using your **Settings → Branding** button color, logo (when uploaded), and company profile — plus line items (with HTML details), discount/tax/total breakdown, memo notes, terms & conditions, and — after customer accept — the acceptance block with signature image when one was captured. Long notes and terms continue across as many pages as needed.
 
-## Email customer
+## Email quote
 
-After you **Send** the quotation (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email customer** on the record page (`quotations.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. When the quotation is still **Sent**, the message includes the client link to review and accept. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
+After you **Mark as sent** (status is **Sent**, **Accepted**, **Rejected**, or **Expired**), use **Email quote** on the record page (`quotations.send`). The dialog pre-fills the linked contact or company email when available; you can add CC recipients, edit the subject and message, and choose whether to attach the PDF. When the quotation is still **Sent**, the message includes the share link to review and accept. Delivery uses your workspace email configuration and appears in **Settings → Email logs**.
 
 ## Assignment
 

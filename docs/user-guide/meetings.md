@@ -4,7 +4,7 @@ Use **Meetings** to schedule workspace meetings, invite teammates (and external 
 
 ## Access
 
-- Workspace must have the **Meetings** module installed (included by default; requires **Calendar**).
+- Your workspace must have the **Meetings** module installed. It's free to install from the Marketplace and requires **Calendar**.
 - Your role needs `meetings.view` (and `create` / `update` / `delete` for edits).
 - Connecting Zoom/Google requires `meetings.manage_integrations`.
 
