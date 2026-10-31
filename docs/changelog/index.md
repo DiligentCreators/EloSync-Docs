@@ -1,3 +1,8 @@
+## Tasks create: allow null recurrence interval (2026-11-01)
+
+- **EloSync-Backend:** Store/update task validation accepts `nullable` `recurrence_interval` so the SPA can clear recurrence fields when Repeat is off. Update path coerces null/off recurrence interval to `1` (non-nullable column). Pest regression in `TaskRecurrenceTest`.
+- **EloSync-Docs:** This changelog.
+
 ## Platform-wide note @mentions (full page + drawer) (2026-10-27)
 
 - **EloSync-Backend:** Polymorphic `note_mentions` + `MentionableNoteRegistry` + `RecordNoteMentionedNotification` extend Lead/Task/Help Desk mention parity to Activity, Asset, Company, Contact, Contract, Credit Note, Invoice, Payment, Estimate, Expense, Knowledge Base, Opportunity, Product, Project, Purchase Order, Quotation, Reseller, Vendor, and Warehouse notes. Per-module optional email prefs (default off). Catalog MINOR bumps for those modules (+ Help Desk **1.18.0 → 1.19.0** for drawer parity).
