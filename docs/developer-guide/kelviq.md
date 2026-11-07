@@ -68,7 +68,7 @@ Never put production keys in sandbox mode. Do not change `KELVIQ_ENV` to `produc
 
    `--gateway=kelviq` matches by gateway **code** (not driver class). If Sync writes `0` mappings, the CLI prints the first Kelviq API error per module.
 
-   Sync skips (or tolerates) Kelviq **publish** when the plan is already `isLatest` — Kelviq often returns HTML 500 on a second publish. Mappings are still upserted for already-published plans.
+   Sync always upserts EloSync Product Mapping to `elosync-{slug}` after the Kelviq product/plan/prices exist. Publish is **best-effort**: already-`isLatest` plans are skipped, and publish HTML 500 / unpublished drafts do **not** block mapping (publish in the Kelviq dashboard if checkout requires a live plan).
 5. Register webhook URL (ngrok / Herd share / public API):
 
 ```text
