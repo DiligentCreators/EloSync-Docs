@@ -1,3 +1,8 @@
+## Kelviq catalog sync tolerates already-published plans (2026-11-08)
+
+- **EloSync-Backend:** Catalog sync skips publish when the Kelviq plan is already `isLatest`, and if publish returns 400/500 it re-checks and still upserts mappings when published. Clearer Kelviq HTTP error messages (incl. HTML 500). Pest coverage for already-published / failed-republish paths.
+- **EloSync-Docs:** Kelviq sync note + this changelog.
+
 ## Gateway catalog sync hardening (2026-11-07)
 
 - **EloSync-Backend:** Catalog sync no longer reports success when credentials fail with zero items. Kelviq sync creates a BOOLEAN `elosync-access` feature for FLAT prices, recovers from existing product/plan conflicts, and surfaces the first provider error. New Artisan `payment-gateways:sync-catalog {gateway}`. `storage:verify-pack-mappings --gateway=kelviq` resolves by gateway **code**.
