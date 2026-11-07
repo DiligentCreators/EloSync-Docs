@@ -19,7 +19,7 @@ Settings → Billing still holds invoice prefix / trial toggles — **not** gate
 2. Use row actions:
    - **View details** — capabilities, currencies, webhook status, recent logs
    - **Configure** — enter credentials (Stripe: publishable/secret/webhook; Creem: API secret + webhook secret; Kelviq: Server API key + webhook secret)
-   - **Product mapping** — map catalog modules to provider product/price references (Stripe `price_…` / Creem `prod_…` / Kelviq plan identifier). Module create/edit does **not** collect provider IDs.
+   - **Product mapping** — map catalog modules to provider product/price references (Stripe `price_…` / Creem `prod_…` / Kelviq plan identifier). Use **Sync catalog** to create missing provider products from EloSync module prices (Kelviq, Stripe, Creem). Module create/edit does **not** collect provider IDs.
    - **Test connection** — verifies credentials against the provider
    - **Set as default** — used for new checkouts / consolidated billing
    - **Enable / Disable** — disabled gateways cannot process (cannot disable the current default)

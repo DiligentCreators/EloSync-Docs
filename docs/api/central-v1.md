@@ -170,6 +170,7 @@ Invoices are created by the Billing Engine (consolidated run or purchase settlem
 | GET | `/payment-gateways/{id}/capabilities` | `payment-gateways.read` | Capabilities + currencies + `requires_product_mapping` |
 | GET | `/payment-gateways/{id}/module-prices` | `payment-gateways.read` | Gateway ↔ module product/price mappings |
 | PUT | `/payment-gateways/{id}/module-prices` | `payment-gateways.update` | Replace mappings (`{ mappings: [...] }`); 422 if gateway does not require mapping |
+| POST | `/payment-gateways/{id}/sync-catalog` | `payment-gateways.update` | Create missing provider products/plans from EloSync billable modules and upsert mappings (`{ overwrite?: bool, module_ids?: int[] }`). Supported for Kelviq, Stripe, Creem. |
 
 Also accepts `billing.manage` as an alternate permission.
 
