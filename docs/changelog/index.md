@@ -1,3 +1,9 @@
+## Gateway catalog sync hardening (2026-11-07)
+
+- **EloSync-Backend:** Catalog sync no longer reports success when credentials fail with zero items. Kelviq sync creates a BOOLEAN `elosync-access` feature for FLAT prices, recovers from existing product/plan conflicts, and surfaces the first provider error. New Artisan `payment-gateways:sync-catalog {gateway}`. `storage:verify-pack-mappings --gateway=kelviq` resolves by gateway **code**.
+- **EloSync-Frontend:** Sync toast/error shows the first failed module message from `sync-catalog`.
+- **EloSync-Docs:** Kelviq guide CLI notes + this changelog.
+
 ## Gateway catalog sync (Kelviq / Stripe / Creem) (2026-11-07)
 
 - **EloSync-Backend:** `POST /payment-gateways/{id}/sync-catalog` creates missing provider catalog objects from billable EloSync modules and upserts `payment_gateway_module_prices`. Kelviq: product + plan (`elosync-{slug}`) + MONTHLY/YEARLY prices + publish. Stripe: Product + Price per cycle. Creem: Product per cycle (`every-month` / `every-year`). Optional `overwrite` + `module_ids`. Capability `catalog_sync`. Pest: `GatewayCatalogSyncTest`.
