@@ -11,6 +11,7 @@ Gateway-agnostic payment infrastructure for EloSync Central. The **Billing Engin
 | `BillingEngine` | Purchase / consolidate / handle normalized `GatewayEvent` — **no Stripe/Cashier imports** |
 | `StripeGateway` | Cashier Checkout + Stripe SDK + webhook normalization |
 | `CreemGateway` | Creem REST (HTTP client) + webhook normalization |
+| `KelviqGateway` | Kelviq REST (HTTP client) + webhook normalization |
 | `ManualGateway` | Synchronous offline settlement |
 | `PaymentGatewayService` | Admin enable/disable/default/config/mode/test/logs |
 | `GatewayWebhookController` | `POST /webhooks/gateways/{code}` → driver → Billing Engine |
@@ -40,11 +41,13 @@ flowchart TB
     MG[ManualGateway]
     SG[StripeGateway]
     CG[CreemGateway]
+    KG[KelviqGateway]
   end
 
   subgraph Providers["External"]
     Stripe[Stripe API / Cashier]
     Creem[Creem API]
+    Kelviq[Kelviq API]
   end
 
   PG --> PGC
@@ -56,8 +59,10 @@ flowchart TB
   IF --> MG
   IF --> SG
   IF --> CG
+  IF --> KG
   SG --> Stripe
   CG --> Creem
+  KG --> Kelviq
 ```
 
 ## Checkout / activation sequence
@@ -157,3 +162,4 @@ Admin API: `GET/PUT /payment-gateways/{id}/module-prices`. Central UI: **Billing
 - [Billing Engine](/developer-guide/billing-engine)
 - [Stripe / Cashier notes](/developer-guide/stripe-cashier)
 - [Creem gateway](/developer-guide/creem)
+- [Kelviq gateway](/developer-guide/kelviq)

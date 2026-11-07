@@ -45,7 +45,7 @@ Not in the sidebar (reached via in-page links): `/central/tenants/:id`, `/centra
 | Dashboard | `/dashboard` |
 | Settings | `/system-settings` |
 | Billing dashboard | `/payment-gateways`, `/invoices`, `/payments` |
-| Payment Gateways | `/payment-gateways`, enable/disable/default/config/mode/test-connection/logs; **Product Mapping** for Stripe (`price_…`) and Creem (`prod_…`) |
+| Payment Gateways | `/payment-gateways`, enable/disable/default/config/mode/test-connection/logs; **Product Mapping** for Stripe (`price_…`), Creem (`prod_…`), and Kelviq (plan identifier) |
 | Invoices / Payments (global) | `/invoices`, `/payments` |
 
 ## Beta Applications

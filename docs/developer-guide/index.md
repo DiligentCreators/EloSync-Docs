@@ -51,6 +51,7 @@ Engineering documentation for extending EloSync. New business capability ships a
 | [Webhooks](./payment-gateways-webhooks) | Webhook reference |
 | [Stripe / Cashier](./stripe-cashier) | Cashier driver notes |
 | [Creem](./creem) | Creem checkout and ops |
+| [Kelviq](./kelviq) | Kelviq Central Marketplace checkout and ops |
 
 ## Modules
 

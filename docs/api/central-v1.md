@@ -190,7 +190,7 @@ Tenant **Audit Logs** (`GET /tenants/{tenant}/audit-logs`, `tenants.read`) inclu
 | Method | Path | Notes |
 |--------|------|-------|
 | POST | `/stripe/webhook` | Cashier-compatible path (`config('cashier.path')` + `/webhook`) |
-| POST | `/webhooks/gateways/{code}` | Gateway-agnostic ingress for all drivers |
+| POST | `/webhooks/gateways/{code}` | Gateway-agnostic ingress for all drivers (`stripe`, `creem`, `kelviq`, …) |
 | POST | `/webhooks/email/{provider}` | Email delivery webhooks (Central) |
 | POST | `/webhooks/email/{provider}/{tenant}` | Email delivery webhooks (Tenant custom mail) |
 

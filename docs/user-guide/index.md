@@ -21,7 +21,7 @@ Guides for workspace operators and Central admins using EloSync day to day.
 | [Central Settings](./central-settings) | Operator guide for system settings |
 | [Tenant Settings Overview](./tenant-settings-overview) | Workspace branding & mail index |
 | [Tenant Settings](./tenant-settings) | Workspace configuration for admins |
-| [Payment Gateways](./payment-gateways) | Stripe, Creem, and manual payments |
+| [Payment Gateways](./payment-gateways) | Stripe, Creem, Kelviq, and manual payments |
 
 ## Modules
 
