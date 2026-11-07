@@ -58,6 +58,15 @@ Never put production keys in sandbox mode. Do not change `KELVIQ_ENV` to `produc
 1. Open Kelviq sandbox setup → copy Server API key (and later webhook secret) into Backend `.env` or Central **Configure**.
 2. Central: enable Kelviq, mode **sandbox**, paste Server API key + Webhook secret.
 3. Product mapping → **Sync catalog** (preferred) creates one Kelviq product/plan per EloSync module (`elosync-{slug}`), sets MONTHLY/YEARLY prices from catalog amounts, publishes the plan, and writes the plan identifier into both cycle rows. Or publish plans in the Kelviq dashboard and paste identifiers manually. Monthly / yearly rows share the plan identifier; checkout sends `chargePeriod` `MONTHLY` / `YEARLY`.
+
+   On the server you can also run:
+
+   ```bash
+   php artisan payment-gateways:sync-catalog kelviq --overwrite
+   php artisan storage:verify-pack-mappings --gateway=kelviq
+   ```
+
+   `--gateway=kelviq` matches by gateway **code** (not driver class). If Sync writes `0` mappings, the CLI prints the first Kelviq API error per module.
 5. Register webhook URL (ngrok / Herd share / public API):
 
 ```text
