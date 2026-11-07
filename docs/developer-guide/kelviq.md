@@ -67,6 +67,8 @@ Never put production keys in sandbox mode. Do not change `KELVIQ_ENV` to `produc
    ```
 
    `--gateway=kelviq` matches by gateway **code** (not driver class). If Sync writes `0` mappings, the CLI prints the first Kelviq API error per module.
+
+   Sync skips (or tolerates) Kelviq **publish** when the plan is already `isLatest` — Kelviq often returns HTML 500 on a second publish. Mappings are still upserted for already-published plans.
 5. Register webhook URL (ngrok / Herd share / public API):
 
 ```text
