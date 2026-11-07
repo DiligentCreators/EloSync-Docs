@@ -69,6 +69,8 @@ Never put production keys in sandbox mode. Do not change `KELVIQ_ENV` to `produc
    `--gateway=kelviq` matches by gateway **code** (not driver class). If Sync writes `0` mappings, the CLI prints the first Kelviq API error per module.
 
    Sync always upserts EloSync Product Mapping to `elosync-{slug}` after the Kelviq product/plan/prices exist. Publish is **best-effort**: already-`isLatest` plans are skipped, and publish HTML 500 / unpublished drafts do **not** block mapping (publish in the Kelviq dashboard if checkout requires a live plan).
+
+   The Central UI **Sync catalog** button queues `SyncPaymentGatewayCatalogJob` on the `catalog-sync` Horizon queue (up to ~10 minutes) and polls status — use it instead of waiting on a long HTTP request. The artisan command still runs sync inline for ops.
 5. Register webhook URL (ngrok / Herd share / public API):
 
 ```text
