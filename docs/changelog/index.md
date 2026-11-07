@@ -1,3 +1,8 @@
+## Kelviq catalog sync maps even when publish fails (2026-11-08)
+
+- **EloSync-Backend:** Catalog sync upserts `elosync-{slug}` mappings after product/plan/prices succeed; Kelviq publish is best-effort and no longer blocks Product Mapping when it returns HTML 500 or leaves `isLatest` false.
+- **EloSync-Docs:** Kelviq sync note + this changelog.
+
 ## Kelviq catalog sync tolerates already-published plans (2026-11-08)
 
 - **EloSync-Backend:** Catalog sync skips publish when the Kelviq plan is already `isLatest`, and if publish returns 400/500 it re-checks and still upserts mappings when published. Clearer Kelviq HTTP error messages (incl. HTML 500). Pest coverage for already-published / failed-republish paths.
