@@ -30,7 +30,7 @@ php artisan db:seed --class=Database\\Seeders\\Central\\PaymentGatewaySeeder
 
 2. Configure credentials (env fallbacks **or** Central admin UI). Keep `KELVIQ_ENV=sandbox` until go-live.
 
-3. Publish Kelviq sandbox plans for each billable module; map each `planIdentifier` under **Billing → Payment Gateways → Product mapping**.
+3. Map billable modules under **Billing → Payment Gateways → Product mapping** — either click **Sync catalog** (creates/publishes Kelviq products + plans from EloSync prices and fills plan identifiers) or publish plans in the Kelviq dashboard and paste each `planIdentifier` manually.
 
 4. Point Kelviq webhooks to `POST /webhooks/gateways/kelviq`.
 
@@ -56,9 +56,8 @@ Never put production keys in sandbox mode. Do not change `KELVIQ_ENV` to `produc
 ## Sandbox setup
 
 1. Open Kelviq sandbox setup → copy Server API key (and later webhook secret) into Backend `.env` or Central **Configure**.
-2. Publish plans in the Kelviq sandbox catalog; copy each plan identifier.
-3. Central: enable Kelviq, mode **sandbox**, paste Server API key + Webhook secret.
-4. Product mapping: put the plan identifier in **Plan identifier** (product reference). Monthly / yearly rows map to `MONTHLY` / `YEARLY`.
+2. Central: enable Kelviq, mode **sandbox**, paste Server API key + Webhook secret.
+3. Product mapping → **Sync catalog** (preferred) creates one Kelviq product/plan per EloSync module (`elosync-{slug}`), sets MONTHLY/YEARLY prices from catalog amounts, publishes the plan, and writes the plan identifier into both cycle rows. Or publish plans in the Kelviq dashboard and paste identifiers manually. Monthly / yearly rows share the plan identifier; checkout sends `chargePeriod` `MONTHLY` / `YEARLY`.
 5. Register webhook URL (ngrok / Herd share / public API):
 
 ```text

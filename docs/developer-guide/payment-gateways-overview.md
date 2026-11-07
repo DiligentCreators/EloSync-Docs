@@ -142,7 +142,7 @@ erDiagram
 
 Gateways with `checkout` + `subscriptions` capabilities (`requiresProductMapping()`) store provider product/price references in `payment_gateway_module_prices`. Modules never store Stripe (or any provider) IDs.
 
-Admin API: `GET/PUT /payment-gateways/{id}/module-prices`. Central UI: **Billing → Payment Gateways → Product mapping**.
+Admin API: `GET/PUT /payment-gateways/{id}/module-prices` and `POST /payment-gateways/{id}/sync-catalog` (Kelviq / Stripe / Creem create missing provider products from EloSync catalog prices). Central UI: **Billing → Payment Gateways → Product mapping** → **Sync catalog**.
 
 ## Adding a new gateway
 

@@ -1,3 +1,9 @@
+## Gateway catalog sync (Kelviq / Stripe / Creem) (2026-11-07)
+
+- **EloSync-Backend:** `POST /payment-gateways/{id}/sync-catalog` creates missing provider catalog objects from billable EloSync modules and upserts `payment_gateway_module_prices`. Kelviq: product + plan (`elosync-{slug}`) + MONTHLY/YEARLY prices + publish. Stripe: Product + Price per cycle. Creem: Product per cycle (`every-month` / `every-year`). Optional `overwrite` + `module_ids`. Capability `catalog_sync`. Pest: `GatewayCatalogSyncTest`.
+- **EloSync-Frontend:** Product mapping dialog **Sync catalog** / **Sync & overwrite**.
+- **EloSync-Docs:** User guide, Kelviq guide, central API, this changelog.
+
 ## Central Kelviq payment gateway (sandbox) (2026-11-07)
 
 - **EloSync-Backend:** `KelviqGateway` implements `PaymentGatewayInterface` (HTTP client + webhook HMAC + 300s replay window). Seeds `payment_gateways.code=kelviq`. Marketplace checkout uses tenant UUID as Kelviq `customerId` and mapped `planIdentifier` / `MONTHLY|YEARLY`. Maps `invoice.paid` renewals; pause → `suspended` / resume → `active`. Webhook: `POST /webhooks/gateways/kelviq`. Env: `KELVIQ_ENABLED`, `KELVIQ_ENV`, `KELVIQ_SERVER_API_KEY`, `KELVIQ_WEBHOOK_SECRET`. Pest: `KelviqGatewayTest`, `KelviqWebhookTest`.
