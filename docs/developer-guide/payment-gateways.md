@@ -14,9 +14,11 @@ $driver->capabilities();
 $driver->supportedCurrencies();
 ```
 
-Never import `Stripe\*`, `Laravel\Cashier\*`, `StripeGateway`, or `CreemGateway` from `BillingEngine`, services outside `App\Billing\Drivers`, or controllers other than Stripe-specific webhook adapters.
+Never import `Stripe\*`, `Laravel\Cashier\*`, `StripeGateway`, `CreemGateway`, or `KelviqGateway` from `BillingEngine`, services outside `App\Billing\Drivers`, or controllers other than Stripe-specific webhook adapters.
 
 Creem customer portal: `CreemGateway::createPortalSession(Tenant $tenant)` (driver helper; not required by `BillingEngine`).
+
+Kelviq customer portal: `KelviqGateway::createPortalSession(Tenant $tenant)` returns `${customerPortalUrl}?token=…` (customer must have an email; driver helper).
 
 ## Encrypted credentials
 
@@ -76,6 +78,8 @@ php artisan test --compact tests/Feature/Central/Billing/PaymentGatewayIsolation
 php artisan test --compact tests/Feature/Central/Billing/GatewayWebhookRoutingTest.php
 php artisan test --compact tests/Feature/Central/Billing/CreemGatewayTest.php
 php artisan test --compact tests/Feature/Central/Billing/CreemWebhookTest.php
+php artisan test --compact tests/Feature/Central/Billing/KelviqGatewayTest.php
+php artisan test --compact tests/Feature/Central/Billing/KelviqWebhookTest.php
 ```
 
-Architecture tests assert `BillingEngine` and `GatewayManager` do not reference Stripe/Cashier/Creem drivers.
+Architecture tests assert `BillingEngine` and `GatewayManager` do not reference Stripe/Cashier/Creem/Kelviq drivers.

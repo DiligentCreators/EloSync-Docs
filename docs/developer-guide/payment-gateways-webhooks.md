@@ -55,6 +55,20 @@ Signature header: `creem-signature` (HMAC-SHA256 of raw body).
 
 See [Creem gateway](/developer-guide/creem) for the full event matrix.
 
+## Kelviq events handled for billing activation
+
+Signature headers: `webhook-id`, `webhook-timestamp`, `webhook-signature` (HMAC-SHA256 of `{id}.{timestamp}.{rawBody}`).
+
+- `checkout.completed` / `invoice.paid` → activate pending modules / renewals (`payment_succeeded`)
+- `invoice.payment_failed` → `payment_failed` (failed renewal)
+- `subscription.created` → link provider subscription id
+- `subscription.updated` / `subscription.plan_changed` → sync
+- `subscription.paused` → suspend local module entitlements
+- `subscription.resumed` → restore active entitlements
+- `subscription.cancelled` → cancel module licensing when the subscription actually ends
+
+See [Kelviq gateway](/developer-guide/kelviq) for the full event matrix and go-live checklist.
+
 ## Local development
 
 ```bash
@@ -64,6 +78,9 @@ stripe listen --forward-to https://your-app.test/webhooks/gateways/stripe
 
 # Creem: forward sandbox webhooks (ngrok / Herd) to:
 # https://your-app.test/webhooks/gateways/creem
+
+# Kelviq: forward sandbox webhooks to:
+# https://your-app.test/webhooks/gateways/kelviq
 ```
 
-Use the CLI webhook signing secret for local verification (`whsec_…` for Stripe; Creem dashboard webhook secret for Creem).
+Use the CLI webhook signing secret for local verification (`whsec_…` for Stripe; Creem dashboard webhook secret for Creem; Kelviq endpoint secret `kq_whsec_…`).

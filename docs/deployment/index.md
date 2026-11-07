@@ -69,7 +69,8 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Tenant RBAC](./tenant-rbac) | RBAC production checklist |
 | [Central Settings](./central-settings) | System settings ops |
 | [Tenant Settings](./tenant-settings) | Workspace branding & mail ops |
-| [Payment Gateways](./payment-gateways) | Stripe / Creem production ops |
+| [Payment Gateways](./payment-gateways) | Stripe / Creem / Kelviq production ops |
+| [Kelviq production readiness](./kelviq-production-readiness) | Sandbox audit + live cutover checklist |
 | [Module Development](./module-development) | Shipping modules to production |
 | [Leads](./leads) | Leads module ops |
 | [Contacts](./contacts) | Contacts module ops |

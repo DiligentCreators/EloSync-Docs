@@ -325,6 +325,7 @@ export default withMermaid(defineConfig({
             { text: 'Webhooks', link: '/developer-guide/payment-gateways-webhooks' },
             { text: 'Stripe / Cashier', link: '/developer-guide/stripe-cashier' },
             { text: 'Creem', link: '/developer-guide/creem' },
+            { text: 'Kelviq', link: '/developer-guide/kelviq' },
           ],
         },
         {
@@ -525,6 +526,7 @@ export default withMermaid(defineConfig({
             { text: 'Tenant Settings', link: '/deployment/tenant-settings' },
             { text: 'Tenant API & Webhooks Production Readiness', link: '/deployment/tenant-api-webhooks-production-readiness' },
             { text: 'Payment Gateways', link: '/deployment/payment-gateways' },
+            { text: 'Kelviq readiness', link: '/deployment/kelviq-production-readiness' },
             { text: 'Module Development', link: '/deployment/module-development' },
             { text: 'Leads', link: '/deployment/leads' },
             { text: 'Companies', link: '/deployment/companies' },

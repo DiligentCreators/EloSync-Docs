@@ -1,3 +1,11 @@
+## Central Kelviq payment gateway (sandbox) (2026-11-07)
+
+- **EloSync-Backend:** `KelviqGateway` implements `PaymentGatewayInterface` (HTTP client + webhook HMAC + 300s replay window). Seeds `payment_gateways.code=kelviq`. Marketplace checkout uses tenant UUID as Kelviq `customerId` and mapped `planIdentifier` / `MONTHLY|YEARLY`. Maps `invoice.paid` renewals; pause → `suspended` / resume → `active`. Webhook: `POST /webhooks/gateways/kelviq`. Env: `KELVIQ_ENABLED`, `KELVIQ_ENV`, `KELVIQ_SERVER_API_KEY`, `KELVIQ_WEBHOOK_SECRET`. Pest: `KelviqGatewayTest`, `KelviqWebhookTest`.
+- **EloSync-Frontend:** Payment Gateways configure + product-mapping UI for Kelviq; Settings billing default gateway select includes `kelviq`. Headed e2e: `test:e2e:billing:kelviq:headed`.
+- **EloSync-Docs:** [Kelviq gateway](/developer-guide/kelviq), [production readiness](/deployment/kelviq-production-readiness), overview/webhooks/user-guide/CHANGELOG updates.
+- **Out of scope:** tenant-owned Kelviq keys for customer invoice checkout (future Payments module work).
+- **Go-live:** business verification + payouts, publish production plans, production keys + `KELVIQ_ENV=production`, production webhook on `https://api.elosync.com/webhooks/gateways/kelviq`.
+
 ## Tasks create: allow null recurrence interval (2026-11-01)
 
 - **EloSync-Backend:** Store/update task validation accepts `nullable` `recurrence_interval` so the SPA can clear recurrence fields when Repeat is off. Update path coerces null/off recurrence interval to `1` (non-nullable column). Pest regression in `TaskRecurrenceTest`.
