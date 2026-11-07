@@ -1,3 +1,9 @@
+## Queued payment gateway catalog sync (2026-11-08)
+
+- **EloSync-Backend:** `POST …/sync-catalog` returns **202** and runs `SyncPaymentGatewayCatalogJob` on Horizon queue `catalog-sync`; `GET …/sync-catalog/{id}` for status. Artisan command remains synchronous.
+- **EloSync-Frontend:** Product Mapping Sync polls the run until completed/failed (no 30s browser timeout).
+- **EloSync-Docs:** Kelviq sync note + this changelog.
+
 ## Kelviq catalog sync maps even when publish fails (2026-11-08)
 
 - **EloSync-Backend:** Catalog sync upserts `elosync-{slug}` mappings after product/plan/prices succeed; Kelviq publish is best-effort and no longer blocks Product Mapping when it returns HTML 500 or leaves `isLatest` false.
