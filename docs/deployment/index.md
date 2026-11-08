@@ -24,6 +24,7 @@ Production runbooks and operational checklists for hosting EloSync.
 | [Calendar named calendars 1.9.0](./calendar-named-calendars-1-9-0-production-readiness) | Named team/department calendars — **Go** |
 | [Calendar webhook inbound 1.8.0](./calendar-webhook-inbound-1-8-0-production-readiness) | Provider watches + public webhooks — **Go** |
 | [Calendar overlay push 1.7.0](./calendar-overlay-provider-push-1-7-0-production-readiness) | Project/Contact/Company overlay push — **Go** |
+| [Staff ↔ portal login cross-links](./staff-portal-login-cross-links-production-readiness) | Reciprocal guest login footers + shared-host `?workspace=` — **Go** |
 | [Customer Portal 1.3.0 depth](./customer-portal-1-3-0-production-readiness) | Magic-link, portal 2FA, public KB + Help Desk 1.15.0 reopen — **Go** |
 | [Help Desk 1.15.0 customer reply reopen](./help-desk-1-15-0-production-readiness) | Closed/resolved reopen on customer reply + notify — **Go** |
 | [Customer Portal 1.1.0 projects/tasks](./customer-portal-1-1-0-production-readiness) | Shared projects + customer-visible tasks — **Go** |

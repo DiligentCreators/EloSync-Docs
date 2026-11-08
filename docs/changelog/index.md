@@ -1,3 +1,8 @@
+## Staff ↔ customer portal login cross-links (2026-11-09)
+
+- **EloSync-Frontend:** Tenant workspace login shows a secondary **Customer portal sign-in** link; portal login shows **Workspace sign-in** for team members. `withWorkspaceQuery()` preserves shared-host `?workspace=` (also on portal forgot / magic-link back links). Vitest helper coverage + Playwright smoke for the guest hop. Auth stores/guards stay isolated.
+- **EloSync-Docs:** User/developer guides + [production readiness / audit](/deployment/staff-portal-login-cross-links-production-readiness) (**Go**).
+
 ## Portal Stripe min-amount messaging + gateway method labels (2026-11-09)
 
 - **EloSync-Backend:** Portal Stripe Checkout preflight rejects balances below Stripe’s published presentment minimums; maps `amount_too_small` (e.g. low PKR after settlement FX) to a clear validation message. `PortalPaymentResource` exposes `gateway_provider`; receipts show Stripe/Creem/Kelviq instead of generic Gateway. Catalog PATCH: payment-gateways **1.0.0 → 1.0.1**, payments **1.9.0 → 1.9.1**, customer-portal **1.7.0 → 1.7.1**.
