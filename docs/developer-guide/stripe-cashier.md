@@ -23,9 +23,24 @@ See [Billing Engine](/developer-guide/billing-engine) and [Payment Gateway Archi
   - `POST /stripe/webhook` → Cashier + Billing Engine
   - `POST /webhooks/gateways/stripe` → Billing Engine only
 
-## Manual price mapping
+## Product mapping (Sync catalog)
 
-Modules stay payment-provider agnostic (`monthly_price`, `yearly_price`, `currency`). Stripe Product/Price IDs live in `payment_gateway_module_prices` (managed under **Payment Gateways → Product Mapping**). The platform never auto-creates Stripe products/prices.
+Modules stay payment-provider agnostic (`monthly_price`, `yearly_price`, `currency`). Stripe Product/Price IDs live in `payment_gateway_module_prices` (Central → **Payment Gateways → Product Mapping**).
+
+**Preferred:** click **Sync catalog** (or **Sync & overwrite**) — or run:
+
+```bash
+php artisan payment-gateways:sync-catalog stripe --overwrite
+```
+
+EloSync creates one Stripe Product per module and a Price per billing cycle from catalog amounts, then upserts `prod_…` / `price_…` into Product Mapping. The UI queues the same job as Kelviq/Creem (Horizon `catalog-sync`); keep the dialog open while it runs.
+
+| Mode | Keys | What Sync hits |
+|------|------|----------------|
+| Sandbox | `sk_test_…` / `pk_test_…` | Stripe test mode catalog |
+| Live | `sk_live_…` / `pk_live_…` | Stripe live catalog |
+
+Do **not** mix test keys with live mode (or the reverse). After switching mode, Sync again (or remap) so mappings point at the correct mode’s `price_…` ids. Manual paste of dashboard IDs remains supported.
 
 ## When Stripe is used
 

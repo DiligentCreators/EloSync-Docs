@@ -26,7 +26,7 @@ php artisan db:seed --class=Database\\Seeders\\Central\\PaymentGatewaySeeder
 
 2. Configure credentials (env fallbacks **or** Central admin UI).
 
-3. Map each billable module to a Creem Product ID under **Billing → Payment Gateways → Product mapping**.
+3. Map billable modules under **Billing → Payment Gateways → Product mapping** — prefer **Sync catalog** (creates one Creem `prod_…` per billing cycle from EloSync prices and fills mapping). Or paste `prod_…` ids from the Creem dashboard.
 
 4. Point Creem webhooks to `POST /webhooks/gateways/creem`.
 
@@ -50,9 +50,14 @@ Config file: `config/creem.php`.
 ## Sandbox setup
 
 1. Create a Creem test account → **Developers → API Keys** (`ck_test_…`).
-2. Create recurring products in the Creem dashboard; copy each `prod_…` id.
-3. In Central admin: enable Creem, mode **sandbox**, paste Secret key + Webhook secret.
-4. Product mapping: put `prod_…` in **Product reference** (Price reference may repeat the same id).
+2. In Central admin: enable Creem, mode **sandbox**, paste Secret key + Webhook secret. **Test connection**.
+3. Product mapping → **Sync catalog** (preferred) creates monthly/yearly Creem products (`every-month` / `every-year`) from EloSync amounts and writes `prod_…` into both Product and Price reference fields. Or create products in the Creem dashboard and paste ids.
+4. CLI alternative:
+
+   ```bash
+   php artisan payment-gateways:sync-catalog creem --overwrite
+   ```
+
 5. Register webhook URL (ngrok / Herd share):
 
 ```text
@@ -64,9 +69,9 @@ Subscribe at least: `checkout.completed`, `subscription.active`, `subscription.p
 ## Production setup
 
 1. Switch Creem dashboard to live; create live API key + webhook secret.
-2. Admin: mode **live**, paste live credentials (do not mix test keys).
+2. Admin: mode **live**, paste live credentials (do not mix test keys). **Test connection**.
 3. Webhook URL must be HTTPS public: `https://api.yourdomain.com/webhooks/gateways/creem`.
-4. Remap products to live `prod_…` ids.
+4. **Sync catalog** again (or remap) so Product Mapping uses **live** `prod_…` ids — sandbox ids will not work in live mode.
 5. Set Creem as default only after a successful **Test connection** and a sandbox end-to-end purchase.
 
 ## Webhook configuration

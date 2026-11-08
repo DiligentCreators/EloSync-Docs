@@ -1,3 +1,8 @@
+## Stripe/Creem catalog sync docs + Stripe Pest coverage (2026-11-08)
+
+- **EloSync-Backend:** Pest proves Stripe Sync catalog creates Product + Prices and upserts Product Mapping (parity with Creem/Kelviq coverage).
+- **EloSync-Docs:** Stripe and Creem guides document **Sync catalog** for sandbox and live (replacing “manual only” / “never auto-create” wording).
+
 ## Queued payment gateway catalog sync (2026-11-08)
 
 - **EloSync-Backend:** `POST …/sync-catalog` returns **202** and runs `SyncPaymentGatewayCatalogJob` on Horizon queue `catalog-sync`; `GET …/sync-catalog/{id}` for status. Artisan command remains synchronous.
