@@ -21,10 +21,10 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 | Link rules | `LinkableContact`, `LinkableCompany`, `EligiblePaymentAssignee` — `allocations.*.customer_invoice_id` is a plain tenant-scoped `Rule::exists()` on `CustomerInvoice` |
 | PDF / email | `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `resources/views/payments/receipt.blade.php` — posted-only; mirrors invoice billing document mailer |
 | Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentRefundTest.php`, `CustomerPaymentStripeRefundTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php`, `TenantStripeIntegrationTest.php` |
-| Online gateways | See [Tenant Payment Gateways](/developer-guide/tenant-payment-gateways) — module `payment-gateways` **1.0.0** owns Stripe/Creem/Kelviq connections; Stripe refund helpers remain under `TenantStripeRefundService` |
+| Online gateways | See [Tenant Payment Gateways](/developer-guide/tenant-payment-gateways) — module `payment-gateways` **1.0.1** owns Stripe/Creem/Kelviq connections; Stripe refund helpers remain under `TenantStripeRefundService` |
 | Tenant Stripe facades | `TenantStripeConnectionService`, `TenantStripeCheckoutService`, `TenantStripeRefundService`, `TenantStripeApi`, `StripeMoney` (delegate to payment-gateways services) |
 
-## Tenant online checkout (payment-gateways 1.0.0)
+## Tenant online checkout (payment-gateways 1.0.1)
 
 Workspace-owned provider credentials live in `tenant_payment_gateway_connections`. **Not** Central `payment_gateways` / Cashier.
 
@@ -33,7 +33,8 @@ Workspace-owned provider credentials live in `tenant_payment_gateway_connections
 - Portal: `online_payment_providers` + optional checkout `provider`; default when omitted
 - Webhooks: `/webhooks/tenant/{tenant}/gateways/{provider}/customer-payments`
 - Staff refund of `gateway_provider=stripe` still calls Stripe before the ledger write
-- Catalog: **payments 1.9.0**, **customer-portal 1.7.0**, **payment-gateways 1.0.0**
+- Stripe Checkout: published presentment minimums + `amount_too_small` messaging; payments Method UI uses `gateway_provider`
+- Catalog: **payments 1.9.1**, **customer-portal 1.7.1**, **payment-gateways 1.0.1**
 
 ## Domain notes
 

@@ -1,6 +1,6 @@
 # Tenant Payment Gateways — Developer Guide
 
-Free Marketplace module (`payment-gateways`, **1.0.0**) for workspace-owned Stripe / Creem / Kelviq credentials used by Customer Portal invoice checkout.
+Free Marketplace module (`payment-gateways`, **1.0.1**) for workspace-owned Stripe / Creem / Kelviq credentials used by Customer Portal invoice checkout.
 
 **Not** Central `payment_gateways` / Cashier / `BillingEngine`. Do not reuse Central credentials for tenant CRM checkout.
 
@@ -18,7 +18,7 @@ Free Marketplace module (`payment-gateways`, **1.0.0**) for workspace-owned Stri
 
 Migrate-only registration + `CatalogSeeder` sync. Workspaces that already had Stripe rows are auto-entitled on upgrade.
 
-Companion bumps: **payments 1.9.0**, **customer-portal 1.7.0** (portal provider list + checkout `provider`).
+Companion bumps: **payments 1.9.1**, **customer-portal 1.7.1** (Stripe min-amount messaging; portal/staff payment method shows `gateway_provider` label).
 
 ## Data model
 
@@ -55,6 +55,8 @@ Portal:
 
 - Invoice resource: `online_payment_available`, `online_payment_providers[{code,name,is_default}]`
 - `POST /portal/invoices/{id}/checkout` body optional `{ "provider": "stripe"|"creem"|"kelviq" }` (default = workspace default)
+- Stripe Checkout: `StripeMoney` preflight for published presentment minimums; `amount_too_small` → clear 422 (no FX invent for PKR — still paisa minor units)
+- Payment resource: `method` stays `gateway`; `gateway_provider` is `stripe` \| `creem` \| `kelviq` for UI labels
 
 Webhooks:
 

@@ -31,7 +31,11 @@ On an unpaid invoice in the Customer Portal:
 - One ready gateway → **Pay now**
 - Several ready gateways → pick a provider, then **Pay now**
 
-Successful checkout posts a gateway payment on the Payments ledger and applies it to the invoice.
+Successful checkout posts a gateway payment on the Payments ledger and applies it to the invoice. Payments list **Method** shows the provider name (Stripe, Creem, or Kelviq), not a generic “Gateway” label.
+
+### Minimum charge amounts
+
+Stripe enforces a minimum online charge. For currencies Stripe publishes (for example USD **0.50**), EloSync blocks Pay now before opening Checkout. For other presentment currencies (for example **PKR**), Stripe may still reject small amounts after converting to your Stripe account’s settlement currency — increase the invoice balance and try again.
 
 ## Tips
 
