@@ -224,6 +224,7 @@ export default withMermaid(defineConfig({
             { text: 'Invoices', link: '/user-guide/invoices' },
             { text: 'Payments Overview', link: '/user-guide/payments-overview' },
             { text: 'Payments', link: '/user-guide/payments' },
+            { text: 'Payment Gateways (workspace)', link: '/user-guide/tenant-payment-gateways' },
             { text: 'Credit Notes Overview', link: '/user-guide/credit-notes-overview' },
             { text: 'Credit Notes', link: '/user-guide/credit-notes' },
             { text: 'Estimates Overview', link: '/user-guide/estimates-overview' },
@@ -352,6 +353,7 @@ export default withMermaid(defineConfig({
             { text: 'Reseller Payouts', link: '/developer-guide/reseller-payouts' },
             { text: 'Invoices', link: '/developer-guide/invoices' },
             { text: 'Payments', link: '/developer-guide/payments' },
+            { text: 'Tenant Payment Gateways', link: '/developer-guide/tenant-payment-gateways' },
             { text: 'Credit Notes', link: '/developer-guide/credit-notes' },
             { text: 'Estimates', link: '/developer-guide/estimates' },
             { text: 'Vendors', link: '/developer-guide/vendors' },
@@ -568,6 +570,10 @@ export default withMermaid(defineConfig({
             { text: 'Reseller Payouts', link: '/deployment/reseller-payouts' },
             { text: 'Invoices', link: '/deployment/invoices' },
             { text: 'Payments', link: '/deployment/payments' },
+            {
+              text: 'Tenant Payment Gateways 1.0.0 Readiness',
+              link: '/deployment/tenant-payment-gateways-1-0-0-production-readiness',
+            },
             {
               text: 'Payments Refunds 1.5.0 Readiness',
               link: '/deployment/payments-partial-refunds-gateway-record-1-5-0-production-readiness',

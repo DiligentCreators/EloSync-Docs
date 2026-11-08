@@ -152,6 +152,18 @@ Payments records amounts against an invoice's `amount_paid` and allocates them t
 
 **Status:** [Payments](/user-guide/payments-overview) is shipped — see [Product Roadmap](/getting-started/product-roadmap) Phase 3.
 
+### Payment Gateways → Payments (required) + Customer Portal (optional)
+
+```text
+Payment Gateways
+  ├── depends on Payments          (required)
+  └── may use Customer Portal      (optional — portal Pay now)
+```
+
+Workspace-owned Stripe/Creem/Kelviq keys post gateway `CustomerPayment` rows, so Payments is required. Portal checkout is soft: admins can configure gateways without Customer Portal installed.
+
+**Status:** [Payment Gateways](/user-guide/tenant-payment-gateways) shipped **1.0.0**.
+
 ### Resellers → Payments (required)
 
 ```text

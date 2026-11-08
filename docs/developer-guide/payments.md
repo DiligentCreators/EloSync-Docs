@@ -21,17 +21,19 @@ Mirror of the [Invoices developer guide](/developer-guide/invoices) (assignee sc
 | Link rules | `LinkableContact`, `LinkableCompany`, `EligiblePaymentAssignee` — `allocations.*.customer_invoice_id` is a plain tenant-scoped `Rule::exists()` on `CustomerInvoice` |
 | PDF / email | `CustomerPaymentPdfService`, `CustomerPaymentEmailService`, `resources/views/payments/receipt.blade.php` — posted-only; mirrors invoice billing document mailer |
 | Tests | `tests/Feature/Tenant/CustomerPayment/CustomerPaymentTest.php`, `CustomerPaymentRefundTest.php`, `CustomerPaymentStripeRefundTest.php`, `CustomerPaymentPdfTest.php`, `CustomerPaymentEmailTest.php`, `TenantStripeIntegrationTest.php` |
-| Tenant Stripe (1.7.0) | `TenantStripeConnection`, `TenantStripeConnectionService`, `TenantStripeCheckoutService`, `TenantStripeRefundService`, `TenantStripeApi`, `StripeMoney`, `TenantStripeIntegrationController`, `TenantStripeWebhookController` |
+| Online gateways | See [Tenant Payment Gateways](/developer-guide/tenant-payment-gateways) — module `payment-gateways` **1.0.0** owns Stripe/Creem/Kelviq connections; Stripe refund helpers remain under `TenantStripeRefundService` |
+| Tenant Stripe facades | `TenantStripeConnectionService`, `TenantStripeCheckoutService`, `TenantStripeRefundService`, `TenantStripeApi`, `StripeMoney` (delegate to payment-gateways services) |
 
-## Tenant Stripe + portal Checkout (1.6.0)
+## Tenant online checkout (payment-gateways 1.0.0)
 
-Workspace-owned Stripe credentials (encrypted secrets, `mode` sandbox|live) for Customer Portal invoice pay. **Not** Central `payment_gateways` / Cashier.
+Workspace-owned provider credentials live in `tenant_payment_gateway_connections`. **Not** Central `payment_gateways` / Cashier.
 
-- Staff API: `/payments/integrations/stripe` (`payments.manage_integrations`)
-- Portal: `POST /portal/invoices/{id}/checkout` → Checkout Session URL
-- Webhook: `POST /webhooks/tenant/{tenant}/stripe/customer-payments` → create+post gateway `CustomerPayment` (idempotent on `gateway_transaction_id`); `refund.created` / `charge.refunded` book a ledger refund once on `stripe_refund_id`
-- Staff refund of `gateway_provider=stripe` calls Stripe `refunds.create` on the PaymentIntent (Checkout Session ids are resolved first) **before** the ledger write. The secret is the mode stored on `gateway_mode`, else the `(sandbox)` / `(live)` capture note, else the connection’s current mode. A Stripe error leaves the payment posted. Manual methods never call Stripe.
-- Catalog **payments 1.7.0**. Companion catalog: **customer-portal 1.4.0** (`online_payment_available` on portal invoice resource)
+- Install free module `payment-gateways` (requires Payments). Staff UI: Billing → Payment Gateways.
+- Staff API: `/payment-gateways` (+ legacy `/payments/integrations/stripe`)
+- Portal: `online_payment_providers` + optional checkout `provider`; default when omitted
+- Webhooks: `/webhooks/tenant/{tenant}/gateways/{provider}/customer-payments`
+- Staff refund of `gateway_provider=stripe` still calls Stripe before the ledger write
+- Catalog: **payments 1.9.0**, **customer-portal 1.7.0**, **payment-gateways 1.0.0**
 
 ## Domain notes
 
