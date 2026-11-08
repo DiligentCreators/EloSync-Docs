@@ -52,7 +52,8 @@ Tenant customer billing — not a redesign of Central Marketplace billing.
 | [Invoices](/user-guide/invoices-overview) | Shipped |
 | [Estimates](/user-guide/estimates-overview) | Shipped (requires Invoices) |
 | [Credit Notes](/user-guide/credit-notes-overview) | Shipped **1.2.0** (requires Invoices; PDF + email; applied refund) |
-| [Payments](/user-guide/payments-overview) | Shipped **1.7.0** (Stripe PaymentIntent refunds; tenant Stripe portal Checkout **1.6.0**; requires Invoices; receipt PDF + email; ledger refunds **1.5.0**) |
+| [Payments](/user-guide/payments-overview) | Shipped **1.9.0** (companion to Payment Gateways **1.0.0**; Stripe refunds; requires Invoices) |
+| [Payment Gateways](/user-guide/tenant-payment-gateways) | Shipped **1.0.0** (free opt-in; Stripe/Creem/Kelviq workspace keys; multi-enable + portal choice; requires Payments) |
 
 ### Deferred
 
@@ -264,6 +265,8 @@ Contract PDF + e-signature shipped (**contracts 1.5.0**): branded PDF download, 
 **Calendar named team/department calendars (2026-10-08):** New `calendars` table (name/slug, optional soft-linked `department_id`, creator); `calendar_events.calendar_id` nullable FK (`null` stays personal). `GET/POST/PUT/DELETE /calendar/calendars` behind new `calendar.manage_calendars` permission (admin/manager default). Visibility adds creator + department members/manager (only when Departments is entitled) + `calendar.view_all`; posting to a named calendar needs `calendar.create` and membership. SPA filter chips (All/Personal/named), manage-calendars dialog, and an event-form calendar picker. Catalog **calendar 1.8.0 → 1.9.0**. Closes the "Calendar: named team calendars" deferred item above.
 
 **Calendar named-calendar provider sync/watches (2026-10-13):** Secondary Google/Outlook calendars + watches for named EloSync calendars (`calendar_provider_links`); per-provider `calendar_event_provider_mappings`; Google full `calendar` scope. Catalog **calendar 1.9.0 → 1.10.0**. Go-live: [production readiness](/deployment/calendar-named-provider-sync-1-10-0-production-readiness).
+
+**Tenant Payment Gateways module (2026-11-08):** Free opt-in `payment-gateways` **1.0.0** — multi-enable Stripe/Creem/Kelviq, workspace default, portal client chooses provider. Catalog companions payments **1.9.0**, customer-portal **1.7.0**. Go-live: [production readiness](/deployment/tenant-payment-gateways-1-0-0-production-readiness). Supersedes the Stripe-only Payments integrations panel.
 
 **Tenant Stripe + portal invoice Checkout (2026-10-13):** Workspace-owned Stripe keys (sandbox/live), `payments.manage_integrations`, portal `POST …/invoices/{id}/checkout`, webhook `POST /webhooks/tenant/{tenant}/stripe/customer-payments` posts gateway `CustomerPayment`. Catalog **payments 1.5.0 → 1.6.0**, **customer-portal 1.3.0 → 1.4.0**. Go-live: [production readiness](/deployment/tenant-stripe-portal-checkout-production-readiness).
 

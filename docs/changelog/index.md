@@ -1,3 +1,9 @@
+## Tenant Payment Gateways module 1.0.0 (2026-11-08)
+
+- **EloSync-Backend:** Free opt-in module `payment-gateways` (`is_billable=false`, not default-included). Required dep **payments**; optional **customer-portal**. Table `tenant_payment_gateway_connections` (migrates legacy Stripe rows; rebuild migration if an abandoned Connect-shaped table exists). Multi-enable Stripe / Creem / Kelviq with workspace default; enable requires checkout-ready config. Staff API `/payment-gateways/*`; portal checkout accepts `provider`; webhooks `POST /webhooks/tenant/{tenant}/gateways/{provider}/customer-payments` (legacy Stripe URL kept). Catalog bumps: payments **1.8.0 → 1.9.0**, customer-portal **1.6.0 → 1.7.0**. Pest: `PaymentGateway/*` (+ updated portal/Stripe tests).
+- **EloSync-Frontend:** Billing → **Payment Gateways** page (configure / test / default / disconnect); Payments list links here; portal invoice provider picker when multiple gateways are ready. Headed e2e: `test:e2e:payment-gateways:headed` (8 shared-session tests). Playwright payments workflow + Stripe headed suite updated.
+- **EloSync-Docs:** [User guide](/user-guide/tenant-payment-gateways), [developer guide](/developer-guide/tenant-payment-gateways), [production readiness](/deployment/tenant-payment-gateways-1-0-0-production-readiness) (Go).
+
 ## Stripe/Creem catalog sync docs + Stripe Pest coverage (2026-11-08)
 
 - **EloSync-Backend:** Pest proves Stripe Sync catalog creates Product + Prices and upserts Product Mapping (parity with Creem/Kelviq coverage).
@@ -36,7 +42,7 @@
 - **EloSync-Backend:** `KelviqGateway` implements `PaymentGatewayInterface` (HTTP client + webhook HMAC + 300s replay window). Seeds `payment_gateways.code=kelviq`. Marketplace checkout uses tenant UUID as Kelviq `customerId` and mapped `planIdentifier` / `MONTHLY|YEARLY`. Maps `invoice.paid` renewals; pause → `suspended` / resume → `active`. Webhook: `POST /webhooks/gateways/kelviq`. Env: `KELVIQ_ENABLED`, `KELVIQ_ENV`, `KELVIQ_SERVER_API_KEY`, `KELVIQ_WEBHOOK_SECRET`. Pest: `KelviqGatewayTest`, `KelviqWebhookTest`.
 - **EloSync-Frontend:** Payment Gateways configure + product-mapping UI for Kelviq; Settings billing default gateway select includes `kelviq`. Headed e2e: `test:e2e:billing:kelviq:headed`.
 - **EloSync-Docs:** [Kelviq gateway](/developer-guide/kelviq), [production readiness](/deployment/kelviq-production-readiness), overview/webhooks/user-guide/CHANGELOG updates.
-- **Out of scope:** tenant-owned Kelviq keys for customer invoice checkout (future Payments module work).
+- **Follow-up (shipped 2026-11-08):** tenant-owned Kelviq keys for customer invoice checkout — see [Tenant Payment Gateways 1.0.0](/changelog/#tenant-payment-gateways-module-1-0-0-2026-11-08).
 - **Go-live:** business verification + payouts, publish production plans, production keys + `KELVIQ_ENV=production`, production webhook on `https://api.elosync.com/webhooks/gateways/kelviq`.
 
 ## Tasks create: allow null recurrence interval (2026-11-01)

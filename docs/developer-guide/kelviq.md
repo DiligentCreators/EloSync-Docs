@@ -4,7 +4,7 @@ Kelviq is a Central payment provider (Merchant of Record) that plugs into the ex
 
 Use Kelviq when EloSync SaaS Marketplace fees should be collected under an organization that Kelviq supports (for example Diligent Creators Private Limited in Pakistan) while Stripe entity setup is incomplete. Stripe, Creem, and Manual remain available; switch the **default** gateway in Central when ready.
 
-Tenant workspaces accepting payments from *their* customers with workspace-owned keys is a separate concern (`TenantStripeConnection` today). Do **not** reuse Central `payment_gateways` credentials for tenant CRM checkout.
+Tenant workspaces accepting payments from *their* customers with workspace-owned keys use the free **Payment Gateways** module (`tenant_payment_gateway_connections`, including Kelviq). Do **not** reuse Central `payment_gateways` credentials for tenant CRM checkout — see [Tenant Payment Gateways](/developer-guide/tenant-payment-gateways).
 
 ## Architecture
 
