@@ -13,7 +13,7 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 | Operators / workspace users | [customer-portal.md](/user-guide/customer-portal) |
 | Engineers | [customer-portal.md](/developer-guide/customer-portal) |
 | Production / ops | [customer-portal.md](/deployment/customer-portal) |
-| Production readiness | [Stripe portal checkout / payments 1.6.0](/deployment/tenant-stripe-portal-checkout-production-readiness) · [1.3.0](/deployment/customer-portal-1-3-0-production-readiness) · [1.1.0](/deployment/customer-portal-1-1-0-production-readiness) · [1.0.0](/deployment/customer-portal-1-0-0-production-readiness) |
+| Production readiness | [Staff ↔ portal login cross-links](/deployment/staff-portal-login-cross-links-production-readiness) · [Stripe portal checkout / payments 1.6.0](/deployment/tenant-stripe-portal-checkout-production-readiness) · [1.3.0](/deployment/customer-portal-1-3-0-production-readiness) · [1.1.0](/deployment/customer-portal-1-1-0-production-readiness) · [1.0.0](/deployment/customer-portal-1-0-0-production-readiness) |
 | Tenant API | [../api/tenant-v1-customer-portal.md](/api/tenant-v1-customer-portal) |
 
 ## Capabilities (1.4.0)
@@ -21,7 +21,7 @@ Free **Operations** Marketplace module that gives invited Contacts a separate lo
 - Invite-only portal accounts linked 1:1 to a Contact (email + password; no open self-registration)
 - Separate Sanctum guard (`portal-api`) — never staff `User` / Spatie roles
 - Staff: Operations → Customer Portal list; Contact record invite / resend / disable / enable
-- Customer SPA: login, magic-link passwordless sign-in, forgot/reset password, accept invite, dashboard, Security (TOTP 2FA)
+- Customer SPA: login, magic-link passwordless sign-in, forgot/reset password, accept invite, dashboard, Security (TOTP 2FA); reciprocal footer links with workspace (staff) login
 - Soft-gated sections: Projects, Invoices, Payments, Quotations, Contracts, Support (Help Desk), Knowledge Base (published articles)
 - Projects: staff **Share with customer portal** + per-task **Visible to customer**; portal shows milestones/tasks/timeline
 - Document PDF download; quotation/contract acceptance-link from portal (existing public accept pages)

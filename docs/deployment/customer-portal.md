@@ -31,5 +31,6 @@
 
 ## Related
 
+- [Staff ↔ portal login cross-links readiness](/deployment/staff-portal-login-cross-links-production-readiness)
 - [Production readiness](/deployment/customer-portal-1-0-0-production-readiness)
 - [Product Roadmap](/getting-started/product-roadmap)

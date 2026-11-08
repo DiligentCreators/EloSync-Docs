@@ -30,6 +30,7 @@ Marketplace Operations module (`customer-portal` **1.3.0**). Flat namespaces (no
 
 - Staff: `src/pages/customer-portal/`, Contact invite actions, nav under Operations
 - Portal SPA: `src/pages/portal/*`, `PortalLayout` / `PortalAuthLayout`, `usePortalAuthStore` (isolated token storage). Shared-host login/forgot/magic-link: email first, then searchable company picker from the central lookup (invite/reset/magic links still carry `?workspace=`).
+- Guest auth cross-links (footer only; no shared form): tenant `/#/login` → **Customer portal sign-in**; portal `/#/portal/login` → **Workspace sign-in**. `withWorkspaceQuery()` keeps shared-host `?workspace=` on those hops and on portal forgot / magic-link → login back links. Readiness: [staff-portal-login-cross-links](/deployment/staff-portal-login-cross-links-production-readiness).
 - Routes: `/#/portal/login`, magic-link request + `/#/portal/magic-login/:token`, invite/reset, Security (2FA), Knowledge Base, Announcements, authenticated `/#/portal/...`
 - `FrontendUrl::portalInvite()` / `portalResetPassword()` / `portalMagicLogin()`
 
