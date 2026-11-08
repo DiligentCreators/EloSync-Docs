@@ -1,3 +1,9 @@
+## Portal Stripe min-amount messaging + gateway method labels (2026-11-09)
+
+- **EloSync-Backend:** Portal Stripe Checkout preflight rejects balances below Stripe’s published presentment minimums; maps `amount_too_small` (e.g. low PKR after settlement FX) to a clear validation message. `PortalPaymentResource` exposes `gateway_provider`; receipts show Stripe/Creem/Kelviq instead of generic Gateway. Catalog PATCH: payment-gateways **1.0.0 → 1.0.1**, payments **1.9.0 → 1.9.1**, customer-portal **1.7.0 → 1.7.1**.
+- **EloSync-Frontend:** Portal and staff Payments Method column/detail use the gateway provider label when `method=gateway`.
+- **EloSync-Docs:** User/developer tenant payment gateways notes for minimum charges and provider labels.
+
 ## Tenant Payment Gateways module 1.0.0 (2026-11-08)
 
 - **EloSync-Backend:** Free opt-in module `payment-gateways` (`is_billable=false`, not default-included). Required dep **payments**; optional **customer-portal**. Table `tenant_payment_gateway_connections` (migrates legacy Stripe rows; rebuild migration if an abandoned Connect-shaped table exists). Multi-enable Stripe / Creem / Kelviq with workspace default; enable requires checkout-ready config. Staff API `/payment-gateways/*`; portal checkout accepts `provider`; webhooks `POST /webhooks/tenant/{tenant}/gateways/{provider}/customer-payments` (legacy Stripe URL kept). Catalog bumps: payments **1.8.0 → 1.9.0**, customer-portal **1.6.0 → 1.7.0**. Pest: `PaymentGateway/*` (+ updated portal/Stripe tests).
