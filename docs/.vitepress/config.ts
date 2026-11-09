@@ -327,6 +327,7 @@ export default withMermaid(defineConfig({
             { text: 'Stripe / Cashier', link: '/developer-guide/stripe-cashier' },
             { text: 'Creem', link: '/developer-guide/creem' },
             { text: 'Kelviq', link: '/developer-guide/kelviq' },
+            { text: 'Lemon Squeezy', link: '/developer-guide/lemonsqueezy' },
           ],
         },
         {

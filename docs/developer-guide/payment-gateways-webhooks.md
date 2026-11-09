@@ -69,6 +69,19 @@ Signature headers: `webhook-id`, `webhook-timestamp`, `webhook-signature` (HMAC-
 
 See [Kelviq gateway](/developer-guide/kelviq) for the full event matrix and go-live checklist.
 
+## Lemon Squeezy events handled for billing activation
+
+Signature header: `X-Signature` (HMAC-SHA256 of raw body).
+
+- `subscription_payment_success` / `subscription_payment_recovered` / `order_created` → activate pending modules (`payment_succeeded`)
+- `subscription_payment_failed` → `payment_failed`
+- `subscription_created` → link provider subscription id
+- `subscription_updated` / `subscription_paused` / `subscription_resumed` / `subscription_unpaused` → sync
+- `subscription_cancelled` / `subscription_expired` → cancel module licensing
+- `order_refunded` → ignored (`unsupported`) after signature verification
+
+See [Lemon Squeezy gateway](/developer-guide/lemonsqueezy) for the full event matrix and go-live checklist.
+
 ## Local development
 
 ```bash
@@ -81,6 +94,9 @@ stripe listen --forward-to https://your-app.test/webhooks/gateways/stripe
 
 # Kelviq: forward sandbox webhooks to:
 # https://your-app.test/webhooks/gateways/kelviq
+
+# Lemon Squeezy: forward test-mode webhooks to:
+# https://your-app.test/webhooks/gateways/lemonsqueezy
 ```
 
-Use the CLI webhook signing secret for local verification (`whsec_…` for Stripe; Creem dashboard webhook secret for Creem; Kelviq endpoint secret `kq_whsec_…`).
+Use the CLI webhook signing secret for local verification (`whsec_…` for Stripe; Creem dashboard webhook secret for Creem; Kelviq endpoint secret `kq_whsec_…`; Lemon Squeezy webhook signing secret for `X-Signature`).

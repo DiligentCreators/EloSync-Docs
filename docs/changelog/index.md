@@ -1,3 +1,10 @@
+## Central Lemon Squeezy payment gateway (2026-11-09)
+
+- **EloSync-Backend:** `LemonSqueezyGateway` implements `PaymentGatewayInterface` (JSON:API client + `X-Signature` HMAC). Seeds `payment_gateways.code=lemonsqueezy`. Marketplace checkout uses mapped **variant** ids + store relationship; custom checkout data carries `tenant_id` for webhook correlation. No catalog sync (Lemon Squeezy has no product-create API). Webhook: `POST /webhooks/gateways/lemonsqueezy`. Env: `LEMONSQUEEZY_ENABLED`, `LEMONSQUEEZY_ENV`, `LEMONSQUEEZY_API_KEY`, `LEMONSQUEEZY_STORE_ID`, `LEMONSQUEEZY_WEBHOOK_SECRET`. Pest: `LemonSqueezyGatewayTest`, `LemonSqueezyWebhookTest`.
+- **EloSync-Frontend:** Central Payment Gateways configure (API key / store id / webhook secret) + product-mapping UI for variant IDs; Settings billing default gateway select includes `lemonsqueezy`.
+- **EloSync-Docs:** [Lemon Squeezy gateway](/developer-guide/lemonsqueezy), overview/webhooks/user-guide/deployment/CHANGELOG updates.
+- **Follow-up:** tenant-owned Lemon Squeezy keys for customer invoice checkout — after Central sandbox E2E.
+
 ## Staff ↔ customer portal login cross-links (2026-11-09)
 
 - **EloSync-Frontend:** Tenant workspace login shows a secondary **Customer portal sign-in** link; portal login shows **Workspace sign-in** for team members. `withWorkspaceQuery()` preserves shared-host `?workspace=` (also on portal forgot / magic-link back links). Vitest helper coverage + Playwright smoke for the guest hop. Auth stores/guards stay isolated.
