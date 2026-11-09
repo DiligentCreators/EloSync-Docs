@@ -1,3 +1,9 @@
+## Lemon Squeezy Marketplace checkout redirect (2026-11-09)
+
+- **EloSync-Backend:** Billable Marketplace Subscribe with Lemon Squeezy as default always stays **Pending** until the payment webhook, returns a real Lemon Squeezy checkout URL, and requires Variant product mapping even if `capabilities` were incomplete. Settings → Default payment gateway now syncs `payment_gateways.is_default` (so choosing LS no longer silently settles via Manual). Migrate-only upsert for `payment_gateways.code=lemonsqueezy` (idempotent; does not clobber credentials / is_default / is_active).
+- **EloSync-Frontend:** Marketplace Subscribe no longer toasts “Module subscription started” when an external/pending purchase returns no checkout URL — shows an error instead. Manual / immediate-settle success toast unchanged.
+- **EloSync-Docs:** This changelog.
+
 ## Lemon Squeezy API key length validation (2026-11-09)
 
 - **EloSync-Backend:** Payment gateway config `secret_key` / `webhook_secret` max length raised from 255 → 4096 so Lemon Squeezy JWT API keys save successfully. Pest covers a long JWT-shaped key on `lemonsqueezy`.
