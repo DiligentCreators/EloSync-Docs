@@ -6,7 +6,7 @@
 use App\Billing\Contracts\PaymentGatewayInterface;
 use App\Billing\GatewayManager;
 
-$driver = app(GatewayManager::class)->driver('stripe'); // or 'creem' / default
+$driver = app(GatewayManager::class)->driver('stripe'); // or 'creem' / 'kelviq' / 'lemonsqueezy' / default
 $driver->createCheckout($request);
 $driver->parseWebhook($payload, $signature);
 $driver->testConnection();
@@ -14,7 +14,7 @@ $driver->capabilities();
 $driver->supportedCurrencies();
 ```
 
-Never import `Stripe\*`, `Laravel\Cashier\*`, `StripeGateway`, `CreemGateway`, or `KelviqGateway` from `BillingEngine`, services outside `App\Billing\Drivers`, or controllers other than Stripe-specific webhook adapters.
+Never import `Stripe\*`, `Laravel\Cashier\*`, `StripeGateway`, `CreemGateway`, `KelviqGateway`, or `LemonSqueezyGateway` from `BillingEngine`, services outside `App\Billing\Drivers`, or controllers other than Stripe-specific webhook adapters.
 
 Creem customer portal: `CreemGateway::createPortalSession(Tenant $tenant)` (driver helper; not required by `BillingEngine`).
 
@@ -80,6 +80,8 @@ php artisan test --compact tests/Feature/Central/Billing/CreemGatewayTest.php
 php artisan test --compact tests/Feature/Central/Billing/CreemWebhookTest.php
 php artisan test --compact tests/Feature/Central/Billing/KelviqGatewayTest.php
 php artisan test --compact tests/Feature/Central/Billing/KelviqWebhookTest.php
+php artisan test --compact tests/Feature/Central/Billing/LemonSqueezyGatewayTest.php
+php artisan test --compact tests/Feature/Central/Billing/LemonSqueezyWebhookTest.php
 ```
 
-Architecture tests assert `BillingEngine` and `GatewayManager` do not reference Stripe/Cashier/Creem/Kelviq drivers.
+Architecture tests assert `BillingEngine` and `GatewayManager` do not reference Stripe/Cashier/Creem/Kelviq/Lemon Squeezy drivers.

@@ -12,6 +12,7 @@ Gateway-agnostic payment infrastructure for EloSync Central. The **Billing Engin
 | `StripeGateway` | Cashier Checkout + Stripe SDK + webhook normalization |
 | `CreemGateway` | Creem REST (HTTP client) + webhook normalization |
 | `KelviqGateway` | Kelviq REST (HTTP client) + webhook normalization |
+| `LemonSqueezyGateway` | Lemon Squeezy JSON:API (HTTP client) + webhook normalization |
 | `ManualGateway` | Synchronous offline settlement |
 | `PaymentGatewayService` | Admin enable/disable/default/config/mode/test/logs |
 | `GatewayWebhookController` | `POST /webhooks/gateways/{code}` → driver → Billing Engine |
@@ -42,12 +43,14 @@ flowchart TB
     SG[StripeGateway]
     CG[CreemGateway]
     KG[KelviqGateway]
+    LG[LemonSqueezyGateway]
   end
 
   subgraph Providers["External"]
     Stripe[Stripe API / Cashier]
     Creem[Creem API]
     Kelviq[Kelviq API]
+    Lemon[Lemon Squeezy API]
   end
 
   PG --> PGC
@@ -60,9 +63,11 @@ flowchart TB
   IF --> SG
   IF --> CG
   IF --> KG
+  IF --> LG
   SG --> Stripe
   CG --> Creem
   KG --> Kelviq
+  LG --> Lemon
 ```
 
 ## Checkout / activation sequence
