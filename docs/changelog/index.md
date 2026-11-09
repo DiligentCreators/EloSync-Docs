@@ -1,3 +1,7 @@
+## Lemon Squeezy API key length validation (2026-11-09)
+
+- **EloSync-Backend:** Payment gateway config `secret_key` / `webhook_secret` max length raised from 255 → 4096 so Lemon Squeezy JWT API keys save successfully. Pest covers a long JWT-shaped key on `lemonsqueezy`.
+
 ## Central Lemon Squeezy payment gateway (2026-11-09)
 
 - **EloSync-Backend:** `LemonSqueezyGateway` implements `PaymentGatewayInterface` (JSON:API client + `X-Signature` HMAC). Seeds `payment_gateways.code=lemonsqueezy`. Marketplace checkout uses mapped **variant** ids + store relationship; custom checkout data carries `tenant_id` for webhook correlation. No catalog sync (Lemon Squeezy has no product-create API). Webhook: `POST /webhooks/gateways/lemonsqueezy`. Env: `LEMONSQUEEZY_ENABLED`, `LEMONSQUEEZY_ENV`, `LEMONSQUEEZY_API_KEY`, `LEMONSQUEEZY_STORE_ID`, `LEMONSQUEEZY_WEBHOOK_SECRET`. Pest: `LemonSqueezyGatewayTest`, `LemonSqueezyWebhookTest`.
