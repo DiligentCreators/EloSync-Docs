@@ -164,6 +164,20 @@ Workspace-owned Stripe/Creem/Kelviq keys post gateway `CustomerPayment` rows, so
 
 **Status:** [Payment Gateways](/user-guide/tenant-payment-gateways) shipped **1.0.0**.
 
+### FBR Invoicing → Invoices + Products (required) + Companies/Contacts (optional)
+
+```text
+FBR Invoicing
+  ├── depends on Invoices   (required)
+  ├── depends on Products   (required)
+  ├── may use Companies     (optional — buyer NTN/STRN)
+  └── may use Contacts      (optional — buyer NTN/STRN)
+```
+
+Pakistan FBR Digital Invoicing validates/submits `CustomerInvoice` rows using product FBR profiles and a **platform-wide** HS/UoM catalog. Marketplace blocks install until Invoices and Products are entitled.
+
+**Status:** [FBR Invoicing](/user-guide/fbr-invoicing) shipped **1.0.0**.
+
 ### Resellers → Payments (required)
 
 ```text

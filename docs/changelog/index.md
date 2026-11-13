@@ -1,3 +1,9 @@
+## FBR Invoicing module 1.0.0 (2026-11-10)
+
+- **EloSync-Backend:** Free Marketplace module `fbr-invoicing` (hard deps **invoices** + **products**; optional companies/contacts). Central shared `fbr_hs_uoms` / `fbr_registration_scenarios`; tenant encrypted credentials; `product_fbr_profiles`; invoice validate→submit with FBR number + submission audit; Artisan `fbr:sync-hs-uom` / `fbr:sync-scenarios`; Central catalog API. Pest: `FbrInvoicingModuleTest`.
+- **EloSync-Frontend:** Billing → FBR Invoicing credentials page; invoice Validate/Submit actions; company FBR buyer fields when entitled; Playwright smoke `test:e2e:fbr-invoicing`.
+- **EloSync-Docs:** User / developer / deployment guides + module-dependencies. No historical client importer (manual pilot onboarding).
+
 ## Lemon Squeezy Marketplace checkout redirect (2026-11-09)
 
 - **EloSync-Backend:** Billable Marketplace Subscribe with Lemon Squeezy as default always stays **Pending** until the payment webhook, returns a real Lemon Squeezy checkout URL, and requires Variant product mapping even if `capabilities` were incomplete. Settings → Default payment gateway now syncs `payment_gateways.is_default` (so choosing LS no longer silently settles via Manual). Migrate-only upsert for `payment_gateways.code=lemonsqueezy` (idempotent; does not clobber credentials / is_default / is_active).

@@ -225,6 +225,7 @@ export default withMermaid(defineConfig({
             { text: 'Payments Overview', link: '/user-guide/payments-overview' },
             { text: 'Payments', link: '/user-guide/payments' },
             { text: 'Payment Gateways (workspace)', link: '/user-guide/tenant-payment-gateways' },
+            { text: 'FBR Invoicing', link: '/user-guide/fbr-invoicing' },
             { text: 'Credit Notes Overview', link: '/user-guide/credit-notes-overview' },
             { text: 'Credit Notes', link: '/user-guide/credit-notes' },
             { text: 'Estimates Overview', link: '/user-guide/estimates-overview' },
@@ -355,6 +356,7 @@ export default withMermaid(defineConfig({
             { text: 'Invoices', link: '/developer-guide/invoices' },
             { text: 'Payments', link: '/developer-guide/payments' },
             { text: 'Tenant Payment Gateways', link: '/developer-guide/tenant-payment-gateways' },
+            { text: 'FBR Invoicing', link: '/developer-guide/fbr-invoicing' },
             { text: 'Credit Notes', link: '/developer-guide/credit-notes' },
             { text: 'Estimates', link: '/developer-guide/estimates' },
             { text: 'Vendors', link: '/developer-guide/vendors' },
@@ -576,6 +578,7 @@ export default withMermaid(defineConfig({
               text: 'Tenant Payment Gateways 1.0.0 Readiness',
               link: '/deployment/tenant-payment-gateways-1-0-0-production-readiness',
             },
+            { text: 'FBR Invoicing', link: '/deployment/fbr-invoicing' },
             {
               text: 'Payments Refunds 1.5.0 Readiness',
               link: '/deployment/payments-partial-refunds-gateway-record-1-5-0-production-readiness',
