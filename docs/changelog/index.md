@@ -1,3 +1,21 @@
+## Central FBR Catalog CRUD + empty default catalog (2026-11-13)
+
+- **EloSync-Backend:** Removed starter HS/UoM and scenario seed inserts. Soft-delete + update APIs for HS/UoM and scenarios. Pest covers update/delete.
+- **EloSync-Frontend:** FBR Catalog row actions — create / edit / delete for HS/UoM and scenarios.
+
+## Central FBR Catalog sample CSVs (2026-11-13)
+
+- **EloSync-Frontend:** FBR Catalog page and import dialogs offer **Sample HS/UoM** and **Sample scenarios** downloads before upload.
+
+## Central FBR Catalog upload UI (2026-11-13)
+
+- **EloSync-Frontend:** Central **Catalog → FBR Catalog** page lists shared HS/UoM + scenarios and imports CSV via multipart upload (no SSH/`artisan` required). Gated by `modules.list` / `modules.update`.
+- **EloSync-Backend:** `fbr-catalog` routes require `modules.list`/`modules.update`; import endpoints throttled. Pest: `FbrCatalogImportTest`.
+
+## FBR HS/UoM catalog sync hardening (2026-11-13)
+
+- **EloSync-Backend:** `fbr_hs_uoms.description` widened to `TEXT`. `fbr:sync-hs-uom` / Central CSV import: preserve leading-zero HS codes, default empty `unit_name` to **Others**, rejoin broken description quotes. Pest: `FbrHsUomCatalogSyncTest`.
+
 ## FBR Invoicing module 1.0.0 (2026-11-10)
 
 - **EloSync-Backend:** Free Marketplace module `fbr-invoicing` (hard deps **invoices** + **products**; optional companies/contacts). Central shared `fbr_hs_uoms` / `fbr_registration_scenarios`; tenant encrypted credentials; `product_fbr_profiles`; invoice validate→submit with FBR number + submission audit; Artisan `fbr:sync-hs-uom` / `fbr:sync-scenarios`; Central catalog API. Pest: `FbrInvoicingModuleTest`.

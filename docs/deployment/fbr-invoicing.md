@@ -6,14 +6,24 @@ Run EloSync-Backend migrations (catalog registration, permissions, schema). No `
 
 ## Catalog load
 
-After deploy, load the full FBR HS↔UoM CSV once:
+After deploy, load the full FBR HS↔UoM catalog once. Prefer the **Central SPA** (no SSH required):
+
+1. Sign in to Central → **Catalog → FBR Catalog**
+2. **Import HS/UoM** (and optionally **Import scenarios**)
+3. Confirm the toast counts (`created` / `updated` / `skipped` / `defaulted_unit`)
+
+API equivalent: `POST /api/central/v1/fbr-catalog/hs-uoms/import` (multipart `file`) with `modules.update`.
+
+Optional CLI (same importer):
 
 ```bash
 php artisan fbr:sync-hs-uom /secure/path/fbr-hs-uoms.csv
 php artisan fbr:sync-scenarios /secure/path/fbr-scenarios.csv
 ```
 
-Starter rows ship for local/CI only.
+CSV columns: `hs_code`, `unit_name`, `description`. UTF-8 BOM / Excel-quoted headers are accepted. Leading zeros on `hs_code` are preserved. Empty `unit_name` is stored as **Others**. Descriptions are `TEXT` (not capped at 255). Large imports may take ~1–2 minutes; the SPA request timeout is 180s.
+
+The catalog starts empty (no seeded HS/UoM or scenarios). Load it after deploy via Central UI or artisan.
 
 ## Pilot checklist
 

@@ -39,11 +39,12 @@ Times use Settings → General → Timezone for display of validation/submission
 
 ## Updating the HS/UoM catalog
 
-Platform operators load or refresh the shared catalog with:
+Platform operators manage the shared catalog from **Central → Catalog → FBR Catalog** (starts empty — nothing is pre-seeded):
 
-```bash
-php artisan fbr:sync-hs-uom /path/to/hs-uoms.csv
-php artisan fbr:sync-scenarios /path/to/scenarios.csv
-```
+1. Download **Sample HS/UoM** / **Sample scenarios** (also inside each import dialog)
+2. Import CSV, or use **New HS/UoM** / **New scenario**
+3. Edit or delete any row from the table actions menu
 
-Or via Central API `POST /api/central/v1/fbr-catalog/hs-uoms/import`. One update applies to every workspace.
+HS/UoM CSV columns: `hs_code`, `unit_name`, `description`. Scenario CSV columns: `scenario_id`, `buyer_registration_type`. Codes that start with zero stay intact. Rows with a blank unit are imported as **Others**. One update applies to every workspace.
+
+CLI remains available for automation: `php artisan fbr:sync-hs-uom` / `fbr:sync-scenarios`.
