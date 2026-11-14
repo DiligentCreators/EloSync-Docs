@@ -1,3 +1,12 @@
+## FBR Invoicing retest-2 + Batch 2 Proforma + R2-8 docs (2026-11-14)
+
+- **EloSync-Docs:** User / developer / deployment guides + changelog for QA retest-2 and Batch 2: seller NTN save 7–9 / FBR wire 7 or 13 via `nic_validate` with warning; tax-rate omitted→profile (+ notice) vs explicit 0% kept and blocked; submit inconsistency retry once (no double-submit); readiness read-only after submit; API invoice currency defaults to workspace currency on FBR tenants; blocked Live-switch audited; token hint bullets + last 4; line editor 0% warning / empty→profile rate; Proforma on Estimates (never FBR HTTP; banner; validity/due/payment/delivery/advance terms; estimated GST/further tax — 1200 @ retail 1500 × 18% = 270 / 1470; Expired display; convert → Draft then Validate/Submit); R2-8 payments only after IRN (UI disabled + API 422; non-FBR unchanged). Bulk send / watermark / month-year prefix still not shipped.
+- **EloSync-Frontend (general):** First-time page tours now close when you leave the page, so they no longer cover other forms.
+
+## FBR Invoicing Batch 1 docs (2026-11-14)
+
+- **EloSync-Docs:** User / developer / deployment guides updated for Batch 1 as shipped: credentials environment badge, admin-only Live + typed `LIVE`, local Live guard, environment-change audit, masked last-4 token hints, blank token keeps saved token, 7 canonical provinces with aliases; gated buyer FBR fields (NTN 7 / CNIC 13, registration type never auto-set); optional import columns with row-level errors and no Verify; document-level errors as `Invoice: message`; readiness checklist from saved data; 0% tax blocked on validate and submit for standard-rate/3rd-schedule with amount match (zero-rated/exempt and non-FBR unaffected); buyer-verify informational sandbox status. Developer guide only: `local:fbr-backfill-submitted-status`.
+
 ## Central FBR Catalog CRUD + empty default catalog (2026-11-13)
 
 - **EloSync-Backend:** Removed starter HS/UoM and scenario seed inserts. Soft-delete + update APIs for HS/UoM and scenarios. Pest covers update/delete.
