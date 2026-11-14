@@ -1,3 +1,7 @@
+## FBR Invoicing Batch 4 docs (2026-11-15)
+
+- **EloSync-Docs:** User / developer / invoices API notes for Batch 4: invoice number year/month prefix (Settings → General → Document number prefixes; FBR-only switches; counter restarts per year/month in workspace TZ); FBR invoice PDF (**SALES TAX INVOICE**, draft watermark before submit, IRN/QR/**Verified by FBR** text badge after; `fbrPdf` / `:fbr` cache); bulk **Send N to FBR** on Invoices (max 25; `POST …/fbr-invoicing/invoices/bulk-submit`, permission `fbr-invoicing.submit`, per-item submitted/failed/skipped). Staff role gains `accounting.export`.
+
 ## FBR Invoicing R3 + Batch 3 docs (2026-11-14)
 
 - **EloSync-Docs:** User / developer / deployment guides + changelog for R3 and Batch 3: line editor keeps typed 0% in live totals with amber “FBR will reject 0%” warning and empty rate → product FBR profile per-line note; Validate retries once on contradictory FBR results then try-again (duplicate `item_errors` shown once); seller address required (settings + readiness; validate/submit blocked while empty); proforma convert copies issue date (today), due date, payment terms and includes further tax in the invoice total; after IRN, partial/full payments keep the FBR lock; trash/restore/permanent delete for companies/contacts/products with permanent delete refused when used on an FBR-submitted document; share FBR invoice by email (PDF IRN + QR) and WhatsApp only when `whatsapp-cloud` entitled; local QA uses log mail and no real WhatsApp. Bulk send / watermark / month-year prefix still not shipped (Batch 4+).

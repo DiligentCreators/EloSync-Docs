@@ -69,9 +69,10 @@ Prefix `/api/tenant/v1/fbr-invoicing` · middleware `module:fbr-invoicing`:
 | `GET` / `PUT` | `products/{product}/profile` | Product FBR profile (sale type, HS, UoM, rate, retail, SRO, …) |
 | `POST` | `invoices/{customerInvoice}/validate` | Permission `validate` — see **D5**, **D6** |
 | `POST` | `invoices/{customerInvoice}/submit` | Permission `submit` — see **D4**, **D6**, **D7**, **R2-1** |
+| `POST` | `invoices/bulk-submit` | Permission `submit` — see **Batch 4** |
 | `POST` | `credit-notes/{customerCreditNote}/validate` / `submit` | Same response shape as invoices |
 
-There are **no** FBR validate/submit routes for estimates. Validate and submit are **separate** endpoints. Validate must succeed before submit; editing invoice content clears validation (never clears a stored FBR IRN). Submit uses `lockForUpdate` plus a per-document Cache lock; it does **not** HTTP-retry on ordinary failures. **Validate** and **submit** each may run a single automatic **inconsistency** retry when FBR’s result contradicts the payload — see **R3-2** / **R2-1**. Duplicate `item_errors` are deduped before the response. Live outbound calls are blocked in `local`/`testing` unless `FBR_ALLOW_LIVE_LOCALLY=true`.
+There are **no** FBR validate/submit routes for estimates. Validate and submit are **separate** endpoints. Validate must succeed before submit; editing invoice content clears validation (never clears a stored FBR IRN). Submit uses `lockForUpdate` plus a per-document Cache lock; it does **not** HTTP-retry on ordinary failures. **Validate** and **submit** each may run a single automatic **inconsistency** retry when FBR’s result contradicts the payload — see **R3-2** / **R2-1**. Duplicate `item_errors` are deduped before the response. Live outbound calls are blocked in `local`/`testing` unless `FBR_ALLOW_LIVE_LOCALLY=true`. User-facing flows (prefix, PDF, bulk send): [FBR Invoicing user guide](/user-guide/fbr-invoicing).
 
 ### Validate / submit response shape
 
@@ -156,7 +157,7 @@ For `saleType` `3rd Schedule Goods` (SN008):
 
 ### D3 — PDF after FBR submit
 
-When `fbr_invoice_number` is set, the invoice PDF includes the FBR IRN and a **PNG QR** (GD) encoding that number. Non-FBR PDFs are unchanged (no FBR chrome). Official FBR logo on PDF is **not** shipped yet.
+FBR-entitled invoice PDFs use view flag `fbrPdf` and cache key suffix `:fbr`. Title is **SALES TAX INVOICE**. Before IRN: diagonal watermark **DRAFT - NOT SUBMITTED TO FBR** plus line **Not yet submitted to FBR**. After IRN: watermark removed; PDF includes FBR invoice number, PNG QR (GD), and a text **FBR Digital Invoicing** / **Verified by FBR** badge (official FBR logo not bundled). Footer: computer-generated / no stamp or signature. Non-FBR PDFs are unchanged (no FBR chrome). See [user guide — FBR invoice PDF](/user-guide/fbr-invoicing#fbr-invoice-pdf).
 
 **Troubleshooting (Windows / `php artisan serve`):** Dompdf font subsetting called `tempnam()` against `sys_get_temp_dir()`. Under `php artisan serve` on Windows, `TEMP`/`TMP` can be stripped so the temp dir becomes `C:\WINDOWS` (not writable) and every PDF returns **500**. Fix: all Dompdf services build `Options` via `App\Support\Pdf\DompdfOptionsFactory` with `tempDir` = `storage/framework/dompdf` and `fontCache` = `storage/fonts` (both auto-created and git-ignored).
 
@@ -164,7 +165,7 @@ When `fbr_invoice_number` is set, the invoice PDF includes the FBR IRN and a **P
 
 Once `fbr_invoice_number` is set, the invoice is locked on **every** surface: full page, list, drawer, **bulk** actions, and API. No Edit, Void, or Trash. Backend rejects those mutations. Corrections go through credit/debit notes. Partial/full payments after IRN do **not** unlock the invoice or alter FBR fields (Batch 3).
 
-Validate and Submit actions are hidden after submission. Do **not** treat bulk “Send N to FBR” or PDF watermark / month-year prefix as shipped — those are Batch 4+ (not shipped).
+Validate and Submit actions are hidden after submission. List bulk “Send N to FBR” is Batch 4 (below) — it never resubmits an invoice that already has an IRN.
 
 ### D5 — Invalid validate UX / payload
 
@@ -241,6 +242,22 @@ Non-FBR estimate request rules and resource shape unchanged. Convert still copie
 
 Local QA: use `MAIL_MAILER=log` (no real outbound mail); WhatsApp share is a `wa.me` link only — **no** real WhatsApp Cloud send.
 
+## Batch 4 — year/month prefix, PDF draft chrome, bulk submit
+
+### Invoice number prefix
+
+Tenant settings `invoices_number_prefix_year` / `invoices_number_prefix_month` (boolean) are honoured **only** when `fbr-invoicing` is entitled. UI: Settings → General → Document number prefixes (FBR-only switches). Formats with text prefix `INV-`: both off → `INV-00001`; year → `INV-2026-00001`; month → `INV-2026-11-00001` (month always includes year). Counter is per workspace and restarts at `00001` each new year (year mode) or month (month mode); date = workspace TZ on create day. Existing numbers never change. Non-FBR tenants keep `INV-00001` numbering. See [user guide](/user-guide/fbr-invoicing#invoice-number-prefix).
+
+### Bulk submit
+
+`POST /api/tenant/v1/fbr-invoicing/invoices/bulk-submit` · permission `fbr-invoicing.submit` · module `fbr-invoicing`.
+
+Body: `{ "invoice_ids": [ … ] }` — **1–25** distinct integers.
+
+Response `data.results[]`: `{ invoice_id, number, status: "submitted"|"failed"|"skipped", fbr_invoice_number, message, item_errors }`; `data.summary`: `{ submitted, failed, skipped }`.
+
+Each item reuses the single-invoice submit path (cache lock, validate-first, live guard). One failure does not stop the others; already-submitted invoices are **skipped** (never submitted twice). Live outbound calls follow the same local/test guard as single submit. SPA: Invoices list checkboxes + **Send N to FBR**. See [user guide](/user-guide/fbr-invoicing#bulk-send-to-fbr) and [invoices API note](/api/tenant-v1-invoices#fbr-invoicing).
+
 ## Payload notes
 
 - Includes `sellerSTRN` / `buyerSTRN` when present
@@ -270,9 +287,8 @@ Refuse validate/submit unless module entitled, original invoice has `fbr_invoice
 - Credit-note sandbox type/reason gap (`Credit Note` → 0003; reason/remarks 0027/0028)
 - SN024 SRO pipe-typo in catalog data
 - UoM aliases beyond catalog short name `Number` → `Numbers, pieces, units`
-- Official FBR logo on PDF not implemented
+- Official FBR logo on PDF not implemented (text **Verified by FBR** badge ships)
 - No dedicated item-level “SRO” `saleType` string beyond `sroScheduleNo` / `sroItemSerialNo`
-- Bulk “Send N to FBR”, PDF watermark / month-year prefix (Batch 4+ — not shipped)
 
 ## Central API
 

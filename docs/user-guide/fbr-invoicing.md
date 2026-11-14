@@ -29,6 +29,21 @@ Tokens are encrypted at rest. HS codes and units of measure come from a **platfo
 
 Sandbox and Live use different tokens and endpoints.
 
+## Invoice number prefix (year / month) {#invoice-number-prefix}
+
+Settings → General → **Document number prefixes**.
+
+- **Invoice** prefix text (default `INV-`)
+- When **FBR Invoicing** is installed, two FBR-only switches appear: **Prefix is year** and **Prefix is month**
+
+| Switches | Example number |
+|----------|----------------|
+| Both off | `INV-00001` |
+| Year on | `INV-2026-00001` |
+| Month on | `INV-2026-11-00001` (always includes the year — turning year on as well has no extra effect) |
+
+The counter is **per workspace** and restarts at `00001` every new year (year mode) or every new month (month mode). The date used is the **workspace time zone** on the day the invoice is created. Existing invoice numbers never change. Workspaces without FBR keep `INV-00001` numbering.
+
 ## Buyer details
 
 When FBR Invoicing is installed, company and contact forms show gated FBR buyer fields:
@@ -124,7 +139,19 @@ API-created invoices on FBR workspaces **default to the workspace currency** (fo
 
 Invoice list/export include FBR number / submitted status **only** when the module is entitled. Non-FBR export headers stay unchanged.
 
-## After submit: locked invoice + PDF
+## Send several invoices to FBR at once {#bulk-send-to-fbr}
+
+On **Invoices**, FBR workspaces with the FBR submit permission see checkboxes. Only invoices that are **validated with FBR** and **not yet submitted** can be selected (others show a disabled checkbox with the reason).
+
+Use **Select all eligible** (current page), **Clear selection**, then **Send N to FBR** (max **25** per batch). Confirm, then a results list shows each invoice:
+
+- **Submitted** — with the FBR invoice number
+- **Failed** — with the FBR or validation message
+- **Skipped** — already submitted, not validated, deleted, or cancelled
+
+One failure does not stop the others; an invoice is never submitted twice. Submissions go to the environment set in FBR settings; **Live** is blocked on local/test installs.
+
+## After submit: locked invoice
 
 Once an invoice has an FBR invoice number:
 
@@ -132,7 +159,6 @@ Once an invoice has an FBR invoice number:
 - **Record payment** / post payment is allowed **only after** the invoice has been submitted to FBR and has an IRN. Before that, **Record payment** is disabled and the API returns **422** with the reason. After IRN, **partial** and **full** payments (and voiding a payment) update payment status as usual but **keep the FBR lock** — IRN, tax, lines, and buyer stay unchanged. Workspaces without FBR Invoicing are unchanged.
 - Validate and Submit are hidden after submission.
 - Corrections use a **credit note** or **debit note** (Credit Notes module required), not an edit.
-- The PDF shows the **FBR invoice number** and a **QR code**. Invoices without FBR submission keep the normal PDF (no FBR number/QR). The official FBR logo on PDF is not shipped yet.
 
 ### Share (email / WhatsApp)
 
@@ -143,7 +169,15 @@ On FBR workspaces, after submit you can:
 
 Workspaces without FBR Invoicing keep the normal invoice share UI (no FBR `share_capabilities` extras).
 
-Bulk “Send N to FBR” and PDF watermark / month-year prefix are **not** part of this release (Batch 4+ — not shipped).
+## FBR invoice PDF {#fbr-invoice-pdf}
+
+For FBR workspaces the PDF title reads **SALES TAX INVOICE**.
+
+- **Before FBR submission** — light diagonal watermark **DRAFT - NOT SUBMITTED TO FBR** and the line **Not yet submitted to FBR**, so it is not mistaken for a final tax invoice
+- **After submission** — watermark gone; the PDF shows the FBR invoice number, the FBR QR code, and an **FBR Digital Invoicing** verification badge with **Verified by FBR**. Scan the QR to check. (A text badge; the official FBR logo is not bundled.)
+- **Footer** — *This invoice is computer-generated and does not require a stamp or signature.*
+
+Non-FBR workspaces' PDFs are unchanged.
 
 ## Companies, contacts, and products (trash)
 
@@ -198,5 +232,4 @@ CLI remains available for automation: `php artisan fbr:sync-hs-uom` / `fbr:sync-
 - Credit-note sandbox type/reason gap (see above)
 - Some SRO catalog typos (e.g. SN024 pipe character)
 - Extra UoM short-name aliases beyond **Number**
-- Official FBR logo on PDF
-- Bulk “Send N to FBR”, PDF watermark / month-year prefix (Batch 4+ — not shipped)
+- Official FBR logo on PDF (text verification badge ships today)
