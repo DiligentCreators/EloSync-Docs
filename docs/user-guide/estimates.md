@@ -52,7 +52,7 @@ Once an estimate is **Sent** or **Accepted**, use **Convert to invoice** from th
 - An estimate can only be converted **once** — the action is hidden once a converted invoice already exists
 - Convert is also blocked if the estimate’s linked quotation already has an invoice (from converting that quote, another estimate, or billing a contract that copied the quotation). Use a new estimate or invoice from scratch if you still need another bill
 
-When **FBR Invoicing** is installed, estimates also act as **proforma** (banner, payment/delivery/advance terms, estimated GST, Expired display from validity). Convert still creates a **Draft** invoice with no FBR number — Validate and Submit happen on the invoice. Details: [FBR Invoicing](/user-guide/fbr-invoicing#proforma-on-estimates-batch-2).
+When **FBR Invoicing** is installed, estimates also act as **proforma** (banner, payment/delivery/advance terms, estimated GST, Expired display from validity). Convert still creates a **Draft** invoice with no FBR number — issue date today, due date / payment terms copied, further tax included in the total — then Validate and Submit happen on the invoice. Details: [FBR Invoicing](/user-guide/fbr-invoicing#proforma-on-estimates-batch-2).
 
 ## Assignment
 

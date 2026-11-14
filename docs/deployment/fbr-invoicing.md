@@ -58,17 +58,18 @@ The catalog starts empty (no seeded HS/UoM or scenarios). Load it after deploy v
 ## Pilot checklist
 
 1. Entitle **invoices**, **products**, **fbr-invoicing** for the pilot workspace (optional **estimates** for proforma)
-2. Billing → FBR Invoicing → paste **Sandbox** token (leave blank later to keep it; UI shows bullets + last-4 only); seller NTN 7–9 digits or CNIC 13 digits (add NIC validation when NTN length is not 7/13); province from the 7 canonical names (aliases accepted); save; confirm seller-registration warning when neither is FBR-usable
+2. Billing → FBR Invoicing → paste **Sandbox** token (leave blank later to keep it; UI shows bullets + last-4 only); set **seller address** (required — settings amber warning + readiness flag; validate/submit blocked while empty); seller NTN 7–9 digits or CNIC 13 digits (add NIC validation when NTN length is not 7/13); province from the 7 canonical names (aliases accepted); save; confirm seller-registration warning when neither is FBR-usable
 3. Confirm environment badge, admin-only Live switch with typed `LIVE`, blocked-attempt audit, and environment-change meta (who/when)
 4. Buyer fields on company/contact; Verify with FBR → Registered / Unregistered / Not found (or informational sandbox status — never auto-Registered on failure); set type manually if needed
 5. Optional FBR columns on company/contact import; row-level errors; no Verify during import
 6. Product FBR profile: HS search, sale type, **18%** default for standard-rate, retail visible for 3rd schedule
-7. Invoice qty ≥ 1; further tax only for unregistered; readiness checklist from saved data (NTN optional for Unregistered); empty tax rate defaults from profile with notification; explicit 0% kept and blocked on Validate/Submit for standard-rate/3rd-schedule; Validate (status code + `Invoice: …` / per-line item errors) → Submit (one automatic inconsistency retry if sandbox contradicts a matching validate); Draft→issued/unpaid, `fbr_invoice_number`, PDF IRN + QR; readiness stays read-only after submit
-8. Confirm Edit/Void/Trash hidden on page/list/drawer/bulk + API blocked; **Record payment disabled until IRN** (API 422); payment create/post works after submit; issue credit/debit note → Validate → Submit (FBR type Debit Note + invoiceRefNo)
-9. Estimates (if entitled): proforma banner, terms, estimated GST (1200 @ retail 1500 × 18% → 270 / 1470), Expired display from validity, convert → Draft invoice then Validate/Submit; no FBR HTTP on estimates
-10. Repeat with Live token only after sandbox success (and never from local/testing without `FBR_ALLOW_LIVE_LOCALLY`)
-11. Confirm a non-FBR workspace shows unchanged invoices/contacts/companies/estimates/import/payments (no FBR UI or API keys)
-12. Local QA only: `php artisan local:seed-fbr-qa-tenants` seeds `non-fbr-demo` / `fbr-demo` (never production; never mutates `demo-crm`)
+7. Invoice qty ≥ 1; further tax only for unregistered; readiness checklist from saved data (NTN optional for Unregistered; seller address ok); line editor: typed 0% stays 0 with amber reject warning, empty rate → profile note; empty tax rate defaults from profile with notification; explicit 0% kept and blocked on Validate/Submit for standard-rate/3rd-schedule; Validate (status code + `Invoice: …` / deduped per-line item errors; one automatic retry when FBR contradicts the invoice, then try-again) → Submit (one automatic inconsistency retry if sandbox contradicts a matching validate); Draft→issued/unpaid, `fbr_invoice_number`, PDF IRN + QR; readiness stays read-only after submit
+8. Confirm Edit/Void/Trash hidden on page/list/drawer/bulk + API blocked; **Record payment disabled until IRN** (API 422); after IRN, partial/full payments (and void payment) work without unlocking FBR fields; email PDF with IRN/QR; WhatsApp share only when `whatsapp-cloud` entitled; issue credit/debit note → Validate → Submit (FBR type Debit Note + invoiceRefNo)
+9. Estimates (if entitled): proforma banner, terms, estimated GST (1200 @ retail 1500 × 18% → 270 / 1470), Expired display from validity, convert → Draft invoice (issue date today, due date + payment terms copied, further tax in total) then Validate/Submit; no FBR HTTP on estimates
+10. Companies/contacts/products: trash + restore; permanent delete refused when used on an FBR-submitted document; unreferenced records still force-deletable
+11. Repeat with Live token only after sandbox success (and never from local/testing without `FBR_ALLOW_LIVE_LOCALLY`)
+12. Confirm a non-FBR workspace shows unchanged invoices/contacts/companies/estimates/import/payments/share (no FBR UI or API keys)
+13. Local QA only: `php artisan local:seed-fbr-qa-tenants` seeds `non-fbr-demo` / `fbr-demo` (never production; never mutates `demo-crm`). Use **log mail** (`MAIL_MAILER=log`) and **no real WhatsApp** send — share uses `wa.me` only when WhatsApp is entitled
 
 ## Secrets
 
@@ -76,4 +77,4 @@ Do not log tokens. Credentials use Eloquent `encrypted` casts on `fbr_workspace_
 
 ## Verdict
 
-**Go** for sandbox pilots after migrations + catalog load + Pest green (`tests/Feature/Tenant/FbrInvoicing/*`, `EstimateFbrProformaTest`, including settings hardening, QA retest 1–2, payment guard, PDF, and gating).
+**Go** for sandbox pilots after migrations + catalog load + Pest green (`tests/Feature/Tenant/FbrInvoicing/*`, `EstimateFbrProformaTest`, including settings hardening, QA retest 1–3, Batch 3, payment guard, PDF, and gating). Bulk send / watermark / month-year prefix remain **not** shipped (Batch 4+).

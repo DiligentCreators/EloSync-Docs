@@ -25,9 +25,9 @@ Without entitlement:
 - Import field catalogs omit FBR columns
 - Invoice export headers stay exactly as today
 - Frontend hides FBR UI via `hasModule('fbr-invoicing')`
-- Non-FBR tenants never see buyer verify, product FBR profile, Validate/Submit, readiness checklist, proforma extras, payment gate, or FBR PDF chrome
+- Non-FBR tenants never see buyer verify, product FBR profile, Validate/Submit, readiness checklist, proforma extras, payment gate, FBR share capabilities, or FBR PDF chrome
 
-Prove with Pest on a non-FBR tenant **and** an FBR tenant (`FbrInvoicingNonFbrRegressionTest`, `FbrInvoicingGatingAndSafetyTest`, `FbrInvoicingQaRetest1Test`, `FbrInvoicingQaRetest2Test`, `EstimateFbrProformaTest`, `FbrPaymentGuardTest`, settings/import buyer-field tests).
+Prove with Pest on a non-FBR tenant **and** an FBR tenant (`FbrInvoicingNonFbrRegressionTest`, `FbrInvoicingGatingAndSafetyTest`, `FbrInvoicingQaRetest1Test`, `FbrInvoicingQaRetest2Test`, `FbrInvoicingQaRetest3Test`, `FbrInvoicingBatch3Test`, `EstimateFbrProformaTest`, `FbrPaymentGuardTest`, settings/import buyer-field tests).
 
 ## Data model
 
@@ -71,7 +71,7 @@ Prefix `/api/tenant/v1/fbr-invoicing` · middleware `module:fbr-invoicing`:
 | `POST` | `invoices/{customerInvoice}/submit` | Permission `submit` — see **D4**, **D6**, **D7**, **R2-1** |
 | `POST` | `credit-notes/{customerCreditNote}/validate` / `submit` | Same response shape as invoices |
 
-There are **no** FBR validate/submit routes for estimates. Validate and submit are **separate** endpoints. Validate must succeed before submit; editing invoice content clears validation (never clears a stored FBR IRN). Submit uses `lockForUpdate` plus a per-document Cache lock; it does **not** HTTP-retry on ordinary failures (validate may retry). A single automatic **inconsistency** retry may run after a successful validate with the same `payload_hash` — see **R2-1**. Live outbound calls are blocked in `local`/`testing` unless `FBR_ALLOW_LIVE_LOCALLY=true`.
+There are **no** FBR validate/submit routes for estimates. Validate and submit are **separate** endpoints. Validate must succeed before submit; editing invoice content clears validation (never clears a stored FBR IRN). Submit uses `lockForUpdate` plus a per-document Cache lock; it does **not** HTTP-retry on ordinary failures. **Validate** and **submit** each may run a single automatic **inconsistency** retry when FBR’s result contradicts the payload — see **R3-2** / **R2-1**. Duplicate `item_errors` are deduped before the response. Live outbound calls are blocked in `local`/`testing` unless `FBR_ALLOW_LIVE_LOCALLY=true`.
 
 ### Validate / submit response shape
 
@@ -131,10 +131,10 @@ Company/contact import templates and mapping include optional `ntn_cnic`, `strn`
 
 - Buyer: NTN/CNIC **required** only when Registered; Unregistered optional (if present must be 7/13 digits)
 - Lines: HS + UoM present; tax evaluated via `FbrInvoiceTaxGuard`
-- Credentials configured + environment; empty seller address → readiness warning; `validated` / `submitted` / overall `ready`
+- Credentials configured + environment; **seller address required** — empty address sets `credentials.seller_address_ok` / `seller.address_ok` false and surfaces “Seller address is empty in FBR settings”; `validated` / `submitted` / overall `ready`
 - Submitted: `locked: true` + `post_submission_issues` (read-only UI)
 
-Returned on invoice detail and on validate/submit responses; UI refreshes after those calls and stays visible after submit.
+Returned on invoice detail and on validate/submit responses; UI refreshes after those calls and stays visible after submit. Settings UI shows an amber “Required by FBR — validate is blocked until set” when address is blank.
 
 ## Behaviour (D1–D7 + retest-2)
 
@@ -162,9 +162,9 @@ When `fbr_invoice_number` is set, the invoice PDF includes the FBR IRN and a **P
 
 ### D4 — Lock after FBR submit
 
-Once `fbr_invoice_number` is set, the invoice is locked on **every** surface: full page, list, drawer, **bulk** actions, and API. No Edit, Void, or Trash. Backend rejects those mutations. Corrections go through credit/debit notes.
+Once `fbr_invoice_number` is set, the invoice is locked on **every** surface: full page, list, drawer, **bulk** actions, and API. No Edit, Void, or Trash. Backend rejects those mutations. Corrections go through credit/debit notes. Partial/full payments after IRN do **not** unlock the invoice or alter FBR fields (Batch 3).
 
-Validate and Submit actions are hidden after submission. Do **not** treat bulk “Send N to FBR” or PDF watermark / month-year prefix as shipped — those are later batches.
+Validate and Submit actions are hidden after submission. Do **not** treat bulk “Send N to FBR” or PDF watermark / month-year prefix as shipped — those are Batch 4+ (not shipped).
 
 ### D5 — Invalid validate UX / payload
 
@@ -178,7 +178,7 @@ On FBR workspaces, standard-rate goods default to **18%** GST from the product F
 
 - **Omitted / null / empty** `tax_rate` → default from product FBR profile **and** report `fbr_adjustments: [{line_index, field: 'tax_rate', from, to, reason}]` (plus activity note when available)
 - **Explicit numeric 0** on standard-rate / 3rd-schedule / reduced → keep **0** (never overwrite)
-- Frontend line editor: typed 0% stays 0 with warning; empty rate takes profile rate on product pick
+- Frontend line editor (**R3-1**): typed 0% stays 0 in **live totals** with amber “FBR will reject 0% tax for this sale type”; empty rate uses profile rate with per-line “N% from product's FBR profile” note
 
 `FbrInvoiceTaxGuard` runs on **both validate and submit**:
 
@@ -190,6 +190,10 @@ On FBR workspaces, standard-rate goods default to **18%** GST from the product F
 
 After a successful FBR submit, invoice status moves from **Draft** to the workspace’s issued/unpaid equivalent (via the normal send path, no email). Non-FBR drafts are unchanged.
 
+### R3-2 — Validate inconsistency retry + dedupe
+
+`FbrInconsistentResultGuard` applies to **validate** as well as submit: when FBR returns an Invalid result that **contradicts** the payload (e.g. 3rd-schedule / retail-price mandatory when no line is 3rd schedule), EloSync retries validate **once** (`validate_retry` / `retry_of`). Genuine matching errors are **not** retried. If the retry also fails, return Invalid with `FbrInconsistentResultGuard::INCONSISTENCY_MESSAGE` (“…Please try again in a moment.”). Duplicate `item_errors` (same index + code + message) are **deduped** in the API response and again in Frontend `dedupeFbrItemErrors` / `parseFbrItemErrors`. Empty seller address blocks validate/submit **before** any FBR HTTP (`FBR: seller address is empty…`).
+
 ### R2-1 — Submit inconsistency retry
 
 When submit returns non-00 with **no** IRN after a recent successful validate (**00**) with the **same** `payload_hash` (within ~10 minutes), EloSync retries **once** (~2s delay, `submit_retry` / `retry_of`). Concurrent submits are blocked (`submission in progress`). Never retries when an IRN was returned or on HTTP 5xx success-looking bodies. If the retry also fails, return Invalid with an inconsistency message asking the user to try again — nothing was submitted. Config: `fbr.submit_inconsistency_retry_seconds`.
@@ -198,9 +202,9 @@ When submit returns non-00 with **no** IRN after a recent successful validate (*
 
 `CustomerInvoiceService` create: FBR-entitled tenants default omitted currency to `workspaceCurrency()`; non-FBR stays previous USD-when-omitted behaviour.
 
-### R2-8 — Payments only after FBR submit
+### R2-8 / Batch 3 — Payments only after FBR submit (lock kept)
 
-On FBR-entitled tenants, create/update allocations and `post` for a payment are rejected with **422** when any allocated invoice lacks `fbr_invoice_number` (message explains submit/IRN is required first). Invoice detail exposes `fbr_payment_allowed` / `fbr_payment_block_reason` for FBR tenants only so the UI can disable **Record payment**. Non-FBR payment flows are unchanged. After a successful submit (IRN set), recording/posting a payment remains allowed and does not unlock the invoice or alter FBR fields.
+On FBR-entitled tenants, create/update allocations and `post` for a payment are rejected with **422** when any allocated invoice lacks `fbr_invoice_number` (message explains submit/IRN is required first). Invoice detail exposes `fbr_payment_allowed` / `fbr_payment_block_reason` for FBR tenants only so the UI can disable **Record payment**. Non-FBR payment flows are unchanged. After a successful submit (IRN set), **partial** and **full** payments (and voiding a payment) remain allowed: status may move Partial → Paid, but edit/void/trash stay blocked and FBR fields / lines / tax are **unchanged**.
 
 ## Batch 2 — Proforma on Estimates
 
@@ -214,9 +218,28 @@ Extends existing Estimates inside the FBR gate (no separate proforma model; Quot
 | Estimated tax | Shared `FbrInvoiceLineCalculator` — per-line `estimated_sales_tax` / `estimated_further_tax`; totals `estimated_gst_total`, `estimated_further_tax_total`, `estimated_grand_total`. Example: 1200 @ retail 1500 × 18% → GST **270** / line **1470** |
 | Display status | Derived `display_status` = `expired` when `valid_until` is before today (workspace TZ) and status is draft/sent; **stored** status unchanged |
 | PDF | Banner `PROFORMA INVOICE — NOT A FINAL TAX INVOICE`; validity, due date, terms, estimated taxes; **no** FBR number/QR |
-| Convert | Existing convert → **Draft** invoice, `fbr_validated` false, no IRN; then normal invoice validate/submit |
+| Convert (**R3-3**) | Existing convert → **Draft** invoice, `fbr_validated` false, no IRN; `issue_date` = today (workspace TZ); `due_date` + `payment_terms` copied from estimate; line `fbr_further_tax_type` carried; invoice **total includes further tax**; then normal invoice validate/submit |
 
-Non-FBR estimate request rules and resource shape unchanged.
+Non-FBR estimate request rules and resource shape unchanged. Convert still copies issue/due/payment terms for all tenants; further-tax total inclusion is FBR-gated.
+
+## Batch 3 — Trash guard + share
+
+### Permanent delete guard
+
+`FbrReferenceGuard` on FBR tenants: soft delete + restore of companies / contacts / products stay allowed. `forceDelete` is refused with `FbrReferenceGuard::FORCE_DELETE_BLOCK_MESSAGE` when the record is referenced by an invoice or credit note that has `fbr_invoice_number`. Non-FBR tenants keep previous force-delete behaviour (IRN on a row does not matter without the module).
+
+### Share (email / WhatsApp)
+
+`FbrInvoiceShare` + invoice detail for FBR tenants only:
+
+| Capability | Behaviour |
+|------------|-----------|
+| `share_capabilities.email` | Always `true` when module on — existing `POST invoices/{id}/email` with `attach_pdf` includes IRN + QR PNG; FBR fields unchanged |
+| `share_capabilities.whatsapp` | `true` only when workspace also has `whatsapp-cloud` |
+| `POST invoices/{id}/whatsapp-share` | Returns `whatsapp_share_url` (`wa.me/?text=` + public view URL); **404** without FBR or without WhatsApp; never mutates FBR fields |
+| Non-FBR | `share_capabilities` / `whatsapp_share_url` keys **omitted** |
+
+Local QA: use `MAIL_MAILER=log` (no real outbound mail); WhatsApp share is a `wa.me` link only — **no** real WhatsApp Cloud send.
 
 ## Payload notes
 
@@ -227,7 +250,8 @@ Non-FBR estimate request rules and resource shape unchanged.
 - Prefer invoice-level `fbr_registration_scenario_id`, else first line product scenario
 - `scenarioId` sent in **sandbox only** (omitted on live)
 - Registered buyers require NTN + province at validate/submit; qty `min:1` when module entitled
-- Void/edit/trash blocked when `fbr_invoice_number` is set on invoices **and** on FBR credit/debit notes; payment create/post gated until IRN (R2-8)
+- Void/edit/trash blocked when `fbr_invoice_number` is set on invoices **and** on FBR credit/debit notes; payment create/post gated until IRN (R2-8); after IRN, payments keep the lock (Batch 3)
+- Seller address required before validate/submit (R3-4)
 
 ### Credit / debit note payload mapping
 
@@ -248,7 +272,7 @@ Refuse validate/submit unless module entitled, original invoice has `fbr_invoice
 - UoM aliases beyond catalog short name `Number` → `Numbers, pieces, units`
 - Official FBR logo on PDF not implemented
 - No dedicated item-level “SRO” `saleType` string beyond `sroScheduleNo` / `sroItemSerialNo`
-- Bulk “Send N to FBR”, PDF watermark / month-year prefix (later batches — not shipped)
+- Bulk “Send N to FBR”, PDF watermark / month-year prefix (Batch 4+ — not shipped)
 
 ## Central API
 
@@ -264,12 +288,14 @@ Refuse validate/submit unless module entitled, original invoice has `fbr_invoice
 ## Services
 
 - `App\Services\Tenant\Fbr\FbrCredentialService`
-- `App\Services\Tenant\Fbr\FbrInvoiceService` — invoice + credit/debit note payload, validate, submit (+ inconsistency retry), buyer verify
-- `App\Services\Tenant\Fbr\FbrSubmitInconsistencyGuard` — same-hash validate→submit mismatch detection
+- `App\Services\Tenant\Fbr\FbrInvoiceService` — invoice + credit/debit note payload, validate, submit (+ inconsistency retry on validate and submit), buyer verify, seller-address preflight
+- `App\Services\Tenant\Fbr\FbrInconsistentResultGuard` — contradictory FBR result detection, validate/submit single-retry, `item_errors` dedupe, try-again message
 - `App\Services\Tenant\Fbr\FbrInvoiceTaxGuard` — positive-tax / amount-match guard for validate + submit
-- `App\Services\Tenant\Fbr\FbrInvoiceLineCalculator` — line tax defaults / 3rd-schedule / estimate estimated tax
-- `App\Services\Tenant\Fbr\FbrInvoiceReadiness` — computed checklist payload (incl. locked / post_submission_issues)
+- `App\Services\Tenant\Fbr\FbrInvoiceLineCalculator` — line tax defaults / 3rd-schedule / further tax in totals / estimate estimated tax
+- `App\Services\Tenant\Fbr\FbrInvoiceReadiness` — computed checklist payload (incl. seller address ok, locked / post_submission_issues)
 - `App\Services\Tenant\Fbr\FbrPaymentGuard` — payment create/post only after IRN (FBR tenants)
+- `App\Services\Tenant\Fbr\FbrReferenceGuard` — refuse permanent delete of companies/contacts/products used on FBR-submitted docs
+- `App\Services\Tenant\Fbr\FbrInvoiceShare` — `share_capabilities` + WhatsApp `wa.me` share URL (FBR + WhatsApp entitled)
 - `App\Support\Fbr\FbrBuyerFieldNormalizer` — shared buyer NTN/CNIC / registration / province normalisation
 - `App\Support\Fbr\FbrSellerNtn` — seller save vs FBR-API length rules
 - `App\Services\Local\LocalFbrQaTenantService` — local QA tenant seed
@@ -288,13 +314,15 @@ Under `tests/Feature/Tenant/FbrInvoicing/`:
 - `FbrInvoicingSettingsHardeningTest.php` — credentials Live confirm, token hints (bullets), seller NTN / nic_validate, province aliases, blocked Live audit
 - `FbrInvoicingQaRetest1Test.php` — zero-tax on validate+submit, readiness, backfill command, non-FBR 0% unaffected
 - `FbrInvoicingQaRetest2Test.php` — submit inconsistency retry, readiness locked/post_submission_issues, workspace currency, tax_rate adjustments, blocked Live audit
+- `FbrInvoicingQaRetest3Test.php` — validate inconsistency retry + try-again message, item_errors dedupe, seller address block + readiness flags, proforma convert dates/terms/further tax, further tax in invoice create totals, non-FBR convert unchanged
+- `FbrInvoicingBatch3Test.php` — partial/full payment keeps FBR lock; trash/restore/forceDelete + refuse when FBR-referenced; email PDF IRN/QR; `share_capabilities` / WhatsApp share; non-FBR share keys omitted
 - `FbrPaymentGuardTest.php` — payments blocked until IRN; non-FBR unchanged
 - `FbrInvoicingCreditNoteTest.php`
 - `FbrInvoicingPdfTest.php` — non-FBR and FBR PDF **200** (IRN + QR when submitted)
 
 Also: `tests/Feature/Tenant/Estimate/EstimateFbrProformaTest.php`, `tests/Feature/Tenant/Company/CompanyFbrBuyerFieldsTest.php`, `CompanyFbrImportTest.php`, `ContactFbrBuyerFieldsTest.php`, `ContactFbrImportTest.php`.
 
-Central catalog / sync tests unchanged. Frontend: `test:e2e:fbr-invoicing` (credentials smoke); line-editor / tour unit tests for tax-rate warning and page-scoped tour dismiss.
+Central catalog / sync tests unchanged. Frontend: `test:e2e:fbr-invoicing` (credentials smoke); line-editor / tour unit tests for tax-rate warning, profile note, and page-scoped tour dismiss; `src/lib/fbr.test.ts` for dedupe / inconsistency copy.
 
 ## Deployment cross-links
 
